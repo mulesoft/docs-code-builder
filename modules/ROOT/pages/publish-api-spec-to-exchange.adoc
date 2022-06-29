@@ -1,0 +1,45 @@
+= Publish an API Specification to Exchange
+
+You can publish your API specification to Exchange to make it discoverable to other team members.
+
+When publishing an API to Exchange, you create a new API asset with that API, and you can later use it to implement it into a Mule application.
+
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* You created a basic structure for your API specification. +
+See xref:design-api-specification.adoc[].
+* You configured request and response data for  your API specification. +
+See xref:design-api-specification.adoc[].
+* Your local changes are in sync with Anypoint Design Center. +
+See xref:syncrhonize-with-design-center.adoc[].
+
+== Publishing an API to Exchange
+
+To publish your API to Exchange:
+
+. In Anypoint Code Builder, ensure that your American Flights API project is still open.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Publish API Specification to Exchange_.
+. Type a project name: +
+* *American Flights API ACB*.
+. Confirm the artifact ID: *American-Flights-API-ACB*
+. Confirm the asset version: *1.0.0*.
+. Confirm the API version: *v1*.
+. The status bar shows the progress.
+. Select *No* when prompted to implement the API.
++
+[NOTE]
+--
+Selecting *Yes* when prompted to implement the API enalbes you to directly scaffold your API specification into an implementation to code the logic behind each endpoint.
+--
+
+== Locate Your API in Exchange
+
+After publishing your API specification, you can find it in Anypoint Exchange:
+
+. Navigate to Anypoint Platform and login using your credentials.
+. Navigate to Anypoint Exchange.
+. Notice that your API specification is listed as an asset. +
+You can select the API, and navigate through the summary and see all the endpoints you defined in the provious tasks.

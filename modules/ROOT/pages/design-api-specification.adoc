@@ -1,0 +1,156 @@
+= Design an API Specification
+
+You can design a new RAML or OAS API specification using Anypoint Code Builder.
+
+Supported OAS and RAML versions are:
+
+* RAML 1.0
+* RAML 0.8
+* OAS 2.0 (JSON)
+* OAS 2.0 (YAML)
+* OAS 3.0 (JSON)
+* OAS 3.0 (YAML)
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+
+== Create a New API Specification
+
+To create a new API specification:
+
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _design_.
+. Select *MuleSoft: Design an API* from the list of results.
+. Type the name of your API specification: +
+* `*American Flights API*`
+. Type a description of your API.
+. Select *New API Specification*.
+. Select *RAML 1.0*.
+. Select the location of your API specification.
+
+The project explorer now shows you your American Flights API folder with an `american-flights-api.raml` file open in the editor.
+
+== Add a RAML Resource
+
+Start adding resources to your API specification:
+
+. In the editor, add your first resource called *flights*:
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+--
+. Review your new resource using API Console by clicking the API Console icon on the top right of your screen.
+
+== Add a RAML Method
+
+With one resource created, you can add a method to it using auto-complete:
+
+. Under `/flights`, press `enter` to go to a new line and `tab` to indent.
+. Press `ctrl/cmd + spacebar` to see all the available options.
+. Select *get*.
+
+You can add further methods by going to a new line and keep using the auto-complete feature. For example, you can also add the *post* method.
+
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+  post:
+--
+
+Both methods now show on API Console.
+
+== Add a Nested RAML Resource
+
+You can create nested resources on your API specification and add methods to them:
+
+. Under the `post:` method, add a nested resource for a flight with a specific ID: `/{ID}`.
+. Under your nested resource `/{ID}`, place a `get:` method.
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+  post:
+
+  /{ID}:
+    get:
+--
+
+The nested resource and its associated method also show up in API Console.
+
+== Add a Query Parameter
+
+Add specific query parameters for your resources:
+
+. under the `get:` method of y our `/flights` resource, use `tab` to indent.
+. Press `ctrl/cmd + spacebar` to see all the available options.
+. Select `queryParameters`.
+. Hit `enter` and `tab` to add a new indentation.
+. Add a new keyword called `destination:`.
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+    queryParameters:
+      destination:
+  post:
+
+  /{ID}:
+    get:
+--
+. Indent under the `destination` query parameter and press `ctrl/cmd + spacebar` to see all the available options.
+. Select the  `required` parameter, then press `ctrl/cmd + spacebar` and select `false` as the value.
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+    queryParameters:
+      destination:
+        required: false
+  post:
+
+  /{ID}:
+    get:
+--
+. Go to a new line at the same indent level as the `required` parameter and press `ctrl/cmd + spacebar` to create an `enum` parameter.
+. Under your `enum` parameter, create values for the enum as `SFO`, `LAX`, and `CLE`.
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+    queryParameters:
+      destination:
+        required: false
+        enum:
+          - SFO
+          - LAX
+          - CLE
+  post:
+
+  /{ID}:
+    get:
+--
