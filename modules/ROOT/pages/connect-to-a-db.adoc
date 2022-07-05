@@ -1,0 +1,168 @@
+= Connect to a Database
+
+You can use the Database connector to connect to an external database from your Mule flow.
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* You created an XML snippet. +
+See xref:create-xml-snippets.adoc[] for more information.
+* You created a basic integration using Anypoint Code Builder. +
+See xref:create-basic-integration[]
+* Install a REST client like Postman or AdvancedRestClient.
+
+== Open Your Existing Mule Application.
+
+. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
+. Remove your existing `<set-payload>` component:
++
+[source,xml,linenums]
+--
+<set-payload value="Flight info" doc:name="Set Response" />
+--
+
+== Add a Database Driver Dependency
+
+Because the Database connector can connect to a wide variety of JDBC databases you must include a dependency for the particular driver your need. In this case, use a `mySQL` driver:
+
+. On your Project Explorer, Select your `pom.xml` file.
+. Add a new dependency using the code in the following sample:
++
+[source,xml,linenums]
+--
+<dependency>
+   <groupId>mysql</groupId>
+   <artifactId>mysql-connector-java</artifactId>
+   <version>8.0.29</version>
+</dependency>
+--
+. Replace the existing element called `<configuration/>` under `<build>` > `<plugins>` with a new shared library:
++
+[source,xml,linenums]
+--
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>3.1.0</version>
+        </plugin>
+        <plugin>
+            <groupId>org.mule.tools.maven</groupId>
+            <artifactId>mule-maven-plugin</artifactId>
+            <version>${mule.maven.plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration/> //<1>
+        </plugin>
+--
+<1> Remove the extra `</configuration>` tab.
++
+[source,xml,linenums]
+--
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>3.1.0</version>
+        </plugin>
+        <plugin>
+            <groupId>org.mule.tools.maven</groupId>
+            <artifactId>mule-maven-plugin</artifactId>
+            <version>${mule.maven.plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration> //<1>
+             <sharedLibraries>
+               <sharedLibrary>
+                 <groupId>mysql</groupId>
+                 <artifactId>mysql-connector-java</artifactId>
+               </sharedLibrary>
+             </sharedLibraries>
+            </configuration>
+        </plugin>
+--
+<1> Add a shared library configuration.
+
+== Add a Database Connector
+
+. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
+. Type the type of asset you want to import:
+* _Connector_.
+. Type the connector you want to import:
+* Type _Database_ and select *Database Connector - Mule 4*.
+. Select the version of the connector you want to import:
+* *Database Connector - Mule 4 - 1.13.4*
+. In your pom file, verify that a new dependency for the Database connector was added:
+.. On your Project Explorer, Select your `pom.xml` file.
+.. Under your `<dependencies>` tab, verify that you have a Database connector dependency declared:
++
+[source,xml,linenums]
+--
+<dependency>
+    <groupId>org.mule.connectors</groupId>
+    <artifactId>mule-db-connector</artifactId>
+    <version>1.13.4</version>
+    <classifier>mule-plugin</classifier>
+</dependency>
+--
+
+== Add a Database Connector Configuration
+
+. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
+. Go to a line between your existing `</http:listener-config>` and `<flow>` elements.
+. Start typing `_database_` and select `db-mysql-config`.
++
+[source,xml,linenums]
+--
+<http:listener-config name="inbound-request" doc:name="HTTP Config">
+    <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+
+<db:config name="Database_Config" doc:name="mySQL DB"> //<1>
+    <db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" user="mule" password="mule" database="training" />
+</db:config>
+
+
+<flow name="getFlights">
+    <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+    <set-payload value="Flight info" doc:name="Set Response"/>
+</flow>
+--
+<1> Move through the attributes of the snippet and set the following values:
++
+dname:: `_database-config_`
+doc:name:: `_mySQL DB_`
+host:: `_mudb.learn.mulesoft.com_`
+port:: `_3306_`
+user:: `_mule_`
+password:: `_mule_`
+database:: `_training_`
+
+== Write a Query to Return All Flights
+
+. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
+. Go to the line under your `</http:listener>` element and indent to the same level.
+. Start typing `_select_` and select `Database:select`.
++
+[source,xml,linenums]
+--
+<flow name="getFlights">
+    <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+    <db:select doc:name="Query Flights" config-ref="Database_Config" > //<1>
+        <db:sql>
+            <![CDATA[Select * FROM american]]> //<2>
+        </db:sql>
+    </db:select>
+</flow>
+--
+<1> Move through the attributes of the snippet and set the following values:
++
+doc:name:: `_Query Flights_`
+config-ref:: `_Database_Config_`
+<2> Inside your `<db:sql>` element, type your query:
++
+[source,xml,linenums]
+--
+<![CDATA[Select * FROM american]]>
+--
