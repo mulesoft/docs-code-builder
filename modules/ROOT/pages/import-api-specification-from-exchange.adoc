@@ -1,41 +1,58 @@
 = Import an API From Exchange
 
-1. Open Anypoint Code Builder; make sure you’re still in the existing project from the previous tutorial.
-2. Open the Command Palette type (⇧⌘P) and select MuleSoft: Import Asset from Exchange
+You can import a published API specification in Exchange as a dependency in your project to later scaffold the necessary flows for each endpoint:
 
-Anypoint Code Builder will then prompt you with the required input parameters. Navigate through the prompts with the following values:
+. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
+. Type the type of asset you want to import:
+* `_REST API_`.
+. Type the name of the API you want to import:
+* `_American Flights API ACB_`.
+. Select the version of the API you want to import:
+* `_1.0.0_`
+. Select *Yes* when prompted to scaffold the API dependency. +
+This step adds the API specification as a dependency in your pom.xml file of your project and creates a new file called `american-flight-api.xml`.
 
-Parameter
-Value
-Type
-REST API
-Asset Name
-American Flights API ACB
-Pick a Version
-1.0.0
-Do you want to scaffold the API Dependency?
-Yes
-
-This step adds the asset dependency to your pom.xml file AND creates a new file in your project explorer called american-flight-api-acb.xml.
-
-You will also see the Status Bar reflect the changes being made
-
-You will also see the Status Bar reflect the changes being made
 
 == Examine the XML file created
 
-1. Open the american-flight-api.xml file and locate the 3 flows created for our 3 resources. One for get:\flights, one for post:\flights and one for get:\flights{ID}; you’ll also see placeholders for other automatically generated components related to error handling.
+Open the `american-flight-api-acb.xml` file and locate the 3 flows created for your 3 endpoints. One for `get:\flights`, one for `post:\flights`, and one for `get:\flights{ID}`:
 
 [source,xml,linenums]
 --
-<flow name="get:\flights:american-flight-api-acb-config">
+<flow name="get:\flights:american-flight-api-config">
 </flow>
 
-<flow name="post:\flights:application\json:american-flight-api-acb-config">
+<flow name="post:\flights:application\json:american-flight-api-config">
 </flow>
 
-<flow name="get:\flights\(ID):application\json:american-flight-api-acb-config">
+<flow name="get:\flights\(ID):application\json:american-flight-api-config">
 </flow>
 --
 
-You can also find them in the Outline.
+Anypoint Code Builder creates other automatically generated components related for error handling:
+
+[source,xml]
+--
+<apikit:router config-ref="american-flights-api-config" />
+<error-handler>
+    <on-error-propagate type="APIKIT:BAD_REQUEST">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_FOUND">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+
+    </on-error-propagate>
+</error-handler>
+--
