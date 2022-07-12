@@ -1,0 +1,59 @@
+= Deploy a Mule Application
+
+You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* You designed an API specification. +
+See xref:design-api-specification.adoc[].
+* You developed an integration. +
+See xref:develop-integration.adoc[].
+* You implemented the API. +
+See xref:implement-api-specification.adoc[].
+* You added components to help your debug. +
+See xref:debug-add-logger-set-variables.adoc[].
+* You added breakpoints. +
+See xref:debug-add-breakpoints.adoc[].
+* You ran a debug session. +
+See xref:run-a-debug-session.adoc[]
+* Install a REST client like Postman or AdvancedRestClient.
+
+== Create a Deployment Configuration File
+
+To deploy to Cloudhub you must configure a `deploy.json` file in your `src/main/resources` directory. If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you create one the first time you deploy your application:
+
+. Open Anypoint Code Builder.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
++
+image::deploy-to-cloudhub.pnp[]
+. Select *Create a deploy configuration file instead* from in the pop-up with the error message `Deployment configuration file not found, make sure it's called: deploy.json (case sensitive), and it's placed in the resources folder`
++
+image::create-deployment-file.png[]
+. Anypoint Code Builder creates a `deploy.json` file:
++
+image::deploy-json-file.png[]
++
+[source,json]
+--
+{
+  "runtime": "4.4.0",
+  "workerSize": 0.1,
+  "applicationName": "american-ws-anypoint-code-builder", //<1>
+  "workers": 1,
+  "autoStart": true
+}
+--
+<1> The `applicationName` property defines part of the URL that you use to access your application on Cloudhub. +
+The name must be unique across all applications deployed to Cloudhub.
+
+== Deploy the Application
+
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
+. Select your preferred environment.
+. Anypoint Code Builder packages the application and deploys it to Cloudhub.
+. Log in to Anypoint Platform and navigate to *Runtime Manager*.
+. Select your application from the list applications.
+. Note the domain name for your application: +american-ws-anypoint-code-builder.eu-s1.cloudhub.io+.
+. Open your preferred REST client and make a `GET` request to +http://american-ws-anypoint-code-builder.eu-s1.cloudhub.io/api/flights+.
