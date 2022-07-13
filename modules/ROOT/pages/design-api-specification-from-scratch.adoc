@@ -11,14 +11,23 @@ See xref:setup.adoc[] for more information.
 
 To create a new API specification:
 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _design_.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Add fragment dependency from Exchange_.
 . Select *MuleSoft: Design an API* from the list of results.
++
+image::desing-api-specification.png[]
 . Type the name of your API specification: +
 * `*American Flights API*`
-. Type a description of your API.
++
+image::define-name-api.png[]
 . Select *New API Specification*.
++
+image::select-new-api-specification.png[]
 . Select *RAML 1.0*.
++
+image::select-raml-10.png[]
 . Select the location of your API specification.
++
+image::select-directory.png[]
 
 The project explorer now shows you your American Flights API folder with an `american-flights-api.raml` file open in the editor.
 
@@ -36,6 +45,8 @@ title: American Flights API
 /flights:
 --
 . Review your new resource using API Console by clicking the API Console icon on the top right of your screen.
++
+image::flights-endpoint.png[]
 
 == Add a RAML Method
 
@@ -59,6 +70,8 @@ title: American Flights API
 
 Both methods now show on API Console.
 
+image::get-post-methods-api-console.png[]
+
 == Add a Nested RAML Resource
 
 You can create nested resources on your API specification and add methods to them:
@@ -80,6 +93,8 @@ title: American Flights API
 --
 
 The nested resource and its associated method also show up in API Console.
+
+image::sub-methods-api-console.png[]
 
 == Add a Query Parameter
 
