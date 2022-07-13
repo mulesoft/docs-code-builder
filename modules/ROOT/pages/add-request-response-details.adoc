@@ -12,13 +12,32 @@ See xref:design-api-specification.adoc[].
 
 == Add Data Types and Example Fragments from Exchange
 
+. In Anypoint Code Builder, open your `american-flights-api.raml` file.
 . Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Add fragment dependency from Exchange_.
-. Add the assets *Training: American Flight Data Type* and *Training: American Flights Example*.
-. When prompted, select the latest version of each fragment.
++
+image::add-fragment-from-exchange.png[]
+. Add the *Training: American Flight Data Type* asset.
++
+image::add-training-american-flight.png[]
+. Select the latest version of the `American Flight Data Type` asset.
++
+image::add-flight-data-type-version.png[]
+. The status bar shows a *Dependencies successfully added* message.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Add fragment dependency from Exchange_.
++
+image::add-fragment-from-exchange.png[]
+. Add the *Training: American Flights Example* asset.
++
+image::add-training-example.png[]
+. Select the latest version of the `American Flights Example` asset.
++
+image::add-training-example-version.png[]
 . The status bar shows a *Dependencies successfully added* message.
 . In the Package Explorer, you can see both API fragments that you imported:
 * *AmericanFlightDataType.raml* defines an object corresponding to the definition of a flight.
 * *AmericanFlightsExample.raml* defines the example of data that the flights API returns.
++
+image::imported-assets.png[]
 
 == Add Data Type to your API Specification
 
@@ -28,7 +47,7 @@ Use your imported fragments as types for your API specification:
 . In top of the `flights/` resource, add a `types` element, go to a new line and press `tab` to add an indentation
 . Add a type named `AmericanFlight:`:
 +
-[source,raml,linenums]
+[source,RAML]
 --
 #%RAML 1.0
 title: American Flights API
@@ -52,6 +71,29 @@ types:
 --
 . Add an `!include` directive and press `ctrl/cmd + spacebar` to bring up the auto-complete options.
 . Select `AmericanFlightsDataType.raml`.
++
+[source,RAML]
+--
+#%RAML 1.0
+title: American Flights API
+
+types:
+  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
+
+/flights:
+  get:
+    queryParameters:
+      destination:
+        required: false
+        enum:
+          - SFO
+          - LAX
+          - CLE
+  post:
+
+  /{ID}:
+    get:
+--
 . Add a new element under `queryParameters`, press `ctrl/cmd + spacebar` to bring up the auto-complete options, and add the elements:
 * `responses`
 * `200`
@@ -61,13 +103,13 @@ types:
 . For the `type` element, press `ctrl/cmd + spacebar` and select the `AmericanFlight` type.
 . Add `[]` at the end of your `AmericanFlight` type to define it as an array.
 +
-[source,raml,linenums]
+[source,RAML]
 --
 #%RAML 1.0
 title: American Flights API
 
 types:
-  AmericanFlight:
+  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
 
 /flights:
   get:
@@ -97,14 +139,43 @@ Create a new `example:` element for the `response` element for your `/flights` r
 . Under examples, add an indentation, press `ctrl/cmd + spacebar`, and select *output*.
 . Add an `!include` directive and press `ctrl/cmd + spacebar` to bring up the auto-complete options.
 . Select `AmericanFlightsExample.raml` as the reference for your example.
++
+[source,RAML]
+--
+/flights:
+  get:
+    queryParameters:
+      destination:
+        required: false
+        enum:
+          - SFO
+          - LAX
+          - CLE
+    responses:
+      200:
+        body:
+          application/json:
+            type: AmericanFlight[]
+            examples:
+              output: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-example/1.0.1/AmericanFlightsExample.raml
 
+--
 
 == Define a Response in a New Folder
 
 You can define your responses in a folder within your project:
 
-. In the Project Explorer, under your root folder, create a new sub-folder and name it *examples*.
-. In the *examples* folder, create a new file named `AmericanFlightExample.raml`.
+. In the Project Explorer, right-click on an empty space, and select *New Folder*.
++
+image::add-new-folder.png[]
+. Name the new folder *examples*.
++
+image::create-examples-folder.png[]
+. Right-click on your *examples* folder, select *New File*, and create a new file named `AmericanFlightExample.raml`.
++
+image::add-new-file.png[]
++
+image::create-american-fligh-example-file.png[]
 . Open the file and add the following example:
 +
 [source,raml,linenums]
@@ -131,7 +202,7 @@ value:
 title: American Flights API
 
 types:
-  AmericanFlight:
+  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
 
 /flights:
   get:
@@ -172,7 +243,7 @@ Similar to defining a response for a method, you can define a request example:
 title: American Flights API
 
 types:
-  AmericanFlight:
+  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
 
 /flights:
   get:
@@ -229,7 +300,7 @@ Notice that the ID parameter is missing since you don't have the flight ID when 
 title: American Flights API
 
 types:
-  AmericanFlight:
+  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
 
 /flights:
   get:
@@ -294,7 +365,7 @@ types:
       application/json:
         type: AmericanFlight
         examples:
-          input: !include examples/AmericanFlightNoIDExample.raml
+          input: !include
     responses:
       201: //<1>
         body:
