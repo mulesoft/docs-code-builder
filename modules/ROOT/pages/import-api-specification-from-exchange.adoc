@@ -1,0 +1,58 @@
+= Import an API From Exchange
+
+You can import a published API specification in Exchange as a dependency in your project to later scaffold the necessary flows for each endpoint:
+
+. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
+. Type the type of asset you want to import:
+* `_REST API_`.
+. Type the name of the API you want to import:
+* `_American Flights API ACB_`.
+. Select the version of the API you want to import:
+* `_1.0.0_`
+. Select *Yes* when prompted to scaffold the API dependency. +
+This step adds the API specification as a dependency in your pom.xml file of your project and creates a new file called `american-flight-api.xml`.
+
+
+== Examine the XML file created
+
+Open the `american-flight-api-acb.xml` file and locate the 3 flows created for your 3 endpoints. One for `get:\flights`, one for `post:\flights`, and one for `get:\flights{ID}`:
+
+[source,xml,linenums]
+--
+<flow name="get:\flights:american-flight-api-config">
+</flow>
+
+<flow name="post:\flights:application\json:american-flight-api-config">
+</flow>
+
+<flow name="get:\flights\(ID):application\json:american-flight-api-config">
+</flow>
+--
+
+Anypoint Code Builder creates other automatically generated components related for error handling:
+
+[source,xml]
+--
+<apikit:router config-ref="american-flights-api-config" />
+<error-handler>
+    <on-error-propagate type="APIKIT:BAD_REQUEST">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_FOUND">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+
+    </on-error-propagate>
+</error-handler>
+--

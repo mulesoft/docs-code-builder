@@ -1,0 +1,104 @@
+= Implement the API Interface Logic
+
+After importing an API specification to an existing project, you can use Anypoint Code Builder to build the logic behind each flow.
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* You published an API to Exchange. +
+See xref:publish-api-spec-to-exchange.adoc[].
+* You created an XML snippet. +
+See xref:create-xml-snippets.adoc[] for more information.
+* You created a basic integration using Anypoint Code Builder. +
+See xref:create-basic-integration[].
+* You configured a connection to a database from your project. +
+See xref:connect-to-a-db.adoc[].
+* You used Dataweave to transform the response from your application. +
+See xref:use-dataweave-to-transform-data.adoc[].
+* You imported an API specification to your project. +
+See xref:import-api-specification-from-exchange.adoc[].
+* Install a REST client like Postman or AdvancedRestClient.
+
+== Rename Your Mule Configuration Files
+
+. In Anypoint Code Builder on your Explorer view, right-click your `american-flight-api.xml` file and select *Rename*.
+. Rename the file to *interface.xml*.
+. Right-click your `american-ws-anypoint-code-builder.xml` and select *Rename*.
+. Rename the file to *implementation.xml*.
+
+The interface file now corresponds to where all requests are sent. The flows that you scaffolded when importing the API validate and route requests. The implementation file contains our backend logic that is called from the interface.
+
+== Remove the HTTP Listeners From The Implementation File
+
+. In Anypoint Code Builder, open your `implementation.xml` file.
+. Delete the XML section that corresponds with the `http-listener`:
++
+[source,xml]
+--
+<http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+--
++
+Your flow now must look as follows:
++
+[source,xml]
+--
+<flow name="getFlights">
+    <db:select doc:name="Query Flights" doc:id="pvuqsc" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
+
+    <ee:transform doc:name="Transform Message" doc:id="uniqueId" >
+        <ee:message >
+            <ee:set-payload >
+                <![CDATA[
+                %dw 2.0
+                output application/json
+                ---
+                payload map ( payload01 , indexOfPayload01 ) -> {
+                  ID: payload01.ID,
+                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  price: payload01.price default 0,
+                  departureDate: payload01.takeOffDate as String default "",
+                  origin: payload01.fromAirport default "",
+                  destination: payload01.toAirport default "",
+                  emptySeats: payload01.seatsAvailable default 0,
+                  plane: {
+                    "type": payload01.planeType default "",
+                    totalSeats: payload01.totalSeats default 0
+                  }
+                }
+                ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+
+</flow>
+--
+
+== Reference the Implementation Flow From The Interface File
+
+. In Anypoint Code Builder, open your `interface.xml` file.
+. Locate the flow named `get:\flights:american-flights-api-config`.
++
+[source,xml]
+--
+<flow name="get:\flights:american-flights-api-config">
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+--
+. Create a new line under the `<flow>` element and indent it at the same level as the `<logger>` element.
+. Type `_flow_` and select the element `mule:flowref`.
++
+[source,xml]
+--
+<flow name="get:\flights:american-flights-api-config">
+  <flow-ref name="getFlights" doc:name="Get Flights" /> //<1>
+  <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+--
+<1>
+
+Now all calls to +http://localhost:8081/api/flights+ are handled by your `interface` file and processed in your `implementation` file.
