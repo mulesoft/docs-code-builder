@@ -1,0 +1,141 @@
+= Create a Basic Integration
+
+You can start by creating a basic integration in Anypoint Code Builder
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* You created an XML snippet. +
+See xref:create-xml-snippets.adoc[] for more information.
+* Install a REST client like Postman or AdvancedRestClient.
+
+== Create a Mule Application
+
+. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Develop an Integration_.
+. Type a project name: +
+* _amercian-ws-anypoint-code-builder_.
+. Select a location on your machine to store the project.
+. Anypoint Code Builder creates the base files for your integration.
+
+== Add an HTTP Connector
+
+. On your Project Explorer, Select your `american-ws-anypoint-code-builder.xml` file. +
+You see two different views. To your left, you can see the visual representation of your Mule flow. To your right, you see the Mule Configuration file.
+. Go to a new line at the bottom of the xml file above the closing `</mule>` tag.
+. Press  `ctrl/cmd + space` to open the IntelliSense features of Anypoint Code Builder and review the options that become available.
+. Type `http`, and select `HTTP:listener-config`.
+. Move through the attributes of the snippet and set the following values:
++
+name:: _inbound-request_
+doc:name:: _HTTP Config_
+. Press `enter` to move to a new line and `tab` to add an indentation.
+. Type `http:listener-connection` and select `HTTP:listener-config`.
+. Move through the attributes of the snippet and set the following values:
++
+host:: _0.0.0.0_
+port:: _8081_
+. Go to a new line at the bottom of the xml file above the closing `</mule>` tag.
+. Press  `ctrl/cmd + space` and type `_muledx:flow_`.
+. Type `_doc:name_` and set the value to `getFlights`.
+. Go to a new line under your `<flow>` tag and add press `tab` to add an indentation.
+. Type `_muledx_`, and select `muledx:http-listener`.
+. Move through the attributes of the snippet and set the following values:
++
+path:: `_flights_`
+config-ref:: `_inbound-request_`
+doc:name:: `_HTTP /flights_`
+. On your Project Explorer, Select your `pom.xml` file.
+. After your `</build>` closing tag, add a `<dependencies>` section, with the `mule-http-connector`. Use the code in the following sample:
++
+[source,xml,linenums]
+--
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+  	<dependency>
+  		<groupId>org.mule.connectors</groupId>
+  		<artifactId>mule-http-connector</artifactId>
+  		<version>1.7.1</version>
+  		<classifier>mule-plugin</classifier>
+  	</dependency>
+  </dependencies>
+--
+// Add Dependency should be step 1
+. Review your XML code:
++
+[source,xml,linenums]
+--
+<?xml version="1.0" encoding="UTF-8"?>
+<mule>
+
+  <http:listener-config name="inbound-request" doc:name="HTTP Config">
+      <http:listener-connection host="0.0.0.0" port="8081" />
+  </http:listener-config>
+
+  <flow name="getFlights">
+      <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+  </flow>
+
+</mule>
+--
+
+== Set a Payload
+
+. Go to a new line at the bottom of the xml file above the closing `</flow>` tag.
+. Type `_muledx_`, and select `muledx:set-payload`.
+. Press `tab` to move through the attributes of the snippet and set the following values:
++
+value:: `_Flight info_`
+doc:name:: `_Set Response_`
+. Review your XML code:
++
+[source,xml,linenums]
+--
+<?xml version="1.0" encoding="UTF-8"?>
+<mule>
+
+  <http:listener-config name="inbound-request" doc:name="HTTP Config">
+      <http:listener-connection host="0.0.0.0" port="8081" />
+  </http:listener-config>
+
+  <flow name="getFlights">
+      <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+      <set-payload value="Flight info" doc:name="Set Response" />
+  </flow>
+
+</mule>
+--
+== Run Your Application
+
+. Navigate to *Run* > *Start Debugging* (`F5`). +
+Anypoint Code Builder uses Maven to build your Mule application, and then deploy it to the embedded Mule Runtime Engine.
++
+[WARNING]
+--
+Using *Run* > *Start without Debugging* causes an error.
+--
+. Open the Terminal window (`ctrl + ``) and verify that the deployment was successful.
++
+[source]
+--
+*******************************************************************************************************
+*            - - + APPLICATION + - -            *       - - + DOMAIN + - -       * - - + STATUS + - - *
+*******************************************************************************************************
+* american-ws-anypoint-code-builder-1.0.0-SNAPS * default                        * DEPLOYED           *
+*******************************************************************************************************
+--
+
+
+== Test the Application
+
+. Open your preferred REST client.
+. Make a `GET` request to +http://localhost:8081/flights+. +
+Notice that the *Flight info* message is displayed as the response.
+
+== Stop the Application
+
+. On Anypoint Code Builder, select the stop icon from the toolbar at the top of your screen.
+. On your Terminal window (`ctrl + ``) and verify that the application was stopped.

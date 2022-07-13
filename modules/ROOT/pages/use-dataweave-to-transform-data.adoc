@@ -1,0 +1,166 @@
+= Use Dataweave to Transform Data
+
+You can use Dataweave to transform the flight data you are querying into a JSON output and match it to your API specification.
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* You published the `American Flights API - Anypoint Code Builder` to Exchange. +
+See xref:publish-api-spec-to-exchange.adoc[]
+* You created an XML snippet. +
+See xref:create-xml-snippets.adoc[] for more information.
+* You created a basic integration using Anypoint Code Builder. +
+See xref:create-basic-integration[]
+* You configured a Database Connector element in your application. +
+xref:connect-to-a-db.adoc[]
+* Install a REST client like Postman or AdvancedRestClient.
+
+== Return the Payload as JSON
+
+. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
+. Go to the line under your `</db:select>` element and indent to the same level.
+. Type `_transform_` and select `transform with output json`:
++
+[source,xml,linenums]
+--
+<flow name="getFlights">
+        <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+        <db:select doc:name="Query Flights" config-ref="Database_Config" >
+            <db:sql>
+                <![CDATA[Select * FROM american]]>
+            </db:sql>
+        </db:select>
+
+        <ee:transform doc:name="Transform Message"> //<1>
+            <ee:message >
+                <ee:set-payload > //<2>
+                    <![CDATA[
+                    %dw 2.0
+                    output application/json
+                    ---
+                    payload
+                    ]]>
+                </ee:set-payload>
+            </ee:message>
+        </ee:transform>
+
+    </flow>
+--
+<1> Set the `doc:name` attribute to `_Transform Message_`.
+<2> Remove the content within the `<![CDATA]` attribute inside your `<ee:set-payload>` element, and replace it with the following Dataweave expression:
++
+[source,dataweave]
+--
+%dw 2.0
+output application/json
+---
+payload
+--
+
+Although you got a JSON response from your application, note that it's not the same JSON structure that your API specification dictates:
+
+. Open your `American Flights API - Anypoint Code Builder` in Exchange.
+. Note the defined JSON example under your `GET` method for your `/flights` endpoint:
++
+[%header,%autowidth.spread,cols="a,a"]
+|===
+| API Specification Example Response | Actual Response
+|
+[source,json]
+--
+[
+	{
+		"code": "ER38sd",
+		"price": 400,
+		"departureDate": "2017/07/26",
+		"origin": "CLE",
+		"destination": "SFO",
+		"emptySeats": 0,
+		"plane": {
+		  "type": "Boeing 737",
+		  "totalSeats": 150
+		}
+	}
+]
+--
+|
+[source,json]
+--
+
+--
+|===
+
+
+== Use Dataweave to Map Data to Your Desired Format
+
+. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
+. Replace the content from the existing `<![CDATA]` attribute inside your `<ee:set-payload>` element with the following sample:
++
+[source,dataweave]
+--
+%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+  ID: payload01.ID,
+  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+  price: payload01.price default 0,
+  departureDate: payload01.takeOffDate as String default "",
+  origin: payload01.fromAirport default "",
+  destination: payload01.toAirport default "",
+  emptySeats: payload01.seatsAvailable default 0,
+  plane: {
+    "type": payload01.planeType default "",
+    totalSeats: payload01.totalSeats default 0
+  }
+}
+--
++
+Your flow now must look as follows:
++
+[source,xml]
+--
+<flow name="getFlights">
+        <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+        <db:select doc:name="Query Flights" config-ref="Database_Config" >
+            <db:sql>
+                <![CDATA[Select * FROM american]]>
+            </db:sql>
+        </db:select>
+
+        <ee:transform doc:name="Transform Message"> //<1>
+            <ee:message >
+                <ee:set-payload > //<2>
+                    <![CDATA[
+                    %dw 2.0
+                    output application/json
+                    ---
+                    payload map ( payload01 , indexOfPayload01 ) -> {
+                      ID: payload01.ID,
+                      code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                      price: payload01.price default 0,
+                      departureDate: payload01.takeOffDate as String default "",
+                      origin: payload01.fromAirport default "",
+                      destination: payload01.toAirport default "",
+                      emptySeats: payload01.seatsAvailable default 0,
+                      plane: {
+                        "type": payload01.planeType default "",
+                        totalSeats: payload01.totalSeats default 0
+                      }
+                    }
+                    ]]>
+                </ee:set-payload>
+            </ee:message>
+        </ee:transform>
+
+    </flow>
+--
+
+== Run And Test Your Application
+
+. Navigate to *Run* > *Start Debugging* (`F5`).
+. After the deployment is successful, open your preferred REST client.
+. Make a `GET` request to +http://localhost:8081/flights+. +
+Notice that the proper data structure is now returned from your application.
+. On Anypoint Code Builder, select the stop icon from the toolbar at the top of your screen to stop your application.
