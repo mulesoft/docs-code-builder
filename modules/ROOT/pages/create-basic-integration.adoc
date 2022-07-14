@@ -142,9 +142,6 @@ Review your XML code:
 
 [source,xml,linenums]
 --
-<?xml version="1.0" encoding="UTF-8"?>
-<mule>
-
   <http:listener-config name="inbound-request" doc:name="HTTP Config">
       <http:listener-connection host="0.0.0.0" port="8081" />
   </http:listener-config>
@@ -153,8 +150,6 @@ Review your XML code:
       <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
       <set-payload value="Flight info" doc:name="Set Response" />
   </flow>
-
-</mule>
 --
 
 == Run Your Application
