@@ -20,35 +20,26 @@ xref:connect-to-a-db.adoc[]
 
 . In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
 . Go to the line under your `</db:select>` element and indent to the same level.
-. Type `_transform_` and select `transform with output json`:
+. Type `_transform_` and select `transform with output json`.
++
+image::transform-with-output-json.png[]
 +
 [source,xml,linenums]
 --
-<flow name="getFlights">
-        <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
-        <db:select doc:name="Query Flights" config-ref="Database_Config" >
-            <db:sql>
-                <![CDATA[Select * FROM american]]>
-            </db:sql>
-        </db:select>
-
-        <ee:transform doc:name="Transform Message"> //<1>
-            <ee:message >
-                <ee:set-payload > //<2>
-                    <![CDATA[
-                    %dw 2.0
-                    output application/json
-                    ---
-                    payload
-                    ]]>
-                </ee:set-payload>
-            </ee:message>
-        </ee:transform>
-
-    </flow>
+<ee:transform doc:name="DisplayName" doc:id="uniqueId" >
+    <ee:message >
+        <ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    firstName : "John",
+    lastName : "Doe",
+}]]></ee:set-payload>
+    </ee:message>
+</ee:transform>
 --
-<1> Set the `doc:name` attribute to `_Transform Message_`.
-<2> Remove the content within the `<![CDATA]` attribute inside your `<ee:set-payload>` element, and replace it with the following Dataweave expression:
+. Set the `doc:name` attribute to `_Transform Message_`.
+. Remove the content within the `<![CDATA]` attribute inside your `<ee:set-payload>` element, and replace it with the following Dataweave expression:
 +
 [source,dataweave]
 --
@@ -56,6 +47,167 @@ xref:connect-to-a-db.adoc[]
 output application/json
 ---
 payload
+--
++
+image::transform-with-output-json.png[]
+. Run your application by pressing `F5`.
+. Open your preferred REST client.
+. Make a `GET` request to +http://localhost:8081/flights+. +
+. Note the response from the MySQL database:
++
+[source,JSON]
+--
+[
+    {
+        "planeType": "Boeing 787",
+        "code2": "0001",
+        "takeOffDate": "2016-01-20T00:00:00",
+        "code1": "rree",
+        "fromAirport": "MUA",
+        "price": 541,
+        "seatsAvailable": 0,
+        "toAirport": "LAX",
+        "ID": 1,
+        "airlineName": "American Airlines",
+        "totalSeats": 200
+    },
+    {
+        "planeType": "Boeing 747",
+        "code2": "0123",
+        "takeOffDate": "2016-01-25T00:00:00",
+        "code1": "eefd",
+        "fromAirport": "MUA",
+        "price": 300,
+        "seatsAvailable": 7,
+        "toAirport": "CLE",
+        "ID": 2,
+        "airlineName": "American Airlines",
+        "totalSeats": 345
+    },
+    {
+        "planeType": "Boeing 777",
+        "code2": "0192",
+        "takeOffDate": "2016-01-20T00:00:00",
+        "code1": "ffee",
+        "fromAirport": "MUA",
+        "price": 300,
+        "seatsAvailable": 0,
+        "toAirport": "LAX",
+        "ID": 3,
+        "airlineName": "American Airlines",
+        "totalSeats": 300
+    },
+    {
+        "planeType": "Boeing 737",
+        "code2": "1000",
+        "takeOffDate": "2016-01-20T00:00:00",
+        "code1": "rree",
+        "fromAirport": "MUA",
+        "price": 200,
+        "seatsAvailable": 5,
+        "toAirport": "CLE",
+        "ID": 4,
+        "airlineName": "American Airlines",
+        "totalSeats": 150
+    },
+    {
+        "planeType": "Boeing 737",
+        "code2": "1093",
+        "takeOffDate": "2016-02-11T00:00:00",
+        "code1": "rree",
+        "fromAirport": "MUA",
+        "price": 142,
+        "seatsAvailable": 1,
+        "toAirport": "SFO",
+        "ID": 5,
+        "airlineName": "American Airlines",
+        "totalSeats": 150
+    },
+    {
+        "planeType": "Boeing 787",
+        "code2": "1112",
+        "takeOffDate": "2016-01-20T00:00:00",
+        "code1": "ffee",
+        "fromAirport": "MUA",
+        "price": 954,
+        "seatsAvailable": 100,
+        "toAirport": "CLE",
+        "ID": 6,
+        "airlineName": "American Airlines",
+        "totalSeats": 200
+    },
+    {
+        "planeType": "Boeing 777",
+        "code2": "1994",
+        "takeOffDate": "2016-01-01T00:00:00",
+        "code1": "eefd",
+        "fromAirport": "MUA",
+        "price": 676,
+        "seatsAvailable": 0,
+        "toAirport": "SFO",
+        "ID": 7,
+        "airlineName": "American Airlines",
+        "totalSeats": 300
+    },
+    {
+        "planeType": "Boeing 737",
+        "code2": "2000",
+        "takeOffDate": "2016-02-20T00:00:00",
+        "code1": "ffee",
+        "fromAirport": "MUA",
+        "price": 300,
+        "seatsAvailable": 30,
+        "toAirport": "SFO",
+        "ID": 8,
+        "airlineName": "American Airlines",
+        "totalSeats": 150
+    },
+    {
+        "planeType": "Boeing 737",
+        "code2": "3000",
+        "takeOffDate": "2016-02-01T00:00:00",
+        "code1": "eefd",
+        "fromAirport": "MUA",
+        "price": 900,
+        "seatsAvailable": 0,
+        "toAirport": "SFO",
+        "ID": 9,
+        "airlineName": "American Airlines",
+        "totalSeats": 150
+    },
+    {
+        "planeType": "Boeing 777",
+        "code2": "4511",
+        "takeOffDate": "2016-01-15T00:00:00",
+        "code1": "eefd",
+        "fromAirport": "MUA",
+        "price": 900,
+        "seatsAvailable": 100,
+        "toAirport": "LAX",
+        "ID": 10,
+        "airlineName": "American Airlines",
+        "totalSeats": 300
+    },
+    {
+        "planeType": "Boeing 737",
+        "code2": "4567",
+        "takeOffDate": "2016-01-20T00:00:00",
+        "code1": "rree",
+        "fromAirport": "MUA",
+        "price": 456,
+        "seatsAvailable": 100,
+        "toAirport": "SFO",
+        "ID": 11,
+        "airlineName": "American Airlines",
+        "totalSeats": 150
+    }
+]
+--
++
+[WARNING]
+--
+You can get an error `Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : Communications link failure"`. +
+This error happens when the testing MySQL server is not available. Keep trying until you get a successful response.
 --
 
 Although you got a JSON response from your application, note that it's not the same JSON structure that your API specification dictates:
@@ -65,7 +217,7 @@ Although you got a JSON response from your application, note that it's not the s
 +
 [%header,%autowidth.spread,cols="a,a"]
 |===
-| API Specification Example Response | Actual Response
+| API Specification Response Structure | Actual Response Structure
 |
 [source,json]
 --
@@ -87,10 +239,25 @@ Although you got a JSON response from your application, note that it's not the s
 |
 [source,json]
 --
-
+[
+  {
+      "planeType": "Boeing 787",
+      "code2": "0001",
+      "takeOffDate": "2016-01-20T00:00:00",
+      "code1": "rree",
+      "fromAirport": "MUA",
+      "price": 541,
+      "seatsAvailable": 0,
+      "toAirport": "LAX",
+      "ID": 1,
+      "airlineName": "American Airlines",
+      "totalSeats": 200
+  }
+]
 --
 |===
 
+You can use Dataweave to align your response to the structure that you defined.
 
 == Use Dataweave to Map Data to Your Desired Format
 
@@ -117,8 +284,10 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 }
 --
 +
-Your flow now must look as follows:
-+
+image::dw-expression-transform-response.png[]
+
+Review your XML code:
+
 [source,xml]
 --
 <flow name="getFlights">
@@ -162,5 +331,154 @@ Your flow now must look as follows:
 . Navigate to *Run* > *Start Debugging* (`F5`).
 . After the deployment is successful, open your preferred REST client.
 . Make a `GET` request to +http://localhost:8081/flights+. +
-Notice that the proper data structure is now returned from your application.
+Notice that the proper data structure is now returned from your application:
++
+[source,JSON]
+--
+[
+    {
+        "ID": 1,
+        "code": "rree0001",
+        "price": 541,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 787",
+            "totalSeats": 200
+        }
+    },
+    {
+        "ID": 2,
+        "code": "eefd0123",
+        "price": 300,
+        "departureDate": "2016-01-25T00:00:00",
+        "origin": "MUA",
+        "destination": "CLE",
+        "emptySeats": 7,
+        "plane": {
+            "type": "Boeing 747",
+            "totalSeats": 345
+        }
+    },
+    {
+        "ID": 3,
+        "code": "ffee0192",
+        "price": 300,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 777",
+            "totalSeats": 300
+        }
+    },
+    {
+        "ID": 4,
+        "code": "rree1000",
+        "price": 200,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "CLE",
+        "emptySeats": 5,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 5,
+        "code": "rree1093",
+        "price": 142,
+        "departureDate": "2016-02-11T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 1,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 6,
+        "code": "ffee1112",
+        "price": 954,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "CLE",
+        "emptySeats": 100,
+        "plane": {
+            "type": "Boeing 787",
+            "totalSeats": 200
+        }
+    },
+    {
+        "ID": 7,
+        "code": "eefd1994",
+        "price": 676,
+        "departureDate": "2016-01-01T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 777",
+            "totalSeats": 300
+        }
+    },
+    {
+        "ID": 8,
+        "code": "ffee2000",
+        "price": 300,
+        "departureDate": "2016-02-20T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 30,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 9,
+        "code": "eefd3000",
+        "price": 900,
+        "departureDate": "2016-02-01T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 10,
+        "code": "eefd4511",
+        "price": 900,
+        "departureDate": "2016-01-15T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 100,
+        "plane": {
+            "type": "Boeing 777",
+            "totalSeats": 300
+        }
+    },
+    {
+        "ID": 11,
+        "code": "rree4567",
+        "price": 456,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 100,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    }
+]
+--
 . On Anypoint Code Builder, select the stop icon from the toolbar at the top of your screen to stop your application.
