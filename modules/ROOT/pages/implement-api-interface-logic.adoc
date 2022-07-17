@@ -97,7 +97,7 @@ Your flow now must look as follows:
 == Reference the Implementation Flow From The Interface File
 
 . In Anypoint Code Builder, open your `interface.xml` file.
-. Locate the flow named `get:\flights:american-flights-api-config`.
+. Use the Outline List to navigate to your `get:\flights:american-flights-api-config` flow:
 +
 [source,xml]
 --
@@ -105,16 +105,17 @@ Your flow now must look as follows:
     <logger level="INFO" message="get:\flights:american-flights-api-config" />
 </flow>
 --
-. Create a new line under the `<flow>` element and indent it at the same level as the `<logger>` element.
-. Type `_flow_` and select the element `mule:flowref`.
++
+image::select-get-flights-flow.png[]
+. Create a new line under the `<flow>` element and indent it at the same level as the `<ee:transfor>` element.
+. Type `_flow_` and select the element `mule:flowRef`.
 +
 [source,xml]
 --
-<flow name="get:\flights:american-flights-api-config">
-  <flow-ref name="getFlights" doc:name="Get Flights" /> //<1>
-  <logger level="INFO" message="get:\flights:american-flights-api-config" />
-</flow>
+<flow-ref name="getFlights" doc:name="Get Flights" />
 --
-<1>
+. Configure the `name` attribute as `_getFlights_`.
++
+image::select-flow-ref.png[]
 
 Now all calls to +http://localhost:8081/api/flights+ are handled by your `interface` file and processed in your `implementation` file.
