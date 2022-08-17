@@ -1,0 +1,66 @@
+= Create an Escalation API between Slack and Salesforce
+
+This walkthrough enables you to create an integration that notifies you either through email or Slack when a new case is created in Salesforce.
+
+Your integration contains a flow with the following logic:
+
+* The creation of a new case in Salesforce triggers your flow.
+* If the case is escalated, your application sends an email to the regional leader including Case Number, Origin, Reason, Priority and Status.
+* Otherwise, your application sends a message to a Slack channel with the same information as above.
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* A personal or business Gmail account.
+
+=== Set Up Your Slack Workspace
+
+. Navigate to https://slack.com/[Slack^] and log in using your organization credentials.
++
+[NOTE]
+--
+Because your work organization might restrict users from creating new workspaces, you can also log in using your personal email account.
+--
+. Create a new Workspace called *Integration Test*.
+. Skip the step to invite new users and type a brief description of your Workspace. For example _This is a test Workspace_.
+. Navigate to https://api.slack.com/apps[Your Apps^] and select *Create an App*.
+. Select *From scratch*.
+. Name your app *OAuth for Anypoint Code Builder*, and select your *Integration Test* workspace.
+. Select *Create App*.
+. Select *Install App*.
+. Select *Permission scope*.
+. Scroll down to the *Scopes* section, under *Bot Token Scopes* select *Add an OAuth Scope*, and select *chat:write.public*
+. Select *Add scopes* when prompted to add other necessary scopes for `chat:write.public`.
+. Scroll up to the *OAuth Tokens for Your Workspace* and select *Install to Workspace*.
+. Select *Allow*.
+. Under *Bot User OAuth Token*, select *Copy* and save it on a safe location. +
+You will need this token to connect to your Slack workspace from Anypoint Code Builder.
+
+=== Set Up Your App Password for Your Email
+
+Later in this walkthrough your will configure the Email Connector to send emails to your configured email account. To avoid using your email password, follow https://support.google.com/accounts/answer/185833?visit_id=637917932546436561-2352829986&p=InvalidSecondFactor&rd=1[Google instructions^] to configure an App password.
+
+[IMPORTANT]
+--
+The Gmail account must have 2-factor authentication enabled to configure an App password.
+--
+
+== Create an Integration
+
+. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Develop an Integration_.
++
+image::develop-an-integration.png[]
+. Type a project name: +
+* _New Case Salesforce_.
+. Select a location on your machine to store the project.
++
+image::select-project-location.png[]
+. Anypoint Code Builder creates the base files for your integration.
++
+image::finished-project-creation.png[]
+
+== Next Step
+
+* xref:create-config-files-slack-sfdc.adoc[Create a Configuration File for Slack and Salesforce]. +
+Learn how to create configuration files for your necessary connectors.
