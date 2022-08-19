@@ -1,1 +1,83 @@
 = Configure Slack Integration
+
+With your Email and Salesforce integration complete, you can now configure your Slack integration to send a Slack message for a new case that is not escalated.
+
+== Before You Begin
+
+* You created your xref:create-escalation-slack-api.adoc[Base Integration Mule Configuration File].
+* You created a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
+* Created variables to which you extracted payload information. +
+xref:extract-payload-information.adoc[]
+* Configured a Choice router and added an Email connector to your flow. +
+See xref:add-condition-to-your-flow.adoc[].
+
+== Add a Slack Connector
+
+. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
++
+image::import-asset-from-exchange-db.png[]
+. Type the type of asset you want to import:
+* _Connector_.
++
+image::import-from-exchange-connector-type.png[]
+. Type the connector you want to import:
+* `_Slack_`
++
+image::[]
+. Select *Slack Connector - Mule 4 - Community Version*.
++
+image::[]
+. Select the version of the connector you want to import:
++
+image::[]
+. Anypoint Code Builder displays a message indicating that the dependency was successfully added.
+
+== Configure the Slack Connection
+
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</email:smtp-config>` element.
+. Type _choice_ and select *Slack Connector:config*:
++
+image::[]
+. Add the following configuration to your `<slack:config>` element:
++
+[source,XML]
+--
+<slack:config name="Slack_Config" doc:name="Slack Config">
+  <slack:token-connection token="${slack.token}" />
+</slack:config>
+--
+
+== Add a Slack Action
+
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and remove the `<logger>` element inside the `<otherwise>` element of your Choice router.
++
+[source,XML]
+--
+<logger doc:name="Temporary Logger" message='#["Please look into this new Case: " ++ payload]'/>
+--
+. Add the following code sample:
++
+[source,XML]
+--
+<slack:post-message channel="this-is-a-test" config-ref="Slack_Config" doc:name="Send Case to Slack"> //<1>
+  <slack:message ><![CDATA[#["Please handle this case. " ++ payload]]]></slack:message>
+</slack:post-message>
+--
+<1> Set the `channel` field to the channel name that you set earlier in the walkthrough.
+
+== Test Your Mule Application
+
+. To expedite the test, remove the breakpoint next to your Logger component.
+. Navigate to *Run* > *Start Debugging* (`F5`).
+. After your application deploys successfully, log in to your Salesforce account.
+. Select the App Launcher icon and select *Service*:
++
+image::[]
+. Select *Cases* and select *New Case*.
+. Ensure to set the *Status* of the new case to *New*.
+. After a few seconds, ensure that your configured Slack channel received a message with the information configured in the case:
++
+[source]
+--
+Please handle this case. Case Number: 00001030, Origin: Phone, Case Type: , Priority: Medium, Status: New
+--
