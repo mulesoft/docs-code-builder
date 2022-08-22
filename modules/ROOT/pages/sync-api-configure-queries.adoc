@@ -27,7 +27,7 @@ image::sync-api-outline-select-flow.png[]
 . Remove the existing Transform Message component:
 +
 image::sync-api-remove-transform-message.png[]
-. Replace it with a Transform Message copmonent using the *transform with output JSON* option:
+. Replace it with a Transform Message component using the *transform with output JSON* option:
 +
 image::sync-api-transform-output-json.png[]
 . Replace it with the following code sample:
@@ -58,7 +58,7 @@ image::add-transform-message-sync-api.png[]
 
 == Send a Query to Salesforce
 
-With your query built, you can now use the Salesfroce Connector to retrieve the record from Salesforce, if the record exists.
+With your query built, you can now use the Salesforce Connector to retrieve the record from Salesforce, if the record exists.
 
 . In Anypoint Code Builder, open your `contact-sync.xml` file.
 . Under your `</ee:transform` component, add a new line, type _query_, and select *Salesforce:Query*:
@@ -198,7 +198,7 @@ image::add-breakpoint-sync-api.png[]
 . Note that the application stops right before the Choice router component and that the query parameters are converted into variables:
 +
 image::query-params-to-vars-api-sync.png[]
-. Move the execution forward until your notice that Anypoint Code Builder returns a `returnMessage` variable with the message `Failure: Contact does not exist in Saleforce`.
+. Move the execution forward until your notice that Anypoint Code Builder returns a `returnMessage` variable with the message `Failure: Contact does not exist in Salesforce`.
 +
 image::set-variable-for-no-contact-api-sync.png[]
 
