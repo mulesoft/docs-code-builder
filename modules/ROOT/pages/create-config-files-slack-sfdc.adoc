@@ -75,7 +75,7 @@ If you get an error, verify the error message to troubleshoot further.
 
 . Add a new line under your `</salesforce:sfdc-config>` element, type _flow_, and select *mule:flow*.
 +
-image::[]
+image::create-flow-mule-app.png[]
 . Name your flow *​NewSalesforceCaseFlow*.
 +
 [source,XML]
@@ -86,7 +86,7 @@ image::[]
 --
 . Within your `<flow>` and `</flow>` elements, type _new_, and select *Salesforce:new-object-listener*.
 +
-image::[]
+image::new-salesforce-listener.png[]
 . Move through the attributes of the snippet and set the following values:
 objectType:: *Case*
 config-ref:: *Salesforce-Config*
@@ -113,17 +113,19 @@ name:: *On New Case*
 +
 And add a breakpoint to this line by clicking the left of the line number:
 +
-image::[]
+image::logger-breakpoint-sfdc.png[]
 . Navigate to *Run* > *Start Debugging* (`F5`).
 . After your application deploys successfully, log in to your Salesforce account.
 . Select the App Launcher icon and select *Service*:
 +
-image::[]
+image::salesforce-select-service.png[]
 . Select *Cases* and select *New Case*.
++
+image::salesfroce-create-new-case.png[]
 . Create a new case and save it.
 . Back in Anypoint Code Builder, note that your application stopped at your logger, and inspect the payload.
 +
-image::[]
+image::slack-app-debugger-logger-breakpoint.png[]
 +
 The payload contains information about your newly created case.
 . Step over your Logger component and note that the log output contains the same information about your case.
