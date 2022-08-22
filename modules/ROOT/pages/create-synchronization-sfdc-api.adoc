@@ -1,0 +1,144 @@
+= Create a Contacts Synchronization API with Salesforce
+
+This walkthrough enables you to create an API from scratch that synchronizes your own contacts database with Salesforce.
+
+Your synchronization API contains a flow with the following logic:
+
+* Fetch the contact in Salesforce containing the phone number to change or update it if it exists.
+* Validate the contact exists in Salesforce by using `first name + last name`.
+* If the contact already exists in Salesforce, then:
+** Update phone number in Salesforce.
+** Update phone number in Database - again if the contact exists, otherwise create it.
+** Return a response indicating success.
+* Otherwise, create a response indicating contact doesn’t exist.
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* Set up a Salesforce demo environment.
+** Sign up for a developer organization https://developer.salesforce.com/signup[here^].
+** Create a developer security token https://help.salesforce.com/s/articleView?id=sf.user_security_token.htm&type=5[here^].
+* Crete a MySQL Database instance using AWS free tier following the steps https://aws.amazon.com/getting-started/hands-on/create-mysql-db/[here^].
+
+== Create the API Specification
+
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Add fragment dependency from Exchange_.
+. Select *MuleSoft: Design an API* from the list of results.
++
+image::desing-api-specification.png[]
+. Type the name of your API specification: +
+* `*Contact Sync*`
+. Select *New API Specification*.
++
+image::select-new-api-specification.png[]
+. Select *RAML 1.0*.
++
+image::select-raml-10.png[]
+. Select the location of your API specification.
++
+image::select-directory.png[]
+
+The project explorer now shows you your American Flights API folder with a `contact-sync.raml` file open in the editor.
+
+. Select `contact-sync.raml` from your Explorer view:
++
+image::select-contact-sync.png[]
+. Paste the following RAML description to your API specification:
++
+[source,RAML]
+--
+#%RAML 1.0
+title: Contact Sync
+
+mediaType:
+- application/json
+version: 1.0
+protocols:
+ - http
+ - https
+/updatePhone:
+   post:
+       queryParameters:
+         phoneNumber:
+           type: number
+           example: 5555555555
+           required: true
+         firstName:
+           type: string
+           example: Anna
+           required: true
+         lastName:
+           type: string
+           example: Woods
+           required: true
+       displayName: update
+       responses:
+           200:
+             body:
+               type: string
+               example: Successfully updated!
+--
+. Select the *API Console* icon to review your API:
++
+image::select-api-console-contact-sync.png[]
+. Review the newly created `/post` endpoint.
++
+image::update-phone-endpoint.png[]
+
+== Save Your Changes to Design Center
+
+To enable collaboration on this API specification, you can
+
+. In Anypoint Code Builder select your Source Control view.
++
+image::contact-sync-select-vcs.png[]
+. Select the *Stage Changes* icon next to your `contact-sync.raml` file.
++
+image::contact-sync-stage-changes.png[]
+. Type a commit message such as _Initial Commit_, and select *Commit*.
++
+image::contact-sync-initial-commit.png[]
+. Select the menu icon, and select *Push*.
++
+image::contact-sync-push-changes.png[]
+
+
+== Publish Your API to Exchange and Scaffold it
+
+To write the logic behind this API, you must publish it to Exchange:
+
+. In Anypoint Code Builder, open your `american-flights-api.raml` file.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Publish API Specification to Exchange_.
++
+image::publish-to-exchange.png[]
+. Type a project name: +
+* *Contact Sync*.
+. Confirm the asset version: *1.0.0*.
++
+image::set-asset-version.png[]
+. Confirm the API version: *v1*.
++
+image::set-api-version.png[]
+. The status bar shows the progress.
++
+image::publishing-to-exchange-dialog.png[]
+. Select *Yes* when prompted to scaffold the API dependency.
++
+image::scaffold-option-yes.png[]
++
+. Select a name for your project:
+* *contact-sync*
++
+. Select a location on your machine to store the project.
++
+image::select-project-location.png[]
+
+Anypoint Code Builder adds the API specification as a dependency in the pom.xml file of your project and creates a new file called `contact-sync.xml`:
+
+image::contact-sync-outline.png[]
+
+== Next Step
+
+* xref:create-config-files.adoc[Create a Reusable Configuration File]. +
+Learn how to create configuration files for your different connectors.
