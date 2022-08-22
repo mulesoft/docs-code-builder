@@ -25,17 +25,34 @@ Because your work organization might restrict users from creating new workspaces
 . Create a new Workspace called *Integration Test*.
 . Skip the step to invite new users and type a brief description of your Workspace. For example _This is a test Workspace_.
 . Navigate to https://api.slack.com/apps[Your Apps^] and select *Create an App*.
++
+image::slack-create-app.png[]
 . Select *From scratch*.
 . Name your app *OAuth for Anypoint Code Builder*, and select your *Integration Test* workspace.
+. Select *Generate*.
++
+image::generate-token.png[]
 . Select *Create App*.
++
+image::slack-create-app-workspace.png[]
 . Select *Install App*.
++
+image::slack-install-app.png[]
 . Select *Permission scope*.
++
+image::slack-install-permission-scope.png[]
 . Scroll down to the *Scopes* section, under *Bot Token Scopes* select *Add an OAuth Scope*, and select *chat:write.public*
++
+image::slack-bot-permissions-chat-write.png[]
 . Select *Add scopes* when prompted to add other necessary scopes for `chat:write.public`.
 . Scroll up to the *OAuth Tokens for Your Workspace* and select *Install to Workspace*.
 . Select *Allow*.
++
+image::slack-allow-install-app-workspace.png[]
 . Under *Bot User OAuth Token*, select *Copy* and save it on a safe location. +
 You will need this token to connect to your Slack workspace from Anypoint Code Builder.
++
+image::slack-copy-oauth-token.png[]
 
 === Set Up Your App Password for Your Email
 
