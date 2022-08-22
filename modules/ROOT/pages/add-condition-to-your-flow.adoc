@@ -66,7 +66,7 @@ To configure your `when` element, you first must configure an Email Connector:
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</salesforce:sfdc-config>` element.
 . Type _smtp_ and select *Email:smtp*.
 +
-image::[]
+image::add-smtp-config.png[]
 +
 [source,XML]
 --
@@ -80,7 +80,7 @@ image::[]
 --
 . Add a new line under your `<when>` element, type _send_, and select *Email:send*:
 +
-image::[]
+image::create-send-email-operation.png[]
 +
 [source,XML]
 --
@@ -127,8 +127,10 @@ image::[]
 . After your application deploys successfully, log in to your Salesforce account.
 . Select the App Launcher icon and select *Service*:
 +
-image::[]
+image::salesforce-select-service.png[]
 . Select *Cases* and select *New Case*.
++
+image::salesfroce-create-new-case.png[]
 . Ensure to set the *Status* of the new case to *Escalated*.
 . After a few seconds, ensure that your configured email account received an email with the information configured in the case:
 +
