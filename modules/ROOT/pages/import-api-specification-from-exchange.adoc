@@ -4,17 +4,33 @@ You can import a published API specification in Exchange as a dependency in your
 
 . In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
 . Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
++
+image::import-asset-exchange-implementation.png[]
 . Type the type of asset you want to import:
 * `_REST API_`.
++
+image::rest-api-asset-type.png[]
 . Type the name of the API you want to import:
 * `_American Flights API ACB_`.
++
+image::select-api-asset-from-exchange.png[]
 . Select the version of the API you want to import:
 * `_1.0.0_`
-. Select *Yes* when prompted to scaffold the API dependency. +
-This step adds the API specification as a dependency in your pom.xml file of your project and creates a new file called `american-flight-api.xml`.
-
++
+image::select-api-asset-version.png[]
+. Select *Yes* when prompted to scaffold the API dependency.
++
+image::scaffold-option-yes.png[]
++
+This step adds the API specification as a dependency in your pom.xml file of your project and creates a new file called `american-flight-api-acb.xml`:
++
+image::scafolded-mule-config-file.png[]
 
 == Examine the XML file created
+
+Anypoint Code Builder displays the main flow scaffolded from your API specification.
+
+image::scafolded-flow-canvas.png[]
 
 Open the `american-flight-api-acb.xml` file and locate the 3 flows created for your 3 endpoints. One for `get:\flights`, one for `post:\flights`, and one for `get:\flights{ID}`:
 
@@ -29,6 +45,18 @@ Open the `american-flight-api-acb.xml` file and locate the 3 flows created for y
 <flow name="get:\flights\(ID):application\json:american-flight-api-config">
 </flow>
 --
+
+Additionally, you can use the *Outline List* panel to navigate through flows:
+
+. Select the *Outline List* panel to expand it.
++
+image::outline-list-location.png[]
+. Select the flow to which you want to navigate.
++
+image::outline-list-select-flow.png[]
++
+Selecting a flow from the outline list highlights that same flow in your Mule configuration file.
+
 
 Anypoint Code Builder creates other automatically generated components related for error handling:
 
@@ -56,3 +84,8 @@ Anypoint Code Builder creates other automatically generated components related f
     </on-error-propagate>
 </error-handler>
 --
+
+== Next Step
+
+* xref:implement-api-interface-logic.adoc[Implement the API Interface Logic]. +
+Build over your API and define your flow's logic to handle requests to your implemented API back to your database integration.
