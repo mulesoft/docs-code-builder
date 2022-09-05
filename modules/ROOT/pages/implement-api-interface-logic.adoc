@@ -22,25 +22,40 @@ See xref:import-api-specification-from-exchange.adoc[].
 
 == Rename Your Mule Configuration Files
 
-. In Anypoint Code Builder on your Explorer view, right-click your `american-flight-api.xml` file and select *Rename*.
+. In Anypoint Code Builder on your Explorer view, right-click your `american-flight-api-acb.xml` file and select *Rename*.
++
+image::api-interface-rename.png[]
 . Rename the file to *interface.xml*.
++
+image::interface-rename.png[]
 . Right-click your `american-ws-anypoint-code-builder.xml` and select *Rename*.
++
+image::api-implementation-rename.png[]
 . Rename the file to *implementation.xml*.
++
+image::implementation-rename.png[]
 
 The interface file now corresponds to where all requests are sent. The flows that you scaffolded when importing the API validate and route requests. The implementation file contains our backend logic that is called from the interface.
 
 == Remove the HTTP Listeners From The Implementation File
 
+To ensure that your application exposes one single HTTP endpoint to handle request, you have to remove the
+
 . In Anypoint Code Builder, open your `implementation.xml` file.
-. Delete the XML section that corresponds with the `http-listener`:
+. In the graphical canvas, select the *HTTP /flights* listener and note the corresponding XML code.
++
+image::get-flights-select-listener.png[]
+. Delete the highlighted XML code:
 +
 [source,xml]
 --
 <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
 --
 +
+image::removed-http-listener-get-flights.png[]
+
 Your flow now must look as follows:
-+
+
 [source,xml]
 --
 <flow name="getFlights">
@@ -78,10 +93,11 @@ Your flow now must look as follows:
 </flow>
 --
 
+
 == Reference the Implementation Flow From The Interface File
 
 . In Anypoint Code Builder, open your `interface.xml` file.
-. Locate the flow named `get:\flights:american-flights-api-config`.
+. Use the Outline List to navigate to your `get:\flights:american-flights-api-config` flow:
 +
 [source,xml]
 --
@@ -89,16 +105,21 @@ Your flow now must look as follows:
     <logger level="INFO" message="get:\flights:american-flights-api-config" />
 </flow>
 --
-. Create a new line under the `<flow>` element and indent it at the same level as the `<logger>` element.
-. Type `_flow_` and select the element `mule:flowref`.
++
+image::select-get-flights-flow.png[]
+. Create a new line under the `<flow>` element and indent it at the same level as the `<ee:transfor>` element.
+. Type `_flow_` and select the element `mule:flowRef`.
 +
 [source,xml]
 --
-<flow name="get:\flights:american-flights-api-config">
-  <flow-ref name="getFlights" doc:name="Get Flights" /> //<1>
-  <logger level="INFO" message="get:\flights:american-flights-api-config" />
-</flow>
+<flow-ref name="getFlights" doc:name="Get Flights" />
 --
-<1>
+. Configure the `name` attribute as `_getFlights_`.
++
+image::select-flow-ref.png[]
 
 Now all calls to +http://localhost:8081/api/flights+ are handled by your `interface` file and processed in your `implementation` file.
+
+== Next Step
+
+* Move to a new section of the tutorial and learn how to xref:debug-a-mule-application.adoc[Debug a Mule Application].
