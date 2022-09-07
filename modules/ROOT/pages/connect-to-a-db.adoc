@@ -66,25 +66,6 @@ image::add-shared-library.png[]
 
 == Add a Database Connector
 
-Before adding the Database connector, you must add its dependency in your `pom.xml` file:
-
-. On your Project Explorer, Select your `pom.xml` file.
-. Under your `<dependencies>` tab, below the Listener you added earlier, add the following dependency:
-+
-[source,xml]
---
-<dependency>
-    <groupId>org.mule.connectors</groupId>
-    <artifactId>mule-db-connector</artifactId>
-    <version>1.13.4</version>
-    <classifier>mule-plugin</classifier>
-</dependency>
---
-+
-image::add-db-dependency.png[]
-
-With your dependency declared, you can move forward configuring your Database connector:
-
 . In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
 +
 image::import-asset-from-exchange-db.png[]
