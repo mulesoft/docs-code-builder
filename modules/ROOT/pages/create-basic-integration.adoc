@@ -28,32 +28,6 @@ image::finished-project-creation.png[]
 
 == Add an HTTP Connector
 
-Before adding a connector, you must add its dependency in your `pom.xml` file:
-
-. On your Project Explorer, Select your `pom.xml` file.
-. After your `</build>` closing tag, add a `<dependencies>` section, with the `mule-http-connector`. Use the code in the following sample:
-+
-[source,xml,linenums]
---
-(...)
-      </plugin>
-    </plugins>
-  </build>
-
-  <dependencies>
-  	<dependency>
-  		<groupId>org.mule.connectors</groupId>
-  		<artifactId>mule-http-connector</artifactId>
-  		<version>1.7.1</version>
-  		<classifier>mule-plugin</classifier>
-  	</dependency>
-  </dependencies>
-(...)
---
-+
-image::add-http-listener-dependency.png[]
-
-With your dependency declared, you can move forward creating your first flow:
 
 . On your Project Explorer, select your `american-ws-anypoint-code-builder.xml` file. +
 +
@@ -67,7 +41,21 @@ You see two different views:
 --
 It can take a few minutes for Anypoint Code Builder to set up the flow canvas.
 --
-. Go to a new line at the bottom of the xml file above the closing `</mule>` tag.
+. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
+image::import-asset-from-exchange-db.png[]
+. Type the type of asset you want to import:
+* _Connector_.
++
+image::import-from-exchange-connector-type.png[]
+. Type the connector you want to import:
+* `_HTTP Connector_`
+. Select *HTTP Connector - Mule 4*.
++
+image::import-http-connector.png[]
+. Select the version of the connector you want to import:
++
+image::add-http-version.png[]
+. On your `american-ws-anypoint-code-builder.xml` file, go to a new line at the bottom of the xml file above the closing `</mule>` tag.
 . Type `http`, and select `HTTP:listener-config`.
 +
 image::add-http-config.png[]
