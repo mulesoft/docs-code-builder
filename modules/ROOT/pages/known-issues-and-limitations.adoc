@@ -12,7 +12,8 @@ The following list details identified issues and limitations with Anypoint Code 
 | The *Save as HAR* option in API Console is not supported. | None. | W-11275113
 | Copy and pasting code breaks the graphical UI. | Ensure that your `doc:id` element is unique across all elements in your Mule configuration file.  | W-11350768
 | Icons for installed connectors don't show up | Expected behavior. Certain connectors that you import from Exchange display generic icons. | W-11350942
-| Code Highlighting breaks after defining a Dataweave expression. | Certain Dataweave expressions can break the code highlighting of the rest of the Mule configuration file. This limitation does not interrupt the correct execution of your Mule application.  | W-11350870
+| Code Highlighting breaks after defining a DataWeave expression. | Certain DataWeave expressions can break the code highlighting of the rest of the Mule configuration file. This limitation does not interrupt the correct execution of your Mule application.  | W-11350870
+| Anypoint Code Builder does not decode unicode characters for new lines in XML (`&#10;`) causing DataWeave validations to throw *Invalid input* errors on some multi-line scripts. | None. When running the application it executes correctly.  | W-11750473
 | Edge browser does not color code correctly | Some elements in your Mule configuration file are not highlighted when using Edge browser. This limitation does not interrupt the correct execution of your Mule application. | W-11352033
 | RAML warnings point to documentation that doesn't exist. | Depending on the API specification that you are designing, you might encounter an `Unsupported validation for mediatype` error with a link to an AMF documentation that returns a 404 error.  | W-11356805
 | When defining an `output` for your `examples` element in a RAML API specification the auto-complete feature shows no suggestions. | None | W-11351014
