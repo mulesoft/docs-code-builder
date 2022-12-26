@@ -12,62 +12,55 @@ See xref:create-xml-snippets.adoc[] for more information.
 
 == Create a Mule Application
 
-. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Develop an Integration_.
+. In your web IDE instance, navigate to your Anypoint Code Builder view:
 +
-image::develop-an-integration.png[]
-. Type a project name: +
-* _amercian-ws-anypoint-code-builder_.
+image::anypoint-code-builder-view.png[]
+. Select *Develop an Integration*.
 +
-image::type-project-name.png[]
-. Select a directory where you want to create your project.
+image::develop-integration-option-mat.png[]
 +
-image::select-project-location.png[]
-. Anypoint Code Builder creates the base files for your integration.
+. Configure your integration using the following values:
 +
-image::finished-project-creation.png[]
+image::integration-create-ui.png[]
++
+[calloutlist]
+.. Under *Project Name* type: `amercian-ws-anypoint-code-builder`.
+.. Under *Project Location* select *Browse*, and then select your home directory.
++
+. Select *Create Project*.
 
 == Add an HTTP Connector
-
-Before adding a connector, you must add its dependency in your `pom.xml` file:
-
-. On your Project Explorer, Select your `pom.xml` file.
-. After your `</build>` closing tag, add a `<dependencies>` section, with the `mule-http-connector`. Use the code in the following sample:
-+
-[source,xml,linenums]
---
-(...)
-      </plugin>
-    </plugins>
-  </build>
-
-  <dependencies>
-  	<dependency>
-  		<groupId>org.mule.connectors</groupId>
-  		<artifactId>mule-http-connector</artifactId>
-  		<version>1.7.1</version>
-  		<classifier>mule-plugin</classifier>
-  	</dependency>
-  </dependencies>
-(...)
---
-+
-image::add-http-listener-dependency.png[]
-
-With your dependency declared, you can move forward creating your first flow:
 
 . On your Project Explorer, select your `american-ws-anypoint-code-builder.xml` file. +
 +
 image::empty-canvas-state.png[]
 +
 You see two different views:
-<1> To your left, you can see the visual representation of your Mule flow.
-<2> To your right, you see the Mule Configuration file.
++
+[calloutlist]
+.. To your left, you can see the visual representation of your Mule flow.
+.. To your right, you see the Mule Configuration file.
 +
 [NOTE]
 --
 It can take a few minutes for Anypoint Code Builder to set up the flow canvas.
 --
-. Go to a new line at the bottom of the xml file above the closing `</mule>` tag.
+. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
++
+image::import-asset-from-exchange-db.png[]
+. Type the type of asset you want to import:
+* _Connector_.
++
+image::import-from-exchange-connector-type.png[]
+. Type the connector you want to import:
+* `_HTTP Connector_`
+. Select *HTTP Connector - Mule 4*.
++
+image::import-http-connector.png[]
+. Select the version of the connector you want to import:
++
+image::add-http-version.png[]
+. On your `american-ws-anypoint-code-builder.xml` file, go to a new line at the bottom of the xml file above the closing `</mule>` tag.
 . Type `http`, and select `HTTP:listener-config`.
 +
 image::add-http-config.png[]
@@ -76,7 +69,7 @@ image::add-http-config.png[]
 name:: _inbound-request_
 doc:name:: _HTTP Config_
 . Press `enter` to move to a new line and `tab` to add an indentation.
-. Type `http:listener-connection` and select `HTTP:listener-config`.
+. Type `http:Listener` and select `HTTP:listener-connection`.
 +
 image::add-listener-config-2.png[]
 . Move through the attributes and set the following values:
@@ -92,6 +85,7 @@ image::add-flow.png[]
 image::finished-flow.png[]
 . Go to a new line under your `<flow>` tag and add press `tab` to add an indentation.
 . Type `listener`, and select `HTTP:listener`.
++
 image::add-http-listener-endpoint.png[]
 . Move through the attributes and set the following values:
 +
@@ -177,8 +171,9 @@ image::deployed-application.png[]
 
 == Test the Application
 
-. Open your preferred REST client.
-. Make a `GET` request to +http://localhost:8081/flights+. +
+. Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
+See xref:ping-locally-deployed-app.adoc[] for more information on how to send request to your application.
++
 Notice that the *Flight info* message is displayed as the response.
 
 == Stop the Application

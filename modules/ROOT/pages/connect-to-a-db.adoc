@@ -9,7 +9,7 @@ See xref:setup.adoc[] for more information.
 * You created an XML snippet. +
 See xref:create-xml-snippets.adoc[] for more information.
 * You created a basic integration using Anypoint Code Builder. +
-See xref:create-basic-integration[]
+See xref:create-basic-integration.adoc[]
 * Install a REST client like Postman or AdvancedRestClient.
 
 == Open Your Existing Mule Application.
@@ -66,25 +66,6 @@ image::add-shared-library.png[]
 
 == Add a Database Connector
 
-Before adding the Database connector, you must add its dependency in your `pom.xml` file:
-
-. On your Project Explorer, Select your `pom.xml` file.
-. Under your `<dependencies>` tab, below the Listener you added earlier, add the following dependency:
-+
-[source,xml]
---
-<dependency>
-    <groupId>org.mule.connectors</groupId>
-    <artifactId>mule-db-connector</artifactId>
-    <version>1.13.4</version>
-    <classifier>mule-plugin</classifier>
-</dependency>
---
-+
-image::add-db-dependency.png[]
-
-With your dependency declared, you can move forward configuring your Database connector:
-
 . In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
 +
 image::import-asset-from-exchange-db.png[]
@@ -117,7 +98,7 @@ image::add-new-line-configure-db.png[]
 image::add-db-config.png[]
 . Move through the attributes and set the following values:
 +
-name:: `_database-config_`
+name:: `_Database_Config_`
 doc:name:: `_mySQL DB_`
 host:: `_mudb.learn.mulesoft.com_`
 port:: `_3306_`
