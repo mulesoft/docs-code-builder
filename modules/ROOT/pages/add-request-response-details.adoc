@@ -5,9 +5,11 @@ You can define request and response details for your API specification.
 
 == Before You Begin
 
-* Ensure you set up your MuleSoft environment. +
+Before getting started, ensure you:
+
+* Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
-* You created a basic structure for your API specification. +
+* Created a basic structure for your API specification. +
 See xref:design-api-specification.adoc[].
 
 == Add Data Types and Example Fragments from Exchange
@@ -44,7 +46,7 @@ image::imported-assets.png[]
 Use your imported fragments as types for your API specification:
 
 . Open the *american-flight-api.raml* file in the editor tab.
-. In top of the `flights/` resource, add a `types` element, go to a new line and press `tab` to add an indentation
+. Before the `flights/` resource, add a `types` element, go to a new line and press `tab` to add an indentation
 . Add a type named `AmericanFlight:`:
 +
 [source,RAML]
@@ -94,7 +96,7 @@ types:
   /{ID}:
     get:
 --
-. Add a new element under `queryParameters`, press `ctrl/cmd + spacebar` to bring up the auto-complete options, and add the elements:
+. Add a new child element inside `queryParameters`, press `ctrl/cmd + spacebar` to bring up the auto-complete options, and add the elements:
 * `responses`
 * `200`
 * `body`
@@ -226,7 +228,7 @@ types:
         application/json:
           type: AmericanFlight
           examples:
-            output: !include: examples/AmericanFlightExample.raml //<1>
+            output: !include examples/AmericanFlightExample.raml //<1>
 --
 <1> New example defined in your `examples` folder.
 
@@ -270,7 +272,7 @@ types:
         application/json:
           type: AmericanFlight
           examples:
-            output: !include: examples/AmericanFlightExample.raml
+            output: !include examples/AmericanFlightExample.raml
 --
 <1> `AmericanFlight` is defined as the type for the `post` method.
 . Under your `examples` folder, create a new example file named `AmericanFlightNoIDExample.raml`.
@@ -329,7 +331,7 @@ types:
         application/json:
           type: AmericanFlight
           examples:
-            output: !include: examples/AmericanFlightExample.raml
+            output: !include examples/AmericanFlightExample.raml
 --
 <1> Define the example file you created earlier as an example for your `/{ID}:post` method.
 
@@ -378,7 +380,7 @@ types:
         application/json:
           type: AmericanFlight
           examples:
-            output: !include: examples/AmericanFlightExample.raml
+            output: !include examples/AmericanFlightExample.raml
 --
 <1> Create a 201 response with the required `body` > `application/json` > `example` elements.
 . As an example, define a custom message: *Flight added (but not really)*:
