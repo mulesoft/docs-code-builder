@@ -1,0 +1,48 @@
+= Implement a GraphQL API Specification
+
+Anypoint Code Builder enables you to implement GraphQL API specifications.
+
+== Before You Begin
+
+Before getting started, ensure that your API specification is published on Exchange.
+
+You can only publish your GraphQL API specification by publishing a new asset on Exchange:
+
+. In Anypoint Platform, navigate to *Exchange*.
+. Select *Publish a new asset*.
+. Under *Name*, enter a name for your API asset.
+. Under *Asset types*, select *GraphQL API*.
+. Under *Method*, select *Upload a GraphQL API Schema*.
++
+image::upload-graphql-api-exchange-method-select.png[]
+. Under *File upload*, select *Choose file* and browse your GraphQL schema file.
+. Under *Lifecycle*, select the lifecycle status of your API specification.
+. Select *Publish*.
+
+
+== Implement an API Specification
+
+. In your web IDE instance, navigate to your Anypoint Code Builder view:
++
+image::anypoint-code-builder-view.png[]
+. Select *Implement an API*.
++
+image::implement-api-option-mat.png[]
+. Configure your project using the following values:
++
+image::implement-api-configure-1.png[]
++
+[calloutlist]
+.. *Project Name*: Type a name for your project.
+.. *Project Location*: Select *Browse*, browse through your home directory, and click *OK* to select a specific location for your project.
+.. Search for an API specification published in Exchange to implement. +
+Start typing the name of the API specification that you want to implement and hit `enter` to get a list of possible results. Click *Add asset* to select the API specification that you want:
++
+image::implement-api-add-asset-graphql.png[]
+
+Anypoint Code Builder creates the necessary flows for each endpoint on your API specification endpoints.
+
+[NOTE]
+--
+Because GraphQL schemas don't allow examples, Anypoint Code Builder creates empty flows when scaffolding a project based on a GraphQL API.
+--
