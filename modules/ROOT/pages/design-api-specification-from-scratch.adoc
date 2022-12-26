@@ -1,0 +1,167 @@
+= Create an API Specification
+
+Create a basic RAML API specification using Anypoint Code Builder.
+
+== Before You Begin
+
+* Ensure you set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+
+== Create a New API Specification
+
+To create a new API specification:
+
+. In your web IDE instance, navigate to your Anypoint Code Builder view:
++
+image::anypoint-code-builder-view.png[]
+. Select *Design an API*.
++
+image::design-api-1.png[]
++
+. Configure your API using the following values:
++
+image::design-api-ui-first.png[]
++
+[calloutlist]
+.. In *Project name* type:  `*American Flights API*`
+.. In *Project Location* select *Browse*, and then select your home directory.
+.. In *API Specification Language* select *RAML 1.0*.
++
+. Select *Create Project*.
+
+The project explorer now shows you your American Flights API folder with an `american-flights-api.raml` file open in the editor.
+
+== Add a RAML Resource
+
+Start adding resources to your API specification:
+
+. In the editor, add your first resource called *flights*:
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+--
+. Review your new resource using API Console by clicking the API Console icon on your API specification editor.
++
+image::flights-endpoint.png[]
+
+== Add a RAML Method
+
+With one resource created, you can add a method to it using auto-complete:
+
+. After `/flights`, press `enter` to go to a new line and `tab` to indent.
+. Press `ctrl/cmd + spacebar` to see all the available options.
+. Select *get*.
+
+You can add further methods by going to a new line and keep using the auto-complete feature. For example, you can also add the *post* method.
+
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+  post:
+--
+
+Both methods now show on API Console.
+
+image::get-post-methods-api-console.png[]
+
+== Add a Nested RAML Resource
+
+You can create nested resources on your API specification and add methods to them:
+
+. Inside the `post:` method, add a nested resource for a flight with a specific ID: `/{ID}`.
+. Inside the nested resource `/{ID}`, place a `get:` method.
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+  post:
+
+  /{ID}:
+    get:
+--
+
+The nested resource and its associated method also show up in API Console.
+
+image::sub-methods-api-console.png[]
+
+== Add a Query Parameter
+
+Add specific query parameters for your resources:
+
+. In a new line after the `get:` method of your `/flights` resource, use `tab` to indent.
+. Press `ctrl/cmd + spacebar` to see all the available options.
+. Select `queryParameters`.
+. Hit `enter` and `tab` to add a new indentation.
+. Add a new keyword called `destination:`.
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+    queryParameters:
+      destination:
+  post:
+
+  /{ID}:
+    get:
+--
+. Inside the `destination` query parameter, indent the new line and press `ctrl/cmd + spacebar` to see all the available options.
+. Select the  `required` parameter, then press `ctrl/cmd + spacebar` and select `false` as the value.
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+    queryParameters:
+      destination:
+        required: false
+  post:
+
+  /{ID}:
+    get:
+--
+. Go to a new line at the same indent level as the `required` parameter and press `ctrl/cmd + spacebar` to create an `enum` parameter.
+. Inside your `enum` parameter, create values for the enum as `SFO`, `LAX`, and `CLE`.
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: American Flights API
+
+/flights:
+  get:
+    queryParameters:
+      destination:
+        required: false
+        enum:
+          - SFO
+          - LAX
+          - CLE
+  post:
+
+  /{ID}:
+    get:
+--
+
+== Next Step
+
+* xref:add-request-response-details.adoc[Add Request and Response Details]. +
+Build over your API specification detailing request and response examples. Learn how to import existing API fragments from Exchange to reuse and discover data types and examples.
