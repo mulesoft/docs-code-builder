@@ -1,6 +1,6 @@
 = Create an API Specification
 
-You can create a basic RAML API specification using Anypoint Code Builder
+Create a basic RAML API specification using Anypoint Code Builder.
 
 == Before You Begin
 
@@ -23,9 +23,9 @@ image::design-api-1.png[]
 image::design-api-ui-first.png[]
 +
 [calloutlist]
-.. Under *Project name* type:  `*American Flights API*`
-.. Under *Project Location* select *Browse*, and then select your home directory.
-.. Under *API Specification Language* select *RAML 1.0*.
+.. In *Project name* type:  `*American Flights API*`
+.. In *Project Location* select *Browse*, and then select your home directory.
+.. In *API Specification Language* select *RAML 1.0*.
 +
 . Select *Create Project*.
 
@@ -52,7 +52,7 @@ image::flights-endpoint.png[]
 
 With one resource created, you can add a method to it using auto-complete:
 
-. Under `/flights`, press `enter` to go to a new line and `tab` to indent.
+. After `/flights`, press `enter` to go to a new line and `tab` to indent.
 . Press `ctrl/cmd + spacebar` to see all the available options.
 . Select *get*.
 
@@ -100,7 +100,7 @@ image::sub-methods-api-console.png[]
 
 Add specific query parameters for your resources:
 
-. under the `get:` method of y our `/flights` resource, use `tab` to indent.
+. In a new line after the `get:` method of your `/flights` resource, use `tab` to indent.
 . Press `ctrl/cmd + spacebar` to see all the available options.
 . Select `queryParameters`.
 . Hit `enter` and `tab` to add a new indentation.
@@ -120,7 +120,7 @@ title: American Flights API
   /{ID}:
     get:
 --
-. Indent under the `destination` query parameter and press `ctrl/cmd + spacebar` to see all the available options.
+. Inside the `destination` query parameter, indent the new line and press `ctrl/cmd + spacebar` to see all the available options.
 . Select the  `required` parameter, then press `ctrl/cmd + spacebar` and select `false` as the value.
 +
 [source,raml,linenums]
@@ -139,7 +139,7 @@ title: American Flights API
     get:
 --
 . Go to a new line at the same indent level as the `required` parameter and press `ctrl/cmd + spacebar` to create an `enum` parameter.
-. Under your `enum` parameter, create values for the enum as `SFO`, `LAX`, and `CLE`.
+. Inside your `enum` parameter, create values for the enum as `SFO`, `LAX`, and `CLE`.
 +
 [source,raml,linenums]
 --
