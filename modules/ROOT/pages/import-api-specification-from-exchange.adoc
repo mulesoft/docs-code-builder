@@ -1,6 +1,6 @@
 = Import an API From Exchange
 
-You can import a published API specification in Exchange as a dependency in your project to later scaffold the necessary flows for each endpoint:
+You can import a published API specification from Exchange as a dependency in your project to later scaffold the necessary flows for each endpoint:
 
 . In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
 . Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
@@ -22,7 +22,7 @@ image::select-api-asset-version.png[]
 +
 image::scaffold-option-yes.png[]
 +
-This step adds the API specification as a dependency in your pom.xml file of your project and creates a new file called `american-flight-api-acb.xml`:
+This step adds the API specification as a dependency in your project's `pom.xml` file and creates a new file called `american-flight-api-acb.xml`:
 +
 image::scafolded-mule-config-file.png[]
 
@@ -32,7 +32,10 @@ Anypoint Code Builder displays the main flow scaffolded from your API specificat
 
 image::scafolded-flow-canvas.png[]
 
-Open the `american-flight-api-acb.xml` file and locate the 3 flows created for your 3 endpoints. One for `get:\flights`, one for `post:\flights`, and one for `get:\flights{ID}`:
+Open the `american-flight-api-acb.xml` file and locate the flows created for these endpoints: 
+* `get:\flights`
+* `post:\flight`
+* `get:\flights{ID}`:
 
 [source,xml,linenums]
 --
@@ -58,7 +61,7 @@ image::outline-list-select-flow.png[]
 Selecting a flow from the outline list highlights that same flow in your Mule configuration file.
 
 
-Anypoint Code Builder creates other automatically generated components related for error handling:
+Anypoint Code Builder creates other automatically generated components related to error handling:
 
 [source,xml]
 --
