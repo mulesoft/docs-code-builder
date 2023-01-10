@@ -1,0 +1,128 @@
+= Implement the API Interface Logic
+
+After importing an API specification to an existing project, you can use Anypoint Code Builder to build the logic behind each flow.
+
+== Before You Begin
+
+Before getting started, ensure you:
+
+* Set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* Published an API to Exchange. +
+See xref:publish-api-spec-to-exchange.adoc[].
+* Created an XML snippet. +
+See xref:create-xml-snippets.adoc[] for more information.
+* Created a basic integration using Anypoint Code Builder. +
+See xref:create-basic-integration.adoc[].
+* Configured a connection to a database from your project. +
+See xref:connect-to-a-db.adoc[].
+* Used Dataweave to transform the response from your application. +
+See xref:use-dataweave-to-transform-data.adoc[].
+* Imported an API specification to your project. +
+See xref:import-api-specification-from-exchange.adoc[].
+* Installed a REST client like Postman or AdvancedRestClient.
+
+== Rename Your Mule Configuration Files
+
+. In Anypoint Code Builder's Explorer view, right-click your `american-flight-api-acb.xml` file and select *Rename*.
++
+image::api-interface-rename.png[]
+. Rename the file to *interface.xml*.
++
+image::interface-rename.png[]
+. Right-click your `american-ws-anypoint-code-builder.xml` and select *Rename*.
++
+image::api-implementation-rename.png[]
+. Rename the file to *implementation.xml*.
++
+image::implementation-rename.png[]
+
+The interface file now receives all incoming requests to your application. The flows that you scaffolded when importing the API validate and route requests. The implementation file contains the backend logic that the interface calls.
+
+== Remove the HTTP Listeners From The Implementation File
+
+To ensure that your application exposes one single HTTP endpoint to handle request, you have to remove the HTTP listeners from the implementation file.
+
+. In Anypoint Code Builder, open your `implementation.xml` file.
+. In the graphical canvas, select the *HTTP /flights* listener and note the corresponding XML code.
++
+image::get-flights-select-listener.png[]
+. Delete the highlighted XML code:
++
+[source,xml]
+--
+<http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+--
++
+image::removed-http-listener-get-flights.png[]
+
+Your flow should now look like this:
+
+[source,xml]
+--
+<flow name="getFlights">
+    <db:select doc:name="Query Flights" doc:id="pvuqsc" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
+
+    <ee:transform doc:name="Transform Message" doc:id="uniqueId" >
+        <ee:message >
+            <ee:set-payload >
+                <![CDATA[
+                %dw 2.0
+                output application/json
+                ---
+                payload map ( payload01 , indexOfPayload01 ) -> {
+                  ID: payload01.ID,
+                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  price: payload01.price default 0,
+                  departureDate: payload01.takeOffDate as String default "",
+                  origin: payload01.fromAirport default "",
+                  destination: payload01.toAirport default "",
+                  emptySeats: payload01.seatsAvailable default 0,
+                  plane: {
+                    "type": payload01.planeType default "",
+                    totalSeats: payload01.totalSeats default 0
+                  }
+                }
+                ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+
+</flow>
+--
+
+
+== Reference the Implementation Flow From The Interface File
+
+. In Anypoint Code Builder, open your `interface.xml` file.
+. Use the Outline List to navigate to your `get:\flights:american-flights-api-config` flow:
++
+[source,xml]
+--
+<flow name="get:\flights:american-flights-api-config">
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+--
++
+image::select-get-flights-flow.png[]
+. Create a new line under the `<flow>` element and indent it at the same level as the `<ee:transfor>` element.
+. Type `_flow_` and select the element `mule:flowRef`.
++
+[source,xml]
+--
+<flow-ref name="getFlights" doc:name="Get Flights" />
+--
+. Configure the `name` attribute as `_getFlights_`.
++
+image::select-flow-ref.png[]
+
+Now all calls to `+https://<web-IDE-instance>/api/8081/flights+` are handled by your `interface` file and processed in your `implementation` file. +
+See xref:ping-locally-deployed-app.adoc[] for more information about sending requests to your application.
+
+== Next Step
+
+* Learn how to xref:debug-a-mule-application.adoc[Debug a Mule Application].
