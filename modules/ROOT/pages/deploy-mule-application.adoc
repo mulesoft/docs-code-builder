@@ -9,6 +9,8 @@ Anypoint Code Builder can only deploy applications to CloudHub 1.0
 
 == Before You Begin
 
+Before you begin, ensure that:
+
 * Ensure you set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
 * You designed an API specification. +
@@ -23,17 +25,17 @@ See xref:debug-add-logger-set-variables.adoc[].
 See xref:debug-add-breakpoints.adoc[].
 * You ran a debug session. +
 See xref:run-a-debug-session.adoc[]
-* Install a REST client like Postman or AdvancedRestClient.
+* You installed a REST client like Postman or AdvancedRestClient.
 
 == Create a Deployment Configuration File
 
-To deploy to Cloudhub you must configure a `deploy.json` file in your `src/main/resources` directory. If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you create one the first time you deploy your application:
+To deploy to Cloudhub you must configure a `deploy.json` file in your `src/main/resources` directory. If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you to create one the first time you deploy your application:
 
 . Open Anypoint Code Builder.
 . Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
 +
 image::deploy-to-cloudhub.png[]
-. Select *Create a deploy configuration file instead* from in the pop-up with the error message `Deployment configuration file not found, make sure it's called: deploy.json (case sensitive), and it's placed in the resources folder`
+. Select *Create a deploy configuration file instead* from the pop-up with the error message `Deployment configuration file not found, make sure it's called: deploy.json (case sensitive), and it's placed in the resources folder`
 +
 image::create-deployment-file.png[]
 . Anypoint Code Builder creates a `deploy.json` file:
@@ -57,7 +59,8 @@ The name must be unique across all applications deployed to Cloudhub.
 
 . Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
 . Select your preferred environment.
-. Anypoint Code Builder packages the application and deploys it to Cloudhub.
++
+Anypoint Code Builder packages the application and deploys it to Cloudhub.
 . Log in to Anypoint Platform and navigate to *Runtime Manager*.
 . Select your application from the list applications.
 . Note the domain name for your application: +american-ws-anypoint-code-builder.eu-s1.cloudhub.io+.
