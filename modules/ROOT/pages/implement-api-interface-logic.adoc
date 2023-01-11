@@ -4,25 +4,27 @@ After importing an API specification to an existing project, you can use Anypoin
 
 == Before You Begin
 
-* Ensure you set up your MuleSoft environment. +
+Before getting started, ensure you:
+
+* Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
-* You published an API to Exchange. +
+* Published an API to Exchange. +
 See xref:publish-api-spec-to-exchange.adoc[].
-* You created an XML snippet. +
+* Created an XML snippet. +
 See xref:create-xml-snippets.adoc[] for more information.
-* You created a basic integration using Anypoint Code Builder. +
+* Created a basic integration using Anypoint Code Builder. +
 See xref:create-basic-integration.adoc[].
-* You configured a connection to a database from your project. +
+* Configured a connection to a database from your project. +
 See xref:connect-to-a-db.adoc[].
-* You used Dataweave to transform the response from your application. +
+* Used Dataweave to transform the response from your application. +
 See xref:use-dataweave-to-transform-data.adoc[].
-* You imported an API specification to your project. +
+* Imported an API specification to your project. +
 See xref:import-api-specification-from-exchange.adoc[].
-* Install a REST client like Postman or AdvancedRestClient.
+* Installed a REST client like Postman or AdvancedRestClient.
 
 == Rename Your Mule Configuration Files
 
-. In Anypoint Code Builder, on your Explorer view, right-click your `american-flight-api-acb.xml` file and select *Rename*.
+. In Anypoint Code Builder's Explorer view, right-click your `american-flight-api-acb.xml` file and select *Rename*.
 +
 image::api-interface-rename.png[]
 . Rename the file to *interface.xml*.
@@ -35,11 +37,11 @@ image::api-implementation-rename.png[]
 +
 image::implementation-rename.png[]
 
-The interface file now corresponds to where all requests are sent. The flows that you scaffolded when importing the API validate and route requests. The implementation file contains our backend logic that is called from the interface.
+The interface file now receives all incoming requests to your application. The flows that you scaffolded when importing the API validate and route requests. The implementation file contains the backend logic that the interface calls.
 
 == Remove the HTTP Listeners From The Implementation File
 
-To ensure that your application exposes one single HTTP endpoint to handle request, you have to remove the
+To ensure that your application exposes one single HTTP endpoint to handle request, you have to remove the HTTP listeners from the implementation file.
 
 . In Anypoint Code Builder, open your `implementation.xml` file.
 . In the graphical canvas, select the *HTTP /flights* listener and note the corresponding XML code.
@@ -54,7 +56,7 @@ image::get-flights-select-listener.png[]
 +
 image::removed-http-listener-get-flights.png[]
 
-Your flow now must look as follows:
+Your flow should now look like this:
 
 [source,xml]
 --
@@ -119,8 +121,8 @@ image::select-get-flights-flow.png[]
 image::select-flow-ref.png[]
 
 Now all calls to `+https://<web-IDE-instance>/api/8081/flights+` are handled by your `interface` file and processed in your `implementation` file. +
-See xref:ping-locally-deployed-app.adoc[] for more information on how to send request to your application.
+See xref:ping-locally-deployed-app.adoc[] for more information about sending requests to your application.
 
 == Next Step
 
-* Move to a new section of the tutorial and learn how to xref:debug-a-mule-application.adoc[Debug a Mule Application].
+* Learn how to xref:debug-a-mule-application.adoc[Debug a Mule Application].
