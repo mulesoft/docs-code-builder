@@ -14,23 +14,25 @@ Your synchronization API contains a flow with the following logic:
 
 == Before You Begin
 
-* Ensure you set up your MuleSoft environment. +
+Before you begin, ensure that you:
+
+* Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
 * Set up a Salesforce demo environment.
 ** Sign up for a developer organization https://developer.salesforce.com/signup[here^].
 ** Create a developer security token https://help.salesforce.com/s/articleView?id=sf.user_security_token.htm&type=5[here^].
-* Crete a MySQL Database instance using AWS free tier following the steps https://aws.amazon.com/getting-started/hands-on/create-mysql-db/[here^].
+* Creted a MySQL Database instance using AWS free tier following the steps https://aws.amazon.com/getting-started/hands-on/create-mysql-db/[here^].
 
 == Create the API Specification
 
-. In your web IDE instance, navigate to your Anypoint Code Builder view:
+. In the web IDE instance, navigate to your Anypoint Code Builder view:
 +
 image::anypoint-code-builder-view.png[]
 . Select *Design an API*.
 +
 image::design-api-1.png[]
 +
-. Configure your API using the following values:
+. Configure the API using the following values:
 +
 image::design-api-ui-first.png[]
 +
@@ -41,12 +43,12 @@ image::design-api-ui-first.png[]
 +
 . Select *Create Project*.
 
-The project explorer now shows you your American Flights API folder with a `contact-sync.raml` file open in the editor.
+The project explorer now shows you the American Flights API folder with a `contact-sync.raml` file open in the editor.
 
-. Select `contact-sync.raml` from your Explorer view:
+. Select `contact-sync.raml` from the Explorer view:
 +
 image::select-contact-sync.png[]
-. Paste the following RAML description to your API specification:
+. Paste the following RAML description to the API specification:
 +
 [source,RAML]
 --
@@ -81,7 +83,7 @@ protocols:
                type: string
                example: Successfully updated!
 --
-. Select the *API Console* icon to review your API:
+. Select the *API Console* icon to review the API:
 +
 image::select-api-console-contact-sync.png[]
 . Review the newly created `/post` endpoint.
@@ -92,13 +94,13 @@ image::update-phone-endpoint.png[]
 
 To enable collaboration on this API specification, you can
 
-. In Anypoint Code Builder, select your Source Control view.
+. In Anypoint Code Builder, select the Source Control view.
 +
 image::contact-sync-select-vcs.png[]
-. Select the *Stage Changes* icon next to your `contact-sync.raml` file.
+. Select the *Stage Changes* icon next to the `contact-sync.raml` file.
 +
 image::contact-sync-stage-changes.png[]
-. Type a commit message such as _Initial Commit_, and select *Commit*.
+. Type a commit message, for example, _Initial Commit_, and select *Commit*.
 +
 image::contact-sync-initial-commit.png[]
 . Select the menu icon, and select *Push*.
@@ -110,7 +112,7 @@ image::contact-sync-push-changes.png[]
 
 To write the logic behind this API, you must publish it to Exchange:
 
-. In Anypoint Code Builder, open your `american-flights-api.raml` file.
+. In Anypoint Code Builder, open the `american-flights-api.raml` file.
 . Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Publish API Specification to Exchange_.
 +
 image::publish-to-exchange.png[]
@@ -129,10 +131,10 @@ image::publishing-to-exchange-dialog.png[]
 +
 image::scaffold-option-yes.png[]
 +
-. Select a name for your project:
+. Select a name for the project:
 * *contact-sync*
 +
-. Select a directory where you want to create your project.
+. Select a directory where you want to create the project.
 +
 image::select-project-location.png[]
 
