@@ -4,13 +4,15 @@ You can use the Database connector to connect to an external database from your 
 
 == Before You Begin
 
-* Ensure you set up your MuleSoft environment. +
+Before getting started, ensure you:
+
+* Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
-* You created an XML snippet. +
+* Created an XML snippet. +
 See xref:create-xml-snippets.adoc[] for more information.
-* You created a basic integration using Anypoint Code Builder. +
+* Created a basic integration using Anypoint Code Builder. +
 See xref:create-basic-integration.adoc[]
-* Install a REST client like Postman or AdvancedRestClient.
+* Installed a REST client like Postman or AdvancedRestClient.
 
 == Open Your Existing Mule Application.
 
@@ -26,9 +28,9 @@ image::remove-set-payload.png[]
 
 == Add a Database Driver Dependency
 
-Because the Database connector can connect to a wide variety of JDBC databases you must include a dependency for the particular driver your need. In this case, use a `mySQL` driver:
+Because the Database connector can connect to a wide variety of JDBC databases, you must include a dependency for the particular driver your need. In this case, use a `mySQL` driver:
 
-. On your Project Explorer, Select your `pom.xml` file.
+. In Project Explorer, select the `pom.xml` file.
 . Add a new dependency using the code in the following sample:
 +
 [source,xml,linenums]
@@ -41,7 +43,7 @@ Because the Database connector can connect to a wide variety of JDBC databases y
 --
 +
 image::add-mysql-driver-dependency.png[]
-. Replace the existing element called `<configuration/>` within your `mule-maven-plugin` with a new shared library:
+. Replace the existing `<configuration/>` element within your `mule-maven-plugin` with a new shared library:
 +
 [source,xml,linenums]
 --

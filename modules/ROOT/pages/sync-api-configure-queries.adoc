@@ -9,19 +9,19 @@
 
 == Configure Logic to Find a Salesforce Record
 
-The purpose of your application is to receive a record with a firstName, lastName, and phoneNumber from the query parameters of a POST request, and translate it into a query to your Salesforce organization to retrieve that same contact.
+The purpose of the application is to receive a record with a `firstName`, `lastName`, and `phoneNumber` from the query parameters of a POST request, and translate it into a query to your Salesforce organization to retrieve that same contact.
 
-To retrieve the information from Salesforce, we can use the following query:
+To retrieve the information from Salesforce, use the following query:
 
 [source,MySQL]
 --
 SELECT phone, ID from Contact WHERE FirstName=':firstname' AND LastName=':lastname'
 --
 
-The previous query uses two query parameters: `firstname` and `lastname`. To assign values to each parameter you must create two variables in your flow: `firstnameVar` and `lastnameVar`:
+The previous query uses two query parameters: `firstname` and `lastname`. To assign values to each parameter you must create two variables: `firstnameVar` and `lastnameVar`:
 
-. In Anypoint Code Builder, open your `contact-sync.xml` file.
-. Use the *Outline List* to navigate to your `post:\updatePhone:contact-sync-config` flow.
+. In Anypoint Code Builder, open the `contact-sync.xml` file.
+. Use the *Outline List* element to navigate to the `post:\updatePhone:contact-sync-config` flow.
 +
 image::sync-api-outline-select-flow.png[]
 . Remove the existing Transform Message component:
@@ -58,10 +58,10 @@ image::add-transform-message-sync-api.png[]
 
 == Send a Query to Salesforce
 
-With your query built, you can now use the Salesforce Connector to retrieve the record from Salesforce, if the record exists.
+Use the Salesforce Connector to retrieve the record from Salesforce, if the record exists.
 
-. In Anypoint Code Builder, open your `contact-sync.xml` file.
-. Under your `</ee:transform` component, add a new line, type _query_, and select *Salesforce:Query*:
+. In Anypoint Code Builder, open the `contact-sync.xml` file.
+. In the `</ee:transform` component, add a new line, type _query_, and select `Salesforce:Query`:
 +
 image::sync-api-add-sfdc-query.png[]
 . Update your `salesforce:query` *config-ref* element to point to your existing Salesforce connector configuration: *Salesforce-Config*.
@@ -168,7 +168,7 @@ Review your XML code:
 
 With the condition for whether the contact exists and the error message configured for when it doesn't, you can now add logic to store the existing phone number retrieved from Salesforce.
 
-. Add a new line under your `<when` element and add the following components:
+. Add a new line after the `<when` element and add the following components:
 +
 [source,XML]
 --
@@ -189,16 +189,16 @@ image::final-choice-api-sync.png[]
 == Test Your API
 
 . Open a REST client
-. Set up a breakpoint by clicking the red icon right next to your `<choice` element.
+. Set up a breakpoint by clicking the red icon right next to the `<choice` element.
 +
 image::add-breakpoint-sync-api.png[]
-. Run your application by pressing `F5`.
+. Run the application by pressing `F5`.
 . Open your preferred REST client.
 . Make a `POST` request to `+0.0.0.0:8081/api/updatePhone?phoneNumber=555555&firstName=Anna&lastName=Woods+`.
 . Note that the application stops right before the Choice router component and that the query parameters are converted into variables:
 +
 image::query-params-to-vars-api-sync.png[]
-. Move the execution forward until your notice that Anypoint Code Builder returns a `returnMessage` variable with the message `Failure: Contact does not exist in Salesforce`.
+. Move the execution forward until Anypoint Code Builder returns a `returnMessage` variable with the message `Failure: Contact does not exist in Salesforce`.
 +
 image::set-variable-for-no-contact-api-sync.png[]
 

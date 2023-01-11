@@ -4,6 +4,8 @@ After setting up your debug conditions, you can run a debug session and evaluate
 
 == Before You Begin
 
+Before you begin, ensure that:
+
 * You designed an API specification. +
 See xref:design-api-specification.adoc[].
 * You developed an integration. +
@@ -49,7 +51,7 @@ image::debug-add-expression.png[]
 . Add the expression `payload.^mediaType`.
 . Select the *Step Over* button until your execution moves to the `<set-payload>` component.
 . Note that your payload is `application/java`.
-. Select the *Step Over* button until your execution to the `<logger>` component.
+. Select the *Step Over* button until your execution jumps to the `<logger>` component.
 . Note that your payload is now transformed to `application/json`.
 +
 image::debuger-watch-expression-json.png[]
