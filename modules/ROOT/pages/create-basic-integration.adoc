@@ -1,14 +1,16 @@
 = Create a Basic Integration
 
-You can start by creating a basic integration in Anypoint Code Builder
+Start by creating a basic integration in Anypoint Code Builder
 
 == Before You Begin
 
-* Ensure you set up your MuleSoft environment. +
+Before getting started, ensure you:
+
+* Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
-* You created an XML snippet. +
+* Created an XML snippet. +
 See xref:create-xml-snippets.adoc[] for more information.
-* Install a REST client like Postman or AdvancedRestClient.
+* Installed a REST client like Postman or AdvancedRestClient.
 
 == Create a Mule Application
 
@@ -24,22 +26,22 @@ image::develop-integration-option-mat.png[]
 image::integration-create-ui.png[]
 +
 [calloutlist]
-.. Under *Project Name* type: `amercian-ws-anypoint-code-builder`.
-.. Under *Project Location* select *Browse*, and then select your home directory.
+.. Under *Project Name*, type `amercian-ws-anypoint-code-builder`.
+.. Under *Project Location*, select *Browse*, and then select your home directory.
 +
 . Select *Create Project*.
 
 == Add an HTTP Connector
 
-. On your Project Explorer, select your `american-ws-anypoint-code-builder.xml` file. +
+. In Project Explorer, select the`american-ws-anypoint-code-builder.xml` file. +
 +
 image::empty-canvas-state.png[]
 +
 You see two different views:
 +
 [calloutlist]
-.. To your left, you can see the visual representation of your Mule flow.
-.. To your right, you see the Mule Configuration file.
+.. One editor displays a visual representation of your Mule flow.
+.. The other editor displays the Mule Configuration file.
 +
 [NOTE]
 --
@@ -60,11 +62,11 @@ image::import-http-connector.png[]
 . Select the version of the connector you want to import:
 +
 image::add-http-version.png[]
-. On your `american-ws-anypoint-code-builder.xml` file, go to a new line at the bottom of the xml file above the closing `</mule>` tag.
+. In the`american-ws-anypoint-code-builder.xml` file, go to a new line at the bottom of the XML file above the closing `</mule>` tag.
 . Type `http`, and select `HTTP:listener-config`.
 +
 image::add-http-config.png[]
-. Move through the attributes and set the following values:
+. Scroll through the assets and enter the following values:
 +
 name:: _inbound-request_
 doc:name:: _HTTP Config_
@@ -72,11 +74,11 @@ doc:name:: _HTTP Config_
 . Type `http:Listener` and select `HTTP:listener-connection`.
 +
 image::add-listener-config-2.png[]
-. Move through the attributes and set the following values:
+. Scroll through the attributes and set the following values:
 +
 host:: _0.0.0.0_
 port:: _8081_
-. Go to a new line at the bottom of the xml file above the closing `</mule>` tag.
+. Go to a new line at the bottom of the XML file above the closing `</mule>` tag.
 . Type `flow`, and select `mule:flow`.
 +
 image::add-flow.png[]
@@ -87,17 +89,17 @@ image::finished-flow.png[]
 . Type `listener`, and select `HTTP:listener`.
 +
 image::add-http-listener-endpoint.png[]
-. Move through the attributes and set the following values:
+. Scroll through the attributes and set the following values:
 +
 path:: `_flights_`
 config-ref:: `_inbound-request_`
 doc:name:: `_HTTP /flights_`
 +
-Note that as you move forward with your XML, Anypoint Code Builder creates a graphical representation of your flow in the left panel.
+As you move forward with your XML, Anypoint Code Builder creates a graphical representation of your flow in the left panel.
 +
 image::first-flow-graphical-view.png[]
 +
-You can select any processor in the graphical view, and Anypoint Code Builder highlights its location within the XML Mule configuration file.
+Select any processor in the graphical view to have Anypoint Code Builder highlight its location within the XML Mule configuration file.
 +
 image::http-highlight-flow.png[]
 
@@ -121,7 +123,7 @@ Review your XML code:
 
 == Set a Payload
 
-. Go to a new line at the bottom of the xml file above the closing `</flow>` tag.
+. Go to a new line at the bottom of the XML file above the closing `</flow>` tag.
 . Type `_set-payload_`, and select `mule:setPayload`.
 +
 image::add-set-payload.png[]
@@ -172,13 +174,13 @@ image::deployed-application.png[]
 == Test the Application
 
 . Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
-See xref:ping-locally-deployed-app.adoc[] for more information on how to send request to your application.
+See xref:ping-locally-deployed-app.adoc[] for more information about sending a request to your application.
 +
 Notice that the *Flight info* message is displayed as the response.
 
 == Stop the Application
 
-. On Anypoint Code Builder, select the stop icon from the toolbar at the top of your screen.
+. In Anypoint Code Builder, select the stop icon from the toolbar at the top of your screen.
 +
 image::stop-mule-application.png[]
 . Anypoint Code Builder returns to the Explorer view.
