@@ -4,19 +4,21 @@ Now that you retrieved the contact record from Salesforce, you can add logic to 
 
 == Before You Begin
 
-* You created a xref:create-synchronization-sfdc-api.adoc[Contacts Synchronization API].
-* You configured a xref:create-config-files.adoc[Reusable Configuration File].
-* You configured your query to your Salesforce environment. +
+Before you begin, ensure that you:
+
+* Created a xref:create-synchronization-sfdc-api.adoc[Contacts Synchronization API].
+* Configured a xref:create-config-files.adoc[Reusable Configuration File].
+* Configured a query to your Salesforce environment. +
 See xref:sync-api-configure-queries.adoc[] for more information.
-* Install a REST client like Postman or AdvancedRestClient.
+* Installed a REST client like Postman or AdvancedRestClient.
 
 == Add a Scatter-Gather to Store Data in Parallel
 
-. In Anypoint Code Builder, open your `contact-sync.xml` file.
-. Add a new line under your *Contact exists in Salesforce* `<set-variable` component, type `_scatter_` and select *mule:scatterGather*:
+. In Anypoint Code Builder, open the `contact-sync.xml` file.
+. Add a new line after the *Contact exists in Salesforce* `<set-variable` component, type `_scatter_` and select `mule:scatterGather`:
 +
 image::contact-sync-api-add-scatter-gather.png[]
-. Add the following logic within your Scatter-Gather component:
+. Add the following logic within the Scatter-Gather component:
 +
 [source,XML]
 --
@@ -34,14 +36,15 @@ image::contact-sync-api-add-scatter-gather.png[]
 == Update Salesforce Record
 
 You can start by implementing the steps to update a record in Salesforce if it is needed. For this purpose, you must define:
+
 * A logic to decide if the update is needed.
 * The operations required to update the record using the Salesforce connector.
 
 Earlier in this walkthrough, you stored the phone number retrieved from the record in a variable named `phonenumberSFVar`. You can now compare that variable to the value received in your POST request query parameter, stored in another variable named `phonenumberVar`.
 
-To compare the phone number in your POST request, and the number retrieved from Salesforce you can add a Choice router with a DataWeave expression to check if the existing and new phone numbers in Salesforce are the same. If they are the same you can log a message saying “Phone number in Salesforce already up to date", and add a Set Variable to set the value "Phone number in Salesforce already up to date. " to variable `ReturnMessageSF`.
+To compare the phone number in your POST request, and the number retrieved from Salesforce, add a Choice router with a DataWeave expression to check if the existing and new phone numbers in Salesforce are the same. If they are the same, log a message saying *Phone number in Salesforce already up to date*, and add a Set Variable component to set the value *Phone number in Salesforce already up to date* to variable `ReturnMessageSF`:
 
-. In Anypoint Code Builder, open your `contact-sync.xml` file.
+. In Anypoint Code Builder, open the `contact-sync.xml` file.
 . Add a choice router right after your *SF Update* route:
 +
 [source,XML]
@@ -56,9 +59,10 @@ To compare the phone number in your POST request, and the number retrieved from 
     </otherwise>
 </choice>
 --
-. Populate your `otherwise` element with:
+. Populate the `otherwise` element with:
++
 * A Transform Message component to upsert the phone number using the variables `IdVar` and `phonenumberVar`.
-* Log the successful update and assign the value “Phone number in Salesforce successfully updated.  to the `ReturnMessageSF` variable:
+* Log the successful update and assign the value *Phone number in Salesforce successfully updated* to the `ReturnMessageSF` variable:
 +
 [source,XML]
 --
@@ -81,12 +85,13 @@ To compare the phone number in your POST request, and the number retrieved from 
 
 == Update Database Record
 
-You can now implement the steps to update a record in your target MySQL database if it is needed. For this purpose, you must define:
+To implement the steps to update a record in your target MySQL database if needed, you must define:
+
 * A logic to decide if the update is needed.
 * The operations required to update the record using the Database connector.
 
-. In Anypoint Code Builder, open your `contact-sync.xml` file.
-. Add a `db:select` processor under your *DB Update* `route` processor to select all the fields from the *Contacts* table and filter by the contact’s first and last name:
+. In Anypoint Code Builder, open the `contact-sync.xml` file.
+. Add a `db:select` processor under the *DB Update* `route` processor to select all the fields from the *Contacts* table and filter by the contact’s first and last name:
 +
 [source,XML]
 --
@@ -118,7 +123,7 @@ image::db-update-scatter-gather-sync-api.png[]
 --
 +
 image::second-choice-router-db-update.png[]
-. Because the contact does not exist yet in the database, you can use the *contact does not exist* `when` branch of your Choice router to insert a new row with the contact details and set a `ReturnMessageDB` variable accordingly. The following code details the steps:
+. Because the contact does not exist in the database, use the *contact does not exist* `when` branch of your Choice router to insert a new row with the contact details and set a `ReturnMessageDB` variable accordingly. The following code details the steps:
 +
 [source,XML]
 --
@@ -138,7 +143,7 @@ image::second-choice-router-db-update.png[]
 <logger doc:name="Logger" message='#["Contact in database created"]' />
 <set-variable value='#["Contact in database created. "]' doc:name="Set ReturnMessageDB" variableName="ReturnMessageDB"/>
 --
-. Now, if the record exists in the database, you can create an `otherwise` branch inside your Choice router to extract the phone number and assign it to a variable named `phonenumberDBVar`, casting the contact phone number as String:
+. Now, if the record exists in the database, create an `otherwise` branch inside the Choice router to extract the phone number and assign it to a variable named `phonenumberDBVar`, casting the contact phone number as String:
 +
 [source,XML]
 --
@@ -146,7 +151,7 @@ image::second-choice-router-db-update.png[]
     <set-variable value="#[payload.phoneNumber[0] as String]" doc:name="Set phone in DB" doc:id="tkqxdt" variableName="phonenumberDBVar"/>
 </otherwise>
 --
-. And add another Choice router to check if the old and the new phone number are the same. If the numbers are the same, log and update the `ReturnMessageDB` accordingly, otherwise update the phone number in the database and then log and update the `ReturnVariableDB`. +
+. Add another Choice router to check if the old and the new phone number are the same. If the numbers are the same, log and update the `ReturnMessageDB` accordingly, otherwise update the phone number in the database and then log and update the `ReturnVariableDB`. +
 Add the following code sample under your *Set Phone in DB* `set-variable` component:
 +
 [source,XML]

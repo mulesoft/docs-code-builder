@@ -4,6 +4,8 @@ You can use Logger and Set Variable components to help debug your Mule applicati
 
 == Before You Begin
 
+Before you begin, ensure that:
+
 * You designed an API specification. +
 See xref:design-api-specification.adoc[]
 * You developed an integration. +
@@ -13,7 +15,7 @@ See xref:implement-api-specification.adoc[]
 
 == Add Logger and Set Variable Components
 
-. In Anypoint Code Builder, on your Explorer view, open your `implementation.xml`.
+. In Anypoint Code Builder, on the Explorer view, open your `implementation.xml`.
 . Add a new line after your `</db:select>` element and indent it to the same level.
 . Start typing `_set variable_` and select `mule:set-variable`:
 +
@@ -112,7 +114,7 @@ variableName:: `_databasePayload_`.
 <1> Move through the attributes of the snippet and set the following values:
 +
 doc:name:: `_Log Payload_`.
-message:: `_#[%dw 2.0 output application/json --- payload]_`
+message:: `_#[%dw 2.0 output application/json --- payload]_`.
 
 == Next Step
 
