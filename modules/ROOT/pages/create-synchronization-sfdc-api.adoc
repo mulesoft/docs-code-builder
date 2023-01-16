@@ -2,15 +2,13 @@
 
 This walkthrough enables you to create an API from scratch that synchronizes your own contacts database with Salesforce.
 
-Your synchronization API contains a flow with the following logic:
+The synchronization API that you will build contains a flow with the following logic:
 
-* Fetch the contact in Salesforce containing the phone number to change or update it if it exists.
-* Validate the contact exists in Salesforce by using `first name + last name`.
-* If the contact already exists in Salesforce, then:
-** Update phone number in Salesforce.
-** Update phone number in Database - again if the contact exists, otherwise create it.
-** Return a response indicating success.
-* Otherwise, create a response indicating contact doesn’t exist.
+* Fetch a contact from Salesforce.
+* If the contact in Salesforce has a phone number, retrieve its first and last name.
+* Define if the contact exists in the database by matching its first and last name with the contact fetched from Salesforce.
+* If the contact in the database matches the contact on Salesforce, update the phone number in the Database and return a response indicating success.
+* Otherwise, create a response indicating that the contact doesn’t exist.
 
 == Before You Begin
 
@@ -37,7 +35,7 @@ image::design-api-1.png[]
 image::design-api-ui-first.png[]
 +
 [calloutlist]
-.. Under *Project name* type:  `*Contact Sync*`
+.. Under *Project name* type: `*Contact Sync*`.
 .. Under *Project Location* select *Browse*, and then select your home directory.
 .. Under *API Specification Language* select *RAML 1.0*.
 +
@@ -92,7 +90,7 @@ image::update-phone-endpoint.png[]
 
 == Save Your Changes to Design Center
 
-To enable collaboration on this API specification, you can
+To enable collaboration on this API specification:
 
 . In Anypoint Code Builder, select the Source Control view.
 +
@@ -117,7 +115,7 @@ To write the logic behind this API, you must publish it to Exchange:
 +
 image::publish-to-exchange.png[]
 . Type a project name: +
-* *Contact Sync*.
+* *Contact Sync*
 . Confirm the asset version: *1.0.0*.
 +
 image::set-asset-version.png[]
@@ -139,7 +137,7 @@ image::scaffold-option-yes.png[]
 +
 image::select-project-location.png[]
 
-Anypoint Code Builder adds the API specification as a dependency in the pom.xml file of your project and creates a new file called `contact-sync.xml`:
+Anypoint Code Builder adds the API specification as a dependency in the `pom.xml` file of your project and creates a new file called `contact-sync.xml`:
 
 image::contact-sync-outline.png[]
 
