@@ -31,7 +31,7 @@ email:
 slack:
  token: "yourSlackToken"
 --
-. Navigate to your `new-case-salesforce.xml` file, add a new line before your `<http:listener-config` element, type _configuration_ and select *mule:configurationProperties*:
+. Navigate to your `new-case-salesforce.xml` file, add a new line before your `<http:listener-config>` element, type _configuration_ and select *mule:configurationProperties*:
 +
 image::select-mule-config-properties-contacts-sync.png[]
 . Scroll through the attributes and set the following value:
@@ -47,14 +47,14 @@ file:: config.yaml
 
 Use your configuration file to add the necessary fields for the Salesforce Connector to connect to your Salesforce environment:
 
-. Create a new line after your `<configuration-properties` element, type _salesforce_, and select *salesforce:sfdc-config*.
+. Create a new line after your `<configuration-properties>` element, type _salesforce_, and select *salesforce:sfdc-config*.
 +
 image::sync-api-select-sfdc-config.png[]
 . Set the *name* field to _Salesforce-Config_.
 . Create a new line, type _basic_ and select *Salesforce:Basic*.
 +
 image::basic-auth-sfdc-connector.png[]
-. Configure your *username* and *password* elements to use your configuration file values:
+. Configure the *username* and *password* elements to use your configuration file values:
 +
 [source,XML]
 --
@@ -69,7 +69,7 @@ When you move your cursor over the `${salesforce.username}` and `${salesforce.pa
 +
 image::sync-api-sfdc-test-connection.png[]
 +
-Anypoint Code Builder returns a *Connection is valid* message below. +
+Anypoint Code Builder returns a *Connection is valid* message. +
 If you get an error, verify the error message to troubleshoot further.
 
 == Add a Salesforce Trigger
@@ -125,7 +125,7 @@ image::salesforce-select-service.png[]
 image::salesfroce-create-new-case.png[]
 . Ensure to set the *Status* of the new case to *New*.
 . Create a new case and save it.
-. Back in Anypoint Code Builder, note that your application stopped at your logger, and inspect the payload.
+. In Anypoint Code Builder, note that your application stopped at the logger and then, inspect the payload.
 +
 image::slack-app-debugger-logger-breakpoint.png[]
 +

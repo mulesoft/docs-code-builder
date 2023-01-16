@@ -15,7 +15,7 @@ See xref:extract-payload-information.adoc[].
 
 Use a Choice Router to define behaviors based on specific conditions. In this case, choose to send an email if the case is escalated.
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `<logger` element.
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `<logger>` element.
 . Type _choice_ and select *mule:choice*:
 . Add both `when` and `otherwise` elements:
 +
@@ -63,7 +63,7 @@ For better readability of your Mule flow, update the name of the `choice`, `when
 
 == Add an Email Connector
 
-To configure your `when` element, you first must configure an Email Connector:
+To configure the `when` element, you must first configure an Email Connector:
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</salesforce:sfdc-config>` element.
 . Type _smtp_ and select *Email:smtp*.
