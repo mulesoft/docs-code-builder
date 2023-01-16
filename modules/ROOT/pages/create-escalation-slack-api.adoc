@@ -5,30 +5,29 @@ This walkthrough enables you to create an integration that notifies you either t
 The integration that you will build contains a flow with the following logic:
 
 * The creation of a new case in Salesforce triggers your flow.
-* If the case is escalated, your application sends an email to the regional leader including the case number, origin, reason, priority and status.
-* If the case is not escalated, your application sends a message to a Slack channel with the same information as above.
+* If the case is escalated, your application sends an email to the regional leader including the case number, origin, reason, priority, and status.
+* If the case is not escalated, your application sends a message to a Slack channel with the same information as before.
 
 == Before You Begin
 
-* Ensure you set up your MuleSoft environment. +
+Before you begin, ensure you:
+
+* Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
-* A personal or business Gmail account.
+* Have a personal or business Gmail account.
 
 === Set Up Your Slack Workspace
 
 . Navigate to https://slack.com/[Slack^] and log in using your organization credentials.
 +
-[NOTE]
---
-Because your work organization might restrict users from creating new workspaces, you can also log in using your personal email account.
---
+If your work organization restricts users from creating new workspaces, log in using your personal email account.
 . Create a new Workspace called *Integration Test*.
 . Skip the step to invite new users and type a brief description of your Workspace. For example _This is a test Workspace_.
 . Navigate to https://api.slack.com/apps[Your Apps^] and select *Create an App*.
 +
 image::slack-create-app.png[]
 . Select *From scratch*.
-. Name your app *OAuth for Anypoint Code Builder*, and select your *Integration Test* workspace.
+. Name your app _OAuth for Anypoint Code Builder_, and select your *Integration Test* workspace.
 . Select *Generate*.
 +
 image::generate-token.png[]
@@ -41,7 +40,7 @@ image::slack-install-app.png[]
 . Select *Permission scope*.
 +
 image::slack-install-permission-scope.png[]
-. Scroll down to the *Scopes* section, under *Bot Token Scopes* select *Add an OAuth Scope*, and select *chat:write.public*
+. Scroll down to the *Scopes* section, under *Bot Token Scopes* select *Add an OAuth Scope*, and select *chat:write.public*.
 +
 image::slack-bot-permissions-chat-write.png[]
 . Select *Add scopes* when prompted to add other necessary scopes for `chat:write.public`.
@@ -54,7 +53,7 @@ You will need this token to connect to your Slack workspace from Anypoint Code B
 +
 image::slack-copy-oauth-token.png[]
 
-=== Set Up Your App Password for Your Email
+=== Set up an App Password for Your Email
 
 Later in this walkthrough your will configure the Email Connector to send emails to your configured email account. To avoid using your email password, follow https://support.google.com/accounts/answer/185833?visit_id=637917932546436561-2352829986&p=InvalidSecondFactor&rd=1[Google instructions^] to configure an App password.
 
