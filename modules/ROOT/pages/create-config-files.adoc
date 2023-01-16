@@ -77,6 +77,8 @@ If you get an error, verify the error message to troubleshoot further.
 
 == Configure Your Database Connector
 
+Configure a Database Connector to connect to your database to retrieve and update records. To configure a Database Connector in Anypoint Code Builder, you must add a database driver.
+
 === Add a Database Driver Dependency
 
 Because the Database connector can connect to a wide variety of JDBC databases you must include a dependency for the particular driver you need. In this case, use a `MySQL` driver:
@@ -117,7 +119,7 @@ image::add-mysql-driver-dependency.png[]
 +
 image::add-shared-library.png[]
 
-== Add a Database Connector
+=== Add a Database Connector
 
 . In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
 +
@@ -138,9 +140,6 @@ image::select-database-connector.png[]
 +
 image::select-db-version.png[]
 . Anypoint Code Builder displays a message indicating that the dependency was successfully added.
-
-=== Configure Your Database Connector
-
 . On the `contact-sync.xml` file, add a new line under the `</salesforce:sfdc-config>` element, type _mysql-config_, and select `db:mysql-config`:
 +
 image::sync-api-create-db-config.png[]

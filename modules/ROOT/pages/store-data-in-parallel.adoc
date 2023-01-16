@@ -15,7 +15,8 @@ See xref:sync-api-configure-queries.adoc[] for more information.
 == Add a Scatter-Gather to Store Data in Parallel
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. Add a new line after the *Contact exists in Salesforce* `<set-variable` component, type `_scatter_` and select `mule:scatterGather`:
+. Add a new line after the *Contact exists in Salesforce* `<set-variable>` component.
+. Type `_scatter_` and select `mule:scatterGather`:
 +
 image::contact-sync-api-add-scatter-gather.png[]
 . Add the following logic within the Scatter-Gather component:
