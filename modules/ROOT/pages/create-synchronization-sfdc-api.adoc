@@ -2,15 +2,13 @@
 
 This walkthrough enables you to create an API from scratch that synchronizes your own contacts database with Salesforce.
 
-Your synchronization API contains a flow with the following logic:
+The synchronization API that you will build contains a flow with the following logic:
 
-* Fetch the contact in Salesforce containing the phone number to change or update it if it exists.
-* Validate the contact exists in Salesforce by using `first name + last name`.
-* If the contact already exists in Salesforce, then:
-** Update the phone number in Salesforce.
-** Update phone number in Database - again if the contact exists, otherwise create it.
-** Return a response indicating success.
-* Otherwise, create a response indicating contact doesn’t exist.
+* Fetch a contact from Salesforce.
+* If the contact in Salesforce has a phone number, retrieve its first and last name.
+* Define if the contact exists in the database by matching its first and last name with the contact fetched from Salesforce.
+* If the contact in the database matches the contact on Salesforce, update the phone number in the Database and return a response indicating success.
+* Otherwise, create a response indicating that the contact doesn’t exist.
 
 == Before You Begin
 
