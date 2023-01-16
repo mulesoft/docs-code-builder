@@ -98,9 +98,9 @@ Additionally, update the name of the component to _Query SFDC for Contact_:
 +
 image::sync-api-sfdc-query-component-flow.png[]
 
-== Define Behavior in Case the Record Exists or Not
+== Define Behavior in Case the Record Has a Phone Number
 
-Use a Choice Router to define behaviors based on specific conditions. In this case, you can use the Choice router to define behaviors based on whether the record exists or not in your Salesforce environment.
+Use a Choice Router to define behaviors based on specific conditions. In this case, you can use the Choice router to define behaviors based on whether the record has a phone number in your Salesforce environment. If it does, then to the application's logic, the contact exists.
 
 . In Anypoint Code Builder, open your `contact-sync.xml` file, and add a new line under your `</salesforce:query>` element.
 . Type _choice_ and select *mule:choice*:
@@ -137,7 +137,7 @@ For better readability of your Mule flow, update the name of the `choice`, `when
 +
 image::choice-flow-canvas.png[]
 
-As a condition for the first branch, check the results of the Salesforce query operation. If there are any results, the `Salesforce:Query` processor returns an array of *Contact* objects. In this case, the flow returns a failure message if the contact doesn’t exist.
+As a condition for the first branch, check the results of the Salesforce query operation. If there are any results, the `Salesforce:Query` processor returns an array of *Contact* objects. In this case, the flow returns a failure message if the contact doesn’t has a phone number.
 
 Create an expression that captures this condition:
 
