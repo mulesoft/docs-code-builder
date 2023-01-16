@@ -1,14 +1,14 @@
 = Create a Configuration File for Slack and Salesforce
 
-A configuration file is a file that can reference different configurations for your connectors. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
+A configuration file is a `.yml` file that can reference different configurations and specify different values for your connector properties. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
+
+To start configuring your Slack and Salesforce connectors in your escalation API, create a configuration file.
 
 == Before You Begin
 
-* You created your xref:create-escalation-slack-api.adoc[base integration Mule configuration file].
+Ensure that you created your xref:create-escalation-slack-api.adoc[base integration Mule configuration file].
 
 == Create a Configuration File
-
-A configuration file is a `.yaml` file with different values for your connectors properties:
 
 . In your explorer view, right-click under *src* > *main* > *mule* > *Resources* and select *New File*.
 +
@@ -34,7 +34,7 @@ slack:
 . Navigate to your `new-case-salesforce.xml` file, add a new line before your `<http:listener-config` element, type _configuration_ and select *mule:configurationProperties*:
 +
 image::select-mule-config-properties-contacts-sync.png[]
-. Move through the attributes and set the following value:
+. Scroll through the attributes and set the following value:
 +
 file:: config.yaml
 +
@@ -45,13 +45,13 @@ file:: config.yaml
 
 == Configure Your Salesforce Connector
 
-Now that you have your configuration file in place, you can use it to add the necessary fields for your Salesforce Connector to connect to your Salesforce environment:
+Use your configuration file to add the necessary fields for the Salesforce Connector to connect to your Salesforce environment:
 
-. Create a new line below your `<configuration-properties` element, type _salesforce_, and select *salesforce:sfdc-config*.
+. Create a new line after your `<configuration-properties` element, type _salesforce_, and select *salesforce:sfdc-config*.
 +
 image::sync-api-select-sfdc-config.png[]
 . Set the *name* field to _Salesforce-Config_.
-. Create a new line, type _basic_ and select *Salesforce:Basic* to configure a basic connection.
+. Create a new line, type _basic_ and select *Salesforce:Basic*.
 +
 image::basic-auth-sfdc-connector.png[]
 . Configure your *username* and *password* elements to use your configuration file values:
@@ -63,9 +63,10 @@ image::basic-auth-sfdc-connector.png[]
 +
 [NOTE]
 --
-When you mouse over your ${salesforce.username} and ${salesforce.password} elements, Anypoint Code Builder shows you the values from the configuration file.
+When you move your cursor over the `${salesforce.username}` and `${salesforce.password}` elements, Anypoint Code Builder shows the values from the configuration file.
 --
-. Verify your connection to Salesforce by selecting the *Test Connection* item on top of your `<salesforce:sfdc-config` item.
+. Verify your connection to Salesforce by selecting the *Test Connection* item on top of your `<salesforce:sfdc-config>` item.
++
 image::sync-api-sfdc-test-connection.png[]
 +
 Anypoint Code Builder returns a *Connection is valid* message below. +
@@ -73,10 +74,10 @@ If you get an error, verify the error message to troubleshoot further.
 
 == Add a Salesforce Trigger
 
-. Add a new line under your `</salesforce:sfdc-config>` element, type _flow_, and select *mule:flow*.
+. Add a new line after your `</salesforce:sfdc-config>` element, type _flow_, and select *mule:flow*.
 +
 image::create-flow-mule-app.png[]
-. Name your flow *​NewSalesforceCaseFlow*.
+. Name the flow *​NewSalesforceCaseFlow*.
 +
 [source,XML]
 --
@@ -87,7 +88,7 @@ image::create-flow-mule-app.png[]
 . Within your `<flow>` and `</flow>` elements, type _new_, and select *Salesforce:new-object-listener*.
 +
 image::new-salesforce-listener.png[]
-. Move through the attributes of the snippet and set the following values:
+. Scroll through the attributes of the snippet and set the following values:
 objectType:: *Case*
 config-ref:: *Salesforce-Config*
 name:: *On New Case*
