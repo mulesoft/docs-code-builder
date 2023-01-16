@@ -1,10 +1,12 @@
-= Configure Your Queries to Your Services
+= Configure Queries to Your Services
 
 == Before You Begin
 
-* You created a xref:create-synchronization-sfdc-api.adoc[Contacts Synchronization API].
-* You configured a xref:create-config-files.adoc[Reusable Configuration File].
-* Install a REST client like Postman or AdvancedRestClient.
+Before you begin, ensure you: 
+
+* Created a xref:create-synchronization-sfdc-api.adoc[Contacts Synchronization API].
+* Configured a xref:create-config-files.adoc[Reusable Configuration File].
+* Installed a REST client like Postman or AdvancedRestClient.
 
 
 == Configure Logic to Find a Salesforce Record
@@ -61,7 +63,7 @@ image::add-transform-message-sync-api.png[]
 Use the Salesforce Connector to retrieve the record from Salesforce, if the record exists.
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. In the `</ee:transform` component, add a new line, type _query_, and select `Salesforce:Query`:
+. In the `</ee:transform>` component, add a new line, type _query_, and select `Salesforce:Query`:
 +
 image::sync-api-add-sfdc-query.png[]
 . Update your `salesforce:query` *config-ref* element to point to your existing Salesforce connector configuration: *Salesforce-Config*.
@@ -95,11 +97,11 @@ Additionally, update the name of the component to _Query SFDC for Contact_:
 +
 image::sync-api-sfdc-query-component-flow.png[]
 
-== Define Behavior In Case The Record Exists or Not
+== Define Behavior in Case the Record Exists or Not
 
 Use a Choice Router to define behaviors based on specific conditions. In this case, you can use the Choice router to define behaviors based on whether the record exists or not in your Salesforce environment.
 
-. In Anypoint Code Builder, open your `contact-sync.xml` file, and add a new line under your `</salesforce:query` element.
+. In Anypoint Code Builder, open your `contact-sync.xml` file, and add a new line under your `</salesforce:query>` element.
 . Type _choice_ and select *mule:choice*:
 . Add both `when` and `otherwise` elements:
 +
@@ -134,9 +136,9 @@ For better readability of your Mule flow, update the name of the `choice`, `when
 +
 image::choice-flow-canvas.png[]
 
-As a condition for the first branch, you must check the results of the Salesforce query operation. If there are any results, the `Salesforce:Query` processor returns an array of *Contact* objects. In this case, if the contact doesn’t exist the flow returns a failure message.
+As a condition for the first branch, check the results of the Salesforce query operation. If there are any results, the `Salesforce:Query` processor returns an array of *Contact* objects. In this case, the flow returns a failure message if the contact doesn’t exist.
 
-You must create an expression that captures this condition:
+Create an expression that captures this condition:
 
 . On your `<when>` element, add the following expressions:
 +
@@ -168,7 +170,7 @@ Review your XML code:
 
 With the condition for whether the contact exists and the error message configured for when it doesn't, you can now add logic to store the existing phone number retrieved from Salesforce.
 
-. Add a new line after the `<when` element and add the following components:
+. Add a new line after the `<when>` element and add the following components:
 +
 [source,XML]
 --
@@ -189,7 +191,7 @@ image::final-choice-api-sync.png[]
 == Test Your API
 
 . Open a REST client
-. Set up a breakpoint by clicking the red icon right next to the `<choice` element.
+. Set up a breakpoint by clicking the red icon right next to the `<choice>` element.
 +
 image::add-breakpoint-sync-api.png[]
 . Run the application by pressing `F5`.

@@ -1,16 +1,16 @@
 = Create a Reusable Configuration File
 
-A configuration file is a file that can reference different configurations for your connectors. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
+A configuration file is a `.yml` file that can reference different configurations and specify different values for your connector properties. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
 
-To start configuring your Salesforce and Database connectors in your synchronization API, you can create a configuration file.
+To start configuring your Salesforce and Database connectors in your synchronization API, create a configuration file.
 
 == Before You Begin
 
-* Ensure that you created a xref:create-synchronization-sfdc-api.adoc[Contacts Synchronization API]
+* Ensure that you created a xref:create-synchronization-sfdc-api.adoc[Contacts Synchronization API].
 
 == Create a Configuration File
 
-A configuration file is a `.yaml` file with different values for your connectors properties:
+To create a configuration file:
 
 . In your explorer view, right-click under *src* > *main* > *mule* > *Resources* and select *New File*.
 +
@@ -33,7 +33,8 @@ mysql:
     username: ""
     password: ""
 --
-. Navigate to your `contact-sync.xml` file, add a new line before your `<http:listener-config` element, type _configuration_ and select `mule:configurationProperties`:
+. Navigate to your `contact-sync.xml` file and open it for editing.
+. Add a new line before the `<http:listener-config>` element, type _configuration_, and select `mule:configurationProperties`:
 +
 image::select-mule-config-properties-contacts-sync.png[]
 . Scroll through the attributes and set the following value:
@@ -49,7 +50,7 @@ file:: _config.yaml_
 
 In your configuration file, add the necessary fields for the Salesforce Connector to connect to your Salesforce environment:
 
-. Create a new line after the `<configuration-properties` element, type _salesforce_, and select `salesforce:sfdc-config`.
+. Create a new line after the `<configuration-properties>` element, type _salesforce_, and select `salesforce:sfdc-config`.
 +
 image::sync-api-select-sfdc-config.png[]
 . Set the *name* field to _Salesforce-Config_.
@@ -67,10 +68,10 @@ image::basic-auth-sfdc-connector.png[]
 --
 When you move your cursor over the `${salesforce.username}` and `${salesforce.password}` elements, Anypoint Code Builder shows the values from the configuration file.
 --
-. Verify your connection to Salesforce by selecting the *Test Connection* item on top of the `<salesforce:sfdc-config` item.
+. Verify your connection to Salesforce by selecting the *Test Connection* item on top of the `<salesforce:sfdc-config>` item.
 image::sync-api-sfdc-test-connection.png[]
 +
-Anypoint Code Builder returns a *Connection is valid* message below. +
+Anypoint Code Builder returns a *Connection is valid* message. +
 If you get an error, verify the error message to troubleshoot further.
 
 == Configure Your Database Connector
@@ -121,11 +122,11 @@ image::add-shared-library.png[]
 +
 image::import-asset-from-exchange-db.png[]
 . Type the type of asset you want to import:
-* _Connector_.
+* _Connector_
 +
 image::import-from-exchange-connector-type.png[]
 . Type the connector you want to import:
-* `_Database_`.
+* `_Database_`
 +
 image::choose-asset-name.png[]
 . Select *Database Connector - Mule 4*.
@@ -139,7 +140,7 @@ image::select-db-version.png[]
 
 === Configure Your Database Connector
 
-. On the `contact-sync.xml`, add a new line under the `</salesforce:sfdc-config>` element, type _mysql-config_, and select `db:mysql-config`:
+. On the `contact-sync.xml` file, add a new line under the `</salesforce:sfdc-config>` element, type _mysql-config_, and select `db:mysql-config`:
 +
 image::sync-api-create-db-config.png[]
 . Note that Anypoint Code Builder populates the Database Connector fields with the placeholders from the configuration file:
@@ -150,10 +151,10 @@ image::sync-api-create-db-config.png[]
   <db:my-sql-connection host="${mysql.host}" port="${mysql.port}" user="${mysql.username}" password="${mysql.password}" />
 </db:config>
 --
-. Verify your connection to the MySQL database by selecting the *Test Connection* item on the `<db:config` item.
+. Verify your connection to the MySQL database by selecting the *Test Connection* item on the `<db:config>` item.
 image::sync-api-db-config-test-connection.png[]
 +
-Anypoint Code Builder returns a *Connection is valid* message below. +
+Anypoint Code Builder returns a *Connection is valid* message. +
 If you get an error, verify the error message to troubleshoot further.
 
 == Next Step
