@@ -15,7 +15,8 @@ See xref:sync-api-configure-queries.adoc[] for more information.
 == Add a Scatter-Gather to Store Data in Parallel
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. Add a new line after the *Contact exists in Salesforce* `<set-variable` component, type `_scatter_` and select `mule:scatterGather`:
+. Add a new line after the *Contact exists in Salesforce* `<set-variable>` component.
+. Type `_scatter_` and select `mule:scatterGather`:
 +
 image::contact-sync-api-add-scatter-gather.png[]
 . Add the following logic within the Scatter-Gather component:
@@ -151,7 +152,7 @@ image::second-choice-router-db-update.png[]
     <set-variable value="#[payload.phoneNumber[0] as String]" doc:name="Set phone in DB" doc:id="tkqxdt" variableName="phonenumberDBVar"/>
 </otherwise>
 --
-. Add another Choice router to check if the old and the new phone number are the same. If the numbers are the same, log and update the `ReturnMessageDB` accordingly, otherwise update the phone number in the database and then log and update the `ReturnVariableDB`. +
+. Add another Choice router to check if the old and the new phone numbers are the same. If the numbers are the same, log and update the `ReturnMessageDB` accordingly, otherwise update the phone number in the database and then log and update the `ReturnVariableDB`. +
 Add the following code sample under your *Set Phone in DB* `set-variable` component:
 +
 [source,XML]
