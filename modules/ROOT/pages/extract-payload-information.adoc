@@ -4,12 +4,14 @@ This section of the walkthrough teaches you how to extract information from the 
 
 == Before You Begin
 
-* You created your xref:create-escalation-slack-api.adoc[Base Integration Mule Configuration File].
-* You created a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
+Before you begin, ensure you:
+
+* Created a xref:create-escalation-slack-api.adoc[Base Integration Mule Configuration File].
+* Created a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
 
 == Extract Values From the Payload
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</salesforce:new-object-listener` element.
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</salesforce:new-object-listener>` element.
 . Create a Transform Message component to extract data from the payload to variables:
 +
 [source,XML]
