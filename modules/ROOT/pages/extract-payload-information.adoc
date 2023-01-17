@@ -1,0 +1,52 @@
+= Extract Payload Information to Variables
+
+This section of the walkthrough teaches you how to extract information from the payload into different variables to refer to those values later in the flow.
+
+== Before You Begin
+
+Before you begin, ensure you:
+
+* Created a xref:create-escalation-slack-api.adoc[Base Integration Mule Configuration File].
+* Created a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
+
+== Extract Values From the Payload
+
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</salesforce:new-object-listener>` element.
+. Create a Transform Message component to extract data from the payload to variables:
++
+[source,XML]
+--
+<ee:transform doc:name="Extract Values from Case" >
+    <ee:variables>
+      <ee:set-variable variableName="casestatus"> //<1>
+          <![CDATA[%dw 2.0 output application/java --- payload.Status]]>
+      </ee:set-variable>
+      <ee:set-variable variableName="casenumber"> //<2>
+          <![CDATA[%dw 2.0 output application/java --- payload.CaseNumber]]>
+      </ee:set-variable>
+<ee:set-variable variableName="slackchannel"> //<3>
+          <![CDATA["this-is-a-test"]]>
+      </ee:set-variable>
+    </ee:variables>
+  </ee:transform>
+--
+<1> `casestatus` retrieves the Salesforce case status: *New*, *Working*, or *Escalated*.
+<2> `casenumber` retrieves the case number created by Salesforce.
+<3> Set the `slackchannel` to the channel name that you set earlier in the walkthrough.
+
+
+== Concatenate Your Values in The Payload
+
+. Add a Set Payload component to concatenate the value of your variables in the resulting payload of your application:
++
+[source,XML]
+--
+<set-payload doc:name="Set Case Info" value='#["Case Number: " ++ (payload.CaseNumber default "") ++  ", Origin: " ++ (payload.Origin default "") ++ ", Case Type: " ++ (payload.Type default "") ++ ", Priority: " ++ (payload.Priority default "") ++ ", Status: " ++ (payload.Status default "")]'/>
+--
+
+image::slack-app-integration-flow.png[]
+
+== Next Step
+
+* xref:add-condition-to-your-flow.adoc[Add a Condition to Your Flow Logic]. +
+Create a condition to send an Email if the case is escalated, otherwise inform about the case in a Slack channel.
