@@ -1,0 +1,53 @@
+= Ping a Locally Deployed App
+
+Because Anypoint Code Builder works as a web IDE, consider that you must ping a different URL to trigger the execution of locally deployed Mule applications.
+
+When you want to ping an application that it's triggered by an HTTP listener, you must use a different URL than `localhost`
+
+== Ping a Locally Deployed Application Using a Browser
+
+. Open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
+. After your application deploys successfully, open a new tab in your browser.
+. Type the URL of your web IDE instance, add the `/proxy/` path, and then add the port number you configured as a new path:
+`+https://<web-IDE-instance>/api/<port-you-configured-on-your-listener>/+`
++
+For example:
++
+[source]
+--
+https://pilar-t21fc0x.builder.code.com/proxy/8081/
+--
++
+See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct instance URL.
+. When pinging that URL, Anypoint Code Builder triggers the Mule flow.
+
+== Ping a Locally Deployed Application Using a REST Client
+
+. Open Anypoint Code Builder using your browser's Developer Tools (`F12`).
+. Navigate to your *Application* tab.
+. Under *Storage*, expand the *Cookies* section and select the URL of your web IDE instance.
++
+image::application-storage-cookies.png[]
+. Copy both cookies names and values: `_auth_proxy.sig` and `_auth_proxy`. For example:
++
+[source]
+--
+_auth_proxy.sig=xxxxxxxxxxxxxxxxxx; _auth_proxy=xxxxxxxxxxxxxxxxxx==
+--
+. In Anypoint Code Builder, open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
+. After your application deploys successfully, open your preferred REST client application.
+. Type the URL of your web IDE instance in the request URL section, add the `/proxy/` path, and then add the port number you configured as a new path:
+`+https://<web-IDE-instance>/api/<port-you-configured-on-your-listener>/+`
++
+For example:
++
+[source]
+--
+https://pilar-t21fc0x.builder.code.com/proxy/8081/
+--
++
+See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct instance URL.
+. Configure the headers to send the necessary cookies that you copied earlier:
++
+image::send-request-with-cookies.png[]
+. When pinging that URL, Anypoint Code Builder triggers the Mule flow.
