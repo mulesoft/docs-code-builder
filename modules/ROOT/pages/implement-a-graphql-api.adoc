@@ -1,18 +1,18 @@
 = Implement a GraphQL API
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-This walkthrough enables you to create an API from scratch that implements a GraphQL API that you published to Exchange.
+This walkthrough enables you to create a Mule application from scratch that implements a GraphQL API that you published to Exchange.
 
 Before you begin, ensure that you:
 
 * Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
-* Downloaded the xref:attachment$books-api.graphql[*Books API* graphQL schema].
+* Downloaded the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
 
 == Publish the GraphQL API to Exchange
 
-You can only implement a GraphQL that exists in Exchange. Additionally, you can only add a GraphQL API by manually publishing it to Exchange:
+You can only implement a GraphQL API that exists in Exchange. Additionally, you can only add a GraphQL API by manually publishing it to Exchange:
 
 . In Anypoint Platform, navigate to *Exchange*.
 . Select *Publish a new asset*.
@@ -41,7 +41,7 @@ image::implement-api-option-mat.png[]
 image::implement-api-configure-1.png[]
 +
 [calloutlist]
-.. *Project Name*: _books-implmenetation_.
+.. *Project Name*: _books-implementation_.
 .. *Project Location*: select *Browse*, and then select your home directory.
 +
 image::select-home-directory.png[]
@@ -53,14 +53,14 @@ image::select-books-graphql-api.png[]
 +
 . Select *Create Project*.
 
-Anypoint Code Builder scaffolds your graphQL API and creates an empty flow for each type in your Books API graphQL schema.
+Anypoint Code Builder scaffolds your GraphQL API and creates an empty flow for each type in your Books API GraphQL schema.
 
 
 [%header,%autowidth.spread,cols="a,a"]
 |===
 | GraphQL Schema | Mule Flow
 |
-[source,graphQL]
+[source,GraphQL]
 --
 
 type Query {
@@ -104,4 +104,4 @@ type Bestsellers {
 == Next Step
 
 * xref:test-graphql-first-implementation.adoc[Test Your GraphQL Implementation]. +
-Run your application on Anypoint Code Builder and post graphQL queries to your endpoint.
+Run your application on Anypoint Code Builder and post GraphQL queries to your endpoint.
