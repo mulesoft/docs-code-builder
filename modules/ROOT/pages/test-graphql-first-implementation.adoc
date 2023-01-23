@@ -10,7 +10,7 @@ Before you begin, ensure that you:
 
 * Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
-* Downloaded the xref:attachment$books-api.graphql[*Books API* graphQL schema].
+* Downloaded the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
 * Implemented the Books API GraphQL Schema. +
 See xref:implement-a-graphql-api.adoc[Implement a GraphQL API].
 * You installed a REST client like Postman or AdvancedRestClient.
@@ -54,9 +54,9 @@ See xref:ping-locally-deployed-app.adoc[] for more information.
 --
 +
 image::configure-post-request-acb-cookies.png[]
-. Configure the body of the request to contain a graphQL query. For example:
+. Configure the body of the request to contain a GraphQL query. For example:
 +
-[source,graphQL]
+[source,GraphQL]
 --
 query bookById($id: ID){
 	bookById(id: $id) {
@@ -74,7 +74,7 @@ query bookById($id: ID){
 +
 Note that because you are querying a value by a specific ID (`$id: ID`), you must provide a GraphQL variable with the ID you want to query:
 +
-[source,graphQL]
+[source,GraphQL]
 --
 {
 	"id": 1
@@ -85,7 +85,7 @@ image::graphql-query-book-by-id.png[]
 . Send the request.
 . Anypoint Code Builder returns an empty field for the book:
 +
-[source,graphQL]
+[source,GraphQL]
 --
 {
     "data": {
@@ -98,7 +98,7 @@ Other queries you can try for your endpoint are:
 
 * Query `books`:
 +
-[source,graphQL]
+[source,GraphQL]
 --
 query books {
 	books{
@@ -115,7 +115,7 @@ query books {
 --
 * Query `bestSellers`
 +
-[source,graphQL]
+[source,GraphQL]
 --
 query bestsellers {
 	bestsellers{
