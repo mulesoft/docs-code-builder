@@ -4,7 +4,7 @@ Anypoint Code Builder enables you to preview the result of your DataWeave transf
 
 include::partial$dw-dependency-warning.adoc[]
 
-You can use this feature in any field that accepts a DataWeave expression such as inside a Set Payload component:
+You can use this feature in any field that accepts a DataWeave expression, such as inside a Set Payload component:
 
 [source,XML]
 --
@@ -16,12 +16,10 @@ image::set-payload-dw.png[]
 
 == Example
 
-Assume you want to create a DataWeave script to normalize date separators  (`/`, `.`, and `-`) to output a consistent separator (`-`).
-
-For this example, you'll create a Mule application that receives an XML payload with dates using different separators and transforms them into the same `mm-dd-yyyy` format:
+Create a Mule application that receives an XML payload with dates using different date separators (`/`, `.`, and `-`). The application uses a DataWeave script to normalize the dates to use a consistent separator (`-`):
 
 . In your Anypoint Code Builder welcome mat, select *Develop an Integration*.
-. Name your project _normalize-dates_, and select *Browse*.
+. Name your project _normalize-dates_ and select *Browse*.
 +
 image::integration-1.png[]
 . Select your home directory and click *OK*:
@@ -62,9 +60,11 @@ dates: payload.dates mapObject ((date, index) ->
    date : normalize(date)
 )
 --
-. Note that Anypoint Code Builder warns you about the payload not being resolved:
-+
+
+Note that Anypoint Code Builder warns you about the payload not being resolved:
+
 image::quick-fix-dw-example.png[]
+
 . Select *Quick Fix* > *Create Sample Data for Payload* > *XML*.
 . Replace the generated `payload.xml` file with the following XML code:
 +
@@ -76,11 +76,12 @@ image::quick-fix-dw-example.png[]
   <date>28.JUL.16</date>
 </dates>
 --
-. Back in your `normalize-date.xml` file, locate your cursor within your DataWeave code, click the *Show Code Actions* icon, and select *Run Preview*:
+. Back in your `normalize-date.xml` file, locate your cursor within your DataWeave code, click *Show Code Actions*, and select *Run Preview*:
 +
 image::run-preview-dw-example.png[]
-. Note that the output tab shows the payload sample with the date separators normalized:
-+
+
+Note that the output tab shows the payload sample with the date separators normalized:
+
 [source,XML]
 --
 <dates>
@@ -92,5 +93,4 @@ image::run-preview-dw-example.png[]
 
 == Known Limitations
 
-* Currently, DataWeave cannot recognize the larger context to which scripts belong. Therefore, DataWeave requests sample data for all scripts within a single component. In the future, samples will only be needed once for each context.
-* To add context variables samples, DataWeave indicates an error over them. This is not accurate as the script is valid regardless of the existence of samples. In the future, this error will be replaced by a warning, accurately reflecting the consequences of the lack of samples. Any preview attempts will fail.
+* Currently, DataWeave cannot recognize the larger context to which samples belong. Therefore, DataWeave requests sample data for all scripts within a single component. In the future, you will need to provide samples only once for each context.
