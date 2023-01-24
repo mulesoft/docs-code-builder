@@ -60,9 +60,11 @@ dates: payload.dates mapObject ((date, index) ->
    date : normalize(date)
 )
 --
-. Note that Anypoint Code Builder warns you about the payload not being resolved:
-+
+
+Note that Anypoint Code Builder warns you about the payload not being resolved:
+
 image::quick-fix-dw-example.png[]
+
 . Select *Quick Fix* > *Create Sample Data for Payload* > *XML*.
 . Replace the generated `payload.xml` file with the following XML code:
 +
@@ -77,8 +79,9 @@ image::quick-fix-dw-example.png[]
 . Back in your `normalize-date.xml` file, locate your cursor within your DataWeave code, click *Show Code Actions*, and select *Run Preview*:
 +
 image::run-preview-dw-example.png[]
-. Note that the output tab shows the payload sample with the date separators normalized:
-+
+
+Note that the output tab shows the payload sample with the date separators normalized:
+
 [source,XML]
 --
 <dates>
