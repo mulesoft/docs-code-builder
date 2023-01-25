@@ -1,0 +1,130 @@
+= Mock Data Using a DataWeave Library
+
+The following walkthrough shows you how to develop an integration, import the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^] from Exchange, and use  the custom library to return a random value from the library.
+
+== Before You Begin
+
+Before getting started, ensure you:
+
+* Set up your MuleSoft environment. +
+See xref:setup.adoc[Setup] for more information.
+
+== Create a Mule Application
+
+. In your web IDE instance, navigate to your Anypoint Code Builder view:
++
+image::anypoint-code-builder-view.png[]
+. Select *Develop an Integration*.
++
+image::develop-integration-option-mat.png[]
++
+. Configure your integration using the following values:
++
+image::integration-create-ui.png[]
++
+[calloutlist]
+.. On *Project Name*, type `mock-dw-library`.
+.. On *Project Location*, select *Browse*, and then select your home directory.
++
+. Select *Create Project*.
+
+== Create a Flow
+
+Start by configuring a flow with an HTTP listener that exposes a root path (`/`):
+
+. Between both `<mule>` and `</mule>` elements, create an HTTP Listener global configuration:
++
+[source,XML]
+--
+<http:listener-config name="HTTP_Listener_config" >
+  <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+--
+. After the `</http:listener-config>` element, add a flow and an HTTP Listener element:
++
+[source,XML]
+--
+<flow name="receive-request" doc:name="Flow" >
+  <http:listener path="/" config-ref="HTTP_Listener_config" doc:name="Listener" doc:id="bbzemf" />
+</flow>
+--
+
+== Import the DataWeave Library
+
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
++
+image::import-asset-from-exchange-db.png[]
+. Select *DataWeave Library*.
+. Start typing _DataWeave_, and hit `enter` for Anypoint Code Builder to suggest the assets that match your search.
+. Select *DataWeave Mock Data Generators Library*.
+. Select version *1.0.0*.
+
+Anypoint Code Builder displays a message indicating that the dependency was successfully added.
+
+== Use the DataWeave Library
+
+. After the `<http:listener` element, add a new line and create a Set Payload processor.
++
+[source,XML]
+--
+<flow name="receive-request" doc:name="Flow" >
+  <http:listener path="/" config-ref="HTTP_Listener_config" doc:name="Listener" doc:id="bbzemf" />
+  <set-payload value="#[]" doc:name="Set Payload" doc:id="ee6848" />
+</flow>
+--
+. Add the following DataWeave script inside the `value` element of the `set-payload` element:
++
+[source,dataweave]
+--
+%dw 2.0
+output application/json
+import * from mocks::DataGenerators
+---
+
+
+mocks::DataGenerators::randomCity()
+--
+
+Review your XML code:
+
+[source,XML]
+--
+<flow name="receive-request" doc:name="Flow" >
+  <http:listener path="/" config-ref="HTTP_Listener_config" doc:name="Listener" doc:id="bbzemf" />
+  <set-payload value="#[%dw 2.0	output application/json	import * from mocks::DataGenerators	---	mocks::DataGenerators::randomCity()]" doc:name="Set Payload" doc:id="ee6848" />
+</flow>
+--
+
+== Deploy the Application
+
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
++
+image::deploy-to-cloudhub.png[]
+. Select *Create a deploy configuration file instead* from the pop-up with the error message `Deployment configuration file not found, make sure it's called: deploy.json (case sensitive), and it's placed in the resources folder`
++
+image::create-deployment-file.png[]
+. Anypoint Code Builder creates a `deploy.json` file:
++
+image::deploy-json-file.png[]
++
+[source,json]
+--
+{
+  "runtime": "4.4.0",
+  "workerSize": 0.1,
+  "applicationName": "mock-dw-library", //<1>
+  "workers": 1,
+  "autoStart": true
+}
+--
+<1> The `applicationName` property defines part of the URL that you use to access your application on Cloudhub. +
+The name must be unique across all applications deployed to Cloudhub.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
+. Select your preferred environment.
++
+Anypoint Code Builder packages the application and deploys it to Cloudhub.
+. Navigate to *Runtime Manager*.
+. Select your application from the list applications.
+. The domain name of the application varies, but it follows a similar structure such as: +mock-dw-library.eu-s1.cloudhub.io+.
+. Open your preferred REST client and make a `GET` request to +http://mock-dw-library.eu-s1.cloudhub.io/+.
+. Your application now returns a random city every time you hit the endpoint.
