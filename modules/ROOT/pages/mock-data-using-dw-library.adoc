@@ -17,15 +17,13 @@ image::anypoint-code-builder-view.png[]
 . Select *Develop an Integration*.
 +
 image::develop-integration-option-mat.png[]
-+
 . Configure your integration using the following values:
 +
 image::integration-create-ui.png[]
 +
 [calloutlist]
-.. On *Project Name*, type `mock-dw-library`.
+.. On *Project Name*, type `_mock-dw-library_`.
 .. On *Project Location*, select *Browse*, and then select your home directory.
-+
 . Select *Create Project*.
 
 == Create a Flow
@@ -55,7 +53,7 @@ Start by configuring a flow with an HTTP listener that exposes a root path (`/`)
 +
 image::import-asset-from-exchange-db.png[]
 . Select *DataWeave Library*.
-. Start typing _DataWeave_, and hit `enter` for Anypoint Code Builder to suggest the assets that match your search.
+. Start typing _DataWeave_, and press `enter` for Anypoint Code Builder to suggest the assets that match your search.
 . Select *DataWeave Mock Data Generators Library*.
 . Select version *1.0.0*.
 
@@ -63,7 +61,7 @@ Anypoint Code Builder displays a message indicating that the dependency was succ
 
 == Use the DataWeave Library
 
-. After the `<http:listener` element, add a new line and create a Set Payload processor:
+. After the `<http:listener>` element, add a new line and create a Set Payload processor:
 +
 [source,XML]
 --
@@ -124,7 +122,7 @@ The name must be unique across all applications deployed to CloudHub.
 +
 Anypoint Code Builder packages the application and deploys it to CloudHub.
 . Navigate to *Runtime Manager*.
-. Select your application from the application list.
-. The domain name of the application varies, but it follows a similar structure such as: +mock-dw-library.eu-s1.cloudhub.io+.
-. Open your preferred REST client and make a `GET` request to +http://mock-dw-library.eu-s1.cloudhub.io/+.
-. Your application now returns a random city every time you hit the endpoint.
+. Select your application from the application list. +
+The domain name of the application varies, but it follows a similar structure such as: +mock-dw-library.eu-s1.cloudhub.io+.
+. Open your preferred REST client and make a `GET` request to `+http://mock-dw-library.eu-s1.cloudhub.io/+`.
+. Your application now returns a random city every time you reach the endpoint.
