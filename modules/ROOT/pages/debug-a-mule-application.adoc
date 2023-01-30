@@ -4,7 +4,10 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 You can debug your Mule applcation using the embedded debugger in Anypoint Code Builder
 
-Because Anypoint Code Builder auto save feature is enabled by default, each save in debug mode will hot deploy your application. If you are in the middle of a change and your changes save automatically you'll have to wait for the deployment to fail before resaving your entire change.  To avoid this scenario, you can disable auto save by going to *File* > *Auto Save* and toggle the check mark to *off*.
+Anypoint Code Builder does not have a hot re-deploy mechanism. To re-deploy a running application that you are debugging:
+
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Rebuild Application_ .
+
 
 == Getting to Know the Debugger
 
