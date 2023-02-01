@@ -58,6 +58,8 @@ image::transform-with-output-json.png[]
 . Open your preferred REST client.
 . Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
 See xref:ping-locally-deployed-app.adoc[] for more information about sending a request to your application.
+
+Note the response from the MySQL database:
 +
 [source,JSON]
 --
@@ -207,7 +209,7 @@ See xref:ping-locally-deployed-app.adoc[] for more information about sending a r
     }
 ]
 --
-+
+
 [WARNING]
 --
 You can get an error `Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : Communications link failure"`. +
