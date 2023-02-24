@@ -1,6 +1,6 @@
 = Use DataWeave to Transform Data
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 You can use DataWeave to transform the flight data you are querying into a JSON output and match it to your API specification.
 
@@ -55,9 +55,11 @@ payload
 +
 image::transform-with-output-json.png[]
 . Run your application by pressing `F5`.
-. Make a `GET` request to `+https://<web-IDE-instance>/api/8081/flights+`. +
-See xref:ping-locally-deployed-app.adoc[] for more information on how to send request to your application.
-. Note the response from the MySQL database:
+. Open your preferred REST client.
+. Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
+See xref:ping-locally-deployed-app.adoc[] for more information about sending a request to your application.
+
+Note the response from the MySQL database:
 +
 [source,JSON]
 --
@@ -207,7 +209,7 @@ See xref:ping-locally-deployed-app.adoc[] for more information on how to send re
     }
 ]
 --
-+
+
 [WARNING]
 --
 You can get an error `Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : Communications link failure"`. +

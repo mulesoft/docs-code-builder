@@ -1,6 +1,6 @@
 = Mock Data Using a DataWeave Library
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 The following walkthrough shows you how to develop an integration, import the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^] from Exchange, and use  the custom library to return a random value from the library.
 
@@ -19,22 +19,20 @@ image::anypoint-code-builder-view.png[]
 . Select *Develop an Integration*.
 +
 image::develop-integration-option-mat.png[]
-+
 . Configure your integration using the following values:
 +
 image::integration-create-ui.png[]
 +
 [calloutlist]
-.. On *Project Name*, type `mock-dw-library`.
+.. On *Project Name*, type `_mock-dw-library_`.
 .. On *Project Location*, select *Browse*, and then select your home directory.
-+
 . Select *Create Project*.
 
 == Create a Flow
 
 Start by configuring a flow with an HTTP listener that exposes a root path (`/`):
 
-. Between both `<mule>` and `</mule>` elements, create an HTTP Listener global configuration:
+. Between the `<mule>` and `</mule>` elements, create an HTTP Listener global configuration:
 +
 [source,XML]
 --
@@ -57,7 +55,7 @@ Start by configuring a flow with an HTTP listener that exposes a root path (`/`)
 +
 image::import-asset-from-exchange-db.png[]
 . Select *DataWeave Library*.
-. Start typing _DataWeave_, and hit `enter` for Anypoint Code Builder to suggest the assets that match your search.
+. Start typing _DataWeave_, and press `enter` for Anypoint Code Builder to suggest the assets that match your search.
 . Select *DataWeave Mock Data Generators Library*.
 . Select version *1.0.0*.
 
@@ -65,7 +63,7 @@ Anypoint Code Builder displays a message indicating that the dependency was succ
 
 == Use the DataWeave Library
 
-. After the `<http:listener` element, add a new line and create a Set Payload processor.
+. After the `<http:listener>` element, add a new line and create a Set Payload processor:
 +
 [source,XML]
 --
@@ -102,12 +100,7 @@ Review your XML code:
 . Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
 +
 image::deploy-to-cloudhub.png[]
-. Select *Create a deploy configuration file instead* from the pop-up with the error message `Deployment configuration file not found, make sure it's called: deploy.json (case sensitive), and it's placed in the resources folder`
-+
-image::create-deployment-file.png[]
-. Anypoint Code Builder creates a `deploy.json` file:
-+
-image::deploy-json-file.png[]
+. Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review:
 +
 [source,json]
 --
@@ -119,14 +112,20 @@ image::deploy-json-file.png[]
   "autoStart": true
 }
 --
-<1> The `applicationName` property defines part of the URL that you use to access your application on Cloudhub. +
-The name must be unique across all applications deployed to Cloudhub.
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
++
+[calloutlist]
+.. The `applicationName` property defines the part of the URL that you use to access your application on CloudHub. +
+The name must be unique across all applications deployed to CloudHub.
+. After reviewing the deployment configuration, select *Deploy* to deploy the application to CloudHub.
++
+image::deploy-config-created.png[Deployment configuration file created pop-up message]
 . Select your preferred environment.
 +
+image::select-deployment-environment.png[]
++
 Anypoint Code Builder packages the application and deploys it to Cloudhub.
-. Navigate to *Runtime Manager*.
-. Select your application from the list applications.
-. The domain name of the application varies, but it follows a similar structure such as: +mock-dw-library.eu-s1.cloudhub.io+.
-. Open your preferred REST client and make a `GET` request to +http://mock-dw-library.eu-s1.cloudhub.io/+.
-. Your application now returns a random city every time you hit the endpoint.
+. After deployment completes, select *Open in Runtime Manager*.
+. Select your application from the application list. +
+The domain name of the application varies, but it follows a similar structure such as: `+mock-dw-library.eu-s1.cloudhub.io+`.
+. Open your preferred REST client and make a `GET` request to `+http://mock-dw-library.eu-s1.cloudhub.io/+`.
+. Your application now returns a random city every time you reach the endpoint.
