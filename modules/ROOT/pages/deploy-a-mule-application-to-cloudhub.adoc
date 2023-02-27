@@ -18,7 +18,7 @@ See xref:access-management::permissions-by-product.adoc#runtime-manager[Availabl
 
 To deploy an application to CloudHub you must configure a `deploy.json` file in the `src/main/resources` directory of your Mule application project. If your project does not have a `deploy.json` file, Anypoint Code Builder will automatically create one the first time you deploy your application:
 
-. In Anypoint Code Builder, open your main application configuration file, and select the *Deploy to CloudHub* icon image:deploy-to-cloudhub-icon.png[20,20].
+. In Anypoint Code Builder, open your Mule configuration file, and select the *Deploy to CloudHub* icon image:deploy-to-cloudhub-icon.png[20,20].
 +
 image::deployment-icon-location.png[Deploy to CloudHub icon highlighted on top of the editors.]
 +
@@ -44,8 +44,24 @@ The name must be unique across all applications deployed to Cloudhub.
 image::deploy-config-created.png[Deployment configuration file created pop-up message]
 . Select your preferred environment.
 +
-image::select-deployment-environment.png[]
+image::select-deployment-environment.png[Environment selection drop-down]
 +
 Anypoint Code Builder packages the application and deploys it to Cloudhub.
 
-After deployment completes, Anypoint Code Builder enables you to open the application on Runtime Manager
+After the deployment completes, Anypoint Code Builder enables you to open the application on Runtime Manager.
+
+
+== Re-deploy to CloudHub
+
+After you deploy a Mule application to CloudHub, you can still modify it and re-deploy it with your new changes. The application that's running on CloudHub will be overwritten.
+
+To re-deploy a Mule application to CloudHub:
+
+. In Anypoint Code Builder, open your Mule configuration file, and select the *Deploy to CloudHub* icon image:deploy-to-cloudhub-icon.png[20,20].
+. If there's already an application with the same `applicationName` already deployed to the same environment on CloudHub, Anypoint Code Builder prompts you to re-deploy the application.
++
+image::re-deploy-to-cloudhub-prompt.png[Pop-up message prompt to re-deploy to CloudHub]
++
+Anypoint Code Builder packages the application and deploys it to Cloudhub.
+
+After the re-deployment completes, Anypoint Code Builder enables you to open the application on Runtime Manager.
