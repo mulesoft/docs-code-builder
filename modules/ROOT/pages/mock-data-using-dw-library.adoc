@@ -91,7 +91,10 @@ Review your XML code:
 --
 <flow name="receive-request" doc:name="Flow" >
   <http:listener path="/" config-ref="HTTP_Listener_config" doc:name="Listener" doc:id="bbzemf" />
-  <set-payload value="#[%dw 2.0	output application/json	import * from mocks::DataGenerators	---	mocks::DataGenerators::randomCity()]" doc:name="Set Payload" doc:id="ee6848" />
+  <set-payload
+    doc:name="Set Payload"
+    value="#[%dw 2.0 output application/json import * from mocks::DataGenerators --- mocks::DataGenerators::randomCity()]"
+    />
 </flow>
 --
 
@@ -112,7 +115,6 @@ image::deploy-to-cloudhub.png[]
   "autoStart": true
 }
 --
-+
 [calloutlist]
 .. The `applicationName` property defines the part of the URL that you use to access your application on CloudHub. +
 The name must be unique across all applications deployed to CloudHub.

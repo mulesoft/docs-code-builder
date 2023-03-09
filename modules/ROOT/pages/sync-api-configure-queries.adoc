@@ -182,11 +182,11 @@ With the condition for whether the contact exists and the error message configur
 <logger level="INFO" message='#["Existing phone number in salesforce: " ++ vars.phonenumberSFVar]' doc:name="Logger" /> //<3>
 <set-variable variableName="ReturnMessage" value="Contact exists in Salesforce" doc:name="Set Return Message" /> //<4>
 --
-+
-<1> A Set Variable component to assign the value of the contact’s phone to a temporary variable named `phonenumberSFVar`.
-<2> A second Set Variable component to store the ID to a temporary variable named `IdVar`.
-<3> A Logger to print the value of the phone found in the record.
-<4> A Set Variable to assign a temporary value to the `ReturnMessage` variable.
+[calloutlist]
+.. A Set Variable component to assign the value of the contact’s phone to a temporary variable named `phonenumberSFVar`.
+.. A second Set Variable component to store the ID to a temporary variable named `IdVar`.
+.. A Logger to print the value of the phone found in the record.
+.. A Set Variable to assign a temporary value to the `ReturnMessage` variable.
 +
 image::final-choice-api-sync.png[]
 
