@@ -1,6 +1,6 @@
 = Create a Basic Integration
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Start by creating a basic integration in Anypoint Code Builder
 
@@ -51,7 +51,7 @@ It can take a few minutes for Anypoint Code Builder to set up the flow canvas.
 --
 . In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
 +
-image::import-asset-from-exchange-db.png[]
+image::import-asset-exchange-implementation.png[]
 . Type the type of asset you want to import:
 * _Connector_.
 +
@@ -64,7 +64,7 @@ image::import-http-connector.png[]
 . Select the version of the connector you want to import:
 +
 image::add-http-version.png[]
-. In the`american-ws-anypoint-code-builder.xml` file, go to a new line at the bottom of the XML file above the closing `</mule>` tag.
+. In the `american-ws-anypoint-code-builder.xml` file, go to a new line at the bottom of the XML file above the closing `</mule>` tag.
 . Type `http`, and select `HTTP:listener-config`.
 +
 image::add-http-config.png[]
@@ -80,29 +80,33 @@ image::add-listener-config-2.png[]
 +
 host:: _0.0.0.0_
 port:: _8081_
-. Go to a new line at the bottom of the XML file above the closing `</mule>` tag.
-. Type `flow`, and select `mule:flow`.
+. Select the `plus` icon on your canvas:
 +
-image::add-flow.png[]
+image::add-flow-structure.png[plus icon highlighted on the empty canvas.]
+. Select *Flow*:
++
+image::add-flow-to-canvas.png[Flow element highlighted on the flow structure selection screen.]
 . Type `_doc:name_` and set the value to `getFlights`.
 +
-image::finished-flow.png[]
-. Go to a new line under your `<flow>` tag and add press `tab` to add an indentation.
-. Type `listener`, and select `HTTP:listener`.
+image::finished-flow.png[Flow overview comparison between the canvas and the XML editors.]
+. In your canvas, after your *Flow* component, select the `plus` icon:
 +
 image::add-http-listener-endpoint.png[]
-. Scroll through the attributes and set the following values:
+. Type `Listener` on the search field, and select *Listener* from the HTTP results:
++
+image::add-http-listener-from-canvas.png[]
+. On the XML, scroll through the attributes and set the following values:
 +
 path:: `_flights_`
 config-ref:: `_inbound-request_`
 doc:name:: `_HTTP /flights_`
-+
+
 As you move forward with your XML, Anypoint Code Builder creates a graphical representation of your flow in the left panel.
-+
+
 image::first-flow-graphical-view.png[]
-+
+
 Select any processor in the graphical view to have Anypoint Code Builder highlight its location within the XML Mule configuration file.
-+
+
 image::http-highlight-flow.png[]
 
 Review your XML code:
@@ -125,16 +129,17 @@ Review your XML code:
 
 == Set a Payload
 
-. Go to a new line at the bottom of the XML file above the closing `</flow>` tag.
-. Type `_set-payload_`, and select `mule:setPayload`.
+. In your canvas, after your *Listener* component, select the `plus` icon:
++
+iamge::add-set-payload-canvas.png[]
+. Type `payload`, and select *Set Payload*.
 +
 image::add-set-payload.png[]
 . Press `tab` to Move through the attributes and set the following values:
 +
 value:: `_Flight info_`
 doc:name:: `_Set Response_`
-+
-image::finished-set-payload.png[]
+
 
 Review your XML code:
 
@@ -169,8 +174,6 @@ Using *Run* > *Start without Debugging* causes an error.
 * american-ws-anypoint-code-builder-1.0.0-SNAPS * default                        * DEPLOYED           *
 *******************************************************************************************************
 --
-+
-image::deployed-application.png[]
 
 
 == Test the Application
