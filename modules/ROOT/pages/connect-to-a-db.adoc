@@ -25,8 +25,6 @@ See xref:create-basic-integration.adoc[]
 --
 <set-payload value="Flight info" doc:name="Set Response" />
 --
-+
-image::remove-set-payload.png[]
 
 == Add a Database Driver Dependency
 
@@ -73,7 +71,7 @@ image::add-shared-library.png[]
 
 . In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
 +
-image::import-asset-from-exchange-db.png[]
+image::import-asset-exchange-implementation.png[]
 . Type the type of asset you want to import:
 * _Connector_.
 +
@@ -96,11 +94,7 @@ image::select-db-version.png[]
 
 . In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
 . Go to a line between your existing `</http:listener-config>` and `<flow>` elements.
-+
-image::add-new-line-configure-db.png[]
 . Start typing `_database_` and select `db-mysql-config`.
-+
-image::add-db-config.png[]
 . Move through the attributes and set the following values:
 +
 name:: `_Database_Config_`
@@ -143,8 +137,9 @@ Review your XML code:
 
 == Write a Query to Return All Flights
 
-. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
-. Go to the line under your `<http:listener>` element and indent to the same level.
+. Select the `plus` icon after the Listener component:
++
+image::select-db-select-canvas.png[]
 . Start typing `_select_` and select `Database:select`.
 +
 image::select-db-select.png[]
