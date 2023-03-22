@@ -19,7 +19,7 @@ See xref:add-condition-to-your-flow.adoc[].
 
 . In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
 +
-image::import-asset-from-exchange-db.png[]
+image::import-asset-exchange-implementation.png[]
 . Specify the type of asset you want to import:
 * _Connector_.
 +
@@ -53,13 +53,19 @@ image::add-slack-config.png[]
 
 == Add a Slack Action
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and remove the `<logger>` element inside the `<otherwise>` element of your Choice router.
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, *Temporary Logger* component inside the *Not Escalated* route of the Choice router:
 +
 [source,XML]
 --
 <logger doc:name="Temporary Logger" message='#["Please look into this new Case: " ++ payload]'/>
 --
-. Add the following code sample:
+. Select the `plus` icon inside the *Not Escalated* route of the Choice router:
++
+image::add-slack-action-example-canvas.png[]
+. Type `_post_`, and select the *Chat: Post Message* operation from the Slack section:
++
+image::add-chat-post-message-operation-canvas.png[]
+. Configure the Slack operation using the following code sample:
 +
 [source,XML]
 --
