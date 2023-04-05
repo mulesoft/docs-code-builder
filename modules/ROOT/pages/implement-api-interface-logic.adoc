@@ -1,6 +1,6 @@
 = Implement the API Interface Logic
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 After importing an API specification to an existing project, you can use Anypoint Code Builder to build the logic behind each flow.
 
@@ -55,8 +55,6 @@ image::get-flights-select-listener.png[]
 --
 <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
 --
-+
-image::removed-http-listener-get-flights.png[]
 
 Your flow should now look like this:
 
@@ -101,7 +99,7 @@ Your flow should now look like this:
 == Reference the Implementation Flow From The Interface File
 
 . In Anypoint Code Builder, open your `interface.xml` file.
-. Use the Outline List to navigate to your `get:\flights:american-flights-api-config` flow:
+. Use the *Flow List* to navigate to your `get:\flights:american-flights-api-config` flow:
 +
 [source,xml]
 --
@@ -111,16 +109,10 @@ Your flow should now look like this:
 --
 +
 image::select-get-flights-flow.png[]
-. Create a new line under the `<flow>` element and indent it at the same level as the `<ee:transfor>` element.
-. Type `_flow_` and select the element `mule:flowRef`.
+. Select the `plus` icon before the Transform Message component:
 +
-[source,xml]
---
-<flow-ref name="getFlights" doc:name="Get Flights" />
---
+image::add-sub-flow-canvas-tutorial.png[]
 . Configure the `name` attribute as `_getFlights_`.
-+
-image::select-flow-ref.png[]
 
 Now all calls to `+https://<web-IDE-instance>/api/8081/flights+` are handled by your `interface` file and processed in your `implementation` file. +
 See xref:ping-locally-deployed-app.adoc[] for more information about sending requests to your application.
