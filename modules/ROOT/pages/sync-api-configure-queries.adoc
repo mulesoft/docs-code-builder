@@ -1,6 +1,6 @@
 = Configure Queries to Your Services
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 == Before You Begin
 
@@ -25,7 +25,7 @@ SELECT phone, ID from Contact WHERE FirstName=':firstname' AND LastName=':lastna
 The previous query uses two query parameters: `firstname` and `lastname`. To assign values to each parameter you must create two variables: `firstnameVar` and `lastnameVar`:
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. Use the *Outline List* element to navigate to the `post:\updatePhone:contact-sync-config` flow.
+. Use the *Flow List* element to navigate to the `post:\updatePhone:contact-sync-config` flow.
 +
 image::sync-api-outline-select-flow.png[]
 . Remove the existing Transform Message component:
@@ -58,17 +58,18 @@ This Transform Message processor enables you to perform several DataWeave mappin
 * The first name of the incoming payload, mapped to the `firstnameVar` variable.
 * The last name of the incoming payload, mapped to the `lastnameVar` variable.
 * The phone number of the incoming payload, mapped to the `phonenumberVar` variable.
-+
-image::add-transform-message-sync-api.png[]
 
 == Send a Query to Salesforce
 
 Use the Salesforce Connector to retrieve the record from Salesforce, if the record exists.
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. In the `</ee:transform>` component, add a new line, type _query_, and select `Salesforce:Query`:
+. Select the `plus` icon after the Transform Message component:
 +
-image::sync-api-add-sfdc-query.png[]
+image::add-salesforce-query-canvas.png[]
+. Type `_query_` and select the *query* operation:
++
+image::add-query-operations-salesforce-canvas.png[]
 . Update your `salesforce:query` *config-ref* element to point to your existing Salesforce connector configuration: *Salesforce-Config*.
 +
 Additionally, update the name of the component to _Query SFDC for Contact_:
@@ -97,18 +98,17 @@ Additionally, update the name of the component to _Query SFDC for Contact_:
  </salesforce:parameters>
 </salesforce:query>
 --
-+
-image::sync-api-sfdc-query-component-flow.png[]
 
 == Define Behavior in Case the Record Has a Phone Number
 
 Use a Choice Router to define behaviors based on specific conditions. In this case, you can use the Choice router to define behaviors based on whether the record has a phone number in your Salesforce environment. If it does, then to the application's logic, the contact exists.
 
-. In Anypoint Code Builder, open your `contact-sync.xml` file, and add a new line under your `</salesforce:query>` element.
-. Type _choice_ and select *mule:choice*:
-. Add both `when` and `otherwise` elements:
+. Select the `plus` icon after the *Query* operation:
 +
-image::sync-api-choice-when.png[]
+image::add-choice-component-canvas.png[]
+. Type _choice_ and select *mule:choice*:
++
+image::choice-operation-canvas.png[]
 +
 [source,XML]
 --
@@ -136,8 +136,7 @@ For better readability of your Mule flow, update the name of the `choice`, `when
   </otherwise>
 </choice>
 --
-+
-image::choice-flow-canvas.png[]
+
 
 As a condition for the first branch, check the results of the Salesforce query operation. If there are any results, the `Salesforce:Query` processor returns an array of *Contact* objects. In this case, the flow returns a failure message if the contact doesn’t have a phone number.
 
@@ -187,8 +186,6 @@ With the condition for whether the contact exists and the error message configur
 .. A second Set Variable component to store the ID to a temporary variable named `IdVar`.
 .. A Logger to print the value of the phone found in the record.
 .. A Set Variable to assign a temporary value to the `ReturnMessage` variable.
-+
-image::final-choice-api-sync.png[]
 
 
 == Test Your API
