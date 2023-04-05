@@ -76,9 +76,12 @@ If you get an error, verify the error message to troubleshoot further.
 
 == Add a Salesforce Trigger
 
-. Add a new line after your `</salesforce:sfdc-config>` element, type _flow_, and select *mule:flow*.
+. Select the `plus` icon on your canvas:
 +
-image::create-flow-mule-app.png[]
+image::add-flow-structure.png[]
+. Select *Flow*:
++
+image::add-flow-to-canvas.png[]
 . Name the flow *​NewSalesforceCaseFlow*.
 +
 [source,XML]
@@ -87,9 +90,9 @@ image::create-flow-mule-app.png[]
 
 </flow>
 --
-. Within your `<flow>` and `</flow>` elements, type _new_, and select *Salesforce:new-object-listener*.
+. Select the `plus` icon after *Flow*, type _new object_, and select *On new object* after *Salesforce*:
 +
-image::new-salesforce-listener.png[]
+image::salesforce-on-new-object-canvas.png[]
 . Scroll through the attributes of the snippet and set the following values:
 objectType:: *Case*
 config-ref:: *Salesforce-Config*
@@ -108,6 +111,10 @@ name:: *On New Case*
 == Test Your Salesforce Integration
 
 . Add a logger at the end of your flow:
++
+image::add-logger-end-flow-canvas.png[]
++
+image::drag-logger-canvas.png[]
 +
 [source,XML]
 --

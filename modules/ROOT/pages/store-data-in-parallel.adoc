@@ -1,6 +1,6 @@
 = Store Data in Parallel
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Now that you retrieved the contact record from Salesforce, you can add logic to determine if the record needs to be updated. If it does, you must update the stored information with the new values. To do so, you can use the Scatter-Gather processor to execute requests in parallel to both your Salesforce organization and your MySQL database.
 
@@ -17,10 +17,12 @@ See xref:sync-api-configure-queries.adoc[] for more information.
 == Add a Scatter-Gather to Store Data in Parallel
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. Add a new line after the *Contact exists in Salesforce* `<set-variable>` component.
-. Type `_scatter_` and select `mule:scatterGather`:
+. Select the `plus` icon after the *Set Return Message* Set Variable component:
 +
-image::contact-sync-api-add-scatter-gather.png[]
+image::add-scatter-gather-canvas.png[]
+. Type `_scatter_` and select `Scatter Gather`:
++
+image::scatter-gather-operation-canvas.png[]
 . Add the following logic within the Scatter-Gather component:
 +
 [source,XML]
