@@ -30,11 +30,16 @@ image::start-debugging.png[]
 . Navigate to your *Application* tab, under *Storage* expanded the *Cookies* section, and select the URL of your web IDE instance.
 +
 image::application-storage-cookies.png[]
-. Copy both cookies names and values: `_auth_proxy.sig` and `_auth_proxy`. For example:
+. Copy the cookie name and value. For example:
 +
 [source]
 --
-_auth_proxy.sig=xxxxxxxxxxxxxxxxxx; _auth_proxy=xxxxxxxxxxxxxxxxxx==
+proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx
+--
++
+[NOTE]
+--
+The `proxysession` cookie name varies depending on the user.
 --
 . In Anypoint Code Builder, navigate to *View* > *Appearance* > *Panel* (`cmd + J` on macOS or `ctrl + J` on Windows).
 . Navigate to the *Ports* tab.
@@ -48,14 +53,14 @@ The URL to ping varies depending on the webIDE instance ID. It follows the forma
 See xref:ping-locally-deployed-app.adoc[] for more information.
 --
 . On your preferred REST client, create a `POST` request to the local address, adding the `/graphql` path: `+https://<web-IDE-instance>/proxy/8081/graphql+`.
-. Add a new *Cookie* header to the request with the `_auth_proxy.sig` and `_auth_proxy` values:
+. Add a new *Cookie* header to the request with the `proxysession` value:
 +
 [source,CURL]
 --
---header 'Cookie: _auth_proxy.sig=xxxxxxxxxxxxxxxxxx; _auth_proxy=xxxxxxxxxxxxxxxxxx' \
+--header 'Cookie: proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx \
 --
 +
-image::configure-post-request-acb-cookies.png[]
+image::send-request-with-cookies.png[]
 . Configure the body of the request to contain a GraphQL query. For example:
 +
 [source,GraphQL]
