@@ -98,7 +98,18 @@ types:
   /{ID}:
     get:
 --
-. Add a new child element inside `queryParameters`, press `ctrl + spacebar` to bring up the autocomplete options, and add the elements:
+. Add a new child element at the same level as `queryParameters`, right after:
++
+[source,RAML,linenums]
+--
+enum:
+          - SFO
+          - LAX
+          - CLE
+
+--
++
+. Press `ctrl + spacebar` to bring up the autocomplete options, and add the elements:
 * `responses`
 * `200`
 * `body`
