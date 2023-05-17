@@ -48,7 +48,7 @@ image::imported-assets.png[]
 Use your imported fragments as types for your API specification:
 
 . Open the *american-flight-api.raml* file in the editor tab.
-. Before the `flights/` resource, add a `types` element, go to a new line and press `tab` to add an indentation
+. Before the `/flights` resource, add a `types` element, go to a new line and press `tab` to add an indentation
 . Add a type named `AmericanFlight:`:
 +
 [source,RAML]
@@ -98,13 +98,24 @@ types:
   /{ID}:
     get:
 --
-. Add a new child element inside `queryParameters`, press `ctrl + spacebar` to bring up the autocomplete options, and add the elements:
+. Add a new child element at the same level as `queryParameters`, right after:
++
+[source,RAML,linenums]
+--
+enum:
+          - SFO
+          - LAX
+          - CLE
+
+--
++
+. Press `ctrl + spacebar` to bring up the autocomplete options, and add the elements:
 * `responses`
 * `200`
 * `body`
 * `application/json`
 * `type`
-. For the `type` element, press `ctrl/cmd + spacebar` and select the `AmericanFlight` type.
+. For the `type` element, press `ctrl + spacebar` and select the `AmericanFlight` type.
 . Add `[]` at the end of your `AmericanFlight` type to define it as an array.
 +
 [source,RAML]
@@ -374,7 +385,7 @@ types:
       application/json:
         type: AmericanFlight
         examples:
-          input: !include
+          input: !include examples/AmericanFlightExample.raml
     responses:
       201: //<1>
         body:
