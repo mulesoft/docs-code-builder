@@ -1,0 +1,98 @@
+= Work with Code Snippets
+
+Code snippets are reusable templates that make it easier to enter repeating code patterns,  such as an insert operation from Database Connector, or logging messages and variables.
+
+Anypoint Code Builder supports both built-in snippets within the web IDE, and enables you to create and save your own snippets.
+
+Code Builder does not filter  document that we don't filter out config snippets, despite the fact that you cannot use them in the canvas.
+
+== Built-In Snippets
+
+Code Builder bundles a set of built-in snippets. To add a built-in snippet to your flow:
+
+. Select the `plus` icon on your canvas to add a new component to your flow.
+. Select _Snippets_:
++
+image::select-snippet-overview.png[]
+. Select _Built-in Snippets_:
++
+image::built-in-snippets-overview.png[]
+. Choose the snippet you want from the list of provided snippets.
+
+Additionally, you can use any of the provided snippets by using the auto-complete feature when working on the XML editor.
+
+== Create Your Own Snippet
+
+You can create your own reusable snippets and save them to reuse them in your project.
+
+The snippets that you save are only available to you. Code Builder does not support shared snippets with all users working in a project.
+
+To create your own snippets:
+
+. Select the `plus` icon on your canvas to add a new component to your flow.
+. Select _Snippets_:
++
+image::select-snippet-overview.png[]
+. Select _User Snippets_:
++
+image::user-snippet-overview.png[]
+. Select the `plus` icon:
++
+image::create-user-snippet-overview.png[]
++
+If you don't have other user snippets in your web IDE, Code Builder prompts you to create one.
+. Code Builder creates a new `mule-xml.json`  snippet file with a sample snippet for you to edit.
+. Uncomment all the fields after *Example*:
++
+[source,JSON]
+--
+{
+    // Example:
+	 "Log a message": { //<1>
+	 	"prefix": "log", //<2>
+	 	"body": [ //<3>
+	 		"<logger level=\"${1:INFO}\" message='$2' doc:name=\"Logger\" doc:id=\"$RANDOM_HEX\" />$0",
+	 	],
+	 	"description": "Log output to console" //<4>
+	 }
+}
+--
+<1> The first element in the XML is the text that will display in the list of user snippets.
+<2> The `prefix` field is the trigger text for that snippet. You can start typing it and press `tab` in your XML editor to add the snippet using auto-complete.
+<3> The `body` field is the actual code template that you can reuse.
+<4> The `description` field is a description of the snippet.
+. You can add other snippets to your `mule-xml.json` by adding new fields. For example:
++
+[source,JSON]
+--
+{
+    // Example:
+	 "Log a message": {
+	 	"prefix": "log",
+	 	"body": [
+	 		"<logger level=\"${1:INFO}\" message='$2' doc:name=\"Logger\" doc:id=\"$RANDOM_HEX\" />$0",
+	 	],
+	 	"description": "Log output to console"
+	 },
+        "Select first and last name from database": { //<1>
+		"prefix": "select-name-from-db",
+		"body": [
+          "<db:select config-ref=\"${1:Database_Config}\" doc:name=\"${2:Select Contact from DB}\" doc:id=\"$RANDOM_HEX\" >",
+          "<db:sql>",
+          "<![CDATA[SELECT * FROM Contacts WHERE FirstName = :firstname AND LastName = :lastname]]>",
+          "</db:sql>",
+          "<db:input-parameters>",
+            "<![CDATA[#[\{",
+            "firstname: vars.firstnameVar,",
+            "lastname: vars.lastnameVar",
+            "\\}]]]>",
+          "</db:input-parameters>",
+          "</db:select>$0"
+		],
+		"description": "Pull first and last name from database"
+	 }
+}
+--
+<1> The previous sample shows a snippet for a Database Connector select operation that retrieves a `firstName` and `lastName` values from a Database.
+
+
