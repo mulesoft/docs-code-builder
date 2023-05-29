@@ -1,7 +1,45 @@
 = Implement a Local API Specification
 
-Anypoint Code Builder enables you to scaffold your API specification into a Mule project without having to publish it to Exchange. You can work on your Mule project, then edit the API specification, and re-scaffold it to reflect your new changes. Both API design and API implementation tasks are now synchronized. You can then publish your API specification and deploy your Mule project from there.
+Anypoint Code Builder enables you to scaffold your API specification into a Mule project without having to publish it to Exchange. You can work on your Mule project then edit the API specification, and re-scaffold it to reflect your new changes. Both API design and API implementation tasks are now synchronized. You can then publish your API specification and deploy your Mule project from there.
 
-When you are designing an API specification, run the *Implement Local API* command to scaffold your current API specification into a new Mule project. Code Builder creates a workspace with both your API specification and Mule project, and keeps them synchronized.
+Anypoint Code Builder enables you to scaffold your API specification into a Mule project without having to publish it to Exchange. You can work on your Mule project then edit the API specification, and re-scaffold it to reflect your new changes. Both API design and API implementation tasks are now synchronized. You can then publish your API specification and deploy your Mule project from there.
 
-With your API specification and related Mule project in sync, you can now modify your API specification and implement your changes simultaneously. Iterating between your API design and implementation tasks, you can speed up your development process.
+When you are designing an API specification, run the *Implement Local API* command to scaffold your current API specification into a new Mule project. Code Builder creates a workspace with both your API specification and Mule project and keeps them synchronized.
+
+With your API specification and related Mule project in sync, you can now modify your API specification and implement your changes simultaneously. By iterating between your API design and implementation tasks, you can speed up your development process.
+
+To implement a local API:
+
+. Open an API specification. +
+You can either import an API from Design Center or design a new API specification.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Implement a Local API_.
+. Code Builder creates a multi-root workspace to keep your API specification and Mule project in sync. +
+A multi-root workspace enables you to work with both your API specification and Mule project folders at the same time.
+. After the workspace is created, Code Builder builds your API. +
+In this step, Code Builder packages the API specification and publishes it to a local Maven repository as a snapshot.
+. Choose a location to store your workspace. +
+Your multi-root workspace is a `.code-workspace` file extension that keeps both of your directories coordinates.
++
+[IMPORTANT]
+--
+Save your `.code-workspace` file in your home directory. Do not save it inside your API specification folder.
+--
+. Choose a project name for your Mule project.
+. Choose a location for your Mule project.
+. Code Builder scaffolds your current local API specification into a new Mule project.
+
+You can now start iterating between your API specification and its related Mule project.
+
+== Working Iteratively Between Your API Specification and Mule Project
+
+Implementing a local API enables you to reflect your changes to your API design directly into the Mule project that implements your API specification.
+
+Every time you modify your API specification, you can run a *Re-Scaffold this local API* command to update your Mule project based on the changes in your Mule application. For example, if you add a new endpoint to your API specification, Code Builder scaffolds a new flow for that endpoint.
+
+
+You can close your multi-root workspace by running the *Workspaces: Close Worspace* command. You can re-open your synchronized project by opening the workspace you created when you started implementing your local API.
+
+
+== See Also
+
+* xref:local-api-specification-tutorial.adoc[Iteratively Design an API Specification and Implement it]
