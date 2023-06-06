@@ -49,22 +49,17 @@ You see two different views:
 --
 It can take a few minutes for Anypoint Code Builder to set up the flow canvas.
 --
-. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
+. Select *Flow* from the canvas to create a new empty flow.
 +
-image::import-asset-exchange-implementation.png[]
-. Type the type of asset you want to import:
-* _Connector_.
+image::create-flow-canvas.png[]
+. Name your flow `getFlights`.
+. In your canvas, after your *Flow* component, select the `plus` icon:
 +
-image::import-from-exchange-connector-type.png[]
-. Type the connector you want to import:
-* `_HTTP Connector_`
-. Select *HTTP Connector - Mule 4*.
+image::main-tutorial-add-first-http-listener.png[]
+. Type `Listener` on the search field, and select *Listener* from the HTTP results:
 +
-image::import-http-connector.png[]
-. Select the version of the connector you want to import:
-+
-image::add-http-version.png[]
-. In the `american-ws-anypoint-code-builder.xml` file, go to a new line at the bottom of the XML file above the closing `</mule>` tag.
+image::main-tutorial-add-first-listener.png[]
+. In the `american-ws-anypoint-code-builder.xml` file, add a new line before your `<flow>` element.
 . Type `http`, and select `HTTP:listener-config`.
 +
 image::add-http-config.png[]
@@ -81,20 +76,6 @@ image::add-listener-config-2.png[]
 host:: _0.0.0.0_
 port:: _8081_
 . Select the `plus` icon on your canvas:
-+
-image::add-flow-structure.png[plus icon highlighted on the empty canvas.]
-. Select *Flow*:
-+
-image::add-flow-to-canvas.png[Flow element highlighted on the flow structure selection screen.]
-. Type `_doc:name_` and set the value to `getFlights`.
-+
-image::finished-flow.png[Flow overview comparison between the canvas and the XML editors.]
-. In your canvas, after your *Flow* component, select the `plus` icon:
-+
-image::add-http-listener-endpoint.png[]
-. Type `Listener` on the search field, and select *Listener* from the HTTP results:
-+
-image::add-http-listener-from-canvas.png[]
 . On the XML, scroll through the attributes and set the following values:
 +
 path:: `_flights_`
