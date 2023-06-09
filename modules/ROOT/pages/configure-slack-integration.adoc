@@ -15,26 +15,37 @@ See xref:extract-payload-information.adoc[].
 * Configured a Choice router and added an Email connector to your flow. +
 See xref:add-condition-to-your-flow.adoc[].
 
-== Add a Slack Connector
+== Add a Slack Action
 
-. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file and delete the *Temporary Logger* component inside the *Not Escalated* route of the Choice router:
 +
-image::import-asset-exchange-implementation.png[]
-. Specify the type of asset you want to import:
-* _Connector_.
+image::delete-temporary-logger-slack.png[]
 +
-image::import-from-exchange-connector-type.png[]
-. Type the connector you want to import:
-* `_Slack_`
+[source,XML]
+--
+<logger doc:name="Temporary Logger" message='#["Please look into this new Case: " ++ payload]'/>
+--
+. Select the `plus` icon inside the *Not Escalated* route of the Choice router:
 +
-image::add-slack-connector.png[]
-. Select *Slack Connector - Mule 4 - Community Version*.
+image::add-slack-action-example-canvas.png[]
+. Select the `search in Exchange` icon, type `_Slack_` and select *Slack Connector*:
 +
-image::select-slack-connector.png[]
-. Select the version of the connector you want to import:
+image::add-slack-connector-canvas-exchange.png[]
+. Select the *Chat: Post Message* operation from the Slack section:
 +
-image::select-slack-connector-version.png[]
-. Anypoint Code Builder displays a message indicating that the dependency was successfully added.
+image::select-post-message-operation.png[]
+. Configure the Slack operation using the following code sample:
++
+[source,XML]
+--
+<slack:post-message channel="this-is-a-test" config-ref="Slack_Config" doc:name="Send Case to Slack"> //<1>
+  <slack:message ><![CDATA[#["Please handle this case. " ++ payload]]]></slack:message>
+</slack:post-message>
+--
+[calloutlist]
+.. Set the `channel` field to the channel name that you set earlier in the walkthrough.
+
+
 
 == Configure the Slack Connection
 
@@ -51,30 +62,7 @@ image::add-slack-config.png[]
 </slack:config>
 --
 
-== Add a Slack Action
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, *Temporary Logger* component inside the *Not Escalated* route of the Choice router:
-+
-[source,XML]
---
-<logger doc:name="Temporary Logger" message='#["Please look into this new Case: " ++ payload]'/>
---
-. Select the `plus` icon inside the *Not Escalated* route of the Choice router:
-+
-image::add-slack-action-example-canvas.png[]
-. Type `_post_`, and select the *Chat: Post Message* operation from the Slack section:
-+
-image::add-chat-post-message-operation-canvas.png[]
-. Configure the Slack operation using the following code sample:
-+
-[source,XML]
---
-<slack:post-message channel="this-is-a-test" config-ref="Slack_Config" doc:name="Send Case to Slack"> //<1>
-  <slack:message ><![CDATA[#["Please handle this case. " ++ payload]]]></slack:message>
-</slack:post-message>
---
-[calloutlist]
-.. Set the `channel` field to the channel name that you set earlier in the walkthrough.
 
 == Test Your Mule Application
 

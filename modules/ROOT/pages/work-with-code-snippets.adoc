@@ -1,10 +1,10 @@
 = Work with Code Snippets
 
-Code snippets are reusable templates that make it easier to enter repeating code patterns,  such as an insert operation from Database Connector, or logging messages and variables.
+Code snippets are reusable templates that simplify reusing code patterns, such as an insert operation from Database Connector, or logging messages and variables.
 
-Anypoint Code Builder supports both built-in snippets within the web IDE, and enables you to create and save your own snippets.
+Anypoint Code Builder provides built-in snippets and enables you to create and save custom snippets.
 
-Code Builder does not filter  document that we don't filter out config snippets, despite the fact that you cannot use them in the canvas.
+Code Builder does not filter out snippets for code that goes outside a flow, such as connectors configurations.
 
 == Built-In Snippets
 
@@ -19,15 +19,15 @@ image::select-snippet-overview.png[]
 image::built-in-snippets-overview.png[]
 . Choose the snippet you want from the list of provided snippets.
 
-Additionally, you can use any of the provided snippets by using the auto-complete feature when working on the XML editor.
+Use the auto-complete feature when working on the XML editor to find any of the built-in snippets.
 
-== Create Your Own Snippet
+== Create a Snippet
 
-You can create your own reusable snippets and save them to reuse them in your project.
+Create and save reusable custom snippets to use in your project.
 
-The snippets that you save are only available to you. Code Builder does not support shared snippets with all users working in a project.
+The snippets that you save are not available to others. Code Builder does not support sharing snippets with all users working on a project.
 
-To create your own snippets:
+To create a snippet:
 
 . Select the `plus` icon on your canvas to add a new component to your flow.
 . Select _Snippets_:
@@ -41,8 +41,9 @@ image::user-snippet-overview.png[]
 image::create-user-snippet-overview.png[]
 +
 If you don't have other user snippets in your web IDE, Code Builder prompts you to create one.
-. Code Builder creates a new `mule-xml.json`  snippet file with a sample snippet for you to edit.
-. Uncomment all the fields after *Example*:
++
+Code Builder creates a new `mule-xml.json` snippet file with a sample snippet for you to edit.
+. In the sample snippet file (`mule-xml.json`) Code Builder creates, uncomment all the fields after *Example*:
 +
 [source,JSON]
 --
@@ -57,8 +58,8 @@ If you don't have other user snippets in your web IDE, Code Builder prompts you 
 	 }
 }
 --
-<1> The first element in the XML is the text that will display in the list of user snippets.
-<2> The `prefix` field is the trigger text for that snippet. You can start typing it and press `tab` in your XML editor to add the snippet using auto-complete.
+<1> The first element in the XML is the text that displays in the list of user snippets.
+<2> The `prefix` field is the trigger text for that snippet. Start typing the prefix and press `tab` in your XML editor to add the snippet using auto-complete.
 <3> The `body` field is the actual code template that you can reuse.
 <4> The `description` field is a description of the snippet.
 . You can add other snippets to your `mule-xml.json` by adding new fields. For example:
@@ -93,6 +94,4 @@ If you don't have other user snippets in your web IDE, Code Builder prompts you 
 	 }
 }
 --
-<1> The previous sample shows a snippet for a Database Connector select operation that retrieves a `firstName` and `lastName` values from a Database.
-
-
+<1> The previous sample shows a snippet for a Database Connector select operation that retrieves `firstName` and `lastName` values from a Database.
