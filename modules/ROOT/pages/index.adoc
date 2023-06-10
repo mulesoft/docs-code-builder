@@ -3,7 +3,7 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //intro
-Anypoint Code Builder is an AI-powered integrated development environment (IDE) for designing and implementing API specifications and for developing integration applications that connect data from disparate systems and perform data transformations to required formats.
+Anypoint Code Builder is an AI-powered integrated development environment (IDE) for designing and implementing API specifications and for developing integration applications that connect data from disparate systems and transform your data to required formats.
 
 //list key features; avoid mentioning MuleSoft-specific terminology
 
@@ -11,15 +11,15 @@ Anypoint Code Builder is an AI-powered integrated development environment (IDE) 
 //NOTE: avoiding terminology like flow, connectors, etc. until later
 * API specification design features... support for RAML, OAS, mocking service feature, etc.?
 * API implementation feature ... scaffolding?
-* Integration development features ... via UI and XML? 
+* Integration development features ... in addition to AI, graphical UI and XML config? 
 
 //extensions info
 Anypoint Code Builder is available from the web or from your desktop. The web-based Anypoint Code Builder (beta version) and Anypoint Code Builder for Desktop are a set of extensions to Visual Studio Code (VS Code) IDE. The web-based extensions are built into the code-server VS Code IDE and require no additional software, setup, or machine specifications. The desktop extensions require installation to your VS Code IDE and some setup.
 
-//relationships to our other products
+//relationships to our other products (avoid mentioning features not introduced yet)
 Both the web and desktop Anypoint Code Builder IDEs integrate with key Anypoint Platform features: 
 
-* Exchange for publishing the API specifications you create and for importing API specifications, connectors, and other development resources that you need
+* Exchange for publishing the API specifications you create and for importing API specifications and development resources
 * Design Center for storing API specifications as they are developed
 * CloudHub for deploying the implementations and integrations that you build 
 
@@ -30,29 +30,33 @@ While built-in features, such as AI-generated suggestions, help guide your work 
 
 * To design API specifications, you must have experience with API design languages (supported versions of OAS or RAML). You can easily transition to Anypoint Code Builder if you already have experience with Anypoint Design Center for this task. 
 
-* To implement API specifications and develop integrations, you need to be familiar with Mule application development and the DataWeave transformation language. You can easily transition to Anypoint Code Builder with these tasks in Anypoint Studio. 
+* To implement API specifications and develop integrations, familiarity with Mule application development and the DataWeave transformation language is necessary. You can easily transition to Anypoint Code Builder if you already have experience with these tasks in Anypoint Studio. 
 
-//TODO: Learning resources are available in the connector docs, Mule docs, DataWeave docs, and dataweave.mulesoft.com, which provides a tutorial and playground for trying out DataWeave scripts.  
+//TODO: ADD Learning resources are available in the connector docs, Mule docs, DataWeave docs, and dataweave.mulesoft.com, which provides a tutorial and playground for trying out DataWeave scripts.  
 
 //seems like we have no choice but to introduce them to key things they
 //need to understand and point them to resources for more info
 === Key Concepts  
 
 //TODO: SHOULD WE ADD SOMETHING LIKE THIS (WITH IMPROVED DESCRIPTIONS)?
+//TODO: QA and refine the "starter" descriptions below, of course
 //Important concepts include the following:
 
-* Connectors are clients for retrieving and sending data between systems. Built-in connectors for Anypoint Code Builder include... 
-//Salesforce, etc. These are available from Exchange. See docs... 
-//TODO: preparing a way to provide sharable component doc in ACB doc set for these. 
+Understanding the following is helpful:
 
-* Components (such as For Each <xmlneeded/>, Transform Message <xmlneeded/>, and Flow <xmlneeded/>) are programmatic building blocks of an integration application. 
-//TODO: preparing a way to provide sharable component doc in ACB doc set for these. 
+* Connectors are clients that provide operations for retrieving, modifying, and sending data to and from systems. Built-in connectors for Anypoint Code Builder include... 
+Salesforce, etc. Connectors are also available through ACB from Anypoint Exchange. See docs... 
+//TODO: we're preparing a way to provide sharable component doc in ACB doc set for these. This bullet could point to that ACB doc once it exists and/or to the connectors section of the docs.
 
-* DataWeave is the programming language is all expressions and data transformation scripts. The language offers rich function libraries and mechanisms for creating customizations, including your own functions, libraries, and types.
+* Components are programmatic building blocks of an integration application. Examples include For Each <xmlneeded/>, Transform Message <xmlneeded/>, and Flow <xmlneeded/>.
+//TODO: we're preparing a way to provide sharable component doc in ACB doc set for these. This bullet could point to that doc or to the component section of the docs. I'd prefer the former, which will exclude refs to Studio.
+
+* DataWeave is the programming language for all expressions and data transformations. The language offers rich function libraries and mechanisms for creating customizations, including your own functions, libraries, and types.
 //TODO: POINT TO DW docs, DW playground & tutorial on dataweave.mulesoft.com (below)
 
 * Scaffolding is an automatic process that uses APIKit to convert an API specification into an XML-based router and endpoints that you implement within a Mule application. 
-//TODO: Note sure if we need to say more about APIKit; leaning toward no.
+//TODO: Not sure if we need to say more about APIKit; leaning toward no.
+//TODO: If already introduced above, prob not needed here unless we're adding some detail
 
 * A Mule application is an XML-based integration application that runs on the Mule execution engine. The application supports connectors, components, and scaffolded API specifications. Mule application development requires some understanding of the Mule message model (Mule event, Mule message) and predefined Mule variables (`payload`, `attributes`, `vars`, `errors`).
 //TODO: POINT TO helpful areas of the Mule docs (below)
