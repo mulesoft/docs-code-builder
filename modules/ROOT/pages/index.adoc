@@ -2,26 +2,90 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Anypoint Code Builder is a web-based integrated development environment (IDE) based on Visual Studio Code that includes Anypoint Code Builder extensions. Anypoint Code Builder provides a modern experience for all developers to design, develop, and deploy APIs, integrations, and automations from a single environment.
+//intro
+Anypoint Code Builder is an AI-powered integrated development environment (IDE) for designing and implementing API specifications and for developing integration applications that connect data from disparate systems and perform data transformations to required formats.
 
-Anypoint Code Builder requires no additional software, setup, or machine specifications.
+//list key features; avoid mentioning MuleSoft-specific terminology
 
-Anypoint Code Builder is in open beta, and it's available for any organization that signed up for this beta release. +
-If you are not part of this open beta, ask your MuleSoft representative to add you.
+* AI... suggested components and structures for building your integration applications blocks  
+//NOTE: avoiding terminology like flow, connectors, etc. until later
+* API specification design features... support for RAML, OAS, mocking service feature, etc.?
+* API implementation feature ... scaffolding?
+* Integration development features ... via UI and XML? 
+
+//extensions info
+Anypoint Code Builder is available from the web or from your desktop. The web-based Anypoint Code Builder (beta version) and Anypoint Code Builder for Desktop are a set of extensions to Visual Studio Code (VS Code) IDE. The web-based extensions are built into the code-server VS Code IDE and require no additional software, setup, or machine specifications. The desktop extensions require installation to your VS Code IDE and some setup.
+
+//relationships to our other products
+Both the web and desktop Anypoint Code Builder IDEs integrate with key Anypoint Platform features: 
+
+* Exchange for publishing the API specifications you create and for importing API specifications, connectors, and other development resources that you need
+* Design Center for storing API specifications as they are developed
+* CloudHub for deploying the implementations and integrations that you build 
+
+//what do people need to know to get started?
+== Prerequisites
+
+While built-in features, such as AI-generated suggestions, help guide your work in Anypoint Code Builder, the following background is necessary: 
+
+* To design API specifications, you must have experience with API design languages (supported versions of OAS or RAML). You can easily transition to Anypoint Code Builder if you already have experience with Anypoint Design Center for this task. 
+
+* To implement API specifications and develop integrations, you need to be familiar with Mule application development and the DataWeave transformation language. You can easily transition to Anypoint Code Builder with these tasks in Anypoint Studio. 
+
+//TODO: Learning resources are available in the connector docs, Mule docs, DataWeave docs, and dataweave.mulesoft.com, which provides a tutorial and playground for trying out DataWeave scripts.  
+
+//seems like we have no choice but to introduce them to key things they
+//need to understand and point them to resources for more info
+=== Key Concepts  
+
+//TODO: SHOULD WE ADD SOMETHING LIKE THIS (WITH IMPROVED DESCRIPTIONS)?
+//Important concepts include the following:
+
+* Connectors are clients for retrieving and sending data between systems. Built-in connectors for Anypoint Code Builder include... 
+//Salesforce, etc. These are available from Exchange. See docs... 
+//TODO: preparing a way to provide sharable component doc in ACB doc set for these. 
+
+* Components (such as For Each <xmlneeded/>, Transform Message <xmlneeded/>, and Flow <xmlneeded/>) are programmatic building blocks of an integration application. 
+//TODO: preparing a way to provide sharable component doc in ACB doc set for these. 
+
+* DataWeave is the programming language is all expressions and data transformation scripts. The language offers rich function libraries and mechanisms for creating customizations, including your own functions, libraries, and types.
+//TODO: POINT TO DW docs, DW playground & tutorial on dataweave.mulesoft.com (below)
+
+* Scaffolding is an automatic process that uses APIKit to convert an API specification into an XML-based router and endpoints that you implement within a Mule application. 
+//TODO: Note sure if we need to say more about APIKit; leaning toward no.
+
+* A Mule application is an XML-based integration application that runs on the Mule execution engine. The application supports connectors, components, and scaffolded API specifications. Mule application development requires some understanding of the Mule message model (Mule event, Mule message) and predefined Mule variables (`payload`, `attributes`, `vars`, `errors`).
+//TODO: POINT TO helpful areas of the Mule docs (below)
+
+
+//where and how to get access
+== Availability and Access
+
+Anypoint Code Builder for Desktop is available generally, while the web-based Anypoint Code Builder is an open beta release that is available to any organization that joins the beta release program. To participate in the open beta, ask your MuleSoft representative for help.
+
+//TODO: POINT TO SETUP PAGE WHERE THEY CAN GET, SET UP, AND USE THE DESKTOP IDE EXTENSIONS IN VS CODE
+
+The web-based Anypoint Code Builder IDE is available from Anypoint Platform: 
+
+* anypoint.mulesoft.com
+* eu.anypoint.mulesoft.com
+
+Anypoint Platform requires a user account. You can use an existing account or create one. Trial accounts are allowed.  
+
+An Anypoint Platform administrator account must provide you with access to Code Builder... //TODO: some detail on the required permission
 
 [IMPORTANT]
 --
-During the open beta, your existing web IDE instance might be deleted, causing you to lose your integrations, automations, and APIs.
+During the open beta, your web IDE instance might be deleted, causing you to lose your integrations, automations, and APIs.
 
 To save your work, you must either deploy your Mule projects to CloudHub, commit them to source control, or publish your API specifications to Design Center.
 
-Users with an Anypoint Platform trial account will lose access to Anypoint Code Builder after their trial expires and their web IDE instances will be deleted.
---
-
-
-
+If you are using an Anypoint Platform trial account that loses access to Anypoint Code Builder after their trial expires and their web IDE instances will be deleted.
 
 Do not use Anypoint Code Builder to develop APIs, integrations, or automations meant for production environments.
+--
+
+//TODO: ANYTHING ELSE?
 
 == See Also
 
