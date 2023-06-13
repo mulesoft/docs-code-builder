@@ -8,14 +8,71 @@ The following list details identified issues and limitations with Anypoint Code 
 
 == General Limitations
 
+// SHOULD DATASENSE be INTELISENSE (VSCODE)?
+
 [%header,cols="2a,2a,1a"]
 |===
 | Limitation | Workaround |ID
-| Anypoint Code Builder does not decode Unicode characters for new lines in XML (`&#10;`) causing DataWeave validations to throw *Invalid input* errors on some multi-line scripts. This limitation does not interrupt the correct execution of your Mule application. | None | W-11750473
-| Dark theme not showing the error response. Due to an issue with the color scheme of API Console, when using Anypoint Code Builder in dark mode, the error messages in the console are hard to read. | None | W-11351113
-| Redeployment to CloudHub is not supported. | Delete and deploy the application again. |
-| When launching the web IDE for the first time from Anypoint Code Builder central page, you must allow popups from the page. | None. |
-| You can't import and scaffold older version of REST API assets from Exchange. | None. | W-12406413
 | Code highlighting breaks when you define a DataWeave multiline expression. This limitation does not interrupt the correct execution of your Mule application. | None. | W-11492623
-| The RAML editor does not handle indentation correctly when using tabs or spaces. | None. | W-11625929
+| The canvas does not show flows and components after scaffolding a Mule application | Close the canvas UI and re-open it. | W-13162142
+| Link to the *code-server Editing evolved dialogue* help article does not work | None. | W-13488500
+| You cannot add flow structures in the canvas if the component palette is open | Close the component palette to re-enable the Flow Structure wizard. | W-13198955
+| Moving the editors when using the search function in the component palette causes your search to be canceled. | None. Avoid re-arranging your editors when using the component palette in the canvas. | W-13172200
+| Selecting a project folder in the projects view opens the entire project. | None. | W-13143061
+| Adding a space at the end of an API specification name throws an error. | Do not use spaces at the end of any project name. | W-13115894
+| Auto-completions and code suggestions do not follow standard VSC/LSP pattern | None. | W-12564179
+| API Console does not reflect changes immediately. | None. | W-12564212
+| Uploading a large `.jar` file causes Code Builder to become unresponsive. | You can't upload files bigger than 100 MB. | W-12557980
+| Code Builder does not create a `.gitignore` template file when creating a new integration, API specification, or implementation. | Create the file manually. | W-12557172
+| Kafka Connector does not show the *Test Connection* Option | None. | W-12553536
+| Code Builder displays a pop-up indicating opened ports when creating a Mule project. | None. | W-12482078
+| DataSense does not identify functions provided by the connector. | None. | W-12448776
+| Using auto-complete to create a parameter for the `value` field in the XML adds an extra `#[]` statement. | None. | W-12444650
+
+// This issue shows as closed. Is this still happening? If so, is there a workaround?
+| Integration project fails when running in a multi-root context | | W-12739837
+
+| The Flow List view window cannot be resized after getting stretched out to its maximum. | Close the canvas and re-open it. | W-13159247
+| Canvas palette flickers after being opened. | None. | W-13210830
+| Code Builder does not notify you when your session expires. | None. | W-13210507
+
+// UNCOMMENT FOR DESKTOP RELEASE. I don't think we want to raise awareness of these settings for web IDE.
+// | User is Not getting notified after changing the Region in settings.json file | | W-13184670
+
+// SEEMS MORE INTERNAL ISSUE THAN USER FACING BEHAVIOR
+// | Limits of chains are calculated based on just one element | | W-11837810
+
+| Auto-completion does not work when using connectors that contribute the same prefix. | None. | W-10667510
+
+// PLEASE VALIDATE THE REWORD OF THE ISSUE BELOW:
+| Updating metadata on a different component does not trigger metadata validation in later scripts causing Code Builder to display potential errors until a change in the code is made. | None. | W-12215165
+
+| The *Back* button in the command palette does not work when running the `MuleSoft: Import Asset from Exchange` command. | None. | W-12012889
+| DataSense does not reflect array structures at the payload's root level. | None. | W-12263085
+
+// THIS ONE SHOWS AS CLOSED. DO WE REALLY WANT TO MAKE THIS PUBLIC?
+// | [Threat Modeling] - ACB WebIDE Flow - Service accesstoken is stored in clear text in memory | | W-11496109
+
+// NOT A CUSTOMER FACING ISSUE. OK TO REMOVE?
+// | Developers can't debug ts test on api component module | | W-12355034
+
+// SEEMS INTERNAL BEHAVIOUR. WE MIGHT NOT WANT TO EXPOSE THE USER TO THIS:
+// | During dependency updates project's pom file an exception is thrown | | W-12408356
+
+// BUG STATUS IS "NEVER". DO WE WANT TO MAKE THIS PUBLIC?
+| The list of trusted authors for a directory or file is not persistent across different browsers. | None. | W-12408476
+
+| The component palette can not always show the latest versions of the connectors. | Because Code Builder embeds some connectors, the version of these connectors might be outdated. | W-12766888
+
+// I'd avoid publishing this until we document this feature and explain settings differences between web IDE, and Desktop.
+// | [ACB][Open Beta][v24.2][Bug Hunt] Region field in deploy.json is disregarded | | W-12558000
+
+| DataSense does not work when a tag spans multiple lines. | None. | W-12482310
+| Code Builder displays a *Cannot read properties of undefined (reading 'name')* error failing to resolve a GraphQL type. | None. | W-12482229
+| NetSuite Connector does not have an icon in the component palette. | None. | W-13173111
+| Ending a second thread in a Scatter Gather component before the first thread finishes freezes Code Builder processing. | Manually select the other thread to continue processing. | W-10601367
+| The Mule configuration file can sometimes fail to open right after you created a new Mule project. | Open the file manually. | W-10601832
+
+// Seems an internal issue. What effects can this have for a end user?
+// | WorkspaceManager method getProjectAt is not detecting any URI without ending with slash | | W-12213360
 |===
