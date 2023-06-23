@@ -1,0 +1,44 @@
+= Test an API Specification Using Mocking Service
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+With a designed API specification, you can use Mocking Service to mock your API and test
+the request and responses you designed in your API specification.
+
+== Before you Begin
+
+Before getting started, ensure you:
+
+* Set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* Created a basic structure for your API specification. +
+See xref:design-api-specification.adoc[].
+* Configured request and response data for your API specification. +
+See xref:design-api-specification.adoc[].
+
+== Test your API Specification
+
+. In Anypoint Code Builder, open your `american-flights-api.raml` file.
+. Select the API Console icon on the top right of your screen.
++
+image::api-console-button.png[]
+. In API Console, select the `get` method for the `flights/` resource.
++
+image::select-get-method.png[]
+. Select the *Try It* button.
++
+image::select-try-it-button.png[]
+. Select the *destination* text box inside *Query Parameters* and verify that the three values you defined in your API specification show up.
++
+image::select-query-params.png[]
+. Select *Send*.
+. Verify that API Console returns the response you defined with the imported fragment.
++
+image::api-console-reponse.png[]
+
+Additionally, you can review your configured response examples when querying your mocked API endpoints.
+
+== Next Step
+
+* xref:synchronize-with-design-center.adoc[Synchronize Changes with Design Center]. +
+Learn how to use the integrated source control management (SCM) to upload your API specification to Design Center, enabling other developers on your team to contribute to your API.

@@ -1,0 +1,177 @@
+= Create a Basic Integration
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Start by creating a basic integration in Anypoint Code Builder
+
+== Before You Begin
+
+Before getting started, ensure you:
+
+* Set up your MuleSoft environment. +
+See xref:setup.adoc[] for more information.
+* Created an XML snippet. +
+See xref:create-xml-snippets.adoc[] for more information.
+* Installed a REST client like Postman or AdvancedRestClient.
+
+== Create a Mule Application
+
+. In your web IDE instance, navigate to your Anypoint Code Builder view:
++
+image::anypoint-code-builder-view.png[]
+. Select *Develop an Integration*.
++
+image::develop-integration-option-mat.png[]
++
+. Configure your integration using the following values:
++
+image::integration-create-ui.png[]
++
+[calloutlist]
+.. Under *Project Name*, type `american-ws-anypoint-code-builder`.
+.. Under *Project Location*, select *Browse*, and then select your home directory.
++
+. Select *Create Project*.
+
+== Add an HTTP Connector
+
+. In Project Explorer, select the`american-ws-anypoint-code-builder.xml` file. +
++
+image::empty-canvas-state.png[]
++
+You see two different views:
++
+[calloutlist]
+.. One editor displays a visual representation of your Mule flow.
+.. The other editor displays the Mule Configuration file.
++
+[NOTE]
+--
+It can take a few minutes for Anypoint Code Builder to set up the flow canvas.
+--
+. Select *Flow* from the canvas to create a new empty flow.
++
+image::create-flow-canvas.png[]
+. Name your flow `getFlights`.
+. In your canvas, after your *Flow* component, select the `plus` icon:
++
+image::main-tutorial-add-first-http-listener.png[]
+. Type `Listener` on the search field, and select *Listener* from the HTTP results:
++
+image::main-tutorial-add-first-listener.png[]
+. In the `american-ws-anypoint-code-builder.xml` file, add a new line before your `<flow>` element.
+. Type `http`, and select `HTTP:listener-config`.
++
+image::add-http-config.png[]
+. Scroll through the assets and enter the following values:
++
+name:: _inbound-request_
+doc:name:: _HTTP Config_
+. Press `enter` to move to a new line and `tab` to add an indentation.
+. Type `http:Listener` and select `HTTP:listener-connection`.
++
+image::add-listener-config-2.png[]
+. Scroll through the attributes and set the following values:
++
+host:: _0.0.0.0_
+port:: _8081_
+. Select the `plus` icon on your canvas:
+. On the XML, scroll through the attributes and set the following values:
++
+path:: `_flights_`
+config-ref:: `_inbound-request_`
+doc:name:: `_HTTP /flights_`
+
+As you move forward with your XML, Anypoint Code Builder creates a graphical representation of your flow in the left panel.
+
+image::first-flow-graphical-view.png[]
+
+Select any processor in the graphical view to have Anypoint Code Builder highlight its location within the XML Mule configuration file.
+
+image::http-highlight-flow.png[]
+
+Review your XML code:
+
+[source,xml,linenums]
+--
+<?xml version="1.0" encoding="UTF-8"?>
+<mule>
+
+  <http:listener-config name="inbound-request" doc:name="HTTP Config">
+      <http:listener-connection host="0.0.0.0" port="8081" />
+  </http:listener-config>
+
+  <flow name="getFlights">
+      <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+  </flow>
+
+</mule>
+--
+
+== Set a Payload
+
+. In your canvas, after your *Listener* component, select the `plus` icon:
++
+image::add-set-payload-canvas.png[]
+. Type `payload`, and select *Set Payload*.
++
+image::add-set-payload.png[]
+. Press `tab` to Move through the attributes and set the following values:
++
+value:: `_Flight info_`
+doc:name:: `_Set Response_`
+
+
+Review your XML code:
+
+[source,xml,linenums]
+--
+  <http:listener-config name="inbound-request" doc:name="HTTP Config">
+      <http:listener-connection host="0.0.0.0" port="8081" />
+  </http:listener-config>
+
+  <flow name="getFlights">
+      <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+      <set-payload value="Flight info" doc:name="Set Response" />
+  </flow>
+--
+
+== Run Your Application
+
+. Navigate to *Run* > *Start Debugging* (`F5`). +
+Anypoint Code Builder moves to the Run and Debug view, uses Maven to build your Mule application, and then deploy it to the embedded Mule Runtime Engine.
++
+[WARNING]
+--
+Using *Run* > *Start without Debugging* causes an error.
+--
+. Open the Terminal window (`ctrl + ``) and verify that the deployment was successful.
++
+[source]
+--
+*******************************************************************************************************
+*            - - + APPLICATION + - -            *       - - + DOMAIN + - -       * - - + STATUS + - - *
+*******************************************************************************************************
+* american-ws-anypoint-code-builder-1.0.0-SNAPS * default                        * DEPLOYED           *
+*******************************************************************************************************
+--
+
+
+== Test the Application
+
+. Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
+See xref:ping-locally-deployed-app.adoc[] for more information about sending a request to your application.
++
+Notice that the *Flight info* message is displayed as the response.
+
+== Stop the Application
+
+. In Anypoint Code Builder, select the stop icon from the toolbar at the top of your screen.
++
+image::stop-mule-application.png[]
+. Anypoint Code Builder returns to the Explorer view.
+
+== Next Step
+
+* xref:connect-to-a-db.adoc[Connect to a Database]. +
+Import a connector from Exchange and configure it to connect to an existing database that returns real information about flights for your API.
