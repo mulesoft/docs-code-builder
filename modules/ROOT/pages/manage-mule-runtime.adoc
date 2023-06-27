@@ -1,29 +1,28 @@
-= Manage Mule Runtime in Code Builder
+= Mule Runtime Not Found or Not Installed Errors
 
-Anypoint Code Builder bundles an instance of Mule Runtime engine for the implement and integration tasks. You must always have a Mule runtime configured to be able to use the features that enable you to develop Mule applications.
+Anypoint Code Builder bundles an instance of Mule Runtime version 4 to help you during your implement and integration tasks. You must always have a Mule runtime configured to be able to use the features that enable you to develop Mule applications.
 
-Code Builder has two properties to manage the embedded Mule Runtime engine instance:
+Code Builder uses two properties to control the embedded Mule Runtime engine instance:
 
-* *Mule Home*: The full path that points to the ZIP file of the Mule Runtime instance. +
-Default value: `/Users/<user-name>/muleRuntimes/<mule-runtime-zip-file>`.
-* *Mule Runtimes Directory*: The default location in which all Mule runtime engine ZIP files are downloaded. +
+* *Mule Runtimes Directory*: The default location of the Mule runtime engine installation. +
 Default value: `/Users/<user-name>/muleRuntimes/`.
+* *Mule Home*: The full path that points to the root files of the Mule Runtime instance. +
+Default value: `/Users/<user-name>/muleRuntimes/<mule-runtime-installation>`.
 
 [WARNING]
 --
-Changing the *Mule Home* and *Mule Runtimes Directory* properties requires advanced knowledge of Mule runtime.
+Changing the *Mule Runtimes Directory* and *Mule Home* properties causes unexpected errors.
 
-Changing the default values causes unexpected errors.
+Modify these values only if you encounter any of the errors detailed in this article.
 --
 
-== Troubleshooting Embedded Mule Runtime Errors
+== Troubleshooting Mule Runtime Errors
 
 If you encounter runtime errors when developing an integration or implementing an API, troubleshoot them as follows:
 
-
 === Mule Runtime Is Not Installed, You Must Configure a Mule Runtime to Enable This Feature
 
-This error happens when you attempt to use a feature that requires a working Mule Runtime engine configured. for example, attempting to use auto-complete, or run a debug session. It's possible that one or both of the *Mule Home* and *Mule Runtimes Directory* are misconfigured, or empty. To troubleshoot this:
+This error happens when you attempt to use a feature that requires a working Mule Runtime engine configured. For example, attempting to use auto-complete, or run a debug session. It's possible that one or both of the *Mule Home* and *Mule Runtimes Directory* are misconfigured, or empty. To troubleshoot this:
 
 . Navigate to your Anypoint Code Builder view, and select the *Open ACB Settings* icon.
 +
