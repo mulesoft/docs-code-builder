@@ -2,10 +2,9 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-With a designed API specification, you can use Mocking Service to mock your API and test
-the request and responses you designed in your API specification.
+With a designed API specification, you can use Mocking Service to mock your API and test the request and responses you designed in your API specification.
 
-== Before you Begin
+== Before You Begin
 
 Before getting started, ensure you:
 
@@ -16,25 +15,29 @@ See xref:design-api-specification.adoc[].
 * Configured request and response data for your API specification. +
 See xref:design-api-specification.adoc[].
 
-== Test your API Specification
+== Test Your API Specification
 
 . In Anypoint Code Builder, open your `american-flights-api.raml` file.
-. Select the API Console icon on the top right of your screen.
+. Select the API Console icon in the editor toolbar.
 +
-image::api-console-button.png[]
+image::api-console-button.png["API Console icon highlighted in the editor toolbar"]
+//TO-DO: Take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
 . In API Console, select the `get` method for the `flights/` resource.
 +
-image::select-get-method.png[]
+image::select-get-method.png["get method for the flights/ resource highlighted in the API Console"]
+//TO-DO: Take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
 . Select the *Try It* button.
 +
-image::select-try-it-button.png[]
+image::select-try-it-button.png["Try it button highlighted in the API console"]
+//TO-DO: Take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
 . Select the *destination* text box inside *Query Parameters* and verify that the three values you defined in your API specification show up.
 +
-image::select-query-params.png[]
+image::select-query-params.png["Values highlighted in the API console"]
+//TO-DO: Take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
 . Select *Send*.
 . Verify that API Console returns the response you defined with the imported fragment.
 +
-image::api-console-reponse.png[]
+image::api-console-reponse.png["A 200 OK response highlighted in the API console"]
 
 Additionally, you can review your configured response examples when querying your mocked API endpoints.
 
