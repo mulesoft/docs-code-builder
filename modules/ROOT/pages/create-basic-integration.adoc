@@ -2,7 +2,7 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Start by creating a basic integration in Anypoint Code Builder
+Start by creating a basic integration in Anypoint Code Builder.
 
 == Before You Begin
 
@@ -13,19 +13,21 @@ See xref:setup.adoc[] for more information.
 * Created an XML snippet. +
 See xref:create-xml-snippets.adoc[] for more information.
 * Installed a REST client like Postman or AdvancedRestClient.
+// Do we have to name the REST clients? I would just say "Installed a REST client".
 
 == Create a Mule Application
 
-. In your web IDE instance, navigate to your Anypoint Code Builder view:
+. Go to Anypoint Code Builder:
 +
-image::anypoint-code-builder-view.png[]
+image::anypoint-code-builder-view.png["Anypoint Code Builder Welcome page highlighted"]
+// We can delete this image. The following image shows the important content and it is valid for the web IDE and VSCode plugin.
 . Select *Develop an Integration*.
 +
-image::develop-integration-option-mat.png[]
+image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
 +
 . Configure your integration using the following values:
 +
-image::integration-create-ui.png[]
+image::integration-create-ui.png["Project name and Project Location fields highlighted in the Develop and Integration window"]
 +
 [calloutlist]
 .. Under *Project Name*, type `american-ws-anypoint-code-builder`.
@@ -35,9 +37,9 @@ image::integration-create-ui.png[]
 
 == Add an HTTP Connector
 
-. In Project Explorer, select the`american-ws-anypoint-code-builder.xml` file. +
+. In Project Explorer, select the `american-ws-anypoint-code-builder.xml` file. +
 +
-image::empty-canvas-state.png[]
+image::empty-canvas-state.png["american-ws-anypoint-code-builder.xml file shown in visual representation of its Mule flow and the Mule Configuration file"]
 +
 You see two different views:
 +
@@ -49,20 +51,22 @@ You see two different views:
 --
 It can take a few minutes for Anypoint Code Builder to set up the flow canvas.
 --
+// Though this comment is valid for web IDE and VSCode plugin, I'd remove it.
 . Select *Flow* from the canvas to create a new empty flow.
 +
-image::create-flow-canvas.png[]
+image::create-flow-canvas.png["american-ws-anypoint-code-builder.xml file shown in visual representation of its Mule flow and the Mule Configuration file"]
+// create-flow-canvas.png and empty-canvas-state.png seem to be the same image with different names. We can remove one file, or change its content. For example, we can take a SS of the XML change to "getFlights" so the change is shown in the XML and in the flow.  
 . Name your flow `getFlights`.
 . In your canvas, after your *Flow* component, select the `plus` icon:
 +
-image::main-tutorial-add-first-http-listener.png[]
+image::main-tutorial-add-first-http-listener.png["Plus icon highlighted in the flow"]
 . Type `Listener` on the search field, and select *Listener* from the HTTP results:
 +
-image::main-tutorial-add-first-listener.png[]
+image::main-tutorial-add-first-listener.png["Listener component highlighted in the Add Component section"]
 . In the `american-ws-anypoint-code-builder.xml` file, add a new line before your `<flow>` element.
 . Type `http`, and select `HTTP:listener-config`.
 +
-image::add-http-config.png[]
+image::add-http-config.png["HTTP:listener-config highlighted in the popup menu"]
 . Scroll through the assets and enter the following values:
 +
 name:: _inbound-request_
@@ -70,7 +74,7 @@ doc:name:: _HTTP Config_
 . Press `enter` to move to a new line and `tab` to add an indentation.
 . Type `http:Listener` and select `HTTP:listener-connection`.
 +
-image::add-listener-config-2.png[]
+image::add-listener-config-2.png["HTTP:listener-connection highlighted"]
 . Scroll through the attributes and set the following values:
 +
 host:: _0.0.0.0_
@@ -84,11 +88,12 @@ doc:name:: `_HTTP /flights_`
 
 As you move forward with your XML, Anypoint Code Builder creates a graphical representation of your flow.
 
-image::first-flow-graphical-view.png[]
+image::first-flow-graphical-view.png["XML file and its graphical representation"]
 
-Select any processor in the graphical view to have Anypoint Code Builder highlight its location within the XML Mule configuration file.
+If you select any processor in the graphical view, Anypoint Code Builder highlights its location within the XML Mule configuration file.
 
-image::http-highlight-flow.png[]
+image::http-highlight-flow.png["HTTP listener highlighted in the flow and in the XML code"]
+// first-flow-graphical-view.png and http-highlight-flow.png are almost the same image.  We can remove one file, or change its content.  
 
 Review your XML code:
 
@@ -112,11 +117,11 @@ Review your XML code:
 
 . In your canvas, after your *Listener* component, select the `plus` icon:
 +
-image::add-set-payload-canvas.png[]
+image::add-set-payload-canvas.png["Plus icon highlighted in the flow canvas"]
 . Type `payload`, and select *Set Payload*.
 +
-image::add-set-payload.png[]
-. Press `tab` to Move through the attributes and set the following values:
+image::add-set-payload.png["setPayload highlighted in the Adding Component section"]
+. Press `tab` to move through the attributes and set the following values:
 +
 value:: `_Flight info_`
 doc:name:: `_Set Response_`
@@ -138,7 +143,7 @@ Review your XML code:
 == Run Your Application
 
 . Navigate to *Run* > *Start Debugging* (`F5`). +
-Anypoint Code Builder moves to the Run and Debug view, uses Maven to build your Mule application, and then deploy it to the embedded Mule Runtime Engine.
+Anypoint Code Builder moves to the Run and Debug view, uses Maven to build your Mule application, and then deploys it to the embedded Mule Runtime Engine.
 +
 [WARNING]
 --
@@ -155,18 +160,18 @@ Using *Run* > *Start without Debugging* causes an error.
 *******************************************************************************************************
 --
 
-== Test the Application
+== Test Your Application
 
 . Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
 See xref:ping-locally-deployed-app.adoc[] for more information about sending a request to your application.
 +
 Notice that the *Flight info* message is displayed as the response.
 
-== Stop the Application
+== Stop Your Application
 
-. In Anypoint Code Builder, select the stop icon from the toolbar at the top of your screen.
+. In Anypoint Code Builder, select the stop icon from the toolbar.
 +
-image::stop-mule-application.png[]
+image::stop-mule-application.png["Stop icon highlighted in the toolbar"]
 . Anypoint Code Builder returns to the Explorer view.
 
 == Next Step
