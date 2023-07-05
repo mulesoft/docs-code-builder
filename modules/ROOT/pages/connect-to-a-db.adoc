@@ -1,4 +1,4 @@
-= Connect to a Database
+= Connecting to a Database
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -15,8 +15,9 @@ See xref:create-xml-snippets.adoc[] for more information.
 * Created a basic integration using Anypoint Code Builder. +
 See xref:create-basic-integration.adoc[]
 * Installed a REST client like Postman or AdvancedRestClient.
+// Do we have to name the REST clients? I would just say "Installed a REST client".
 
-== Open Your Existing Mule Application.
+== Open Your Existing Mule Application
 
 . In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
 . Remove your existing `<set-payload>` component:
@@ -28,7 +29,7 @@ See xref:create-basic-integration.adoc[]
 
 == Add a Database Driver Dependency
 
-Because the Database connector can connect to a wide variety of JDBC databases, you must include a dependency for the particular driver your need. In this case, use a `mySQL` driver:
+Because the Database connector can connect to a wide variety of Java Database Connectivity (JDBC) databases, you must include a dependency for the particular driver your need. In this case, use a `mySQL` driver:
 
 . In Project Explorer, select the `pom.xml` file.
 . Add a new dependency using the code in the following sample:
@@ -42,7 +43,7 @@ Because the Database connector can connect to a wide variety of JDBC databases, 
 </dependency>
 --
 +
-image::add-mysql-driver-dependency.png[]
+image::add-mysql-driver-dependency.png["Pom.xml and dependency highlighted"]
 . Replace the existing `<configuration/>` element within your `mule-maven-plugin` with a new shared library:
 +
 [source,xml,linenums]
@@ -65,8 +66,7 @@ image::add-mysql-driver-dependency.png[]
 [calloutlist]
 .. Add a shared library configuration.
 +
-image::add-shared-library.png[]
-
+image::add-shared-library.png["Shared library highlighted in the pom.xml file"]
 
 == Add a Database Connector Configuration
 
@@ -117,10 +117,10 @@ Review your XML code:
 
 . Select the `plus` icon after the Listener component:
 +
-image::select-db-select-canvas.png[]
+image::select-db-select-canvas.png["Plus icon highlighted in the Listener component"]
 . Start typing `_select_` and select `Database:select`.
 +
-image::select-db-select.png[]
+image::select-db-select.png["Database:select highlighted in the Adding Component section"]
 +
 [source,XML]
 --
@@ -137,7 +137,7 @@ config-ref:: `_Database_Config_`
 --
 You must add the `config-ref` attribute. Start typing `_config_` and use the autocomplete feature to define your attribute.
 
-image::add-config-ref-auto-complete.png[]
+image::add-config-ref-auto-complete.png["Config-ref highlighted"]
 --
 . Inside your `<db:sql>` element, type your query:
 +
@@ -156,7 +156,6 @@ image::add-config-ref-auto-complete.png[]
   </db:sql>
 </db:select>
 --
-
 
 Review your XML code:
 
