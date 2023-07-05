@@ -1,4 +1,4 @@
-= Use DataWeave to Transform Data
+= Using DataWeave to Transform Data
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -26,7 +26,7 @@ xref:connect-to-a-db.adoc[]
 . Select the `plus` icon after the *Select* component:
 . Type `_transform_` and select `Transform`.
 +
-image::transform-with-output-json.png[]
+image::transform-with-output-json.png["Transform component highlighted"]
 . Set the `doc:name` attribute to `_Transform Message_`.
 . Remove the content within the `<![CDATA]` attribute inside your `<ee:set-payload>` element, and replace it with the following DataWeave expression:
 +
@@ -38,14 +38,15 @@ output application/json
 payload
 --
 +
-image::transform-with-output-json.png[]
+image::transform-with-output-json.png["Transform component highlighted"]
+// TO-DO: This image is repeated twice in this article. In the second case, we may look for another image.
 . Run your application by pressing `F5`.
 . Open your preferred REST client.
 . Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
 See xref:ping-locally-deployed-app.adoc[] for more information about sending a request to your application.
 
-Note the response from the MySQL database:
-+
+The MySQL database provides the following response:
+
 [source,JSON]
 --
 [
@@ -200,11 +201,12 @@ Note the response from the MySQL database:
 You can get an error `Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : Communications link failure"`. +
 This error happens when the testing MySQL server is not available. Keep trying until you get a successful response.
 --
+// To-Do: Get aligned with our CX style guide and change notes and warnings format from [WARNING]/[NOTE] to WARNING:/NOTE: (https://confluence.internal.salesforce.com/display/DOCTEAM/TCX+-+Notes%2C+Tips%2C+Warnings%2C+and+Important+Notes). 
 
-Although you got a JSON response from your application, note that it's not the same JSON structure that your API specification dictates:
+Although you got a JSON response from your application, it's not the same JSON structure that your API specification dictates:
 
 . Open your `American Flights API - Anypoint Code Builder` in Exchange.
-. Note the defined JSON example under your `GET` method for your `/flights` endpoint:
+. The following defined JSON example under your `GET` method for your `/flights` endpoint is provided:
 +
 [%header,%autowidth.spread,cols="a,a"]
 |===
@@ -275,7 +277,7 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 }
 --
 +
-image::dw-expression-transform-response.png[]
+image::dw-expression-transform-response.png["DataWeave example highlighted"]
 
 Review your XML code:
 
@@ -317,11 +319,11 @@ Review your XML code:
     </flow>
 --
 
-== Run And Test Your Application
+== Run and Test Your Application
 
 . Navigate to *Run* > *Start Debugging* (`F5`).
 . After the deployment is successful, make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
-See xref:ping-locally-deployed-app.adoc[] for more information on how to send request to your application.
+See xref:ping-locally-deployed-app.adoc[] for more information about how to send request to your application.
 +
 Notice that the proper data structure is now returned from your application:
 +
@@ -473,7 +475,7 @@ Notice that the proper data structure is now returned from your application:
     }
 ]
 --
-. On Anypoint Code Builder, select the stop icon from the toolbar at the top of your screen to stop your application.
+. On Anypoint Code Builder, select the stop icon from the toolbar to stop your application.
 
 == Next Step
 
