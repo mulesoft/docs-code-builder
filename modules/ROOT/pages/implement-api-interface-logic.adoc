@@ -26,29 +26,30 @@ See xref:import-api-specification-from-exchange.adoc[].
 
 == Rename Your Mule Configuration Files
 
-. In Anypoint Code Builder's Explorer view, right-click your `american-flight-api-acb.xml` file and select *Rename*.
+. In Anypoint Code Builder Explorer view, right-click your `american-flight-api-acb.xml` file and select *Rename*.
 +
-image::api-interface-rename.png[]
+image::api-interface-rename.png["Rename option highlighted the context menu of american-flight-api-acb.xml file"]
+// TO-DO: The background of the contextual menu is white in the web IDE and grey in the desktop IDE.
 . Rename the file to *interface.xml*.
 +
-image::interface-rename.png[]
+image::interface-rename.png["interface.mxl file highlighted when renaming a file"]
 . Right-click your `american-ws-anypoint-code-builder.xml` and select *Rename*.
 +
-image::api-implementation-rename.png[]
+image::api-implementation-rename.png["Rename option highlighted the context menu of american-ws-anypoint-code-builder.xml file"]
 . Rename the file to *implementation.xml*.
 +
-image::implementation-rename.png[]
+image::implementation-rename.png["implementation.xml file highlighted when renaming a file"]
 
 The interface file now receives all incoming requests to your application. The flows that you scaffolded when importing the API validate and route requests. The implementation file contains the backend logic that the interface calls.
 
-== Remove the HTTP Listeners From The Implementation File
+== Remove the HTTP Listeners from the Implementation File
 
 To ensure that your application exposes one single HTTP endpoint to handle request, you have to remove the HTTP listeners from the implementation file.
 
 . In Anypoint Code Builder, open your `implementation.xml` file.
-. In the graphical canvas, select the *HTTP /flights* listener and note the corresponding XML code.
+. In the graphical canvas, select the *HTTP /flights* listener. The corresponding XML code is shown.
 +
-image::get-flights-select-listener.png[]
+image::get-flights-select-listener.png["HTTP listener highlighted in the implementation.xml file"]
 . Delete the highlighted XML code:
 +
 [source,xml]
@@ -95,8 +96,7 @@ Your flow should now look like this:
 </flow>
 --
 
-
-== Reference the Implementation Flow From The Interface File
+== Reference the Implementation Flow from the Interface File
 
 . In Anypoint Code Builder, open your `interface.xml` file.
 . Use the *Flow List* to navigate to your `get:\flights:american-flights-api-config` flow:
@@ -107,8 +107,10 @@ Your flow should now look like this:
     <logger level="INFO" message="get:\flights:american-flights-api-config" />
 </flow>
 --
+// TO-DO: The name of the file should be consistent with the name of the asset. For example, in my case, the file name is acb-american-flights-api-config.
 +
-image::select-get-flights-flow.png[]
+image::select-get-flights-flow.png["`get:\flights:american-flights-api-config` flow highlighted]
+// TO-DO: Replace current image with an image that can be seen in a 13 inch display.
 . Select the `plus` icon before the Transform Message component:
 +
 image::add-sub-flow-canvas-tutorial.png[]
