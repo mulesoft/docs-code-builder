@@ -1,8 +1,9 @@
-= Add Breakpoints
+= Adding Breakpoints
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 A breakpoint enables you to pause your Mule application at a specific place to learn more about what is happening.
+// TODO: Kudos for explaining the purpose of adding a component to your flow when debugging it! 
 
 == Before You Begin
 
@@ -22,21 +23,20 @@ To add a breakpoint to your Mule application:
 . In Anypoint Code Builder, on the Explorer view, open your `interface.xml`.
 . Select the *Run and Debug* icon in the activity bar:
 +
-image::run-and-debug.png[]
+image::run-and-debug.png["Run and debug icon highlighted in the activity bar"]
 . Click next to the line in your `<flow-ref>` component to add a breakpoint on that component.
+// TODO: There may be a step missing in the implement-api-interface-logic.adoc file. The `<flow-ref>` is not available for me. I have a <ee:transform doc:name="Transform Message">. Can we add here something like "<flow-ref name="AnotherFlow" />"?
 +
-image::add-breakpoint.png[]
+image::add-breakpoint.png["Breakpoint highlighted next to the line number"]
 +
-[NOTE]
---
-You can also use `F9` to add a breakpoint to the line you are standing on.
---
-. On your `implementation.xml` file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components.
-. Note that all your breakpoints show up in the *Breakpoints* panel:
+NOTE: You can also use `F9` to add a breakpoint to the line you are standing on.
 +
-image::breakpoints-panel.png[]
+. On your `implementation.xml` file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components. Your breakpoints show up in the *Breakpoints* panel:
+// TODO: Panel name is always in capital letters both in web IDE and in desktop IDE.
+
+image::breakpoints-panel.png["Breakpoints added highlighted"]
 
 == Next Step
 
 * xref:run-a-debug-session.adoc[Run a Debug Session]. +
-Run your first debug session and inspect the message and variables at different points during your application's execution.
+Run your first debug session and inspect the message and variables at different points during your application execution.
