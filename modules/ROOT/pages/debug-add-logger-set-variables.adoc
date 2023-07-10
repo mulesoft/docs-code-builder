@@ -1,4 +1,4 @@
-= Add Components to Help You Debug Your Application
+= Adding Components to Debug Your Application
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
@@ -9,17 +9,20 @@ You can use Logger and Set Variable components to help debug your Mule applicati
 Before you begin, ensure that:
 
 * You designed an API specification. +
-See xref:design-api-specification.adoc[]
+See xref:design-api-specification.adoc[].
 * You developed an integration. +
-See xref:develop-integration.adoc[]
+See xref:develop-integration.adoc[].
 * You implemented the API. +
-See xref:implement-api-specification.adoc[]
+See xref:implement-api-specification.adoc[].
 
 == Add Logger and Set Variable Components
 
 . In Anypoint Code Builder, on the Explorer view, open your `implementation.xml`.
+// TODO: Package Explorer, Project Explorer, or Explorer view? "Explorer" or "EXPLORER"?
 . Add a new line after your `</db:select>` element and indent it to the same level.
-. Start typing `_set variable_` and select `mule:set-variable`:
+. Start typing `_set-variable_` and select `set-variable` (`mule:set-variable`):
+// TODO: If you don't write the dash (-), there is no option to add `set-variable` (`mule:set-variable`). Adding "`set-variable` (`mule:set-variable`)" to avoid misunderstandings with "`muledx:set-variable`".
+// TODO: If we are to make tutorials clearer, we may need to add the purpose of adding `set-variable` (`mule:set-variable`).
 +
 [source,xml]
 --
@@ -62,12 +65,15 @@ See xref:implement-api-specification.adoc[]
 --
 [calloutlist]
 .. Move through the attributes of the snippet and set the following values:
+// TODO: Depending on the scree resolution, you need to scroll the window to discover the call-out number.
 +
 value:: `_#[payload]_`.
 doc:name:: `_Set Database Payload_`.
 variableName:: `_databasePayload_`.
-. Create a new line below before your `</flow>` element and indent to the same level.
-. Start typing `_logger_` and select `mule::Logger`:
+. Create a new line before your `</flow>` element and indent to the same level.
+. Start typing `_logger_` and select `logger` (`mule::Logger`):
+// TODO: Adding "`logger` (`mule::Logger`)" to avoid misunderstandings with "`muledx:logger`".
+// TODO: If we are to make tutorials clearer, we may need to add the purpose of adding `logger` (`mule::Logger`).
 +
 [source,XML]
 --
