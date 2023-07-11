@@ -1,45 +1,44 @@
 = Mule Runtime Not Found or Not Installed Errors
 
-Anypoint Code Builder bundles an instance of Mule Runtime version 4 to help you during your implement and integration tasks. You must always have a Mule runtime configured to be able to use the features that enable you to develop Mule applications.
+Anypoint Code Builder bundles a version 4 instance of Mule runtime engine (Mule) to run your integrations and implementations.  
 
-Code Builder uses two properties to control the embedded Mule Runtime engine instance:
+Do not change the default locations of Mule are unless you receive an error that Mule is not found or installed. If such errors occur, 
+the following properties enable you to change the location:
 
 * *Mule Runtimes Directory*: The default location of the Mule runtime engine installation. +
 Default value: `/Users/<user-name>/muleRuntimes/`.
 * *Mule Home*: The full path that points to the root files of the Mule Runtime instance. +
 Default value: `/Users/<user-name>/muleRuntimes/<mule-runtime-installation>`.
 
-[WARNING]
---
-Changing the *Mule Runtimes Directory* and *Mule Home* properties causes unexpected errors.
 
-Modify these values only if you encounter any of the errors detailed in this article.
---
+== Mule Runtime Is Not Installed, You Must Configure a Mule Runtime to Enable This Feature
 
-== Troubleshooting Mule Runtime Errors
+This error occurs if *Mule Home* and *Mule Runtimes Directory* are misconfigured or empty and feature requires a running Mule instance. 
+For example, auto-completion and debugging features require Mule to run. 
 
-If you encounter runtime errors when developing an integration or implementing an API, troubleshoot them as follows:
+To troubleshoot this issue, use the following procedure: 
 
-=== Mule Runtime Is Not Installed, You Must Configure a Mule Runtime to Enable This Feature
-
-This error happens when you attempt to use a feature that requires a working Mule Runtime engine configured. For example, attempting to use auto-complete, or run a debug session. It's possible that one or both of the *Mule Home* and *Mule Runtimes Directory* are misconfigured, or empty. To troubleshoot this:
-
-. Navigate to your Anypoint Code Builder view, and select the *Open ACB Settings* icon.
-+
-image::open-settings.png[]
 . Locate the *Mule > Runtime: Mule Home* and *Mule > Runtime: Mule Runtimes Directory* properties:
 +
+image::open-settings.png[]
+
+. Provide the full path to the folder that contains Mule runtime. This field must not be empty.
++
 image::mule-runtimes-settings.png[]
-. Provide the full path to the folder that contains Mule runtime. This field must not be empty. 
 
 === No Mule runtime found. To perform this action, you must have Mule runtime configured.
 
-This warning happens when you open Anypoint Code Builder without a Mule Runtime engine configured. It's possible that one or both of the *Mule Home* and *Mule Runtimes Directory* are misconfigured, or empty. To troubleshoot this:
+This warning occurs if Mule is not configured properly when you open Anypoint Code Builder. 
+The *Mule Home* or *Mule Runtimes Directory* fields are misconfigured or empty. 
+
+To troubleshoot this issue, use the following procedure:
 
 . Navigate to your Anypoint Code Builder view, and select the *Open ACB Settings* icon.
 +
 image::open-settings.png[]
+
 . Locate the *Mule > Runtime: Mule Home* and *Mule > Runtime: Mule Runtimes Directory* properties:
 +
 image::mule-runtimes-settings.png[]
+
 . Provide the full path to the folder that contains Mule runtime. This field must not be empty. 
