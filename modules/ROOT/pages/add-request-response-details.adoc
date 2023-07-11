@@ -26,7 +26,8 @@ image::add-training-american-flight.png["Training: American Flight Data Type ass
 . Select the latest version of the `American Flight Data Type` asset.
 +
 image::add-flight-data-type-version.png["Latest American Flight Data Type asset version highlighted"]
-. The status bar shows a *Dependencies successfully added* message.
++
+The status bar shows a *Dependencies successfully added* message.
 . Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Add fragment dependency from Exchange_.
 +
 image::add-fragment-from-exchange.png["MuleSoft: Add fragment dependency from Exchange option highlighted"]
@@ -36,8 +37,10 @@ image::add-training-example.png["Training: American Flights Example asset option
 . Select the latest version of the `American Flights Example` asset.
 +
 image::add-training-example-version.png["Latest version of the American Flights Example asset highlighted"]
-. The status bar shows a *Dependencies successfully added* message.
-. In the Package Explorer, you can see both API fragments that you imported:
++
+The status bar shows a *Dependencies successfully added* message.
++
+In the Package Explorer, you can see both API fragments that you imported:
 * *AmericanFlightDataType.raml* defines an object corresponding to the definition of a flight.
 * *AmericanFlightsExample.raml* defines the example of data that the flights API returns.
 +
@@ -75,6 +78,8 @@ types:
     get:
 --
 // If using a Mac, try `fn + ctrl + spacebar`.
+
+// hn: idea - just show what to add to the code and what the yaml file looks like after.
 . Add an `!include` directive and press `ctrl + spacebar` to bring up the autocomplete options.
 . Select `AmericanFlightsDataType.raml`.
 +
@@ -140,12 +145,17 @@ types:
 
 == Add an Example Response
 
-Create a new `example:` element for the `response` element for your `/flights` resource:
+Create a new `examples:` element for the `responses` element for your `/flights` resource:
 
-. Add a new resource at the same level of your `type` response, press `ctrl/cmd + spacebar` to bring up the autocomplete options, and select `examples`.
+. Add a new resource at the same level as your `type` response, press `ctrl/cmd + spacebar` to bring up the autocomplete options, and select `examples`.
+// hn: This automatically adds the colon and indents the next line so indention not necessary
 . Under examples, add an indentation, press `ctrl + spacebar`, and select *output*.
+// hn: It doesn't add the colon - is it necessary?
 . Add an `!include` directive and press `ctrl + spacebar` to bring up the autocomplete options.
-. Select `AmericanFlightsExample.raml` as the reference for your example.
+// You have to select examples or exchange_modules before you can select the raml...
+. Select `AmericanFlightExample.raml` as the reference for your example.
+// hn: my options don't include the .raml. When I include, I get an error that it doesn't exist. It works if I add "examples" in the path.
+// hn: I think there's a bug.
 +
 [source,RAML]
 --
@@ -177,12 +187,13 @@ You can define your responses in a folder within your project:
 image::add-new-folder.png["New Folder option highlighted in the context menu"]
 . Name the new folder *examples*.
 +
-image::create-examples-folder.png["New Examples folder highlighted"]
+image::create-examples-folder.png["New examples folder highlighted"]
 . Right-click on your *examples* folder, select *New File*, and create a new file named `AmericanFlightExample.raml`.
 +
 image::add-new-file.png["New file highlighted in the context menu"]
 +
 image::create-american-fligh-example-file.png["AmericanFlightExample.raml file highlighted"]
+// hn: this is how we should do it!
 . Open the file and add the following example:
 +
 [source,raml,linenums]
@@ -240,6 +251,8 @@ types:
 .. New example defined in your `examples` folder.
 
 == Define a Request Example
+
+// hn: do we need to reiterate which file we're working in now that there are two?
 
 Similar to defining a response for a method, you can define a request example:
 
@@ -347,6 +360,7 @@ types:
 Additionally, you can define the type of response of your `post` method for your `/flights` resource:
 
 . Add a new line under your `/flights:post` method and indent it at the same level as your `body:` element.
+// hn: there's something missing - need the responses element.
 . Press `ctrl + spacebar` to bring up the autocomplete options to create a 201 response:
 +
 [source,raml,linenums]
