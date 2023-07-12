@@ -29,13 +29,14 @@ See xref:run-a-debug-session.adoc[]
 
 == Deploy the Application to CloudHub
 
-To deploy to CloudHub you must configure a `deploy.json` file in your `src/main/resources` directory. If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you to create one the first time you deploy your application:
+To deploy to CloudHub, you must configure a `deploy.json` file in your `src/main/resources` directory. If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you to create one the first time you deploy your application:
 
 . Open Anypoint Code Builder.
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
-// TODO: Request dev team to rename the command to "MuleSoft: Deploy to CloudHub".
+. Open the application to deploy.
+// TODO: Adding necessary step. If no application is open, the "MuleSoft: Deploy to Cloudhub" command is not displayed. Is this the expected behavior? 
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to CloudHub_.
 +
-image::deploy-to-cloudhub.png[]
+image::deploy-to-cloudhub.png["MuleSoft: Deploy to CloudHub command highlighted"]
 . Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review:
 +
 [source,json]
@@ -53,10 +54,10 @@ image::deploy-to-cloudhub.png[]
 The name must be unique across all applications deployed to CloudHub.
 . After reviewing the deployment configuration, select *Deploy* to deploy the application to CloudHub.
 +
-image::deploy-config-created.png[Deployment configuration file created pop-up message]
+image::deploy-config-created.png["Deployment configuration file created pop-up message"]
 . Select your preferred environment.
 +
-image::select-deployment-environment.png[]
+image::select-deployment-environment.png["Design and Sandbox environment options highlighted"]
 +
 Anypoint Code Builder packages the application and deploys it to CloudHub.
 . After deployment completes, select *Open in Runtime Manager*.
