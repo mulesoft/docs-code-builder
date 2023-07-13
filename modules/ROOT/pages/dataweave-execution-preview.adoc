@@ -17,21 +17,18 @@ You can use this feature in any field that accepts a DataWeave expression, such 
 
 image::set-payload-dw.png["Set-payload component highlighted in a flow"]
 
-
 == Example
 
 Create a Mule application that receives an XML payload with dates using different date separators (`/`, `.`, and `-`). The application uses a DataWeave script to normalize the dates to use a consistent separator (`-`):
 
-. In your Anypoint Code Builder welcome mat, select *Develop an Integration*.
+. In Anypoint Code Builder, select *Develop an Integration*.
 . Name your project _normalize-dates_ and select *Browse*.
 +
-image::integration-1.png[]
-. Select your home directory and click *OK*:
-+
-image::select-project-location-dw-example.png[]
+image::integration-1.png["Project name and browse highlighted"]
+. Select your home directory.
 . Select *Create Project*:
 +
-image::create-project-dw-example.png[]
+image::create-project-dw-example.png["Create Project highlighted"]
 . Add the following HTTP Listener config and flow to your `normalize-dates.xml` file:
 +
 [source,XML]
@@ -64,9 +61,9 @@ dates: payload.dates mapObject ((date, index) ->
    date : normalize(date)
 )
 --
-
-Note that Anypoint Code Builder warns you about the payload not being resolved:
-
++
+Anypoint Code Builder warns you about the payload not being resolved:
++
 image::quick-fix-dw-example.png[]
 
 . Select *Quick Fix* > *Create Sample Data for Payload* > *XML*.
