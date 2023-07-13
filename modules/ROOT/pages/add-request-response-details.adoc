@@ -41,6 +41,7 @@ image::add-training-example-version.png["Latest version of the American Flights 
 The status bar shows a *Dependencies successfully added* message.
 +
 In the Package Explorer, you can see both API fragments that you imported:
++
 * *AmericanFlightDataType.raml* defines an object corresponding to the definition of a flight.
 * *AmericanFlightsExample.raml* defines the example of data that the flights API returns.
 +
@@ -105,7 +106,7 @@ types:
   /{ID}:
     get:
 --
-. Inside the `get:` method of your `/flights` resource, add a new child element `responses` at the same level as `queryParameters`.
+. Inside the `get` method of your `/flights` resource, add a new child element `responses:` at the same level as `queryParameters`.
 +
 . Press `ctrl + spacebar` to bring up the autocomplete options, and add the elements:
 * `200`
@@ -147,9 +148,9 @@ types:
 
 Create a new `examples:` element for the `responses` element for your `/flights` resource:
 
-. Add a new resource at the same level as your `type` response, press `ctrl/cmd + spacebar` to bring up the autocomplete options, and select `examples`.
+. Add a new resource at the same level as your `type` response, press `ctrl + spacebar` to bring up the autocomplete options, and select `examples`.
 // hn: This automatically adds the colon and indents the next line so indention not necessary
-. Under examples, add an indentation, press `ctrl + spacebar`, and select *output*.
+. Under examples, add an indentation, press `ctrl + spacebar`, and select `output`.
 // hn: It doesn't add the colon - is it necessary?
 . Add an `!include` directive and press `ctrl + spacebar` to bring up the autocomplete options.
 // You have to select examples or exchange_modules before you can select the raml...
