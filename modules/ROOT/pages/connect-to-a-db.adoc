@@ -44,7 +44,7 @@ Because the Database connector can connect to a wide variety of Java Database Co
 --
 +
 image::add-mysql-driver-dependency.png["Pom.xml and dependency highlighted"]
-// TO-DO: This image shows the hamburger menu so we should replace it.
+//cp: TO-DO: This image shows the hamburger menu so we should replace it.
 . Replace the existing `<configuration/>` element within your `mule-maven-plugin` with a new shared library:
 +
 [source,xml,linenums]
@@ -67,13 +67,14 @@ image::add-mysql-driver-dependency.png["Pom.xml and dependency highlighted"]
 [calloutlist]
 .. Add a shared library configuration.
 +
+//dm: Change image, it contains hamburger menu. Need to make generic. Take a SS in a lower resolution, it's hard to read.
 image::add-shared-library.png["Shared library highlighted in the pom.xml file"]
 
 == Add a Database Connector Configuration
 
 . In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
 . Go to a line between your existing `</http:listener-config>` and `<flow>` elements.
-. Start typing `_database_` and select `db-mysql-config`.
+. Start typing `_database_` and select `db:mysql-config`.
 . Move through the attributes and set the following values:
 +
 name:: `_Database_Config_`
@@ -120,7 +121,7 @@ Review your XML code:
 +
 image::select-db-select-canvas.png["Plus icon highlighted in the Listener component"]
 //TO-DO: On web IDE, "Adding Components". On desktop IDE, "Add Components".
-. Start typing `_select_` and select `Database:select`.
+. Start typing `_select_` and select `Database Select`.
 +
 image::select-db-select.png["Database:select highlighted in the Adding Component section"]
 +

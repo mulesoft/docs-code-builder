@@ -13,18 +13,19 @@ See xref:setup.adoc[] for more information.
 * Created an XML snippet. +
 See xref:create-xml-snippets.adoc[] for more information.
 * Installed a REST client like Postman or AdvancedRestClient.
-// Do we have to name the REST clients? I would just say "Installed a REST client".
+//cp: Do we have to name the REST clients? I would just say "Installed a REST client".
 
 == Create a Mule Application
 
-. Go to Anypoint Code Builder:
+. Go to Anypoint Code Builder.
 +
 image::anypoint-code-builder-view.png["Anypoint Code Builder Welcome page highlighted"]
-// TO-DO: We can delete this image. The following image shows the important content and it is valid for the web IDE and VSCode plugin.
+//cp: TO-DO: We can delete this image. The following image shows the important content and it is valid for the web IDE and VSCode plugin.
+//dm: if you still want to keep it, change image because it contains hamburger menu.
 . Select *Develop an Integration*.
 +
 image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
-// TO-DO: We should get in touch with UI responsible to learn what phrase will be finally used "Getting started" or "Quick Actions". Be consistent in the use of capital letter in every word.
+//cp: TO-DO: We should get in touch with UI responsible to learn what phrase will be finally used "Getting started" or "Quick Actions". Be consistent in the use of capital letter in every word.
 +
 . Configure your integration using the following values:
 +
@@ -38,8 +39,9 @@ image::integration-create-ui.png["Project name and Project Location fields highl
 
 == Add an HTTP Connector
 
-. In Project Explorer, select the `american-ws-anypoint-code-builder.xml` file. +
+. In Project Explorer, select the `american-ws-anypoint-code-builder.xml` file.
 +
+//dm: Add callouts to this image as described below. 
 image::empty-canvas-state.png["american-ws-anypoint-code-builder.xml file shown in visual representation of its Mule flow and the Mule Configuration file"]
 +
 You see two different views:
@@ -52,11 +54,11 @@ You see two different views:
 --
 It can take a few minutes for Anypoint Code Builder to set up the flow canvas.
 --
-// Though this comment is valid for web IDE and VSCode plugin, I'd remove it.
+//cp: Though this comment is valid for web IDE and VSCode plugin, I'd remove it.
 . Select *Flow* from the canvas to create a new empty flow.
 +
 image::create-flow-canvas.png["american-ws-anypoint-code-builder.xml file shown in visual representation of its Mule flow and the Mule Configuration file"]
-// create-flow-canvas.png and empty-canvas-state.png seem to be the same image with different names. We can remove one file, or change its content. For example, we can take a SS of the XML change to "getFlights" so the change is shown in the XML and in the flow.  
+//cp: create-flow-canvas.png and empty-canvas-state.png seem to be the same image with different names. We can remove one file, or change its content. For example, we can take a SS of the XML change to "getFlights" so the change is shown in the XML and in the flow.  
 . Name your flow `getFlights`.
 . In your canvas, after your *Flow* component, select the `plus` icon:
 +
@@ -73,15 +75,16 @@ image::add-http-config.png["HTTP:listener-config highlighted in the popup menu"]
 name:: _inbound-request_
 doc:name:: _HTTP Config_
 . Press `enter` to move to a new line and `tab` to add an indentation.
-. Type `http:Listener` and select `HTTP:listener-connection`.
+. Type `http:Listener`, and select `HTTP:listener-connection`.
 +
 image::add-listener-config-2.png["HTTP:listener-connection highlighted"]
 . Scroll through the attributes and set the following values:
 +
 host:: _0.0.0.0_
 port:: _8081_
-. Select the `plus` icon on your canvas:
+. Select the `plus` icon on your canvas.
 . On the XML, scroll through the attributes and set the following values:
+//dm: shouldn't we say `on the Flow component` instead of `XML`?
 +
 path:: `_flights_`
 config-ref:: `_inbound-request_`
@@ -94,7 +97,7 @@ image::first-flow-graphical-view.png["XML file and its graphical representation"
 If you select any processor in the graphical view, Anypoint Code Builder highlights its location within the XML Mule configuration file.
 
 image::http-highlight-flow.png["HTTP listener highlighted in the flow and in the XML code"]
-// first-flow-graphical-view.png and http-highlight-flow.png are almost the same image.  We can remove one file, or change its content.  
+//cp: first-flow-graphical-view.png and http-highlight-flow.png are almost the same image.  We can remove one file, or change its content.  
 
 Review your XML code:
 
@@ -116,7 +119,7 @@ Review your XML code:
 
 == Set a Payload
 
-. In your canvas, after your *Listener* component, select the `plus` icon:
+. In your canvas, after your *Listener* component, select the `plus` icon.
 +
 image::add-set-payload-canvas.png["Plus icon highlighted in the flow canvas"]
 . Type `payload`, and select *Set Payload*.
@@ -144,7 +147,7 @@ Review your XML code:
 == Run Your Application
 
 . Navigate to *Run* > *Start Debugging* (`F5`). +
-Anypoint Code Builder moves to the Run and Debug view, uses Maven to build your Mule application, and then deploys it to the embedded Mule Runtime Engine.
+Anypoint Code Builder moves to the Run and Debug view, uses Maven to build your Mule application, and then deploys it to the embedded Mule runtime engine.
 +
 [WARNING]
 --
