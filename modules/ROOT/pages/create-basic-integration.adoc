@@ -60,23 +60,23 @@ image::main-tutorial-add-first-http-listener.png[]
 +
 image::main-tutorial-add-first-listener.png[]
 . In the `american-ws-anypoint-code-builder.xml` file, add a new line before your `<flow>` element.
-. Type `http`, and select `HTTP:listener-config`.
+. Type `http`, and select `http:listener-config`.
 +
 image::add-http-config.png[]
-. Scroll through the assets and enter the following values:
+. In the XML, add the following attributes with the listed values configured:
 +
 name:: _inbound-request_
 doc:name:: _HTTP Config_
 . Press `enter` to move to a new line and `tab` to add an indentation.
-. Type `http:Listener` and select `HTTP:listener-connection`.
+. Type `http:listener` and select `http:listener-connection`.
 +
 image::add-listener-config-2.png[]
-. Scroll through the attributes and set the following values:
+. In the XML, add the following attributes with the listed values configured:
 +
 host:: _0.0.0.0_
 port:: _8081_
 . Select the `plus` icon on your canvas:
-. On the XML, scroll through the attributes and set the following values:
+. In the XML, add the following attributes with the listed values configured:
 +
 path:: `_flights_`
 config-ref:: `_inbound-request_`
@@ -116,7 +116,7 @@ image::add-set-payload-canvas.png[]
 . Type `payload`, and select *Set Payload*.
 +
 image::add-set-payload.png[]
-. Press `tab` to Move through the attributes and set the following values:
+. In the XML, add the following attributes with the listed values configured:
 +
 value:: `_Flight info_`
 doc:name:: `_Set Response_`
@@ -138,7 +138,7 @@ Review your XML code:
 
 == Run Your Application
 
-. Navigate to *Run* > *Start Debugging* (`F5`). +
+. Navigate to *Run* > *Start Debugging*, or press `F5`. +
 Anypoint Code Builder moves to the Run and Debug view, uses Maven to build your Mule application, and then deploy it to the embedded Mule Runtime Engine.
 +
 [WARNING]
