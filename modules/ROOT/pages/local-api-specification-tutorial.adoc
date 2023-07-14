@@ -1,4 +1,6 @@
 = Iteratively Design an API Specification and Implement it
+// TODO: Should this title be more consistent with other titles? Something like: "Iteratively Designing and Implementing an API Specification"?
+:imagesdir: ../assets/images
 
 Anypoint Code Builder enables you to scaffold your API specification into a Mule project without having to publish it to Exchange. You can work on your Mule project, then edit the API specification, and re-scaffold it to reflect your new changes.
 
@@ -11,13 +13,15 @@ See xref:setup.adoc[] for more information.
 
 To create a new API specification:
 
-. In your web IDE instance, navigate to your Anypoint Code Builder view:
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Design an API_.
 +
-image::anypoint-code-builder-view.png[]
-. Select *Design an API*.
-+
-image::design-api-1.png[]
-+
+// . In your web IDE instance, navigate to your Anypoint Code Builder view:
+// +
+// image::anypoint-code-builder-view.png[]
+// . Select *Design an API*.
+// +
+// image::design-api-1.png[]
+// +
 . Configure your API using the following values:
 +
 image::design-api-ui-first.png[]
@@ -34,7 +38,7 @@ You can't change business groups after you create your API specification.
 --
 . Select *Create Project*.
 +
-The project explorer now shows you your American Flights API folder with an `american-flights-api.raml` file open in the editor.
+The project explorer now shows you your Retrieve Users API folder with a `retrieve-users-api.raml` file open in the editor.
 // REUSE
 . In the editor, add the following RAML specification:
 +
@@ -77,12 +81,16 @@ version: 1.0.development
 
 == Implement the Local API
 
+// TODO: Should we define "Local API"? What does this mean in the context of the Web IDE? Also, will customers know what a "multi-root workspace is"? Should this be defined? Should it be "multi-version workspace"?
+
 By default, when you create a new API specification, Code Builder assigns it a version 1.0.0. You can create a multi-root workspace with your API specification directory and a new Mule project directory to design and implement the API iteratively:
 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Implement a Local API_.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Implement this Local API_.
+// TODO: the Desktop IDE asks to choose a project name here.
 . Code Builder creates a multi-root workspace to keep your API specification and Mule project in sync.
 .. Choose a location to store your workspace. +
 Your multi-root workspace is a `.code-workspace` file extension that keeps both of your directories coordinates.
+// TODO: Does the customer need to know about this file extension? The Desktop IDE UI didn't mention this file extension anywhere.
 +
 [IMPORTANT]
 --
