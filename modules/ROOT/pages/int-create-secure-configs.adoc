@@ -2,7 +2,7 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Encrypt sensitive values of properties used in your Mule applications, and hide the name of the decryption key in Runtime Manager when the application deploys to CloudHub. 
+Encrypt sensitive values of properties used in your Mule application, and hide the name of the decryption key in Runtime Manager when the application deploys to CloudHub. 
 
 
 //TODO: SCREENSHOT SHOWING the files in the project and config XML
@@ -49,7 +49,12 @@ You can use terminal in Anypoint Code Builder for this purpose.
 
 . Specify your encrypted properties in a `.yaml` or Spring-formatted `.properties` file within the `src/main` directory of the project folder for your Mule application. 
 +
-Example: `my.property : "![En8lII21ZHrdIaINw0+mSA==]"`
+.Example: my.properties.yaml
+----
+`my.property : "![En8lII21ZHrdIaINw0+mSA==]"`
+----
++
+//TODO: ADD section on BEST PRACTICES FOR FILE NAME and related {env} variable 
 
 . In your configuration XML for the Mule application: 
 
