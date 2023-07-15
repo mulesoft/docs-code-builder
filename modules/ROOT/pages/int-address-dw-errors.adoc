@@ -1,0 +1,62 @@
+= DataWeave Validations
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+Whenever your DataWeave code has a syntactic or semantic error, Anypoint Code Builder highlights the error and offers suggestions to fix the error.
+
+include::partial$dw-dependency-warning.adoc[]
+
+For example, Anypoint Code Builder flags when a function hasn't been defined:
+
+[source,DataWeave]
+--
+%dw 2.0
+output application/json
+---
+toUpper("hello")
+--
+
+image::undefined-function.png[]
+
+To quickly fix the issue:
+
+. Select *Quick Fix*:
++
+image::undefined-function-quick-fix.png[]
+. Select *Create Function*:
++
+image::create-function-dw.png[]
+
+Anypoint Code Builder automatically creates a function definition for your script:
+
+[source,DataWeave]
+--
+%dw 2.0
+fun toUpper(param0: String) = ??? //<1>
+output application/json
+---
+toUpper("hello")
+--
+[calloutlist]
+.. A new function declaration for you to define your function.
+
+For example, you can define the function to use the `upper` function to return the provided String in uppercase characters:
+
+[source,DataWeave]
+--
+%dw 2.0
+fun toUpper(param0: String) = upper(param0) //<1>
+output application/json
+---
+toUpper("hello")
+--
+[calloutlist]
+.. Define your custom `toUpper` function.
+
+Additionally, you can preview the result of your function by locating your cursor within your DataWeave code, clicking the *Show Code Actions* icon, and selecting *Run Preview*:
+
+image::function-validation-run-preview.png[]
+
+Anypoint Code Builder opens a new *Preview Output* tab with the result of the function:
+
+image::dataweave-function-preview-output.png[]

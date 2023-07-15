@@ -1,0 +1,41 @@
+= Implement a REST or OAS API Specification
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Anypoint Code Builder enables you to implement RAML 0.8, 1.0 and OAS 2.0 and 3.0 API specifications.
+
+== Before You Begin
+
+Before getting started, ensure that your API specification is published on Exchange.
+
+You can publish your RAML or OAS API specification to exchange using different methods:
+
+* Manually publish your API specification files by publishing a new asset on Exchange. +
+See xref:exchange::to-create-an-asset.adoc#create-an-api-asset[Create an API Asset].
+* Publish your API specification from Anypoint Studio. +
+See xref:studio::publish-api-project-to-exchange.adoc[Publish an API Project to Exchange]
+* Publish your API specification using Anypoint CLI. +
+See xref:anypoint-cli::exchange-assets.adoc#exchange-asset-upload[Exchange Assets].
+
+== Implement an API Specification
+
+. In your web IDE instance, navigate to your Anypoint Code Builder view:
++
+image::anypoint-code-builder-view.png[]
+. Select *Implement an API*.
++
+image::implement-api-option-mat.png[]
+. Configure your project using the following values:
++
+image::implement-api-configure-1.png[]
++
+[calloutlist]
+.. *Project Name*: Type a name for your project.
+.. *Project Location*: Select *Browse*, browse through your home directory, and click *OK* to select a specific location for your project.
+.. Search for an API specification published in Exchange to implement. +
+Start typing the name of the API specification that you want to implement and hit `enter` to get a list of possible results. Click *Add asset* to select the API specification that you want:
++
+image::implement-api-add-asset.png[]
+.. *Show filters*: Enables you to filter search results. See xref:filter-search-results.adoc[] for more information.
+
+Anypoint Code Builder creates the necessary flows for each endpoint on your API specification endpoints.

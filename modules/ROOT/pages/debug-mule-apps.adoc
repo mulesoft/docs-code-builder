@@ -1,0 +1,33 @@
+= Debug a Mule Application
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+You can debug your Mule applcation using the embedded debugger in Anypoint Code Builder
+
+Anypoint Code Builder does not have a hot re-deploy mechanism. To re-deploy a running application that you are debugging:
+
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Rebuild Application_ .
+
+
+== Getting to Know the Debugger
+
+image::debugger-view.png[]
+
+. *Start Debugging*: A shortcut to start the build and run your Mule application in debug mode.
+. *Variables Panel*: Shows information about the Mule event and variables.
+. *Watch Panel*: Use this panel to evaluate variables and expressions.
+. *Call Stack Panel*: Shows the functions or procedures that are currently in the stack.
+. *Breakpoints Panel*: Shows a summary of all breakpoints in your Mule application.
+. *Terminal*: Shows you the output of the Maven build and the results of the deployment to the embedded Mule Runtime engine.
+. *Debug Toolbar*: Contains buttons to navigate through your running Mule application.
++
+image::debugger-toolbar.png[]
+[arabic]
+.. *Step Over*: If the line does not contain a `flowref` it behaves the same as next, it takes `flowref` as a unit of process avoiding to stop until return to the current flow.
+.. *Step Into*: If the line does not contain a `flowref` it behaves the same as next but if it does the debugger enters the flow referenced.
+.. *Step Out*: The debugger goes out of the current flow trying to return to a previous flow. If another flow doesn’t exist, the debugger behaves like *continue*.
+.. *Restart*: Not supported.
+
+The following section teaches you how to set up components that help you debug your Mule application, set up breakpoints for your code, and run a debug session.
+
+Start by xref:debug-add-logger-set-variables.adoc[Adding Components to Help You Debug Your Application].
