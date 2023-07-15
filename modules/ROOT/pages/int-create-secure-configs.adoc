@@ -1,0 +1,81 @@
+= Secure Configuration Properties 
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Encrypt sensitive values of properties within your Mule applications, and configure the deployment process to hide the name of the decryption key in Runtime Manager when the application deploys to CloudHub. 
+
+
+TODO TO SELF - SIMPLIFY THE FOLLOWING TO MAKE MORE CONCEPTUAL AND LESS TASK-ORIENTED:
+
+Encrypt properties using the MuleSoft Secure Properties Tool. After encrypting,  create a properties file for the properties. In the file, specify key-value pairs for which the encrypted property is the value, and the key is a unique name of your choice, for example, `my.property : "![En8lII21ZHrdIaINw0+mSA==]"`. You specify the key-value pairs in a `.yaml` or  Spring-formatted `.properties` file that you put in the `src/main` directory of the project folder for your Mule application.
+
+To use an encrypted value in a Mule application, specify the key of your encrypted property in the configuration XML. For example, for `my.property`, use `${secure::my.property}` instead of the encrypted value. Also configure the Secure Configuration Properties snippet (`<secure-properties:config/>`) to identify your properties file, the name of the decryption key (defaults to `encryption.key`), and the algorithm used to encrypt the value. 
+
+Before deploying your application, provide the name of decryption key as a `secureProperties` value in `mule-artifact.json` For example, if `encryption.key` is the name of the key, add the following to the file. 
+
+----
+{
+    "minMuleVersion": "4.4.0",
+    "secureProperties": [encryption.key]
+}
+----
+
+
+
+IN PROGRESS, NEEDS A LOT OF CONTEXT STILL...
+
+To encrypt sensitive values:
+
+. Download the https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[Secure Properties Tool] (an executable JAR file). 
+
+. From the command line, run the Secure Properties Tool on the value or file that you intend to secure. 
++
+The tool requires the following settings:
+
+* An encryption algorithm to use, such as Blowfish. The tool supports other algorithms. 
+* A value for your decryption key. 
+* The unencrypted value of the property to encrypt.
+
+You can use terminal in Anypoint Code Builder for this purpose.
+
+. Specify your encrypted properties in a `.yaml` or Spring-formatted `.properties` file within the `src/main` directory of the project folder for your Mule application. 
++
+Example: `my.property : "![En8lII21ZHrdIaINw0+mSA==]"`
+
+. In your configuration XML for the Mule application: 
+
+.. Embed and configure the Secure Configuration Properties snippet (`<secure-properties:config/>`) in the configuration XML for the application, providing:
+
+* The same encryption algorithm used to encrypt the value
+* The name for your decryption key or the default name, `encryption.key`
+* The name of the file that contains your encrypted property
+
+.. To use your encrypted value in your application, provide the key of the encrypted property using the `secure::` prefix. 
++
+Example: `${secure::my.property}` 
+
+
+To hide the name of the decryption key:
+
+. Provide the name of decryption key in `mule-artifact.json` for your Mule project. 
++
+Example that use `encryption.key` as the name of the key: 
++
+----
+{
+    "minMuleVersion": "4.4.0",
+    "secureProperties": [encryption.key]
+}
+----
+
+. In your Mule application, deploy the application to CloudHub.
++
+Anypoint Code Builder asks you to provide the value of that key when deploying the application to CloudHub from the IDE. 
++
+When deployed to CloudHub, Runtime Managers shows the key name but hides its value.
+
+
+
+
+
+
