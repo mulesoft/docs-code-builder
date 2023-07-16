@@ -12,7 +12,7 @@ Encrypt properties using the MuleSoft Secure Properties Tool. After encrypting, 
 
 To use an encrypted value in a Mule application, specify the key of your encrypted property with a `secure::` prefix in the configuration XML. For example, for `my.property : "![En8lII21ZHrdIaINw0+mSA==]"`, use `${secure::my.property}` instead of the encrypted value. Also configure the Secure Configuration Properties snippet (`<secure-properties:config/>`) to identify your properties file, the name of the decryption key (`encryption.key` by default), and the same <<algorithms, algorithm>> that was used to encrypt the value. `<secure-properties:config/>` is a global element at the same level as the `<flow/>` element.
 
-Before deploying your application, provide the name of decryption key as a `secureProperties` value in `mule-artifact.json` For example, if `encryption.key` is the name of the key, add the following `secureProperties` line to the file, making sure add a comma to the end of the preceding line:
+Before deploying your application, provide the name of decryption key as a `secureProperties` value in `mule-artifact.json` so that your deployment to CloudHub hides the key name from Runtime Manager. For example, if `encryption.key` is the name of the key, add the following `secureProperties` line to the file, making sure add a comma to the end of the preceding line:
 
 ----
 {
