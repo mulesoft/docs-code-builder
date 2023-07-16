@@ -2,24 +2,25 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Anypoint Code Builder is built from the Anypoint Extension Pack extensions to Visual Studio Code. Both the desktop and web IDEs for Anypoint Code Builder share these extensions. 
+Anypoint Code Builder is built from the Anypoint Extension Pack extensions to Visual Studio Code. Both the desktop and web IDEs for Anypoint Code Builder share these extensions. The web IDE provides built-in extensions to the vs-code implementation of Visual Studio Code for the web.
 
 * <<set-up-desktop>>: For the desktop IDE, you must load the extension pack to your local Visual Studio Code IDE. 
-* <<set-up-web>>: For the web IDE, you must acquire the permission to log in to Anypoint Platform to open Anypoint Code Builder. 
+* <<set-up-web>>: For the web IDE, you must log in to Anypoint Platform and acquire the permission to use Anypoint Code Builder. 
 
 [[set-up-desktop]]
 == Desktop IDE Setup
 
 The desktop-based IDE extensions are available from the Visual Studio Marketplace: 
 
-. Find *Anypoint Code Builder for Desktop* on the https://marketplace.visualstudio.com/[^Visual Studio Marketplace.
+. Find *Anypoint Code Builder for Desktop* on the https://marketplace.visualstudio.com/[Visual Studio Marketplace^].
 . Install the extension pack on your Visual Studio Code IDE. 
 +
-For guidance, see the https://code.visualstudio.com/learn/get-started/extensions[^Visual Studio Code website].
+For guidance, see the https://code.visualstudio.com/learn/get-started/extensions[Visual Studio Code website^].
 . Open the desktop IDE in Visual Studio Code by clicking the MuleSoft icon in the activity bar.
 . Check that Anypoint Code Builder loads. 
 
 //TODO: ADD GRAPHIC
+//TODO: TROUBLESHOOTING IF IT DOESN'T LOAD
 
 [[set-up-web]]
 == Web IDE Access
@@ -27,22 +28,24 @@ For guidance, see the https://code.visualstudio.com/learn/get-started/extensions
 On the web, Anypoint Code Builder IDE is available from Anypoint Platform. 
 //TODO: ADD GRAPHIC
 
+=== Before You Begin
+
 * Anypoint Platform requires a user account. You can use an existing account or create one. Trial accounts are allowed. 
 
 * An administrator with an Anypoint Platform organization account must provide you with access to Anypoint Code Builder. See xref:configure-permissions.adoc[Configure Permissions]. 
 +
 Organization administrators for Anypoint Platform have permission to add the permission to your user account or to the team to which your user account belongs. 
 
-To gain access to Anypoint Code Builder from Anypoint Platform:
+=== Launch the Web IDE in Anypoint Platform
 
 . Log in to Anypoint Platform:
 +
+You must use the URI for the host that contains your user account, which is associated with a specific business organization and Anypoint Platform host. The accounts and business organizations are not shared across the hosts. 
++
 Anypoint Platform is hosted on EU-compliant and U.S. instances: 
 
-* https://anypoint.mulesoft.com/login/[^anypoint.mulesoft.com] for the U.S. host (supports all non-EU regions)
-* https://eu.anypoint.mulesoft.com/eu.anypoint.mulesoft.com[^eu.anypoint.mulesoft.com] for the EU-compliant host
-
-You must use the URI for the host that contains your user account, which is associated with a specific business organization. The accounts and business organizations are not shared across the hosts. 
+* https://anypoint.mulesoft.com/login/[anypoint.mulesoft.com^] for the U.S. host (supports all non-EU regions)
+* https://eu.anypoint.mulesoft.com/eu.anypoint.mulesoft.com[eu.anypoint.mulesoft.com^] for the EU-compliant host
 
 . Accept any terms and conditions for use of Anypoint Platform.
 . Click *Launch Web IDE*.
