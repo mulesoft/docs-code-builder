@@ -4,90 +4,50 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Anypoint Code Builder is a web-based IDE that you can access from your Anypoint Platform account. As an organization administrator, you can enable your users to access Anypoint Code Builder.
 
-== Prerequisites
+You manage user access either by granting
+xref:access-management::users.adoc#grant-user-permissions[permissions] to users individually
+or by using
+xref:access-management::teams.adoc[teams].
+
+== Before You Begin
 
 * Ensure that you have access to the private beta release of Anypoint Code Builder.
-* Verify that your organization administrator accepted Anypoint Code Builder beta terms and conditions. +
-See xref:accept-terms-and-conditions.adoc[Accept Terms and Conditions].
-
-== Grant Users Permissions to Access Anypoint Code Builder
-
-To grant permissions to your users to use Anypoint Code Builder:
-
-. Log in to Anypoint Platform and navigate to *Access Management*:
+* Verify that your organization administrator accepted Anypoint Code Builder beta terms and conditions.
 +
-image::select-access-management.png[“*Access Management* highlighted in the Anypoint Platform navigation panel”]
-. On the navigation bar, select *Users*:
+See xref:accept-terms-and-conditions.adoc[].
+
+== Grant Anypoint Code Builder Permissions to Users
+
+To grant Anypoint Code Builder Developer permission to an individual user:
+
+. Log in to https://www.anypoint.mulesoft.com/login/[Anypoint Platform^] and navigate to *Access Management*.
+. Follow the steps in xref:access-management:users.adoc#grant-user-permissions[Grant Permissions to Users].
 +
-image::select-users-access-management.png[“*Users* option highlighted in the *Access Management*”]
-. Click the user name of the user to which you assign permissions:
-+
-image::select-username-access-management.png[“User name highlighted in the *Organization Users* tab”]
-. Navigate to the *Anypoint Code Builder* tab, click the *Select Access* drop-down, and select *Anypoint Code Builder Developer*.
+In the *Permissions* > *Anypoint Code Builder* section, select *Anypoint Code Builder Developer*:
 +
 image::access-management-select-access.png[“*Anypoint Code Builder* tab, *Select Access* drop-down menu, and *Anypoint Code Builder Developer* option highlighted”]
-. Click the plus sign icon to add permission to this user:
-+
-image::blue-icon-add-access-management.png["Plus sign icon highlighted"]
-
-Your user can now develop using Anypoint Code Builder.
-
-== Grant Teams Permissions to Access Anypoint Code Builder
-
-To grant permissions to use Anypoint Code Builder using Teams:
-
-. Log in to https://www.anypoint.mulesoft.com/login/[Anypoint Platform^] and navigate to *Access Management*:
-+
-image::select-access-management.png[“*Access Management* highlighted in the Anypoint Platform navigation panel”]
-. On the navigation panel, select *Users*:
-+
-image::select-users-access-management.png[“*Users* option highlighted in the *Access Management*” ]
-. Click the username of the user to which you assign permissions:
-+
-image::select-username-access-management.png[“User name highlighted in the *Organization Users* tab.”]
-. Navigate to the *Anypoint Code Builder* tab, click the *Select Access* drop-down menu, and select *Anypoint Code Builder Developer*.
-+
-image::access-management-select-access.png[“*Anypoint Code Builder* tab, *Select Access* drop-down menu, and *Anypoint Code Builder Developer* option highlighted”]
-. Click the plus sign icon to add the selected permission to this user:
-+
-image::blue-icon-add-access-management.png[“Plus sign icon highlighted”]
 
 The user can now develop using Anypoint Code Builder.
 
-== Grant Teams Permissions to Access Anypoint Code Builder
+== Grant Anypoint Code Builder Permissions to Teams
 
-To grant permissions to use Anypoint Code Builder using Teams:
+To grant Anypoint Code Builder Developer permission to a team:
 
-. Log in to https://www.anypoint.mulesoft.com/login/[Anypoint Platform^] and navigate to *Access Management*:
+. Log in to https://www.anypoint.mulesoft.com/login/[Anypoint Platform^] and navigate to *Access Management*.
+. If you haven't yet, click *Try New Features* > *Start Using These Features* to xref:access-management::teams.adoc#opt-in-to-teams[opt in to Teams].
+. Follow the steps in
+xref:access-management::configure-teams.adoc[]
+to create the team, and add users and permissions to the team.
 +
-image::select-access-management.png[“*Access Management* highlighted in the Anypoint Platform navigation panel.”]
-. Optionally, if you see the message, click *Try New Features* on the navigation panel.
-+
-image::try-new-features-button.png[“*Try New Features* button highlighted in the Access Management navigation panel.”]
-. Click *Start Using These Features* to enable access to the *Teams* feature.
-+
-image::start-using-these-features.png[“*Start Using These Features* button highlighted in the pop-up window”]
-. Click *Teams* on the navigation panel and *Create Teams*.
-+
-image::teams-create-teams.png[“*Teams* option and *Create team* button highlighted”]
-. In the *Create Team* window, type the name of your new team, select the parent team from which permissions are inherited, and click *Create*.
-+
-image::create-team-window.png[“*Name* and *Parent team* fields highlighted in the *Create Team* pop-up window”]
-. Click the name of the team you created and *Add permissions*.
-+
-image::add-permissions.png[“*Add permissions* and *Parent team* fields highlighted in the *Create Team* pop-up window”]
-. Select the *Anypoint Code Builder Developer* option in the *Permissions* list and click *Next*. 
+In the *Add Permissions* > *Select Permissions* section, select *Anypoint Code Builder Developer*:
 +
 image::acb-developer-permission.png[“*Anypoint Code Builder Developer* permission highlighted in the permission page”]
-. Select the business groups where you add the selected permissions and click *Next*.
-. Review the configuration and click *Add Permissions*.
-+
-image::teams-permissions.png[“*Anypoint Code Builder Developer* permission highlighted in the permission page”]
 
-The team can now develop using Anypoint Code Builder, and you can access the *Permissions* tab to verify your team's current permission assignment in the *Teams* option in the navigation panel. 
+The members of the team can now develop using Anypoint Code Builder.
 
 == See Also
 
-* xref:load-acb-web-ide.adoc[Load Anypoint Code Builder]
-* xref:configure-mulesoft-environment.adoc[Configure your MuleSoft Environment]
-* xref:access-management::configure-teams.adoc[Configure Teams in Access Management]
+* xref:load-acb-web-ide.adoc[]
+* xref:access-management::configure-teams.adoc[]
+* xref:access-management::users.adoc#grant-user-permissions[Grant Permissions to Users]
+
