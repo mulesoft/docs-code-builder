@@ -1,5 +1,5 @@
 = Iteratively Design an API Specification and Implement it
-// TODO: Should this title be more consistent with other titles? Something like: "Iteratively Designing and Implementing an API Specification"?
+// TODO: cc: Should this title be more consistent with other titles? Something like: "Iteratively Designing and Implementing an API Specification"?
 :imagesdir: ../assets/images
 
 Anypoint Code Builder enables you to scaffold your API specification into a Mule project without having to publish it to Exchange. You can work on your Mule project, then edit the API specification, and re-scaffold it to reflect your new changes.
@@ -81,16 +81,15 @@ version: 1.0.development
 
 == Implement the Local API
 
-// TODO: Should we define "Local API"? What does this mean in the context of the Web IDE? Also, will customers know what a "multi-root workspace is"? Should this be defined? Should it be "multi-version workspace"?
+// TODO: cc: Should we define "Local API"? What does this mean in the context of the Web IDE? Also, will customers know what a "multi-root workspace is"? Should this be defined? Should it be "multi-version workspace"?
 
 By default, when you create a new API specification, Code Builder assigns it a version 1.0.0. You can create a multi-root workspace with your API specification directory and a new Mule project directory to design and implement the API iteratively:
 
 . Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Implement this Local API_.
-// TODO: the Desktop IDE asks to choose a project name here.
+// TODO: cc: The Desktop IDE asks to choose a project name here. There is no UI displayed for saving a `.code-workspace` file. 
 . Code Builder creates a multi-root workspace to keep your API specification and Mule project in sync.
 .. Choose a location to store your workspace. +
 Your multi-root workspace is a `.code-workspace` file extension that keeps both of your directories coordinates.
-// TODO: Does the customer need to know about this file extension? The Desktop IDE UI didn't mention this file extension anywhere.
 +
 [IMPORTANT]
 --
@@ -98,16 +97,19 @@ Save your `.code-workspace` file in your home directory. Do not save it inside y
 --
 . After the workspace is created, Code Builder builds your API. +
 In this step, Code Builder packages the API specification and publishes it to a local Maven repository as a snapshot.
+// TODO: cc: On Desktop, the command action skips the above `.code-workspace` steps and goes directly to the following step.
 . After building your API, Code Builder can now implement it locally:
 .. Choose a project name for your Mule project: `_Retrieve Users Implementation_`.
 .. Select your home directory as your target folder.
 +
 [TIP]
 --
+// TODO: cc: I'm not sure what the value of seeing progress is. The project creation process was quick for me (just a few seconds), so a customer might not be able to see the progress in time.
 To see the progress of the full process:
 
 . From the menu, select *View* > *Output*.
 +
+// TODO: cc: UI is different on Desktop
 image::select-specific-output-view.png[]
 . On the right top side of the output panel, select the drop-down menu.
 +
