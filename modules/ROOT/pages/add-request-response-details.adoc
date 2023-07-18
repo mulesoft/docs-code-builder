@@ -17,7 +17,12 @@ See xref:design-api-specification.adoc[].
 == Add Data Types and Example Fragments from Exchange
 
 . In Anypoint Code Builder, open your `american-flights-api.raml` file.
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Add fragment dependency from Exchange_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Add fragment dependency from Exchange
+----
 +
 image::add-fragment-from-exchange.png[]
 . Add the `Training: American Flight Data Type` asset.
@@ -27,7 +32,12 @@ image::add-training-american-flight.png[]
 +
 image::add-flight-data-type-version.png[]
 . The status bar shows a *Dependencies successfully added* message.
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Add fragment dependency from Exchange_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Add fragment dependency from Exchange
+----
 +
 image::add-fragment-from-exchange.png[]
 . Add the `Training: American Flights Example` asset.
@@ -73,7 +83,7 @@ types:
   /{ID}:
     get:
 --
-. Add an `!include` directive and press `ctrl + spacebar` to bring up the autocomplete options.
+. Add an `!include` directive, and press Ctrl+Spacebar to open the autocomplete options.
 . Select `AmericanFlightsDataType.raml`.
 +
 [source,RAML]
@@ -109,13 +119,13 @@ enum:
 
 --
 +
-. Press `ctrl + spacebar` to bring up the autocomplete options, and add the elements:
+. Press Ctrl+Spacebar to open the autocomplete options, and add the elements:
 * `responses`
 * `200`
 * `body`
 * `application/json`
 * `type`
-. For the `type` element, press `ctrl + spacebar` and select the `AmericanFlight` type.
+. For the `type` element, press Ctrl+Spacebar and select the `AmericanFlight` type.
 . Add `[]` at the end of your `AmericanFlight` type to define it as an array.
 +
 [source,RAML]
@@ -150,9 +160,9 @@ types:
 
 Create a new `example:` element for the `response` element for your `/flights` resource:
 
-. Add a new resource at the same level of your `type` response, press `ctrl/cmd + spacebar` to bring up the autocomplete options, and select `examples`.
-. Under examples, add an indentation, press `ctrl + spacebar`, and select *output*.
-. Add an `!include` directive and press `ctrl + spacebar` to bring up the autocomplete options.
+. Add a new resource at the same level as your `type` response by pressing Ctrl+Spacebar (Windows) or Cmd+Spacebar (Mac) to open the autocomplete options, and select `examples`.
+. Under examples, add an indentation, press Ctrl+Spacebar, and select *output*.
+. Add an `!include` directive and press Ctrl+Spacebar to open the autocomplete options.
 . Select `AmericanFlightsExample.raml` as the reference for your example.
 +
 [source,RAML]
@@ -356,7 +366,7 @@ types:
 Additionally, you can define the type of response of your `post` method for your `/flights` resource:
 
 . Add a new line under your `/flights:post` method and indent it at the same level as your `body:` element.
-. Press `ctrl + spacebar` to bring up the autocomplete options to create a 201 response:
+. Press Ctrl+Spacebar (Mac) to open the autocomplete options and generate a 201 response:
 +
 [source,raml,linenums]
 --
