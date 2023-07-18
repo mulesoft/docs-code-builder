@@ -15,11 +15,11 @@ To create a new API specification:
 
 . In the activity bar, navigate to your Anypoint Code Builder view:
 +
-//TO-DO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, the "Design an API" section's title is different and the "Help" section has a new title on top ("Documentation").
+//TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, the "Design an API" section's title is different and the "Help" section has a new title on top ("Documentation").
 image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
 . Select *Design an API*.
 +
-//TO-DO: Delete this image and use the previous one. Add numbers next to the arrows to denote steps 1 and 2. 
+//TODO: Delete this image and use the previous one. Add numbers next to the arrows to denote steps 1 and 2. 
 image::design-api-1.png["*Design an API* link highlighted in the *Getting Started* section"]
 +
 . Configure your API using the following values:
@@ -37,10 +37,10 @@ image::design-api-ui-first.png["Project name, Project Location, API Specificatio
 You can't change business groups after you create your API specification.
 --
 . Select *Create Project*.
-// hn: POPUP message: Do you trust the authors of the files in this folder?
+//TODO hn: POPUP message: Do you trust the authors of the files in this folder?
 
 The project explorer now shows you your American Flights API folder with an `american-flights-api.raml` file open in the editor.
-// hn: There was a delay for me.
+//TODO hn: There was a delay for me.
 
 == Add a RAML Resource
 
@@ -57,7 +57,7 @@ title: American Flights API
 --
 . Review your new resource using *API Console* by clicking the API Console icon on your API specification editor.
 +
-//TO-DO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
+//TODO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
 image::flights-endpoint.png["\flights resource highlighted in *API Console*"]
 // hn: this is not the case for me. I see the name of the raml file.
 
@@ -68,8 +68,8 @@ image::flights-endpoint.png["\flights resource highlighted in *API Console*"]
 
 With one resource created, you can add a method to it using autocomplete:
 
-. After `/flights`, press `enter` to go to a new line and `tab` to indent.
-. Press `ctrl + spacebar` to see all the available options.
+. On a new line after `/flights`, press Tab to indent.
+. Press Ctrl+Spacebar to display all the available options.
 . Select *get*.
 
 You can add further methods by going to a new line and keep using the autocomplete feature. For example, you can also add the *post* method.
@@ -86,9 +86,9 @@ title: American Flights API
 
 Both methods now show on *API Console*.
 
-//TO-DO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
+//TODO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
 image::get-post-methods-api-console.png["GET and POST methods highlighted in *API Console*"]
-// hn: this is not the case for me. I see the name of the raml file.
+//TODO hn: this is not the case for me. I see the name of the raml file.
 
 == Add a Nested RAML Resource
 
@@ -112,19 +112,19 @@ title: American Flights API
 
 The nested resource and its associated method also show up in *API Console*.
 
-//TO-DO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
+//TODO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
 image::sub-methods-api-console.png["/flights/{ID} highlighted in *API Console*]
-// hn: this is not the case for me. I see the name of the raml file.
+//TODO hn: this is not the case for me. I see the name of the raml file.
 
 == Add a Query Parameter
 
 Add specific query parameters to your resources:
 
 . In a new line after the `get:` method of your `/flights` resource, use `tab` to indent.
-. Press `ctrl + spacebar` to see all the available options.
+. Press Ctrl+Spacebar to display all the available options.
 . Select `queryParameters`.
-. Hit `enter` and `tab` to add a new indentation.
-// hn: this is automatic for me when I add queryParameters
+. On the next line, press Tab to add a new indentation.
+// hn: TODO this is automatic for me when I add queryParameters
 . Add a new keyword called `destination:`.
 +
 [source,raml,linenums]
@@ -141,8 +141,8 @@ title: American Flights API
   /{ID}:
     get:
 --
-. Inside the `destination` query parameter, indent the new line and press `ctrl + spacebar` to see all the available options.
-. Select the  `required` parameter, then press `ctrl + spacebar` and select `false` as the value.
+. Inside the `destination` query parameter, indent the new line and press Ctrl+Spacebar (Windows) or Cmd+Spacebar (Mac) to view the available options.
+. Select the `required` parameter, and then press Ctrl+Spacebar (Windows) or Cmd+Spacebar (Mac) and select `false` as the value.
 +
 [source,raml,linenums]
 --
@@ -159,7 +159,7 @@ title: American Flights API
   /{ID}:
     get:
 --
-. Go to a new line at the same indent level as the `required` parameter and press `ctrl + spacebar` to create an `enum` parameter.
+. On a new line at the same indent level as the `required` parameter, press Ctrl+Spacebar (Windows) or Cmd+Spacebar (Mac) to create an `enum` parameter.
 . Inside your `enum` parameter, create values for the enum as `SFO`, `LAX`, and `CLE`.
 +
 [source,raml,linenums]

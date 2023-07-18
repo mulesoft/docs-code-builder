@@ -17,7 +17,12 @@ See xref:design-api-specification.adoc[].
 == Add Data Types and Example Fragments from Exchange
 
 . In Anypoint Code Builder, open your `american-flights-api.raml` file.
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Add fragment dependency from Exchange_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Add fragment dependency from Exchange
+----
 +
 image::add-fragment-from-exchange.png["MuleSoft: Add fragment dependency from Exchange option highlighted"]
 . Add the `Training: American Flight Data Type` asset.
@@ -25,10 +30,14 @@ image::add-fragment-from-exchange.png["MuleSoft: Add fragment dependency from Ex
 image::add-training-american-flight.png["Training: American Flight Data Type asset option highlighted"]
 . Select the latest version of the `American Flight Data Type` asset.
 +
-image::add-flight-data-type-version.png["Latest American Flight Data Type asset version highlighted"]
+image::add-flight-data-type-version.png[]
+. The status bar displays a *Dependencies successfully added* message.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
-The status bar shows a *Dependencies successfully added* message.
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Add fragment dependency from Exchange_.
+[source,command]
+----
+MuleSoft: Add fragment dependency from Exchange
+----
 +
 image::add-fragment-from-exchange.png["MuleSoft: Add fragment dependency from Exchange option highlighted"]
 . Add the `Training: American Flights Example` asset.
@@ -81,7 +90,7 @@ types:
 // If using a Mac, try `fn + ctrl + spacebar`.
 
 // hn: idea - just show what to add to the code and what the yaml file looks like after.
-. Add an `!include` directive and press `ctrl + spacebar` to bring up the autocomplete options.
+. Add an `!include` directive, and press Ctrl+Spacebar to open the autocomplete options.
 . Select `AmericanFlightsDataType.raml`.
 +
 [source,RAML]
@@ -107,13 +116,13 @@ types:
     get:
 --
 . Inside the `get` method of your `/flights` resource, add a new child element `responses:` at the same level as `queryParameters`.
-+
-. Press `ctrl + spacebar` to bring up the autocomplete options, and add the elements:
+. Press Ctrl+Spacebar to open the autocomplete options, and add the following elements:
+* `responses`
 * `200`
 * `body`
 * `application/json`
 * `type`
-. For the `type` element, press `ctrl + spacebar` and select the `AmericanFlight` type.
+. For the `type` element, press Ctrl+Spacebar and select the `AmericanFlight` type.
 . Add `[]` at the end of your `AmericanFlight` type to define it as an array.
 +
 [source,RAML]
@@ -148,15 +157,15 @@ types:
 
 Create a new `examples:` element for the `responses` element for your `/flights` resource:
 
-. Add a new resource at the same level as your `type` response, press `ctrl + spacebar` to bring up the autocomplete options, and select `examples`.
-// hn: This automatically adds the colon and indents the next line so indention not necessary
-. Under examples, add an indentation, press `ctrl + spacebar`, and select `output`.
-// hn: It doesn't add the colon - is it necessary?
-. Add an `!include` directive and press `ctrl + spacebar` to bring up the autocomplete options.
-// You have to select examples or exchange_modules before you can select the raml...
-. Select `AmericanFlightExample.raml` as the reference for your example.
-// hn: my options don't include the .raml. When I include, I get an error that it doesn't exist. It works if I add "examples" in the path.
-// hn: I think there's a bug.
+. Add a new resource at the same level as your `type` response by pressing Ctrl+Spacebar (Windows) or Cmd+Spacebar (Mac) to open the autocomplete options, and select `examples`.
+// TODO hn: This automatically adds the colon and indents the next line so indention not necessary
+. Under examples, add an indentation, press Ctrl+Spacebar, and select *output*.
+// TODO hn: It doesn't add the colon - is it necessary?
+. Add an `!include` directive and press Ctrl+Spacebar to open the autocomplete options.
+// TODO You have to select examples or exchange_modules before you can select the raml...
+. Select `AmericanFlightsExample.raml` as the reference for your example.
+// TODO hn: my options don't include the .raml. When I include, I get an error that it doesn't exist. It works if I add "examples" in the path.
+// TODO hn: I think there's a bug.
 +
 [source,RAML]
 --
@@ -362,7 +371,7 @@ Additionally, you can define the type of response of your `post` method for your
 
 . Add a new line under your `/flights:post` method and indent it at the same level as your `body:` element.
 // hn: there's something missing - need the responses element.
-. Press `ctrl + spacebar` to bring up the autocomplete options to create a 201 response:
+. Press Ctrl+Spacebar (Mac) to open the autocomplete options and generate a 201 response:
 +
 [source,raml,linenums]
 --
