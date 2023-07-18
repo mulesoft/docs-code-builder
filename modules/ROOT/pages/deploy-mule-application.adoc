@@ -4,8 +4,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
 
-NOTE: Anypoint Code Builder can only deploy applications to CloudHub 1.0.
-// TODO: Is this still true? 
+Anypoint Code Builder deploys applications to a non-production environment in CloudHub. 
 
 == Before You Begin
 
@@ -32,9 +31,14 @@ See xref:run-a-debug-session.adoc[]
 To deploy to CloudHub, you must configure a `deploy.json` file in your `src/main/resources` directory. If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you to create one the first time you deploy your application:
 
 . Open Anypoint Code Builder.
+// TODO: from CrisP: Adding necessary step. If no application is open, the "MuleSoft: Deploy to Cloudhub" command is not displayed. Is this the expected behavior? 
 . Open the application to deploy.
-// TODO: Adding necessary step. If no application is open, the "MuleSoft: Deploy to Cloudhub" command is not displayed. Is this the expected behavior? 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to CloudHub_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Deploy to Cloudhub
+----
 +
 image::deploy-to-cloudhub.png["MuleSoft: Deploy to CloudHub command highlighted"]
 . Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review:
