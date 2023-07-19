@@ -1,5 +1,7 @@
 = Iteratively Design an API Specification and Implement it
 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
 Anypoint Code Builder enables you to scaffold your API specification into a Mule project without having to publish it to Exchange. You can work on your Mule project, then edit the API specification, and re-scaffold it to reflect your new changes.
 
 == Before You Begin
@@ -79,7 +81,12 @@ version: 1.0.development
 
 By default, when you create a new API specification, Code Builder assigns it a version 1.0.0. You can create a multi-root workspace with your API specification directory and a new Mule project directory to design and implement the API iteratively:
 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Implement a Local API_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Implement a Local API
+----
 . Code Builder creates a multi-root workspace to keep your API specification and Mule project in sync.
 .. Choose a location to store your workspace. +
 Your multi-root workspace is a `.code-workspace` file extension that keeps both of your directories coordinates.
@@ -237,7 +244,12 @@ version: 1.0.development
 With a new endpoint added to your API specification, you can now re-scaffold it to update your linked Mule project:
 
 . Navigate back to the `retrieve-users-api.raml` file under the *Retrieve Users API* directory.
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Re-Scaffold this local API_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Re-Scaffold this local API
+----
 . Note that Code Builder adds a new flow for the newly added endpoint:
 +
 [source,XML,linenums]
@@ -331,7 +343,12 @@ Your changes are now published in Design Center.
 
 You can now publish your new API specification to Exchange to make it discoverable to other team members.
 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Publish API Specification to Exchange_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Publish API Specification to Exchange
+----
 . Type a project name: +
 * *Retrieve Users API*.
 . Confirm the artifact ID: *Retrieve-Users-API*
