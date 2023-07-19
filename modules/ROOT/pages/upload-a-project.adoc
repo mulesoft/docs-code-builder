@@ -1,15 +1,36 @@
-= Upload a Project
+= Import a Project
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-You can upload an existing project directory or a packaged Mule application to Anypoint Code Builder.
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-== Upload a Project Directory
+Import a project directory or a packaged Mule application (JAR file) to Anypoint Code Builder.
 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _File: Open Folder..._.
+== Load a Project Directory or Project File into the Desktop IDE
+
+The desktop IDE opens your local file directory. You can navigate to the project folder or directory that you intend to load to the IDE.
+
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+File: Open Folder...
+----
+
+. 
+
+== Upload a Project Directory to the Web IDE
+
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+File: Open Folder...
+----
 +
 image::file-open-folder-command.png[]
-. Select your Anyoint Code Builder home directory:
+. Select your Anypoint Code Builder home directory:
 +
 image::select-home-directory.png[]
 +
@@ -33,14 +54,24 @@ image::upload-progress-expanded.png[]
 . After your upload completes, close your home directory by selecting the menu icon > *File* > *Close Folder*.
 +
 image::close-working-directory.png[]
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _File: Open Folder..._.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+File: Open Folder...
+----
 . Select the directory that you uploaded earlier.
 
-== Upload a Packaged Project
+== Upload a Packaged Project to the Web IDE
 
 You can upload both heavy and lightweight packaged Mule applications:
 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _File: Open Folder..._.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+ File: Open Folder...
+----
 +
 image::file-open-folder-command.png[]
 . Select your Anyoint Code Builder home directory:
@@ -50,7 +81,7 @@ image::select-home-directory.png[]
 You may need to trust the authors of the files in the directory if this is your first time opening your home directory:
 +
 image::trust-home-directory.png[]
-. After Anypoint Code Builder loads your home directory, drag your jar file to your Explorer view:
+. After Anypoint Code Builder loads your home directory, drag your JAR file to your Explorer view:
 +
 image::upload-jar-file.png[]
 You might need to trust the authors of your file or directory:
@@ -66,11 +97,16 @@ image::upload-progress-expanded.png[]
 . After your upload completes, close your home directory by selecting the menu icon > *File* > *Close Folder*.
 +
 image::close-working-directory.png[]
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import a Project_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Import a Project
+----
 +
 image::import-a-project.png[]
 . Select *Mule Project Type*:
 +
 image::import-mule-project.png[]
-. Select the jar file that you uploaded earlier.
+. Select the JAR file that you uploaded.
 . Anypoint Code Builder unpacks your application and displays the directory structure of your working Mule project.
