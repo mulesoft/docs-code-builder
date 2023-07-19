@@ -31,3 +31,62 @@ Every time you modify your API specification, you can run a *Re-Scaffold this lo
 
 
 You can close your multi-root workspace by running the *Worspaces: Close Worspace* command. You can re-open your synchronized project by opening the workspace your created when you started implementing your local API.
+
+
+// implement-local-api-specification
+////
+Anypoint Code Builder enables you to scaffold an API specification into a Mule project without having to publish it to Exchange. If you edit the API specification, re-scaffold it to reflect the changes in the Mule project.
+
+Both API design and API implementation tasks are now synchronized. You can then publish your API specification and deploy your Mule project.
+
+When you are designing an API specification, click the *Implement this local API* icon to scaffold your current API specification into a new Mule project:
+
+image::implement-local-api-icon.png[]
+
+Code Builder creates a workspace with both the API specification and Mule project and keeps them synchronized.
+
+[NOTE]
+Optionally, you can open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Implement this Local API_.
+
+After the API specification and the related Mule project are synced, you can modify the API specification and implement changes simultaneously.
+
+By iterating between the API design and implementation tasks you can speed up the development process.
+
+== Working Iteratively Between an API Specification and a Mule Project
+
+To implement a local API:
+
+. Open an API specification. +
+You can either import an API from Design Center or design a new API specification.
+. Click the *Implement this local API* icon.
++
+Code Builder creates a multi-root workspace to keep your API specification and Mule project in sync. +
+A multi-root workspace enables you to work with both your API specification and Mule project folders at the same time.
++
+After creating the workspace, Code Builder packages the API specification and publishes it to a local Maven repository as a snapshot.
+. Choose a location to store your workspace. +
+The multi-root workspace is a file with the `.code-workspace` extension that keeps both of your directories coordinated.
++
+[IMPORTANT]
+--
+Save the `.code-workspace` file in your home directory. Do not save it inside the API specification folder.
+--
+. Choose a project name for your Mule project.
+. Choose a location for your Mule project.
++
+Code Builder then scaffolds your current local API specification into a new Mule project.
+
+You can now start iterating between your API specification and its related Mule project.
+
+Every time you modify an API specification, you can run a *Re-Scaffold this local API* command to update the  Mule project based on the changes in the Mule application. For example, if you add a new endpoint to an API specification, Code Builder scaffolds a new flow for that endpoint.
+
+To close your multi-root workspace, run the *Workspaces: Close Workspace* command. 
+
+To re-open the synchronized project, open the workspace you created when you started implementing your local API.
+
+
+== See Also
+
+* xref:local-api-specification-tutorial.adoc[]
+
+////
