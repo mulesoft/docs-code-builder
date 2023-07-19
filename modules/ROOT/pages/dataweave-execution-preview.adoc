@@ -20,14 +20,9 @@ image::set-payload-dw.png["Set-payload component highlighted in a flow"]
 
 Create a Mule application that receives an XML payload with dates using different date separators (`/`, `.`, and `-`). The application uses a DataWeave script to normalize the dates to use a consistent separator (`-`):
 
-. In Anypoint Code Builder, select *Develop an Integration*.
+. In Anypoint Code Builder, click *Develop an Integration*.
 . Name your project `normalize-dates`.
-. Specify your home directory for the location.
-+
-// Is this true? 
-In the desktop IDE: the path is set to your default project location.
-See xref:work-on-home-directory.adoc[].
-. Click *Create Project*.
+. Specify your home directory for the location and click *Create Project*.
 . Add the following HTTP Listener config and flow to your `normalize-dates.xml` file:
 +
 [source,XML]
@@ -61,8 +56,44 @@ dates: payload.dates mapObject ((date, index) ->
 )
 --
 +
-// I did not get this warning.
-Anypoint Code Builder warns you about the payload not being resolved:
+.Click to show the `normalize-dates-xml` file.
+[%collapsible]
+====
+[source,XML]
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+    http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+<http:listener-config name="get-endpoint" doc:name="Listener config" >
+    <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+<flow name="main-flow" doc:name="Flow"  >
+<http:listener path="/" config-ref="get-endpoint" doc:name="Listener"  />
+<ee:transform doc:name="Transform" >
+<ee:message>
+        <ee:set-payload>
+            <![CDATA[
+                %dw 2.0
+                output application/xml
+                fun normalize(date) = (date) replace "/" with "-" replace "." with "-"
+                ---
+                dates: payload.dates mapObject ((date, index) ->
+                    date : normalize(date)
+                )
+            ]]>
+        </ee:set-payload>
+    </ee:message>
+</ee:transform>
+</flow>
+</mule>
+====
++
+// I did not get this warning. Unable to proceed. Tried in the web UI too.
+Anypoint Code Builder warns you that the payload cannot be resolved:
 +
 image::quick-fix-dw-example.png[]
 
