@@ -2,20 +2,6 @@
 
 Anypoint Code Builder enables you to preview the result of your DataWeave transformation and to define your custom sample data to enable auto-completion of your context variables.
 
-include::partial$dw-dependency-warning.adoc[]
-
-You can use this feature in any field that accepts a DataWeave expression, such as in a Set Payload component:
-
-[source,XML]
---
-<set-payload value="#[payload]" doc:name="Set payload" />
---
-
-image::set-payload-dw.png["Set-payload component highlighted in a flow"]
-
-
-== Example: Preview DataWeave Results
-
 Create a Mule application that receives an XML payload with dates using different date separators (`/`, `.`, and `-`). The application uses a DataWeave script to normalize the dates to use a consistent separator (`-`):
 
 . In Anypoint Code Builder, click *Develop an Integration*.
@@ -41,7 +27,7 @@ Create a Mule application that receives an XML payload with dates using differen
 </ee:transform>
 </flow>
 --
-. Within the `[CDATA[` code, add the following DataWeave code:
+. Within the `[CDATA[` code, add the following DataWeave script:
 +
 [source,dataweave]
 --
