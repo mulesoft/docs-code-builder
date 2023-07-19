@@ -5,11 +5,21 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Because Anypoint Code Builder works as a web IDE, consider that you must ping a different URL to trigger the execution of locally deployed Mule applications.
+When an integration that you are developing builds successfully, the application deploys _locally_ within your development environment, whether on your desktop or the web-based host for your Anypoint Code Builder applications. 
 
-When you want to ping an application that it's triggered by an HTTP listener, you must use a different URL than `localhost`
+It is common to configure an HTTP Listener to trigger the execution of a deployed application through a URL. The URLs to use for the desktop and web IDEs differ for deployments to your development environment:
 
-== Ping a Locally Deployed Application Using a Browser
+* In the desktop IDE, a URL configured for the listener, such as `localhost:8081`, works if no other applications are using that port. 
+* In the web IDE, your local development environment is hosted remotely, so you must configure a URL to a proxy for your application's host. 
++
+For guidance constructing the URL in the web IDE, see:
+
+** <<ping-browser>> 
+** <<ping-rest-client>>
+
+
+[[ping-browser]]
+== Ping a Locally Deployed Application on the Web IDE Using a Browser
 
 . Open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
 . After your application deploys successfully, open a new tab in your browser.
@@ -24,11 +34,12 @@ https://lavender-ndm0yl.builder.code.com/proxy/8081/
 --
 +
 See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct instance URL.
-. When pinging that URL, Anypoint Code Builder triggers the Mule flow.
+. When pinging that URL, the web IDE triggers the Mule flow.
 
-== Ping a Locally Deployed Application Using a REST Client
+[[ping-rest-client]]
+== Ping a Locally Deployed Application on the Web IDE Using a REST Client
 
-. Open Anypoint Code Builder using your browser's Developer Tools (`F12`).
+. Open the web IDE using your browser's Developer Tools (`F12`).
 . Navigate to your *Application* tab.
 . Under *Storage*, expand the *Cookies* section and select the URL of your web IDE instance.
 . Search for the term _proxysession_:
@@ -45,7 +56,7 @@ proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx
 --
 The `proxysession` cookie name varies depending on the user.
 --
-. In Anypoint Code Builder, open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
+. In the web IDE, open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
 . After your application deploys successfully, open your preferred REST client application.
 . Type the URL of your web IDE instance in the request URL section, add the `/proxy/` path, and then add the port number you configured as a new path:
 `+https://<web-IDE-instance>/api/<port-you-configured-on-your-listener>/+`
@@ -61,4 +72,4 @@ See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct
 . Configure the headers to send the necessary cookies that you copied earlier:
 +
 image::send-request-with-cookies.png[]
-. When pinging that URL, Anypoint Code Builder triggers the Mule flow.
+. When pinging that URL, the web IDE triggers the Mule flow.
