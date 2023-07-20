@@ -1,41 +1,55 @@
 = Addressing DataWeave Errors
 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 When your DataWeave code contains a syntactic or semantic error, Anypoint Code Builder highlights the error and offers a suggested fix.
 
+[IMPORTANT]
+====
 include::partial$dw-dependency-warning.adoc[]
-
-You can preview the result of your DataWeave transformation and define your custom sample data to enable auto-completion of your context variables.
+====
 
 
 == Example: Fix an Undefined Function Error
 
 Anypoint Code Builder flags undefined functions automatically.
-For example, the `toUpper` function is not defined:
+
+For example, in this code, DataWeave flags an error with `toUpper`:
+
+image::dw-error.png[]
+
+When you place your cursor on the function, DataWeave provide information about the error:
 
 image::undefined-function.png[]
 
 To fix the issue:
 
-. Click *Quick Fix* in the error popup, then click *Create Function*:
+. Click the error to display the popup.
+. Click *Quick Fix*, and then click *Create Function*.
 +
-Anypoint Code Builder automatically creates a function definition with the `???` placeholder for you to define your function:
+Anypoint Code Builder automatically adds a function definition with the `???` placeholder for you to define your function:
 +
 [source,DataWeave]
-fun toUpper(param0) = ???
+fun toUpper(param0: String) = ???
 
 . Update the function to use the `upper` function to return the provided String in uppercase characters.
 +
 [source,DataWeave]
 --
-%dw 2.0
-fun toUpper(param0:String) = upper(param0)
-output application/json
----
-toUpper("hello")
+<ee:set-payload>
+    <![CDATA[
+        %dw 2.0
+        fun toUpper(param0: String) = upper(param0)
+        output application/json
+        ---
+        toUpper("hello")
+    ]]>
+</ee:set-payload>
 --
+
 
 === Preview the Result of Your Function
 
