@@ -7,10 +7,8 @@ include::partial$dw-dependency-warning.adoc[]
 
 When your DataWeave code contains a syntactic or semantic error, Anypoint Code Builder highlights the error and offers a suggested fix.
 
-You can preview the result of your DataWeave transformation and define your custom sample data to enable auto-completion of your context variables.
 
-
-== Example: Fix an Undefined Function Error
+== Fix an Undefined Function Error
 
 Anypoint Code Builder flags undefined functions automatically.
 For example, the `toUpper` function is not defined:
@@ -37,7 +35,7 @@ output application/json
 toUpper("hello")
 --
 
-=== Preview the Result of Your New Function
+=== Preview the Result of Your Function
 
 To preview the result of your function, place the cursor within your DataWeave code, click the *Show Code Actions* icon, and then click *Run Preview*:
 
@@ -46,131 +44,3 @@ image::function-validation-run-preview.png[]
 Anypoint Code Builder opens a new *Preview Output* tab with the result of the function:
 
 image::dataweave-function-preview-output.png[]
-
-
-== Fix a Missing Sample Input Error
-
-You can use this feature in any field that accepts a DataWeave expression.
-
-such as in a Set Payload component:
-
-[source,XML]
---
-<set-payload value="#[payload]" doc:name="Set payload" />
---
-
-image::set-payload-dw.png["Set-payload component highlighted in a flow"]
-
-
-=== Preview the Result of the Payload
-
-
-== Example: Fix an Unresolved Payload Error 
-
-In this example, you create a Mule application that receives an XML payload with dates using different date separators (`/`, `.`, and `-`).
-The application uses a DataWeave script to normalize the dates to use a consistent separator (`-`).
-
-. In Anypoint Code Builder, click *Develop an Integration*.
-. Name your project `normalize-dates`.
-. Specify your home directory for the location and click *Create Project*.
-. Add the following HTTP Listener config and flow to your `normalize-dates.xml` file:
-+
-[source,XML]
---
-<http:listener-config name="get-endpoint" doc:name="Listener config" >
-    <http:listener-connection host="0.0.0.0" port="8081" />
-</http:listener-config>
-
-<flow name="main-flow" doc:name="Flow"  >
-<http:listener path="/" config-ref="get-endpoint" doc:name="Listener"  />
-<ee:transform doc:name="Transform" >
-<ee:message>
-        <ee:set-payload>
-            <![CDATA[
-            ]]>
-        </ee:set-payload>
-    </ee:message>
-</ee:transform>
-</flow>
---
-. Within the `[CDATA[` code, add the following DataWeave script:
-+
-[source,dataweave]
---
-%dw 2.0
-output application/xml
-fun normalize(date) = (date) replace "/" with "-" replace "." with "-"
----
-dates: payload.dates mapObject ((date, index) ->
-   date : normalize(date)
-)
---
-+
-.Click to show the `normalize-dates-xml` file.
-[%collapsible]
-====
-[source,XML]
-<?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-    xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-    xmlns:http="http://www.mulesoft.org/schema/mule/http"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-    http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
-<http:listener-config name="get-endpoint" doc:name="Listener config" >
-    <http:listener-connection host="0.0.0.0" port="8081" />
-</http:listener-config>
-<flow name="main-flow" doc:name="Flow"  >
-<http:listener path="/" config-ref="get-endpoint" doc:name="Listener"  />
-<ee:transform doc:name="Transform" >
-<ee:message>
-        <ee:set-payload>
-            <![CDATA[
-                %dw 2.0
-                output application/xml
-                fun normalize(date) = (date) replace "/" with "-" replace "." with "-"
-                ---
-                dates: payload.dates mapObject ((date, index) ->
-                    date : normalize(date)
-                )
-            ]]>
-        </ee:set-payload>
-    </ee:message>
-</ee:transform>
-</flow>
-</mule>
-====
-+
-Anypoint Code Builder warns you that the payload cannot be resolved:
-+
-image::quick-fix-dw-example.png[]
-
-. Select *Quick Fix* > *Create Sample Data for Payload* > *XML*.
-. Replace the generated `payload.xml` file with the following XML code:
-+
-[source,XML]
---
-<dates>
-  <date>26-JUL-16</date>
-  <date>27/JUL/16</date>
-  <date>28.JUL.16</date>
-</dates>
---
-
-=== Preview the Resolved Payload Fix
-
-. In the `normalize-date.xml` file, place your cursor within your DataWeave code, click *Show Code Actions*, and select *Run Preview*:
-+
-image::run-preview-dw-example.png[]
-
-The output tab shows the payload sample with the date separators normalized:
-
-[source,XML]
---
-<dates>
-  <normalized_as_string>26-JUL-16</normalized_as_string>
-  <normalized_as_string>27-JUL-16</normalized_as_string>
-  <normalized_as_string>28-JUL-16</normalized_as_string>
-</dates>
---
