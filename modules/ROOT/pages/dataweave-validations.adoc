@@ -1,62 +1,60 @@
-= DataWeave Validations
+= Addressing DataWeave Errors
+:page-aliases: dataweave-execution-preview.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Whenever your DataWeave code has a syntactic or semantic error, Anypoint Code Builder highlights the error and offers suggestions to fix the error.
+When your DataWeave code contains a syntactic or semantic error, Anypoint Code Builder highlights the error and offers a suggested fix.
 
+[IMPORTANT]
+====
 include::partial$dw-dependency-warning.adoc[]
+====
 
-For example, Anypoint Code Builder flags when a function hasn't been defined:
 
-[source,DataWeave]
---
-%dw 2.0
-output application/json
----
-toUpper("hello")
---
+== Example: Fix an Undefined Function Error
+
+Anypoint Code Builder flags undefined functions automatically.
+
+For example, in this code, DataWeave flags an error with `toUpper`:
+
+image::dw-error.png[]
+
+When you place your cursor on the function, DataWeave provide information about the error:
 
 image::undefined-function.png[]
 
-To quickly fix the issue:
+To fix this issue:
 
-. Select *Quick Fix*:
+. Click the error to display the popup.
+. Click *Quick Fix*, and then click *Create Function*.
 +
-image::undefined-function-quick-fix.png[]
-. Select *Create Function*:
+Anypoint Code Builder automatically adds a function definition with the `???` placeholder for you to define your function:
 +
-image::create-function-dw.png[]
+[source,DataWeave]
+fun toUpper(param0: String) = ???
 
-Anypoint Code Builder automatically creates a function definition for your script:
-
+. Update the function to use the `upper` function to return the provided String in uppercase characters.
++
 [source,DataWeave]
 --
-%dw 2.0
-fun toUpper(param0: String) = ??? //<1>
-output application/json
----
-toUpper("hello")
+<ee:set-payload>
+    <![CDATA[
+        %dw 2.0
+        fun toUpper(param0: String) = upper(param0)
+        output application/json
+        ---
+        toUpper("hello")
+    ]]>
+</ee:set-payload>
 --
-[calloutlist]
-.. A new function declaration for you to define your function.
 
-For example, you can define the function to use the `upper` function to return the provided String in uppercase characters:
 
-[source,DataWeave]
---
-%dw 2.0
-fun toUpper(param0: String) = upper(param0) //<1>
-output application/json
----
-toUpper("hello")
---
-[calloutlist]
-.. Define your custom `toUpper` function.
+=== Preview the Result of Your Function
 
-Additionally, you can preview the result of your function by locating your cursor within your DataWeave code, clicking the *Show Code Actions* icon, and selecting *Run Preview*:
+To preview the result of your function, place the cursor within your DataWeave code, click the *Show Code Actions* icon, and then click *Run Preview*:
 
 image::function-validation-run-preview.png[]
 
