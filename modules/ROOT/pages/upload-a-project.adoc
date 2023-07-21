@@ -1,6 +1,6 @@
 = Import a Project into an IDE Workspace
 :root-dir: This directory is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
-:open-root: If you do not open the root directory, the project does not load correctly because Visual Studio Code does not recognize the directory as a workspace. The applications does not display the UI canvas for the application.
+:open-root: If you do not open the root directory, the project does not load correctly because Visual Studio Code does not recognize the directory as a workspace. A Mule application does not load the UI canvas for the application.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -136,7 +136,7 @@ image::upload-progress.png[]
 You can expand the progress bar by clicking it:
 +
 image::upload-progress-expanded.png[]
-. After the process upload process is complete, provide the following command to import the JAR file to your workspace:
+. After the upload process is complete, provide the following command to import the JAR file to your workspace:
 +
 [source,command]
 ----
@@ -150,15 +150,12 @@ image::import-mule-project.png[]
 .. Select the JAR file that you uploaded.
 +
 Anypoint Code Builder unpacks your application into a project folder.
-. Navigate to your the _root_ of the project folder, using the following command to open the folder:
+. Navigate to your the _root_ of the project folder, using the following command to open the folder and load your workspace to the IDE:
 +
 [source,command]
 ----
  File: Open Folder...
 ----
-+
-When you open the root folder, the web IDE opens your project in a workspace.
-+
 +
 // see text for this variable defined under title
 {open-root}
