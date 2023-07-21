@@ -10,15 +10,13 @@ Import a project directory or a packaged Mule application (JAR file) to Anypoint
 
 A project directory contains an API specification or Mule application for an implementation or integration. 
 
-== Load a Project Folder or Compressed Project File into the Desktop IDE
+== Import a Project Folder or Compressed Project File into the Desktop IDE
 
-The desktop IDE enables you to upload a project directory or JAR file into a workspace.
+The desktop IDE enables you to upload a project directory or JAR file into a workspace:
 
 Visual Studio Code treats a project directory as a workspace when you open it to the root directory or if your project folder is within a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^]. 
 
-=== Load a Project Folder into the Desktop IDE 
-
-To open a project folder from the project root directory:
+=== Import a Project Folder into a Desktop IDE Workspace
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
@@ -34,9 +32,9 @@ This directory is the top-level folder that Anypoint Code Builder generates when
 //open root text defined in variable
 {open-root}
 
-=== Load a Compressed Project File into the Desktop IDE
+=== Import a Packaged Project into a Desktop IDE Workspace
 
-To import and unpack a project JAR file into Anypoint Code Builder for Desktop:
+Import and unpack a project JAR file, and open the decompressed project folder in a workspace.
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
@@ -62,13 +60,11 @@ File: Open Folder...
 //open root text defined in variable
 {open-root}
 
-== Import a Project Folder or Compressed Project File into the Web IDE
+== Import a Project Folder or Packaged Project into a Web IDE Workspace
 
 The web IDE enables you to upload a project directory or JAR file into a workspace.
 
-== Upload a Project Directory to the Web IDE
-
-To open a project folder into a workspace:
+=== Import a Project Folder into a Web IDE Workspace
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
@@ -90,9 +86,9 @@ If prompted, trust the authors of your file or directory:
 image::trust-home-directory.png[]
 . Anypoint Code Builder displays an upload progress bar that you can click to expand.
 
-== Import a Packaged Project to the Web IDE
+=== Import a Packaged Project into a Web IDE Workspace
 
-You can import both heavy and lightweight packaged Mule applications:
+Import and unpack a project JAR file:
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
@@ -142,7 +138,8 @@ image::import-mule-project.png[]
 [[use-dw-imported-project]]
 == Use DataWeave with Imported Projects
 
-To use DataWeave in an imported project, you must add the following dependency to your project `pom.xml` file:
+To use DataWeave in an imported project, you must add a `mule-service-weave-ee` dependency to your project `pom.xml` file:
+
 [source,XML]
 ----
 <dependency>
