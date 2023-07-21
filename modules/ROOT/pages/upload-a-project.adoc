@@ -1,6 +1,6 @@
 = Import a Project into an IDE Workspace
 :root-dir: This directory is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
-:open-root: If you do not open the root directory, the project does not load correctly because Visual Studio Code does not recognize the directory as a workspace.
+:open-root: If you do not open the root directory, the project does not load correctly because Visual Studio Code does not recognize the directory as a workspace. The applications does not display the UI canvas for the application.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -62,6 +62,7 @@ The web IDE enables you to upload a project directory or JAR file into a workspa
 * <<web-project-folder>>
 * <<web-project-package>>
 
+//WEB: PROJECT FOLDER TO WORKSPACE
 [[web-project-folder]]
 === Import a Project Folder into a Web IDE Workspace
 
@@ -99,10 +100,12 @@ File: Open Folder...
 ----
 .. Provide the path to the root directory of the project and click *OK* to load the project root directory into the workspace.
 
+
+//WEB: PACKAGED PROJECT TO WORKSPACE
 [[web-project-package]]
 === Import a Packaged Project into a Web IDE Workspace
 
-Import and unpack a project JAR file:
+Import and unpack a project JAR file for a project:
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
@@ -125,17 +128,15 @@ image::upload-jar-file.png[]
 If prompted, trust the authors of your file or directory:
 +
 image::trust-author-upload-file.png[]
-. Anypoint Code Builder displays the upload progress on the bottom left side of your screen:
++
+Anypoint Code Builder displays the upload progress on the bottom left side of your screen:
 +
 image::upload-progress.png[]
 +
 You can expand the progress bar by clicking it:
 +
 image::upload-progress-expanded.png[]
-. After your upload completes, close your home directory by selecting the menu icon > *File* > *Close Folder*.
-+
-image::close-working-directory.png[]
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
+. After the process upload process is complete, provide the following command to import the JAR file to your workspace:
 +
 [source,command]
 ----
@@ -143,11 +144,25 @@ MuleSoft: Import a Project
 ----
 +
 image::import-a-project.png[]
-. Select *Mule Project Type*:
+.. Select *Mule Project Type*:
 +
 image::import-mule-project.png[]
-. Select the JAR file that you uploaded.
-. Anypoint Code Builder unpacks your application and displays the directory structure of your working Mule project.
+.. Select the JAR file that you uploaded.
++
+Anypoint Code Builder unpacks your application into a project folder.
+. Navigate to your the _root_ of the project folder, using the following command to open the folder:
++
+[source,command]
+----
+ File: Open Folder...
+----
++
+When you open the root folder, the web IDE opens your project in a workspace.
++
++
+// see text for this variable defined under title
+{open-root}
+
 
 [[use-dw-imported-project]]
 == Use DataWeave with Imported Projects
