@@ -10,12 +10,16 @@ Import a project directory or a packaged Mule application (JAR file) to Anypoint
 
 A project directory contains an API specification or Mule application for an implementation or integration. 
 
-== Import a Project Folder or Compressed Project File into the Desktop IDE
+== Import a Project into a Desktop IDE Workspace
 
-The desktop IDE enables you to upload a project directory or JAR file into a workspace:
+The desktop IDE enables you to upload a project directory or package JAR file into a workspace. 
+
+* <<desktop-project-folder>>
+* <<desktop-project-package>>
 
 Visual Studio Code treats a project directory as a workspace when you open it to the root directory or if your project folder is within a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^]. 
 
+[[desktop-project-folder]]
 === Import a Project Folder into a Desktop IDE Workspace
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
@@ -32,6 +36,7 @@ This directory is the top-level folder that Anypoint Code Builder generates when
 //open root text defined in variable
 {open-root}
 
+[[desktop-project-package]]
 === Import a Packaged Project into a Desktop IDE Workspace
 
 Import and unpack a project JAR file, and open the decompressed project folder in a workspace.
@@ -60,10 +65,14 @@ File: Open Folder...
 //open root text defined in variable
 {open-root}
 
-== Import a Project Folder or Packaged Project into a Web IDE Workspace
+== Import a Project into a Web IDE Workspace
 
 The web IDE enables you to upload a project directory or JAR file into a workspace.
 
+* <<web-project-folder>>
+* <<web-project-package>>
+
+[[web-project-folder]]
 === Import a Project Folder into a Web IDE Workspace
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
@@ -86,6 +95,7 @@ If prompted, trust the authors of your file or directory:
 image::trust-home-directory.png[]
 . Anypoint Code Builder displays an upload progress bar that you can click to expand.
 
+[[web-project-package]]
 === Import a Packaged Project into a Web IDE Workspace
 
 Import and unpack a project JAR file:
