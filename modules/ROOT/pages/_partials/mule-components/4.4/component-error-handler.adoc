@@ -1,0 +1,246 @@
+//
+//tag::component-title[]
+
+= Error Handler (<error-handler/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Catches an error thrown by the Mule application and routes it to the first On-Error component configuration that matches the error type. 
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+The Error Handler component has two child elements, On Error Continue and On Error Propagate, which enable you to configure routes that execute when the error raised in the application matches the type of error configured in the handler. Each handler has its own behavior and works relative to the component that contains it (a Flow or a Try scope):
+
+* On Error Continue (`on-error-continue`): executes and uses the result of the execution as the result of its container element (as if the container completed the execution successfully). Any transactions at this point commit successfully.
+
+* On Error Propagate (`on-error-propagate`): rolls back any transactions, executes, and uses that result to re-throw the existing error. In this case, the container element "fails" its execution.
+
+If there's no error handling configuration that matches the error, the app follows a default error handling process. See xref:mule-runtime::error-handling.adoc#default_error_handling[] for more information.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<flow name="myFlow">
+
+    <error-handler>
+      <on-error-propagate name="onErrorPropagate" >
+        <!-- error handling logic -->
+      </on-error-propagate>
+      <on-error-continue name="onErrorContinue" >
+        <!-- error handling logic -->
+      </on-error-continue>
+    </error-handler>
+
+</flow>
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<error-handler/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-attributes-child1[]
+
+=== Child XML Elements and Attributes
+
+The `<on-error-continue/>` and `<on-error-propagate/>` child elements share the following attributes:
+
+[%header, cols="1,3"]
+|===
+|Attributes | Description
+
+| `type` | A comma-separated list of Mule error types that defines the errors this on-error strategy handles.
+| `when` | A matching expression that defines the condition to trigger the execution of this on-error strategy. The expression must evaluate to a boolean value (`true` or `false`).
+| `enableNotifications` | Specifies if this strategy fires a notification of type `ExceptionNotification` when an error occurs. Defaults to `true`.
+| `logException` | Specifies whether to log the error at level `ERROR` before this strategy handles it. Defaults to `true`.
+
+|===
+//end::component-xml-attributes-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Error Handling Example
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following example configures handlers to produce `{ "MyError": "value was expected to be null" }` for a `VALIDATION:NOT_NULL`
+error and `{ "messageANY" : "Some other error" }` for other error types. 
+
+[source,xml,linenums]
+----
+<error-handler >
+  <on-error-continue
+    enableNotifications="true"
+    logException="true"
+    type="VALIDATION:NOT_NULL">
+    <ee:transform >
+      <ee:message>
+        <ee:set-payload>
+        <![CDATA[%dw 2.0
+        output application/json
+        ---
+        {
+        MyError : error.description as String
+        }]]>
+        </ee:set-payload>
+      </ee:message>
+    </ee:transform>
+  </on-error-continue>
+  <on-error-continue
+    enableNotifications="true"
+    logException="true"
+    type="ANY">
+    <ee:transform>
+      <ee:message >
+        <ee:set-payload >
+        <![CDATA[%dw 2.0
+        output application/json
+        ---
+        {
+        "messageANY" : "Some other error"
+        }
+        ]]>
+        </ee:set-payload>
+      </ee:message>
+    </ee:transform>
+  </on-error-continue>
+</error-handler>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::mule-error-concept.adoc[Mule Errors]
+//* xref:acb-component-try-scope.adoc[]
+* xref:mule-runtime::mule-server-notifications[Mule Runtime Engine Notifications]
+
+//end::see-also[]
