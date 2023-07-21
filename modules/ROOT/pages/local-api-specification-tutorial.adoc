@@ -22,6 +22,7 @@ To create a new API specification:
 // +
 // image::design-api-1.png[]
 // +
+. Select the command.
 . Configure your API using the following values:
 +
 image::design-api-ui-first.png[]
@@ -85,8 +86,7 @@ version: 1.0.development
 
 By default, when you create a new API specification, Code Builder assigns it a version 1.0.0. You can create a multi-root workspace with your API specification directory and a new Mule project directory to design and implement the API iteratively:
 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Implement this Local API_.
-// TODO: cc: The Desktop IDE asks to choose a project name here. There is no UI displayed for saving a `.code-workspace` file. 
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Implement this local API_.
 . Code Builder creates a multi-root workspace to keep your API specification and Mule project in sync.
 .. Choose a location to store your workspace. +
 Your multi-root workspace is a `.code-workspace` file extension that keeps both of your directories coordinates.
@@ -97,27 +97,26 @@ Save your `.code-workspace` file in your home directory. Do not save it inside y
 --
 . After the workspace is created, Code Builder builds your API. +
 In this step, Code Builder packages the API specification and publishes it to a local Maven repository as a snapshot.
-// TODO: cc: On Desktop, the command action skips the above `.code-workspace` steps and goes directly to the following step.
 . After building your API, Code Builder can now implement it locally:
 .. Choose a project name for your Mule project: `_Retrieve Users Implementation_`.
 .. Select your home directory as your target folder.
 +
-[TIP]
---
+// [TIP]
+// --
 // TODO: cc: I'm not sure what the value of seeing progress is. The project creation process was quick for me (just a few seconds), so a customer might not be able to see the progress in time.
-To see the progress of the full process:
+// To see the progress of the full process:
 
-. From the menu, select *View* > *Output*.
-+
-// TODO: cc: UI is different on Desktop
-image::select-specific-output-view.png[]
-. On the right top side of the output panel, select the drop-down menu.
-+
-image::select-output-dropdown.png[]
-. Select *Mule DX Server*.
-+
-image::select-mule-dx-server.png[]
---
+// . From the menu, select *View* > *Output*.
+// +
+// // TODO: cc: UI is different on Desktop
+// image::select-specific-output-view.png[]
+// . On the right top side of the output panel, select the drop-down menu.
+// +
+// image::select-output-dropdown.png[]
+// . Select *Mule DX Server*.
+// +
+// image::select-mule-dx-server.png[]
+// --
 
 After Code Builder scaffolds your API specification, it opens a new directory in your newly created multi-root workspace with a Mule project. Note that it creates a flow with the proper APIkit router and another flow for the `GET` resource you designed in the RAML file:
 
@@ -246,9 +245,11 @@ version: 1.0.development
 
 With a new endpoint added to your API specification, you can now re-scaffold it to update your linked Mule project:
 
-. Navigate back to the `retrieve-users-api.raml` file under the *Retrieve Users API* directory.
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Re-Scaffold this local API_.
-. Note that Code Builder adds a new flow for the newly added endpoint:
+. Ensure that the `retrieve-users-api.raml` file is still active in the RAML editor.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Re-scaffold this local API_.
+. Select the command.
++
+Note that Code Builder adds a new flow for the newly added endpoint:
 +
 [source,XML,linenums]
 --
@@ -330,8 +331,9 @@ With your changes implemented, you can now save your API specification to Design
 . In Anypoint Code Builder, select your Source Control view.
 . Select the plus icon next to `retrieve-users-api.raml`.
 . Review the changes in the Source Control view. Note that the file has moved into *Staged Changes*.
-. Click the plus icon in the section header to stage the remaining changes.
+. Stage the remaining changes. 
 . Enter a message that summarizes the change or changes being made. For example: `_Create Retrieve Users API_`.
+// TODO: cc: On Desktop I had to push the "Commit" button here. Is this the same for Web? And then instead of "Push", it was "Sync Changes." Does this also differ from Web?
 . Select *Push*.
 
 Your changes are now published in Design Center.
