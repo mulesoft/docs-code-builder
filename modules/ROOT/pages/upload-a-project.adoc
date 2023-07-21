@@ -9,19 +9,15 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Import a project directory or a packaged Mule application (JAR file) to Anypoint Code Builder.
 
-A project directory contains an API specification or Mule application for an implementation, or integration. 
+A project directory contains an API specification or Mule application for an implementation or integration. 
 
 == Load a Project Folder or Compressed Project File into the Desktop IDE
 
-Open a project folder or compressed JAR file from Anypoint Code Builder for Desktop. 
+Visual Studio Code treats a project directory as a workspace when you open it to the root directory or if your project folder is within a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^]. 
 
-Visual Studio Code treats a project directory as a workspace only when you open it to the root directory. 
-// attribute here contains repeated sentence about root dir defined at top of page
-{open-root}
+=== Load a Project Folder into the Desktop IDE 
 
-=== Load a Project Folder into the Desktop IDE
-
-The desktop IDE opens your local file directory. You can navigate to the project folder or directory that you intend to load to the IDE.
+To open a project folder from the project root directory:
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
@@ -39,7 +35,7 @@ This directory is the folder that Anypoint Code Builder generates when you creat
 
 == Load a Compressed Project File into the Desktop IDE
 
-Import and unpack a project JAR file into Anypoint Code Builder for Desktop.
+To import and unpack a project JAR file into Anypoint Code Builder for Desktop:
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
@@ -47,22 +43,31 @@ Import and unpack a project JAR file into Anypoint Code Builder for Desktop.
 ----
 MuleSoft: Import a Mule Project
 ----
+. Navigate to the JAR file and import it.
 +
 The desktop IDE unpacks the JAR file into a project folder.
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
+. Open the unpacked project folder from its root directory
+
+.. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac).
+.. Provide the following command:
 +
 [source,command]
 ----
 File: Open Folder...
 ----
-. Navigate to the _root_ directory of the unpacked project folder. 
-. Open the root directory for your project.
+.. Navigate to the _root_ directory of the unpacked project folder. 
+.. Open the root directory for your project.
 +
 //open root text defined in variable
 {open-root}
 
+== Import a Project Folder or Compressed Project File into the Web IDE
+
+Visual Studio Code treats a project directory as a workspace when you open it to the root directory or if your project folder is within a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^]. 
 
 == Upload a Project Directory to the Web IDE
+
+To open a project folder from the project root directory:
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
