@@ -2,6 +2,9 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
 The following walkthrough shows you how to develop an integration, import the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^] from Exchange, and use  the custom library to return a random value from the library.
 
 == Before You Begin
@@ -51,11 +54,16 @@ Start by configuring a flow with an HTTP listener that exposes a root path (`/`)
 
 == Import the DataWeave Library
 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Import Asset from Exchange
+----
 +
 image::import-asset-from-exchange-db.png[]
 . Select *DataWeave Library*.
-. Start typing _DataWeave_, and press `enter` for Anypoint Code Builder to suggest the assets that match your search.
+. Start typing _DataWeave_, and press Return to list assets that match your search.
 . Select *DataWeave Mock Data Generators Library*.
 . Select version *1.0.0*.
 
@@ -100,7 +108,12 @@ Review your XML code:
 
 == Deploy the Application
 
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Deploy to Cloudhub_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Deploy to Cloudhub
+----
 +
 image::deploy-to-cloudhub.png[]
 . Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review:

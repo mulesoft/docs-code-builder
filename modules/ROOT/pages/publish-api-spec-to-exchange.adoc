@@ -2,6 +2,9 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
 Publish your API specification to Exchange to make it discoverable to other team members.
 
 When publishing an API to Exchange, you create a new API asset with that API, and you can later use it to implement it into a Mule application.
@@ -25,7 +28,12 @@ See xref:synchronize-with-design-center.adoc[].
 To publish your API to Exchange:
 
 . In Anypoint Code Builder, open your `american-flights-api.raml` file.
-. Open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Publish API Specification to Exchange_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Publish API Specification to Exchange
+----
 +
 image::publish-to-exchange.png[]
 . Type a project name: +
