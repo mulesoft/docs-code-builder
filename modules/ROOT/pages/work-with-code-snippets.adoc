@@ -6,11 +6,11 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 //TODO: IS THS UP-TO-DATE?
 //TODO: CAN'T SEE IMAGES
 
-Use built-in snippets or define your own to reuse code patterns in configuration files for your Mule applications. This practice avoids the need to retype the same pattern each time you use it, which helps you work more quickly and reduces the potential for configuration errors. Use snippets to provide configurations for any elements supported by the Mule DSL, such as commonly used connector operations, processing patterns performed by other components, or multi-element configurations in the configuration XML.
+To reuse code patterns in configuration files for your Mule applications, use built-in snippets or define your own user snippets. This practice avoids the need to retype the same pattern each time you use it, which helps you work more quickly and reduces the potential for configuration errors. Use snippets to provide configurations for any elements supported by the Mule DSL, such as commonly used connector operations, processing patterns performed by other components, or multi-element configurations in the configuration XML.
 
-Snippets are templates created in the JSON format. When you insert a snippet into the configuration XML for a Mule application, the snippet JSON transforms to XML automatically. 
+Snippets are templates created in the JSON format. When you insert a snippet into the configuration XML for a Mule application, the snippet JSON transforms to XML automatically. Create user snippets in the `mule-xml.json`.
 
-//TODO: WHAT DOES THIS MEAN??
+//TODO: WHAT DOES THIS MEAN?? 
 Anypoint Code Builder does not filter out snippets for code that goes outside a flow, such as connector configurations.
 
 == Built-In Snippets
@@ -59,15 +59,12 @@ If there is no snippet for a configuration you require, you can create one from 
 --
 {
     // Example:
-	 "Log a message": { 
-		//<1>
-	 	"prefix": "log", 
-		//<2>
-	 	"body": [ 
-			//<3>
+	  "Log a message": { //<!--<1>-->
+	 	"prefix": "log", //<!--<2>-->
+	 	"body": [ //<!--<3>-->
 	 		"<logger level=\"${1:INFO}\" message='$2' doc:name=\"Logger\" doc:id=\"$RANDOM_HEX\" />$0",
 	 	],
-	 	"description": "Log output to console" //<4>
+	 	"description": "Log output to console" //<!--<4>-->
 	 }
 }
 --
@@ -95,9 +92,6 @@ In the example, the next step is to add a `level` and `message` value to the com
 ----
 . Add any other snippets to your `mule-xml.json` by adding new fields. For example:
 +
-//TODO: THE DB SNIPPET IS MISCONFIGURED AND BREAKS STUFF. NEED WORKING CONFIG!
-// 	ALSO THE NUMBERS IN THE JSON BREAK THE CONFIG IN THE IDE. YOU HAVE TO DELETE THEM. 
-// 	CAN WE WRITE THE NUMBERS IN A WAY THAT DON'T BREAK THE CONFIG SO PEOPLE DON'T HAVE TO DELETE THEM MANUALLY?
 [source,JSON]
 --
 {
@@ -109,23 +103,25 @@ In the example, the next step is to add a `level` and `message` value to the com
 	 	],
 	 	"description": "Log output to console"
 	 },
-        "Select first and last name from database": { //<1>
-		"prefix": "select-name-from-db",
-		"body": [
-          "<db:select config-ref=\"${1:Database_Config}\" doc:name=\"${2:Select Contact from DB}\" doc:id=\"$RANDOM_HEX\" >",
-          "<db:sql>",
-          "<![CDATA[SELECT * FROM Contacts WHERE FirstName = :firstname AND LastName = :lastname]]>",
-          "</db:sql>",
-          "<db:input-parameters>",
-            "<![CDATA[#[\{",
-            "firstname: vars.firstnameVar,",
-            "lastname: vars.lastnameVar",
-            "\\}]]]>",
-          "</db:input-parameters>",
-          "</db:select>$0"
+        "Select first and last name from database": { //<!--<1>-->
+          "prefix": "select-name-from-db",
+          "body": [
+            "<db:select config-ref=\"${1:Database_Config}\" doc:name=\"${2:Select Contact from DB}\" doc:id=\"$RANDOM_HEX\" >",
+            "<db:sql>",
+            "<![CDATA[SELECT * FROM Contacts WHERE FirstName = :firstname AND LastName = :lastname]]>",
+            "</db:sql>",
+            "<db:input-parameters>",
+              "<![CDATA[#[\\{",
+              "firstname: vars.firstnameVar,",
+              "lastname: vars.lastnameVar",
+              "\\}]]]>",
+            "</db:input-parameters>",
+            "</db:select>$0"
 		],
 		"description": "Pull first and last name from database"
 	 }
 }
 --
-<1> The previous sample shows a snippet for a Database Connector select operation that retrieves `firstName` and `lastName` values from a Database.
+<1> A snippet for a Database Connector select operation that retrieves `firstName` and `lastName` values from a Database.
++
+If you insert the snippet the database example into your configuration XML, the next step is to provide the value of `config-ref=""`. To get the value, it is necessary to configure a global `<db:config/>` element at outside of the `<flow/>`. To learn more about this configuration, see xref:connect-to-a-db.adoc[].
