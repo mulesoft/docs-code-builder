@@ -6,7 +6,7 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 //TODO: IS THS UP-TO-DATE?
 //TODO: CAN'T SEE IMAGES
 
-To reuse code patterns in configuration files for your Mule application flows, use built-in snippets or define your own user snippets. These practices avoid the need to retype the same pattern each time you use it, which helps you work more quickly and reduces the potential for configuration errors. Use snippets to provide configurations for any elements supported by the Mule DSL, such as commonly used connector operations, processing patterns performed by other components, or multi-element configurations in the configuration XML.
+To reuse code patterns in configuration files for your Mule application flows, use built-in snippets or define your own user snippets. These practices avoid the need to retype the same pattern each time you use it, which helps you work more efficiently and reduces the potential for configuration errors. Use snippets to provide configurations for any elements supported by the Mule DSL, such as commonly used connector operations, processing patterns performed by other components, or multi-element configurations in the configuration XML.
 
 Snippets are templates created in the JSON format. When you insert a snippet into the configuration XML for a Mule application, the snippet JSON transforms to XML automatically. Create user snippets in `mule-xml.json`.
 
@@ -17,42 +17,46 @@ Anypoint Code Builder does not filter out snippets for code that goes outside a 
 
 Code Builder bundles a set of built-in snippets. To add a built-in snippet to your flow:
 
-. Select the `plus` icon on your canvas to add a new component to your flow.
-. Select _Snippets_:
+. From the canvas for a Mule application, select the `plus` to add a new component to your flow.
 +
-//TODO: IMAGE OUT OF DATE AND ALMOST IMPOSSIBLE TO MAKE OUT
-image::select-snippet-overview.png[]
-. Select _Built-in Snippets_:
-+
-//TODO: IMAGE OUT OF DATE AND ALMOST IMPOSSIBLE TO MAKE OUT 
-image::built-in-snippets-overview.png[]
-. Choose the snippet you want from the list of provided snippets.
+image::main-tutorial-add-first-http-listener.png["Mule application canvas"]
+. Navigate to *Snippets* > *Built-in Snippets*. 
+. Select the snippet from the list of built-in snippets.
 
-Use the auto-complete feature when working on the XML editor to find any of the built-in snippets.
+Alternatively, use the auto-complete feature within the configuration XML to find built-in snippets. For example: 
+
+Compare the built-in Choice snippet configuration to the basic XML configuration for this component:
+
+[source,xml]
+--
+<!-- (1) -->
+<choice doc:name="Choice" doc:id="vcfaqr" >
+  <when expression='#[]' doc:name="When" >
+  </when>
+  <otherwise doc:name="Otherwise" >
+  </otherwise>
+</choice>
+<!-- (2) -->
+<choice doc:name="Choice" doc:id="hhdehz" >
+--
+
+<1> XML for the built-in Choice snippet, identified as `flow:choice` in the auto-complete list.
+<2> XML for the minimally configured Choice component. The same XML is added to the configuration XML when you navigating to *Core Processors* > *Flow Control* > *Choice* from the canvas.
 
 == Create a Snippet
 
-Create and save reusable custom snippets to use in your project.
+Create reusable user snippets for your Mule applications. 
 
-The snippets that you save are specific to your IDE instance and not shared when you export your project for others to import and work on.
+Snippets that you create are specific to your IDE instance and not shared in projects for applications that you export for others to import and work on.
 
 To create a snippet:
 
-. Select the `plus` icon on your canvas to add a new component to your flow.
-. Select _Snippets_:
+. From the canvas for a Mule application, select the `plus` to add a new component to your flow.
 +
-//TODO: IMAGE OUT OF DATE AND ALMOST IMPOSSIBLE TO MAKE OUT
-image::select-snippet-overview.png[]
-. Select _User Snippets_:
+image::main-tutorial-add-first-http-listener.png["Mule application canvas"]
+. Navigate to *Snippets* > *User Snippets*. 
 +
-//TODO: IMAGE OUT OF DATE AND ALMOST IMPOSSIBLE TO MAKE OUT
-image::user-snippet-overview.png[]
-. Select the `plus` icon:
-+
-//TODO: IMAGE OUT OF DATE AND ALMOST IMPOSSIBLE TO MAKE OUT
-image::create-user-snippet-overview.png[]
-+
-If there is no snippet for a configuration you require, you can create one from the UI. If you have no snippets, Anypoint Code Builder creates a new `mule-xml.json` snippet file with a sample snippet for you to edit.
+If the snippet you need is not available, you can use the *+* icon in the *User Snippets* UI to open `mule-xml.json`, where you configure user snippets. If you have no snippets, Anypoint Code Builder creates a new `mule-xml.json` snippet file with a sample snippet for you to edit.
 . In the sample snippet file (`mule-xml.json`) that Anypoint Code Builder creates, uncomment all the fields after *Example*:
 +
 [source,JSON]
