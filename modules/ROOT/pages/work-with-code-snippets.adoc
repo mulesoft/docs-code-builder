@@ -6,14 +6,14 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 //TODO: IS THS UP-TO-DATE?
 //TODO: CAN'T SEE IMAGES
 
-To reuse code patterns in configuration files for your Mule application flows or subflows, use built-in snippets or define your own user snippets. These practices avoid the need to retype the same pattern each time you use it, which helps you work more efficiently and reduces the potential for configuration errors. 
+To reuse code patterns in configuration files for your Mule application flows  or subflows, use built-in snippets or define your own user snippets. These practices avoid the need to retype the same pattern each time you use it, which helps you work more efficiently and reduces the potential for configuration errors. 
 
 Use snippets to provide configurations for any elements supported by the Mule DSL, such as commonly used connector operations, message processing patterns supported by other components, or multi-element configurations in the configuration XML.
 
-Snippets are templates created in the JSON format. When you insert a snippet into the configuration XML for a Mule application flow, the snippet JSON transforms to XML automatically. Create user snippets in `mule-xml.json`. Code snippets are a VS Code feature. For more information, see https://code.visualstudio.com/docs/editor/userdefinedsnippets[Snippets in Visual Studio Code^].
+Snippets are templates created in the JSON format. When you insert a snippet into the configuration XML for a Mule application flow or subflow, the snippet JSON transforms to XML automatically. Create user snippets in `mule-xml.json`. Code snippets are a VS Code feature. For more information, see https://code.visualstudio.com/docs/editor/userdefinedsnippets[Snippets in Visual Studio Code^].
 
 //TODO: IS THIS A WORKAROUND FOR NOW OR IS THIS JUST THE WAY IT'S GONNA BE FOREVER?
-The IDE inserts all user snippets into the `<flow/>` element. If you create and insert a user snippet for a global configuration, such as a configuration for a database connection, which must be located outside of the `<flow/>` element, manually move the configuration to the same level as the `<flow/>` element. 
+The IDE inserts all user snippets into the `<flow/>` or `<sub-flow/>` element. If you create and insert a user snippet for a global configuration, such as a configuration for a database connection, which must be located outside of the `<flow/>` or `<sub-flow/>` element, manually move the configuration to the same level as the `<flow/>` or `<sub-flow/>`element. 
 
 == Built-In Snippets
 
