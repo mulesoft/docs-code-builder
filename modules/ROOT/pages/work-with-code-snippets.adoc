@@ -47,10 +47,10 @@ Compare the built-in Choice snippet configuration to the basic XML configuration
 <choice doc:name="Choice" doc:id="hhdehz" >
 --
 
-<1> XML for the built-in Choice snippet, identified as `flow:choice` in the auto-complete list. The icon for snippets is a two-dimensional square.
+<1> XML for the built-in Choice snippet, identified as `flow:choice` in the auto-complete list. The icon for snippets is a two-dimensional square. 
 <2> XML for the minimally configured Choice component. The icon for minimally configured XML is a three-dimensional square. For built-in _components_ like the Choice router, the IDE inserts the same configuration XML block when you navigate to *Core Processors* > *Flow Control* > *Choice* from the canvas.
 
-== Create a Snippet
+== Create a User Snippet
 
 Create reusable user snippets for your Mule applications. 
 
@@ -136,3 +136,5 @@ In the example, the next step is to add a `level` and `message` value to the com
 <1> A snippet for a Database Connector select operation that retrieves `firstName` and `lastName` values from a Database.
 +
 If you insert the snippet for the database example into your configuration XML, the next step is to provide the value of `config-ref=""`. To get the value, it is necessary to configure a global `<db:config/>` element at outside of the `<flow/>`. To learn more about this configuration, see xref:connect-to-a-db.adoc[].
++
+Like built-in snippets, user snippets are also available from the auto-complete menu in the configuration XML. In the auto-complete menu, find the name for the snippet that you provided in `mule-xml.json` and add the snippet to the XML. 
