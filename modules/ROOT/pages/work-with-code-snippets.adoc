@@ -6,9 +6,9 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 //TODO: IS THS UP-TO-DATE?
 //TODO: CAN'T SEE IMAGES
 
-Use built-in snippets or define your own to reuse code patterns in configuration files for your Mule applications. This practice avoids the need to retype the same pattern each time you use it, helps you work more quickly, and reduces the potential for configuration errors. Use snippets to provide configurations for any elements supported by the Mule DSL, such as commonly used connector operations, processing patterns performed by Core components, or larger XML configurations for multiple elements in the configuration XML.
+Use built-in snippets or define your own to reuse code patterns in configuration files for your Mule applications. This practice avoids the need to retype the same pattern each time you use it, which helps you work more quickly and reduces the potential for configuration errors. Use snippets to provide configurations for any elements supported by the Mule DSL, such as commonly used connector operations, processing patterns performed by other components, or multi-element configurations in the configuration XML.
 
-Snippets are templates created in the JSON format. When you insert a snippet into the configuration XML for a Mule application, the snippet JSON transforms to XML automatically.  
+Snippets are templates created in the JSON format. When you insert a snippet into the configuration XML for a Mule application, the snippet JSON transforms to XML automatically. 
 
 //TODO: WHAT DOES THIS MEAN??
 Anypoint Code Builder does not filter out snippets for code that goes outside a flow, such as connector configurations.
@@ -76,15 +76,23 @@ If there is no snippet for a configuration you require, you can create one from 
 <3> The `body` field is the actual code template that you can reuse.
 <4> The `description` field is a description of the snippet.
 +
-After you save the new snippet, select the new snippet from the canvas to load the configuration XML for your application, the XML for the logger looks like this:
+After you save the new snippet, select the new snippet from the canvas to load the configuration XML for your application, the XML for the logger example looks like this:
 +
 [source,xml]
 ----
 <logger level="" message='$2' doc:name="Logger" doc:id="sgxbfo" />
 ----
 +
-For this example, the next step is to add the `level` and `message` value of your choice to the component. 
-
+In this example, notice that `doc:id` is a randomly generated because of the `$RANDOM_HEX` value in the snippet.
++
+. Add any required values or configurations to the XML.
++
+In the example, the next step is to add a `level` and `message` value to the component. For example:
++
+[source,xml]
+----
+<logger level="WARN" message='my message here' doc:name="Logger" doc:id="sgxbfo" />
+----
 . Add any other snippets to your `mule-xml.json` by adding new fields. For example:
 +
 //TODO: THE DB SNIPPET IS MISCONFIGURED AND BREAKS STUFF. NEED WORKING CONFIG!
