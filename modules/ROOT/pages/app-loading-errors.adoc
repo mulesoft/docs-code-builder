@@ -1,0 +1,36 @@
+= Application Loading Errors
+
+Errors sometimes occur when you open an application in Anypoint Code Builder. 
+
+== Loading Error in the UI Canvas
+
+A *Loading...* error in the UI canvas of an open application typically indicates that a browser extension is interfering with the UI loading process. 
+
+To address this issue, try:
+
+* Disabling browser extensions and reloading the application 
+* Using another browser that is not using extensions
+
+
+== Flow Canvas Preparation Never Completes
+
+If the UI canvas contains the message *Preparing Flow Canvas* but the flow graphics fail to load after a few minutes, make sure that your application is open from its _root_ directory or from a multi-root workspace. 
+
+Visual Studio Code treats a project directory as a workspace when you open it to the project's root directory or if your project folder is located in a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^].
+
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+File: Open Folder...
+----
+. Navigate to the _root_ directory for your project. 
++
+The root is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
+
+See also, xref:upload-a-project.adoc[].
+
+
+
+
+
