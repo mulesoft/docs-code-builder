@@ -1,4 +1,5 @@
 = Test Your GraphQL Implementation
+:imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -26,9 +27,12 @@ To locally deploy your Mule Application, run a debug session in Anypoint Code Bu
 
 . Launch Anypoint Code Builder.
 . Open the *Books Implementation* project.
-. On your Run and Debug view, select your *Run and Debug* icon.
+. Select Run and Debug from the Activity Bar, then press the *Start Debugging* icon.
 +
-image::start-debugging.png[]
+// TODO: cc: desktop IDE UI differs
+// image::start-debugging.png[]
+
+// TODO: cc: these steps are all web-IDE specific. What are the corresponding desktop IDE steps? I think these desktop steps will need to come from engineering, as I'm not clear what is happening here.
 . Launch your browser Developer Tools (`F12`).
 . Navigate to your *Application* tab, under *Storage* expanded the *Cookies* section, and select the URL of your web IDE instance.
 +
@@ -65,7 +69,8 @@ See xref:ping-locally-deployed-app.adoc[] for more information.
 --header 'Cookie: proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx \
 --
 +
-image::send-request-with-cookies.png[]
+// TODO: cc: We probably shouldn't have screenshots of third-party applications, due to maintenance issues.
+// image::send-request-with-cookies.png[]
 . Configure the body of the request to contain a GraphQL query. For example:
 +
 [source,GraphQL]
@@ -93,7 +98,8 @@ Note that because you are querying a value by a specific ID (`$id: ID`), you mus
 }
 --
 +
-image::graphql-query-book-by-id.png[]
+// TODO: cc: We probably shouldn't have screenshots of third-party applications, due to maintenance issues.
+// image::graphql-query-book-by-id.png[]
 . Send the request.
 . Anypoint Code Builder returns an empty field for the book:
 +
