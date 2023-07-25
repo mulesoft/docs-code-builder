@@ -1,14 +1,315 @@
-= Secure Configuration Properties 
+= Define and Secure Properties for a Mule Application
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Encrypt sensitive values of properties used in your Mule application, and hide the name of the encryption key in Runtime Manager when the application deploys to CloudHub. 
+Create properties that enable you to:
+
+* Encrypt sensitive values used in your Mule application.
+
+* Easily select settings, such as different hosts, ports, and directory paths, for a specific deployment environment (development, staging, production, or another environment). 
+
+== Encrypt Sensitive Values in a Mule Application
+
+Use the Secure Properties Tool to encrypt sensitive data in your properties files, and for deployments to CloudHub, hide the value of the encryption key in the Anypoint Runtime Manager UI when the application deploys. Runtime Manager otherwise displays that value along with other configurable property values (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
+
+. Create a properties file with _unencrypted_ properties:
++
+//TODO: ADD SCREENSHOT OF DIRECTORY AND PROPERTIES FILE
+.. Open the project for your Mule application to its `src/main/resources` directory.
+.. Create a YAML file that configures properties as key-value pairs. 
++
+.Example:
+[source,yaml]
+----
+myprop : "somevalue"
+
+mysensitiveprop : "somesensitivevalue"
+---- 
++
+For more guidance, see <<properties>>.
+
+. Encrypt sensitive properties:
+.. Download the https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[Secure Properties Tool], an executable JAR file for encrypting properties.
+.. From the command line, run the Secure Properties Tool on the values you intend to secure.
++
+.Example that encrypts `"mysensitivevalue"` using Blowfish and an encryption key named `my-key`:
+[source,terminal]
+----
+$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \ string \
+encrypt \
+Blowfish \
+CBC \
+my-key \
+"mysensitivevalue" 
+----
++
+Note that you will add the value of the encryption key before testing a local deployment within your IDE and when deploying your application to CloudHub. 
++
+.Encrypted Output:
+[source,terminal]
+----
+/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5
+----
++
+For more information and other encryption options, see <<encrypt>>. 
+
+. In your properties file, add each encrypted property value within `![]` brackets.
++
+.Example that replaces the unencrypted value `"mysensitivevalue"` with the encrypted value `"![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"`:
+[source,yaml]
+----
+myprop : "somevalue"
+mysensitiveprop : "![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"
+---- 
+For guidance, see <<properties>>.
+
+. Use the encrypted value in a Mule application.
++
+//TODO: SCREENSHOT OF FLOW AND CONFIGURED Secure Configuration Properties snippet
+.. Add the key to the encrypted property as a value of an attribute in connector or component XML. For example:
++
+[source,xml]
+----
+<set-payload 
+  value="${secure::mysensitiveprop}" 
+  doc:name="Set payload" doc:id="abcdef" />
+----
+.. Above the `<flow/>` element your the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctl+space (Mac) or Cmd+space(Windows), typing the initial letters of the element name, such as `secu`, and selecting the snippet.
++
+//TODO: ADD SCREENSHOT TO MAKE THIS CLEAR
++
+Above a `<flow/>`` element, the XML from the unmodified snippet looks like this in the configuration XML:
++
+[source,xml]
+----
+<secure-properties:config name="Secure_Properties_Config" 
+  doc:name="Secure Properties Config" doc:id="ukvpll" 
+  file="${env}.secure.yaml" key="${encryption.key}" >
+      <secure-properties:encrypt algorithm="Blowfish" />
+</secure-properties:config>
+
+<flow name="some-flow" >
+...
+----
++
+The snippet preconfigures parts of the element that the basic XML configuration does not, so be sure to select the _snippet_ and _not_ the basic XML for this element, which has the same name but a different icon. Like all snippets, this snippet is identified by a two-dimensional box icon, while the basic XML for this element has a three-dimensional box icon. 
+.. Configure the snippet with values for `file`, `key`, and `algorithm`. For example:
++
+[source,xml]
+----
+<secure-properties:config name="Secure_Properties_Config" 
+  doc:name="Secure Properties Config" doc:id="ddzpxf" 
+  file="my-properties.yaml" key="${encryption.key}" >
+   <secure-properties:encrypt algorithm="Blowfish" />
+</secure-properties:config>
+----
++
+* `file`: Name of your properties file
+* `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`)
+* `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish)
++
+See <<algorithms>>.
+
+. Test your application in the IDE:
+.. Navigate to *Manage* (gear icon) > *Settings*, and find *Runtime: Default Arguments* on the *Settings* page. 
+.. Add the key-value pair for your encryption key to the end of the configuration in the *Runtime: Default Arguments* field. For example:
++
+[source,key-configuration]
+----
+-M-Dencryption.key=my-key
+----
++
+In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key` is the value used to encrypt the properties through the Secure Properties Tool. 
+.. Deploy the application with *Run and Debug* by pressing Ctrl+shift+p (Windows) or CmdCtrl+shift+p (Mac), entering *View: Show Run and Debug*, clicking *Run and Debug*, and if prompted, selecting *Mule Xml Debug).
++
+A successful deployment produces the following message in the tab *OUTPUT* of the output panel. For information about the output panel, see xref:configure-default-output-panel.adoc[].
++
+----
+**********************************************************************
+*              - - + DOMAIN + - -               * - - + STATUS + - - *
+**********************************************************************
+* default                                       * DEPLOYED           *
+**********************************************************************
+----
++
+If the application does not deploy successfully, check the console for the error and troubleshoot. 
+. If you intend to deploy your application to CloudHub, proceed to <<deploy-to-cloudhub>.
++
+This procedure shows you the hidden encryption key name in Runtime Manager. 
+
+[[deploy-to-cloudhub]]
+== Deploy to CloudHub
+
+. Deploy the app
+
+ into *Settings* > *Mule* › *Runtime: Default Arguments*. 
+Note that if you deploy your application to CloudHub, you are prompted to provide the value of the encryption key during the deployment. 
+ and test the configuration within the IDE:
++
+TODO
+
+. If you intend to deploy your application to CloudHub from the IDE, go to <<hide-key>>.
+
+
+[[properties]]
+==== Configuration Properties in a Mule Application
+
+Connectors and components in the Mule configuration XML accept variables for sensitive and non-sensitive data. The variables are defined in a `.yaml` or Spring-formatted `.properties` file that you create and store in the `src/main/resources` directory of the project for your Mule application. For example:
+
+[%header,cols="1a,1a"]
+|===
+| Unencrypted Values of `uname` and `pw` Keys
+| Encrypted Values of `uname` and `pw` Keys
+
+| 
+[source,yaml]
+----
+ftp:
+  workingDir: /Users/me/myworkingdir
+  host: localhost
+  uname: myusername
+  pw: mypassword
+env: dev
+----
+|
+[source,yaml]
+----
+ftp:
+  workingDir: /Users/me/myworkingdir
+  host: localhost
+  uname: UqoJI2fvggE=
+  pw: n2LDIOKKxhQ5Tdv5AeCtFQ==
+env: dev
+----
+|===
+
+[[specify]]
+
+Property values in the XML configuration of a Mule application require the following syntax:
+
+* `${property-key}` for unencrypted values
+* `${secure::property-key}` for encrypted values
+
+This FTP example specifies _encrypted_ values for its `username` and `password` attributes:
+
+[source,xml]
+----
+<ftp:config name="FTP_Config" doc:name="FTP Config" doc:id="abcdefg" >
+  <ftp:connection workingDir="${ftp.workingDir}" host="${ftp.host}"
+    port="21" username="${secure::ftp.uname}" password="${secure::ftp.pw}" />
+</ftp:config>
+---- 
+
+`ftp.uname` and `ftp.pw` reference the value of the properties through their keys.
+
+[[encrypt]]
+=== Encryption with the MuleSoft Secure Properties Tool
+
+Use MuleSoft Secure Properties Tool (`secure-properties-tool.jar`) to encrypt sensitive data. 
+
+The following examples use the Blowfish algorithm to encrypt two strings (`"myusername"` and `"mypassword"`), provide the same encryption key (`my-key`), and use the default encryption mode, CBC. 
+
+* This example encrypts `"myusername"` as `dlwfnITNF2aBCLn588sgFA==`:
++
+[source,terminal]
+----
+$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
+> string \
+> encrypt \
+> Blowfish \
+> CBC \
+> my-key \
+> "myusername"
+dlwfnITNF2aBCLn588sgFA==
+----
+
+* This example encrypts `"mypassword"` as `n2LDIOKKxhQ5Tdv5AeCtFQ==`:
++
+[source,terminal]
+----
+$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
+> string \
+> encrypt \
+> Blowfish \
+> CBC \
+> my-key \
+> "mypassword"
+n2LDIOKKxhQ5Tdv5AeCtFQ==
+----
+
+For more information about encryption processes see xref:mule-runtime::secure-configuration-properties.adoc[].
+
+
+[[hide-key]]
+== Hide Your Encryption Key Name
+
+. If you intend to deploy your application to CloudHub from the IDE:
+
+.. Hide the name (name or VALUE) of the encryption key (`encryption.key` by default) from the Runtime Manager UI.
++ 
+In `mule-artifact.json`, add the name of your encryption key to a comma-separated `secureProperties` array. For example:
++
+----
+{
+    "minMuleVersion": "4.4.0",
+    "secureProperties": [encryption.key, other.value.to.hide]
+}
+----
+.. Deploy your application to CloudHub. For example:
++
+TODO
+.. Check the deployment in Runtime Manager to ensure that the encryption key is hidden.
++
+Navigate ... TODO. 
+
+
+
+
+
+
+=== Properties Filename Workflow
+
+Some property values differ depending whether they are in a development, QA, production, or other environment. Examples include host URLs and directories that differ in development, sandbox, production environments. 
+
+To account for this difference, create separate properties files for each environment and use a field in the Runtime Manager UI to point to the correct properties file after you deploy your application to CloudHub.
+
+To make this work:
+
+. Create a separate properties file for each environment, using a consistent naming convention. For example:
+
+* `dev.properties.yaml` for your development environment in the IDE
+* `staging.properties.yaml` for your pre-production environment
+* `prod.properties.yaml` for the production environment
+
++
+This naming pattern enables you to define a variable for the first part file name. For example:
++
+[source,property]
+----
+env : dev
+----
+
+. Use the variable when you reference your properties file to your application. For example:
++
+[source,xml]
+----
+<secure-properties:config key="${encryption.key}"
+  file="${env}.properties.yaml" name="test">
+    <secure-properties:encrypt algorithm="AES" mode="CBC" useRandomIVs="true"/>
+</secure-properties:config>
+----
+. Find the value in Runtime Manager, and change it to the appropriate environment.
++
+TODO
+
+
+
 
 
 //TODO: SCREENSHOT SHOWING the files in the project and config XML
 TODO TO SELF - SIMPLIFY THE FOLLOWING TO MAKE MORE CONCEPTUAL AND LESS TASK-ORIENTED. ALSO USE CONTENT TO CREATE NUMBERED STEPS (started), WITH ENOUGH DETAIL TO COMPLETE. 
 
-Encrypt one or more properties using the MuleSoft Secure Properties Tool. After encrypting, create a file for the properties. In the file, specify key-value pairs for which each encrypted property is the value and the key is a unique name of your choice, for example, `my.property : "![En8lII21ZHrdIaINw0+mSA==]"`. Specify the key-value pairs in a `.yaml` or Spring-formatted `.properties` file, and put the file in the `src/main/resources` directory of the project for your Mule application.
+
 
 To use an encrypted value in a Mule application, specify the key of your encrypted property with a `secure::` prefix in the configuration XML. For example, for `my.property : "![En8lII21ZHrdIaINw0+mSA==]"`, use `${secure::my.property}` instead of the encrypted value. Also configure the Secure Configuration Properties snippet (`<secure-properties:config/>`) to identify your properties file, the name of the encryption key (`encryption.key` by default), and the same <<algorithms, algorithm>> that was used to encrypt the value (or values). `<secure-properties:config/>` is a global element at the same level as the `<flow/>` element.
 
@@ -37,7 +338,7 @@ To encrypt sensitive values:
 
 . Download the https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[Secure Properties Tool] (an executable JAR file). 
 
-. From the command line, run the Secure Properties Tool on the value or file that you intend to secure. 
+. From the command line, run the Secure Properties Tool on the values you intend to secure. 
 +
 The tool requires the following settings:
 
