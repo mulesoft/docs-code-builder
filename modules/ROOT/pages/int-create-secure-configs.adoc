@@ -257,11 +257,12 @@ Failed to deploy to CloudHub: 403 User unauthorized to access requested resource
 +
 The name (not the value) of your encryption key goes into a comma-separated `secureProperties` array. When you deploy your application to CloudHub, the IDE prompts you to provide a _value_ of your choice for the encryption key. 
 . Deploy your application to CloudHub by pressing Ctrl+shift+p (Windows) or CmdCtrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
-. When prompted, enter a value of your choice for the encryption key.
-//TODO: ADD SCREENSHOT
-. Select an environment for your deployment (*Sandbox* or *Design*).
+. When prompted, enter _the same value_ you used to encrypt your secure properties.
 +
-Deployments directly to the Production environment are not allowed. 
+If you do not enter the same value, the application is able to upload to CloudHub, but the deployment will fail.
+. Select the *Design* environment for your deployment.
++
+Other environments are not supported.
 + 
 The IDE indicates that the deployment is in progress and prompts you to open the application in Runtime Manager when the deployment completes successfully/ 
 
