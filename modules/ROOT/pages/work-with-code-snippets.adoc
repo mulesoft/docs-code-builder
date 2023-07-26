@@ -12,8 +12,12 @@ Use snippets to provide configurations for any elements supported by the Mule DS
 
 Snippets are templates created in the JSON format. When you insert a snippet into the configuration XML for a Mule application flow or subflow, the snippet JSON transforms to XML automatically. Create user snippets in `mule-xml.json`. Code snippets are a VS Code feature. For more information, see https://code.visualstudio.com/docs/editor/userdefinedsnippets[Snippets in Visual Studio Code^].
 
-//TODO: IS THIS A WORKAROUND FOR NOW OR IS THIS JUST THE WAY IT'S GONNA BE FOREVER?
-From the UI, Anypoint Code Builder inserts all user snippets into the `<flow/>` or `<sub-flow/>` element that you are working on. If you create and insert a user snippet for a global configuration that must reside at the same level as the `<flow/>` or `<sub-flow/>`, and not within either element, use <<autocomplete, auto-complete in the configuration XML>> to find and insert the snippet. Snippets are identified by their name and a two-dimensional box icon. For example, configurations for connections to a database must reside outside of the `<flow/>` element. To learn more about this configuration, see xref:connect-to-a-db.adoc[].
+Add snippets from the UI canvas or the configuration XML:
+
+* From the UI canvas, Anypoint Code Builder inserts all user snippets into the `<flow/>` or `<sub-flow/>` element that you are working on. 
+* From the configuration XML, use <<autocomplete, auto-complete>> to find and insert user snippets. For example, for a global configuration that must reside at the same level as the `<flow/>` or `<sub-flow/>`, and not within either element, use auto-complete. From the auto-complete menu, snippets are identified by their name and a two-dimensional box icon. 
++
+For an example of a global configuration for connections to a database, which must reside outside of the `<flow/>` element, see xref:connect-to-a-db.adoc[].
 
 
 == Work with Built-In Snippets
