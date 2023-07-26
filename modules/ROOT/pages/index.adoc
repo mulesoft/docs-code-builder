@@ -6,18 +6,16 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 //intro
-Use the Anypoint Code Builder integrated development environment (IDE) for designing, testing, and implementing APIs. You can also develop, debug, and deploy integrations and implementations that connect disparate systems. 
-
-Work locally with Anypoint Code Builder for Desktop on Visual Studio Code or online with Anypoint Code Builder on Anypoint Platform. The IDEs support the development lifecycle:
+Use the Anypoint Code Builder integrated development environment (IDE) for your API designs, implementations, and integration development. Work locally with Anypoint Code Builder for Desktop on Microsoft Visual Studio Code (VS Code) or from your browser with Anypoint Code Builder on Anypoint Platform. The IDEs support the development lifecycle:
 
 * API specification design (OAS, RAML, or GraphQL), a mocking service for testing, source control, and publication to Anypoint Exchange
-* API implementation features for importing supported API specifications and autogenerating interfaces for flows and error handlers within a Mule application
+* API implementation features for importing supported API specifications and autogenerating interfaces (scaffolding) for flows and error handlers within a Mule application
 * Integration development to connect systems, transform data to required formats, and provide business logic to manage messages and events programmatically within a Mule application
 
 //extensions info
 == Anypoint Extension Pack
 
-Anypoint Extension Pack is the set of extensions to Visual Studio Code that provides the Anypoint Code Builder experience in the desktop and web-based IDEs. The web-based extensions are built into code-server, a web-based IDE based on VS Code. The desktop extensions require installation to your VS Code IDE. See xref:setup.adoc[].
+Get the Anypoint Code Builder experience through the Anypoint Extension Pack for Visual Studio Code. The web-based extensions are preinstalled into a code-server implementation that makes VS Code accessible from a browser. The desktop extensions require installation to your VS Code IDE. See xref:setup.adoc[].
 
 == Get Familiar with the Basics
 
@@ -28,7 +26,7 @@ It's also useful to be familiar with these products and features:
 * Anypoint Connectors provide operations for retrieving, modifying, and sending data to and from systems. Anypoint Code Builder provides <<builtin-connectors, built-in connectors>> and access to many other connectors from Anypoint Exchange.
 //TODO: we're preparing a way to provide sharable component doc in ACB doc set for these. This bullet could point to that ACB doc once it exists and/or to the connectors section of the docs. 
 
-* Core components are programmatic building blocks that provide the business logic for integration applications. Examples include For Each (`<foreach/>`), Transform Message (`<ee:transform/>`), and Flow (`<flow/>`).
+* Core processors (also called Core components or Mule components) are programmatic building blocks that provide the business logic for integration applications. Examples include For Each (`<foreach/>`), Transform Message (`<ee:transform/>`), and Flow (`<flow/>`).
 //TODO: we're preparing a way to provide sharable component doc in ACB doc set for these. This bullet could point to that doc or to the component section of the docs. I'd prefer the former, which will exclude refs to Studio.
 
 * DataWeave is the programming language for all expressions and data transformations in your integrations and implementations. The language offers function libraries and mechanisms for creating customizations, including your own functions, libraries, and data types.
@@ -39,6 +37,10 @@ It's also useful to be familiar with these products and features:
 //TODO: If already introduced above, prob not needed here unless we're adding some detail
 
 * A flow is a block of components, including any connector operations, that Mule runtime engine (Mule) executes sequentially on an event and the message it contains. A flow can also contain an operation that triggers the creation of the event and initiates the execution of the flow.
++
+A subflow is similar to a flow but does not support the configuration of triggers (sometimes called message sources), which are exclusive to flows. 
++
+A flow reference enables you to to trigger execution of a flow or subflow from another flow.
 
 * A Mule application contains one or more XML-based configuration files for your connectors, components, secure configuration properties, scaffolded API specifications, and other parts of your integrations and implementations. The application runs on Mule and is part of a project that contains the resources needed to configure, build, run, test, and deploy the application. 
 
