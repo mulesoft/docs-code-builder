@@ -108,7 +108,7 @@ n2LDIOKKxhQ5Tdv5AeCtFQ==
 ----
 
 [[algorithms]]
-MuleSoft Secure Properties Tool and Secure Properties element (`<<secure-properties/>`) accept the following algorithms:
+MuleSoft Secure Properties Tool and the Secure Properties element (`<<secure-properties/>`) accept the following algorithms:
 
 * AES 
 * Blowfish
@@ -119,7 +119,7 @@ MuleSoft Secure Properties Tool and Secure Properties element (`<<secure-propert
 
 [[ciphers]]
 //This comes from Mule Runtime docs. Not verified in ACB yet by me:
-MuleSoft Secure Properties Tool and Secure Properties element (`<<secure-properties/>`) accept the following ciphers:
+MuleSoft Secure Properties Tool and the Secure Properties element (`<<secure-properties/>`) accept the following ciphers:
 
 * CBC (default)
 * CFB
@@ -131,9 +131,9 @@ For step-by-step instructions on encrypting properties in a Mule application, se
 [[prop-file]]
 === Property Files for Different Deployment Targets
 
-Hosts, ports, directories, usernames, and other settings in the configuration XML often differ depending on the target environment for your deployment, such as the development, sandbox, or production environment. For example, on your desktop, the host name is typically `localhost`, the port something like `8081`, and the directory a path on your local machine rather than a path to an external URI.
+Hosts, ports, directories, and other settings in the configuration XML often differ depending on the target environment for your deployment, such as the development, sandbox, or production environment. For example, on your desktop, the host name is typically `localhost`, the port something like `8081`, and the directory is a path on your local machine rather than a path to an external host.
 
-When developing your application in the IDE, create separate properties files for each of the target environment that requires different settings, and provide the the appropriate settings in each file. 
+When developing your application in the IDE, create separate properties files for each of the target environment that requires different settings, and provide the  appropriate settings in each file. 
 
 [[filename-patterns]]
 Typical filename patterns look something like this:
@@ -142,7 +142,6 @@ Typical filename patterns look something like this:
 * `sandbox.properties.yaml` or `sandbox.secure.yaml` for a pre-production environment
 * `prod.properties.yaml` or `sandbox.secure.yaml` for the production environment
 
-`env` variable: +
 Consistent filename patterns enable you to use an `$\{env}` variable in your configuration XML for the prefix to the filename, for example, `$\{env}.properties.yaml` or `$\{env}.secure.yaml`. 
 
 [[prefix]]
@@ -157,7 +156,7 @@ Notice the value of the `file` attribute in this example:
 </secure-properties:config>
 ----
 
-For step-by-step instructions on using the `env` variable, see <<prop-file>>.
+For step-by-step instructions on using the `env` variable, see <<create-prop-file>>.
 
 //H2 PROCEDURE: ENCRYPT
 [[encrypt]]
@@ -348,10 +347,10 @@ Runtime Manager apply your changes and attempt to deploy your application.
 
 For more information, see xref:runtime-manager::index.adoc[]. For information about CloudHub, see xref:cloudhub-1::index.adoc[].
 
-[[prop-file]]
+[[reate-prop-file]]
 == Create and Use Properties Files for Different Deployment Targets
 
-When developing your application in the IDE, create separate properties files for each of the target environment (such as development, sandbox, or production) that requires different settings, and provide the the appropriate settings in each file. 
+When developing your application in the IDE, create separate properties files for each of the target environment (such as development, sandbox, or production) that requires different settings, and provide the appropriate settings in each file. The files can include encrypted and unencrypted property values.
 
 Before you begin: 
 
