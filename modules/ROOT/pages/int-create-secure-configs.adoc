@@ -354,13 +354,11 @@ When developing your application, create separate properties files for each targ
 
 The file names must follow a consistent pattern so that you can configure a variable such as `$\{env}` as a modifiable prefix that enables you to switch to the file that contains settings for the environment in which your application runs. You can include encrypted and unencrypted property values in the files.
 
-For more information, review <<prop-file>>.
-
 To configure and use the `env` variable as a prefix to a filename:
 
 . Using a consistent filename pattern, create properties files for each environment that requires different settings.
 + 
-For guidance with naming and configuring the contents of properties files, see <<filename-patterns, filename patterns>> and <<properties>>. 
+For guidance with naming and configuring the contents of properties files, review <<prop-file>>.
 . If you are using the `<secure-properties/>` or another element that points to your properties file, set the value for the filename with variable for the prefix, such as `$\{env}`. For example:
 +
 ----
