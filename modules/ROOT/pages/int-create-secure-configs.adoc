@@ -129,7 +129,7 @@ For more guidance, see <<properties>>.
 .. Download the https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[Secure Properties Tool], an executable JAR file for encrypting properties.
 .. From the command line, run the Secure Properties Tool on the values you intend to secure.
 +
-.Example that encrypts `"mysensitivevalue"` using Blowfish and an encryption key named `my-key`:
+.Example that encrypts `"mysensitivevalue"` using Blowfish and `my-key` for an encryption key password:
 [source,terminal]
 ----
 $ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \ string \
@@ -171,9 +171,9 @@ For guidance, see <<properties>>.
   value="${secure::mysensitiveprop}" 
   doc:name="Set payload" doc:id="abcdef" />
 ----
-.. Above the `<flow/>` element your the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctl+space (Mac) or Cmd+space(Windows), typing the initial letters of the element name, such as `secu`, and selecting the snippet.
+.. Above the `<flow/>` element in your the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and selecting the snippet.
 +
-//TODO: ADD SCREENSHOT TO MAKE THIS CLEAR
+image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties Snippet"]
 +
 The XML for an unmodified snippet looks like this above a `<flow/>` element:
 +
