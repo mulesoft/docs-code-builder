@@ -6,7 +6,7 @@ Create properties that enable you to:
 
 * Encrypt sensitive values used in your Mule application.
 
-* Easily select settings, such as different hosts, ports, and directory paths, for a specific deployment environment (development, sandbox, production, or another environment). 
+* Easily change properties files to use for different deployment environments (development, sandbox, production, or other deployment target). 
 
 [[get-familiar]]
 == Get Familiar With Configuration Properties and Encryption
@@ -113,7 +113,7 @@ Use the Secure Properties Tool to encrypt sensitive data in your properties file
 
 . Create a properties file with _unencrypted_ properties:
 +
-//TODO: ADD SCREENSHOT OF DIRECTORY AND PROPERTIES FILE
+images::acb-project-directory.png["project direction in a Mule app"]
 .. Open the project for your Mule application to its `src/main/resources` directory.
 .. Create a YAML file that configures properties as key-value pairs. For example:
 +
@@ -129,7 +129,7 @@ For more guidance, see <<properties>>.
 .. Download the https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[Secure Properties Tool], an executable JAR file for encrypting properties.
 .. From the command line, run the Secure Properties Tool on the values you intend to secure.
 +
-.Example that encrypts `"mysensitivevalue"` using Blowfish and an encryption key named `my-key`:
+.Example that encrypts `"mysensitivevalue"` using Blowfish and the value `my-key` as a password for the encryption key:
 [source,terminal]
 ----
 $ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \ string \
@@ -141,8 +141,6 @@ my-key \
 ----
 +
 :Important: Be sure to store your encryption key value in a safe location that you can retrieve when you deploy your application. If deploy with the wrong value, the deployment will fail because it will decrypt your sensitive value. 
-+
-Note that you do not add the _value_ of the encryption key yet, only the _name_ (`my-key` in the example). You add a _value_ of your choice for the key before testing a local deployment within your IDE and when deploying an application to CloudHub. 
 +
 .Encrypted Output:
 [source,terminal]
