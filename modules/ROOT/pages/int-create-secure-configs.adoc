@@ -56,7 +56,7 @@ n2LDIOKKxhQ5Tdv5AeCtFQ==
 ----
 
 [[algorithms]]
-MuleSoft Secure Properties Tool and the Secure Properties element (`<<secure-properties/>`) accept the following algorithms:
+MuleSoft Secure Properties Tool and the Secure Properties element (`<secure-properties/>`) accept the following algorithms:
 
 * AES 
 * Blowfish
@@ -67,7 +67,7 @@ MuleSoft Secure Properties Tool and the Secure Properties element (`<<secure-pro
 
 [[ciphers]]
 //This comes from Mule Runtime docs. Not verified in ACB yet by me:
-MuleSoft Secure Properties Tool and the Secure Properties element (`<<secure-properties/>`) accept the following ciphers:
+MuleSoft Secure Properties Tool and the Secure Properties element (`<secure-properties/>`) accept the following ciphers:
 
 * CBC (default)
 * CFB
@@ -108,7 +108,7 @@ ftp:
 ----
 |===
 
-You can create separate properties files for your unecrypted and encrypted properties. For example: 
+You can create separate properties files for your unencrypted and encrypted properties. For example: 
 
 
 [%header,cols="1a,1a"]
@@ -138,9 +138,9 @@ For step-by-step instructions, see <<encrypt>>.
 
 //H3 section: reference 
 [[reference-use]]
-=== Use Properties in the Configuration XML
+=== References to Properties and Property Files in the Configuration XML
 
-Reference a property files that contain encrypted or unencrypted values, and use  property values in the configuration XML:
+Reference a property files, and use property values in the configuration XML:
 
 * If your properties file does not contain _any_ encrypted properties:
 ** Use this syntax: `${property-key}`
@@ -164,6 +164,25 @@ For example, assume the property `port: "8081"` in properties file `ports.yaml`,
 
 ** Use this syntax: `${secure::property-key}`
 ** Use this global element to reference the file: `<secure-properties:config/>`
++
+This FTP example references `dev.secure.yaml` with `<secure-properties:config/>`, and uses the `secure::` prefix to reference all properties in that properties file:
+
+[source,xml]
+----
+<secure-properties:config name="Secure_Properties_Config" 
+  doc:name="Secure Properties Config" doc:id="acegik" 
+  file="dev.secure.yaml" key="${encryption.key}" >
+      <secure-properties:encrypt algorithm="Blowfish" />
+</secure-properties:config>
+
+<ftp:config name="FTP_Config" doc:name="FTP Config" doc:id="abcdefg" >
+  <ftp:connection workingDir="${secure::ftp.workingDir}" host="${secure::ftp.host}"
+    port="21" username="${secure::ftp.uname}" password="${secure::ftp.pw}" />
+</ftp:config>
+<flow>
+  ...
+</flow>
+---- 
 +
 For step-by-step instructions with encrypted values, see <<encrypt>>. 
 
