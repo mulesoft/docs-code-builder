@@ -79,7 +79,7 @@ For step-by-step instructions on encrypting properties in a Mule application, se
 //H3 section: properties 
 //some tasks link to additional guidance with the properties
 [[properties]]
-=== Configuration Properties in a Mule Application
+=== Configuration Properties Files
 
 Connectors and components in the Mule configuration XML accept variables for sensitive and non-sensitive data. The variables are defined in a `.yaml` or Spring-formatted `.properties` file that you create and store in the `src/main/resources` directory of the project for your Mule application. For example:
 
@@ -140,7 +140,7 @@ For step-by-step instructions, see <<encrypt>>.
 [[reference-use]]
 === Use Properties in the Configuration XML
 
-Reference a properties file that contains some encrypted values or a file with no encrypted values, and use the required syntax to use the property value in the configuration XML.
+Reference a properties files that contain encrypted or unencrypted values, and use the property value in the configuration XML:
 
 * If your properties file does not contain _any_ encrypted properties:
 ** Use this syntax: `${property-key}`
