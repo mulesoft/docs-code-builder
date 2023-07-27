@@ -4,9 +4,9 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Create properties that enable you to:
 
-* Encrypt sensitive values used in your Mule application
-* Define and use variables instead of literal strings when setting values in the configuration XML
-* Select different property files for a specific deployment environment, such as development, sandbox, or production 
+* Encrypt sensitive values used in your Mule application.
+
+* Select different property files for a specific deployment environment, such as  development, sandbox, or production. 
 
 [[get-familiar]]
 == Get Familiar With Configuration Properties and Encryption
@@ -315,11 +315,9 @@ The snippet preconfigures parts of the element that the basic XML configuration 
 +
 * `file`: Name of your properties file 
 +
-To use the variable `$\{env}` in your filename configuration, see <<env-variable>>.
+To use the variable `$\{env}` in your filename configuration, see <<reference-use>>.
 * `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`).
-* `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet).
-+
-See <<algorithms>>.
+* `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
 
 . Test your application in the IDE:
 .. Navigate to *Manage* (gear icon) > *Settings*, and find *Runtime: Default Arguments* on the *Settings* page. 
