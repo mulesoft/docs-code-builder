@@ -52,11 +52,8 @@ ftp:
 Property values in the XML configuration of a Mule application require the following syntax:
 
 * `${_property-key_}` for unencrypted
-+
-For example, you use `${host}` in the XML for the property `host: "8081"`.
-* `${secure::_property-key_}` for encrypted values
-+
-For example, you use `${secure::pw}` in the XML for the property `pw: "![n2LDIOKKxhQ5Tdv5AeCtFQ==]"`.
+//special formatting with extra backticks to italicize property-key:
+* `${secure::``_property-key_}` for encrypted values
 
 This FTP example specifies _encrypted_ values for its `username` and `password` attributes:
 
