@@ -373,16 +373,15 @@ See <<prefix, Secure Properties example>> for more detail.
 <global-property name="env" value="dev" />
 ----
 +
-After deploying to CloudHub, you can add a new value that takes precedence over this setting through the Runtime Manager UI.
-. Make sure the application deploys locally in the IDE before deploying to CloudHub:
-+
+After deploying to CloudHub, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
+. Before deploying to CloudHub, make sure the application deploys locally in the IDE:
 .. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
 .. If prompted, enter _the same value_ you used to encrypt your secure properties.
 .. Select the *Sandbox* environment for your deployment.
 . Once the deployment is complete, click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
 . Set the `env` property for the application in Runtime Manager:
 .. Click *Settings* > *Properties* tab for the application.
-.. In the *Properties* tab, provide a new *env* key with the value for the environment, such as *sandbox*. 
+.. In the *Properties* tab, provide a new *env* key with a value that matches the environment, such as *sandbox*, and the prefix to the file name (such as `sandbox.properties.yaml`). 
 .. Click *Apply Changes* to launch a deployment with the new setting for `env` in your application.
 +
 The new setting makes the application use the properties file with the prefix that matches the value you provided for *env* in Runtime Manager. This setting overrides the global property setting (`<global-property/>`) in the configuration XML for your application. 
