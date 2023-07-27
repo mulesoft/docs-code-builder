@@ -33,28 +33,31 @@ Connectors and components in the Mule configuration XML accept variables for sen
 [source,yaml]
 ----
 ftp:
-  workingDir: "/Users/me/myworkingdir"
-  host: "localhost"
-  uname: "myusername"
-  pw: "mypassword"
-env: "dev"
+  workingDir: /Users/me/myworkingdir
+  host: localhost
+  uname: myusername
+  pw: mypassword
+env: dev
 ----
 |
 [source,yaml]
 ----
 ftp:
-  workingDir: "/Users/me/myworkingdir"
-  host: "localhost"
-  uname: "![UqoJI2fvggE=]"
-  pw: "![n2LDIOKKxhQ5Tdv5AeCtFQ==]"
-env: "dev"
+  workingDir: /Users/me/myworkingdir
+  host: localhost
+  uname: ![UqoJI2fvggE=]
+  pw: ![n2LDIOKKxhQ5Tdv5AeCtFQ==]
 ----
 |===
 
 Property values in the XML configuration of a Mule application require the following syntax:
 
-* `${property-key}` for unencrypted values
-* `${secure::property-key}` for encrypted values
+* `${_property-key_}` for unencrypted
++
+For example, you use `${host}` in the XML for the property `host: "8081"`.
+* `${secure::_property-key_}` for encrypted values
++
+For example, you use `${secure::pw}` in the XML for the property `pw: "![n2LDIOKKxhQ5Tdv5AeCtFQ==]"`.
 
 This FTP example specifies _encrypted_ values for its `username` and `password` attributes:
 
