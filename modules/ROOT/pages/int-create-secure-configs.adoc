@@ -350,7 +350,9 @@ For more information, see xref:runtime-manager::index.adoc[]. For information ab
 [[reate-prop-file]]
 == Create and Use Properties Files for Different Deployment Targets
 
-When developing your application in the IDE, create separate properties files for each the target environment (such as development, sandbox, or production) that requires different settings, and provide the appropriate settings in each file. The files can include encrypted and unencrypted property values.
+When developing your application, create separate properties files for each target environment (such as development, sandbox, or production) that requires different settings, and provide the appropriate settings in each file. 
+
+The file names must follow a consistent pattern so that you can configure a variable such as `$\{env}` as a modifiable prefix that enables you to switch to the properties file with settings for the environment. You can include encrypted and unencrypted property values in the files.
 
 Before you begin: 
 
