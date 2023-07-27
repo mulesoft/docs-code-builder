@@ -347,16 +347,14 @@ Runtime Manager apply your changes and attempt to deploy your application.
 
 For more information, see xref:runtime-manager::index.adoc[]. For information about CloudHub, see xref:cloudhub-1::index.adoc[].
 
-[[reate-prop-file]]
+[[create-prop-file]]
 == Provide Settings for Different Environments
 
 When developing your application, create separate properties files for each target environment (such as development, sandbox, or production) that requires different settings, and provide the appropriate settings in each file. 
 
-The file names must follow a consistent pattern so that you can configure a variable such as `$\{env}` as a modifiable prefix that enables you to switch to the properties file with settings for the environment. You can include encrypted and unencrypted property values in the files.
+The file names must follow a consistent pattern so that you can configure a variable such as `$\{env}` as a modifiable prefix that enables you to switch to the file that contains settings for the environment in which your application runs. You can include encrypted and unencrypted property values in the files.
 
-Before you begin: 
-
-* Review <<prop-file>>.
+For more information, review <<prop-file>>.
 
 To configure and use the `env` variable as a prefix to a filename:
 
