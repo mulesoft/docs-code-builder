@@ -16,23 +16,25 @@ Before you begin, ensure that you:
 
 * Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
-* Download the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
+// * Download the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
 * Implement the Books API GraphQL Schema. +
 See xref:implement-a-graphql-api.adoc[Implement a GraphQL API].
-* Install a REST client like Postman or AdvancedRestClient.
+// * Install a REST client like Postman or AdvancedRestClient.
 
 == Run Your Application
 
 To locally deploy your Mule Application, run a debug session in Anypoint Code Builder:
 
-. Launch Anypoint Code Builder.
-. Open the *Books Implementation* project.
+.Web IDE
+[%collapsible]
+====
+
+. In Anypoint Code Builder, open the *Books Implementation* project.
 . Select Run and Debug in the Activity Bar, then press the *Start Debugging* icon.
 +
 // TODO: cc: desktop IDE UI differs
 // image::start-debugging.png[]
 
-// TODO: cc: these steps are all web-IDE specific. What are the corresponding desktop IDE steps? I think these desktop steps will need to come from engineering, as I'm not sure I'll have the time to figure it all out. However, initial tests show that the test URL on desktop is localhost, not the web IDE instance address. But what are the remaining steps? Does the GraphQL query differ?
 . Launch your browser Developer Tools (`F12`).
 . Navigate to your *Application* tab, under *Storage* expanded the *Cookies* section, and select the URL of your web IDE instance.
 +
@@ -61,17 +63,32 @@ image::ports-panel-local-address-8081.png[]
 The URL to ping varies depending on the webIDE instance ID. It follows the format `+https://<web-IDE-instance>/proxy/<port-you-configured-on-your-listener>/+`. In this case, because you are pinging the 8081 port, your URL is `+https://<web-IDE-instance>/proxy/8081/+`.
 See xref:ping-locally-deployed-app.adoc[] for more information.
 --
-. In your preferred REST client, create a `POST` request to the local address, adding the `/graphql` path: `+https://<web-IDE-instance>/proxy/8081/graphql+`.
-. Add a new *Cookie* header to the request with the `proxysession` value:
+. Using `curl`, create a `POST` request to the local address, adding the `/graphql` path: `+https://<web-IDE-instance>/proxy/8081/graphql+`, and the `proxysession` cookie:
 +
-[source,CURL]
+[source,curl]
 --
---header 'Cookie: proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx \
+curl --request POST \
+--location 'https://<web-IDE-instance>/proxy/8081/graphql' \
+--header 'Cookie: <proxysession-cookie-name>=<cookie-value>' \
+--header 'Content-Type: application/json' \
+--data '{
+    "query": "query bookById($id: ID) {bookById(id: $id){ id name pageCount author{ id firstName lastName}}}",
+    "variables": {
+        "id": 1
+    }
+}'
 --
 +
-// TODO: cc: We probably shouldn't have screenshots of third-party applications, due to maintenance issues.
+// . Add a new *Cookie* header to the request with the `proxysession` value:
+// +
+// [source,CURL]
+// --
+// --header 'Cookie: proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx \
+// --
+// +
+// TODO: cc: Screenshot no longer valid because we're now using curl instead of Postman
 // image::send-request-with-cookies.png[]
-. Configure the body of the request to contain a GraphQL query. For example:
+The `curl` request contains the following GraphQL query:
 +
 [source,GraphQL]
 --
@@ -89,7 +106,7 @@ query bookById($id: ID){
 }
 --
 +
-Note that because you are querying a value by a specific ID (`$id: ID`), you must provide a GraphQL variable with the ID you want to query:
+Because you are querying a value by a specific ID (`$id: ID`), you must provide a GraphQL variable with the ID you want to query:
 +
 [source,GraphQL]
 --
@@ -98,10 +115,11 @@ Note that because you are querying a value by a specific ID (`$id: ID`), you mus
 }
 --
 +
-// TODO: cc: We probably shouldn't have screenshots of third-party applications, due to maintenance issues.
+// TODO: cc: Screenshot no longer valid because we're now using curl instead of Postman
 // image::graphql-query-book-by-id.png[]
-. Send the request.
-. Anypoint Code Builder returns an empty field for the book:
+. Send the `curl` request.
++
+Anypoint Code Builder returns an empty field for the book:
 +
 [source,GraphQL]
 --
@@ -111,6 +129,42 @@ Note that because you are querying a value by a specific ID (`$id: ID`), you mus
     }
 }
 --
+====
+
+.Desktop IDE
+[%collapsible]
+====
+
+. In Anypoint Code Builder, open the *Books Implementation* project.
+. Select Run and Debug in the Activity Bar, then press the *Start Debugging* icon.
+. Using `curl`, create a `POST` request to the local address, adding the `/graphql` path: `+http://localhost:8081/graphql+`:
++
+[source,curl]
+--
+curl --request POST \
+--location 'http://localhost:8081/graphql' \
+--header 'Content-Type: application/json' \
+--data '{
+    "query": "query bookById($id: ID) {bookById(id: $id){ id name pageCount author{ id firstName lastName}}}",
+    "variables": {
+        "id": 1
+    }
+}'
+--
+
+. Send the `curl` request.
++
+Anypoint Code Builder returns an empty field for the book:
++
+[source,GraphQL]
+--
+{
+    "data": {
+        "bookById": null
+    }
+}
+--
+====
 
 Other queries you can try for your endpoint are:
 

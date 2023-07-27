@@ -56,22 +56,35 @@ See xref:implement-a-graphql-api.adoc[Implement a GraphQL API].
 //     }
 //}
 
-+
-[source,GraphQL]
+[source,curl]
 --
-query bookById($id: ID){
-	bookById(id: $id) {
-		id
-		name
-		pageCount
-		author{
-			id
-			firstName
-			lastName
-		}
-	}
-}
+curl --request POST \
+--location 'http://localhost:8081/graphql' \
+--header 'Content-Type: application/json' \
+--data '{
+    "query": "query bookById($id: ID) {bookById(id: $id){ id name pageCount author{ id firstName lastName}}}",
+    "variables": {
+        "id": 1
+    }
+}'
 --
+
+// +
+// [source,GraphQL]
+// --
+// query bookById($id: ID){
+// 	bookById(id: $id) {
+// 		id
+// 		name
+// 		pageCount
+// 		author{
+// 			id
+// 			firstName
+// 			lastName
+// 		}
+// 	}
+// }
+// --
 . Anypoint Code Builder returns your configured JSON response:
 +
 [source,JSON]
