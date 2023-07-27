@@ -45,8 +45,8 @@ env: dev
 ftp:
   workingDir: /Users/me/myworkingdir
   host: localhost
-  uname: UqoJI2fvggE=
-  pw: n2LDIOKKxhQ5Tdv5AeCtFQ==
+  uname: ![UqoJI2fvggE=]
+  pw: ![n2LDIOKKxhQ5Tdv5AeCtFQ==]
 env: dev
 ----
 |===
@@ -381,7 +381,7 @@ After deploying to CloudHub, you can add a new value through the Runtime Manager
 . Once the deployment is complete, click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
 . Set the `env` property for the application in Runtime Manager:
 .. Click *Settings* > *Properties* tab for the application.
-.. In the *Properties* tab, provide a new *env* key with a value that matches the environment, such as *sandbox*, and the prefix to the file name (such as `sandbox.properties.yaml`). 
+.. In the *Properties* tab, provide a new *env* key with a value that matches the environment, such as *sandbox*, and the prefix to the file name (such as `sandbox.properties.yaml`).
 .. Click *Apply Changes* to launch a deployment with the new setting for `env` in your application.
 +
 The new setting makes the application use the properties file with the prefix that matches the value you provided for *env* in Runtime Manager. This setting overrides the global property setting (`<global-property/>`) in the configuration XML for your application. 
