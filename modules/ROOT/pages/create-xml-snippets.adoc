@@ -1,30 +1,38 @@
-= Creating XML Snippets
+= Create XML Snippets
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-All Mule applications, domains, and policies are configured through an XML domain-specific language. This XML file is called the Mule Configuration file and it specifies the resources and dependencies needed to build your Mule application.
+Create user snippets for your integration to use before you create the integration. Snippets are reusable code patterns that you can add to your Mule application. In addition to providing built-in snippets, the IDE enables you to configure your own user snippets. 
 
-User Snippets in Anypoint Code Builder are templates that make it easier to enter repeating code patterns, such as loops or conditional statements. You can define snippets to use when configuring connectors and modules. These snippets can contain all of the needed configuration placeholders, so that you won't have to enter them manually.
+From the UI, insert snippets directly into flows and subflows, or select snippets from the configuration XML to insert them anywhere in the XML.
+
+For more information about snippets, see xref:work-with-code-snippets.adoc[].
 
 == Before You Begin
 
-* Ensure you set up your MuleSoft environment. +
+* Ensure you set up your MuleSoft environment.
 See xref:setup.adoc[] for more information.
 
-== Open User Snippets
+== Open the User Snippets File
 
-. Navigate to Configure User Snippets. +
-Open the Command Palette (`ctrl/cmd + shift + P`) and type _Snippets: Configure User Snippets_.
-. In the *Select Snippets File or Create Snippets* section type _mule-xml_.
+Define user snippets in the `mule-xml.json` file,  in which you specify snippets for connector operations, Core processors, and other elements in the XML configuration file for your Mule applications.  
+
+. In Anypoint Code Builder, navigate to *Configure User Snippets*:
+
+* In the desktop IDE, navigate to *Code* > *Settings* > *Configure User Snippets*.
+* In the web IDE, navigate to *File* > *Preferences* > *Configure User Snippets*.
 +
-image::select-snippets.png["User snippet options"]
+.Web IDE example:
+image::file-preferences-user-snippets.png[User Snippet option highlighted in the Preferences menu.]
+. In the *Select Snippets File or Create Snippets* field that opens, type `_mule-xml_` and select *mule-xml.json (Mule XML)*.
 +
-//dm: Consider deleting this image as it's basically the same as the previous one.
-image::select-mule-xml.png["mule-xml snippet highlighted in the user snippet options"]
-. A new, empty snippet opens:
+image::select-snippets.png[User snippet options.]
++
+image::select-mule-xml.png[mule-xml snippet highlighted in the user snippet options.]
+. If the file has no configurations, the file that opens looks like this:
 +
 [source,xml,linenums]
 --
@@ -44,7 +52,7 @@ image::select-mule-xml.png["mule-xml snippet highlighted in the user snippet opt
 	// }
 }
 --
-. Replace the empty snippet with the following code:
+. Add this snippet code to the file: 
 +
 [source,xml,linenums]
 --
@@ -121,6 +129,13 @@ image::select-mule-xml.png["mule-xml snippet highlighted in the user snippet opt
 	 }
   }
 --
+. Find your user snippets in the IDE:
+.. From the canvas for a Mule application, select the `plus` to add a new component to your flow.
++
+image::main-tutorial-add-first-http-listener.png["Mule application canvas"]
+.. Navigate to *Snippets* > *User Snippets* to see your list of user snippets.
+
+This list is specific to your IDE instance and not shared with other IDEs. 
 
 == Next Step
 
