@@ -28,44 +28,6 @@ Before following step-by-step procedures for encrypting properties or deploying 
 
 MuleSoft provides an executable JAR file for encrypting sensitive data (`secure-properties-tool.jar`): https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[MuleSoft Secure Properties Tool^]
 
-////
-HIDING SINCE IT'S COVERED ELSEWHERE
-The following examples use the Blowfish algorithm to encrypt two strings (`"myusername"` and `"mypassword"`), provide the same encryption key _value_ (`my-key`) as a password for the encryption key, and use the default encryption mode, CBC. 
-
-* This example encrypts `"myusername"` as `dlwfnITNF2aBCLn588sgFA==`:
-+
-[source,terminal]
-----
-$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
-> string \
-> encrypt \
-> Blowfish \
-> CBC \
-> my-key \
-> "myusername"
-dlwfnITNF2aBCLn588sgFA==
-----
-
-* This example encrypts `"mypassword"` as `n2LDIOKKxhQ5Tdv5AeCtFQ==`:
-+
-[source,terminal]
-----
-$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
-> string \
-> encrypt \
-> Blowfish \
-> CBC \
-> my-key \
-> "mypassword"
-n2LDIOKKxhQ5Tdv5AeCtFQ==
-----
-
-END HIDING
-////
-
-////
-//MuleSoft Secure Properties Tool and the Secure Properties element (`<secure-properties/>`) accept the following algorithms:
-////
 
 [[algorithms]]
 The tool accepts the following algorithms:
@@ -78,10 +40,6 @@ The tool accepts the following algorithms:
 * RCA
 
 
-////
-//This comes from Mule Runtime docs. Not verified in ACB yet by me:
-//MuleSoft Secure Properties Tool and the Secure Properties element (`<secure-properties/>`) accept the following ciphers:
-////
 [[ciphers]]
 The tool accepts the following ciphers:
 
@@ -201,41 +159,6 @@ This FTP example references `dev.secure.yaml` with `<secure-properties:config/>`
 ---- 
 +
 For step-by-step instructions with encrypted values, see <<use>>. 
-
-////
-HIDING - MOVING PARTS TO CONSOLIDATE INFO
-[[prop-files]]
-=== Property Files for Different Deployment Targets
-
-Hosts, ports, directories, and other settings in the configuration XML often differ depending on the target environment for your deployment, such as the development, sandbox, or production environment. For example, on your desktop, the host name is typically `localhost`, the port something like `8081`, and the directory is a path on your local machine rather than a path to an external host.
-
-When developing your application in the IDE, create separate properties files for each of the target environments that require different settings, and provide the appropriate settings in each file. 
-
-[[filename-patterns]]
-Typical filenames follow patterns like these:
-
-* `dev.properties.yaml` or `dev.secure.yaml` for your development environment in the IDE
-* `sandbox.properties.yaml` or `sandbox.secure.yaml` for a pre-production environment
-* `prod.properties.yaml` or `prod.secure.yaml` for the production environment
-
-Consistent filename patterns enable you to use a `$\{env}` variable in your configuration XML for the prefix to the filename, for example, `$\{env}.properties.yaml` or `$\{env}.secure.yaml`. 
-
-[[prefix]]
-Notice the value of the `file` attribute in this example:
-
-[source,xml]
-----
-<secure-properties:config name="Secure_Properties_Config" 
-  doc:name="Secure Properties Config" doc:id="acegik" 
-  file="${env}.secure.yaml" key="${encryption.key}" >
-      <secure-properties:encrypt algorithm="Blowfish" />
-</secure-properties:config>
-----
-
-For step-by-step instructions for using the `env` variable, see <<create-prop-file>>.
-
-END HIDING
-////
 
 //H2 PROCEDURE: ENCRYPT
 [[encrypt]]
