@@ -202,8 +202,6 @@ Be sure to store your encryption key value (password) in a safe location that yo
 ----
 /MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5
 ----
-+
-For more information, see <<encrypt>>. 
 
 . In your properties file, add each encrypted property value within `![]` brackets.
 +
@@ -477,10 +475,10 @@ If the encryption key value is wrong, the error is `org.mule.encryption.exceptio
 +
 To fix this error:
 +
-. Navigate to *Settings* > *Properties* for your application in Runtime Manager and provide the correct value for your encryption key in the field for the encryption key.
-* Click *Apply Changes*.
+.. Navigate to *Settings* > *Properties* for your application in Runtime Manager and provide the correct value for your encryption key in the field for the encryption key.
+.. Click *Apply Changes*.
 +
-Runtime Manager applies your changes and attempt to deploy your application. 
+Runtime Manager applies your changes and attempts to deploy your application. 
 
 For more information, see xref:runtime-manager::index.adoc[]. For information about CloudHub, see xref:cloudhub-1::index.adoc[].
 
@@ -507,7 +505,7 @@ To configure and use the `env` variable as a prefix to a filename:
 +
 [[prefix]]
 Notice the value of the `file` attribute in this example:
-
++
 [source,xml]
 ----
 <secure-properties:config name="Secure_Properties_Config" 
