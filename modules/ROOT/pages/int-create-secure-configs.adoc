@@ -412,11 +412,21 @@ If you want to use the variable `$\{env}` in your filename configuration, see <<
 This name serves as the key for the encryption value (password) used to encrypt your secure properties with the Secure Properties Tools.
 * `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
 
-//anchor for checking deployment:
 [[test-deploy]]
+== Test Encrypted Properties in Your IDE
+
+If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. This setting enables the runtime to decrypt properties used in your the application when the application deploys in your IDE and deploy successfully.
+
+The setting avoids an error that causes the deployment to fail when you use  *Run and Debug* in your IDE:
+
+----
+Couldn't find configuration property value for key ${encryption.key} 
+from properties provider environment properties provider
+----
+
 . Test your application in the IDE:
 .. Navigate to *Manage* (gear icon) > *Settings*, and find *Runtime: Default Arguments* on the *Settings* page. 
-.. In the *Runtime: Default Arguments* field, add the key-value pair for your encryption key to the _end_ of the configuration. For example:
+.. In the *Runtime: Default Arguments* field, append the key-value pair for your encryption key to the _end_ of the configuration. For example:
 +
 [source,key-configuration]
 ----
