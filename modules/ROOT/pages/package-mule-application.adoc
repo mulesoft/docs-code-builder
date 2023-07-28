@@ -7,6 +7,7 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Package Mule application resources in a sharable ZIP file, a deployable JAR file, or a lightweight package that contains.
 
+[[sharable]]
 == Package a Project in a Sharable JAR File
 
 Package source files from your project into a light JAR file that you can share. After you share the JAR file, others can unpack and load into a workspace in their Anypoint Code Builder IDE.
@@ -38,11 +39,13 @@ image::mule-only-sources-task.png["Mule: Package Only Source option highlighted"
 .. From the project directory for your application, navigate to the `/target` directory to find a JAR file with a name like this one:
 +
 `_my-project-name_.1.0.0-SNAPSHOT-mule-application-light-package.jar`
+.. Share the JAR file with others on your team.
++
+The file size is small because it provides the minimal resources necessary to load into a workspace on an Anypoint Code Builder IDE.
 
-//Info on opening the project source files from the JAR
-include::partial$acb-open-packaged-sources.adoc[]
+To open a sharable JAR file in a project workspace, see xref:upload-a-project.adoc#[].
 
-
+[[deployable]]
 == Package a Deployable JAR File
 
 . Open the Mule project you want to package in Anypoint Code Builder.
@@ -73,12 +76,17 @@ image::mule-package-task.png["Mule: Package option highlighted"]
 [INFO] Finished at: 2023-07-21T13:47:56-07:00
 [INFO] ------------------------------------------------------------------------
 ----
++
+The name of the JAR file follows this pattern:
++
+`_my-project-name_.1.0.0-SNAPSHOT-mule-application.jar`
 
-== Package a Lightweight JAR File
+[[archivable]]
+== Package an Archive 
 
 Archive Mule application source files and metadata required to import the JAR package back into Anypoint Code Builder.
 
-A lightweight package of a Mule application does not include any dependencies declared in the `pom.xml` file. This JAR file cannot be deployed to a Mule runtime engine. 
+This package of a Mule application does not include any dependencies declared in the `pom.xml` file. This JAR file cannot be deployed to a Mule runtime engine. 
 
 . Open the Mule project you want to package in Anypoint Code Builder.
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
@@ -92,8 +100,12 @@ image::run-task-acb.png["Task: Run Task command highlighted"]
 . Select *mule*.
 +
 image::run-task-acb-mule.png["Mule option highlighted"]
-. Select *mule: Package Only Sources*.
-. After getting a *BUILD SUCCESS* message on your terminal, navigate to the *target* directory on your root project directory and find your packaged Mule application JAR file.
+. Select *mule: Lightweight Package*.
+. After getting a *BUILD SUCCESS* message on your terminal, navigate to the `/target` directory on project root to find your packaged Mule application JAR file.
++
+The JAR file has the same name as the <<sharable, sharable JAR file>>, but the unpacked contents are not intended for use in an IDE workspace or for deployment.
++
+`_my-project-name_.1.0.0-SNAPSHOT-mule-application-light-package.jar`
 
 == See Also
 
