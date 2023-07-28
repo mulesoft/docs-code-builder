@@ -146,7 +146,7 @@ Reference property files and use property values in the configuration XML:
 ** Use this syntax to reference the property value: `${property-key}`
 ** Use this global element to reference the file: `<configuration-properties/>`
 +
-For example, assume the property `port: "8081"` in properties file `ports.yaml`, use `${port}` as the value of the `port` attribute in `<http:listener-config/>`:
+For example, assuming that the `port: "8081"` property is in the properties file `ports.yaml`, use `${port}` as the value of the `port` attribute in `<http:listener-config/>`:
 +
 [source,xml]
 ----
@@ -191,7 +191,7 @@ For step-by-step instructions with encrypted values, see <<encrypt>>.
 
 Hosts, ports, directories, and other settings in the configuration XML often differ depending on the target environment for your deployment, such as the development, sandbox, or production environment. For example, on your desktop, the host name is typically `localhost`, the port something like `8081`, and the directory is a path on your local machine rather than a path to an external host.
 
-When developing your application in the IDE, create separate properties files for each of the target environment that requires different settings, and provide the  appropriate settings in each file. 
+When developing your application in the IDE, create separate properties files for each of the target environments that require different settings, and provide the appropriate settings in each file. 
 
 [[filename-patterns]]
 Typical filenames follow patterns like these:
@@ -200,7 +200,7 @@ Typical filenames follow patterns like these:
 * `sandbox.properties.yaml` or `sandbox.secure.yaml` for a pre-production environment
 * `prod.properties.yaml` or `sandbox.secure.yaml` for the production environment
 
-Consistent filename patterns enable you to use an `$\{env}` variable in your configuration XML for the prefix to the filename, for example, `$\{env}.properties.yaml` or `$\{env}.secure.yaml`. 
+Consistent filename patterns enable you to use a `$\{env}` variable in your configuration XML for the prefix to the filename, for example, `$\{env}.properties.yaml` or `$\{env}.secure.yaml`. 
 
 [[prefix]]
 Notice the value of the `file` attribute in this example:
@@ -251,7 +251,7 @@ my-key \
 "mysensitivevalue" 
 ----
 +
-:Important: Be sure to store your encryption key value in a safe location that you can retrieve when you deploy your application. If deploy with the wrong value, the deployment will fail because it will decrypt your sensitive value. 
+Important: Be sure to store your encryption key value (password) in a safe location that you can retrieve when you deploy your application. If you do not enter the correct password, the application is able to upload to CloudHub, but the deployment will fail because the password will not work.
 +
 .Encrypted Output:
 [source,terminal]
@@ -274,7 +274,7 @@ For guidance, see <<properties>>.
 . Use the encrypted value in a Mule application:
 +
 //TODO: SCREENSHOT OF FLOW AND CONFIGURED Secure Configuration Properties snippet
-.. Add the key to the encrypted property as a value of an attribute in connector or component XML. For example:
+.. Add the key to the encrypted property as a value of an attribute in the connector or component XML. For example:
 +
 [source,xml]
 ----
@@ -302,7 +302,7 @@ The XML for an unmodified snippet looks like this above a `<flow/>` element:
 +
 The snippet preconfigures parts of the element that the basic XML configuration does not, so be sure to select the _snippet_ and _not_ the basic XML for this element, which has the same name but a different icon. Like all snippets, this snippet is identified by a two-dimensional box icon, while the basic XML for this element has a three-dimensional box icon. 
 .
-.. Configure the snippet with values for the `file`, `key`, and `algorithm` attributes. For example:
+.. Configure the snippet with values for the `file`, `key`, and `algorithm` attributes, for example:
 +
 [source,xml]
 ----
@@ -315,7 +315,7 @@ The snippet preconfigures parts of the element that the basic XML configuration 
 +
 * `file`: Name of your properties file 
 +
-To use the variable `$\{env}` in your filename configuration, see <<reference-use>>.
+To use the variable `$\{env}` in your filename configuration: 
 * `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`).
 * `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
 
@@ -329,7 +329,7 @@ To use the variable `$\{env}` in your filename configuration, see <<reference-us
 ----
 +
 In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key` is the value used to encrypt the properties through the Secure Properties Tool. 
-.. Deploy the application locally within the IDE by pressing Ctrl+shift+p (Windows) or CmdCtrl+shift+p (Mac), entering *View: Show Run and Debug*, and clicking *Run and Debug*.
+.. Deploy the application locally within the IDE by pressing Ctrl+shift+p (Windows) or CmdCtrl+shift+p (Mac), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
 +
 A successful deployment produces the following message in the *OUTPUT* tab of the output panel. For information about the output panel, see xref:configure-default-output-panel.adoc[].
 +
@@ -350,7 +350,7 @@ This procedure shows you the hidden encryption key name in Runtime Manager.
 [[deploy-to-cloudhub]]
 == Deploy to CloudHub with Sensitive Values Hidden
 
-Hide the value of an encryption key or other property in the Runtime Manager UI when you deploy an application to CloudHub. Runtime Manager otherwise displays that value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
+If you don't hide the value of an encryption key or other property in the Runtime Manager UI when you deploy an application to CloudHub, Runtime Manager displays that value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
 
 Before you begin: 
 
@@ -377,7 +377,7 @@ If you do not enter the same value, the application is able to upload to CloudHu
 +
 Other environments are not supported, and attempts to deploy to the *Design* environment fail with a `500` error code. While the deployment is in progress, the IDE provides the status of the process and prompts you to open the application in Runtime Manager when the deployment completes.  
 +
-It is possible for an application to upload correctly but fail to complete the deployment process successfully, for example, because the provided encryption key value is invalid. The error message says that the application `was not successfully deployed to "Sandbox" in CloudHub`, but it provides a way to *Open in Runtime Manager* to check the logs and correct some issues.
+In some cases, it's possible for an application to upload correctly but fail to complete the deployment process successfully, for example, because the provided encryption key value is invalid. The error message says that the application `was not successfully deployed to "Sandbox" in CloudHub`, but it provides a way to *Open in Runtime Manager* to check the logs and correct some issues.
 . Click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
 . Check the deployment in Runtime Manager to ensure that the encryption key is hidden.
 +
@@ -390,10 +390,10 @@ If the encryption key value is wrong, the error is `org.mule.encryption.exceptio
 +
 To fix this error:
 +
-. Navigate to *Settings* > *Properties* for your application in Runtime Manager. . Provide the correct value for your encryption key in the field for the encryption key.
+. Navigate to *Settings* > *Properties* for your application in Runtime Manager and provide the correct value for your encryption key in the field for the encryption key.
 * Click *Apply Changes*.
 +
-Runtime Manager apply your changes and attempt to deploy your application. 
+Runtime Manager applies your changes and attempt to deploy your application. 
 
 For more information, see xref:runtime-manager::index.adoc[]. For information about CloudHub, see xref:cloudhub-1::index.adoc[].
 
@@ -430,7 +430,7 @@ After deploying to CloudHub, you can add a new value through the Runtime Manager
 .. Select the *Sandbox* environment for your deployment.
 . Once the deployment is complete, click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
 . Set the `env` property for the application in Runtime Manager:
-.. Click *Settings* > *Properties* tab for the application.
+.. Click *Settings* > *Properties* for the application.
 .. In the *Properties* tab, provide a new *env* key with a value that matches the environment, such as *sandbox*, and the prefix to the file name (such as `sandbox.properties.yaml`).
 .. Click *Apply Changes* to launch a deployment with the new setting for `env` in your application.
 +
