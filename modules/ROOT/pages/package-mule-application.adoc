@@ -9,7 +9,7 @@ Package Mule application resources in a sharable ZIP file, a deployable JAR file
 
 == Package a Project in a Sharable JAR File
 
-Export your the source files from your project into a light JAR file that you can share. Others can import the source files into their Anypoint Code Builder IDE.
+Package source files from your project into a light JAR file that you can share. After you share the JAR file, others can unpack and load into a workspace in their Anypoint Code Builder IDE.
 
 The source files include:
 
@@ -74,9 +74,11 @@ image::mule-package-task.png["Mule: Package option highlighted"]
 [INFO] ------------------------------------------------------------------------
 ----
 
-=== Package a Lightweight JAR File
+== Package a Lightweight JAR File
 
-A lightweight package of a Mule application does not include any dependencies declared in the `pom.xml` file. This JAR file cannot be deployed to a Mule runtime engine. It only offers a way to archive just the Mule application source files and metadata required to import the JAR package back into Anypoint Code Builder.
+Archive Mule application source files and metadata required to import the JAR package back into Anypoint Code Builder.
+
+A lightweight package of a Mule application does not include any dependencies declared in the `pom.xml` file. This JAR file cannot be deployed to a Mule runtime engine. 
 
 . Open the Mule project you want to package in Anypoint Code Builder.
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
