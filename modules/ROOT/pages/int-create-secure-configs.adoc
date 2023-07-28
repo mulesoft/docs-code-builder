@@ -198,7 +198,7 @@ Typical filenames follow patterns like these:
 
 * `dev.properties.yaml` or `dev.secure.yaml` for your development environment in the IDE
 * `sandbox.properties.yaml` or `sandbox.secure.yaml` for a pre-production environment
-* `prod.properties.yaml` or `sandbox.secure.yaml` for the production environment
+* `prod.properties.yaml` or `prod.secure.yaml` for the production environment
 
 Consistent filename patterns enable you to use a `$\{env}` variable in your configuration XML for the prefix to the filename, for example, `$\{env}.properties.yaml` or `$\{env}.secure.yaml`. 
 
@@ -250,7 +250,8 @@ my-key \
 "mysensitivevalue" 
 ----
 +
-Important: Be sure to store your encryption key value (password) in a safe location that you can retrieve when you deploy your application. If you do not enter the correct password, the application is able to upload to CloudHub, but the deployment will fail because the password will not work.
+Important: +
+Be sure to store your encryption key value (password) in a safe location that you can retrieve when you deploy your application. If you do not enter the correct password, the application is able to upload to CloudHub, but the deployment will fail because the password will not work.
 +
 .Encrypted Output:
 [source,terminal]
@@ -281,7 +282,7 @@ For guidance, see <<properties>>.
   value="${secure::mysensitiveprop}" 
   doc:name="Set payload" doc:id="abcdef" />
 ----
-.. Above the `<flow/>` element in your the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and selecting the snippet.
+.. Above the `<flow/>` element in your the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
 +
 image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties Snippet"]
 +
@@ -314,7 +315,7 @@ The snippet preconfigures parts of the element that the basic XML configuration 
 +
 * `file`: Name of your properties file 
 +
-To use the variable `$\{env}` in your filename configuration: 
+If you want to use the variable `$\{env}` in your filename configuration, see <<prop-files>> for guidance.
 * `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`).
 * `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
 
@@ -349,7 +350,7 @@ This procedure shows you the hidden encryption key name in Runtime Manager.
 [[deploy-to-cloudhub]]
 == Deploy to CloudHub with Sensitive Values Hidden
 
-If you don't hide the value of an encryption key or other property in the Runtime Manager UI when you deploy an application to CloudHub, Runtime Manager displays that value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
+If you don't hide the value of an encryption key or other property from the Runtime Manager UI when you deploy an application to CloudHub, Runtime Manager displays that value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
 
 Before you begin: 
 
