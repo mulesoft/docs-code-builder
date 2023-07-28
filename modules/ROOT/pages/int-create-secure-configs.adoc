@@ -7,9 +7,9 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Create properties that enable you to:
 
-* Encrypt sensitive values used in your Mule application.
+* Encrypt sensitive values used in your Mule application
 * Define and use variables instead of literal strings when setting values in the configuration XML
-* Select different property files for a specific deployment environment, such as  development, sandbox, or production. 
+* Configure a variable for selecting different property files for a specific deployment environment, such as development, sandbox, or production
 
 [[get-familiar]]
 == Get Familiar With Configuration Properties and Encryption
@@ -164,12 +164,16 @@ For step-by-step instructions with encrypted values, see <<use>>.
 [[encrypt]]
 == Encrypt Sensitive Values
 
-Use the Secure Properties Tool to encrypt sensitive data in properties files for your Mule application.
+Use the Secure Properties Tool to encrypt sensitive data that you add to properties files for your Mule application.
 
-image::acb-project-directory.png["Project Directory for a Mule Application Workspace"]
+.Example with properties file `dev.secure.yaml` in the project workspace of a Mule application:
+--
+image::acb-project-directory.png[alt="Project Directory for a Mule Application Workspace",width="80%"]
+--
 
 . Create a properties file with _unencrypted_ properties:
-.. Open the `src/main/resources` directory of your project, and create a YAML file with a name like `dev.secure.yaml` or `local.secure.yaml` that configures properties as key-value pairs. For example:
+.. Open the `src/main/resources` directory of your project. 
+.. Create a YAML file with a name like `dev.secure.yaml` or `local.secure.yaml` that configures properties as key-value pairs. For example:
 +
 [source,yaml]
 ----
@@ -186,7 +190,8 @@ For more guidance, see <<properties>>.
 .Example that encrypts `"mysensitivevalue"` using Blowfish and `my-key` for an encryption key password:
 [source,terminal]
 ----
-$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \ string \
+$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
+string \
 encrypt \
 Blowfish \
 CBC \
@@ -194,8 +199,7 @@ my-key \
 "mysensitivevalue" 
 ----
 +
-Important: +
-Be sure to store your encryption key value (password) in a safe location that you can retrieve when you deploy your application. If you do not enter the correct password, the application is able to upload to CloudHub, but the deployment will fail because the password will not work.
+Important: Be sure to store your encryption key value (password) in a safe place that you can retrieve when you deploy your application.
 +
 .Encrypted Output:
 [source,terminal]
@@ -211,7 +215,7 @@ Be sure to store your encryption key value (password) in a safe location that yo
 myprop : "somevalue"
 mysensitiveprop : "![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"
 ---- 
-For guidance, see <<properties>>.
+For more guidance, see <<properties>>.
 
 [[use]]
 == Use Encrypted Properties
@@ -359,7 +363,7 @@ To use encrypted properties:
 
 . Use an encrypted value in a Mule application:
 +
-.. Add the key to the encrypted property as a value of an attribute in the connector or component XML. For example:
+.. In the connector or component XML, add the key of an encrypted property as the value of an XML attribute. For example:
 +
 [source,xml]
 ----
@@ -367,7 +371,9 @@ To use encrypted properties:
   value="${secure::mysensitiveprop}" 
   doc:name="Set payload" doc:id="abcdef" />
 ----
-.. Above the `<flow/>` element in your the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
++
+Notice the `secure::` prefix to the key.
+.. Above the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
 +
 image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties Snippet"]
 +
@@ -400,10 +406,14 @@ The snippet preconfigures parts of the element that the basic XML configuration 
 +
 * `file`: Name of your properties file 
 +
-If you want to use the variable `$\{env}` in your filename configuration, see <<create-prop-file>> for guidance.
-* `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`).
+If you want to use the variable `$\{env}` in your filename configuration, see <<create-prop-file>> for the procedure.
+* `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`) 
++
+This name serves as the key for the encryption value (password) used to encrypt your secure properties with the Secure Properties Tools.
 * `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
 
+//anchor for checking deployment:
+[[test-deploy]]
 . Test your application in the IDE:
 .. Navigate to *Manage* (gear icon) > *Settings*, and find *Runtime: Default Arguments* on the *Settings* page. 
 .. In the *Runtime: Default Arguments* field, add the key-value pair for your encryption key to the _end_ of the configuration. For example:
@@ -522,8 +532,10 @@ Notice the value of the `file` attribute in this example:
 ----
 +
 After deploying to CloudHub, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
-. Before deploying to CloudHub, make sure the application deploys locally in the IDE:
-.. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
+. Before deploying to CloudHub, make sure the application deploys locally your  IDE.
++
+For guidance with settings required for applications that use encrypted properties, see <<test-deploy, testing instructions>>.
+. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
 .. If prompted, enter _the same value_ you used to encrypt your secure properties.
 .. Select the *Sandbox* environment for your deployment.
 . Once the deployment is complete, click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
