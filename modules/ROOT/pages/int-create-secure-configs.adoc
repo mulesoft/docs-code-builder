@@ -271,9 +271,152 @@ mysensitiveprop : "![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"
 ---- 
 For guidance, see <<properties>>.
 
+[[use]]
+== Use Encrypted Properties in the Configuration XML
+
+Add encrypted properties to components in a Mule application. Reference a properties file with `<secure-properties/>`, and run a local deployment that decrypts your properties. 
+
+For your reference, examples in the procedure are based on these configurations:
+
+.Configuration XML (`my-secure-integration.xml`)
+[%collapsible]
+====
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+    http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+	http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+  <global-property name="env" value="dev" />
+  
+  <secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="utlnst" file="${env}.secure.yaml" key="${encryption.key}" >
+    <secure-properties:encrypt algorithm="Blowfish" />
+  </secure-properties:config>
+  
+  <flow name="my-secure-data-flow" >
+    <scheduler doc:name="Scheduler" doc:id="adstdc" >
+      <scheduling-strategy>
+          <fixed-frequency frequency="15" timeUnit="SECONDS" />
+      </scheduling-strategy>
+    </scheduler>
+
+    <set-payload value="${secure::myprop}" doc:name="Set payload" doc:id="izdtkc" />
+    <logger doc:name="Logger" doc:id="ljjcpz" level="WARN" message="#[payload]" category="INSECURE PROPERTY EXAMPLE" />
+
+    <set-payload value="${secure::mysensitiveprop}" doc:name="Set payload" doc:id="abcdef" />
+    <logger doc:name="Logger" doc:id="ghijkl" level="WARN" message="#[payload]" category="INSECURE PROPERTY EXAMPLE" />
+
+  </flow>
+</mule>
+----
+====
+
+.Properties file (`dev.secure.yaml`)
+[%collapsible]
+====
+The configuration XML uses these properties.
+
+[source,yaml]
+----
+myprop : "somevalue"
+
+mysensitiveprop : "![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"
+----
+====
+
+.POM file (`pom.xml`)
+[%collapsible]
+====
+The POM file includes dependencies for the components in the configuration XML.
+
+[source,pom]
+----
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>com.mycompany</groupId>
+    <artifactId>my-secure-integration</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>mule-application</packaging>
+    
+    <name>my-secure-integration</name>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <mule.maven.plugin.version>3.3.5</mule.maven.plugin.version>
+    </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.mule.tools.maven</groupId>
+                <artifactId>mule-maven-plugin</artifactId>
+                <version>${mule.maven.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration/>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>anypoint-exchange-v2</id>
+            <name>Anypoint Exchange</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v2/maven</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>https://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mulesoft-releases</id>
+            <name>mulesoft release repository</name>
+            <layout>default</layout>
+            <url>https://repository.mulesoft.org/releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <dependencies>
+        <dependency>
+            <groupId>com.mulesoft.services</groupId>
+            <artifactId>mule-service-weave-ee</artifactId>
+            <version>2.4.0-20221212</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.modules</groupId>
+            <artifactId>mule-secure-configuration-property-module</artifactId>
+            <version>1.2.5</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+    </dependencies>
+</project>
+----
+====
+
+To use encrypted properties: 
+
 . Use the encrypted value in a Mule application:
 +
-//TODO: SCREENSHOT OF FLOW AND CONFIGURED Secure Configuration Properties snippet
 .. Add the key to the encrypted property as a value of an attribute in the connector or component XML. For example:
 +
 [source,xml]
