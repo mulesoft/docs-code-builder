@@ -25,6 +25,8 @@ Before following step-by-step procedures for encrypting properties or deploying 
 
 Use MuleSoft Secure Properties Tool (`secure-properties-tool.jar`) to encrypt sensitive data. 
 
+////
+HIDING SINCE IT'S COVERED ELSEWHERE
 The following examples use the Blowfish algorithm to encrypt two strings (`"myusername"` and `"mypassword"`), provide the same encryption key _value_ (`my-key`) as a password for the encryption key, and use the default encryption mode, CBC. 
 
 * This example encrypts `"myusername"` as `dlwfnITNF2aBCLn588sgFA==`:
@@ -54,6 +56,9 @@ $ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
 > "mypassword"
 n2LDIOKKxhQ5Tdv5AeCtFQ==
 ----
+
+END HIDING
+////
 
 [[algorithms]]
 MuleSoft Secure Properties Tool and the Secure Properties element (`<secure-properties/>`) accept the following algorithms:
