@@ -5,11 +5,42 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Package a Mule application in a JAR file.
+Package Mule application resources in a sharable ZIP file, a deployable JAR file, or a lightweight package that contains.
 
 == Package a Project in a Sharable JAR File
 
-Export your the source files from your project to a light ZIP file that you can share with anyone to open and run your application in their IDE.
+Export your the source files from your project into a light JAR file that you can share. Others can import the source files into their Anypoint Code Builder IDE.
+
+The source files include:
+
+* The configuration XML and other files in the `src` folder, including resource files
+* `mule-artifact.json`
+* `pom.xml`
+
+To package the project source files:
+
+. Open the Mule project you want to package in Anypoint Code Builder.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+Task: Run Task
+----
++
+image::run-task-acb.png["Task: Run Task command highlighted"]
+. Select *mule*.
++
+image::run-task-acb-mule.png["Mule option highlighted"]
+. Select *mule: Package Only Sources*.
++
+image::mule-only-sources-task.png["Mule: Package Only Source option highlighted"]
+. After getting a *BUILD SUCCESS* message on your terminal:
+.. From the project directory for your application, navigate to the `/target` directory to find a JAR file with a name like this one:
++
+`_my-project-name_.1.0.0-SNAPSHOT-mule-application-light-package.jar`
+
+//Info on opening the project source files from the JAR
+include::partial$acb-open-packaged-sources.adoc[]
 
 
 == Package a Deployable JAR File
@@ -60,8 +91,6 @@ image::run-task-acb.png["Task: Run Task command highlighted"]
 +
 image::run-task-acb-mule.png["Mule option highlighted"]
 . Select *mule: Package Only Sources*.
-+
-image::mule-only-sources-task.png["Mule: Package Only Source option highlighted"]
 . After getting a *BUILD SUCCESS* message on your terminal, navigate to the *target* directory on your root project directory and find your packaged Mule application JAR file.
 
 == See Also
