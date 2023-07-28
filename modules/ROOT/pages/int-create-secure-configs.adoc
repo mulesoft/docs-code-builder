@@ -541,7 +541,7 @@ If you do not enter the same value, the application is able to upload to CloudHu
 +
 Other environments are not supported, and attempts to deploy to the *Design* environment fail with a `500` error code. While the deployment is in progress, the IDE provides the status of the process and prompts you to open the application in Runtime Manager when the deployment completes.  
 +
-In some cases, it's possible for an application to upload correctly but fail to complete the deployment process successfully, for example, because the provided encryption key value is invalid. The error message says that the application `was not successfully deployed to "Sandbox" in CloudHub`, but it provides a way to *Open in Runtime Manager* to check the logs and correct some issues.
+If you receive an error message that says the application `was not successfully deployed to "Sandbox" in CloudHub`, you can open Runtime Manager to check the logs and correct some issues.
 . Click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
 . Check the deployment in Runtime Manager to ensure that the encryption key is hidden.
 +
@@ -580,8 +580,6 @@ Consistent filename patterns enable you to use a `$\{env}` variable in your conf
 To configure and use the `env` variable as a prefix to a filename:
 
 . Using a consistent filename pattern, create properties files for each environment that requires different settings.
-+ 
-For guidance with naming and configuring the contents of properties files, review <<create-prop-file>>.
 . If you are using the `<secure-properties/>` or another element that points to your properties file, provide a prefix, such as `$\{env}`, to the file name. 
 +
 [[prefix]]
