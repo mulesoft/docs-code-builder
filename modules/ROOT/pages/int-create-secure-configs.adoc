@@ -2,6 +2,9 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
 Create properties that enable you to:
 
 * Encrypt sensitive values used in your Mule application.
@@ -16,47 +19,18 @@ Before following step-by-step procedures for encrypting properties or deploying 
 * <<encryption-tool>>
 * <<properties>>
 * <<reference-use>>
-* <<prop-files>>
+//* <<prop-files>>
 
 //H3 section: encryption  
 //some tasks link to additional guidance with the encryption
 [[encryption-tool]]
 === Encryption with the MuleSoft Secure Properties Tool
 
-Use MuleSoft Secure Properties Tool (`secure-properties-tool.jar`) to encrypt sensitive data. 
+MuleSoft provides an executable JAR file for encrypting sensitive data (`secure-properties-tool.jar`): https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[MuleSoft Secure Properties Tool^]
 
-The following examples use the Blowfish algorithm to encrypt two strings (`"myusername"` and `"mypassword"`), provide the same encryption key _value_ (`my-key`) as a password for the encryption key, and use the default encryption mode, CBC. 
-
-* This example encrypts `"myusername"` as `dlwfnITNF2aBCLn588sgFA==`:
-+
-[source,terminal]
-----
-$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
-> string \
-> encrypt \
-> Blowfish \
-> CBC \
-> my-key \
-> "myusername"
-dlwfnITNF2aBCLn588sgFA==
-----
-
-* This example encrypts `"mypassword"` as `n2LDIOKKxhQ5Tdv5AeCtFQ==`:
-+
-[source,terminal]
-----
-$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
-> string \
-> encrypt \
-> Blowfish \
-> CBC \
-> my-key \
-> "mypassword"
-n2LDIOKKxhQ5Tdv5AeCtFQ==
-----
 
 [[algorithms]]
-MuleSoft Secure Properties Tool and the Secure Properties element (`<secure-properties/>`) accept the following algorithms:
+The tool accepts the following algorithms:
 
 * AES 
 * Blowfish
@@ -65,9 +39,9 @@ MuleSoft Secure Properties Tool and the Secure Properties element (`<secure-prop
 * RC2
 * RCA
 
+
 [[ciphers]]
-//This comes from Mule Runtime docs. Not verified in ACB yet by me:
-MuleSoft Secure Properties Tool and the Secure Properties element (`<secure-properties/>`) accept the following ciphers:
+The tool accepts the following ciphers:
 
 * CBC (default)
 * CFB
@@ -184,43 +158,13 @@ This FTP example references `dev.secure.yaml` with `<secure-properties:config/>`
 </flow>
 ---- 
 +
-For step-by-step instructions with encrypted values, see <<encrypt>>. 
-
-[[prop-files]]
-=== Property Files for Different Deployment Targets
-
-Hosts, ports, directories, and other settings in the configuration XML often differ depending on the target environment for your deployment, such as the development, sandbox, or production environment. For example, on your desktop, the host name is typically `localhost`, the port something like `8081`, and the directory is a path on your local machine rather than a path to an external host.
-
-When developing your application in the IDE, create separate properties files for each of the target environments that require different settings, and provide the appropriate settings in each file. 
-
-[[filename-patterns]]
-Typical filenames follow patterns like these:
-
-* `dev.properties.yaml` or `dev.secure.yaml` for your development environment in the IDE
-* `sandbox.properties.yaml` or `sandbox.secure.yaml` for a pre-production environment
-* `prod.properties.yaml` or `prod.secure.yaml` for the production environment
-
-Consistent filename patterns enable you to use a `$\{env}` variable in your configuration XML for the prefix to the filename, for example, `$\{env}.properties.yaml` or `$\{env}.secure.yaml`. 
-
-[[prefix]]
-Notice the value of the `file` attribute in this example:
-
-[source,xml]
-----
-<secure-properties:config name="Secure_Properties_Config" 
-  doc:name="Secure Properties Config" doc:id="acegik" 
-  file="${env}.secure.yaml" key="${encryption.key}" >
-      <secure-properties:encrypt algorithm="Blowfish" />
-</secure-properties:config>
-----
-
-For step-by-step instructions for using the `env` variable, see <<create-prop-file>>.
+For step-by-step instructions with encrypted values, see <<use>>. 
 
 //H2 PROCEDURE: ENCRYPT
 [[encrypt]]
-== Encrypt Sensitive Values in a Mule Application
+== Encrypt Sensitive Values
 
-Use the Secure Properties Tool to encrypt sensitive data in your properties files. 
+Use the Secure Properties Tool to encrypt sensitive data in properties files for your Mule application.
 
 image::acb-project-directory.png["Project Directory for a Mule Application Workspace"]
 
@@ -258,8 +202,6 @@ Be sure to store your encryption key value (password) in a safe location that yo
 ----
 /MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5
 ----
-+
-For more information, see <<encrypt>>. 
 
 . In your properties file, add each encrypted property value within `![]` brackets.
 +
@@ -271,9 +213,152 @@ mysensitiveprop : "![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"
 ---- 
 For guidance, see <<properties>>.
 
-. Use the encrypted value in a Mule application:
+[[use]]
+== Use Encrypted Properties
+
+Add encrypted properties to components in a Mule application. Reference a properties file with `<secure-properties/>`, and run a local deployment that decrypts your properties. 
+
+For reference, examples in the procedure are based on these configurations:
+
+.Configuration XML (`my-secure-integration.xml`)
+[%collapsible]
+====
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+    http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+	http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+  <global-property name="env" value="dev" />
+  
+  <secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="utlnst" file="${env}.secure.yaml" key="${encryption.key}" >
+    <secure-properties:encrypt algorithm="Blowfish" />
+  </secure-properties:config>
+  
+  <flow name="my-secure-data-flow" >
+    <scheduler doc:name="Scheduler" doc:id="adstdc" >
+      <scheduling-strategy>
+          <fixed-frequency frequency="15" timeUnit="SECONDS" />
+      </scheduling-strategy>
+    </scheduler>
+
+    <set-payload value="${secure::myprop}" doc:name="Set payload" doc:id="izdtkc" />
+    <logger doc:name="Logger" doc:id="ljjcpz" level="WARN" message="#[payload]" category="INSECURE PROPERTY EXAMPLE" />
+
+    <set-payload value="${secure::mysensitiveprop}" doc:name="Set payload" doc:id="abcdef" />
+    <logger doc:name="Logger" doc:id="ghijkl" level="WARN" message="#[payload]" category="INSECURE PROPERTY EXAMPLE" />
+
+  </flow>
+</mule>
+----
+====
+
+.Properties file (`dev.secure.yaml`)
+[%collapsible]
+====
+The configuration XML uses these properties.
+
+[source,yaml]
+----
+myprop : "somevalue"
+
+mysensitiveprop : "![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"
+----
+====
+
+.POM file (`pom.xml`)
+[%collapsible]
+====
+The POM file includes dependencies for the components in the configuration XML.
+
+[source,pom]
+----
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>com.mycompany</groupId>
+    <artifactId>my-secure-integration</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>mule-application</packaging>
+    
+    <name>my-secure-integration</name>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <mule.maven.plugin.version>3.3.5</mule.maven.plugin.version>
+    </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.mule.tools.maven</groupId>
+                <artifactId>mule-maven-plugin</artifactId>
+                <version>${mule.maven.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration/>
+            </plugin>
+        </plugins>
+    </build>
+    <repositories>
+        <repository>
+            <id>anypoint-exchange-v2</id>
+            <name>Anypoint Exchange</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v2/maven</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>https://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mulesoft-releases</id>
+            <name>mulesoft release repository</name>
+            <layout>default</layout>
+            <url>https://repository.mulesoft.org/releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <dependencies>
+        <dependency>
+            <groupId>com.mulesoft.services</groupId>
+            <artifactId>mule-service-weave-ee</artifactId>
+            <version>2.4.0-20221212</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.modules</groupId>
+            <artifactId>mule-secure-configuration-property-module</artifactId>
+            <version>1.2.5</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+    </dependencies>
+</project>
+----
+====
+
+To use encrypted properties: 
+
+. Use an encrypted value in a Mule application:
 +
-//TODO: SCREENSHOT OF FLOW AND CONFIGURED Secure Configuration Properties snippet
 .. Add the key to the encrypted property as a value of an attribute in the connector or component XML. For example:
 +
 [source,xml]
@@ -296,7 +381,7 @@ The XML for an unmodified snippet looks like this above a `<flow/>` element:
       <secure-properties:encrypt algorithm="Blowfish" />
 </secure-properties:config>
 
-<flow name="some-flow" >
+<flow name="my-secure-data-flow" >
 ...
 ----
 +
@@ -315,7 +400,7 @@ The snippet preconfigures parts of the element that the basic XML configuration 
 +
 * `file`: Name of your properties file 
 +
-If you want to use the variable `$\{env}` in your filename configuration, see <<prop-files>> for guidance.
+If you want to use the variable `$\{env}` in your filename configuration, see <<create-prop-file>> for guidance.
 * `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`).
 * `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
 
@@ -377,7 +462,7 @@ If you do not enter the same value, the application is able to upload to CloudHu
 +
 Other environments are not supported, and attempts to deploy to the *Design* environment fail with a `500` error code. While the deployment is in progress, the IDE provides the status of the process and prompts you to open the application in Runtime Manager when the deployment completes.  
 +
-In some cases, it's possible for an application to upload correctly but fail to complete the deployment process successfully, for example, because the provided encryption key value is invalid. The error message says that the application `was not successfully deployed to "Sandbox" in CloudHub`, but it provides a way to *Open in Runtime Manager* to check the logs and correct some issues.
+If you receive an error message that says the application `was not successfully deployed to "Sandbox" in CloudHub`, you can open Runtime Manager to check the logs and correct some issues.
 . Click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
 . Check the deployment in Runtime Manager to ensure that the encryption key is hidden.
 +
@@ -390,32 +475,45 @@ If the encryption key value is wrong, the error is `org.mule.encryption.exceptio
 +
 To fix this error:
 +
-. Navigate to *Settings* > *Properties* for your application in Runtime Manager and provide the correct value for your encryption key in the field for the encryption key.
-* Click *Apply Changes*.
+.. Navigate to *Settings* > *Properties* for your application in Runtime Manager and provide the correct value for your encryption key in the field for the encryption key.
+.. Click *Apply Changes*.
 +
-Runtime Manager applies your changes and attempt to deploy your application. 
+Runtime Manager applies your changes and attempts to deploy your application. 
 
 For more information, see xref:runtime-manager::index.adoc[]. For information about CloudHub, see xref:cloudhub-1::index.adoc[].
 
 [[create-prop-file]]
 == Provide Settings for Different Environments
 
-When developing your application, create separate properties files for each target environment (such as development, sandbox, or production) that requires different settings, and provide the appropriate settings in each file. 
+Hosts, ports, directories, and other settings in the configuration XML often differ depending on the target environment for your deployment, such as the development, sandbox, or production environment. For example, on your desktop, the host name is typically `localhost`, the port something like `8081`, and the directory is a path on your local machine rather than a path to an external host.
 
-The file names must follow a consistent pattern so that you can configure a variable such as `$\{env}` as a modifiable prefix that enables you to switch to the file that contains settings for the environment in which your application runs. You can include encrypted and unencrypted property values in the files.
+When developing your application in the IDE, create separate properties files for each of the target environments that require different settings, and provide the appropriate settings in each file. 
+
+[[filename-patterns]]
+Typical filenames follow patterns like these:
+
+* `dev.properties.yaml` or `dev.secure.yaml` for your development environment in the IDE
+* `sandbox.properties.yaml` or `sandbox.secure.yaml` for a pre-production environment
+* `prod.properties.yaml` or `prod.secure.yaml` for the production environment
+
+Consistent filename patterns enable you to use a `$\{env}` variable in your configuration XML for the prefix to the filename, for example, `$\{env}.properties.yaml` or `$\{env}.secure.yaml`. This pattern enables you to switch to the file that contains settings for the environment in which your application runs. You can include encrypted and unencrypted property values in the files.
 
 To configure and use the `env` variable as a prefix to a filename:
 
 . Using a consistent filename pattern, create properties files for each environment that requires different settings.
-+ 
-For guidance with naming and configuring the contents of properties files, review <<prop-files>>.
-. If you are using the `<secure-properties/>` or another element that points to your properties file, provide a prefix, such as `$\{env}`, to the file name. For example:
+. If you are using the `<secure-properties/>` or another element that points to your properties file, provide a prefix, such as `$\{env}`, to the file name. 
 +
-----
-file="${env}.secure.yaml"
-----
+[[prefix]]
+Notice the value of the `file` attribute in this example:
 +
-See <<prefix, Secure Properties example>> for more detail. 
+[source,xml]
+----
+<secure-properties:config name="Secure_Properties_Config" 
+  doc:name="Secure Properties Config" doc:id="acegik" 
+  file="${env}.secure.yaml" key="${encryption.key}" >
+      <secure-properties:encrypt algorithm="Blowfish" />
+</secure-properties:config>
+----
 . Add a `<global-property/>` element to the configuration XML that defines the value of `env` property. 
 +
 [source,xml]
