@@ -1,11 +1,11 @@
-= Add Request and Response Details
+= Add Examples to the American Flights API Specification
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder",width=600]
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides",width=600]
 
-Continue work in xref:design-api-specification-from-scratch.adoc[] by defining request and response specifications. 
+Continue work in xref:design-api-specification-from-scratch.adoc[] by adding API fragments from Exchange for a data type and example. Then create your own examples for the specification, and add a custom message for a response. 
 
 == Add Fragments from Exchange to Your Project
 
@@ -60,21 +60,21 @@ exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-d
 
 Use `!include` directives to add the fragments to the specification:
 
-* The `AmericanFlight` data type is defined in `AmericanFlightDataType.raml` 
-* The `AmericanFlightsExample.raml` example is for a `200` response to the `get` request
+* The `AmericanFlight` data type is defined in `AmericanFlightDataType.raml`. 
+* The `AmericanFlightsExample.raml` example is for a `200` response to the `get` request.
 
 To include the fragments: 
 
-. Open *american-flight-api.raml* in the editor tab.
-. Replace the existing content with this content:
+. Open *american-flight-api.raml* from the project directory in Explorer.
+. Replace the existing content with this:
 +
 [source,RAML]
 --
 #%RAML 1.0
 title: American Flights API
 
-types:
-  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml //<1>
+types: //<1>
+  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml 
 
 /flights:
   get:
@@ -88,21 +88,23 @@ types:
     responses:
       200:
         body:
-          application/json:
+          application/json:  //<2>
             type: AmericanFlight[]
-            examples:
-              output: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-example/1.0.1/AmericanFlightsExample.raml //<2>
+            examples: //<3>
+              output: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-example/1.0.1/AmericanFlightsExample.raml 
 
   post:
 
   /{ID}:
     get:
 --
+[calloutlist]
+.. Uses `!include` to add the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type
+.. Sets the format of the body of the response to JSON (`application/json`) and configures the type of the response as an array of `AmericanFlight` objects (`AmericanFlight[]`)
+.. Adds the `AmericanFlightsExample.raml` example
 
-. Includes `AmericanFlightDataType.raml` from Exchange
-. Includes `AmericanFlightsExample.raml` from Exchange
-
-== Create and Include an Example for the Post Response
+[[post-response-example]]
+== Create and Include an Example for a Get Request by Flight ID
 
 Create an example for the post response, and include it in the specification. 
 
@@ -157,23 +159,25 @@ types:
 
   /{ID}:
     get:
-      body:
+      body: //<1>
         application/json:
           type: AmericanFlight
-          examples:
-            output: !include examples/AmericanFlightExample.raml //<1>
+          examples: //<2>
+            output: !include examples/AmericanFlightExample.raml 
 --
 +
 [calloutlist]
-. New example defined in your `examples` folder.
+.. Specifies the JSON format and type (`AmericanFlight`) of the *get* request body
+.. Adds your example from the `/examples` directory as the content for the body of the request
 
-== Define a Request Example
+[[post-example]]
+== Configure an Example for the Post Method
 
 // hn: do we need to reiterate which file we're working in now that there are two?
+// duke: adding `post` request here:
+Define an example for the `post` request.
 
-Similar to defining a response for a method, you can define a request example:
-
-. Specify that a request to the `/flights:post` method requires an `AmericanFlight` object:
+. Specify that a request to the `/flights:post` method requires an object of the `AmericanFlight` type:
 +
 [source,raml,linenums]
 --
@@ -198,9 +202,9 @@ types:
           application/json:
             type: AmericanFlight[]
   post:
-    body:
+    body: //<1>
       application/json:
-        type: AmericanFlight //<1>
+        type: AmericanFlight //<2>
 
   /{ID}:
     get:
@@ -211,11 +215,11 @@ types:
             output: !include examples/AmericanFlightExample.raml
 --
 [calloutlist]
-.. `AmericanFlight` is defined as the type for the `post` method.
-. Under your `examples` folder, create a new example file named `AmericanFlightNoIDExample.raml`.
-. Add the following information to your example file:
+.. Specifies a JSON-formatted body for the `post` method
+.. Configures `AmericanFlight` as the type for the `post` method
+. Under your `/examples` folder, create a file named `AmericanFlightNoIDExample.raml`, and copy this example to the file:
 +
-[source,raml,linenums]
+[source,raml]
 --
 #%RAML 1.0 NamedExample
 value:
@@ -230,10 +234,8 @@ value:
       totalSeats: 150
 --
 +
-Notice that the ID parameter is missing since you don't have the flight ID when creating a new flight record.
-
-
-. Add the examples to your specification, and include a custom message:
+To simulate a new flight record, this example does not provide an `ID` parameter.
+. Add the example to as a response to the `post` method, and include a custom message:
 +
 [source,RAML]
 ----
@@ -241,42 +243,51 @@ Notice that the ID parameter is missing since you don't have the flight ID when 
 title: American Flights API
 
 types:
-  AmericanFlight:
+    AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
 
 /flights:
   get:
-    queryParameters: //for selecting a destinatiON
+    queryParameters: //<1>
       destination:
         required: false
         enum:
           - SFO
           - LAX
           - CLE
-    responses:
+    responses: //<2>
       200:
         body:
           application/json:
             type: AmericanFlight[]
-  post:
-    body:
+            examples:
+              output: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-example/1.0.1/AmericanFlightsExample.raml
+
+  post: 
+    body: 
       application/json:
         type: AmericanFlight
-        examples:
-          input: !include examples/AmericanFlightExample.raml  //included example
-    responses:
+        examples: //<3>
+          input: !include examples/AmericanFlightNoIDExample.raml 
+    responses: 
       201:
         body:
-          application/json:  //required format
+          application/json: //<4>
           example:
-            message: Flight added (but not really) //custom message for 201 response
+            message: Flight added (but not really)
 
-  /{ID}:
+  /{ID}: 
     get:
-      body:
+      body: 
         application/json:
           type: AmericanFlight
-          examples:
-            output: !include examples/AmericanFlightExample.raml //included example
+          examples: //<5>
+            output: !include examples/AmericanFlightExample.raml
 ----
-
+[calloutlist]
+.. Select a destination.
+.. Return an array of `AmericanFlight` objects for that destination.
+.. Post an `AmericanFlight` object from an `examples/AmericanFlightNoIDExample.raml`.
+.. Provide a custom message for a response in JSON format to the `post` method
+.. Add your example from `examples/AmericanFlightExample.raml` as a response to the nested `get` request
+//next step:
 . Proceed to xref:test-api-specification.adoc[] to test the API endpoints.

@@ -11,21 +11,19 @@ After following all the steps to complete the specification, you can xref:implem
 
 == Start the Specification for API Example
 
-Start creating the American Flights API specification from the *Quick Actions* menu in Anypoint Code Builder. 
+Start creating the American Flights API specification. 
 
-images::acb-api-project.png["Project for American Airlines API"]
+image::acb-api-project.png["Project for American Airlines API"]
 
 . In the activity bar, click the MuleSoft icon to navigate to Anypoint Code Builder.
 +
 For more guidance, see xref:design-api-specification.adoc[].
-. Click *Design an API* from the Anypoint Code Builder menu to start the specification:
+. From the *Quick Actions* menu, click *Design an API* from the Anypoint Code Builder menu to start the API specification project:
  
 * In the *Project Name* field, provide the name *American Flights API* your API specification project.
 * In the *Project Location* field, select *Browse*, and then select your home directory.
 * In the *API Specification Language* field, select *RAML 1.0*.
 * In the *Business Group* field, select the business group for your API specification.
-+
-For more guidance, see xref:design-api-specification.adoc[].
 . Select *Create Project* to generate an American Flights API project with the file `american-flights-api.raml`.
 . Proceed to <<add-resource>>.
 
@@ -59,9 +57,9 @@ title: American Flights API
 +
 . Click the API Console icon to display your specification in the console.
 +
-images::acb-api-console.png["A specification with get and post methods"]
+image::acb-api-console.png["A specification with get and post methods"]
 +
-.Endpoint and methods in the API console:
+Endpoint and methods in the API console:
 +
 //TODO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
 image::get-post-methods-api-console.png["GET and POST methods highlighted in *API Console*"]
@@ -96,10 +94,11 @@ title: American Flights API
 --
 . Open the API Console to display the nested resource:
 +
-images::sub-methods-api-console.png["API Console with nested resource"]
-. Proceed to xref:add-request-response-details.adoc[].
+image::sub-methods-api-console.png["API Console with nested resource"]
+. Proceed to <<add-fragments>>.
 
-== Add API Fragments
+[[add-fragments]]
+== Add API Fragments for a Data Type and Example from Anypoint Exchange
 
 Add these fragments to the project directory:
 
@@ -139,60 +138,6 @@ MuleSoft: Add fragment dependency from Exchange
 Training: American Flights Example
 ----
 . Select the latest version of the *American Flights Example* asset.
-
++
 The fragments are now in the `/exchange_modules` directory of your project.
-
-== Add Examples to the Specification
-
-
-+
-[source,raml]
-----
-#%RAML 1.0
-title: American Flights API
-
-types:
-  AmericanFlight:
-
-/flights:
-  get:
-    queryParameters: //for selecting a destinatin
-      destination:
-        required: false
-        enum:
-          - SFO
-          - LAX
-          - CLE
-    responses:
-      200:
-        body:
-          application/json:
-            type: AmericanFlight[]
-  post:
-    body:
-      application/json:
-        type: AmericanFlight
-        examples:
-          input: !include examples/AmericanFlightExample.raml //included example
-    responses:
-      201:
-        body:
-          application/json:  //required format
-          example:
-            message: Flight added (but not really) //custom message for 201 response
-
-  /{ID}:
-    get:
-      body:
-        application/json:
-          type: AmericanFlight
-          examples:
-            output: !include examples/AmericanFlightExample.raml //included example
-----
-
-
-== Next Step
-
-* xref:add-request-response-details.adoc[Add Request and Response Details]. 
-+
-Build over your API specification detailing request and response examples. Learn how to import existing API fragments from Exchange to reuse and discover data types and examples.
+. Proceed to xref:add-request-response-details.adoc[].
