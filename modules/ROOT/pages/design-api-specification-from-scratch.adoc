@@ -1,55 +1,39 @@
-= Creating an API Specification
+= Creating a Working API Specification
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Create a basic RAML API specification using Anypoint Code Builder.
+Create a basic RAML API specification using Anypoint Code Builder. Reuse API fragments from Anypoint Exchange, create data types and response examples, test your API using API Console, save your API to Design Center, and publish the API as an asset to Exchange.
 
-== Before You Begin
+After completing the specification, you can follow subsequent tutorials to implement the specification and use it in an integration.
 
-* Ensure you fulfill Anypoint Code Builder requirements. +
-See xref:setup.adoc[] for more information.
+== Start the API Specification
 
-== Create a New API Specification
+Start creating an API specification from the *Quick Actions* menu in Anypoint Code Builder.
 
-To create a new API specification:
-
-. In the activity bar, navigate to your Anypoint Code Builder view:
+. In the activity bar, click the MuleSoft icon to navigate to Anypoint Code Builder.
+. Click *Design an API* from the Anypoint Code Builder menu to start the specification:
+ 
+* In the *Project Name* field, provide the name *American Flights API* your API specification project.
+* In the *Project Location* field, select *Browse*, and then select your home directory.
+* In the *API Specification Language* field, select *RAML 1.0*.
+* In the *Business Group* field, select the business group for your API specification.
 +
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, the "Design an API" section's title is different and the "Help" section has a new title on top ("Documentation").
-image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
-. Select *Design an API*.
+For more guidance, see xref:design-api-specification.adoc[].
+. Select *Create Project* to generate an American Flights API project with the file `american-flights-api.raml`.
 +
-//TODO: Delete this image and use the previous one. Add numbers next to the arrows to denote steps 1 and 2. 
-image::design-api-1.png["*Design an API* link highlighted in the *Getting Started* section"]
-+
-. Configure your API using the following values:
-+
-image::design-api-ui-first.png["Project name, Project Location, API Specification Language, and Business Group highlighted in the API Specification tab, in the Design an API window"]
-+
-[calloutlist]
-.. In *Project Name*, enter `*American Flights API*`.
-.. In *Project Location* select *Browse*, and then select your home directory.
-.. In *API Specification Language* select *RAML 1.0*.
-.. In *Business Group* select the business group in which you want to create your API specification.
-+
-[IMPORTANT]
---
-You can't change business groups after you create your API specification.
---
-. Select *Create Project*.
-//TODO hn: POPUP message: Do you trust the authors of the files in this folder?
+images::acb-api-project.png["Project for American Airlines API"]
+. Proceed to <<add-resource>>.
 
-The project explorer now shows you your American Flights API folder with an `american-flights-api.raml` file open in the editor.
-//TODO hn: There was a delay for me.
+[[add-resource]]
+=== Add a RAML Resource and Methods
 
-== Add a RAML Resource
+In American Flights API, start the specification and try GET method in API Console. 
 
-Start adding resources to your API specification:
-
-. In the editor, add your first resource called *flights*:
+. Open `american-flights-api.raml` from your project.
+. Paste this RAML code for the `/flights` endpoint into the file:
 +
 [source,raml,linenums]
 --
@@ -58,112 +42,36 @@ title: American Flights API
 
 /flights:
 --
-. Review your new resource using *API Console* by clicking the API Console icon on your API specification editor.
+. Press Ctrl+Space to display all the available options, and add a `get` method.
+. On the next line directly under `get`, add a `post` method.
 +
-//TODO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
-image::flights-endpoint.png["\flights resource highlighted in *API Console*"]
-// hn: this is not the case for me. I see the name of the raml file.
-
-// hn: it might be good to have a screenshot of the API Console icon.
-// hn: again, the display was delayed and I thought I did something wrong.
-
-== Add a RAML Method
-
-With one resource created, you can add a method to it using autocomplete:
-
-. On a new line after `/flights`, press Tab to indent.
-. Press Ctrl+Spacebar to display all the available options.
-. Select *get*.
-
-You can add further methods by going to a new line and keep using the autocomplete feature. For example, you can also add the *post* method.
-
-[source,raml,linenums]
---
+[source,RAML]
+----
 #%RAML 1.0
 title: American Flights API
 
 /flights:
   get:
   post:
---
-
-Both methods now show on *API Console*.
-
+----
++
+. Click the API Console icon to display your specification in the console.
++
+images::acb-api-console.png["A /flights specification with get and post methods"]
++
+.Endpoint and methods in the API console:
++
 //TODO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
 image::get-post-methods-api-console.png["GET and POST methods highlighted in *API Console*"]
-//TODO hn: this is not the case for me. I see the name of the raml file.
+//TODO: hn: this is not the case for me. I see the name of the raml file.
+//TODO: duke: I'm getting weirdness of Documentation, but I can click the hamburger in the console to display the API Console. Is this a BUG???
 
-== Add a Nested RAML Resource
+[[add-resource]]
+== Add Query Parameters and Nested Resources
 
-You can create nested resources on your API specification and add methods to them:
+Add resources to a nested resource (`/{ID}:`) to use as a dynamic selector, and specify query parameters (`queryParameters:`) as a set of `enum` values to use for requesting the destination of the flight. 
 
-. Inside the `post:` method, add a nested resource for a flight with a specific ID: `/{ID}`.
-. Inside the nested resource `/{ID}`, place a `get:` method.
-+
-[source,raml,linenums]
---
-#%RAML 1.0
-title: American Flights API
-
-/flights:
-  get:
-  post:
-
-  /{ID}:
-    get:
---
-
-The nested resource and its associated method also show up in *API Console*.
-
-//TODO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
-image::sub-methods-api-console.png["/flights/{ID} highlighted in *API Console*]
-//TODO hn: this is not the case for me. I see the name of the raml file.
-
-== Add a Query Parameter
-
-Add specific query parameters to your resources:
-
-. In a new line after the `get:` method of your `/flights` resource, use `tab` to indent.
-. Press Ctrl+Spacebar to display all the available options.
-. Select `queryParameters`.
-. On the next line, press Tab to add a new indentation.
-// hn: TODO this is automatic for me when I add queryParameters
-. Add a new keyword called `destination:`.
-+
-[source,raml,linenums]
---
-#%RAML 1.0
-title: American Flights API
-
-/flights:
-  get:
-    queryParameters:
-      destination:
-  post:
-
-  /{ID}:
-    get:
---
-. Inside the `destination` query parameter, indent the new line and press Ctrl+Spacebar (Windows) or Cmd+Spacebar (Mac) to view the available options.
-. Select the `required` parameter, and then press Ctrl+Spacebar (Windows) or Cmd+Spacebar (Mac) and select `false` as the value.
-+
-[source,raml,linenums]
---
-#%RAML 1.0
-title: American Flights API
-
-/flights:
-  get:
-    queryParameters:
-      destination:
-        required: false
-  post:
-
-  /{ID}:
-    get:
---
-. On a new line at the same indent level as the `required` parameter, press Ctrl+Spacebar (Windows) or Cmd+Spacebar (Mac) to create an `enum` parameter.
-. Inside your `enum` parameter, create values for the enum as `SFO`, `LAX`, and `CLE`.
+. Replace your RAML content with this specification:
 +
 [source,raml,linenums]
 --
@@ -184,8 +92,105 @@ title: American Flights API
   /{ID}:
     get:
 --
+. Open the API Console to display the nested resource:
++
+images::sub-methods-api-console.png["API Console with nested resource"]
+. Proceed to xref:add-request-response-details.adoc[].
+
+== Add API Fragments
+
+Add these fragments to the project directory:
+
+* *Training: American Flight Data Type* for a Flight object
+* *Training: American Flights Example* for data that the flights API returns
+
+Adding the fragments is a precondition to including them in your specification.
+
+To add the fragments: 
+
+. In Anypoint Code Builder, open `american-flights-api.raml`.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
++
+[source,command]
+----
+MuleSoft: Add fragment dependency from Exchange
+----
+. Provide the name of the asset to add:
++
+[source,command]
+----
+Training: American Flight Data Type
+----
+. Select the latest version of the asset.
++
+When the process is complete, the status bar displays the message *Dependencies successfully added*.
+. From the Command Palette, add a fragment:
++
+[source,command]
+----
+MuleSoft: Add fragment dependency from Exchange
+----
+. Provide the name of the asset to add:
++
+[source,command]
+----
+Training: American Flights Example
+----
+. Select the latest version of the *American Flights Example* asset.
+
+The fragments are now in the `/exchange_modules` directory of your project.
+
+== Add Examples to the Specification
+
+
++
+[source,raml]
+----
+#%RAML 1.0
+title: American Flights API
+
+types:
+  AmericanFlight:
+
+/flights:
+  get:
+    queryParameters: //for selecting a destinatin
+      destination:
+        required: false
+        enum:
+          - SFO
+          - LAX
+          - CLE
+    responses:
+      200:
+        body:
+          application/json:
+            type: AmericanFlight[]
+  post:
+    body:
+      application/json:
+        type: AmericanFlight
+        examples:
+          input: !include examples/AmericanFlightExample.raml //included example
+    responses:
+      201:
+        body:
+          application/json:  //required format
+          example:
+            message: Flight added (but not really) //custom message for 201 response
+
+  /{ID}:
+    get:
+      body:
+        application/json:
+          type: AmericanFlight
+          examples:
+            output: !include examples/AmericanFlightExample.raml //included example
+----
+
 
 == Next Step
 
-* xref:add-request-response-details.adoc[Add Request and Response Details]. +
+* xref:add-request-response-details.adoc[Add Request and Response Details]. 
++
 Build over your API specification detailing request and response examples. Learn how to import existing API fragments from Exchange to reuse and discover data types and examples.
