@@ -33,7 +33,7 @@ For more guidance, see xref:design-api-specification.adoc[].
 In American Flights API, start the specification and try GET method in API Console. 
 
 . Open `american-flights-api.raml` from your project.
-. Paste this RAML code for the `/flights` endpoint into the file:
+. Paste this RAML code for the `/flights` endpoint and `get` method into the file:
 +
 [source,raml,linenums]
 --
@@ -41,9 +41,9 @@ In American Flights API, start the specification and try GET method in API Conso
 title: American Flights API
 
 /flights:
+  get:
 --
-. Press Ctrl+Space to display all the available options, and add a `get` method.
-. On the next line directly under `get`, add a `post` method.
+. On the next line directly under `get`, press Ctrl+Space to display all the available options, and select a `post` method.
 +
 [source,RAML]
 ----
@@ -69,7 +69,7 @@ image::get-post-methods-api-console.png["GET and POST methods highlighted in *AP
 [[add-resource]]
 == Add Query Parameters and Nested Resources
 
-Add resources to a nested resource (`/{ID}:`) to use as a dynamic selector, and specify query parameters (`queryParameters:`) as a set of `enum` values to use for requesting the destination of the flight. 
+Add a nested resource (`/{ID}:`) to use as a dynamic selector, and specify query parameters (`queryParameters:`) as a set of `enum` values to use for requesting the destination of the flight. 
 
 . Replace your RAML content with this specification:
 +
@@ -124,8 +124,8 @@ Training: American Flight Data Type
 ----
 . Select the latest version of the asset.
 +
-When the process is complete, the status bar displays the message *Dependencies successfully added*.
-. From the Command Palette, add a fragment:
+This process add the `/exchange_modules` directory in your project with `AmericanFlightDataType.raml`. When the process is complete, the status bar displays the message *Dependencies successfully added*. 
+. From the Command Palette, add the fragment, *Training: American Flights Example*:
 +
 [source,command]
 ----
@@ -139,5 +139,5 @@ Training: American Flights Example
 ----
 . Select the latest version of the *American Flights Example* asset.
 +
-The fragments are now in the `/exchange_modules` directory of your project.
+This process adds the fragment `AmericanFlightsExample.raml` to the `/exchange_modules` directory of your project.
 . Proceed to xref:add-request-response-details.adoc[].
