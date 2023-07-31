@@ -95,49 +95,4 @@ title: American Flights API
 . Open the API Console to display the nested resource:
 +
 image::sub-methods-api-console.png["API Console with nested resource"]
-. Proceed to <<add-fragments>>.
-
-[[add-fragments]]
-== Add API Fragments for a Data Type and Example from Anypoint Exchange
-
-Add these fragments to the project directory:
-
-* *Training: American Flight Data Type* for a Flight object
-* *Training: American Flights Example* for data that the flights API returns
-
-Adding the fragments is a precondition to including them in your specification.
-
-To add the fragments: 
-
-. In Anypoint Code Builder, open `american-flights-api.raml`.
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
-+
-[source,command]
-----
-MuleSoft: Add fragment dependency from Exchange
-----
-. Provide the name of the asset to add:
-+
-[source,command]
-----
-Training: American Flight Data Type
-----
-. Select the latest version of the asset.
-+
-This process add the `/exchange_modules` directory in your project with `AmericanFlightDataType.raml`. When the process is complete, the status bar displays the message *Dependencies successfully added*. 
-. From the Command Palette, add the fragment, *Training: American Flights Example*:
-+
-[source,command]
-----
-MuleSoft: Add fragment dependency from Exchange
-----
-. Provide the name of the asset to add:
-+
-[source,command]
-----
-Training: American Flights Example
-----
-. Select the latest version of the *American Flights Example* asset.
-+
-This process adds the fragment `AmericanFlightsExample.raml` to the `/exchange_modules` directory of your project.
 . Proceed to xref:add-request-response-details.adoc[].
