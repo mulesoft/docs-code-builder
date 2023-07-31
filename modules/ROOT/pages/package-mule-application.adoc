@@ -84,9 +84,7 @@ The name of the JAR file follows this pattern:
 [[archivable]]
 == Package a Lightweight JAR that Lacks Sources
 
-Archive Mule application source files and metadata required to import the JAR package back into Anypoint Code Builder.
-
-This package of a Mule application does not include any dependencies declared in the `pom.xml` file. This JAR file cannot be deployed to a Mule runtime engine. 
+Package a Mule application that lacks sources. For this lightweight package to deploy successfully at runtime, you must provide dependencies declared in the `pom.xml` file. Otherwise, the deployment will not run. 
 
 . Open the Mule project you want to package in Anypoint Code Builder.
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
