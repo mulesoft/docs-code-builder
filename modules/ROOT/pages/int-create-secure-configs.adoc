@@ -359,21 +359,9 @@ The POM file includes dependencies for the components in the configuration XML.
 ----
 ====
 
-To use encrypted properties: 
+To use an encrypted value in a Mule application: 
 
-. Use an encrypted value in a Mule application:
-+
-.. In the connector or component XML, add the key of an encrypted property as the value of an XML attribute. For example:
-+
-[source,xml]
-----
-<set-payload 
-  value="${secure::mysensitiveprop}" 
-  doc:name="Set payload" doc:id="abcdef" />
-----
-+
-Notice the `secure::` prefix to the key.
-.. Above the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
+. Above the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
 +
 image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties Snippet"]
 +
@@ -393,7 +381,7 @@ The XML for an unmodified snippet looks like this above a `<flow/>` element:
 +
 The snippet preconfigures parts of the element that the basic XML configuration does not, so be sure to select the _snippet_ and _not_ the basic XML for this element, which has the same name but a different icon. Like all snippets, this snippet is identified by a two-dimensional box icon, while the basic XML for this element has a three-dimensional box icon. 
 .
-.. Configure the snippet with values for the `file`, `key`, and `algorithm` attributes, for example:
+. Configure the snippet with values for the `file`, `key`, and `algorithm` attributes, for example:
 +
 [source,xml]
 ----
@@ -411,6 +399,16 @@ If you want to use the variable `$\{env}` in your filename configuration, see <<
 +
 This name serves as the key for the encryption value (password) used to encrypt your secure properties with the Secure Properties Tools.
 * `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
+. In the connector or component XML, add the key of an encrypted property as the value of an XML attribute. For example:
++
+[source,xml]
+----
+<set-payload 
+  value="${secure::mysensitiveprop}" 
+  doc:name="Set payload" doc:id="abcdef" />
+----
++
+Notice the `secure::` prefix to the key.
 
 [[test-deploy]]
 == Test Encrypted Properties in Your IDE
@@ -455,7 +453,9 @@ This procedure shows how to hide the hidden encryption key value in Runtime Mana
 [[deploy-to-cloudhub]]
 == Deploy to CloudHub with Sensitive Values Hidden
 
-If you don't hide the value of an encryption key or other property from the Runtime Manager UI when you deploy an application to CloudHub, Runtime Manager displays that value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
+When you deploy an application that you build with Anypoint Code Builder to CloudHub, hide the value of your encryption key to prevent Runtime Manager UI from displaying the value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
+
+Runtime Manager serves as the management console for CloudHub deployments. The encryption key value serves as the password for encryption and decryption.
 
 Before you begin: 
 
