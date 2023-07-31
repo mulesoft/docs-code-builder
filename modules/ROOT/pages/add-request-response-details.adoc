@@ -7,6 +7,13 @@ include::partial$acb-ide-logos.adoc[tags="both-ides",width=600]
 
 Continue work in xref:design-api-specification-from-scratch.adoc[] by adding API fragments from Exchange for a data type and example. Then create your own examples for the specification, and add a custom message for a response. 
 
+== Before You Begin
+
+If you haven't started the American Flight API yet, follow the procedures in this order:
++
+. xref:test-api-specification.adoc[]
+. add-request-response-details.adoc[]
+
 == Add Fragments from Exchange to Your Project
 
 Add fragments to the project directory so that you can include them in your specification.
@@ -272,8 +279,8 @@ types:
       201:
         body:
           application/json: //<4>
-          example:
-            message: Flight added (but not really)
+            example:
+              message: Flight added (but not really)
 
   /{ID}: 
     get:
