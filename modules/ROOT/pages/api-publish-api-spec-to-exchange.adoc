@@ -1,0 +1,77 @@
+= Publish the API Specification to Anypoint Exchange
+:page-aliases: publish-api-spec-to-exchange.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Publish your API specification to Exchange to make it discoverable by other team members.
+
+When publishing an API to Exchange, create an API asset with your API to implement later in a Mule application.
+
+== Before You Begin
+
+If you haven't started the American Flight API example, follow these procedures before attempting to publish:
+
+. xref:tut-api-test-api-specification.adoc[]
+. xref:tut-api-add-request-response-details.adoc[]
+. xref:tut-api-test-api-specification.adoc[]
+. xref:tut-api-synchronize-with-design-center.adoc[]
+
+
+== Publish an API to Exchange
+
+To publish your API to Exchange:
+
+. In Anypoint Code Builder, open your `american-flights-api.raml` file.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Publish API Specification to Exchange
+----
++
+//TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
+image::publish-to-exchange.png["MuleSoft: Publish API Specification to Exchange highlighted in Command Palette"]
+. Type a project name: +
+* *American Flights API ACB*.
++
+image::set-asset-name.png["American Flights API ACB option highlighted"]
+. Confirm the artifact ID: *American-Flights-API-ACB*
++
+image::set-artifact-ID.png["American Flights API ACB artifact highlighted"]
+. Confirm the asset version: *1.0.0*.
++
+image::set-asset-version.png["American Flights API ACB version highlighted"]
+. Confirm the API version: *v1*.
++
+image::set-api-version.png["API version highlighted"]
++
+The status bar shows the progress.
++
+// TODO: Crop the image to show the progress bar in its context. Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
+image::publishing-to-exchange-dialog.png["Publishing API specification to Exchange notification highlighted"]
+
+. Select *No* when prompted to implement the API.
++
+[NOTE]
+--
+Selecting *Yes* when prompted to implement the API enables you to directly scaffold your API specification into an implementation to code the logic behind each endpoint.
+--
+// TODO: I would rewrite the above sentences to explain what happens in each case. 
++
+image::scaffold-project-no.png["No option highlighted in the API implementation"]
+
+== Locate Your API in Exchange
+
+After publishing your API specification, you can find it in Anypoint Exchange:
+
+. Navigate to Anypoint Platform and login using your credentials.
+. Navigate to Anypoint Exchange.
+. Notice that your API specification is listed as an asset. +
+You can select the API, navigate through its summary, and see all the endpoints you defined in the previous tasks.
+
+== Next Step
+
+* Learn how to xref:develop-integration.adoc[Develop an Integration]
