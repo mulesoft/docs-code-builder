@@ -1,39 +1,43 @@
 // SHOULD DATASENSE be INTELLISENSE (VSCODE)?
 
-[%header,cols="2a,2a,1a"]
+[%header,cols="4a,1a"]
 |===
-| Limitation | Workaround |ID
-| Anypoint Code Builder does not decode Unicode characters for new lines in XML (`&#10;`) causing DataWeave validations to throw *Invalid input* errors on some multi-line scripts. This limitation does not interrupt the correct execution of your Mule application. | None | W-11750473
-| Dark theme not showing the error response. Due to an issue with the color scheme of API Console, when using Anypoint Code Builder in dark mode, the error messages in the console are hard to read. | none | W-11351113
-| When launching the web IDE for the first time from Anypoint Code Builder central page, you must allow popups from the page. | none | none
-| Code highlighting breaks when you define a DataWeave multiline expression. This limitation does not interrupt the correct execution of your Mule application. | none| W-11492623
+| Limitation | ID
+| DataWeave validations to throw `Invalid input` errors on some multi-line scripts because Anypoint Code Builder does not decode Unicode characters for new lines in XML (`\&#10;`). This limitation does not interrupt the correct execution of your Mule application.| W-11750473
+| Dark theme not showing the error response. Due to an issue with the color scheme of API Console, when using Anypoint Code Builder in dark mode, the error messages in the console are hard to read. |  W-11351113
+| When launching the web IDE for the first time from Anypoint Code Builder central page, you must allow popups from the page. |  none
+| Code highlighting breaks when you define a DataWeave multiline expression. This limitation does not interrupt the correct execution of your Mule application. |  W-11492623
 | The RAML editor does not handle indentation correctly when using tabs or spaces. | None. | W-11625929
 | The canvas does not show flows and components after scaffolding a Mule application | Close the canvas UI and re-open it. | W-13162142
-| Link to the *code-server Editing evolved dialogue* help article does not work | none| W-13488500
+| Link to the *code-server Editing evolved dialogue* help article does not work |  W-13488500
 | Moving the editors when using the search function in the component palette causes your search to be canceled. | noneAvoid re-arranging your editors when using the component palette in the canvas. | W-13172200
-| Selecting a project folder in the projects view opens the entire project. | none| W-13143061
-| Adding a space at the end of an API specification name throws an error. | Do not use spaces at the end of any project name. | W-13115894
-| Auto-completions and code suggestions do not follow standard VSC/LSP pattern | none| W-12564179
-| API Console does not reflect changes immediately. | none| W-12564212
-| Kafka Connector does not show the *Test Connection* Option | none| W-12553536
-| Code Builder displays a pop-up indicating opened ports when creating a Mule project. | none| W-12482078
-| DataSense does not identify functions provided by the connector. | none| W-12448776
-| Using auto-complete to create a parameter for the `value` field in the XML adds an extra `#[]` statement. | none| W-12444650
+| Selecting a project folder in the projects view opens the entire project. |  W-13143061
+
+| Adding a space at the end of an API specification name throws an error. 
+
+* Workaround: Do not use spaces at the end of any project name. | W-13115894
+
+| Auto-completions and code suggestions do not follow standard VSC/LSP pattern |  W-12564179
+| API Console does not reflect changes immediately. |  W-12564212
+| Kafka Connector does not show the *Test Connection* Option |  W-12553536
+| Code Builder displays a pop-up indicating opened ports when creating a Mule project. |  W-12482078
+| DataSense does not identify functions provided by the connector. |  W-12448776
+| Using auto-complete to create a parameter for the `value` field in the XML adds an extra `#[]` statement. |  W-12444650
 // 12739837 shows as closed. Martin says keep open.
-| Integration project fails when running in a multi-root context | none | W-12739837
+| Integration project fails when running in a multi-root context |  W-12739837
 // TBD: UNCOMMENT FOR DESKTOP RELEASE. I don't think we want to raise awareness of these settings for web IDE.
 // | User is Not getting notified after changing the Region in settings.json file | | W-13184670
-| Auto-completion does not work when using connectors that contribute the same prefix. | none| W-10667510
+| Auto-completion does not work when using connectors that contribute the same prefix. |  W-10667510
 // PLEASE VALIDATE THE REWORD OF THE ISSUE BELOW:
-| Updating metadata on a different component does not trigger metadata validation in later scripts causing Code Builder to display potential errors until a change in the code is made. | none| W-12215165
-| The *Back* button in the command palette does not work when running the `MuleSoft: Import Asset from Exchange` command. | none| W-12012889
-| DataSense does not reflect array structures at the payload's root level. | none| W-12263085
+| Updating metadata on a different component does not trigger metadata validation in later scripts causing Code Builder to display potential errors until a change in the code is made. |  W-12215165
+| The *Back* button in the command palette does not work when running the `MuleSoft: Import Asset from Exchange` command. |  W-12012889
+| DataSense does not reflect array structures at the payload's root level. |  W-12263085
 // Per Martin: W-12408476 is a known limitation, not considered as bug.
-| The list of trusted authors for a directory or file is not persistent across different browsers. | none| W-12408476
-| DataSense does not work when a tag spans multiple lines. | none| W-12482310
-| Code Builder displays a *Cannot read properties of undefined (reading 'name')* error failing to resolve a GraphQL type. | none| W-12482229
-| NetSuite Connector does not have an icon in the component palette. | none| W-13173111
+| The list of trusted authors for a directory or file is not persistent across different browsers. |  W-12408476
+| DataSense does not work when a tag spans multiple lines. |  W-12482310
+| Code Builder displays a *Cannot read properties of undefined (reading 'name')* error failing to resolve a GraphQL type. |  W-12482229
+| NetSuite Connector does not have an icon in the component palette. |  W-13173111
 | Ending a second thread in a Scatter Gather component before the first thread finishes freezes Code Builder processing. | Manually select the other thread to continue processing. | W-10601367
 | The Mule configuration file can sometimes fail to open right after you created a new Mule project. | Open the file manually. | W-10601832
-| The Batch Job processor is not supported. | none| none
+| The Batch Job processor is not supported. |  none
 |===
