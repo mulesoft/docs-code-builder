@@ -199,7 +199,7 @@ my-key \
 "mysensitivevalue" 
 ----
 +
-Important: Be sure to store your encryption key value (password) in a safe place that you can retrieve when you deploy your application.
+[IMPORTANT] Be sure to store your encryption key value (password) in a secure location. You’ll need your key value later, when you deploy your application.
 +
 .Encrypted Output:
 [source,terminal]
@@ -222,7 +222,7 @@ For more guidance, see <<properties>>.
 
 Add encrypted properties to components in a Mule application. Reference a properties file with `<secure-properties/>`, and run a local deployment that decrypts your properties. 
 
-For reference, examples in the procedure are based on these configurations:
+For reference, the examples shown in the steps in this procedure are based on these configuration examples:
 
 .Configuration XML (`my-secure-integration.xml`)
 [%collapsible]
@@ -380,7 +380,6 @@ The XML for an unmodified snippet looks like this above a `<flow/>` element:
 ----
 +
 The snippet preconfigures parts of the element that the basic XML configuration does not, so be sure to select the _snippet_ and _not_ the basic XML for this element, which has the same name but a different icon. Like all snippets, this snippet is identified by a two-dimensional box icon, while the basic XML for this element has a three-dimensional box icon. 
-.
 . Configure the snippet with values for the `file`, `key`, and `algorithm` attributes, for example:
 +
 [source,xml]
@@ -397,7 +396,7 @@ The snippet preconfigures parts of the element that the basic XML configuration 
 If you want to use the variable `$\{env}` in your filename configuration, see <<create-prop-file>> for the procedure.
 * `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`) 
 +
-This name serves as the key for the encryption value (password) used to encrypt your secure properties with the Secure Properties Tools.
+This name serves as the key for the encryption value (password) used to encrypt your secure properties with the Secure Properties Tool.
 * `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
 . In the connector or component XML, add the key of an encrypted property as the value of an XML attribute. For example:
 +
@@ -413,7 +412,7 @@ Notice the `secure::` prefix to the key.
 [[test-deploy]]
 == Test Encrypted Properties in Your IDE
 
-If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. This setting enables the runtime to decrypt properties used in your application when the application deploys in your IDE and deploy successfully.
+If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. Adding these arguments to the setting enables the runtime to decrypt properties used in your application so that it deploys successfully to your IDE. 
 
 The setting avoids an error that causes the deployment to fail when you use  *Run and Debug* in your IDE:
 
