@@ -62,7 +62,9 @@ When the process is complete, check for the `AmericanFlightsExample.raml` asset 
 ----
 exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
 ----
+. Proceed to <<include-fragments>>.
 
+[[include-fragments]]
 == Include the Fragments in the Specification
 
 Use `!include` directives to add the fragments to the specification:
@@ -109,6 +111,7 @@ types: //<1>
 .. Uses `!include` to add the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type
 .. Sets the format of the body of the response to JSON (`application/json`) and configures the type of the response as an array of `AmericanFlight` objects (`AmericanFlight[]`)
 .. Adds the `AmericanFlightsExample.raml` example
+. Proceed to <<post-response-example>>.
 
 [[post-response-example]]
 == Create and Include an Example for a Get Request by Flight ID
@@ -176,6 +179,7 @@ types:
 [calloutlist]
 .. Specifies the JSON format and type (`AmericanFlight`) of the *get* request body
 .. Adds your example from the `/examples` directory as the content for the body of the request
+. Proceed to <<post-example>>.
 
 [[post-example]]
 == Configure an Example for the Post Method
