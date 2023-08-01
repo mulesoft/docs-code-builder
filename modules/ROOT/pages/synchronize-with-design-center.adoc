@@ -21,7 +21,7 @@ If you haven't started the American Flight API specification, follow these proce
 
 Anypoint Code Builder highlights differences made in files since you last synced them with the main branch on Design Center.
 
-When you change your API specification, the Source Control icon in the Activity Bar displays an overview of how many changes you currently have. Selecting the icon shows you the details of your current changes:
+When you change your API specification, the Source Control icon in the Activity Bar displays the number of changes to the API project. Click the icon to display details about your changes:
 
 * *Changes*
 * *Staged Changes*
@@ -34,7 +34,7 @@ To review your changes to your API specification:
 
 . In Anypoint Code Builder, select your *Source Control* view using Ctrl+Shift+g (Mac) or Cmd+Shift+g (Windows).
 . Open your `exchange.json` file.
-. Review the working tree and notice the background highlighting for deletions (red) and additions (green).
+. Review the working tree and notice the shading for deletions (red) and additions (green).
 +
 //TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
 //TODO duke: fix/modify screenshot
@@ -46,7 +46,11 @@ In this case, you added some dependencies to the API by reusing API fragments yo
 [[stage]]
 == Stage Your Changes Individually
 
-The UI uses the `git add` command to add a change from your working directory to the staging area. This command informs Git that you want to include updates a particular file in the next commit. In Anypoint Code Builder you can do this by using the buttons in the UI:
+The UI uses the `git add` command to add a change from your working directory to the staging area. This area includes updates for the next commit. Anypoint Code Builder enables you to stage changes individually or as a group through the UI. 
+//TODO: VERIFY HOW
+Alternatively, you can use the embedded command line in Anypoint Code Builder to commit changes. 
+
+To stage individual changes through the UI:
 
 . In Anypoint Code Builder, select your Source Control view.
 . Select the plus icon in the `american-flight-api.raml` file.
@@ -59,14 +63,12 @@ image::stage-american-flights-api.png["Source control number and plus icon of am
 //TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
 //TODO duke: fix/modify screenshot
 image::staged-changes.png["Working tree of american-flight-api.raml file highlighted"]
-+
-Alternatively, you can perform these actions using the command line embedded in the IDE. 
 . Proceed to <<commit>>.
 
 [[stage-multiple-changes]]
 === Stage Multiple Changes
 
-You can add multiple files at the same time:
+Stage multiple files at the same time:
 
 . In Anypoint Code Builder, select your Source Control view.
 . Click the plus icon in the section header to stage the remaining changes.
@@ -81,7 +83,9 @@ Alternatively, you can perform these actions from the command line embedded in t
 [[commit]]
 == Commit Changes
 
-The UI uses the `git commit` command to save the changes you staged to your local repository:
+The UI uses the `git commit` command to save the changes you staged to your local repository. 
+
+To commit staged changes:
 
 . In Anypoint Code Builder, select your Source Control view.
 . Click in the message box.
@@ -103,7 +107,9 @@ image::commit-changes.png["Tick mark in the Source Control header highlighted"]
 [[push]]
 == Push Changes to Anypoint Design Center
 
-The UI uses the `git push` command to upload your local content to Anypoint Design Center:
+The UI uses the `git push` command to upload your local content to Anypoint Design Center.
+
+To push your changes:
 
 . In Anypoint Code Builder, select your Source Control view.
 . Select the three dots that appear in the *Source Control* header.
