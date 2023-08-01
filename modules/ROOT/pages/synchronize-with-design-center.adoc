@@ -8,7 +8,7 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Use the built-in integrated source control management (SCM) to sync American Flights API with Anypoint Design Center (Design Center). 
 
-Note that Anypoint Code Builder supports source management Git.
+Note that Anypoint Code Builder also supports source management through Git.
 
 == Before You Begin
 
@@ -18,6 +18,7 @@ If you haven't started the American Flight API specification, follow these proce
 . xref:tut-api-add-request-response-details.adoc[]
 . xref:tut-api-test-api-specification.adoc[]
 
+[[review]]
 == Review Changes in Files
 
 Anypoint Code Builder highlights differences made in files since you last synced them with the main branch on Design Center.
@@ -42,7 +43,9 @@ To review your changes to your API specification:
 image::explore-changes-api-specification.png["exchange.json file highlighted to show the source control changes"]
 +
 In this case, you added some dependencies to the API by reusing API fragments you downloaded from Anypoint Exchange.
+. Proceed to <<stage>> or <<stage-multiple-changes>>.
 
+[[stage]]
 == Stage Your Changes Individually
 
 The `git add` command adds a change from your working directory to the staging area. This command informs Git that you want to include updates to a particular file in the next commit. In Anypoint Code Builder you can do this by using the buttons in the UI:
@@ -58,9 +61,11 @@ image::stage-american-flights-api.png["Source control number and plus icon of am
 //TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
 //TODO duke: fix/modify screenshot
 image::staged-changes.png["Working tree of american-flight-api.raml file highlighted"]
++
+Alternatively, you can perform these actions using the command line embedded in the IDE. 
+. Proceed to <<commit>>.
 
-Additionally, you can perform these actions using the command line. 
-
+[[stage-multiple-changes]]
 === Stage Multiple Changes
 
 You can add multiple files at the same time:
@@ -71,9 +76,11 @@ You can add multiple files at the same time:
 //TODO: Web IDE only because it contains hamburger menu. Need to make generic.
 //TODO duke: fix/modify screenshot
 image::stage-all-changes.png["Plus icon highlighted to stage all changes"]
++
+Alternatively, you can perform these actions from the command line embedded in the IDE.
+. Proceed to <<commit>>.
 
-Additionally, you can perform these actions using the embedded command line.
-
+[[commit]]
 == Commit Changes
 
 Use the `git commit` command to save the changes you staged to your local repository:
@@ -92,8 +99,10 @@ A good commit message helps summarize the changes across multiple files by multi
 //TODO: Web IDE only because it contains hamburger menu. Need to make generic.
 //TODO duke: fix/modify screenshot
 image::commit-changes.png["Tick mark in the Source Control header highlighted"]
-. Your Source Control view now shows no changes to commit.
+. Your Source Control view now displays no changes to commit.
+. Proceed to <<push>>.
 
+[[push]]
 == Push Changes to Anypoint Design Center
 
 Use the `git push` command to upload your local content to Anypoint Design Center:
