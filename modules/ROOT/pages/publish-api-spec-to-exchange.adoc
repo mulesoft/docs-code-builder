@@ -1,26 +1,22 @@
-= Publishing an API Specification to Exchange
+= Publish the API Specification to Anypoint Exchange
+:page-aliases: tut-api-publish-api-spec-to-exchange.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Publish your API specification to Exchange to make it discoverable to other team members.
-
-When publishing an API to Exchange, you create a new API asset with that API, and you can later use it to implement it into a Mule application.
+Publish American Flights API specification to Exchange so that other team members can find and implement it.
 
 == Before You Begin
 
-Before getting started, ensure you:
+If you haven't started the American Flight API specification, follow these procedures before attempting to publish:
 
-* Set up your MuleSoft environment. +
-See xref:setup.adoc[] for more information.
-* Created a basic structure for your API specification. +
-See xref:design-api-specification.adoc[].
-* Configured request and response data for your API specification. +
-See xref:design-api-specification.adoc[].
-* Synced your local changes with Anypoint Design Center. +
-See xref:synchronize-with-design-center.adoc[].
+. xref:tut-api-design-api-specification-from-scratch.adoc[]
+. xref:tut-api-add-request-response-details.adoc[]
+. xref:tut-api-test-api-specification.adoc[]
+. xref:tut-api-synchronize-with-design-center.adoc[]
+
 
 == Publish an API to Exchange
 
@@ -35,35 +31,27 @@ MuleSoft: Publish API Specification to Exchange
 ----
 +
 //TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
+//TODO duke: fix/redo image
 image::publish-to-exchange.png["MuleSoft: Publish API Specification to Exchange highlighted in Command Palette"]
 . Type a project name: +
 * *American Flights API ACB*.
 +
-image::set-asset-name.png["American Flights API ACB option highlighted"]
-. Confirm the artifact ID: *American-Flights-API-ACB*
-+
-image::set-artifact-ID.png["American Flights API ACB artifact highlighted"]
+image::set-asset-name.png["American Flights API option highlighted"]
+. Confirm the artifact ID: *American-Flights-API*
 . Confirm the asset version: *1.0.0*.
-+
-image::set-asset-version.png["American Flights API ACB version highlighted"]
 . Confirm the API version: *v1*.
-+
-image::set-api-version.png["API version highlighted"]
-+
 The status bar shows the progress.
 +
 // TODO: Crop the image to show the progress bar in its context. Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
+// TODO duke: replace/fix image
 image::publishing-to-exchange-dialog.png["Publishing API specification to Exchange notification highlighted"]
 
-. Select *No* when prompted to implement the API.
-+
-[NOTE]
---
-Selecting *Yes* when prompted to implement the API enables you to directly scaffold your API specification into an implementation to code the logic behind each endpoint.
---
-// TODO: I would rewrite the above sentences to explain what happens in each case. 
+. When prompted to implement the API now, select *No* to avoid scaffolding the American Flights API specification into your integration.
+For example:
 +
 image::scaffold-project-no.png["No option highlighted in the API implementation"]
++
+Selecting *Yes* scaffolds the API specification into your project. Instead of scaffolding now, you will scaffold in xref:implement-api-specification.adoc[].
 
 == Locate Your API in Exchange
 
@@ -76,4 +64,4 @@ You can select the API, navigate through its summary, and see all the endpoints 
 
 == Next Step
 
-* Learn how to xref:develop-integration.adoc[Develop an Integration]
+Learn to xref:develop-integration.adoc[Develop an Integration].
