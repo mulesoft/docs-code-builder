@@ -18,16 +18,12 @@ See xref:setup.adoc[] for more information.
 
 To create a new API specification:
 
-. Open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and type _MuleSoft: Design an API_.
+. Open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
 +
-// . In your web IDE instance, navigate to your Anypoint Code Builder view:
-// +
-// image::anypoint-code-builder-view.png[]
-// . Select *Design an API*.
-// +
-// image::design-api-1.png[]
-// +
-. Select the command.
+[source,command]
+----
+MuleSoft: Design an API
+----
 . Configure your API using the following values:
 +
 image::design-api-ui-first.png[]
@@ -44,7 +40,7 @@ You can't change business groups after you create your API specification.
 --
 . Select *Create Project*.
 +
-The project explorer now shows you your Retrieve Users API folder with a `retrieve-users-api.raml` file open in the editor.
+The Explorer displays your *Retrieve Users API* folder with a `retrieve-users-api.raml` file open in the editor.
 // REUSE
 . In the editor, add the following RAML specification:
 +
@@ -85,11 +81,9 @@ version: 1.0.development
               } }]
 --
 
-== Implement the Local API
+== Implement the Local API Specification in a Multi-Root Workspace
 
-// TODO: cc: Should we define "Local API"? What does this mean in the context of the Web IDE? Also, will customers know what a "multi-root workspace is"? Should this be defined? Should it be "multi-version workspace"?
-
-By default, when you create a new API specification, Code Builder assigns it a version 1.0.0. You can create a multi-root workspace with your API specification directory and a new Mule project directory to design and implement the API iteratively:
+A local API specification is a project in your Anypoint Code Builder IDE, whether your desktop IDE or the web IDE associated with your user account in Anypoint Platform. Synchronizing your local API specification with a local implementation project in your IDE requires a multi-root workspace in Visual Studio Code.
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
@@ -105,28 +99,24 @@ Your multi-root workspace is a `.code-workspace` file extension that keeps both 
 --
 Save your `.code-workspace` file in your home directory. Do not save it inside your API specification folder.
 --
-. After the workspace is created, Code Builder builds your API. +
+. After the workspace is created, Code Builder builds your API. 
++
 In this step, Code Builder packages the API specification and publishes it to a local Maven repository as a snapshot.
+. Wait for the IDE to prompt you for a project name. 
++
+[TIP]
+--
+To monitor the progress of this task:
+
+. Open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac)
+. From the output panel, select *Mule DX Server* from the drop-down menu.
++
+image::select-mule-dx-server.png[]
+--
 . After building your API, Code Builder can now implement it locally:
 .. Choose a project name for your Mule project: `_Retrieve Users Implementation_`.
 .. Select your home directory as your target folder.
-+
-// [TIP]
-// --
-// TODO: cc: I'm not sure what the value of seeing progress is. The project creation process was quick for me (just a few seconds), so a customer might not be able to see the progress in time.
-// To see the progress of the full process:
 
-// . From the menu, select *View* > *Output*.
-// +
-// // TODO: cc: UI is different on Desktop
-// image::select-specific-output-view.png[]
-// . On the right top side of the output panel, select the drop-down menu.
-// +
-// image::select-output-dropdown.png[]
-// . Select *Mule DX Server*.
-// +
-// image::select-mule-dx-server.png[]
-// --
 
 After Code Builder scaffolds your API specification, it opens a new directory in your newly created multi-root workspace with a Mule project. Note that it creates a flow with the proper APIkit router and another flow for the `GET` resource you designed in the RAML file:
 
