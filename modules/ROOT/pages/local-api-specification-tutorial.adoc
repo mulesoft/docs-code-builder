@@ -1,5 +1,5 @@
-= Iteratively Design an API Specification and Implement it
-// TODO: cc: Should this title be more consistent with other titles? Something like: "Iteratively Designing and Implementing an API Specification"?
+= Iteratively Designing and Implementing an API Specification
+:page-aliases: implement-a-local-api-guide.adoc, tut-local-iterative-design-implement.adoc
 :imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -7,17 +7,28 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Anypoint Code Builder enables you to scaffold your API specification into a Mule project without having to publish it to Exchange. You can work on your Mule project, then edit the API specification, and re-scaffold it to reflect your new changes.
+Anypoint Code Builder enables you to scaffold an API specification into the configuration XML for Mule project without first publishing the specification to Exchange. For example, if you add a new endpoint to your API specification, Anypoint Code Builder is able to scaffold a new flow for that endpoint within your IDE.
+
+////
+TODO duke: TBD: INTEGRATE THIS INFO? 
+Implementing a local API enables you to reflect your changes to your API design directly into the Mule project that implements your API specification.
+
+You can close your multi-root workspace by running the Workspaces: Close Worspace command. You can re-open your synchronized project by opening the workspace your created when you started implementing your local API.
+////
 
 == Before You Begin
 
-* Ensure you set up your MuleSoft environment. +
-See xref:setup.adoc[] for more information.
+Set up your MuleSoft environment. See xref:setup.adoc[] for more information. 
 
 == Create a New API Specification
 
 To create a new API specification:
 
+. Open a new window in VS Code by pressing Ctrl+Shift+n (Mac) or Cmd+Shift+n (Windows).
++
+The IDE permits only one iterative design and implementation project per VS Code workspace. If you create an API specification from a multi-root workspace, the specification automatically belongs to that workspace. An API specification created from a new VS Code window does not belong to any multi-root workspace.
++
+Creating a new window for this procedure enables you to create a multi-root workspace in an upcoming step and avoids an issue that occurs if you create a specification in a multi-root workspace that is already using iterative design with another API specification. 
 . Open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
 +
 [source,command]
@@ -41,6 +52,17 @@ You can't change business groups after you create your API specification.
 . Select *Create Project*.
 +
 The Explorer displays your *Retrieve Users API* folder with a `retrieve-users-api.raml` file open in the editor.
++
+If you receive the error `Unexpected error occurred opening the API Specification`, navigate to your project folder and open the specification file:
+
+.. Press Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
++
+[source,command]
+----
+File: Open Folder
+----
+.. Navigate to the root directory for the project that contains your API specification. 
+.. In the Explorer, click the filename for the specification, `retrieve-users-api.raml`.
 // REUSE
 . In the editor, add the following RAML specification:
 +
