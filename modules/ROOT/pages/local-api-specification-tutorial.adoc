@@ -262,7 +262,7 @@ version: 1.0.development
 --
 . Re-scaffold the API specification to update your Mule project:
 
-.. Ensure that the `retrieve-users-api.raml` file is still active in the RAML editor.
+.. Open `retrieve-users-api.raml` in the RAML editor.
 .. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
 [source,command]
@@ -310,21 +310,24 @@ company: {
     </ee:transform>
 </flow>
 --
+. To save your specification to the SCM in Design Center, go to <<save-spec>>.
 
+[[save-spec]]
 == Save your API Specification in Design Center
 
-With your changes implemented, you can now save your API specification to Design Center:
+After implementing your API specification, save the specification to Design Center:
 
-. In Anypoint Code Builder, select your Source Control view.
-. Select the plus icon next to `retrieve-users-api.raml`.
-. Review the changes in the Source Control view. Note that the file has moved into *Staged Changes*.
-. Stage the remaining changes. 
-. Enter a message that summarizes the change or changes being made. For example: `_Create Retrieve Users API_`.
-// TODO: cc: On Desktop I had to push the "Commit" button here. Is this the same for Web? And then instead of "Push", it was "Sync Changes." Does this also differ from Web?
-. Select *Push*.
+. In Anypoint Code Builder, select the *SOURCE CONTROL* view of the IDE by pressing ^+Shift+g (Mac).
+. Locate the API specification project for `retrieve-users-api.raml`.
+. Use the *+* icon beside your API specification project files to stage commits. 
+. Type a commit message that summarizes the changes. For example: `_Create Retrieve Users API_`
++
+This step avoids the need to specify a commit message through a separate file that pops up in the IDE.
+. Click *Commit* for the staged changes, and wait for the commit process to complete. 
+. If prompted, click *Sync Changes* or *Push*. 
+//TODO: OMG, different options every time... :(
 
 Your changes are now published in Design Center.
-
 
 == Publish the API Specification to Exchange
 
@@ -350,7 +353,8 @@ To work iteratively on a new version of your API specification, close the curren
 
 
 ////
-NOT WORKING, IN PROGRESS
+TODO duke: NOT WORKING, STEPS IN FLUX 
+[[display-command]]
 == Display MuleSoft: Implement this Local API Command
 
 If `MuleSoft: Implement this Local API Command` does not appear in the command palette from your open API specification project, it is likely that another set of iterative projects is in your multi-root workspace. 
