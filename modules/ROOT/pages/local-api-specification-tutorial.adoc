@@ -7,7 +7,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Anypoint Code Builder enables you to scaffold an API specification into the configuration XML for Mule project without first publishing the specification to Exchange. For example, if you add a new endpoint to your API specification, Anypoint Code Builder is able to scaffold a new flow for that endpoint within your IDE.
+Anypoint Code Builder enables you to scaffold an API specification into the configuration XML for Mule project without first publishing the specification to Anypoint Exchange. For example, if you add a new endpoint to your API specification, Anypoint Code Builder is able to scaffold a new flow for that endpoint through the command `MuleSoft: Implement this local API`.
 
 ////
 TODO duke: TBD: INTEGRATE THIS INFO? 
@@ -20,15 +20,17 @@ You can close your multi-root workspace by running the Workspaces: Close Worspac
 
 Set up your MuleSoft environment. See xref:setup.adoc[] for more information. 
 
-== Create a New API Specification
+== Create an API Specification in a New VS Code Window
+
+[[avoid-issue]]
+//anchor for link from first step to this intro
+Iterative API design and implementation within the IDE requires a multi-root workspace in VS Code. However, the IDE permits only one iterative design and implementation project per multi-root workspace, and any API specification created from a VS Code window associated with a multi-root workspace automatically belongs to that workspace. To avoid potential issues from limitations on multi-root workspaces, the first step of this procedure starts from a new VS Code window.
 
 To create a new API specification:
 
 . Open a new window in VS Code by pressing Ctrl+Shift+n (Mac) or Cmd+Shift+n (Windows).
 +
-The IDE permits only one iterative design and implementation project per VS Code workspace. If you create an API specification from a multi-root workspace, the specification automatically belongs to that workspace. An API specification created from a new VS Code window does not belong to any multi-root workspace.
-+
-Creating a new window for this procedure enables you to create a multi-root workspace in an upcoming step and avoids an issue that occurs if you create a specification in a multi-root workspace that is already using iterative design with another API specification. 
+This step prevents the possibility of creating an API specification in a multi-root workspace that already contains iterative design and implementation projects, the first step is start from a new VS Code window.
 . Open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
 +
 [source,command]
@@ -272,7 +274,7 @@ With a new endpoint added to your API specification, you can now re-scaffold it 
 +
 [source,command]
 ----
-MuleSoft: Re-Scaffold this local API
+MuleSoft: Implement this local API
 ----
 . Select the command.
 +
