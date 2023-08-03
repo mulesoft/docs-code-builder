@@ -24,13 +24,13 @@ Set up your MuleSoft environment. See xref:setup.adoc[] for more information.
 
 [[avoid-issue]]
 //anchor for link from first step to this intro
-Iterative API design and implementation within the IDE requires a multi-root workspace in VS Code. However, the IDE permits only one iterative design and implementation project per multi-root workspace, and any API specification created from a VS Code window associated with a multi-root workspace automatically belongs to that workspace. To avoid potential issues from limitations on multi-root workspaces, the first step of this procedure starts from a new VS Code window.
+Iterative API design and implementation within the IDE takes place in a multi-root workspace in VS Code. However, the IDE permits only one iterative design and implementation project per multi-root workspace, and any API specification created from a VS Code window associated with a multi-root workspace automatically belongs to that workspace. To avoid potential issues from limitations of multi-root workspaces, the first step of this procedure starts from a new VS Code window.
 
 To create a new API specification:
 
 . Open a new window in VS Code by pressing Ctrl+Shift+n (Mac) or Cmd+Shift+n (Windows).
 +
-This step prevents the possibility of creating an API specification in a multi-root workspace that already contains iterative design and implementation projects.
+This step prevents the possibility of creating an API specification in a multi-root workspace that already contains iterative design and implementation projects and ensures that the command required in the next procedure, <<implement-local>>, is available.
 . Open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
 +
 [source,command]
@@ -66,7 +66,7 @@ File: Open Folder
 .. Navigate to the root directory for the project that contains your API specification. 
 .. In the Explorer, click the filename for the specification, `retrieve-users-api.raml`.
 // REUSE
-. In the editor, add the following RAML specification:
+. In the editor, add the following RAML specification for an example:
 +
 [source,raml,linenums]
 --
@@ -105,29 +105,36 @@ version: 1.0.development
               } }]
 --
 
+[[implement-local]]
 == Implement the Local API Specification in a Multi-Root Workspace
 
-A local API specification is a project in your Anypoint Code Builder IDE, whether your desktop IDE or the web IDE associated with your user account in Anypoint Platform. Synchronizing your local API specification with a local implementation project in your IDE requires a multi-root workspace in Visual Studio Code.
+Synchronizing your local API specification with a local implementation project in your IDE requires a multi-root workspace in Visual Studio Code. A local project for a specification or implementation resides in your Anypoint Code Builder IDE, whether in your desktop IDE or in the web IDE associated with your user account in Anypoint Platform. 
+
+To implement your specification in a multi-root workspace:
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
 [source,command]
 ----
-MuleSoft: Implement a Local API
+MuleSoft: Implement this Local API
 ----
-. Code Builder creates a multi-root workspace to keep your API specification and Mule project in sync.
-.. Choose a location to store your workspace. +
-Your multi-root workspace is a `.code-workspace` file extension that keeps both of your directories coordinates.
 +
-[IMPORTANT]
---
-Save your `.code-workspace` file in your home directory. Do not save it inside your API specification folder.
---
-. After the workspace is created, Code Builder builds your API. 
+The UI displays the following message: *We'll create a workspace to keep your API specification and Mule project in sync.*
+//+
+//TODO: If you do not find this command in the command palette, go to <<fix-project>>.
+. Code Builder creates a multi-root workspace to keep your API specification and Mule project in sync.
+.. Choose a folder for your workspace, such as the _parent folder_ that contains your API specification project folder. _Do not_ select a folder within your API specification directory.
++
+A multi-root workspace uses a `.code-workspace` file extension.
++ 
+The UI displays the message *Implementing local API Implementation, please wait*. . Wait for the field *Mule project name* to appear in the UI, and provide a name for your Mule project when the field is present.
+. Use *Select a target folder* for your workspace. 
++
+Anypoint Code Builder builds your implementation project. 
+. 
 +
 In this step, Code Builder packages the API specification and publishes it to a local Maven repository as a snapshot.
-. Wait for the IDE to prompt you for a project name. 
-+
+////
 [TIP]
 --
 To monitor the progress of this task:
@@ -137,6 +144,7 @@ To monitor the progress of this task:
 +
 image::select-mule-dx-server.png[]
 --
+////
 . After building your API, Code Builder can now implement it locally:
 .. Choose a project name for your Mule project: `_Retrieve Users Implementation_`.
 .. Select your home directory as your target folder.
@@ -389,3 +397,27 @@ The status bar shows the progress.
 After the deployment completes, Code Builder updates your Mule project pom file to point to `v1.0.0` of your API specification.
 
 To work iteratively on a new version of your API specification, close the current workspace and re-import version 1.0.0 of your API from Design Center, and implement it locally again.
+
+
+////
+NOT WORKING, IN PROGRESS
+== Display MuleSoft: Implement this Local API Command
+
+If `MuleSoft: Implement this Local API Command` does not appear in the command palette from your open API specification project, it is likely that another set of iterative projects is in your multi-root workspace. 
+
+To address this issue:
+
+. In the Explorer, right-click your new API specification folder, and select *Remove project from workspace*. 
+. Select or create a folder for the workspace.
++
+This step opens to the  
+. Reopen your API specification by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
++
+[source,command]
+----
+File: Open Folder
+---- 
+. Find and open the folder with you the new API specification. 
+. Select a  workspace
+
+////
