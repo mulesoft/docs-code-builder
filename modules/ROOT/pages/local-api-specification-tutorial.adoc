@@ -30,7 +30,7 @@ To create a new API specification:
 
 . Open a new window in VS Code by pressing Ctrl+Shift+n (Mac) or Cmd+Shift+n (Windows).
 +
-This step prevents the possibility of creating an API specification in a multi-root workspace that already contains iterative design and implementation projects and ensures that the command required in the next procedure, <<implement-local>>, is available.
+This step helps prevent the possibility of creating an API specification in a multi-root workspace that already contains iterative design and implementation projects and ensures that the command required in the next procedure, <<implement-local>>, is available.
 . Open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
 +
 [source,command]
@@ -45,12 +45,7 @@ image::design-api-ui-first.png[]
 .. In *Project name*, type: `*Retrieve Users API*`.
 .. In *Project Location*, select *Browse* and then select your home directory.
 .. In *API Specification Language*, select *RAML 1.0*.
-.. In *Business Group*, select the business group in which you want to create your API specification.
-+
-[IMPORTANT]
---
-You can't change business groups after you create your API specification.
---
+.. In *Business Group*, select the business group in which you want to create your API specification. You can't change business groups after you create your API specification.
 . Select *Create Project*.
 +
 The Explorer displays your *Retrieve Users API* folder with a `retrieve-users-api.raml` file open in the editor.
@@ -104,6 +99,7 @@ version: 1.0.development
                 "bs": "harness real-time e-markets"
               } }]
 --
+. Proceed to <<implement-local>>.
 
 [[implement-local]]
 == Implement the Local API Specification in a Multi-Root Workspace
@@ -120,38 +116,31 @@ MuleSoft: Implement this Local API
 ----
 +
 The UI displays the following message: *We'll create a workspace to keep your API specification and Mule project in sync.*
-//+
-//TODO: If you do not find this command in the command palette, go to <<fix-project>>.
-. Code Builder creates a multi-root workspace to keep your API specification and Mule project in sync.
-.. Choose a folder for your workspace, such as the _parent folder_ that contains your API specification project folder. _Do not_ select a folder within your API specification directory.
 +
-A multi-root workspace uses a `.code-workspace` file extension.
-+ 
-The UI displays the message *Implementing local API Implementation, please wait*. . Wait for the field *Mule project name* to appear in the UI, and provide a name for your Mule project when the field is present.
-. Use *Select a target folder* for your workspace. 
+If you do not find the command `MuleSoft: Implement this Local API` in the command palette, go to <<fix-project>>.
+. Choose a folder for your workspace, such as the _parent folder_ that contains your API specification project folder. _Do not_ select a folder within your API specification directory.
 +
-Anypoint Code Builder builds your implementation project. 
-. 
+A multi-root workspace uses a `.code-workspace` file extension. 
 +
-In this step, Code Builder packages the API specification and publishes it to a local Maven repository as a snapshot.
-////
+The UI displays the message *Implementing local API Implementation, please wait*. 
+. After waiting for the field *Mule project name* to appear in the UI, start the scaffolding process by entering a name for your Mule project in that field. 
++
+After scaffolding your API specification, the IDE opens a directory in your new multi-root workspace with a Mule project.
++
 [TIP]
 --
 To monitor the progress of this task:
 
-. Open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac)
-. From the output panel, select *Mule DX Server* from the drop-down menu.
+.. Open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac)
+.. From the output panel, select *Mule DX Server* from the drop-down menu.
 +
 image::select-mule-dx-server.png[]
 --
-////
-. After building your API, Code Builder can now implement it locally:
-.. Choose a project name for your Mule project: `_Retrieve Users Implementation_`.
-.. Select your home directory as your target folder.
-
-
-After Code Builder scaffolds your API specification, it opens a new directory in your newly created multi-root workspace with a Mule project. Note that it creates a flow with the proper APIkit router and another flow for the `GET` resource you designed in the RAML file:
-
+. Open the new Mule project with the scaffolded specification in your multi-root workspace. 
++
+* The UI canvas for the project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
+* The `<flow/>` element contains an `<ee:transform/>` element with your example:
++
 [source,XML,linenums]
 --
 <flow name="get:\users:retrieve-users-api-config">
@@ -189,15 +178,14 @@ company: {
     </ee:transform>
 </flow>
 --
+. Proceed to <<update-spec>>.
 
-== Update the API Specification
+[[update-api-spec]]
+== Update the API Specification and Re-scaffold the Implementation XML
+
+Add an endpoint to your specification file and re-scaffold:
 
 . Navigate back to the `retrieve-users-api.raml` file under the *Retrieve Users API* directory.
-+
-[TIP]
---
-To get a full picture of your API you can arrange the tabs to have the RAML editor, the XML configuration file editor, and the canvas one next to the other.
---
 . Add a new `/userbyid` endpoint to your RAML file:
 +
 [source,raml,linenums]
@@ -272,58 +260,20 @@ version: 1.0.development
                   "bs": "e-enable strategic applications"
                 } }]
 --
+. Re-scaffold the API specification to update your Mule project:
 
-== Re-Scaffold the API Specification
-
-With a new endpoint added to your API specification, you can now re-scaffold it to update your linked Mule project:
-
-. Ensure that the `retrieve-users-api.raml` file is still active in the RAML editor.
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
+.. Ensure that the `retrieve-users-api.raml` file is still active in the RAML editor.
+.. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
 [source,command]
 ----
-MuleSoft: Implement this local API
+MuleSoft: Re-scaffold this local API
 ----
-. Select the command.
-+
-Note that Code Builder adds a new flow for the newly added endpoint:
+.. Navigate to your configuration XML, and notice the new flow for the `userbyid` endpoint:
 +
 [source,XML,linenums]
 --
-<flow name="get:\users:retrieve-users-api-config">
-    <ee:transform doc:name="Transform Message">
-        <ee:message>
-            <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-[
-{
-id: 1,
-name: "Leanne Graham",
-username: "Bret",
-email: "Sincere@april.biz",
-address: {
-  street: "Kulas Light",
-  suite: "Apt. 556",
-  city: "Gwenborough",
-  zipcode: "92998-3874",
-  geo: {
-    lat: "-37.3159",
-    lng: "81.1496"
-  }
-},
-phone: "1-770-736-8031 x56442",
-website: "hildegard.org",
-company: {
-  name: "Romaguera-Crona",
-  catchPhrase: "Multi-layered client-server neural-net",
-  bs: "harness real-time e-markets"
-}
-}
-]]]></ee:set-payload>
-        </ee:message>
-    </ee:transform>
-</flow>
+...
 
 <flow name="get:\users\userbyid:retrieve-users-api-config">
     <ee:transform doc:name="Transform Message">
