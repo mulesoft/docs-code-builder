@@ -18,6 +18,7 @@ You can close your multi-root workspace by running the Workspaces: Close Workspa
 
 Set up your MuleSoft environment. See xref:setup.adoc[] for more information. 
 
+[[create]]
 == Create an API Specification in a New VS Code Window
 
 Iterative API design and implementation within the IDE takes place in a multi-root workspace in VS Code. The IDE permits only one iterative design and implementation project per multi-root workspace. 
@@ -351,19 +352,4 @@ If `MuleSoft: Implement this Local API Command` does not appear in the command p
 To address this issue, remove the API specification from that workspace, and create the specification in another directory.
 
 . In the Explorer, right-click your new API specification folder, select *Remove project from workspace*, and delete the specification project. 
-. Create a new directory for your API specification outside of the current workspace.
-+
-Make sure that this new folder does not have a `.code-workspace` file at its root.
-+
-. Recreate the API specification in the new folder:
-+
-When creating the API specification, select your new directory as the *Project Location*. The root directory for your API specification becomes a child of this project location. 
-. Navigate to the root directory of API specification:
-.. Press Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
-+
-[source,command]
-----
-File: Open Folder
----- 
-.. Find and open the root directory for your new API specification. 
-.. Begin the procedure <<implement-local>>.
+. Proceed to <<create>> before starting <<implement-local>> again.
