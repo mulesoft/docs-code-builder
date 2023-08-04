@@ -11,9 +11,7 @@ Anypoint Code Builder enables you to scaffold an API specification into the conf
 
 ////
 TODO duke: TBD: INTEGRATE THIS INFO? 
-Implementing a local API enables you to reflect your changes to your API design directly into the Mule project that implements your API specification.
-
-You can close your multi-root workspace by running the Workspaces: Close Worspace command. You can re-open your synchronized project by opening the workspace your created when you started implementing your local API.
+You can close your multi-root workspace by running the Workspaces: Close Workspace command. You can re-open your synchronized project by opening the workspace your created when you started implementing your local API.
 ////
 
 == Before You Begin
@@ -22,11 +20,9 @@ Set up your MuleSoft environment. See xref:setup.adoc[] for more information.
 
 == Create an API Specification in a New VS Code Window
 
-[[avoid-issue]]
-//anchor for link from first step to this intro
-Iterative API design and implementation within the IDE takes place in a multi-root workspace in VS Code. However, the IDE permits only one iterative design and implementation project per multi-root workspace, and any API specification created from a VS Code window associated with a multi-root workspace automatically belongs to that workspace. To avoid potential issues from limitations of multi-root workspaces, the first step of this procedure starts from a new VS Code window.
+Iterative API design and implementation within the IDE takes place in a multi-root workspace in VS Code. The IDE permits only one iterative design and implementation project per multi-root workspace. 
 
-To create a new API specification:
+To avoid potential issues from limitations of multi-root workspaces, start with a new VS Code window, and create a parent folder for the specification so that you cannot create the specification in a multi-root workspace:
 
 . Open a new window in VS Code by pressing Ctrl+Shift+n (Mac) or Cmd+Shift+n (Windows).
 +
