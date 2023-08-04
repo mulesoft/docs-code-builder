@@ -13,53 +13,40 @@ Import a project directory or a packaged project into a workspace in your IDE. A
 
 Visual Studio Code treats a project directory as a workspace when you open it to the project's root directory or if your project folder is located in a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^]. 
 
-To _export_ a JAR file that packages a project with your application, see xref:package-mule-application.adoc[].
+To _export_ a JAR file that packages a project with resources from your application, see xref:package-mule-application.adoc[].
 
-== Import a Project into a Desktop IDE Workspace
+//H2: DESKTOP
+[[import-desktop]]
+== Import and Open a Project in the Desktop IDE
 
-The desktop IDE enables you to upload a project directory or package JAR file into a workspace. 
+Use the desktop IDE to upload a project directory or sharable JAR file into a project workspace. 
 
-* <<desktop-project-folder>>
 * <<desktop-project-package>>
-
-[[desktop-project-folder]]
-=== Import a Project Folder into a Desktop IDE Workspace
-
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
-+
-[source,command]
-----
-File: Open Folder...
-----
-. Navigate to the _root_ directory for your project. 
-+
-// see text for this variable defined under title
-{root-dir}
-. Open the root directory for your project.
-+
-// see text for this variable defined under title
-{open-root}
+* <<desktop-project-folder>>
 
 [[desktop-project-package]]
-=== Import a Packaged Project into a Desktop IDE Workspace
+=== Import a Sharable Project JAR File
 
-Import a JAR file and load the unpacked project to a workspace in the IDE.
+Import a sharable JAR file into the IDE.
 
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
-+
-[source,command]
-----
-MuleSoft: Import a Project
-----
-. Select *Mule Project Type*:
-+
-image::import-mule-project.png[]
-. Navigate to the JAR file, and click *Select a jar file to import*.
-. Navigate to a parent directory into which you want to store the decompressed project folder, and click *Select a folder to work*.
-+
-The IDE unpacks the JAR file, loads the project folder, and opens the project workspace in the IDE. 
+Shareable JAR files are generated through the process described in xref:package-mule-application.adoc#sharable[Package a Project in a Sharable JAR File] and are different from xref:package-mule-application.adoc#archivable[other lightweight JAR files] created for archive purposes.
 
-== Import a Project into a Web IDE Workspace
+// include for this procedure
+include::partial$acb-open-packaged-sources.adoc[tags="load-sharable-jar"]
+
+See <<desktop-project-folder>>.
+
+[[desktop-project-folder]]
+=== Open a Project Workspace from the Desktop IDE
+
+Open the a project workspace for your application.
+
+// include for this procedure
+include::partial$acb-open-packaged-sources.adoc[tags="load-sharable-jar"]
+
+//H2: WEB
+[[import-web]]
+== Import and Open a Project in the Web IDE
 
 The web IDE enables you to upload a project directory or JAR file into a workspace.
 
