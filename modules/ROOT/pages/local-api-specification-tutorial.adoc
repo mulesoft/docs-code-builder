@@ -322,18 +322,23 @@ company: {
 
 After implementing your API specification, save the specification to Design Center:
 
-. In Anypoint Code Builder, select the *SOURCE CONTROL* view of the IDE by pressing Caret(^)+Shift+g (Mac).
+. In Anypoint Code Builder, select the *SOURCE CONTROL* view of the IDE:
+
+* In the desktop IDE, navigate to *View* > *Source Control*.
+* In the web IDE, navigate to file menu > *View* > *Source Control*.
 . Locate the API specification project for `retrieve-users-api.raml`.
-. Use the *+* icon beside your API specification project files to stage commits. 
+. In the *SOURCE CONTROL* view, click the *+* icon beside your API specification project file to stage your changes. 
 . Type a commit message that summarizes the changes. For example: `_Create Retrieve Users API_`
 +
 This step avoids the need to specify a commit message through a separate file that pops up in the IDE.
 . Click *Commit* for the staged changes, and wait for the commit process to complete. 
 . If prompted, click *Sync Changes* or *Push*. 
 //TODO: OMG, different options every time... :(
++
+Your changes are now stored in the Design Center SCM.
+. Proceed to <<publish>>.
 
-Your changes are now published in Design Center.
-
+[[publish]]
 == Publish the API Specification to Exchange
 
 You can now publish your new API specification to Exchange to make it discoverable to other team members.
@@ -344,17 +349,14 @@ You can now publish your new API specification to Exchange to make it discoverab
 ----
 MuleSoft: Publish API Specification to Exchange
 ----
-. Type a project name: +
-* *Retrieve Users API*.
+. Type a project name: *Retrieve Users API*
 . Confirm the artifact ID: *Retrieve-Users-API*
 . Confirm the asset version: *1.0.0*.
 . Confirm the API version: *v1*.
 +
-The status bar shows the progress.
-
-After the deployment completes, Code Builder updates your Mule project pom file to point to `v1.0.0` of your API specification.
-
-To work iteratively on a new version of your API specification, close the current workspace and re-import version 1.0.0 of your API from Design Center, and implement it locally again.
+The status bar displays the progress, first *Publishing API Specification to Exchange* and when done, a message that the project *has been successfully published to Exchange*. Then the IDE updates your Mule project POM file to point to `v1.0.0` of your API specification.
++
+. To work iteratively on a new version of your API specification, close the current workspace and re-import version 1.0.0 of your API from Design Center, and implement it locally again.
 
 
 ////
