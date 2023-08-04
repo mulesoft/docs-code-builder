@@ -117,28 +117,34 @@ MuleSoft: Implement this Local API
 +
 The UI displays the following message: *We'll create a workspace to keep your API specification and Mule project in sync.*
 +
-If you do not find the command `MuleSoft: Implement this Local API` in the command palette, go to <<fix-project>>.
+_Do not select_ the command `MuleSoft: Implement an API Specification`, which is for implementing a specification that is published on Anypoint Exchange and _not for_ implementing a local API specification that is not published to Exchange.  
+//+
+//TODO duke: STILL WORKING ON GETTING FIX AT THE ANCHOR LINK TO WORK:
+//If you don't find `MuleSoft: Implement this Local API` in the command palette, go to <<display-command>>.
 . Choose a folder for your workspace, such as the _parent folder_ that contains your API specification project folder. _Do not_ select a folder within your API specification directory.
 +
 A multi-root workspace uses a `.code-workspace` file extension. 
 +
 The UI displays the message *Implementing local API Implementation, please wait*. 
-. After waiting for the field *Mule project name* to appear in the UI, start the scaffolding process by entering a name for your Mule project in that field. 
+. After waiting for up to a minute for the field *Mule project name* to appear in the UI, start the scaffolding process by entering a name for your Mule project in that field. 
 +
-After scaffolding your API specification, the IDE opens a directory in your new multi-root workspace with a Mule project.
-+
-[TIP]
---
-To monitor the progress of this task:
+The UI provides updates while the scaffolding process takes place:
 
-.. Open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac)
-.. From the output panel, select *Mule DX Server* from the drop-down menu.
+* *Implementing local API Implementation, please wait*
+* *Scaffolding process ended. You can now start iterating over your local API and implementation project*
+//TODO duke: TBD IF THIS WORKS OR IS NECESSARY:
+//[TIP]
+//--
+//To monitor the progress of this task:
+//
+//.. Open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac)
+//.. From the output panel, select *Mule DX Server* from the drop-down menu.
+//+
+//image::select-mule-dx-server.png[]
+//--
+. Open the configuration XML for the new Mule project with the scaffolded specification from your multi-root workspace. 
 +
-image::select-mule-dx-server.png[]
---
-. Open the new Mule project with the scaffolded specification in your multi-root workspace. 
-+
-* The UI canvas for the project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
+* The UI canvas for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
 * The `<flow/>` element contains an `<ee:transform/>` element with your example:
 +
 [source,XML,linenums]
@@ -178,7 +184,7 @@ company: {
     </ee:transform>
 </flow>
 --
-. Proceed to <<update-spec>>.
+. Proceed to <<update-api-spec>>.
 
 [[update-api-spec]]
 == Update the API Specification and Re-scaffold the Implementation XML
@@ -262,14 +268,13 @@ version: 1.0.development
 --
 . Re-scaffold the API specification to update your Mule project:
 
-.. Open `retrieve-users-api.raml` in the RAML editor.
 .. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
 [source,command]
 ----
 MuleSoft: Re-scaffold this local API
 ----
-.. Navigate to your configuration XML, and notice the new flow for the `userbyid` endpoint:
+.. After receiving a message that your project *has been rescaffolded successfully*, navigate to your configuration XML, and notice the new flow for the `userbyid` endpoint:
 +
 [source,XML,linenums]
 --
