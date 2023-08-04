@@ -179,7 +179,7 @@ image::acb-project-directory.png[alt="Project Directory for a Mule Application W
 ----
 myprop : "somevalue"
 
-mysensitiveprop : "somesensitivevalue"
+mysensitiveprop : "mysensitivevalue"
 ---- 
 +
 For more guidance, see <<properties>>.
@@ -199,7 +199,7 @@ my-key \
 "mysensitivevalue" 
 ----
 +
-Important: Be sure to store your encryption key value (password) in a safe place that you can retrieve when you deploy your application.
+[IMPORTANT] Be sure to store your encryption key value (password) in a secure location. You’ll need your key value later, when you deploy your application.
 +
 .Encrypted Output:
 [source,terminal]
@@ -222,7 +222,7 @@ For more guidance, see <<properties>>.
 
 Add encrypted properties to components in a Mule application. Reference a properties file with `<secure-properties/>`, and run a local deployment that decrypts your properties. 
 
-For reference, examples in the procedure are based on these configurations:
+For reference, the examples shown in the steps in this procedure are based on these configuration examples:
 
 .Configuration XML (`my-secure-integration.xml`)
 [%collapsible]
@@ -359,21 +359,9 @@ The POM file includes dependencies for the components in the configuration XML.
 ----
 ====
 
-To use encrypted properties: 
+To use an encrypted value in a Mule application: 
 
-. Use an encrypted value in a Mule application:
-+
-.. In the connector or component XML, add the key of an encrypted property as the value of an XML attribute. For example:
-+
-[source,xml]
-----
-<set-payload 
-  value="${secure::mysensitiveprop}" 
-  doc:name="Set payload" doc:id="abcdef" />
-----
-+
-Notice the `secure::` prefix to the key.
-.. Above the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
+. Above the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
 +
 image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties Snippet"]
 +
@@ -392,8 +380,7 @@ The XML for an unmodified snippet looks like this above a `<flow/>` element:
 ----
 +
 The snippet preconfigures parts of the element that the basic XML configuration does not, so be sure to select the _snippet_ and _not_ the basic XML for this element, which has the same name but a different icon. Like all snippets, this snippet is identified by a two-dimensional box icon, while the basic XML for this element has a three-dimensional box icon. 
-.
-.. Configure the snippet with values for the `file`, `key`, and `algorithm` attributes, for example:
+. Configure the snippet with values for the `file`, `key`, and `algorithm` attributes, for example:
 +
 [source,xml]
 ----
@@ -409,13 +396,23 @@ The snippet preconfigures parts of the element that the basic XML configuration 
 If you want to use the variable `$\{env}` in your filename configuration, see <<create-prop-file>> for the procedure.
 * `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`) 
 +
-This name serves as the key for the encryption value (password) used to encrypt your secure properties with the Secure Properties Tools.
+This name serves as the key for the encryption value (password) used to encrypt your secure properties with the Secure Properties Tool.
 * `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
+. In the connector or component XML, add the key of an encrypted property as the value of an XML attribute. For example:
++
+[source,xml]
+----
+<set-payload 
+  value="${secure::mysensitiveprop}" 
+  doc:name="Set payload" doc:id="abcdef" />
+----
++
+Notice the `secure::` prefix to the key.
 
 [[test-deploy]]
 == Test Encrypted Properties in Your IDE
 
-If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. This setting enables the runtime to decrypt properties used in your the application when the application deploys in your IDE and deploy successfully.
+If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. Adding these arguments to the setting enables the runtime to decrypt properties used in your application so that it deploys successfully to your IDE. 
 
 The setting avoids an error that causes the deployment to fail when you use  *Run and Debug* in your IDE:
 
@@ -449,13 +446,15 @@ A successful deployment produces the following message in the *OUTPUT* tab of th
 If the application does not deploy successfully, check the console for the error and troubleshoot. 
 . If you intend to deploy your application to CloudHub, proceed to <<deploy-to-cloudhub>>.
 +
-This procedure shows how to hide the hidden encryption key value in Runtime Manager. 
+This procedure shows how to hide the encryption key value in Runtime Manager. 
 
 //H2 PROCEDURE: DEPLOY
 [[deploy-to-cloudhub]]
 == Deploy to CloudHub with Sensitive Values Hidden
 
-If you don't hide the value of an encryption key or other property from the Runtime Manager UI when you deploy an application to CloudHub, Runtime Manager displays that value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
+When you deploy an application that you build with Anypoint Code Builder to CloudHub, hide the value of your encryption key to prevent Runtime Manager UI from displaying the value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
+
+Runtime Manager serves as the management console for CloudHub deployments. The encryption key value serves as the password for encryption and decryption.
 
 Before you begin: 
 
@@ -484,9 +483,8 @@ Other environments are not supported, and attempts to deploy to the *Design* env
 +
 If you receive an error message that says the application `was not successfully deployed to "Sandbox" in CloudHub`, you can open Runtime Manager to check the logs and correct some issues.
 . Click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
-. Check the deployment in Runtime Manager to ensure that the encryption key is hidden.
-+
-In the *Applications* screen for the *SANDBOX* environment, check the *Status* field for your application:
+. Check the deployment in Runtime Manager to ensure that the encryption key is hidden by navigating to Settings > Properties for your application. 
+. In the *Applications* screen for the *SANDBOX* environment, check the *Status* field for your application:
 
 * If the status is *Started*, the deployment is successful, and the application is running.
 * If the status is *Deploy failed*, click the name of your application, and navigate to *Logs* to discover the cause of the failure.
@@ -534,7 +532,7 @@ Notice the value of the `file` attribute in this example:
       <secure-properties:encrypt algorithm="Blowfish" />
 </secure-properties:config>
 ----
-. Add a `<global-property/>` element to the configuration XML that defines the value of `env` property. 
+. Above the `<flow/>` element, add a `<global-property/>` element to the configuration XML that defines the value of `env` property. 
 +
 [source,xml]
 ----
