@@ -118,8 +118,9 @@ The UI displays the following message: *We'll create a workspace to keep your AP
 +
 _Do not select_ the command `MuleSoft: Implement an API Specification`, which is for implementing a specification that is published on Anypoint Exchange and _not for_ implementing a local API specification.  
 +
-If you don't find `MuleSoft: Implement this Local API` in the command palette or the X-shaped icon in the UI for this command , go to <<display-command>>.
+If you don't find `MuleSoft: Implement this Local API` in the command palette or the X-shaped icon in the UI for this command, go to <<display-command>>.
 +
+[[icon-implement-this-api]]
 image::tut-local-spec-implement.png["UI with the X-shaped icon for the command Implement this Local API"]
 . Choose a folder for your workspace, such as the _parent folder_ that contains your API specification project folder. _Do not_ select a folder within your API specification directory.
 +
@@ -351,7 +352,18 @@ The status bar displays the progress, first *Publishing API Specification to Exc
 
 If `MuleSoft: Implement this Local API Command` does not appear in the command palette from your open API specification project, it is likely that another project in your multi-root workspace is implementing a local API specification. 
 
-To address this issue, remove the API specification from that workspace, and create the specification in another directory.
-
-. In the Explorer, right-click your new API specification folder, select *Remove project from workspace*, and delete the specification project. 
-. Proceed to <<create>> before starting <<implement-local>> again.
+. In the Explorer, right-click your new API specification folder, select *Remove project from workspace*.
+. Open a new VS Code window by pressing Ctrl+Shift+n (Mac) or Cmd+Shift+n (Windows).
+. In the new window, navigate to the API specification, and open the specification file:
+.. Press Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
++
+[source,command]
+----
+File: Open Folder
+----
+.. Navigate to the root directory of the folder that contains your API specification. 
+.. In the Explorer, click the filename for the specification, `retrieve-users-api.raml`.
+. Wait for the <<icon-implement-this-api, X-shaped icon> for the `MuleSoft: Implement this API` command to appear in the UI. 
++
+To monitor the status of this process, open the *OUTPUT* panel with Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac) and selecting *MS DX Server* from it drop-down menu. 
+. Proceed to <<implement-local>> to start the implementation process.
