@@ -9,6 +9,8 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Anypoint Code Builder enables you to scaffold an API specification into the configuration XML for a Mule project without first publishing the specification to Anypoint Exchange. For example, if you add a new endpoint to your API specification, Anypoint Code Builder is able to scaffold a new flow for that endpoint through the command `MuleSoft: Implement this local API`.
 
+A local project for an API specification or implementation resides in your Anypoint Code Builder IDE, whether in your desktop IDE or in the web IDE associated with your user account in Anypoint Platform. 
+
 ////
 TODO duke: TBD: INTEGRATE THIS INFO? 
 You can close your multi-root workspace by running the Workspaces: Close Workspace command. You can re-open your synchronized project by opening the workspace your created when you started implementing your local API.
@@ -38,6 +40,7 @@ MuleSoft: Design an API
 +
 image::design-api-ui-first.png[]
 +
+--
 [calloutlist]
 .. In *Project name*, type: `*Retrieve Users API*`.
 .. In *Project Location*, select *Browse*, and create a _parent folder_ for your project. For example:
@@ -47,11 +50,11 @@ image::design-api-ui-first.png[]
 To avoid potential issues, do not use an existing project folder for iterative design and implementation projects.
 .. In *API Specification Language*, select *RAML 1.0*.
 .. In *Business Group*, select the business group in which you want to create your API specification. You can't change business groups after you create your API specification.
+--
 . Select *Create Project*.
 +
 This process creates a child folder that contains your API specification.
 . Navigate to your API specification, and open the specification file:
-
 .. Press Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
 +
 [source,command]
@@ -103,7 +106,7 @@ version: 1.0.development
 [[implement-local]]
 == Implement the Local API Specification in a Multi-Root Workspace
 
-A local project for a specification or implementation resides in your Anypoint Code Builder IDE, whether in your desktop IDE or in the web IDE associated with your user account in Anypoint Platform. Synchronizing your local API specification with a local implementation project in your IDE requires a multi-root workspace in Visual Studio Code.
+Synchronizing your local API specification with a local implementation project in your IDE requires a multi-root workspace in Visual Studio Code.
 
 To implement your specification in a multi-root workspace:
 
@@ -345,7 +348,7 @@ The status bar displays the progress, first *Publishing API Specification to Exc
 . To work iteratively on a new version of your API specification, close the current workspace and re-import version 1.0.0 of your API from Design Center, and implement it locally again.
 
 [[display-command]]
-== Display MuleSoft: Implement this Local API Command
+== Display the Command MuleSoft: Implement this Local API
 
 If `MuleSoft: Implement this Local API Command` does not appear in the command palette from your open API specification project, it is likely that another project in your multi-root workspace is implementing a local API specification. 
 
