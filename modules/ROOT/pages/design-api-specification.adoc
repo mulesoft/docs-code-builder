@@ -8,15 +8,52 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Anypoint Code Builder enables you to design new RAML or OAS API specifications.
 
-Supported OAS and RAML versions are:
+[[versions]]
+== Supported Versions
 
-* RAML 1.0
-* RAML 0.8
-* OAS 2.0 (JSON)
-* OAS 2.0 (YAML)
-* OAS 3.0 (JSON)
-* OAS 3.0 (YAML)
+Supported OAS and RAML versions:
 
-The following section teaches you how to design your first API specification, reuse API fragments from Exchange, test your API using API Console, save your API to Design Center, and finally publish the API as an asset to Exchange.
+//spec versions supported by acb
+include::partial$acb-api-design.adoc[tags="api-spec-versions"]
 
-Start by xref:design-api-specification-from-scratch.adoc[Creating Your First API Specification].
+[[prereqs]]
+== Before You Begin
+
+* Ensure you fulfill Anypoint Code Builder requirements.
++
+See xref:setup.adoc[] for more information.
+
+* Have some familiarity with xref:access-management::business-groups.adoc[business groups].
++
+API specifications belong to a business group.
+
+[[start-spec]]
+== Start an API Specification
+
+Create a project for an API specification:  
+
+. In the activity bar, click the MuleSoft icon to navigate to Anypoint Code Builder:
++
+image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
+. Select *Design an API*.
++
+image::design-api-1.png["*Design an API* link highlighted in the *Getting Started* section"]
++
+. Describe your API specification project:
++
+image::design-api-ui-first.png["Project name, Project Location, API Specification Language, and Business Group highlighted in the API Specification tab, in the Design an API window"]
++
+[calloutlist]
+.. In *Project Name*, provide a name for your API specification project.
+.. In *Project Location*, select *Browse*, and then select your home directory.
+.. In *API Specification Language*, select a versioned language.
+.. In *Business Group*, select the business group for your API specification.
++
+The business group you select is permanent and cannot change after you create your API specification.
+. Select *Create Project*.
++
+If prompted, trust the authors of the files in the folder.
++
+When the project is ready for editing, the API project and specification open in the IDE.
+
+To create an API specification that you can implement within an integration, see xref:design-api-specification-from-scratch.adoc[].
