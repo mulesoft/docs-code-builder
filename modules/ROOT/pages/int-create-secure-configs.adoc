@@ -446,7 +446,7 @@ A successful deployment produces the following message in the *OUTPUT* tab of th
 If the application does not deploy successfully, check the console for the error and troubleshoot. 
 . If you intend to deploy your application to CloudHub, proceed to <<deploy-to-cloudhub>>.
 +
-This procedure shows how to hide the hidden encryption key value in Runtime Manager. 
+This procedure shows how to hide the encryption key value in Runtime Manager. 
 
 //H2 PROCEDURE: DEPLOY
 [[deploy-to-cloudhub]]
@@ -483,9 +483,8 @@ Other environments are not supported, and attempts to deploy to the *Design* env
 +
 If you receive an error message that says the application `was not successfully deployed to "Sandbox" in CloudHub`, you can open Runtime Manager to check the logs and correct some issues.
 . Click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
-. Check the deployment in Runtime Manager to ensure that the encryption key is hidden.
-+
-In the *Applications* screen for the *SANDBOX* environment, check the *Status* field for your application:
+. Check the deployment in Runtime Manager to ensure that the encryption key is hidden by navigating to Settings > Properties for your application. 
+. In the *Applications* screen for the *SANDBOX* environment, check the *Status* field for your application:
 
 * If the status is *Started*, the deployment is successful, and the application is running.
 * If the status is *Deploy failed*, click the name of your application, and navigate to *Logs* to discover the cause of the failure.
