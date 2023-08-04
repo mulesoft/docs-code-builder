@@ -43,14 +43,17 @@ image::design-api-ui-first.png[]
 +
 [calloutlist]
 .. In *Project name*, type: `*Retrieve Users API*`.
-.. In *Project Location*, select *Browse* and then select your home directory.
+.. In *Project Location*, select *Browse*, and create a _parent folder_ for your project. For example:
++
+`/Users/me/my-iterative-project-folder`
++
+To avoid potential issues, do not use an existing project folder for iterative design and implementation projects.
 .. In *API Specification Language*, select *RAML 1.0*.
 .. In *Business Group*, select the business group in which you want to create your API specification. You can't change business groups after you create your API specification.
 . Select *Create Project*.
 +
-The Explorer displays your *Retrieve Users API* folder with a `retrieve-users-api.raml` file open in the editor.
-+
-If you receive the error `Unexpected error occurred opening the API Specification`, navigate to your project folder and open the specification file:
+This process creates a child folder that contains your API specification.
+. Navigate to your API specification, and open the specification file:
 
 .. Press Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
 +
@@ -58,10 +61,9 @@ If you receive the error `Unexpected error occurred opening the API Specificatio
 ----
 File: Open Folder
 ----
-.. Navigate to the root directory for the project that contains your API specification. 
+.. Navigate to the root directory of the folder that contains your API specification. 
 .. In the Explorer, click the filename for the specification, `retrieve-users-api.raml`.
-// REUSE
-. In the editor, add the following RAML specification for an example:
+. In the editor, add this example:
 +
 [source,raml,linenums]
 --
@@ -118,9 +120,8 @@ MuleSoft: Implement this Local API
 The UI displays the following message: *We'll create a workspace to keep your API specification and Mule project in sync.*
 +
 _Do not select_ the command `MuleSoft: Implement an API Specification`, which is for implementing a specification that is published on Anypoint Exchange and _not for_ implementing a local API specification.  
-//+
-//TODO duke: STILL WORKING ON GETTING FIX AT THE ANCHOR LINK TO WORK:
-//If you don't find `MuleSoft: Implement this Local API` in the command palette, go to <<display-command>>.
++
+If you don't find `MuleSoft: Implement this Local API` in the command palette, go to <<display-command>>.
 . Choose a folder for your workspace, such as the _parent folder_ that contains your API specification project folder. _Do not_ select a folder within your API specification directory.
 +
 A multi-root workspace uses a `.code-workspace` file extension. 
@@ -130,16 +131,6 @@ The UI provides updates while the scaffolding process takes place:
 
 .. *Implementing local API Implementation, please wait*
 .. *Scaffolding process ended. You can now start iterating over your local API and implementation project*
-//TODO duke: TBD IF THIS WORKS OR IS NECESSARY:
-//[TIP]
-//--
-//To monitor the progress of this task:
-//
-//.. Open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac)
-//.. From the output panel, select *Mule DX Server* from the drop-down menu.
-//+
-//image::select-mule-dx-server.png[]
-//--
 . For from your multi-root workspace in the Explorer, open the configuration XML for the new Mule project with the scaffolded specification.
 +
 * The UI canvas for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
@@ -356,27 +347,27 @@ The status bar displays the progress, first *Publishing API Specification to Exc
 +
 . To work iteratively on a new version of your API specification, close the current workspace and re-import version 1.0.0 of your API from Design Center, and implement it locally again.
 
-
-////
-TODO duke: NOT WORKING, STEPS IN FLUX 
 [[display-command]]
 == Display MuleSoft: Implement this Local API Command
 
-If `MuleSoft: Implement this Local API Command` does not appear in the command palette from your open API specification project, it is likely that another set of iterative projects is in your multi-root workspace. 
+If `MuleSoft: Implement this Local API Command` does not appear in the command palette from your open API specification project, it is likely that another project in your multi-root workspace is implementing a local API specification. 
 
-To address this issue:
+To address this issue, remove the API specification from that workspace, and create the specification in another directory.
 
-. In the Explorer, right-click your new API specification folder, and select *Remove project from workspace*. 
-. Select or create a folder for the workspace.
+. In the Explorer, right-click your new API specification folder, select *Remove project from workspace*, and delete the specification project. 
+. Create a new directory for your API specification outside of the current workspace.
 +
-This step opens to the  
-. Reopen your API specification by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
+Make sure that this new folder does not have a `.code-workspace` file at its root.
++
+. Recreate the API specification in the new folder:
++
+When creating the API specification, select your new directory as the *Project Location*. The root directory for your API specification becomes a child of this project location. 
+. Navigate to the root directory of API specification:
+.. Press Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
 +
 [source,command]
 ----
 File: Open Folder
 ---- 
-. Find and open the folder with you the new API specification. 
-. Select a  workspace
-
-////
+.. Find and open the root directory for your new API specification. 
+.. Begin the procedure <<implement-local>>.
