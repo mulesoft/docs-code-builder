@@ -1,4 +1,5 @@
 = Configure Slack Integration
+:imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -11,16 +12,16 @@ With your email and Salesforce integration complete, you can now configure your 
 
 Before you begin, ensure you:
 
-* Created a xref:create-escalation-slack-api.adoc[Base Integration Mule Configuration File].
-* Created a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
-* Created variables to which you extracted payload information. +
+* Create a xref:create-escalation-slack-api.adoc["New Case Salesforce" integration].
+* Create a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
+* Create variables to which you extract payload information. +
 See xref:extract-payload-information.adoc[].
-* Configured a Choice router and added an Email connector to your flow. +
+* Configure a Choice Router and add an Email connector to your flow. +
 See xref:add-condition-to-your-flow.adoc[].
 
 == Add a Slack Action
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file and delete the *Temporary Logger* component inside the *Not Escalated* route of the Choice router:
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file and delete the *Temporary Logger* component inside the *Not Escalated* route of the Choice Router:
 +
 image::delete-temporary-logger-slack.png[]
 +
@@ -28,7 +29,7 @@ image::delete-temporary-logger-slack.png[]
 --
 <logger doc:name="Temporary Logger" message='#["Please look into this new Case: " ++ payload]'/>
 --
-. Select the `plus` icon inside the *Not Escalated* route of the Choice router:
+. Select the `plus` icon inside the *Not Escalated* route of the Choice Router:
 +
 image::add-slack-action-example-canvas.png[]
 . Select the `search in Exchange` icon, type `_Slack_` and select *Slack Connector*:
@@ -53,9 +54,10 @@ image::select-post-message-operation.png[]
 == Configure the Slack Connection
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</email:smtp-config>` element.
-. Type _choice_ and select *Slack Connector:config*:
-+
-image::add-slack-config.png[]
+. Type _slack_ and select *slack:config*:
+//+
+//TODO: cc: the connector name in the following screenshot does not match the desktop experience
+//image::add-slack-config.png[]
 . Add the following configuration to your `<slack:config>` element:
 +
 [source,XML]

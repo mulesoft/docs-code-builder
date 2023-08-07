@@ -1,4 +1,5 @@
 = Add a Condition to Your Flow Logic
+:imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -11,19 +12,19 @@ In this section of the walkthrough you learn how to add a condition to your flow
 
 Before you begin, ensure you:
 
-* Created a xref:create-escalation-slack-api.adoc[Base Integration Mule Configuration File].
-* Created a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
-* Created variables to which you extracted payload information. +
+* Create a xref:create-escalation-slack-api.adoc["New Case Salesforce" integration].
+* Create a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
+* Create variables to which you extract payload information. +
 See xref:extract-payload-information.adoc[].
 
-== Define the Behaviour for When the Case Is Escalated
+== Define the Behavior for When the Case Is Escalated
 
 Use a Choice Router to define behaviors based on specific conditions. In this case, choose to send an email if the case is escalated.
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file, select the `plus` icon after the Logger component:
 +
 image::add-choice-router-slack-escalation-canvas.png[]
-. Type _choice_ and select *Choice*:
+. Type _choice_ and select *Choice* under *Flow Control*:
 +
 image::drag-choice-router-slack-integration-canvas.png[]
 . Add both `when` and `otherwise` elements:
@@ -75,9 +76,10 @@ For better readability of your Mule flow, update the name of the `choice`, `when
 To configure the `when` element, you must first configure an Email Connector:
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</salesforce:sfdc-config>` element.
-. Type _smtp_ and select *Email:smtp*.
-+
-image::add-smtp-config.png[]
+. Type _smtp_ and select *email:smtp-config*.
+//+
+//TODO: cc: screenshot doesn't match actual desktop UI
+//image::add-smtp-config.png[]
 +
 [source,XML]
 --
@@ -89,7 +91,7 @@ image::add-smtp-config.png[]
   </email:smtps-connection>
 </email:smtp-config>
 --
-. Select the `plus` icon after the *When* section:
+. Select the `plus` icon after the *Escalated* section:
 +
 image::add-email-operation-slack-integration-canvas.png[]
 . Type _send_, and select *Send* from the *Email* section:
