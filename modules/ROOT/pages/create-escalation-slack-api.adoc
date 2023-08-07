@@ -1,4 +1,5 @@
 = Create an Escalation API between Slack and Salesforce
+:imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -7,7 +8,7 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 This walkthrough enables you to create an integration that notifies you either through email or Slack, when a new case is created in Salesforce.
 
-The integration that you will build contains a flow with the following logic:
+The integration that you build contains a flow with the following logic:
 
 * The creation of a new case in Salesforce triggers your flow.
 * If the case is escalated, your application sends an email to the regional leader including the case number, origin, reason, priority, and status.
@@ -19,7 +20,11 @@ Before you begin, ensure you:
 
 * Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
+* Set up a Salesforce demo environment.
+** Sign up for a developer organization https://developer.salesforce.com/signup[here^].
+** Create a developer security token https://help.salesforce.com/s/articleView?id=sf.user_security_token.htm&type=5[here^].
 * Have a personal or business Gmail account.
+* Have a personal or business Slack account.
 
 === Set Up Your Slack Workspace
 
@@ -60,7 +65,7 @@ image::slack-copy-oauth-token.png[]
 
 === Set up an App Password for Your Email
 
-Later in this walkthrough your will configure the Email Connector to send emails to your configured email account. To avoid using your email password, follow https://support.google.com/accounts/answer/185833?visit_id=637917932546436561-2352829986&p=InvalidSecondFactor&rd=1[Google instructions^] to configure an App password.
+Later in this walkthrough you configure the Email Connector to send emails to your configured email account. To avoid using your email password, follow https://support.google.com/accounts/answer/185833?visit_id=637917932546436561-2352829986&p=InvalidSecondFactor&rd=1[Google instructions^] to configure an App password.
 
 [IMPORTANT]
 --
@@ -70,12 +75,18 @@ The Gmail account must have 2-factor authentication enabled to configure an App 
 == Create an Integration
 
 
-. In your web IDE instance, navigate to your Anypoint Code Builder view:
+// . In your web IDE instance, navigate to your Anypoint Code Builder view:
+// +
+// TODO: cc: web-specific UI screenshot
+// image::anypoint-code-builder-view.png[]
+// . Select *Develop an Integration*.
+// +
+// TODO: cc: web-specific UI screenshot
+// image::develop-integration-option-mat.png[]
+
+. In Anypoint Code Builder, open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and type _MuleSoft: Develop an Integration_.
 +
-image::anypoint-code-builder-view.png[]
-. Select *Develop an Integration*.
-+
-image::develop-integration-option-mat.png[]
+. Select the command.
 +
 . Configure your integration using the following values:
 +
@@ -87,8 +98,9 @@ image::integration-create-ui.png[]
 +
 . Select *Create Project*.
 . Anypoint Code Builder creates the base files for your integration.
-+
-image::finished-project-creation.png[]
+//+
+// TODO: cc: web-specific UI screenshot
+//image::finished-project-creation.png[]
 
 == Next Step
 
