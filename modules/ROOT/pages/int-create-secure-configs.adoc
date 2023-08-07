@@ -82,8 +82,7 @@ ftp:
 ----
 |===
 
-You can create separate properties files for your unencrypted and encrypted properties. For example: 
-
+You can create separate properties files for your unencrypted and encrypted properties. For example, in a YAML file: 
 
 [%header,cols="1a,1a"]
 |===
@@ -107,6 +106,31 @@ ftp:
   pw: "![n2LDIOKKxhQ5Tdv5AeCtFQ==]"
 ----
 |===
+
+
+In a Spring-formatted `.properties` file, the same configurations are:
+
+[%header,cols="1a,1a"]
+|===
+| Unencrypted Values of `workingDir` and `host` Keys
+| Encrypted Values of `uname` and `pw` Keys
+
+| 
+.`dev.properties` content:
+[source,properties]
+----
+ftp.workingDir=/Users/me/myworkingdir
+host.localhost=8081
+----
+|
+.`dev.secure.properties` content:
+[source,properties]
+----
+ftp.uname=![UqoJI2fvggE=]
+ftp.pw=![n2LDIOKKxhQ5Tdv5AeCtFQ==]
+----
+|===
+
 
 For step-by-step instructions, see <<encrypt>>. 
 
@@ -187,7 +211,7 @@ For more guidance, see <<properties>>.
 .. Download the https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[Secure Properties Tool], an executable JAR file for encrypting properties.
 .. From the command line, run the Secure Properties Tool on the values you intend to secure.
 +
-.Example that encrypts `"mysensitivevalue"` using Blowfish and `my-key` for an encryption key password:
+.Example that encrypts `"mysensitivevalue"` using Blowfish and `my-key-value` for an encryption key password:
 [source,terminal]
 ----
 $ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
@@ -195,7 +219,7 @@ string \
 encrypt \
 Blowfish \
 CBC \
-my-key \
+my-key-value \
 "mysensitivevalue" 
 ----
 +
@@ -412,7 +436,7 @@ Notice the `secure::` prefix to the key.
 [[test-deploy]]
 == Test Encrypted Properties in Your IDE
 
-If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. Adding these arguments to the setting enables the runtime to decrypt properties used in your application so that it deploys successfully to your IDE. 
+If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. Adding these arguments to the setting enables the runtime to decrypt properties used in your application that it deploys successfully to the local runtime in your IDE. 
 
 The setting avoids an error that causes the deployment to fail when you use  *Run and Debug* in your IDE:
 
@@ -427,10 +451,10 @@ from properties provider environment properties provider
 +
 [source,key-configuration]
 ----
--M-Dencryption.key=my-key
+-M-Dencryption.key=my-key-value
 ----
 +
-In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key` is the value used to encrypt the properties through the Secure Properties Tool. 
+In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key-value` is the value used to encrypt the properties through the Secure Properties Tool. 
 .. Deploy the application locally within the IDE by pressing Ctrl+shift+p (Windows) or CmdCtrl+shift+p (Mac), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
 +
 A successful deployment produces the following message in the *OUTPUT* tab of the output panel. For information about the output panel, see xref:configure-default-output-panel.adoc[].
