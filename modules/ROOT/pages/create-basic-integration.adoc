@@ -68,7 +68,7 @@ You see two different views:
 .. In the UI canvas, after your *Flow* component, select the `plus` icon:
 +
 image::main-tutorial-add-first-http-listener.png["Plus icon highlighted in the flow"]
-. Search for and select *Listener* from the *HTTP* results:
+.. Search for and select *Listener* from the *HTTP* results:
 +
 image::main-tutorial-add-first-listener.png["Listener component highlighted in the Add Component section"]
 +
@@ -81,39 +81,52 @@ The configuration XML file adds the XML for the HTTP Listener into the `<flow/>`
   
 </flow>
 ----
-.. Above the `<flow>` element in the configuration XML, add the `<`http:listener-config/>` component. 
-. Type `http`, and select `http:listener-config`.
+. In the configuration XML, above the `<flow/>` element, add the `<http:listener-config/>` component: 
+.. In the configuration XML, press Ctrl+Spacebar (Mac) or Cmd+Spacebar(Windows) to open the XML configuration menu.
+.. Type `http`, and select the _snippet_ `muledx:http-listener-config`.
 +
-image::add-http-config.png["HTTP:listener-config highlighted in the popup menu"]
-. Configure the elements for the HTTP Listener operation and the connection:
+image::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu]
++
+.Snippet XML example:
+[source,xml]
+----
+<http:listener-config name="httpListenerConfig" doc:name="Listener Config" doc:id="b5c62f-a84a3a">
+  <http:listener-connection host="Host" port="Port"/>
+</http:listener-config>
+----
+. Configure the attributes for the HTTP Listener operation `<http:listener/>` and `<http:listener-config/>`:
 +
 [source,xml]
 ----
-<http:listener-config name="inbound-request" doc:name="HTTP Config">
-    <http:listener-connection host="0.0.0.0" port="8081" />
+<!--1-->
+<http:listener-config name="inbound-request" doc:name="Listener Config" doc:id="b5c62f-a84a3a"> 
+  <http:listener-connection host="0.0.0.0" port="8081"/>
 </http:listener-config>
 
 <flow name="getFlights">
+<!--2-->   
     <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
 </flow>
 ----
+[calloutlist]
+.. In `<http:listener-config/>` and its child element `<http:listener-connection/>`, set the attributes to values provided in the example. The `doc:id` is randomly generated and does not require a change.
+.. In `<http:listener/>`, set the attributes to the values provided in the example. 
 . Notice the graphical representation of the HTTP Listener element in the UI canvas.
 +
 When you select any processor in the canvas, Anypoint Code Builder highlights its location within the configuration XML.
 +
 image::http-highlight-flow.png["HTTP listener highlighted in the flow and in the XML code"]
-. Use the UI canvas to add a Set Payload component below your HTTP Listener operation. 
-. In the configuration XML, configure the Set Payload component:
+. From the UI canvas, add a Set Payload component below your HTTP Listener operation, and configure its attributes in the configuration XML:
 +
 [source,xml,linenums]
 ----
-<http:listener-config name="inbound-request" doc:name="HTTP Config">
+<http:listener-config name="inbound-request" doc:id="b5c62f-a84a3a">
     <http:listener-connection host="0.0.0.0" port="8081" />
 </http:listener-config>
-
-<flow name="getFlights">
-    <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
-    <set-payload value="Flight info" doc:name="Set Response" />
+  
+<flow name="getFlights" >
+  <http:listener path="" config-ref="inbound-request" doc:name="HTTP /flights" doc:id="htprur" />
+  <set-payload value="Flight info" doc:name="Set Response" doc:id="e43e98-1a9a01"/>
 </flow>
 ----
 
