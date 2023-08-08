@@ -16,12 +16,12 @@ Before you begin:
 * Create a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
 * Create variables to which you extract payload information. +
 See xref:extract-payload-information.adoc[].
-* Configure a Choice Router and add an Email connector to your flow. +
+* Configure a Choice router and add an Email connector to your flow. +
 See xref:add-condition-to-your-flow.adoc[].
 
 == Add a Slack Action
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file and delete the *Temporary Logger* component inside the *Not Escalated* route of the Choice Router:
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file and delete the *Temporary Logger* component inside the *Not Escalated* route of the Choice router:
 +
 image::delete-temporary-logger-slack.png[]
 +
@@ -29,7 +29,7 @@ image::delete-temporary-logger-slack.png[]
 --
 <logger doc:name="Temporary Logger" message='#["Please look into this new Case: " ++ payload]'/>
 --
-. Select the `plus` icon inside the *Not Escalated* route of the Choice Router:
+. Select the `plus` icon inside the *Not Escalated* route of the Choice router:
 +
 image::add-slack-action-example-canvas.png[]
 . Select the `search in Exchange` icon, type `_Slack_` and select *Slack Connector*:
