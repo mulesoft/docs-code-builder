@@ -598,16 +598,18 @@ For guidance with settings required for applications that use encrypted properti
 . If prompted, enter _the same value_ you used to encrypt your secure properties.
 . Select the *Sandbox* environment for your deployment.
 . Once the deployment is complete, click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
-. Click *Settings* > *Properties* for your application to check for the hidden value to the encryption key and for the `env` setting. 
+. To check for properties such as your `env` setting or a hidden value to your encryption key, click *Settings* > *Properties* for your application.
 +
-You can change the value of the properties, for example, to fix any deployment errors. 
+You can create properties or change the value of existing properties, for example, to fix some deployment errors.
+
+////
 //. Set the `env` property for the application in Runtime Manager:
 //.. In the *Properties* tab, provide a new *env* key with a value that matches the environment, such as *sandbox*, and the prefix to the file name (such as `sandbox.properties.yaml`).
 //.. Click *Apply Changes* to launch a deployment with the new setting for `env` in your application.
 //+
 //The new setting makes the application use the properties file with the prefix that matches the value you provided for *env* in Runtime Manager. This setting overrides the global property setting (`<global-property/>`) in the configuration XML for your application. 
-
 //TODO: IS THERE ANOTHER WAY TO SET env? WHAT ABOUT FOR ON-PREM? 
+////
 
 
 == See Also
