@@ -561,27 +561,51 @@ Notice the value of the `file` attribute in this example:
       <secure-properties:encrypt algorithm="Blowfish" />
 </secure-properties:config>
 ----
-. Above the `<flow/>` element, add a `<global-property/>` element to the configuration XML that defines the value of `env` property. 
-+
-[source,xml]
-----
-<global-property name="env" value="dev" />
-----
-+
-After deploying to CloudHub, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
-. Before deploying to CloudHub, make sure the application deploys locally your  IDE.
+//. Above the `<flow/>` element, add a `<global-property/>` element to the configuration XML that defines the value of `env` property. 
+//+
+//[source,xml]
+//----
+//<global-property name="env" value="dev" />
+//----
+//+
+//After deploying to CloudHub, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
+. Before deploying to CloudHub, make sure the application deploys locally your IDE.
 +
 For guidance with settings required for applications that use encrypted properties, see <<test-deploy, testing instructions>>.
-. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
-.. If prompted, enter _the same value_ you used to encrypt your secure properties.
-.. Select the *Sandbox* environment for your deployment.
-. Once the deployment is complete, click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
-. Set the `env` property for the application in Runtime Manager:
-.. Click *Settings* > *Properties* for the application.
-.. In the *Properties* tab, provide a new *env* key with a value that matches the environment, such as *sandbox*, and the prefix to the file name (such as `sandbox.properties.yaml`).
-.. Click *Apply Changes* to launch a deployment with the new setting for `env` in your application.
+. Launch the `deploy.json` file for your application by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
+. _Before opting to deploy_, edit `deploy.json` to specify the correct prefix to your properties file. For example:
 +
-The new setting makes the application use the properties file with the prefix that matches the value you provided for *env* in Runtime Manager. This setting overrides the global property setting (`<global-property/>`) in the configuration XML for your application. 
+[source,deploy.json]
+----
+{
+  "runtime": "4.4.0",
+  "workerSize": 0.1,
+  "applicationName": "my-secure-int2-duke",
+  "workers": 1,
+  "autoStart": true,
+  "properties": //<1>
+    {
+      "env": "sandbox" //<2>
+    }
+}
+----
+--
+[calloutlist]
+. Add the `"properties"` key.
+. Add an object that specifies the value of the `${env}` prefix to your properties file, such as `sandbox`.
+--
+[start=6]
+. If prompted, enter _the same value_ you used to encrypt your secure properties.
+. Select the *Sandbox* environment for your deployment.
+. Once the deployment is complete, click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
+. Click *Settings* > *Properties* for your application to check for the hidden value to the encryption key and for the `env` setting. 
++
+You can change the value of the properties, for example, to fix any deployment errors. 
+//. Set the `env` property for the application in Runtime Manager:
+//.. In the *Properties* tab, provide a new *env* key with a value that matches the environment, such as *sandbox*, and the prefix to the file name (such as `sandbox.properties.yaml`).
+//.. Click *Apply Changes* to launch a deployment with the new setting for `env` in your application.
+//+
+//The new setting makes the application use the properties file with the prefix that matches the value you provided for *env* in Runtime Manager. This setting overrides the global property setting (`<global-property/>`) in the configuration XML for your application. 
 
 //TODO: IS THERE ANOTHER WAY TO SET env? WHAT ABOUT FOR ON-PREM? 
 
