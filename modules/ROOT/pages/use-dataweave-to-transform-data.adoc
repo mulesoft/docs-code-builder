@@ -87,7 +87,7 @@ Communications link failure"`.
 To address the issue, try again until you get a successful response.
 +
 [%collapsible]
-.Click for the complete response data.
+.Click for the complete response.
 ====
 [source,JSON]
 ----
@@ -294,7 +294,7 @@ Use DataWeave to transform the response:
 
 . In the configuration XML, replace the script within the `<![CDATA]]>` with a DataWeave mapping:
 +
-[source,dataweave]
+[source,xml]
 --
 <ee:transform doc:name="Transform Message" doc:id="51fed3-afee8c">
   <ee:message>
@@ -323,9 +323,6 @@ Use DataWeave to transform the response:
 --
 . Review your configuration XML.
 +
-[%collapsible]
-.Complete configuration XML:
-====
 [source,xml]
 ----
 <http:listener-config name="inbound-request" doc:name="HTTP Config">
@@ -338,41 +335,39 @@ Use DataWeave to transform the response:
 </db:config>
 
 <flow name="getFlights">
-        <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
-        <db:select doc:name="Query Flights" config-ref="Database_Config" >
-            <db:sql>
-                <![CDATA[Select * FROM american]]>
-            </db:sql>
-        </db:select>
+    <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+    <db:select doc:name="Query Flights" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
 
-        <ee:transform doc:name="Transform Message">
-            <ee:message >
-                <ee:set-payload >
-                    <![CDATA[
-                    %dw 2.0
-                    output application/json
-                    ---
-                    payload map ( payload01 , indexOfPayload01 ) -> {
-                      ID: payload01.ID,
-                      code: (payload01.code1 default "") ++ (payload01.code2 default ""),
-                      price: payload01.price default 0,
-                      departureDate: payload01.takeOffDate as String default "",
-                      origin: payload01.fromAirport default "",
-                      destination: payload01.toAirport default "",
-                      emptySeats: payload01.seatsAvailable default 0,
-                      plane: {
-                        "type": payload01.planeType default "",
-                        totalSeats: payload01.totalSeats default 0
-                      }
-                    }
-                    ]]>
-                </ee:set-payload>
-            </ee:message>
-        </ee:transform>
-
-    </flow>
+    <ee:transform doc:name="Transform Message">
+        <ee:message >
+            <ee:set-payload >
+                <![CDATA[
+                %dw 2.0
+                output application/json
+                ---
+                payload map ( payload01 , indexOfPayload01 ) -> {
+                  ID: payload01.ID,
+                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  price: payload01.price default 0,
+                  departureDate: payload01.takeOffDate as String default "",
+                  origin: payload01.fromAirport default "",
+                  destination: payload01.toAirport default "",
+                  emptySeats: payload01.seatsAvailable default 0,
+                  plane: {
+                    "type": payload01.planeType default "",
+                    totalSeats: payload01.totalSeats default 0
+                  }
+                }
+                ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+</flow>
 ----
-====
 
 == Run and Test Your Application
 
@@ -383,10 +378,29 @@ For guidance, see xref:create-basic-integration.adoc#run[Run Your Application in
 +
 For guidance, see xref:create-basic-integration.adoc#test[Test Your Application].
 +
-Notice that the transformed data structure conforms to the API requirements.
+Notice that the transformed data structure conforms to the API requirements. For example:
++
+[source,JSON]
+----
+[
+    {
+        "ID": 1,
+        "code": "rree0001",
+        "price": 541,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 787",
+            "totalSeats": 200
+        }
+    },
+    ...
+----
 +
 [%collapsible]
-.Transformed data:
+.Click for the complete response.
 ====
 [source,JSON]
 ----
