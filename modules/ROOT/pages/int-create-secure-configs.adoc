@@ -504,11 +504,16 @@ To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub
 ----
 +
 The _name_ (not the _value_) of your encryption key goes into a comma-separated `secureProperties` array. Later in this procedure, when you deploy your application to CloudHub, the IDE prompts you to provide the _value_ of the encryption key that you provided through the Secure Configuration Tool when encrypting your sensitive properties.
-. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
+. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and providing this command:
++
+[source, command]
+----
+MuleSoft: Deploy to CloudHub
+----
 +
 Alternatively, you can click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
 +
-images::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
+image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
 . When prompted, enter _the same value_ you used to encrypt your secure properties.
 +
 If you do not enter the same value, the application is able to upload to CloudHub, but the deployment will fail because the encryption key value will not work.
@@ -575,12 +580,12 @@ Notice the value of the `file` attribute in this example:
 //----
 //+
 //After deploying to CloudHub, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
-. Before deploying to CloudHub, make sure the application deploys locally your IDE:
+. _Before deploying to CloudHub_, make sure the application deploys locally your IDE:
 .. In the IDE, press Cmd+shift+p (Windows) or Ctrl+shift+p (Mac), and provide this command:
 +
 [source,command]
 ----
-Open `launch.json`
+Open 'launch.json'
 ----
 .. In `launch.json`, append the value of the `env` variable to use when running the application from the IDE. 
 +
