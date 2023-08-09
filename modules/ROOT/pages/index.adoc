@@ -2,30 +2,102 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Anypoint Code Builder is a web-based integrated development environment (IDE) based on Visual Studio Code that includes Anypoint Code Builder extensions. Anypoint Code Builder provides a modern experience for all developers to design, develop, and deploy APIs, integrations, and automations from a single environment.
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Anypoint Code Builder requires no additional software, setup, or machine specifications.
+//intro
+Use the Anypoint Code Builder integrated development environment (IDE) for your API designs, implementations, and integration development. Work locally with Anypoint Code Builder for Desktop on Microsoft Visual Studio Code (VS Code) or from your browser with Anypoint Code Builder on Anypoint Platform. The IDEs support the development lifecycle:
 
-Anypoint Code Builder is in open beta, and it's available for any organization that signed up for this beta release. +
-If you are not part of this open beta, ask your MuleSoft representative to add you.
+* API specification design (OAS, RAML, or GraphQL), a mocking service for testing, source control, and publication to Anypoint Exchange
+* API implementation features for importing supported API specifications and autogenerating interfaces (scaffolding) for flows and error handlers within a Mule application
+* Integration development to connect systems, transform data to required formats, and provide business logic to manage messages and events programmatically within a Mule application
 
-[IMPORTANT]
---
-During the open beta, your existing web IDE instance might be deleted, causing you to lose your integrations, automations, and APIs.
+//extensions info
+== Anypoint Extension Pack
 
-To save your work, you must either deploy your Mule projects to CloudHub, commit them to source control, or publish your API specifications to Design Center.
+Get the Anypoint Code Builder experience through the Anypoint Extension Pack for Visual Studio Code. The web-based extensions are preinstalled into a code-server implementation that makes VS Code accessible from a browser. The desktop extensions require installation to your VS Code IDE. See xref:setup.adoc[].
 
-Users with an Anypoint Platform trial account will lose access to Anypoint Code Builder after their trial expires and their web IDE instances will be deleted.
---
+== Get Familiar with the Basics
+
+It's good to have some knowledge about designing an API using API specification languages (OAS, RAML, or GraphQL). API implementations and integration development require familiarity with Mule application development, connectors, and the DataWeave transformation language. Anypoint Code Builder xref:user-guide.adoc[tutorials] help you get started with these tasks.
+
+It's also useful to be familiar with these products and features:
+
+* Anypoint Connectors provide operations for retrieving, modifying, and sending data to and from systems. Anypoint Code Builder provides <<builtin-connectors, built-in connectors>> and access to many other connectors from Anypoint Exchange.
+//TODO: we're preparing a way to provide sharable component doc in ACB doc set for these. This bullet could point to that ACB doc once it exists and/or to the connectors section of the docs. 
+
+* Core processors (also called Core components or Mule components) are programmatic building blocks that provide the business logic for integration applications. Examples include For Each (`<foreach/>`), Transform Message (`<ee:transform/>`), and Flow (`<flow/>`).
+//TODO: we're preparing a way to provide sharable component doc in ACB doc set for these. This bullet could point to that doc or to the component section of the docs. I'd prefer the former, which will exclude refs to Studio.
+
+* DataWeave is the programming language for all expressions and data transformations in your integrations and implementations. The language offers function libraries and mechanisms for creating customizations, including your own functions, libraries, and data types.
+//TODO: POINT TO DW docs, DW playground & tutorial on dataweave.mulesoft.com (below)
+
+* Scaffolding is an automatic process that uses APIkit to take an API specification as input and autogenerate an XML-based router and endpoints that you implement within a Mule application.
+//TODO: Not sure if we need to say more about APIkit; leaning toward no.
+//TODO: If already introduced above, prob not needed here unless we're adding some detail
+
+* A flow is a block of components, including any connector operations, that Mule runtime engine (Mule) executes sequentially on an event and the message it contains. A flow can also contain an operation that triggers the creation of the event and initiates the execution of the flow.
++
+A subflow is similar to a flow but does not support the configuration of triggers (sometimes called message sources), which are exclusive to flows. 
++
+A flow reference enables you to to trigger execution of a flow or subflow from another flow.
+
+* A Mule application contains one or more XML-based configuration files for your connectors, components, secure configuration properties, scaffolded API specifications, and other parts of your integrations and implementations. The application runs on Mule and is part of a project that contains the resources needed to configure, build, run, test, and deploy the application. 
+
+//Mule application development requires some understanding of the Mule message model, predefined Mule variables (`payload`, `attributes`, `vars`, `errors`), and execution of the Mule event within Mule flows.
+//TODO: POINT TO helpful areas of the Mule docs (below)
+
+== Anypoint Platform Product Integrations
+
+//relationships to our other products
+Both the web and desktop Anypoint Code Builder IDEs integrate with key Anypoint Platform products: 
+
+* Anypoint Exchange for publishing the API specifications that you create, and for importing API specifications and development resources (such as connectors) into your projects
+* CloudHub for deploying the implementations and integrations that you build 
+* Design Center for storing API specifications as they are developed
+
+[[builtin-connectors]]
+== Built-In Connectors
+
+Built-in connectors include:
+
+* xref:db-connector::index.adoc[Anypoint Connector for Database] (Database Connector) 
+* xref:email-connector::index.adoc[Anypoint Connector for Email] (Email Connector)
+* xref:http-connector::index.adoc[Anypoint Connector for HTTP] (HTTP Connector)
+* xref:salesforce-connector::index.adoc[Anypoint Connector for Salesforce] (Salesforce Connector) 
+
+Many other connectors are available through https://www.mulesoft.com/exchange/[Anypoint Exchange^] from your Anypoint Code Builder IDE.
+
+//what do people need to know to get started?
+//NOT YET: While built-in features, such as AI-generated suggestions, help guide your work in Anypoint Code Builder, the following background is necessary: 
+
+//TODO: ADD Learning resources are available in the connector docs, Mule docs, DataWeave docs, and dataweave.mulesoft.com, which provides a tutorial and playground for trying out DataWeave scripts.  
+
+//seems like we have no choice but to introduce them to key things they
+//need to understand and point them to resources for more info
+
+//TODO: SHOULD WE ADD SOMETHING LIKE THIS (WITH IMPROVED DESCRIPTIONS)?
+//TODO: QA and refine the "starter" descriptions below, of course
+//Important concepts include the following:
 
 
+//suggest consolidating feedback info on this page and assuming familiarity with GitHub 
+//== Feedback
 
+//You can provide feedback about Anypoint Code Builder as a https://github.com/forcedotcom/try-acb-feedback/issues[GitHub issue^]. 
 
-Do not use Anypoint Code Builder to develop APIs, integrations, or automations meant for production environments.
+//For questions or general discussions about Code Builder, see see https://trailhead.salesforce.com/trailblazer-community/topics/mulesoftanypointcodebuilder?sort=LAST_MODIFIED_DATE_DESC[Trailblazer Discussion Topic^].
+
+//TODO: ANYTHING ELSE?
 
 == See Also
 
-* xref:configure-permissions.adoc[Configure Permissions]
-* xref:load-acb-web-ide.adoc[Load Anypoint Code Builder]
-* xref:get-started.adoc[Get Started]
-* xref:user-guide.adoc[User Guide]
+* xref:exchange::index.adoc[]
+* xref:connectors::index.adoc[]
+* xref:dataweave::index.adoc[]
+* xref:design-center::index.adoc[] 
+* xref:mule-runtime::index.adoc[]
+* xref:studio::index.adoc[]
+
+//* xref:configure-permissions.adoc[Configure Permissions]
+//* xref:load-acb-web-ide.adoc[Load Anypoint Code Builder]
