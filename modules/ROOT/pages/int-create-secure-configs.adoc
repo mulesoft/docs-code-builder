@@ -485,13 +485,13 @@ When you deploy an application that you build with Anypoint Code Builder to Clou
 
 Runtime Manager serves as the management console for CloudHub deployments. The encryption key value serves as the password for encryption and decryption.
 
-NOTE::
+IMPORTANT::
 This procedure configures the _name_ of your encryption key but not its value in `mule-artifact.json`. For security, never configure the _value_ of your encryption key in this or any other file that is packaged within a deployed project.
 
 Before you begin: 
 
 * Run and test encrypted properties used by your Mule application in your IDE. See <<properties>> for guidance.
-* If you are using the web IDE, make sure that you have the required permission: *Anypoint Code Builder Developer*. See xref:configure-permissions.adoc[].
+* If you are using the web IDE, ensure that you have the required permission: *Anypoint Code Builder Developer*. See xref:configure-permissions.adoc[].
 
 To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub: 
 
@@ -581,7 +581,7 @@ Notice the value of the `file` attribute in this example:
 //----
 //+
 //After deploying to CloudHub, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
-. _Before deploying to CloudHub_, make sure the application deploys locally your IDE:
+. _Before deploying to CloudHub_, ensure that the application deploys locally your IDE:
 .. In the IDE, press Cmd+shift+p (Windows) or Ctrl+shift+p (Mac), and provide this command:
 +
 [source,command]
