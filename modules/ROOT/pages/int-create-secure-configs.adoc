@@ -609,14 +609,19 @@ Notice the setting `-M-Denv=dev` in this `launch.json` example:
 ----
 +
 `-M-Denv=dev` sets the `env` variable to `dev` as a Mule runtime argument (`"mule.runtime.args"`). 
+.. If your application defines encrypted properties in your properties file, configure the *Runtime: Default Arguments* command in the IDE with the encryption key and value. 
 +
-If your application defines encrypted properties in your properties file, you can also add an argument such as `-M-Dencryption.key=my-key-value` to the `"mule.runtime.args"` key. See <<test-deploy>> for guidance.
+See <<test-deploy>> for guidance.
 . Launch the `deploy.json` file for your application by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and providing
 +
 [source,command]
 ----
 MuleSoft: Deploy to CloudHub
 ----
++
+Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
++
+image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub "rocket" icon with deploy.json open"]
 . _Before opting to deploy_, edit `deploy.json` to specify the correct prefix to your properties file. For example:
 +
 [source,deploy.json]
