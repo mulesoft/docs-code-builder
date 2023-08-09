@@ -107,7 +107,6 @@ ftp:
 ----
 |===
 
-
 In a Spring-formatted `.properties` file, the same configurations are:
 
 [%header,cols="1a,1a"]
@@ -132,6 +131,8 @@ ftp.pw=![n2LDIOKKxhQ5Tdv5AeCtFQ==]
 |===
 
 For step-by-step instructions, see <<encrypt>>. 
+
+To provide property settings for different environments, such as production and development environments, create separate properties files for your environments. For instructions, see <<create-prop-file>>.
 
 //H3 section: reference 
 [[reference-use]]
@@ -183,8 +184,6 @@ This FTP example references `dev.secure.yaml` with `<secure-properties:config/>`
 +
 For step-by-step instructions with encrypted values, see <<use>>. 
 
-To provide property settings for different environments, such as production and development environments, create separate properties files for your environments, and use a variable in the file name in the `file` attribute of `<secure-properties:config/>` instead of hardcoding the entire file name. For instructions, see <<create-prop-file>>.
-
 //H2 PROCEDURE: ENCRYPT
 [[encrypt]]
 == Encrypt Sensitive Values
@@ -224,14 +223,14 @@ my-key-value \
 "mysensitivevalue" 
 ----
 +
-[IMPORTANT] Be sure to store your encryption key value (password) in a secure location. You’ll need your key value later, when you deploy your application.
-+
 .Encrypted Output:
 [source,terminal]
 ----
 /MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5
 ----
-
++
+IMPORTANT::
+Be sure to store your encryption key value (password) in a secure location. You’ll need your key value later, when you deploy your application.
 . In your properties file, add each encrypted property value within `![]` brackets.
 +
 .Example that replaces the unencrypted value `"mysensitivevalue"` with the encrypted value `"![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"`:
@@ -450,9 +449,8 @@ Couldn't find configuration property value for key ${encryption.key}
 from properties provider environment properties provider
 ----
 
-. Provide a local key-value pair for your encryption key name and its value through the UI or in `launch.json`:
+. Provide a local key-value pair for your encryption key name and its value through the UI:
 
-* In the UI: 
 .. Navigate to *Manage* (gear icon) > *Settings*, and find *Runtime: Default Arguments* on the *Settings* page. 
 .. In the *Runtime: Default Arguments* field, append the key-value pair for your encryption key to the _end_ of the configuration. For example:
 +
@@ -461,47 +459,7 @@ from properties provider environment properties provider
 -M-Dencryption.key=my-key-value
 ----
 +
-In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key-value` is the value used to encrypt the properties through the Secure Properties Tool. 
-
-* In `launch.json`:
-.. Press Cmd+shift+p (Windows) or Ctrl+shift+p (Mac), and provide this command:
-+
-[source,command]
-----
-Open `launch.json`
-----
-.. Append the argument for the key-value pair as a value of the `"mule.runtime.args"` key. For example:
-+
-[source,launch.json]
-----
-"mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dencryption.key=my-key-value"
-----
-+
-In this example, `-M-Dencryption.key=my-key-value` sets the default name of the encryption key (`encryption.key`) and a value of `my-key-value`. 
-+
-Your encryption key value must match the value that you use to <<encrypt, encrypt your properties with the MuleSoft Secure Properties Tool>>, and your key name must match <<use, the name that you provide for it in `<secure-properties:config/>`>>. 
-+
-.Complete `launch.json` example:
-[source,launch.json]
-----
-{
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "type": "mule-xml-debugger",
-        "request": "launch",
-        "name": "Debug Mule Application",
-        "mule.project": "${workspaceFolder}",
-        "mule.home": "${config:mule.runtime.muleHome}",
-        "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dencryption.key=my-key-value -M-Denv=dev"
-      }
-    ]
-}
-----
-+
-If you are also using a variable to define the name of your properties file in `<secure-properties:config/>`, you can append an argument with an `-M-D` prefix to define that variable, such as `-M-Denv=dev`. See <<create-prop-file>> for more information about this variable.
-+
-The complete `launch.json` example adds arguments `-M-Denv=dev -M-Dencryption.key=my-key-value` to define the `env` variable used in the properties file and the encryption key and value. 
+In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key-value` is the value used to encrypt the properties through the Secure Properties Tool.
 . Deploy the application locally within the IDE by pressing Ctrl+shift+p (Windows) or CmdCtrl+shift+p (Mac), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
 +
 A successful deployment produces the following message in the *OUTPUT* tab of the output panel. For information about the output panel, see xref:configure-default-output-panel.adoc[].
@@ -525,6 +483,8 @@ This procedure shows how to hide the encryption key value in Runtime Manager.
 
 When you deploy an application that you build with Anypoint Code Builder to CloudHub, hide the value of your encryption key to prevent Runtime Manager UI from displaying the value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
 
+This procedure configures the _name_ of your encryption key but not its value in `mule-artifact.json`. For security, never configure the _value_ of your encryption key in this or any other file that is packaged within a deployed project.
+
 Runtime Manager serves as the management console for CloudHub deployments. The encryption key value serves as the password for encryption and decryption.
 
 Before you begin: 
@@ -545,6 +505,10 @@ To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub
 +
 The _name_ (not the _value_) of your encryption key goes into a comma-separated `secureProperties` array. Later in this procedure, when you deploy your application to CloudHub, the IDE prompts you to provide the _value_ of the encryption key that you provided through the Secure Configuration Tool when encrypting your sensitive properties.
 . Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
++
+Alternatively, you can click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
++
+images::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
 . When prompted, enter _the same value_ you used to encrypt your secure properties.
 +
 If you do not enter the same value, the application is able to upload to CloudHub, but the deployment will fail because the encryption key value will not work.
