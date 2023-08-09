@@ -21,7 +21,7 @@ Use DataWeave to transform and match flight data to your API specification.
 +
 image::transform-with-output-json.png["Transform component highlighted"]
 +
-.Transform Message user snippet XML:
+.User snippet XML:
 [source,xml]
 ----
 <ee:transform doc:name="" doc:id="51fed3-afee8c">
@@ -36,7 +36,7 @@ image::transform-with-output-json.png["Transform component highlighted"]
 +
 [source,dataweave]
 --
-<ee:transform doc:name="" doc:id="51fed3-afee8c">
+<ee:transform doc:name="Transform Message" doc:id="51fed3-afee8c">
   <ee:message>
     <ee:set-payload>
       <![CDATA[
@@ -278,7 +278,7 @@ To restructure the response data:
 +
 [source,dataweave]
 --
-<ee:transform doc:name="" doc:id="51fed3-afee8c">
+<ee:transform doc:name="Transform Message" doc:id="51fed3-afee8c">
   <ee:message>
     <ee:set-payload>
       <![CDATA[
@@ -310,6 +310,15 @@ To restructure the response data:
 .Complete configuration XML:
 [source,xml]
 ----
+<http:listener-config name="inbound-request" doc:name="HTTP Config">
+    <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+
+<db:config name="Database_Config" doc:name="mySQL DB">
+    <db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" 
+        user="mule" password="mule" database="training" />
+</db:config>
+
 <flow name="getFlights">
         <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
         <db:select doc:name="Query Flights" config-ref="Database_Config" >
