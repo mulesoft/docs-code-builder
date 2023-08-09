@@ -6,55 +6,63 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-You can use DataWeave to transform the flight data you are querying into a JSON output and match it to your API specification.
+Use DataWeave to transform and match flight data to your API specification.
 
 == Before You Begin
 
-Before getting started, ensure you:
-
-* Set up your MuleSoft environment. +
-See xref:setup.adoc[] for more information.
-* Published the `American Flights API - Anypoint Code Builder` to Exchange. +
-See xref:publish-api-spec-to-exchange.adoc[]
-* Created an XML snippet. +
-See xref:create-xml-snippets.adoc[] for more information.
-* Created a basic integration using Anypoint Code Builder. +
-See xref:create-basic-integration.adoc[]
-* Configured a Database Connector element in your application. +
-xref:connect-to-a-db.adoc[]
-* Installed a REST client like Postman or AdvancedRestClient.
+. xref:create-xml-snippets.adoc[]
+. xref:create-basic-integration.adoc[] 
+. xref:connect-to-a-db.adoc[]
 
 == Return the Payload as JSON
 
-. Open your `american-ws-anypoint-code-builder.xml` file.
-. Select the `plus` icon after the *Select* component:
-. Type `_transform_`, and select the `Transform Message` snippet.
+. In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
+. From the UI canvas, insert the user snippet `Transform Message` below the Database Select operation.
 +
 image::transform-with-output-json.png["Transform component highlighted"]
-// TO-DO: Web IDE="Adding Components" and "Adding Content". Desktop IDE= "Add Component" and "Plus icon".
-. Set the `doc:name` attribute to `_Transform Message_`.
-. Remove the content within the `<![CDATA]` attribute inside your `<ee:set-payload>` element, and replace it with the following DataWeave expression:
-// TO-DO: It is not clear where the following expression should be placed. A "Check your code" would be helpful.
++
+.Transform Message user snippet XML:
+[source,xml]
+----
+<ee:transform doc:name="" doc:id="51fed3-afee8c">
+  <ee:message>
+    <ee:set-payload>
+      <![CDATA[]]>
+    </ee:set-payload>
+  </ee:message>
+</ee:transform>
+----
+. Within the `<![CDATA[]]>` add a DataWeave script that outputs the message payload to a JSON format:
 +
 [source,dataweave]
 --
-%dw 2.0
-output application/json
----
-payload
+<ee:transform doc:name="" doc:id="51fed3-afee8c">
+  <ee:message>
+    <ee:set-payload>
+      <![CDATA[
+      %dw 2.0
+      output application/json
+      ---
+      payload      
+      ]]>
+    </ee:set-payload>
+  </ee:message>
+</ee:transform>
 --
+. Deploy your application within the IDE by executing to *Run* > *Start Debugging* (`F5`).
 +
-image::transform-with-output-json.png["Transform component highlighted"]
-// TO-DO: This image is repeated twice in this article. In the second case, we may look for another image.
-. Run your application by pressing `F5`.
-. Open your preferred REST client.
-. Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
-See xref:ping-locally-deployed-app.adoc[] for more information about sending a request to your application.
-
+For guidance, see xref:create-basic-integration.adoc#run[Run Your Application in Debug Mode].
+. After the application deploy successfully, use a REST Client or browser to trigger a response.
++
+For guidance, see xref:create-basic-integration.adoc#test[Test Your Application].
++
 The MySQL database provides the following response:
-
-[source,JSON]
++
+[collapsible]
 --
+.MySQL response:
+[source,JSON]
+----
 [
     {
         "planeType": "Boeing 787",
@@ -200,20 +208,27 @@ The MySQL database provides the following response:
         "totalSeats": 150
     }
 ]
+----
 --
-
-[WARNING]
---
-You can get an error `Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : Communications link failure"`. +
-This error happens when the testing MySQL server is not available. Keep trying until you get a successful response.
---
-// To-Do: Get aligned with our CX style guide and change notes and warnings format from [WARNING]/[NOTE] to WARNING:/NOTE: (https://confluence.internal.salesforce.com/display/DOCTEAM/TCX+-+Notes%2C+Tips%2C+Warnings%2C+and+Important+Notes). 
-
-Although you got a JSON response from your application, it's not the same JSON structure that your API specification dictates:
-
-. Open your `American Flights API - Anypoint Code Builder` in Exchange.
-. The following defined JSON example under your `GET` method for your `/flights` endpoint is provided:
 +
+If the MySQL test server is not available, this error occurs:
++
+----
+Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : 
+Communications link failure"`. 
+----
++
+To address the issue, try again until you get a successful response.
+. Proceed to <<restructure>>.
+
+[[restructure]]
+== Transform the Response Data
+
+Transform the JSON output to the structure required by your API specification.
+
+//TODO: EXPLAIN HOW TO FIND THIS
+Your *American Flights API* in Exchange uses a different structure for its flight data than your request to the database returns. You can find the required structure in the JSON example under the `GET` method for your `/flights` endpoint.
+
 [%header,%autowidth.spread,cols="a,a"]
 |===
 | API Specification Response Structure | Actual Response Structure
@@ -256,39 +271,45 @@ Although you got a JSON response from your application, it's not the same JSON s
 --
 |===
 
-Use DataWeave to align your response to the structure that you defined.
+To restructure the response data: 
 
-== Use DataWeave to Map Data to Your Desired Format
-
-. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
-. Replace the content from the existing `<![CDATA]` attribute inside your `<ee:set-payload>` element with the following sample:
+. Use DataWeave to transform the response data:
+.. In the configuration XML, replace the script within the `<![CDATA]]>` with a DataWeave mapping:
 +
 [source,dataweave]
 --
-%dw 2.0
-output application/json
----
-payload map ( payload01 , indexOfPayload01 ) -> {
-  ID: payload01.ID,
-  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
-  price: payload01.price default 0,
-  departureDate: payload01.takeOffDate as String default "",
-  origin: payload01.fromAirport default "",
-  destination: payload01.toAirport default "",
-  emptySeats: payload01.seatsAvailable default 0,
-  plane: {
-    "type": payload01.planeType default "",
-    totalSeats: payload01.totalSeats default 0
-  }
-}
+<ee:transform doc:name="" doc:id="51fed3-afee8c">
+  <ee:message>
+    <ee:set-payload>
+      <![CDATA[
+      %dw 2.0
+      output application/json
+      ---
+      payload map ( payload01 , indexOfPayload01 ) -> {
+        ID: payload01.ID,
+        code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+        price: payload01.price default 0,
+        departureDate: payload01.takeOffDate as String default "",
+        origin: payload01.fromAirport default "",
+        destination: payload01.toAirport default "",
+        emptySeats: payload01.seatsAvailable default 0,
+        plane: {
+          "type": payload01.planeType default "",
+          totalSeats: payload01.totalSeats default 0
+        }
+      }    
+      ]]>
+    </ee:set-payload>
+  </ee:message>
+</ee:transform>
 --
+. Review your configuration XML:
 +
-image::dw-expression-transform-response.png["DataWeave example highlighted"]
-
-Review your XML code:
-
-[source,xml]
+[collapsible]
 --
+.Complete configuration XML:
+[source,xml]
+----
 <flow name="getFlights">
         <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
         <db:select doc:name="Query Flights" config-ref="Database_Config" >
@@ -323,18 +344,24 @@ Review your XML code:
         </ee:transform>
 
     </flow>
+----
 --
 
 == Run and Test Your Application
 
-. Navigate to *Run* > *Start Debugging* (`F5`).
-. After the deployment is successful, make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. +
-See xref:ping-locally-deployed-app.adoc[] for more information about how to send request to your application.
+. Deploy your application within the IDE by executing to *Run* > *Start Debugging* (`F5`).
 +
-Notice that the proper data structure is now returned from your application:
+For guidance, see xref:create-basic-integration.adoc#run[Run Your Application in Debug Mode].
+. After the application deploy successfully, use a REST Client or browser to trigger the transformed response.
 +
-[source,JSON]
+For guidance, see xref:create-basic-integration.adoc#test[Test Your Application].
++
+Notice that the transformed data structure conforms to the API requirements:
++
+[collapsible]
 --
+[source,JSON]
+----
 [
     {
         "ID": 1,
@@ -480,9 +507,9 @@ Notice that the proper data structure is now returned from your application:
         }
     }
 ]
+----
 --
-. On Anypoint Code Builder, select the stop icon from the toolbar to stop your application.
-
-== Next Step
-
-* Learn how to xref:implement-api-specification.adoc[Implement an API Specification].
+. Stop your application. 
++
+For guidance, see xref:create-basic-integration.adoc#stop[Stop Your Application].
+. Proceed to xref:implement-api-specification.adoc[].

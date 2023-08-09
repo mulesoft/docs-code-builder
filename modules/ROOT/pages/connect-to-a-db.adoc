@@ -10,13 +10,12 @@ Use Anypoint Connector for Database (Database Connector) to connect to an extern
 
 == Before You Begin
 
-. Complete American Flights API specification. Start from xref:design-api-specification-from-scratch.adoc[], and complete the remaining tasks for adding examples, testing with the mocking service, synchronizing with Design Center, and publishing to Exchange.
 . xref:create-xml-snippets.adoc[]
 . xref:create-basic-integration.adoc[] 
 
 == Open Your American Flights Application
 
-. In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml` file.
+. In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
 . Remove the `<set-payload>` component from the configuration XML:
 +
 [source,xml]
@@ -71,14 +70,16 @@ image::add-mysql-driver-dependency.png["Pom.xml and dependency highlighted"]
 == Add a Database Connector Configuration
 
 . In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
-. In the configuration XML, add the global `<db:config/>` snippet above the `<flow>` element:
-.. Press Ctrl+Spacebar (Mac) or Cmd+Spacebar (Windows), type `mysql`, and select the snippet `db:mysql-config` to produce the following XML configuration above the `<flow/>` component:
+. In the configuration XML, add the global `<db:config/>` snippet:
+.. Above the `<flow/>` element, insert the snippet XML by pressing Ctrl+Spacebar (Mac) or Cmd+Spacebar (Windows), typing `mysql` to search for the snippet, and selecting the snippet `db:mysql-config`.
 +
-.Snippet above the <flow/> element:
+.Snippet XML above the <flow/> element:
 [source,xml]
 ----
 <db:config name="Mysql_Database_Config" >
-  <db:my-sql-connection host="${mysql.host}" port="${mysql.port}" user="${mysql.username}" password="${mysql.password}" database="${mysql.database}" />
+  <db:my-sql-connection host="${mysql.host}" port="${mysql.port}"
+      user="${mysql.username}" password="${mysql.password}"
+      database="${mysql.database}" />
 </db:config>
 
 <flow name="getFlights" >
