@@ -55,12 +55,40 @@ For guidance, see xref:create-basic-integration.adoc#run[Run Your Application in
 . After the application deploy successfully, use a REST Client or browser to trigger a response.
 +
 For guidance, see xref:create-basic-integration.adoc#test[Test Your Application].
+. View the response data from the MySQL database. For example:
 +
-The MySQL database provides the following response:
+[source,JSON]
+----
+[
+    {
+        "planeType": "Boeing 787",
+        "code2": "0001",
+        "takeOffDate": "2016-01-20T00:00:00",
+        "code1": "rree",
+        "fromAirport": "MUA",
+        "price": 541,
+        "seatsAvailable": 0,
+        "toAirport": "LAX",
+        "ID": 1,
+        "airlineName": "American Airlines",
+        "totalSeats": 200
+    },
+    ...
+]
+----
 +
-[collapsible]
---
-.MySQL response:
+If the MySQL test server is not available, this error occurs:
++
+----
+Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : 
+Communications link failure"`. 
+----
++
+To address the issue, try again until you get a successful response.
++
+[%collapsible]
+.Click for the complete response data.
+====
 [source,JSON]
 ----
 [
@@ -209,16 +237,7 @@ The MySQL database provides the following response:
     }
 ]
 ----
---
-+
-If the MySQL test server is not available, this error occurs:
-+
-----
-Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : 
-Communications link failure"`. 
-----
-+
-To address the issue, try again until you get a successful response.
+====
 . Proceed to <<restructure>>.
 
 [[restructure]]
@@ -229,15 +248,15 @@ Transform the JSON output to the structure required by your API specification.
 //TODO: EXPLAIN HOW TO FIND THIS
 Your *American Flights API* in Exchange uses a different structure for its flight data than your request to the database returns. You can find the required structure in the JSON example under the `GET` method for your `/flights` endpoint.
 
-[%header,%autowidth.spread,cols="a,a"]
+[%header,%autowidth.spread,cols="1a,1a"]
 |===
 | API Specification Response Structure | Actual Response Structure
 |
 [source,json]
 --
 [
-	{
-		"code": "ER38sd",
+  {
+	  "code": "ER38sd",
 		"price": 400,
 		"departureDate": "2017/07/26",
 		"origin": "CLE",
@@ -255,17 +274,17 @@ Your *American Flights API* in Exchange uses a different structure for its fligh
 --
 [
   {
-      "planeType": "Boeing 787",
-      "code2": "0001",
-      "takeOffDate": "2016-01-20T00:00:00",
-      "code1": "rree",
-      "fromAirport": "MUA",
-      "price": 541,
-      "seatsAvailable": 0,
-      "toAirport": "LAX",
-      "ID": 1,
-      "airlineName": "American Airlines",
-      "totalSeats": 200
+    "planeType": "Boeing 787",
+    "code2": "0001",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 541,
+    "seatsAvailable": 0,
+    "toAirport": "LAX",
+    "ID": 1,
+    "airlineName": "American Airlines",
+    "totalSeats": 200
   }
 ]
 --
@@ -303,11 +322,11 @@ To restructure the response data:
   </ee:message>
 </ee:transform>
 --
-. Review your configuration XML:
+. Review your configuration XML.
 +
-[collapsible]
---
+[%collapsible]
 .Complete configuration XML:
+====
 [source,xml]
 ----
 <http:listener-config name="inbound-request" doc:name="HTTP Config">
@@ -354,21 +373,22 @@ To restructure the response data:
 
     </flow>
 ----
---
+====
 
 == Run and Test Your Application
 
 . Deploy your application within the IDE by executing to *Run* > *Start Debugging* (`F5`).
 +
 For guidance, see xref:create-basic-integration.adoc#run[Run Your Application in Debug Mode].
-. After the application deploy successfully, use a REST Client or browser to trigger the transformed response.
+. After the application deploy successfully, use a REST Client or browser to trigger flow.
 +
 For guidance, see xref:create-basic-integration.adoc#test[Test Your Application].
 +
-Notice that the transformed data structure conforms to the API requirements:
+Notice that the transformed data structure conforms to the API requirements.
 +
-[collapsible]
---
+[%collapsible]
+.Transformed data:
+====
 [source,JSON]
 ----
 [
@@ -517,7 +537,7 @@ Notice that the transformed data structure conforms to the API requirements:
     }
 ]
 ----
---
+====
 . Stop your application. 
 +
 For guidance, see xref:create-basic-integration.adoc#stop[Stop Your Application].
