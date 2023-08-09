@@ -516,14 +516,14 @@ Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configurat
 image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
 . When prompted, enter _the same value_ you used to encrypt your secure properties.
 +
-If you do not enter the same value, the application is able to upload to CloudHub, but the deployment will fail because the encryption key value will not work.
+If you do not enter the same value, the application is able to upload to CloudHub, but the deployment fails because the encryption key value will not work.
 . Select the *Sandbox* environment for your deployment.
 +
 Other environments are not supported, and attempts to deploy to the *Design* environment fail with a `500` error code. While the deployment is in progress, the IDE provides the status of the process and prompts you to open the application in Runtime Manager when the deployment completes.  
 +
 If you receive an error message that says the application `was not successfully deployed to "Sandbox" in CloudHub`, you can open Runtime Manager to check the logs and correct some issues.
 . Click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
-. Check the deployment in Runtime Manager to ensure that the encryption key is hidden by navigating to Settings > Properties for your application. 
+. Check the deployment in Runtime Manager to ensure that the encryption key is hidden by navigating to *Settings* > *Properties* for your application. 
 . In the *Applications* screen for the *SANDBOX* environment, check the *Status* field for your application:
 
 * If the status is *Started*, the deployment is successful, and the application is running.
