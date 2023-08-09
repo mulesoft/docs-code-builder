@@ -256,17 +256,17 @@ Your *American Flights API* in Exchange uses a different structure for its fligh
 --
 [
   {
-	  "code": "ER38sd",
-		"price": 400,
-		"departureDate": "2017/07/26",
-		"origin": "CLE",
-		"destination": "SFO",
-		"emptySeats": 0,
-		"plane": {
-		  "type": "Boeing 737",
-		  "totalSeats": 150
-		}
-	}
+     "code": "ER38sd",
+     "price": 400,
+     "departureDate": "2017/07/26",
+     "origin": "CLE",
+     "destination": "SFO",
+     "emptySeats": 0,
+     "plane": {
+       "type": "Boeing 737",
+       "totalSeats": 150
+     }
+  }
 ]
 --
 |
@@ -290,10 +290,9 @@ Your *American Flights API* in Exchange uses a different structure for its fligh
 --
 |===
 
-To restructure the response data: 
+Use DataWeave to transform the response:
 
-. Use DataWeave to transform the response data:
-.. In the configuration XML, replace the script within the `<![CDATA]]>` with a DataWeave mapping:
+. In the configuration XML, replace the script within the `<![CDATA]]>` with a DataWeave mapping:
 +
 [source,dataweave]
 --
