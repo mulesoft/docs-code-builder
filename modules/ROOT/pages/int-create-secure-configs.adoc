@@ -82,8 +82,7 @@ ftp:
 ----
 |===
 
-You can create separate properties files for your unencrypted and encrypted properties. For example: 
-
+You can create separate properties files for your unencrypted and encrypted properties. For example, in a YAML file: 
 
 [%header,cols="1a,1a"]
 |===
@@ -108,7 +107,32 @@ ftp:
 ----
 |===
 
+In a Spring-formatted `.properties` file, the same configurations are:
+
+[%header,cols="1a,1a"]
+|===
+| Unencrypted Values of `workingDir` and `host` Keys
+| Encrypted Values of `uname` and `pw` Keys
+
+| 
+.`dev.properties` content:
+[source,properties]
+----
+ftp.workingDir=/Users/me/myworkingdir
+host.localhost=8081
+----
+|
+.`dev.secure.properties` content:
+[source,properties]
+----
+ftp.uname=![UqoJI2fvggE=]
+ftp.pw=![n2LDIOKKxhQ5Tdv5AeCtFQ==]
+----
+|===
+
 For step-by-step instructions, see <<encrypt>>. 
+
+To provide property settings for different environments, such as production and development environments, create separate properties files for your environments. For instructions, see <<create-prop-file>>.
 
 //H3 section: reference 
 [[reference-use]]
@@ -187,7 +211,7 @@ For more guidance, see <<properties>>.
 .. Download the https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[Secure Properties Tool], an executable JAR file for encrypting properties.
 .. From the command line, run the Secure Properties Tool on the values you intend to secure.
 +
-.Example that encrypts `"mysensitivevalue"` using Blowfish and `my-key` for an encryption key password:
+.Example that encrypts `"mysensitivevalue"` using Blowfish and `my-key-value` for an encryption key password:
 [source,terminal]
 ----
 $ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
@@ -195,18 +219,18 @@ string \
 encrypt \
 Blowfish \
 CBC \
-my-key \
+my-key-value \
 "mysensitivevalue" 
 ----
-+
-[IMPORTANT] Be sure to store your encryption key value (password) in a secure location. You’ll need your key value later, when you deploy your application.
 +
 .Encrypted Output:
 [source,terminal]
 ----
 /MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5
 ----
-
++
+IMPORTANT::
+Be sure to store your encryption key value (password) in a secure location. You’ll need your key value later, when you deploy your application.
 . In your properties file, add each encrypted property value within `![]` brackets.
 +
 .Example that replaces the unencrypted value `"mysensitivevalue"` with the encrypted value `"![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"`:
@@ -380,6 +404,10 @@ The XML for an unmodified snippet looks like this above a `<flow/>` element:
 ----
 +
 The snippet preconfigures parts of the element that the basic XML configuration does not, so be sure to select the _snippet_ and _not_ the basic XML for this element, which has the same name but a different icon. Like all snippets, this snippet is identified by a two-dimensional box icon, while the basic XML for this element has a three-dimensional box icon. 
++
+When you _first_ add the `<secure-properties:config/>` snippet to the configuration XML, you can tab to the `algorithm` attribute to select another algorithm, or you can change the value manually:
++
+image::int-secure-config-algorithms.png["List of supported algorithms in Secure Configuration Properties module."]
 . Configure the snippet with values for the `file`, `key`, and `algorithm` attributes, for example:
 +
 [source,xml]
@@ -412,7 +440,7 @@ Notice the `secure::` prefix to the key.
 [[test-deploy]]
 == Test Encrypted Properties in Your IDE
 
-If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. Adding these arguments to the setting enables the runtime to decrypt properties used in your application so that it deploys successfully to your IDE. 
+If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. Adding these arguments to the setting enables the runtime to decrypt properties used in your application so that it deploys successfully to the local runtime in your IDE. 
 
 The setting avoids an error that causes the deployment to fail when you use  *Run and Debug* in your IDE:
 
@@ -421,17 +449,18 @@ Couldn't find configuration property value for key ${encryption.key}
 from properties provider environment properties provider
 ----
 
-. Test your application in the IDE:
+. Provide a local key-value pair for your encryption key name and its value through the UI:
+
 .. Navigate to *Manage* (gear icon) > *Settings*, and find *Runtime: Default Arguments* on the *Settings* page. 
 .. In the *Runtime: Default Arguments* field, append the key-value pair for your encryption key to the _end_ of the configuration. For example:
 +
 [source,key-configuration]
 ----
--M-Dencryption.key=my-key
+-M-Dencryption.key=my-key-value
 ----
 +
-In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key` is the value used to encrypt the properties through the Secure Properties Tool. 
-.. Deploy the application locally within the IDE by pressing Ctrl+shift+p (Windows) or CmdCtrl+shift+p (Mac), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
+In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key-value` is the value used to encrypt the properties through the Secure Properties Tool.
+. Deploy the application locally within the IDE by pressing Ctrl+shift+p (Windows) or CmdCtrl+shift+p (Mac), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
 +
 A successful deployment produces the following message in the *OUTPUT* tab of the output panel. For information about the output panel, see xref:configure-default-output-panel.adoc[].
 +
@@ -456,10 +485,13 @@ When you deploy an application that you build with Anypoint Code Builder to Clou
 
 Runtime Manager serves as the management console for CloudHub deployments. The encryption key value serves as the password for encryption and decryption.
 
+IMPORTANT::
+This procedure configures the _name_ of your encryption key but not its value in `mule-artifact.json`. For security, never configure the _value_ of your encryption key in this or any other file that is packaged within a deployed project.
+
 Before you begin: 
 
 * Run and test encrypted properties used by your Mule application in your IDE. See <<properties>> for guidance.
-* If you are using the web IDE, make sure that you have the required permission: *Anypoint Code Builder Developer*. See xref:configure-permissions.adoc[].
+* If you are using the web IDE, ensure that you have the required permission: *Anypoint Code Builder Developer*. See xref:configure-permissions.adoc[].
 
 To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub: 
 
@@ -468,22 +500,31 @@ To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub
 ----
 {
     "minMuleVersion": "4.4.0",
-    "secureProperties": [encryption.key, other.value.to.hide]
+    "secureProperties": ["encryption.key", "other.value.to.hide"]
 }
 ----
 +
 The _name_ (not the _value_) of your encryption key goes into a comma-separated `secureProperties` array. Later in this procedure, when you deploy your application to CloudHub, the IDE prompts you to provide the _value_ of the encryption key that you provided through the Secure Configuration Tool when encrypting your sensitive properties.
-. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
+. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and providing this command:
++
+[source, command]
+----
+MuleSoft: Deploy to CloudHub
+----
++
+Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
++
+image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
 . When prompted, enter _the same value_ you used to encrypt your secure properties.
 +
-If you do not enter the same value, the application is able to upload to CloudHub, but the deployment will fail because the encryption key value will not work.
+If you do not enter the same value, the application is able to upload to CloudHub, but the deployment fails because the encryption key value will not work.
 . Select the *Sandbox* environment for your deployment.
 +
 Other environments are not supported, and attempts to deploy to the *Design* environment fail with a `500` error code. While the deployment is in progress, the IDE provides the status of the process and prompts you to open the application in Runtime Manager when the deployment completes.  
 +
 If you receive an error message that says the application `was not successfully deployed to "Sandbox" in CloudHub`, you can open Runtime Manager to check the logs and correct some issues.
 . Click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
-. Check the deployment in Runtime Manager to ensure that the encryption key is hidden by navigating to Settings > Properties for your application. 
+. Check the deployment in Runtime Manager to ensure that the encryption key is hidden by navigating to *Settings* > *Properties* for your application. 
 . In the *Applications* screen for the *SANDBOX* environment, check the *Status* field for your application:
 
 * If the status is *Started*, the deployment is successful, and the application is running.
@@ -532,30 +573,84 @@ Notice the value of the `file` attribute in this example:
       <secure-properties:encrypt algorithm="Blowfish" />
 </secure-properties:config>
 ----
-. Above the `<flow/>` element, add a `<global-property/>` element to the configuration XML that defines the value of `env` property. 
+//. Above the `<flow/>` element, add a `<global-property/>` element to the configuration XML that defines the value of `env` property. 
+//+
+//[source,xml]
+//----
+//<global-property name="env" value="dev" />
+//----
+//+
+//After deploying to CloudHub, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
+. _Before deploying to CloudHub_, ensure that the application deploys locally your IDE:
+.. In the IDE, press Cmd+shift+p (Windows) or Ctrl+shift+p (Mac), and provide this command:
 +
-[source,xml]
+[source,command]
 ----
-<global-property name="env" value="dev" />
+Open 'launch.json'
+----
+.. In `launch.json`, append the value of the `env` variable to use when running the application from the IDE. 
++
+Notice the setting `-M-Denv=dev` in this `launch.json` example:
++
+[source,json]
+----
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "mule-xml-debugger",
+        "request": "launch",
+        "name": "Debug Mule Application",
+        "mule.project": "${workspaceFolder}",
+        "mule.home": "${config:mule.runtime.muleHome}",
+        "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Denv=dev"
+      }
+    ]
+}
 ----
 +
-After deploying to CloudHub, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
-. Before deploying to CloudHub, make sure the application deploys locally your  IDE.
+`-M-Denv=dev` sets the `env` variable to `dev` as a Mule runtime argument (`"mule.runtime.args"`). 
+.. If your application defines encrypted properties in your properties file, configure the *Runtime: Default Arguments* command in the IDE with the encryption key and value so that the local deployment to your IDE can decrypt the properties when the application runs.
 +
-For guidance with settings required for applications that use encrypted properties, see <<test-deploy, testing instructions>>.
-. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and entering *MuleSoft: Deploy to CloudHub*.
-.. If prompted, enter _the same value_ you used to encrypt your secure properties.
-.. Select the *Sandbox* environment for your deployment.
+_Do not_ configure `launch.json` with sensitive property values. See <<test-deploy>> for guidance with the recommended configuration.
+. Launch the `deploy.json` file for your application by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and providing
++
+[source,command]
+----
+MuleSoft: Deploy to CloudHub
+----
++
+Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
++
+image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub "rocket" icon with deploy.json open"]
+. _Before opting to deploy_, edit `deploy.json` to specify the correct prefix to your properties file. For example:
++
+[source,deploy.json]
+----
+{
+  "runtime": "4.4.0",
+  "workerSize": 0.1,
+  "applicationName": "my-secure-int2-duke",
+  "workers": 1,
+  "autoStart": true,
+  "properties": //<1>
+    {
+      "env": "sandbox" //<2>
+    }
+}
+----
+--
+[calloutlist]
+. Add the `"properties"` key.
+. Add an object that specifies the value of the `${env}` prefix to your properties file, such as `sandbox`.
+--
+[start=6]
+. If prompted, enter _the same value_ you used to encrypt your secure properties.
+. Select the *Sandbox* environment for your deployment.
 . Once the deployment is complete, click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
-. Set the `env` property for the application in Runtime Manager:
-.. Click *Settings* > *Properties* for the application.
-.. In the *Properties* tab, provide a new *env* key with a value that matches the environment, such as *sandbox*, and the prefix to the file name (such as `sandbox.properties.yaml`).
-.. Click *Apply Changes* to launch a deployment with the new setting for `env` in your application.
+. To check for properties such as your `env` setting or a hidden value to your encryption key, click *Settings* > *Properties* for your application.
 +
-The new setting makes the application use the properties file with the prefix that matches the value you provided for *env* in Runtime Manager. This setting overrides the global property setting (`<global-property/>`) in the configuration XML for your application. 
-
-//TODO: IS THERE ANOTHER WAY TO SET env? WHAT ABOUT FOR ON-PREM? 
-
+You can create properties or change the value of existing properties, for example, to fix some deployment errors.
 
 == See Also
 
