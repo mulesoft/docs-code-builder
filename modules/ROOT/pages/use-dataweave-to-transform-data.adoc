@@ -1,4 +1,4 @@
-= Using DataWeave to Transform Data in the American Flights Example
+= Using DataWeave to Transform Data from the American Flights API Example
 :page-aliases: tut-dev-use-dataweave-to-transform-data.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -52,7 +52,7 @@ image::transform-with-output-json.png["Transform component highlighted"]
 . Deploy your application within the IDE by executing to *Run* > *Start Debugging* (`F5`).
 +
 For guidance, see xref:create-basic-integration.adoc#run[Run Your Application in Debug Mode].
-. After the application deploy successfully, use a REST Client or browser to trigger a response.
+. After the application deploys successfully, use a REST Client or browser to trigger a response.
 +
 For guidance, see xref:create-basic-integration.adoc#test[Test Your Application].
 . View the response data from the MySQL database. For example:
@@ -60,184 +60,185 @@ For guidance, see xref:create-basic-integration.adoc#test[Test Your Application]
 [source,JSON]
 ----
 [
-    {
-        "planeType": "Boeing 787",
-        "code2": "0001",
-        "takeOffDate": "2016-01-20T00:00:00",
-        "code1": "rree",
-        "fromAirport": "MUA",
-        "price": 541,
-        "seatsAvailable": 0,
-        "toAirport": "LAX",
-        "ID": 1,
-        "airlineName": "American Airlines",
-        "totalSeats": 200
-    },
+  {
+    "planeType": "Boeing 787",
+    "code2": "0001",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 541,
+    "seatsAvailable": 0,
+    "toAirport": "LAX",
+    "ID": 1,
+    "airlineName": "American Airlines",
+    "totalSeats": 200
+  },
     ...
 ]
 ----
 +
+.Click for the complete response.
+[%collapsible]
+====
+[source,json]
+----
+[
+  {
+    "planeType": "Boeing 787",
+    "code2": "0001",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 541,
+    "seatsAvailable": 0,
+    "toAirport": "LAX",
+    "ID": 1,
+    "airlineName": "American Airlines",
+    "totalSeats": 200
+  },
+  {
+    "planeType": "Boeing 747",
+    "code2": "0123",
+    "takeOffDate": "2016-01-25T00:00:00",
+    "code1": "eefd",
+    "fromAirport": "MUA",
+    "price": 300,
+    "seatsAvailable": 7,
+    "toAirport": "CLE",
+    "ID": 2,
+    "airlineName": "American Airlines",
+    "totalSeats": 345
+  },
+  {
+    "planeType": "Boeing 777",
+    "code2": "0192",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "ffee",
+    "fromAirport": "MUA",
+    "price": 300,
+    "seatsAvailable": 0,
+    "toAirport": "LAX",
+    "ID": 3,
+    "airlineName": "American Airlines",
+    "totalSeats": 300
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "1000",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 200,
+    "seatsAvailable": 5,
+    "toAirport": "CLE",
+    "ID": 4,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "1093",
+    "takeOffDate": "2016-02-11T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 142,
+    "seatsAvailable": 1,
+    "toAirport": "SFO",
+    "ID": 5,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  },
+  {
+    "planeType": "Boeing 787",
+    "code2": "1112",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "ffee",
+    "fromAirport": "MUA",
+    "price": 954,
+    "seatsAvailable": 100,
+    "toAirport": "CLE",
+    "ID": 6,
+    "airlineName": "American Airlines",
+    "totalSeats": 200
+  },
+  {
+    "planeType": "Boeing 777",
+    "code2": "1994",
+    "takeOffDate": "2016-01-01T00:00:00",
+    "code1": "eefd",
+    "fromAirport": "MUA",
+    "price": 676,
+    "seatsAvailable": 0,
+    "toAirport": "SFO",
+    "ID": 7,
+    "airlineName": "American Airlines",
+    "totalSeats": 300
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "2000",
+    "takeOffDate": "2016-02-20T00:00:00",
+    "code1": "ffee",
+    "fromAirport": "MUA",
+    "price": 300,
+    "seatsAvailable": 30,
+    "toAirport": "SFO",
+    "ID": 8,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "3000",
+    "takeOffDate": "2016-02-01T00:00:00",
+    "code1": "eefd",
+    "fromAirport": "MUA",
+    "price": 900,
+    "seatsAvailable": 0,
+    "toAirport": "SFO",
+    "ID": 9,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  },
+  {
+    "planeType": "Boeing 777",
+    "code2": "4511",
+    "takeOffDate": "2016-01-15T00:00:00",
+    "code1": "eefd",
+    "fromAirport": "MUA",
+    "price": 900,
+    "seatsAvailable": 100,
+    "toAirport": "LAX",
+    "ID": 10,
+    "airlineName": "American Airlines",
+    "totalSeats": 300
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "4567",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 456,
+    "seatsAvailable": 100,
+    "toAirport": "SFO",
+    "ID": 11,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  }
+]
+----
+====
++
 If the MySQL test server is not available, this error occurs:
 +
+[[source,error]]
 ----
 Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : 
 Communications link failure"`. 
 ----
 +
 To address the issue, try again until you get a successful response.
-+
-[%collapsible]
-.Click for the complete response.
-====
-[source,JSON]
-----
-[
-    {
-        "planeType": "Boeing 787",
-        "code2": "0001",
-        "takeOffDate": "2016-01-20T00:00:00",
-        "code1": "rree",
-        "fromAirport": "MUA",
-        "price": 541,
-        "seatsAvailable": 0,
-        "toAirport": "LAX",
-        "ID": 1,
-        "airlineName": "American Airlines",
-        "totalSeats": 200
-    },
-    {
-        "planeType": "Boeing 747",
-        "code2": "0123",
-        "takeOffDate": "2016-01-25T00:00:00",
-        "code1": "eefd",
-        "fromAirport": "MUA",
-        "price": 300,
-        "seatsAvailable": 7,
-        "toAirport": "CLE",
-        "ID": 2,
-        "airlineName": "American Airlines",
-        "totalSeats": 345
-    },
-    {
-        "planeType": "Boeing 777",
-        "code2": "0192",
-        "takeOffDate": "2016-01-20T00:00:00",
-        "code1": "ffee",
-        "fromAirport": "MUA",
-        "price": 300,
-        "seatsAvailable": 0,
-        "toAirport": "LAX",
-        "ID": 3,
-        "airlineName": "American Airlines",
-        "totalSeats": 300
-    },
-    {
-        "planeType": "Boeing 737",
-        "code2": "1000",
-        "takeOffDate": "2016-01-20T00:00:00",
-        "code1": "rree",
-        "fromAirport": "MUA",
-        "price": 200,
-        "seatsAvailable": 5,
-        "toAirport": "CLE",
-        "ID": 4,
-        "airlineName": "American Airlines",
-        "totalSeats": 150
-    },
-    {
-        "planeType": "Boeing 737",
-        "code2": "1093",
-        "takeOffDate": "2016-02-11T00:00:00",
-        "code1": "rree",
-        "fromAirport": "MUA",
-        "price": 142,
-        "seatsAvailable": 1,
-        "toAirport": "SFO",
-        "ID": 5,
-        "airlineName": "American Airlines",
-        "totalSeats": 150
-    },
-    {
-        "planeType": "Boeing 787",
-        "code2": "1112",
-        "takeOffDate": "2016-01-20T00:00:00",
-        "code1": "ffee",
-        "fromAirport": "MUA",
-        "price": 954,
-        "seatsAvailable": 100,
-        "toAirport": "CLE",
-        "ID": 6,
-        "airlineName": "American Airlines",
-        "totalSeats": 200
-    },
-    {
-        "planeType": "Boeing 777",
-        "code2": "1994",
-        "takeOffDate": "2016-01-01T00:00:00",
-        "code1": "eefd",
-        "fromAirport": "MUA",
-        "price": 676,
-        "seatsAvailable": 0,
-        "toAirport": "SFO",
-        "ID": 7,
-        "airlineName": "American Airlines",
-        "totalSeats": 300
-    },
-    {
-        "planeType": "Boeing 737",
-        "code2": "2000",
-        "takeOffDate": "2016-02-20T00:00:00",
-        "code1": "ffee",
-        "fromAirport": "MUA",
-        "price": 300,
-        "seatsAvailable": 30,
-        "toAirport": "SFO",
-        "ID": 8,
-        "airlineName": "American Airlines",
-        "totalSeats": 150
-    },
-    {
-        "planeType": "Boeing 737",
-        "code2": "3000",
-        "takeOffDate": "2016-02-01T00:00:00",
-        "code1": "eefd",
-        "fromAirport": "MUA",
-        "price": 900,
-        "seatsAvailable": 0,
-        "toAirport": "SFO",
-        "ID": 9,
-        "airlineName": "American Airlines",
-        "totalSeats": 150
-    },
-    {
-        "planeType": "Boeing 777",
-        "code2": "4511",
-        "takeOffDate": "2016-01-15T00:00:00",
-        "code1": "eefd",
-        "fromAirport": "MUA",
-        "price": 900,
-        "seatsAvailable": 100,
-        "toAirport": "LAX",
-        "ID": 10,
-        "airlineName": "American Airlines",
-        "totalSeats": 300
-    },
-    {
-        "planeType": "Boeing 737",
-        "code2": "4567",
-        "takeOffDate": "2016-01-20T00:00:00",
-        "code1": "rree",
-        "fromAirport": "MUA",
-        "price": 456,
-        "seatsAvailable": 100,
-        "toAirport": "SFO",
-        "ID": 11,
-        "airlineName": "American Airlines",
-        "totalSeats": 150
-    }
-]
-----
-====
 . Proceed to <<restructure>>.
 
 [[restructure]]
@@ -345,24 +346,24 @@ Use DataWeave to transform the response:
     <ee:transform doc:name="Transform Message">
         <ee:message >
             <ee:set-payload >
-                <![CDATA[
-                %dw 2.0
-                output application/json
-                ---
-                payload map ( payload01 , indexOfPayload01 ) -> {
-                  ID: payload01.ID,
-                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
-                  price: payload01.price default 0,
-                  departureDate: payload01.takeOffDate as String default "",
-                  origin: payload01.fromAirport default "",
-                  destination: payload01.toAirport default "",
-                  emptySeats: payload01.seatsAvailable default 0,
-                  plane: {
-                    "type": payload01.planeType default "",
-                    totalSeats: payload01.totalSeats default 0
-                  }
-                }
-                ]]>
+            <![CDATA[
+            %dw 2.0
+            output application/json
+            ---
+            payload map ( payload01 , indexOfPayload01 ) -> {
+              ID: payload01.ID,
+              code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+              price: payload01.price default 0,
+              departureDate: payload01.takeOffDate as String default "",
+              origin: payload01.fromAirport default "",
+              destination: payload01.toAirport default "",
+              emptySeats: payload01.seatsAvailable default 0,
+              plane: {
+                type: payload01.planeType default "",
+                totalSeats: payload01.totalSeats default 0
+              }
+            }
+            ]]>
             </ee:set-payload>
         </ee:message>
     </ee:transform>

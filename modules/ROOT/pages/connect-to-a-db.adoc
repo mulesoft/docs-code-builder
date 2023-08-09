@@ -29,8 +29,9 @@ The Database Connector supports a variety of Java Database Connectivity (JDBC) d
 
 Provide the dependency for the `mySQL` driver: 
 
-. In Explorer, select the `pom.xml` file.
-. Add a new dependency:
+. Open the *EXPLORER* menu by pressing Cmd+Shift+e (Mac) or Ctrl+Shift+e (Windows).
+. Open the `pom.xml` file.
+. Add a new dependency within the `<dependencies/>` element:
 +
 [source,xml]
 --
@@ -41,7 +42,7 @@ Provide the dependency for the `mySQL` driver:
 </dependency>
 --
 +
-image::add-mysql-driver-dependency.png["Pom.xml and dependency highlighted"]
+image::add-mysql-driver-dependency.png["pom.xml with new dependency highlighted"]
 //TODO: hamburger menu
 . Replace the existing `<configuration/>` element within your `mule-maven-plugin` with a new shared library:
 +
@@ -52,7 +53,7 @@ image::add-mysql-driver-dependency.png["Pom.xml and dependency highlighted"]
     <artifactId>mule-maven-plugin</artifactId>
     <version>${mule.maven.plugin.version}</version>
     <extensions>true</extensions>
-    <configuration> //<1>
+    <configuration>
      <sharedLibraries>
        <sharedLibrary>
          <groupId>mysql</groupId>
@@ -62,8 +63,6 @@ image::add-mysql-driver-dependency.png["Pom.xml and dependency highlighted"]
     </configuration>
 </plugin>
 --
-[calloutlist]
-.. Add a shared library configuration.
 . Proceed to <<add-db-config>>. 
 
 [[add-db-config]]
