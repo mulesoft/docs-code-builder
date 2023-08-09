@@ -136,16 +136,17 @@ image::http-highlight-flow.png["HTTP listener highlighted in the flow and in the
 [calloutlist]
 . Set the `value` attribute to `Flight info` and the `doc:name` to `Set Response`.
 --
+[[check-connection]]
 . Above `<http:listener-config/>` in the configuration XML, click *Test Connection* to check the HTTP Listener connection. 
 +
 The UI provides status:
 
-* *Verifying connection inbound-request*
-* *Connection is valid* indicates a successful connection. Potential error for 
-*Invalid Connection Got status code: 500 when trying to resolve a Mule Runtime operation* indicates a connection error.
+* *Verifying connection inbound-request* indicates that the test is in progress.
+* *Connection is valid* indicates a successful connection. 
+* *Invalid Connection Got status code: 500 when trying to resolve a Mule Runtime operation* indicates a connection error.
 +
-One `500` error is `port 8081: Address already in use`. For port conflicts, configure a different port, such as `8082`, and retest the connection. 
-. Proceed to <<run>>.
+A common code `500` error is `port 8081: Address already in use`. For port conflicts, configure a different port, such as `8082`, and retest the connection. 
+. After receiving the *Connection is valid* message, proceed to <<run>>.
 
 [[run]]
 == Run Your Application in Debug Mode
@@ -178,9 +179,9 @@ Note that using *Run* > *Start without Debugging* produces an error.
 
 Use your REST client or a browser to trigger the flow.
 
-.Submit a request:
+. Submit a request: 
 
-* For the desktop IDE, submit this UIR:
+* For the desktop IDE, submit this URI:
 +
 [source,URI]
 ----
@@ -188,9 +189,11 @@ http://0.0.0.0:8081/flights
 ----
 * For the web IDE, submit a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. 
 +
-See xref:ping-locally-deployed-app.adoc[] for guidance on constructing the URI.
-. Notice that the *Flight info* message is displayed as the response.
-. Proceed to <<stop>>.
+See xref:ping-locally-deployed-app.adoc[] for guidance with the URI.
+. In your REST client or browser, check for the response *Flight info*.
+. After receiving the *Flight info* response, proceed to <<stop>>.
++
+If you do not receive this response, stop the application (see <<stop>> for guidance). Check your XML configuration, and <<check-connection, recheck your HTTP Listener connection>>. 
 
 [[stop]]
 == Stop Your Application
