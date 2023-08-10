@@ -1,60 +1,66 @@
 = Work with Code Snippets
 
-Code snippets are reusable templates that simplify reusing code patterns, such as an insert operation from Database Connector, or logging messages and variables.
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Anypoint Code Builder provides built-in snippets and enables you to create and save custom snippets.
+//TODO: IS THS UP-TO-DATE?
+//TODO: CAN'T SEE IMAGES
 
-Code Builder does not filter out snippets for code that goes outside a flow, such as connectors configurations.
+To reuse code patterns in configuration files for your Mule application flows  or subflows, use built-in snippets or define your own user snippets. These practices avoid the need to retype the same pattern each time you use it, which helps you work more efficiently and reduces the potential for configuration errors. For information about flows and subflows, see xref:/index.adoc#get-familiar-with-the-basics[Get Familiar with the Basics].
 
-== Built-In Snippets
+Use snippets to provide configurations for any elements supported by the Mule DSL, such as commonly used connector operations, message processing patterns supported by Core components, or multi-element configurations in the configuration XML.
 
-Code Builder bundles a set of built-in snippets. To add a built-in snippet to your flow:
+Snippets are templates created in the JSON format. When you insert a snippet into the configuration XML for a Mule application flow or subflow, the snippet JSON transforms to XML automatically. Create user snippets in `mule-xml.json`. Code snippets are a VS Code feature. For more information, see https://code.visualstudio.com/docs/editor/userdefinedsnippets[Snippets in Visual Studio Code^].
 
-. Select the `plus` icon on your canvas to add a new component to your flow.
-. Select _Snippets_:
+Add snippets from the UI canvas or the configuration XML:
+
+* From the UI canvas, Anypoint Code Builder inserts all user snippets into the `<flow/>` or `<sub-flow/>` element that you are working on. 
+* From the configuration XML, use <<autocomplete, auto-complete>> to find and insert user snippets. For example, for a global configuration that must reside at the same level as the `<flow/>` or `<sub-flow/>`, and not within either element, use auto-complete. From the auto-complete menu, snippets are identified by their name and a two-dimensional box icon. 
 +
-image::select-snippet-overview.png[]
-. Select _Built-in Snippets_:
+For an example of a global configuration for connections to a database, which must reside outside of the `<flow/>` element, see xref:connect-to-a-db.adoc[].
+
+
+== Work with Built-In Snippets
+
+Anypoint Code Builder bundles a set of built-in snippets. To add a built-in snippet to a flow or subflow:
+
+. From the canvas for a Mule application, select the plus (*+*) to add a new component to your flow or subflow.
 +
-image::built-in-snippets-overview.png[]
-. Choose the snippet you want from the list of provided snippets.
-
-Use the auto-complete feature when working on the XML editor to find any of the built-in snippets.
-
-== Create a Snippet
-
-Create and save reusable custom snippets to use in your project.
-
-The snippets that you save are not available to others. Code Builder does not support sharing snippets with all users working on a project.
-
-To create a snippet:
-
-. Select the `plus` icon on your canvas to add a new component to your flow.
-. Select _Snippets_:
+image::main-tutorial-add-first-http-listener.png["Mule application canvas"]
+. Navigate to *Snippets* > *Built-in Snippets*. 
+. Select a snippet for your flow from the list of built-in snippets.
 +
-image::select-snippet-overview.png[]
-. Select _User Snippets_:
+The IDE inserts XML for the snippet within the `<flow/>` or `<sub-flow/>` element of your application at the location you selected from the canvas.
+
+Alternatively, use the auto-complete feature to find and insert built-in snippets. See <<autocomplete>>. 
+
+== Work with User Snippets
+
+Create reusable user snippets for your Mule applications. 
+
+Snippets that you create are specific to your IDE instance and not shared in projects for applications that you export for others to import and work on.
+
+To add a user snippet to a flow or subflow:
+
+. From the canvas for a Mule application, select the `plus` to add a new component to your flow.
 +
-image::user-snippet-overview.png[]
-. Select the `plus` icon:
+image::main-tutorial-add-first-http-listener.png["Mule application canvas"]
+. Navigate to *Snippets* > *User Snippets*. 
 +
-image::create-user-snippet-overview.png[]
+If the snippet you need is not available, you can use the *+* icon in the *User Snippets* UI to open `mule-xml.json`, where you configure user snippets. If you have no snippets, Anypoint Code Builder creates a new `mule-xml.json` snippet file with a sample snippet for you to edit.
 +
-If you don't have other user snippets in your web IDE, Code Builder prompts you to create one.
-+ 
-Code Builder creates a new `mule-xml.json` snippet file with a sample snippet for you to edit.
-. In the sample snippet file (`mule-xml.json`) Code Builder creates, uncomment all the fields after *Example*:
+For example, if your `mule-xml.json` is not configured yet, uncomment all the fields after *Example*:
 +
 [source,JSON]
 --
 {
     // Example:
-	 "Log a message": { //<1>
-	 	"prefix": "log", //<2>
-	 	"body": [ //<3>
+	  "Log a message": { //<!--<1>-->
+	 	"prefix": "log", //<!--<2>-->
+	 	"body": [ //<!--<3>-->
 	 		"<logger level=\"${1:INFO}\" message='$2' doc:name=\"Logger\" doc:id=\"$RANDOM_HEX\" />$0",
 	 	],
-	 	"description": "Log output to console" //<4>
+	 	"description": "Log output to console" //<!--<4>-->
 	 }
 }
 --
@@ -62,7 +68,25 @@ Code Builder creates a new `mule-xml.json` snippet file with a sample snippet fo
 <2> The `prefix` field is the trigger text for that snippet. Start typing the prefix and press `tab` in your XML editor to add the snippet using auto-complete.
 <3> The `body` field is the actual code template that you can reuse.
 <4> The `description` field is a description of the snippet.
-. You can add other snippets to your `mule-xml.json` by adding new fields. For example:
++
+After you save the new snippet, select the new snippet from the canvas to load the configuration XML for your application, the XML for the logger example looks like this:
++
+[source,xml]
+----
+<logger level="" message='$2' doc:name="Logger" doc:id="sgxbfo" />
+----
++
+In this example, notice that `doc:id` is a randomly generated because of the `$RANDOM_HEX` value in the snippet.
++
+. Add any required values or configurations to the XML.
++
+In the example, the next step is to add a `level` and `message` value to the component. For example:
++
+[source,xml]
+----
+<logger level="WARN" message='my message here' doc:name="Logger" doc:id="sgxbfo" />
+----
+. Add any other snippets to your `mule-xml.json` by adding new fields. For example:
 +
 [source,JSON]
 --
@@ -75,25 +99,66 @@ Code Builder creates a new `mule-xml.json` snippet file with a sample snippet fo
 	 	],
 	 	"description": "Log output to console"
 	 },
-        "Select first and last name from database": { //<1>
-		"prefix": "select-name-from-db",
-		"body": [
-          "<db:select config-ref=\"${1:Database_Config}\" doc:name=\"${2:Select Contact from DB}\" doc:id=\"$RANDOM_HEX\" >",
-          "<db:sql>",
-          "<![CDATA[SELECT * FROM Contacts WHERE FirstName = :firstname AND LastName = :lastname]]>",
-          "</db:sql>",
-          "<db:input-parameters>",
-            "<![CDATA[#[\{",
-            "firstname: vars.firstnameVar,",
-            "lastname: vars.lastnameVar",
-            "\\}]]]>",
-          "</db:input-parameters>",
-          "</db:select>$0"
+        "Select first and last name from database": { //<!--<1>-->
+          "prefix": "select-name-from-db",
+          "body": [
+            "<db:select config-ref=\"${1:Database_Config}\" doc:name=\"${2:Select Contact from DB}\" doc:id=\"$RANDOM_HEX\" >",
+            "<db:sql>",
+            "<![CDATA[SELECT * FROM Contacts WHERE FirstName = :firstname AND LastName = :lastname]]>",
+            "</db:sql>",
+            "<db:input-parameters>",
+              "<![CDATA[#[\\{",
+              "firstname: vars.firstnameVar,",
+              "lastname: vars.lastnameVar",
+              "\\}]]]>",
+            "</db:input-parameters>",
+            "</db:select>$0"
 		],
 		"description": "Pull first and last name from database"
 	 }
 }
 --
-<1> The previous sample shows a snippet for a Database Connector select operation that retrieves `firstName` and `lastName` values from a Database.
+<1> A snippet for a Database Connector select operation that retrieves `firstName` and `lastName` values from a Database.
++
+If you insert the snippet for the database example into your configuration XML, the next step is to provide the value of `config-ref=""`. To get the value, it is necessary to configure a global `<db:config/>` element at outside of the `<flow/>`. To learn more about this configuration, see xref:connect-to-a-db.adoc[].
 
+Like built-in snippets, user snippets are also available for insertion from the configuration XML. See <<autocomplete>>. 
 
+[[autocomplete]]
+== Use Auto-Complete To Find and Insert Snippets into the Configuration XML
+
+The configuration XML for a Mule application provides access to a menu for adding snippets and component XML to the application. 
+
+. Press (Ctrl+shift or Cmd+shift) from the configuration XML to open the auto-complete menu
+
+. Insert the snippet into your flow or subflow:
+
+* For a built-in snippet, search for and select the name of the built-in snippet. For example:
++
+image::acb-auto-complete-options.png["Auto-completion options for the Choice router"]
++
+Compare the built-in Choice snippet configuration to the basic XML configuration for this component:
++
+[source,xml]
+--
+<!-- (1) -->
+<choice doc:name="Choice" doc:id="vcfaqr" >
+  <when expression='#[]' doc:name="When" >
+  </when>
+  <otherwise doc:name="Otherwise" >
+  </otherwise>
+</choice>
+<!-- (2) -->
+<choice doc:name="Choice" doc:id="hhdehz" >
+--
++
+<1> XML for the built-in Choice snippet is `flow:choice` in the auto-complete list. The icon for snippets in this menu is a one-dimensional square. 
+<2> XML for the minimally configured Choice component, which is also available by navigating to *Core Processors* > *Flow Control* > *Choice* from the UI canvas. The icon for this XML is a three-dimensional square. 
+
+* For a user snippet, search for and select the name of the user snippet (as configured in `mule-xml.json`). 
+
+//TODO: BIG TODO IS HOW TO CREATE THE SNIPPET. EVEN IF WE POINT OUT TO A SNIPPET GENERATOR (IF WE CAN), PEOPLE STILL NEED TO KNOW THE CONFIG XML, BUT THAT WON'T COME FOR COMPONENTS UNTIL GA. ALSO NEED TO COORDINATE WITH CONNECTOR TEAM ABOUT CONNECTOR XML THAT'S STUDIO-FREE.
+
+== See Also
+
+xref:create-xml-snippets.adoc[]

@@ -2,19 +2,29 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
 Anypoint Code Builder enables you to import DataWeave libraries from Exchange into your Mule application.
 
 A DataWeave library is a reusable package of DataWeave modules and mapping files, and resource files, such as JSON, XML, and CSV.
 
 You can import a DataWeave library the same way you import any other asset from Exchange:
 
-. In Anypoint Code Builder, open the Command Palette (`ctrl/cmd + shift + P`) and type _MuleSoft: Import Asset from Exchange_.
+. In Anypoint Code Builder, open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Import Asset from Exchange
+----
 +
 image::import-asset-exchange-implementation.png[]
 . Select *DataWeave Library*.
 +
 image::add-dw-library-from-exchange.png[]
-. Start typing the name of the DataWeave library you need, and press Enter for Anypoint Code Builder to suggest the assets that match your search.
+. Start typing the name of the DataWeave library you need, and press Enter for Anypoint Code Builder to suggest the assets that match your search, such as *DataWeave*:
++
+image::acb-dw-libraries.png[]
 . Select the DataWeave library.
 . Select the version of the DataWeave library to import.
 
