@@ -1,4 +1,5 @@
 = Create a Configuration File for Slack and Salesforce
+:imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -11,7 +12,7 @@ To start configuring your Slack and Salesforce connectors in your escalation API
 
 == Before You Begin
 
-Ensure that you created your xref:create-escalation-slack-api.adoc[base integration Mule configuration file].
+Ensure that you create your xref:create-escalation-slack-api.adoc["New Case Salesforce" integration].
 
 == Create a Configuration File
 
@@ -36,7 +37,7 @@ email:
 slack:
  token: "yourSlackToken"
 --
-. Navigate to your `new-case-salesforce.xml` file, add a new line before your `<http:listener-config>` element, type _configuration_ and select *mule:configurationProperties*:
+. Navigate to your `new-case-salesforce.xml` file, add a new line before the `</mule>` tag, type _configuration_ and select *mule:configurationProperties*:
 +
 image::select-mule-config-properties-contacts-sync.png[]
 . Scroll through the attributes and set the following value:
@@ -50,9 +51,9 @@ file:: config.yaml
 
 == Configure Your Salesforce Connector
 
-Use your configuration file to add the necessary fields for the Salesforce Connector to connect to your Salesforce environment:
+Use the values in your `config.yaml` file to connect the Salesforce Connector to your Salesforce environment:
 
-. Create a new line after your `<configuration-properties>` element, type _salesforce_, and select *salesforce:sfdc-config*.
+. In your `new-case-salesforce.xml` file, create a new line after the `<configuration-properties>` element, type _salesforce_, and select *salesforce:sfdc-config*.
 +
 image::sync-api-select-sfdc-config.png[]
 . Set the *name* field to _Salesforce-Config_.
@@ -79,13 +80,17 @@ If you get an error, verify the error message to troubleshoot further.
 
 == Add a Salesforce Trigger
 
-. Select the `plus` icon on your canvas:
+// TODO: cc: the following two commented out steps don't match the actual desktop experience. Instead there's UI text that asks, "What do you want to build in this file?". A flow is one of the options.
+// . Select the `plus` icon on your canvas:
+// +
+// image::add-flow-structure.png[]
+// . Select *Flow*:
+// +
+// image::add-flow-to-canvas.png[]
+// TODO: cc: is this generic enough for both desktop and web?
+. Add a new flow on your canvas.
 +
-image::add-flow-structure.png[]
-. Select *Flow*:
-+
-image::add-flow-to-canvas.png[]
-. Name the flow *​NewSalesforceCaseFlow*.
+. In the code editor, name the flow *​NewSalesforceCaseFlow*.
 +
 [source,XML]
 --
@@ -93,22 +98,21 @@ image::add-flow-to-canvas.png[]
 
 </flow>
 --
-. Select the `plus` icon after *Flow*, type _new object_, and select *On new object* after *Salesforce*:
-+
-image::salesforce-on-new-object-canvas.png[]
-. Scroll through the attributes of the snippet and set the following values:
+. On your canvas, select the `plus` icon after *Flow*, type _new object_, and select *On new object* after *Salesforce*.
+// TODO: cc: the screenshot doesn't match the step
+//+
+//image::salesforce-on-new-object-canvas.png[]
+. In the code editor, set the following values of the `salesforce:new-object-listener` element:
 objectType:: *Case*
 config-ref:: *Salesforce-Config*
 name:: *On New Case*
-. Configure the scheduling strategy to 1000 milliseconds by adding an extra *fixed-frequency* element:
+. Inside the `salesforce:new-object-listener` element, replace `<scheduling-strategy/>` with the following snippet:
 +
 [source,XML]
 --
-<salesforce:new-object-listener objectType="Case" config-ref="Salesforce-Config" >
-  <scheduling-strategy >
-    <fixed-frequency frequency="1000"/>
-  </scheduling-strategy>
-</salesforce:new-object-listener>
+<scheduling-strategy >
+  <fixed-frequency frequency="1000"/>
+</scheduling-strategy>
 --
 
 == Test Your Salesforce Integration
@@ -119,12 +123,16 @@ image::add-logger-end-flow-canvas.png[]
 +
 image::drag-logger-canvas.png[]
 +
+A `logger` component is added to the `flow` snippet in the code editor. 
++
+. Replace the `logger` component in the code editor with the following:
++
 [source,XML]
 --
 <logger level="INFO" doc:name="Log Case Object" message="{#payload}" />
 --
 +
-And add a breakpoint to this line by clicking the left of the line number:
+. And add a breakpoint to this line by clicking the left of the line number:
 +
 image::logger-breakpoint-sfdc.png[]
 . Navigate to *Run* > *Start Debugging* (`F5`).
@@ -137,14 +145,14 @@ image::salesforce-select-service.png[]
 image::salesfroce-create-new-case.png[]
 . Ensure to set the *Status* of the new case to *New*.
 . Create a new case and save it.
-. In Anypoint Code Builder, note that your application stopped at the logger and then, inspect the payload.
+. In Anypoint Code Builder, your application stops at the logger. Inspect the payload in *Variables*:
 +
 image::slack-app-debugger-logger-breakpoint.png[]
 +
 The payload contains information about your newly created case.
-. Step over your Logger component and note that the log output contains the same information about your case.
+. Step over your Logger component.
 
 == Next Step
 
 * xref:extract-payload-information.adoc[Extract Payload Information to Variables]. +
-Learn How to extract your case information to a variable to use it later in the flow.
+Learn how to extract your case information to a variable to use it later in the flow.
