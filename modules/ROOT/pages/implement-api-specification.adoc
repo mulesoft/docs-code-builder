@@ -54,7 +54,7 @@ image::scafolded-mule-config-file.png["American-flights.xml file highlighted in 
 
 == Examine the Scaffolded XML File
 
-The UI canvas represents the scaffolded API specification as a Router component and a set of On Error and Transform Message components.
+Display the scaffolded flow UIs from the *Flow List*, highlight a selected flows in the configuration XML, and examine the Error Handler components.
 
 image::scafolded-flow-canvas.png["The main flow is highlighted"]
 
@@ -63,35 +63,37 @@ image::scafolded-flow-canvas.png["The main flow is highlighted"]
 . Locate the flows created for these endpoints:
 
 * `get:\flights`
-* `post:\flight`
-* `get:\flights{ID}`:
-
-[source,xml,linenums]
---
++
+[source,xml]
+----
 <flow name="get:\flights:american-flight-api-config">
 </flow>
-
+----
+* `post:\flight`
++
+[source,xml]
+----
 <flow name="post:\flights:application\json:american-flight-api-config">
 </flow>
-
+----
+* `get:\flights{ID}`
++
+[source,xml,linenums]
+----
 <flow name="get:\flights\(ID):application\json:american-flight-api-config">
 </flow>
---
-
-Additionally, you can use the *Flow List* panel to navigate through flows:
-
-. Select the *Flow List* panel to expand it.
+----
+. Use the *Flow List* panel to navigate through flows:
+.. Expand the *Flow List* panel.
 +
 image::outline-list-location.png["Flow list panel highlighted"]
-. Select the flow to which you want to navigate.
+.. Select a flow from the list.
 +
 image::outline-list-select-flow.png["American-flights-api-main flow highlighted"]
-// TO-DO: Double check this SS. It may not be a good guide for the reader.
+// TODO: Fix screenshot. Can't see the flows.
+.. Click the a flow in the UI canvas to highlight the XML for the flow in the configuration XML.
+. Notice the automatically generated Error Handler components in the ` <flow name="american-flight-api-main/>` element:
 +
-Selecting a flow from the flow list highlights that same flow in your Mule configuration file.
-
-Anypoint Code Builder creates other automatically generated components related to error handling:
-
 [source,xml]
 --
 <apikit:router config-ref="american-flights-api-config" />
@@ -116,3 +118,4 @@ Anypoint Code Builder creates other automatically generated components related t
     </on-error-propagate>
 </error-handler>
 --
+. Proceed to implement-api-interface-logic.adoc[].
