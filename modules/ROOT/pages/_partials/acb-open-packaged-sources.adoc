@@ -1,0 +1,50 @@
+//
+// tag::load-sharable-jar[]
+//variable used in multiple places on this page:
+
+To import a sharable JAR file in your desktop IDE:
+
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Import a Project
+----
+. Select *Mule Project Type*:
++
+image::import-mule-project.png[]
+. Navigate to the JAR file, and click *Select jar file to import*.
+. Navigate to a folder of your choice to unpack the JAR file, and click *Select a folder to work*. 
++
+The IDE unpacks the JAR file into that folder, which is the parent directory of the unpacked workspace.
+. To open the project workspace properly, navigate to the root directory for the unpacked source files. 
+
+// end::load-sharable-jar[]
+//
+
+//
+// tag::open-workspace-dir[]
+:root-dir: This directory is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
+//variable used in multiple places on this page:
+:open-root: If you do not open the root directory, the UI canvas for your project does not load correctly because Visual Studio Code does not recognize the directory as a workspace.
+
+[[open-directory]]
+
+.. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+File: Open Folder...
+----
+.. Navigate to the _root_ directory for your project. 
++
+// see text for this variable defined under title
+{root-dir}
++
+// see text for this variable defined under title
+{open-root}
+. Check that the application loads successfully in the IDE.
+
+// end::open-workspace-dir[]
+//
+
