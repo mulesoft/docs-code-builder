@@ -1,4 +1,4 @@
-= Implement an API Specification
+= Implement the American Flights API Specification
 :page-aliases: help-overview-implement.adoc, implement-an-api-specification.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
@@ -6,8 +6,113 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-You can use Anypoint Code Builder to implement a RAML or OAS API specification. Implementing an API specification means that you can import the specification as a dependency and create a Mule application that adds logic to each endpoint.
+Anypoint Code Builder supports implementations of OAS or RAML API specifications. You can import specifications from Anypoint Exchange or use a multi-root workspace in the IDE to import without first publishing the specification to Exchange. 
+//TODO: POINT TO MORE INFO 
 
-The following section teaches you how to import your API specification from Exchange, scaffold flows for your API endpoints, and define the logic for each flow of your Mule application.
+== Before You Begin
 
-Start by xref:import-api-specification-from-exchange.adoc[].
+. xref:design-api-specification.adoc[]: Complete all tasks from creating to publishing the specification to Anypoint Exchange. 
+. xref:develop-integration.adoc[]: Complete all tasks from creating user snippets to transforming response data with DataWeave.
+
+== Import the American Flights API Specification
+
+Before implementing the American Flights API, import the specification from exhange. Add the API specification as a dependency to your `american-ws-anypoint-code-builder` project, scaffold the specification, and create a Mule application that adds the logic for each endpoint.
+
+. In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
++
+[source,command]
+----
+MuleSoft: Import Asset from Exchange
+----
++
+image::import-asset-exchange-implementation.png["Rest API option highlighted after selecting MuleSoft: Import Asset from Exchange"]
+// TODO: New screenshot needed? 
+// More options available now: "Rest API", "DataWeave Library", "GraphQL API", and "Connector".
+. Select *Rest API*. 
++
+image::rest-api-asset-type.png["Rest API option highlighted after selecting MuleSoft: Import Asset from Exchange"]
+. If prompted, log in to Anypoint Platform by allowing the extension to sign in, opening an external web site, and opening Visual Studio Code. 
+. Type the name of your API specification. For example:
++
+[source,spec name]
+----
+American Flights API
+----
++
+Wait for the IDE to load a list of matches to the name: 
++
+image::select-api-asset-from-exchange.png["American Flights API asset is highlighted"]
+. If prompted for a version, select the version of the API to import, such as `_1.0.0_`.
+. Select *Yes* when prompted to scaffold the API dependency.
++
+image::scaffold-option-yes.png["Yes option highlighted when requesting scaffolding the API dependency"]
++
+This step adds the API specification as a dependency in your project's `pom.xml` file and creates a new configuration XML file, such as `american-flights-api.xml`:
++
+image::scafolded-mule-config-file.png["American-flights.xml file highlighted in the package explorer section"]
+
+== Examine the Scaffolded XML File
+
+The UI canvas represents the scaffolded API specification as a Router component and a set of On Error and Transform Message components.
+
+image::scafolded-flow-canvas.png["The main flow is highlighted"]
+
+. From the *EXPLORER*, open `american-flight-api.xml`.
+
+. Locate the flows created for these endpoints:
+
+* `get:\flights`
+* `post:\flight`
+* `get:\flights{ID}`:
+
+[source,xml,linenums]
+--
+<flow name="get:\flights:american-flight-api-config">
+</flow>
+
+<flow name="post:\flights:application\json:american-flight-api-config">
+</flow>
+
+<flow name="get:\flights\(ID):application\json:american-flight-api-config">
+</flow>
+--
+
+Additionally, you can use the *Flow List* panel to navigate through flows:
+
+. Select the *Flow List* panel to expand it.
++
+image::outline-list-location.png["Flow list panel highlighted"]
+. Select the flow to which you want to navigate.
++
+image::outline-list-select-flow.png["American-flights-api-main flow highlighted"]
+// TO-DO: Double check this SS. It may not be a good guide for the reader.
++
+Selecting a flow from the flow list highlights that same flow in your Mule configuration file.
+
+Anypoint Code Builder creates other automatically generated components related to error handling:
+
+[source,xml]
+--
+<apikit:router config-ref="american-flights-api-config" />
+<error-handler>
+    <on-error-propagate type="APIKIT:BAD_REQUEST">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_FOUND">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+
+    </on-error-propagate>
+</error-handler>
+--
