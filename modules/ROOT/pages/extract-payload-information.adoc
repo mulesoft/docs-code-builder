@@ -1,15 +1,19 @@
 = Extract Payload Information to Variables
+:imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 This section of the walkthrough teaches you how to extract information from the payload into different variables to refer to those values later in the flow.
 
 == Before You Begin
 
-Before you begin, ensure you:
+Before you begin:
 
-* Created a xref:create-escalation-slack-api.adoc[Base Integration Mule Configuration File].
-* Created a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
+* Create a xref:create-escalation-slack-api.adoc["New Case Salesforce" integration].
+* Create a xref:create-config-files-slack-sfdc.adoc[Mule Configuration File] and configured your Salesforce integration.
 
 == Extract Values From the Payload
 
@@ -51,7 +55,7 @@ Add a Set Payload component to concatenate the value of your variables in the re
 . Select the `plus` icon after the Transform Message component:
 +
 image::add-set-payload-slack-case-canvas.png[]
-. Type `_set_` and select *setPayload*:
+. Type `_set_` and select *Set Payload*:
 +
 image::drag-set-payload-slack-case-canvas.png[]
 . Configure the Set Payload component with the following code:

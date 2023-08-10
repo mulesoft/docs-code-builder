@@ -1,12 +1,75 @@
-= Setup
+= Setting Up and Accessing Anypoint Code Builder
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Anypoint Code Builder is a web-based IDE that you can access from your Anypoint Platform account.
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-To start developing using Anypoint Code Builder you must:
+Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studio Code. Both the desktop and web IDEs for Anypoint Code Builder share these extensions. The web IDE provides built-in extensions to the code-server implementation of Visual Studio Code for the web.
 
-. xref:accept-terms-and-conditions.adoc[Accept Terms and Conditions]
-. xref:configure-permissions.adoc[Configure Permissions]
-. xref:load-acb-web-ide.adoc[Load Anypoint Code Builder]
-. xref:log-in-anypoint-platform.adoc[Log in to Anypoint Platform]
+//TODO: ADD GRAPHIC TO SHOW MULESOFT ICON IN THE ACTIVITY BAR AND THE MAIN PAGE
+
+* <<set-up-desktop>>: For the desktop IDE, you must load the extension pack to your local Visual Studio Code IDE. 
+* <<set-up-web>>: For the web IDE, you must log in to Anypoint Platform and acquire the permission to use Anypoint Code Builder. 
+
+[[set-up-desktop]]
+== Desktop IDE Setup
+
+The desktop-based IDE extensions are available from the Visual Studio Marketplace: 
+
+. Find *Anypoint Extension Pack* on the https://marketplace.visualstudio.com/[Visual Studio Marketplace^].
+. Install the extension pack on your Visual Studio Code IDE. 
++
+For guidance, see the https://code.visualstudio.com/learn/get-started/extensions[Visual Studio Code website^].
+. Click the MuleSoft icon in the activity bar to see and use Anypoint Code Builder features.
+. Check that Anypoint Code Builder loads. 
+
+//TODO: TROUBLESHOOTING IF IT DOESN'T LOAD
+
+[[set-up-web]]
+== Web IDE Access
+
+On the web, Anypoint Code Builder IDE is available from Anypoint Platform. 
+
+=== Before You Begin
+
+* Anypoint Platform requires a user account. You can use an existing account or create one. Trial accounts are allowed. 
+
+* An administrator with an Anypoint Platform organization account must provide you with access to Anypoint Code Builder. See xref:configure-permissions.adoc[Configure Permissions]. 
++
+Organization Administrators for Anypoint Platform are allowed to add the permission to your user account or to the team to which your user account belongs. 
+
+=== Launch the Web IDE in Anypoint Platform
+
+. Log in to Anypoint Platform:
++
+You must use the URI for the host that contains your user account, which is associated with a specific business organization and Anypoint Platform host. The accounts and business organizations are not shared across the hosts. 
++
+Anypoint Platform is hosted on EU-compliant and U.S. instances: 
+
+* https://anypoint.mulesoft.com/login/[anypoint.mulesoft.com^] for the U.S. host (supports all non-EU regions)
+* https://eu1.anypoint.mulesoft.com/login[eu1.anypoint.mulesoft.com^] for the EU-compliant host 
+
+. Accept any terms and conditions for use of Anypoint Platform.
+. Click *Launch Web IDE*.
++
+After provisioning of your web IDE is complete, the IDE opens.
+. Click the MuleSoft icon in the activity bar to see and use Anypoint Code Builder features.
+//TODO: ADD SCREENSHOT HERE OR SOMEWHERE ELSE THAT MAKES SENSE
+
+[WARNING]
+--
+During the open beta, your web IDE instance might get deleted, causing you to lose your integrations, automations, and APIs.
+
+To save your work, you must either deploy your Mule projects to CloudHub, commit them to source control, or publish your API specifications to Design Center.
+
+If you are using an Anypoint Platform trial account that loses access to Anypoint Code Builder after your trial expires, the web IDE instances are deleted.
+
+Do not use Anypoint Code Builder to develop APIs, integrations, or automations for production environments.
+--
+
+== See Also 
+
+* xref:accept-terms-and-conditions.adoc[Accept Terms and Conditions]
+* xref:load-acb-web-ide.adoc[Load Anypoint Code Builder]
+* xref:log-in-anypoint-platform.adoc[Log in to Anypoint Platform]
