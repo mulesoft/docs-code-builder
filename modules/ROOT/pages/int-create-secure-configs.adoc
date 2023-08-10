@@ -613,7 +613,7 @@ Notice the setting `-M-Denv=dev` in this `launch.json` example:
 .. If your application defines encrypted properties in your properties file, configure the *Runtime: Default Arguments* command in the IDE with the encryption key and value so that the local deployment to your IDE can decrypt the properties when the application runs.
 +
 _Do not_ configure `launch.json` with sensitive property values. See <<test-deploy>> for guidance with the recommended configuration.
-. Launch the `deploy.json` file for your application by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and providing
+. Launch the `deploy.json` file for your application by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and providing this command:
 +
 [source,command]
 ----
@@ -642,7 +642,7 @@ image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub "rocket"
 --
 [calloutlist]
 . Add the `"properties"` key.
-. Add an object that specifies the value of the `${env}` prefix to your properties file, such as `sandbox`.
+. Add an object that specifies the value of the `+${env}+` prefix to your properties file, such as `sandbox`.
 --
 [start=6]
 . If prompted, enter _the same value_ you used to encrypt your secure properties.
