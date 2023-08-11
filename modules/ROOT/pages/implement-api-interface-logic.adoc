@@ -5,63 +5,38 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-After importing an API specification to an existing project, you can use Anypoint Code Builder to build the logic behind each flow.
+Provide the logic for flows in the American Flights API implementation.
 
 == Before You Begin
 
-Before getting started, ensure you:
-
-* Set up your MuleSoft environment. +
-See xref:setup.adoc[] for more information.
-* Published an API to Exchange. +
-See xref:publish-api-spec-to-exchange.adoc[].
-* Created an XML snippet. +
-See xref:create-xml-snippets.adoc[] for more information.
-* Created a basic integration using Anypoint Code Builder. +
-See xref:create-basic-integration.adoc[].
-* Configured a connection to a database from your project. +
-See xref:connect-to-a-db.adoc[].
-* Used DataWeave to transform the response from your application. +
-See xref:use-dataweave-to-transform-data.adoc[].
-* Imported an API specification to your project. +
-See xref:import-api-specification-from-exchange.adoc[].
-* Installed a REST client like Postman or AdvancedRestClient.
+xref:implement-api-specification.adoc[]
 
 == Rename Your Mule Configuration Files
 
-. In Anypoint Code Builder Explorer view, right-click your `american-flight-api-acb.xml` file and select *Rename*.
+Identify the interface and implmentation files for your American Flights application. The interface receives all incoming requests to your application. The scaffolded flows in the interface validate and route requests. The implementation provides the backend logic for calls to the interface.
+
+. Rename `american-flight-api-acb.xml` to `interface.xml` by right-clicking the file name, selecting *Rename*, and providing the new name. 
 +
 image::api-interface-rename.png["Rename option highlighted the context menu of american-flight-api-acb.xml file"]
-// TO-DO: The background of the contextual menu is white in the web IDE and grey in the desktop IDE.
-. Rename the file to *interface.xml*.
-+
-image::interface-rename.png["interface.mxl file highlighted when renaming a file"]
-. Right-click your `american-ws-anypoint-code-builder.xml` and select *Rename*.
-+
-image::api-implementation-rename.png["Rename option highlighted the context menu of american-ws-anypoint-code-builder.xml file"]
-. Rename the file to *implementation.xml*.
-+
-image::implementation-rename.png["implementation.xml file highlighted when renaming a file"]
+. Rename `american-ws-anypoint-code-builder.xml` to `implementation.xml`.
 
-The interface file now receives all incoming requests to your application. The flows that you scaffolded when importing the API validate and route requests. The implementation file contains the backend logic that the interface calls.
+== Remove HTTP Listener from the Implementation File
 
-== Remove the HTTP Listeners from the Implementation File
+To handle requests through the HTTP endpoint in the interface, remove the HTTP listeners from `implementation.xml`.
 
-To ensure that your application exposes one single HTTP endpoint to handle request, you have to remove the HTTP listeners from the implementation file.
-
-. In Anypoint Code Builder, open your `implementation.xml` file.
-. In the graphical canvas, select the *HTTP /flights* listener. The corresponding XML code is shown.
-+
+. Open `implementation.xml`.
++ 
 image::get-flights-select-listener.png["HTTP listener highlighted in the implementation.xml file"]
-. Delete the highlighted XML code:
+. Delete the *HTTP /flights* listener XML from the configuration XML:
 +
 [source,xml]
 --
 <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
 --
-
-Your flow should now look like this:
-
++
+.Click for the resulting flow.
+[collapsible]
+====
 [source,xml]
 --
 <flow name="getFlights">
@@ -98,6 +73,7 @@ Your flow should now look like this:
 
 </flow>
 --
+====
 
 == Reference the Implementation Flow from the Interface File
 
