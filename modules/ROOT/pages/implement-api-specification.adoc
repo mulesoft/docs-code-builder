@@ -118,4 +118,92 @@ image::outline-list-select-flow.png["American-flights-api-main flow highlighted"
     </on-error-propagate>
 </error-handler>
 --
-. Proceed to implement-api-interface-logic.adoc[].
+. Proceed to <<rename>>.
+
+[[rename]]
+== Identify the Interface and Implementation Files
+
+Provide descriptive names for the interface and implmentation files for your American Flights application. The interface will receive all incoming requests to your application. The scaffolded flows in the interface validate and route requests. The implementation will provide the backend logic for calls to the interface.
+
+image::api-interface-rename.png["Rename option highlighted the context menu of american-flight-api-acb.xml file"]
+
+. Rename `american-flight-api-acb.xml` to `interface.xml` by right-clicking the file name, selecting *Rename*, and providing the new name. 
+. Rename `american-ws-anypoint-code-builder.xml` to `implementation.xml`.
+. Proceed to <<endpoint>>.
+
+[[endpoint]]
+== Configure an Endpoint through the Interface 
+
+To receive HTTP requests through the interface, remove the HTTP listener from `implementation.xml`, and rename the HTTP listener in `interface.xml` to `getFlights`.
+
+. Open `implementation.xml`.
++ 
+image::get-flights-select-listener.png["HTTP listener highlighted in the implementation.xml file"]
+. Delete the *HTTP /flights* listener XML from the configuration XML:
++
+[source,xml]
+--
+<http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+--
++
+.Click for the resulting flow.
+[%collapsible]
+====
+[source,xml]
+--
+<flow name="getFlights">
+    <db:select doc:name="Query Flights" doc:id="pvuqsc" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
+
+    <ee:transform doc:name="Transform Message" doc:id="uniqueId" >
+        <ee:message >
+            <ee:set-payload >
+                <![CDATA[
+                %dw 2.0
+                output application/json
+                ---
+                payload map ( payload01 , indexOfPayload01 ) -> {
+                  ID: payload01.ID,
+                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  price: payload01.price default 0,
+                  departureDate: payload01.takeOffDate as String default "",
+                  origin: payload01.fromAirport default "",
+                  destination: payload01.toAirport default "",
+                  emptySeats: payload01.seatsAvailable default 0,
+                  plane: {
+                    "type": payload01.planeType default "",
+                    totalSeats: payload01.totalSeats default 0
+                  }
+                }
+                ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+
+</flow>
+--
+====
+. In Anypoint Code Builder, open your `interface.xml` file.
+. Locate the `get:\flights:american-flights-api-config` flow: 
++
+[source,xml]
+--
+<flow name="get:\flights:american-flights-api-config">
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+--
+. Change the name of this flow to `getFlights`:
++
+[source,xml]
+--
+<flow name="getFlights">
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+--
+
+== Next Step
+
+xref:debug-a-mule-application.adoc[Debug a Mule Application]
