@@ -55,8 +55,14 @@ Examine the scaffolded flows and error handlers for your interface in the UI can
 image::scafolded-flow-canvas.png["The main flow is highlighted"]
 
 . From the *EXPLORER* menu, open the configuration file for your interface, `american-flight-api.xml`.
+. Use the *Flow List* panel to navigate through flows:
++
+image::outline-list-select-flow.png["American-flights-api-main flow highlighted"]
 
-. Locate the flows created for these endpoints:
+.. Expand the *Flow List* panel.
+.. Select a flow from the list.
+.. Click the flow in the UI canvas to highlight the flow in the configuration XML.
+. In the configuration XML, locate the flows created for the endpoints in your API specification:
 
 * `get:\flights`
 +
@@ -79,15 +85,9 @@ image::scafolded-flow-canvas.png["The main flow is highlighted"]
 <flow name="get:\flights\(ID):application\json:american-flight-api-config">
 </flow>
 ----
-. Use the *Flow List* panel to navigate through flows:
+. Notice the automatically generated Error Handler components. For example: 
 +
-image::outline-list-select-flow.png["American-flights-api-main flow highlighted"]
-
-.. Expand the *Flow List* panel.
-.. Select a flow from the list.
-.. Click the a flow in the UI canvas to highlight the flow in the configuration XML.
-. Notice the automatically generated Error Handler components in the `<flow name="american-flight-api-main/>` element:
-+
+//TODO: WE SHOULD SHOW HOW TO DO SOME BASIC ERROR HANDLING...
 [source,xml]
 --
 <apikit:router config-ref="american-flights-api-config" />
@@ -117,7 +117,7 @@ image::outline-list-select-flow.png["American-flights-api-main flow highlighted"
 [[rename]]
 == Name Your Interface and Implementation Files
 
-Provide descriptive names for the interface and implmentation files for your American Flights application. The interface receives all incoming requests to your application. The scaffolded flows in the interface validate and route requests. The implementation provides the backend logic for calls to the interface.
+Provide descriptive names for the interface and implmentation files in your American Flights project. The interface receives all incoming requests to your application. The scaffolded flows in the interface validate and route requests. The implementation provides the backend logic for calls to the interface.
 
 image::api-interface-rename.png["Rename option highlighted the context menu of american-flight-api-acb.xml file"]
 
@@ -197,6 +197,9 @@ image::get-flights-select-listener.png["HTTP listener highlighted in the impleme
     <logger level="INFO" message="get:\flights:american-flights-api-config" />
 </flow>
 --
+. Optional: Trigger a flow through your interface, and process the request with your implementation.
++
+For help triggering the flow, see xref:use-dataweave-to-transform-data.adoc#run-and-test-your-application[Run And Test Your Application].
 
 == Next Step
 
