@@ -6,33 +6,28 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Anypoint Code Builder supports implementations of OAS or RAML API specifications. You can import specifications from Anypoint Exchange or use a multi-root workspace in the IDE to import without first publishing the specification to Exchange. 
-//TODO: POINT TO MORE INFO 
+Import your American Flights API specification from Anypoint Exchange. Scaffold the specification into the American Flights project that you are developing, and add the logic to implement an endpoint.
 
 == Before You Begin
 
 . xref:design-api-specification.adoc[]: Complete all tasks from creating to publishing the specification to Anypoint Exchange. 
 . xref:develop-integration.adoc[]: Complete all tasks from creating user snippets to transforming response data with DataWeave.
 
-== Import the American Flights API Specification
+== Import Your American Flights API Specification from Exchange
 
-Before implementing the American Flights API, import the specification from exhange. Add the API specification as a dependency to your `american-ws-anypoint-code-builder` project, scaffold the specification, and create a Mule application that adds the logic for each endpoint.
-
-. In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
+. In Anypoint Code Builder, open your integration application, `american-ws-anypoint-code-builder`.
++
+For reference, see xref:create-basic-integration.adoc[].
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
 [source,command]
 ----
 MuleSoft: Import Asset from Exchange
 ----
-+
-image::import-asset-exchange-implementation.png["Rest API option highlighted after selecting MuleSoft: Import Asset from Exchange"]
-// TODO: New screenshot needed? 
-// More options available now: "Rest API", "DataWeave Library", "GraphQL API", and "Connector".
 . Select *Rest API*. 
 +
 image::rest-api-asset-type.png["Rest API option highlighted after selecting MuleSoft: Import Asset from Exchange"]
-. If prompted, log in to Anypoint Platform by allowing the extension to sign in, opening an external web site, and opening Visual Studio Code. 
+. If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code. 
 . Type the name of your API specification. For example:
 +
 [source,spec name]
@@ -45,8 +40,6 @@ Wait for the IDE to load a list of matches to the name:
 image::select-api-asset-from-exchange.png["American Flights API asset is highlighted"]
 . If prompted for a version, select the version of the API to import, such as `_1.0.0_`.
 . Select *Yes* when prompted to scaffold the API dependency.
-+
-image::scaffold-option-yes.png["Yes option highlighted when requesting scaffolding the API dependency"]
 +
 This step adds the API specification as a dependency in your project's `pom.xml` file and creates a new configuration XML file, such as `american-flights-api.xml`:
 +
@@ -121,9 +114,9 @@ image::outline-list-select-flow.png["American-flights-api-main flow highlighted"
 . Proceed to <<rename>>.
 
 [[rename]]
-== Identify the Interface and Implementation Files
+== Name Your Interface and Implementation Files
 
-Provide descriptive names for the interface and implmentation files for your American Flights application. The interface will receive all incoming requests to your application. The scaffolded flows in the interface validate and route requests. The implementation will provide the backend logic for calls to the interface.
+Provide descriptive names for the interface and implmentation files for your American Flights application. The interface receives all incoming requests to your application. The scaffolded flows in the interface validate and route requests. The implementation provides the backend logic for calls to the interface.
 
 image::api-interface-rename.png["Rename option highlighted the context menu of american-flight-api-acb.xml file"]
 
