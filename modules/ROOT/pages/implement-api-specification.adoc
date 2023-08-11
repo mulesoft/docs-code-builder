@@ -6,18 +6,20 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Import your American Flights API specification from Anypoint Exchange. Scaffold the specification into the American Flights project that you are developing, and add the logic to implement an endpoint.
+Import your American Flights API specification from Anypoint Exchange. Scaffold the specification into the American Flights project that you are developing, and add the logic to implement an endpoint in the API.
 
 == Before You Begin
 
 . xref:design-api-specification.adoc[]: Complete all tasks from creating to publishing the specification to Anypoint Exchange. 
 . xref:develop-integration.adoc[]: Complete all tasks from creating user snippets to transforming response data with DataWeave.
 
-== Import Your American Flights API Specification from Exchange
+== Import and Scaffold Your American Flights API Specification
 
-. In Anypoint Code Builder, open your integration application, `american-ws-anypoint-code-builder`.
+Import your American Flights API specification from Anypoint Exchange, and scaffold the specification into an interface for your American Flights integration project.
+
+. In Anypoint Code Builder, open your integration, `american-ws-anypoint-code-builder`.
 +
-For reference, see xref:create-basic-integration.adoc[].
+For information about this application, see xref:create-basic-integration.adoc[].
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
 [source,command]
@@ -28,30 +30,31 @@ MuleSoft: Import Asset from Exchange
 +
 image::rest-api-asset-type.png["Rest API option highlighted after selecting MuleSoft: Import Asset from Exchange"]
 . If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code. 
-. Type the name of your API specification. For example:
+. Type the name of your American Flights API specification. For example:
 +
 [source,spec name]
 ----
 American Flights API
 ----
 +
-Wait for the IDE to load a list of matches to the name: 
+For information about this specification, see xref:design-api-specification-from-scratch.adoc[].
+. Wait for the IDE to load a list of matches to the name: 
 +
 image::select-api-asset-from-exchange.png["American Flights API asset is highlighted"]
-. If prompted for a version, select the version of the API to import, such as `_1.0.0_`.
+. When prompted for a version, select the version of the API to import, such as `_1.0.0_`.
 . Select *Yes* when prompted to scaffold the API dependency.
 +
 This step adds the API specification as a dependency in your project's `pom.xml` file and creates a new configuration XML file, such as `american-flights-api.xml`:
 +
 image::scafolded-mule-config-file.png["American-flights.xml file highlighted in the package explorer section"]
 
-== Examine the Scaffolded XML File
+== Tour the Interface File
 
-Display the scaffolded flow UIs from the *Flow List*, highlight a selected flows in the configuration XML, and examine the Error Handler components.
+Examine the scaffolded flows and error handlers for your interface in the UI canvas and configuration XML.
 
 image::scafolded-flow-canvas.png["The main flow is highlighted"]
 
-. From the *EXPLORER*, open `american-flight-api.xml`.
+. From the *EXPLORER* menu, open the configuration file for your interface, `american-flight-api.xml`.
 
 . Locate the flows created for these endpoints:
 
@@ -77,15 +80,13 @@ image::scafolded-flow-canvas.png["The main flow is highlighted"]
 </flow>
 ----
 . Use the *Flow List* panel to navigate through flows:
-.. Expand the *Flow List* panel.
-+
-image::outline-list-location.png["Flow list panel highlighted"]
-.. Select a flow from the list.
 +
 image::outline-list-select-flow.png["American-flights-api-main flow highlighted"]
-// TODO: Fix screenshot. Can't see the flows.
-.. Click the a flow in the UI canvas to highlight the XML for the flow in the configuration XML.
-. Notice the automatically generated Error Handler components in the ` <flow name="american-flight-api-main/>` element:
+
+.. Expand the *Flow List* panel.
+.. Select a flow from the list.
+.. Click the a flow in the UI canvas to highlight the flow in the configuration XML.
+. Notice the automatically generated Error Handler components in the `<flow name="american-flight-api-main/>` element:
 +
 [source,xml]
 --
