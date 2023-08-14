@@ -36,14 +36,14 @@ Alternatively, click the *Source Control* icon in the activity bar.
 image::explore-changes-api-specification.png["exchange.json file highlighted to show the source control changes"]
 +
 This example adds some dependencies to the API specification by reusing the API fragments downloaded from Anypoint Exchange.
-. Proceed to <<stage>> to stage your changes one at a time.
-+
-Alternatively, you can stage multiple files together through <<stage-multiple-changes>>.
+. Proceed to <<stage>>.
 
 [[stage]]
 == Stage Changes to the Built-in SCM
 
 Stage changes from one or more files from the UI or through the command line, with a Git command. The UI uses the `git add` command to add changes from your working directory to the staging area. This area includes updates for the next commit.
+
+image::stage-american-flights-api.png["Source control number and plus icon of american-flight-api.raml file highlighted"]
 
 * <<stage-one>>
 * <<stage-multiple>>
@@ -54,14 +54,11 @@ Stage changes from one or more files from the UI or through the command line, wi
 To stage individual changes through the UI:
 
 . In Anypoint Code Builder, select your Source Control view.
-. Select the plus icon beside the specification file, `american-flight-api.raml`.
-+
-//TODO duke: fix/modify screenshot
-image::stage-american-flights-api.png["Source control number and plus icon of american-flight-api.raml file highlighted"]
+. Select the plus icon beside your RAML specification file, such as `american-flight-api.raml`.
 +
 The file moves to *Staged Changes* section.
 . Review the changes in the Source Control section.
-. Proceed to <<stage-multiple-changes>> to stage changes to more than one file in your API project.
+. Proceed to <<stage-multiple>> to stage changes to more than one file in your API project.
 
 [[stage-multiple]]
 === Stage Changes to Multiple Files
@@ -69,7 +66,7 @@ The file moves to *Staged Changes* section.
 Stage multiple files at the same time:
 
 . Select your Source Control view for your API project.
-. Click the plus icon in the *Changes* the section header to stage the remaining changes.
+. Click the plus icon in the *Changes* header to stage your remaining changes.
 +
 image::stage-all-changes.png["Plus icon highlighted to stage all changes"]
 . Proceed to <<commit>>.
