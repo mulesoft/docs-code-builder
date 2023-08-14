@@ -1,5 +1,5 @@
 = Synchronize the API Specification with Design Center
-:page-aliases: tut-api-synchronize-with-design-center.adoc
+:page-aliases: synchronize-with-design-center.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
@@ -12,32 +12,29 @@ Use the built-in integrated source control management (SCM) to sync American Fli
 
 If you haven't started the American Flight API specification, follow these procedures before attempting to synchronize:
 
-. xref:tut-api-design-api-specification-from-scratch.adoc[]
-. xref:tut-api-add-request-response-details.adoc[]
-. xref:tut-api-test-api-specification.adoc[]
+. xref:tut-design-api-specification-from-scratch.adoc[]
+. xref:tut-design-api-add-request-response-details.adoc[]
+. xref:tut-design-api-test-specification.adoc[]
 
 [[review]]
 == Review Changes in Files
 
-Anypoint Code Builder highlights differences made in files since you last synced them with the main branch on Design Center.
+Anypoint Code Builder identifies differences you make to files since you last synchronized changes with the main branch in Design Center.
 
-When you change your API specification, the Source Control icon in the Activity Bar displays the number of changes to the API project. Click the icon to display details about your changes:
-
-* *Changes*
-* *Staged Changes*
-
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
-//TODO duke: fix/modify screenshot
-image::changes-and-staged-changes.png["Changes and Staged Changes highlighted in the source control section"]
+When you change your API specification, the Source Control icon in the Activity Bar displays the number of changes to the API project. 
 
 To review your changes to your API specification:
 
-. In Anypoint Code Builder, select your *Source Control* view using Ctrl+Shift+g (Mac) or Cmd+Shift+g (Windows).
+. In Anypoint Code Builder, open the *Source Control* menu by pressing Ctrl+Shift+g (Mac) or Cmd+Shift+g (Windows).
++
+//TODO duke: hamburger menu present
+Alternatively, click the *Source Control* icon in the activity bar:
++
+image::changes-and-staged-changes.png["Changes and Staged Changes highlighted in the source control section"]
 . Open your `exchange.json` file.
 . Review the working tree and notice the shading for deletions (red) and additions (green).
 +
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
-//TODO duke: fix/modify screenshot
+//TODO duke: hamburger menu present
 image::explore-changes-api-specification.png["exchange.json file highlighted to show the source control changes"]
 +
 In this case, you added some dependencies to the API by reusing API fragments you downloaded from Anypoint Exchange.
