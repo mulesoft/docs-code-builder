@@ -79,7 +79,7 @@ The UI uses the `git commit` command to save the changes you staged to your loca
 To commit staged changes:
 
 . In Anypoint Code Builder, select your Source Control view.
-. In the message field, enter a message that summarizes your changes, and click *Commit*.
+. In the message field, summarize your changes, and click *Commit*.
 +
 image::add-commit-message.png["Message box highlighted"]
 . Your Source Control view now displays no changes to commit.
@@ -88,21 +88,20 @@ image::add-commit-message.png["Message box highlighted"]
 [[push]]
 == Push Changes to Anypoint Design Center
 
-The UI uses the `git push` command to upload your local content to Anypoint Design Center.
+Use the `git push` command from the UI to upload your local content to Design Center.
 
 To push your changes:
 
-. In Anypoint Code Builder, select your Source Control view.
-. Select the three dots that appear in the *Source Control* header.
+. Open the Source Control view.
+. In the *Source Control* header, click the More actions menu (vertical ellipsis).
 . Select *Push*.
 +
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic.
-//TODO duke: fix/modify screenshot
+//TODO duke: hamburger in screenshot; does Sync Changes appear?
 image::push-changes.png["Push command highlighted in the source control section"]
 +
 Your changes are now published in Design Center.
 +
-The integrated SCM within Anypoint Code Builder might prompt you to `periodically run 'git fetch'`. This option enables Anypoint Code Builder to check for updates of your API in Design Center and prompt you to update your local version of the API.
+If the UI prompts you to `periodically run 'git fetch'`, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API.
 +
 image::fetch-periodically-check.png["Periodically run git fetch message highlighted"]
-. Proceed to xref:tut-api-publish-api-spec-to-exchange.adoc[] so that your team can find and implement the specification.
+. Proceed to xref:tut-design-api-publish-api-spec-to-exchange.adoc[] so that your team can find and implement the specification.
