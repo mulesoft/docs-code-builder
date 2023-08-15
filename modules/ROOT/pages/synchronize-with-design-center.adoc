@@ -1,5 +1,5 @@
 = Synchronize the API Specification with Design Center
-:page-aliases: tut-api-synchronize-with-design-center.adoc
+:page-aliases: synchronize-with-design-center.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
@@ -12,72 +12,63 @@ Use the built-in integrated source control management (SCM) to sync American Fli
 
 If you haven't started the American Flight API specification, follow these procedures before attempting to synchronize:
 
-. xref:tut-api-design-api-specification-from-scratch.adoc[]
-. xref:tut-api-add-request-response-details.adoc[]
-. xref:tut-api-test-api-specification.adoc[]
+. xref:tut-design-api-specification-from-scratch.adoc[]
+. xref:tut-design-api-add-request-response-details.adoc[]
+. xref:tut-design-api-test-specification.adoc[]
 
 [[review]]
 == Review Changes in Files
 
-Anypoint Code Builder highlights differences made in files since you last synced them with the main branch on Design Center.
+Identify changes to files in your API project since the last synchronization with the main branch in Design Center. When you change your API project, the Source Control icon in the Activity Bar identifies the number of changes to the API project. 
 
-When you change your API specification, the Source Control icon in the Activity Bar displays the number of changes to the API project. Click the icon to display details about your changes:
-
-* *Changes*
-* *Staged Changes*
-
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
-//TODO duke: fix/modify screenshot
+//TODO duke: hamburger menu present; maybe ok since it's fairly inobtrusive
 image::changes-and-staged-changes.png["Changes and Staged Changes highlighted in the source control section"]
 
-To review your changes to your API specification:
+To review changes to your API project:
 
-. In Anypoint Code Builder, select your *Source Control* view using Ctrl+Shift+g (Mac) or Cmd+Shift+g (Windows).
+. In Anypoint Code Builder, open the *Source Control* menu by pressing Ctrl+Shift+g (Mac) or Cmd+Shift+g (Windows).
++
+Alternatively, click the *Source Control* icon in the activity bar.
 . Open your `exchange.json` file.
 . Review the working tree and notice the shading for deletions (red) and additions (green).
 +
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
-//TODO duke: fix/modify screenshot
+//TODO duke: hamburger menu present; maybe ok if fairly inobtrusive
 image::explore-changes-api-specification.png["exchange.json file highlighted to show the source control changes"]
 +
-In this case, you added some dependencies to the API by reusing API fragments you downloaded from Anypoint Exchange.
-. Proceed to <<stage>> or <<stage-multiple-changes>> to stage your changes one at a time or together.
+This example adds some dependencies to the API specification by reusing the API fragments downloaded from Anypoint Exchange.
+. Proceed to <<stage>>.
 
 [[stage]]
-== Stage Your Changes Individually
+== Stage Changes to the Built-in SCM
 
-The UI uses the `git add` command to add a change from your working directory to the staging area. This area includes updates for the next commit. Anypoint Code Builder enables you to stage changes individually or as a group through the UI. 
-//TODO: VERIFY HOW
-Alternatively, you can use the embedded command line in Anypoint Code Builder to commit changes. 
+Stage changes from one or more files from the UI or through the command line, with a Git command. The UI uses the `git add` command to add changes from your working directory to the staging area. This area includes updates for the next commit.
+
+image::stage-american-flights-api.png["Source control number and plus icon of american-flight-api.raml file highlighted"]
+
+* <<stage-one>>
+* <<stage-multiple>>
+
+[[stage-one]]
+=== Stage Changes to a Single File
 
 To stage individual changes through the UI:
 
 . In Anypoint Code Builder, select your Source Control view.
-. Select the plus icon in the `american-flight-api.raml` file.
+. Select the plus icon beside your RAML specification file, such as `american-flight-api.raml`.
 +
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
-//TODO duke: fix/modify screenshot
-image::stage-american-flights-api.png["Source control number and plus icon of american-flight-api.raml file highlighted"]
-. Review the changes in the Source Control section. The file moves into *Staged Changes*.
-+
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
-//TODO duke: fix/modify screenshot
-image::staged-changes.png["Working tree of american-flight-api.raml file highlighted"]
-. Proceed to <<commit>>.
+The file moves to *Staged Changes* section.
+. Review the changes in the Source Control section.
+. Proceed to <<stage-multiple>> to stage changes to more than one file in your API project.
 
-[[stage-multiple-changes]]
-=== Stage Multiple Changes
+[[stage-multiple]]
+=== Stage Changes to Multiple Files
 
 Stage multiple files at the same time:
 
-. In Anypoint Code Builder, select your Source Control view.
-. Click the plus icon in the section header to stage the remaining changes.
+. Select your Source Control view for your API project.
+. Click the plus icon in the *Changes* header to stage your remaining changes.
 +
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic.
-//TODO duke: fix/modify screenshot
 image::stage-all-changes.png["Plus icon highlighted to stage all changes"]
-+
-Alternatively, you can perform these actions from the command line embedded in the IDE.
 . Proceed to <<commit>>.
 
 [[commit]]
@@ -88,40 +79,29 @@ The UI uses the `git commit` command to save the changes you staged to your loca
 To commit staged changes:
 
 . In Anypoint Code Builder, select your Source Control view.
-. Click in the message box.
-. Enter a message that summarizes your changes.
+. In the message field, summarize your changes, and click *Commit*.
 +
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic.
-//TODO duke: fix/modify screenshot
 image::add-commit-message.png["Message box highlighted"]
-+
-A good commit message helps summarize the changes across multiple files by multiple developers.
-. Click the tick mark in the *Source Control* header to commit the changes.
-+
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic.
-//TODO duke: fix/modify screenshot
-image::commit-changes.png["Tick mark in the Source Control header highlighted"]
 . Your Source Control view now displays no changes to commit.
 . Proceed to <<push>>.
 
 [[push]]
 == Push Changes to Anypoint Design Center
 
-The UI uses the `git push` command to upload your local content to Anypoint Design Center.
+Use the `git push` command from the UI to upload your local content to Design Center.
 
 To push your changes:
 
-. In Anypoint Code Builder, select your Source Control view.
-. Select the three dots that appear in the *Source Control* header.
+. Open the Source Control view.
+. In the *Source Control* header, click the More actions menu (ellipsis).
 . Select *Push*.
 +
-//TODO: Web IDE only because it contains hamburger menu. Need to make generic.
-//TODO duke: fix/modify screenshot
+//TODO duke: hamburger in screenshot; does Sync Changes appear?
 image::push-changes.png["Push command highlighted in the source control section"]
 +
 Your changes are now published in Design Center.
 +
-The integrated SCM within Anypoint Code Builder might prompt you to `periodically run 'git fetch'`. This option enables Anypoint Code Builder to check for updates of your API in Design Center and prompt you to update your local version of the API.
+If the UI prompts you to `periodically run 'git fetch'`, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API.
 +
 image::fetch-periodically-check.png["Periodically run git fetch message highlighted"]
-. Proceed to xref:tut-api-publish-api-spec-to-exchange.adoc[] so that your team can find and implement the specification.
+. Proceed to xref:tut-design-api-publish-api-spec-to-exchange.adoc[] so that your team can find and implement the specification.
