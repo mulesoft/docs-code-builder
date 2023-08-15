@@ -385,7 +385,7 @@ The POM file includes dependencies for the components in the configuration XML.
 
 To use an encrypted value in a Mule application: 
 
-. Above the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Ctrl+Space (Mac) or Cmd+Space(Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
+. Above the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Cmd+Space (Mac) or Ctrl+Space (Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
 +
 image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties Snippet"]
 +
@@ -460,7 +460,7 @@ from properties provider environment properties provider
 ----
 +
 In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key-value` is the value used to encrypt the properties through the Secure Properties Tool.
-. Deploy the application locally within the IDE by pressing Ctrl+shift+p (Windows) or CmdCtrl+shift+p (Mac), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
+. Deploy the application locally within the IDE by pressing Cmd+shift+p (Mac) or Ctrl+shift+p (Windows), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
 +
 A successful deployment produces the following message in the *OUTPUT* tab of the output panel. For information about the output panel, see xref:configure-default-output-panel.adoc[].
 +
@@ -505,7 +505,7 @@ To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub
 ----
 +
 The _name_ (not the _value_) of your encryption key goes into a comma-separated `secureProperties` array. Later in this procedure, when you deploy your application to CloudHub, the IDE prompts you to provide the _value_ of the encryption key that you provided through the Secure Configuration Tool when encrypting your sensitive properties.
-. Deploy your application to CloudHub by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and providing this command:
+. Deploy your application to CloudHub by pressing Cmd+shift+p (Mac) or Ctrl+shift+p (Windows) and providing this command:
 +
 [source, command]
 ----
@@ -582,7 +582,7 @@ Notice the value of the `file` attribute in this example:
 //+
 //After deploying to CloudHub, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
 . _Before deploying to CloudHub_, ensure that the application deploys locally your IDE:
-.. In the IDE, press Cmd+shift+p (Windows) or Ctrl+shift+p (Mac), and provide this command:
+.. In the IDE, press Cmd+shift+p (Mac) or Ctrl+shift+p (Windows), and provide this command:
 +
 [source,command]
 ----
@@ -613,7 +613,7 @@ Notice the setting `-M-Denv=dev` in this `launch.json` example:
 .. If your application defines encrypted properties in your properties file, configure the *Runtime: Default Arguments* command in the IDE with the encryption key and value so that the local deployment to your IDE can decrypt the properties when the application runs.
 +
 _Do not_ configure `launch.json` with sensitive property values. See <<test-deploy>> for guidance with the recommended configuration.
-. Launch the `deploy.json` file for your application by pressing Cmd+shift+p (Windows) or Ctrl+shift+p (Mac) and providing this command:
+. Launch the `deploy.json` file for your application by pressing Cmd+shift+p (Mac) or Ctrl+shift+p (Windows) and providing this command:
 +
 [source,command]
 ----
