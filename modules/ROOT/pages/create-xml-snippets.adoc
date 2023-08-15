@@ -1,40 +1,66 @@
-= Create XML Snippets
+= Create XML Snippets for the American Flights Example
+:page-aliases: tut-dev-create-xml-snippets.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Create user snippets for your integration to use before you create the integration. Snippets are reusable code patterns that you can add to your Mule application. In addition to providing built-in snippets, the IDE enables you to configure your own user snippets. 
-
-From the UI, insert snippets directly into flows and subflows, or select snippets from the configuration XML to insert them anywhere in the XML.
-
-For more information about snippets, see xref:work-with-code-snippets.adoc[].
+Before you create an integration project for the American Flights example, define user snippets for the project. Snippets are reusable code patterns that you can insert from the IDE into the configuration XML of Mule applications. 
 
 == Before You Begin
 
-* Ensure you set up your MuleSoft environment.
-See xref:setup.adoc[] for more information.
+Design the xref:design-api-specification-from-scratch.adoc[American Flights API] example, completing all the remaining tasks: creating the API specification, adding examples, testing with the mocking service, synchronizing with Design Center, and publishing to Exchange.
 
-== Open the User Snippets File
+== Get Familiar with Snippets
 
-Define user snippets in the `mule-xml.json` file,  in which you specify snippets for connector operations, Core processors, and other elements in the XML configuration file for your Mule applications.  
+In addition to providing built-in snippets, Anypoint Code Builder enables you to configure your own user snippets in a JSON format.  Anypoint Code Builder converts the snippets to XML when you add them to the configuration XML of your Mule application.
+
+The XML generated from the snippets helps you configure your applications more quickly and consistently than with the basic XML elements available from the configuration XML. For example:
+
+* Built-in Logger snippet:
++
+[source,XML]
+----
+<logger level="" message='$2' doc:name="Logger" doc:id="xgsmzm" />
+----
++
+To configure the snippet XML in a Mule application, specify the values to the attributes, such as the `message` for the Logger. 
+
+* Basic Logger XML:
++
+[source,XML]
+----
+<logger doc:name="Logger" doc:id="xlkhkz" />
+----
++
+To configure the basic Logger XML, you must provide the attributes and values. 
+
+For more information, see xref:work-with-code-snippets.adoc[].
+
+== Add User Snippets to Your IDE
+
+Define user snippets in the `mule-xml.json` file. You can configure snippets for connector operations, Core processors, and other processors in the XML configuration file for your Mule applications.  
 
 . In Anypoint Code Builder, navigate to *Configure User Snippets*:
 
 * In the desktop IDE, navigate to *Code* > *Settings* > *Configure User Snippets*.
-* In the web IDE, navigate to *File* > *Preferences* > *Configure User Snippets*.
+* In the web IDE, navigate from the File menu to *Preferences* > *Configure User Snippets*.
+* In either IDE, open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
-.Web IDE example:
-image::file-preferences-user-snippets.png[User Snippet option highlighted in the Preferences menu.]
-. In the *Select Snippets File or Create Snippets* field that opens, type `_mule-xml_` and select *mule-xml.json (Mule XML)*.
+[source,command]
+----
+Snippets: Configure User Snippets
+----
+. In the *Select Snippets File or Create Snippets* field that opens, enter:
 +
-image::select-snippets.png[User snippet options.]
+[source,command]
+----
+mule-xml.json (Mule XML)
+----
+. If the file has no configurations, `mule-xml.json` provides comments within curly braces:
 +
-image::select-mule-xml.png[mule-xml snippet highlighted in the user snippet options.]
-. If the file has no configurations, the file that opens looks like this:
-+
-[source,xml,linenums]
+[source,json]
 --
 {
 	// Place your snippets for mule-xml here. Each snippet is defined under a snippet name and has a prefix, body and
@@ -54,8 +80,8 @@ image::select-mule-xml.png[mule-xml snippet highlighted in the user snippet opti
 --
 . Add this snippet code to the file: 
 +
-[source,xml,linenums]
---
+[source,json]
+----
 {
 	"Mule Flow": {
 		"prefix": "muledx:flow",
@@ -128,9 +154,6 @@ image::select-mule-xml.png[mule-xml snippet highlighted in the user snippet opti
 		]
 	 }
   }
--- 
+----
+. Proceed to xref:create-basic-integration.adoc[Create a Basic Integration]. 
 
-== Next Step
-
-* xref:create-basic-integration.adoc[Create a Basic Integration]. +
-Learn the basics to develop your first basic integration.
