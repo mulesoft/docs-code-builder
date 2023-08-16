@@ -132,17 +132,18 @@ image::packaged-and-running-terminals.png[]
 [[test]]
 == Test Your Mule Application
 
-. Make a GET request to the running application. 
+. From a REST client or your browser, make a GET request to the running application to trigger the debugger. 
 +
 For guidance, see xref:ping-locally-deployed-app.adoc[].
-. In Anypoint Code Builder, notice that the application execution stopped at your first breakpoint.
+//TODO: duke NEED TO MAKE flow-ref BREAKPOINT VISIBLE WHEN TRIGGERING APP
+. In your American Flights project, notice that the execution of the application stops at your first breakpoint.
 +
 image::debug-stop-at-flow-ref.png[]
-. Select the *Step Over* button on your debug toolbar to move the execution to your next breakpoint.
-. In the Debug sidebar, notice that the *Variables* panel shows details about the Mule event at that particular part of the flow.
+. Click the *Step Over* button on your debug toolbar to continue execution to next breakpoint.
+. In the Debug sidebar, notice that the *Variables* panel provides information about the Mule event at the breakpoint.
 +
 image::debugger-stop-db-select.png[]
-. Select the *Step Over* button on your debug toolbar to move the execution to your next breakpoint.
+. Click the *Step Over* button on your debug toolbar to continue execution to your next breakpoint.
 . In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables and note that you can inspect the database response as an array.
 +
 image::debugger-stop-set-variable.png[]
