@@ -23,43 +23,57 @@ See xref:debug-add-logger-set-variables.adoc[].
 See xref:debug-add-breakpoints.adoc[].
 * Install a REST client like Postman or AdvancedRestClient.
 
-== Start a Debug Session
+[[debug]]
+== Start a Debugging Session
 
-. In Anypoint Code Builder, select the *Run and Debug* icon, and click *Start Debugging (F5)*.
+. From the *Run and Debug* panel, click *Debug Mule Application*.
 +
-image::start-debugging.png["Run and Debug icon, and Start Debugging (F5) icon highlighted"]
-. Your application is first packaged, and then Anypoint Code Builder opens a new terminal that deploys the application to the embedded Mule Runtime:
+image::start-debugging.png[]
++
+The IDE packages the application and opens a new terminal that deploys the application to the embedded Mule runtime engine:
 +
 image::packaged-and-running-terminals.png[]
+. Proceed to <<test>>.
 
+[[test]]
 == Test Your Mule Application
 
-. Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/api/flights+`. +
-See xref:ping-locally-deployed-app.adoc[] for more information about how to send request to your application.
-. In Anypoint Code Builder, notice that the application execution stopped at your first breakpoint.
+. From a REST client or your browser, make a GET request to the running application to trigger the debugger. 
++
+For guidance, see xref:ping-locally-deployed-app.adoc[].
+//TODO: duke NEED TO MAKE flow-ref BREAKPOINT VISIBLE WHEN TRIGGERING APP
+. In your American Flights project, notice that the execution of the application stops at your first breakpoint.
 +
 image::debug-stop-at-flow-ref.png[]
-. Select the *Step Over* button on your debug toolbar to move the execution to your next breakpoint.
-. In the Debug sidebar, notice that the *Variables* panel shows details about the Mule event at that particular part of the flow.
+. Click the *Step Over* button on your debug toolbar to continue execution to next breakpoint.
+. In the Debug sidebar, notice that the *Variables* panel provides information about the Mule event at the breakpoint.
 +
 image::debugger-stop-db-select.png[]
-. Select the *Step Over* button on your debug toolbar to move the execution to your next breakpoint.
-. In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables. You can inspect the database response as an array.
+. Click the *Step Over* button on your debug toolbar to continue execution to your next breakpoint.
+. In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables and note that you can inspect the database response as an array.
 +
 image::debugger-stop-set-variable.png[]
 
 == Add a Watch Expression
 
-. In the Debug sidebar, in the Watch panel, select the `plus` icon.
+. Open the *Run and Debug* sidebar.
+. From the *Watch* panel in the sidebar, select the `plus` icon, and add the expression `payload.^mediaType`.
 +
 image::debug-add-expression.png[]
-. Add the expression `payload.^mediaType`.
-. Select the *Step Over* button until your execution moves to the `<set-payload>` component. Your payload is `application/java`.
-. Select the *Step Over* button until your execution jumps to the `<logger>` component. Your payload is now transformed to `application/json`.
+. Select the *Step Over* button until your execution moves to the Set Payload component (`<set-payload/>`).
+. Notice that your payload is `application/java`.
 +
-image::debuger-watch-expression-json.png[]
-. Select the *Continue* button on your debug toolbar. The application returns the response from the database to your REST client.
+image:tut-debug-mediatype-java.png[]
+. Select the *Step Over* button until execution continues to the Logger component (`<logger>`).
+. Notice that your payload transforms to `application/json`.
 +
+image::tut-debug-mediatype-json.png[]
+//image::debuger-watch-expression-json.png[]
+. Select the *Continue* button on your debug toolbar, and notice  that the application returns the response from the database to your REST client or browser.
++
+.Click for the complete implementation XML example.
+[%collapsible]
+====
 [source,JSON]
 --
 [
@@ -208,13 +222,15 @@ image::debuger-watch-expression-json.png[]
     }
 ]
 --
+. Proceed to <<stop>>.
+====
 
-== Stop Debug Session
+[[stop]]
+== Stop the Debugging Session
 
-To stop your debug session, select the *Stop* button on your debug toolbar.
+To stop your debugging session: 
 
+. Select the *Stop* button on your debug toolbar.
++
 image::debugger-stop.png[]
-
-== Next Step
-
-* Move to a new section of the tutorial and learn how to xref:deploy-mule-application.adoc[Deploy a Mule Application].
+. Proceed to xref:deploy-mule-application.adoc[Deploy a Mule Application]

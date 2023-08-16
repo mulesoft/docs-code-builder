@@ -15,26 +15,27 @@ Review and complete:
 . xref:debug-a-mule-application.adoc[]
 . xref:debug-add-logger-set-variables.adoc[]
 
-== Add a Breakpoint
+[[add-breakpoint]]
+== Add Breakpoints to Your Interface
 
-To add a breakpoint to your Mule application:
+Add breakpoints to your American Flights interface:
 
-. In Anypoint Code Builder, on the Explorer view, open your `interface.xml`.
+. Open the _interface_ (`interface.xml`) for your American Flights project. 
 . Select the *Run and Debug* icon in the activity bar:
 +
-image::run-and-debug.png["Run and debug icon highlighted in the activity bar"]
-. Click next to the line in your `<flow-ref>` component to add a breakpoint on that component.
-// TODO: There may be a step missing in the implement-api-interface-logic.adoc file. The `<flow-ref>` is not available for me. I have a <ee:transform doc:name="Transform Message">. Can we add here something like "<flow-ref name="AnotherFlow" />"?
+image::run-and-debug.png[]
+. On the that contains the `<flow-ref/>` component, click to add a breakpoint.
 +
-image::add-breakpoint.png["Breakpoint highlighted next to the line number"]
+image::add-breakpoint.png[]
 +
-NOTE: You can also use `F9` to add a breakpoint to the current line.
-. In your `implementation.xml` file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components. Your breakpoints appear in the *Breakpoints* panel:
-// TODO: Panel name is always in capital letters both in web IDE and in desktop IDE.
+Alternatively, use `F9` to add a breakpoint to the line.
+. Open the _implementation_ (`implementation.xml`) for your American Flights project. 
+. In your implementation, add breakpoints to the `<db:select/>` and `<set-variable/>` components.
++
+. Notice that all the breakpoints are now listed in the *Breakpoints* panel:
++
+image::breakpoints-panel.png[]
+. Proceed to xref:run-a-debug-session.adoc[]. 
++
+Run a debugging session, and inspect the message and variables at different points during your application's execution.
 
-image::breakpoints-panel.png["Breakpoints added highlighted"]
-
-== Next Step
-
-* xref:run-a-debug-session.adoc[Run a Debug Session]. +
-Run your first debug session and inspect the message and variables at different points during application execution.
