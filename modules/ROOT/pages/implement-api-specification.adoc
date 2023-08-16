@@ -88,8 +88,9 @@ image::outline-list-select-flow.png["American-flights-api-main flow highlighted"
 . Notice the automatically generated Error Handler components. For example: 
 +
 //TODO: WE SHOULD SHOW HOW TO DO SOME BASIC ERROR HANDLING...
++
 [source,xml]
---
+----
 <apikit:router config-ref="american-flights-api-config" />
 <error-handler>
     <on-error-propagate type="APIKIT:BAD_REQUEST">
@@ -111,7 +112,8 @@ image::outline-list-select-flow.png["American-flights-api-main flow highlighted"
 
     </on-error-propagate>
 </error-handler>
---
+----
+
 . Proceed to <<rename>>.
 
 [[rename]]
@@ -128,7 +130,7 @@ image::api-interface-rename.png["Rename option highlighted the context menu of a
 [[endpoint]]
 == Configure an Endpoint through the Interface 
 
-To receive HTTP requests through the interface, remove the HTTP listener from `implementation.xml`, and rename the HTTP listener in `interface.xml` to `getFlights`.
+To receive HTTP requests through the interface, remove the HTTP listener from `implementation.xml`, and in your interface file (`interface.xml`), add a Flow Ref component (`<flow-ref/>`) to the `getFlights` flow in your implementation.
 
 . Open `implementation.xml`.
 + 
@@ -189,11 +191,12 @@ image::get-flights-select-listener.png["HTTP listener highlighted in the impleme
     <logger level="INFO" message="get:\flights:american-flights-api-config" />
 </flow>
 --
-. Change the name of this flow to `getFlights`:
+. Above the `<logger/>` element in the flow, add a Flow Reference component (`<flow-ref/>`) that references the flow `getFlights` in the implementation:
 +
 [source,xml]
 --
-<flow name="getFlights">
+<flow name="get:\flights:american-flights-api-config">
+    <flow-ref doc:name="getFlightsRef" name="getFlights"/>
     <logger level="INFO" message="get:\flights:american-flights-api-config" />
 </flow>
 --
