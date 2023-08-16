@@ -1,4 +1,4 @@
-= Run a Debug Session
+= Running a Debug Session
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -25,9 +25,9 @@ See xref:debug-add-breakpoints.adoc[].
 
 == Start a Debug Session
 
-. In Anypoint Code Builder, on your Run and Debug view, select your *Run and Debug* icon.
+. In Anypoint Code Builder, select the *Run and Debug* icon, and click *Start Debugging (F5)*.
 +
-image::start-debugging.png[]
+image::start-debugging.png["Run and Debug icon, and Start Debugging (F5) icon highlighted"]
 . Your application is first packaged, and then Anypoint Code Builder opens a new terminal that deploys the application to the embedded Mule Runtime:
 +
 image::packaged-and-running-terminals.png[]
@@ -35,7 +35,7 @@ image::packaged-and-running-terminals.png[]
 == Test Your Mule Application
 
 . Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/api/flights+`. +
-See xref:ping-locally-deployed-app.adoc[] for more information on how to send request to your application.
+See xref:ping-locally-deployed-app.adoc[] for more information about how to send request to your application.
 . In Anypoint Code Builder, notice that the application execution stopped at your first breakpoint.
 +
 image::debug-stop-at-flow-ref.png[]
@@ -44,7 +44,7 @@ image::debug-stop-at-flow-ref.png[]
 +
 image::debugger-stop-db-select.png[]
 . Select the *Step Over* button on your debug toolbar to move the execution to your next breakpoint.
-. In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables and note that you can inspect the database response as an array.
+. In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables. You can inspect the database response as an array.
 +
 image::debugger-stop-set-variable.png[]
 
@@ -54,13 +54,11 @@ image::debugger-stop-set-variable.png[]
 +
 image::debug-add-expression.png[]
 . Add the expression `payload.^mediaType`.
-. Select the *Step Over* button until your execution moves to the `<set-payload>` component.
-. Note that your payload is `application/java`.
-. Select the *Step Over* button until your execution jumps to the `<logger>` component.
-. Note that your payload is now transformed to `application/json`.
+. Select the *Step Over* button until your execution moves to the `<set-payload>` component. Your payload is `application/java`.
+. Select the *Step Over* button until your execution jumps to the `<logger>` component. Your payload is now transformed to `application/json`.
 +
 image::debuger-watch-expression-json.png[]
-. Select the *Continue* button on your debug toolbar. Note that the application returns the response from the database to your REST client.
+. Select the *Continue* button on your debug toolbar. The application returns the response from the database to your REST client.
 +
 [source,JSON]
 --
