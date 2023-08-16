@@ -150,18 +150,24 @@ image::debugger-stop-set-variable.png[]
 
 == Add a Watch Expression
 
-. In the Debug sidebar, in the Watch panel, select the `plus` icon.
+. Open the *Run and Debug* sidebar.
+. From the *Watch* panel in the sidebar, select the `plus` icon, and add the expression `payload.^mediaType`.
 +
 image::debug-add-expression.png[]
-. Add the expression `payload.^mediaType`.
-. Select the *Step Over* button until your execution moves to the `<set-payload>` component.
-. Note that your payload is `application/java`.
-. Select the *Step Over* button until your execution jumps to the `<logger>` component.
-. Note that your payload is now transformed to `application/json`.
+. Select the *Step Over* button until your execution moves to the Set Payload component (`<set-payload/>`).
+. Notice that your payload is `application/java`.
 +
-image::debuger-watch-expression-json.png[]
-. Select the *Continue* button on your debug toolbar. Note that the application returns the response from the database to your REST client.
+image:tut-debug-mediatype-java.png[]
+. Select the *Step Over* button until execution continues to the Logger component (`<logger>`).
+. Notice that your payload transforms to `application/json`.
 +
+image::tut-debug-mediatype-json.png[]
+//image::debuger-watch-expression-json.png[]
+. Select the *Continue* button on your debug toolbar, and notice  that the application returns the response from the database to your REST client or browser.
++
+.Click for the complete implementation XML example.
+[%collapsible]
+====
 [source,JSON]
 --
 [
@@ -310,15 +316,16 @@ image::debuger-watch-expression-json.png[]
     }
 ]
 --
+. Proceed to <<stop>>.
+====
 
-== Stop Debug Session
+[[stop]]
+== Stop the Debugging Session
 
-To stop your debug session, select the *Stop* button on your debug toolbar.
+To stop your debugging session: 
 
+. Select the *Stop* button on your debug toolbar.
++
 image::debugger-stop.png[]
-
-== Next Step
-
-* Move to a new section of the tutorial and learn how to xref:deploy-mule-application.adoc[Deploy a Mule Application].
-
+. Proceed to xref:deploy-mule-application.adoc[Deploy a Mule Application]
 
