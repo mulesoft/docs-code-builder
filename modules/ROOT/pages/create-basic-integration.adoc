@@ -34,7 +34,6 @@ The listener is for triggering the flow, and Set Payload provides some test data
 
 . In Project Explorer, select the `american-ws-anypoint-code-builder.xml` file.
 +
-//dm: Add callouts to this image as described below. 
 image::empty-canvas-state.png["american-ws-anypoint-code-builder.xml file shown in visual representation of its Mule flow and the Mule Configuration file"]
 +
 You see two different views:
@@ -86,7 +85,7 @@ The configuration XML file adds the XML for the HTTP Listener into the `<flow/>`
 .. In the configuration XML, press Ctrl+Spacebar (Mac) or Cmd+Spacebar(Windows) to open the XML configuration menu.
 .. Type `http`, and select the _snippet_ `muledx:http-listener-config`.
 +
-image::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu]
+image::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu"]
 +
 .Snippet XML example:
 [source,xml]
@@ -101,11 +100,11 @@ image::add-http-config-snippet.png["http:listener-config highlighted in the conf
 ----
 <!--1-->
 <http:listener-config name="inbound-request" doc:name="Listener Config" doc:id="b5c62f-a84a3a"> 
-  <http:listener-connection host="0.0.0.0" port="8081"/>
+  <http:listener-connection host="0.0.0.0" port="8081"/> 
 </http:listener-config>
 
-<!--2-->  
-<flow name="getFlights"> 
+<!--2-->
+<flow name="getFlights">
     <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
 </flow>
 ----
@@ -116,10 +115,10 @@ image::add-http-config-snippet.png["http:listener-config highlighted in the conf
 +
 When you select any processor in the canvas, Anypoint Code Builder highlights its location within the configuration XML.
 +
-image::http-highlight-flow.png["HTTP listener highlighted in the flow and in the XML code"]
+image::http-highlight-flow.png["HTTP Listener highlighted in the flow and in the XML code"]
 . From the UI canvas, add a Set Payload component below your HTTP Listener operation, and configure its attributes in the configuration XML:
 +
-[source,xml,linenums]
+[source,xml]
 ----
 <http:listener-config name="inbound-request" doc:id="b5c62f-a84a3a">
     <http:listener-connection host="0.0.0.0" port="8081" />
