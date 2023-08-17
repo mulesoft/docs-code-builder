@@ -23,18 +23,51 @@ image::debugger-toolbar.png[width=250]
 +
 [calloutlist]
 //TODO: duke need description
-.. *Continue*: TODO
+.. *Continue*: Proceeds to the next component with a breakpoint. 
 +
 Key command: F5
-//TODO: duke fix description; asking Guillermo to explain
-.. *Step Over*: If the line of code does not contain a Flow ref component `<flow-ref/>`, *Step Over* behaves the same as next, it takes `flowref` as a unit of process avoiding to stop until return to the current flow.
+.. *Step Over*: Proceeds to the next component in the flow unless the line contains a Flow Ref component (`<flow-ref/>`). If a Flow ref component is on the line, the debugger does not examine components in the referenced flow. For example:
++
+[source,xml]
+----
+<flow name="helloWorld" doc:name="Flow" >
+  <http:listener path="greet" config-ref="HTTP_Listener_config" doc:name="Listener"/>
+  <flow-ref name="myNewFlow" /> <!--<1>-->
+  <logger doc:name="Logger" message="test1"/> <!--<2>-->
+</flow>
+
+<flow name="myNewFlow" doc:name="Flow" >
+  <logger doc:name="Logger" message="test1"/>
+</flow>
+----
+[calloutlist]
+.. Skip <flow-ref/> logic.
+.. Debug <logger/>.
 +
 Key command: F10
-//TODO: duke fix description; asking Guillermo to explain
-.. *Step Into*: If the line of code does not contain a `flowref` it behaves the same as next but if it does the debugger enters the flow referenced.
+.. *Step Into*: If the line contains a Flow ref component (`<flow-ref/>`), clicking *Step Into* executes the Flow Ref logic and proceeds to the referenced flow before returning to any components after the Flow Ref.
+For example:
++
+[source,xml]
+----
+<flow name="helloWorld" doc:name="Flow" >
+  <http:listener path="greet" config-ref="HTTP_Listener_config" doc:name="Listener"/>
+  <flow-ref name="myNewFlow" /> <!--<1>-->
+  <logger doc:name="Logger" message="test1"/> <!--<2>-->
+</flow>
+
+<flow name="myNewFlow" doc:name="Flow" >
+  <logger doc:name="Logger" message="test1"/> <!--<3>-->
+</flow>
+----
+[calloutlist]
+.. Skip <flow-ref/> logic.
+.. Debug <logger/>.
+
+*Step Into* proceeds to the next component for debugging. If the line contains a Flow Ref component, *Step Into* enters the flow referenced.
 +
 Key command: F11
-.. *Step Out*: The debugger exits the current flow and attempts to return to a previous flow. If the flow doesn’t exist, the debugger behaves like *Continue*.
+.. *Step Out*: The debugger exits the current flow and attempts to return to a previous flow. If a previous flow doesn’t exist, the debugger behaves like *Continue*.
 +
 Key command: Shift+F11
 .. *Restart*: Stops and restarts the application without packaging new dependencies, such as new connector dependencies in your `pom.xml` file.
