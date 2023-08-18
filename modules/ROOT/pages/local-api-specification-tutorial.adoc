@@ -1,4 +1,4 @@
-= Iteratively Designing and Implementing an API Specification
+= Iteratively Design and Implement an API Specification
 :page-aliases: implement-a-local-api-guide.adoc, tut-local-iterative-design-implement.adoc
 :imagesdir: ../assets/images
 
@@ -7,13 +7,11 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Scaffold and synchronize changes to an API specification with an interface file for an existing Mule project without first publishing the specification to Anypoint Exchange. The interface is a configuration XML file automatically created during the scaffolding process.
+Scaffold an API specification into an interface within your IDE, and synchronize changes to the specification with interface without first publishing to Anypoint Exchange. The interface is a configuration XML file automatically created during the scaffolding process.
 
-For example, if you add a new endpoint to your API specification and run the command `MuleSoft: Implement this local API` from a Mule project, Anypoint Code Builder adds or updates a flow for that endpoint into the interface file. 
+For example, after adding a new endpoint to your API specification, you can re-scaffold the change into your implementation XML to add a flow for that endpoint.
 
 Iterative API design and implementation within the IDE takes place in a _multi-root workspace_ in VS Code. The IDE permits only one pair of iterative design and implementation projects per multi-root workspace. 
-
-TIP: Close a multi-root workspace with the command `Workspaces: Close Workspace`. Then you can reopen a synchronized project from the workspace that you create when implementing the API.
 
 == Before You Begin
 
@@ -22,7 +20,7 @@ Follow procedures in xref:setup.adoc[Set Up and Access Anypoint Code Builder].
 [[create]]
 == Create an API Specification in a New VS Code Window
 
-To avoid potential issues from limitations of multi-root workspaces when implementing a local API specification, start with a new VS Code window and folder for your API specification project:
+To avoid potential issues from limitations of multi-root workspaces when implementing a local API specification, start with a new VS Code window and folder for your workspace. 
 
 . Open a new window in VS Code by pressing Cmd+Shift+n (Mac) or Ctrl+Shift+n (Windows).
 +
@@ -36,40 +34,45 @@ Alternatively, open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Sh
 ----
 MuleSoft: Design an API
 ----
-. If prompted, sign in to Anypoint Platform. 
+. If prompted, sign in to Anypoint Platform, and follow all the prompts to reopen the IDE. 
 . Configure your API using these values:
 +
-image::design-api-ui-first.png[]
+image::design-api-ui-first.png["Configure Retrieve Users API"]
 +
 --
 [calloutlist]
 .. In *Project name*, type: `*Retrieve Users API*`.
-.. In *Project Location*, select *Browse*, and create a _parent folder_ for your project and select that location. For example:
+.. In *Project Location*, select *Browse*, create a folder for your project's multi-root workspace, and select that folder's location. For example:
 +
-`/Users/me/my-iterative-project-folder`
+`/Users/me/workspace-retrieve-users`
 +
+NOTE::
 To avoid potential issues related to multi-root workspaces, do not use a pre-existing project folder for iterative design and implementation projects.
 .. In *API Specification Language*, select *RAML 1.0*.
-.. In *Business Group*, select the business group in which you want to create your API specification. You can't change business groups after you create your API specification.
+.. In *Business Group*, select the business group for your API specification. You can't change business groups after you create your API specification.
++
+See xref:access-management::business-groups.adoc[Business Groups] for more information. 
 --
 . Select *Create Project*.
 +
-This process creates a child folder that contains your API specification.
-. Navigate to your API specification, and open the specification file:
-.. Press Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and provide the following command:
+This process creates a project that contains your API specification in within your workspace.
 +
-[source,command]
-----
-File: Open Folder
-----
-.. Navigate to the root directory of the folder that contains your API specification. 
-.. In the Explorer, click the filename for the specification, `retrieve-users-api.raml`.
-. In the editor, add this example:
+Your API specification file `retrieve-users-api.raml` opens automatically from the Explorer menu.
+. To track the progress of internal processing, open the *Output* panel to the *Mule DX Server*.
++
+To open the panel from the command line:
+
+.. Press Cmd+Shift+u (Mac) or Ctrl+Shift+u (Windows) to open the Output panel.
+.. Select *Mule DX Server* from the drop-down menu in the panel.
++
+For more guidance, see xref:configure-default-output-panel.adoc[].
+
+. In the editor for your API specification, add this example to `retrieve-users-api.raml`:
 +
 [source,raml,linenums]
 --
 #%RAML 1.0
-title: Retrieve User
+title: Retrieve Users API
 version: 1.0.development
 /users:
   get:
@@ -128,23 +131,33 @@ MuleSoft: Implement this Local API
 ----
 +
 _Do not select_ the command `MuleSoft: Implement an API Specification`, which is for implementing a specification that is published on Anypoint Exchange and _not for_ implementing a local API specification. 
+
+.. Click *OK* when the UI displays the message *We'll create a workspace to keep your API specification and Mule project in sync.*
 +
-The UI displays the following message: *We'll create a workspace to keep your API specification and Mule project in sync.*
+If you don't find the icon or command, go to <<display-command>>.
 +
-If you don't find the icon or command, go to <<display-command>>.  
-.. Choose a folder for your workspace, such as the _parent folder_ that contains your API specification project folder. _Do not_ select a folder within your API specification directory.
+The UI asks you to save a file with the extension `.code-workspace` for a multi-root workspace. 
 +
-A multi-root workspace uses a `.code-workspace` file extension. 
-.. After waiting for up to a minute for the field *Mule project name* to appear in the UI, start the scaffolding process by entering a name for your Mule project. 
+IMPORTANT::
+_Do not save this file within your API specification project folder_. Proceed to the next step, instead.
+.. Navigate up to the parent folder you created for your workspace, and save the `.code-workspace` file.
+.. Make sure that your *Mule DX Server* output is available for tracking the progress of internal processes in the *Output* panel.
++
+The UI provides a message *Implementing local API implementation, please wait.* Wait for up to a minute for the field *Mule project name* to appear at the top of the UI.
+.. Start the scaffolding process by entering a name for your Mule implementation project, such as `retrieve-users-implementation`, and selecting your workspace folder as the target folder the project.
 +
 The UI provides updates while the scaffolding process takes place:
-
+[arabic]
 ... *Implementing local API Implementation, please wait*
 ... *Scaffolding process ended. You can now start iterating over your local API and implementation project*
-. For from your multi-root workspace in the Explorer, open the configuration XML for the new Mule project with the scaffolded specification.
+. From your multi-root workspace in the Explorer, open the configuration XML for the scaffolded specification in your new Mule project. For example:
 +
+[source,project directory]
+----
+retrieve-users-implementation/src/main/mule/retrieve-users-implementation.xml
+----
 * The UI canvas for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
-* The `<flow/>` element contains an `<ee:transform/>` element with your example:
+* In the implementation XML, the flow `<flow name="get:\users:design-an-api-config"/>` contains an `<ee:transform/>` element with your example:
 +
 [source,XML,linenums]
 --
@@ -190,8 +203,8 @@ company: {
 
 Add an endpoint to your specification file and re-scaffold:
 
-. Navigate to the `retrieve-users-api.raml` file within the *Retrieve Users API* directory.
-. Add a new `/userbyid` endpoint to your RAML file:
+. In the Explorer, navigate to the specification file `retrieve-users-api.raml` in the *Retrieve Users API* directory.
+. Append this `/userbyid` endpoint configuration to your RAML file:
 +
 [source,raml,linenums]
 --
@@ -267,13 +280,13 @@ version: 1.0.development
 --
 . Re-scaffold the API specification to update your Mule project:
 
-.. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
+.. Re-scaffold the specification by opening the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and providing this command:
 +
 [source,command]
 ----
 MuleSoft: Re-scaffold this local API
 ----
-.. After receiving a message that your project *has been rescaffolded successfully*, navigate to your configuration XML, and notice the new flow for the `userbyid` endpoint:
+.. After receiving a message that your project *has been rescaffolded successfully*, navigate to your implementation XML file, and notice the new flow (`<flow name="get:\users\userbyid:design-an-api-config"/>`) for the `userbyid` endpoint:
 +
 [source,XML,linenums]
 --
@@ -314,25 +327,28 @@ company: {
     </ee:transform>
 </flow>
 --
-. To save your specification to the SCM in Design Center, go to <<save-spec>>.
+. Proceed to <<save-spec>>.
 
 [[save-spec]]
 == Save your API Specification in Design Center
 
 After implementing your API specification, save the specification to Design Center:
 
-. In Anypoint Code Builder, select the *SOURCE CONTROL* view of the IDE:
+. In Anypoint Code Builder, select the *Source Control* view of the IDE:
 
 * In the desktop IDE, navigate to *View* > *Source Control*.
 * In the web IDE, navigate to file menu > *View* > *Source Control*.
+//TODO: bug? doesn't seem to work despite UI: 
+//* In either IDE, press ^+Shift+g (Mac) or ^+Shift+g (Windows).
 . Locate the API specification project for `retrieve-users-api.raml`.
-. In the *SOURCE CONTROL* view, click the *+* icon beside your API specification project file to stage your changes. 
-. Type a commit message that summarizes the changes. For example: `_Create Retrieve Users API_`
+. In the *Source Control* view, stage your changes by mousing over *Changes* heading to expose the *+* (plus) icon and then clicking the icon.
++
+image::tut-api-stage-changes.png["Stage API changes"]
+. Type a commit message that summarizes the changes. For example: `_Retrieve Users Projects_`
 +
 This step avoids the need to specify a commit message through a separate file that pops up in the IDE.
 . Click *Commit* for the staged changes, and wait for the commit process to complete. 
 . If prompted, click *Sync Changes* or *Push*. 
-//TODO: OMG, different options every time... :(
 +
 Your changes are now stored in the Design Center SCM.
 . Proceed to <<publish>>.
@@ -340,7 +356,7 @@ Your changes are now stored in the Design Center SCM.
 [[publish]]
 == Publish the API Specification to Exchange
 
-You can now publish your new API specification to Exchange to make it discoverable to other team members.
+After committing your changes to Design Center, publish the API specification to Anypoint Exchange to make discoverable by other team members.
 
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
@@ -349,14 +365,39 @@ You can now publish your new API specification to Exchange to make it discoverab
 MuleSoft: Publish API Specification to Exchange
 ----
 . Type a project name: *Retrieve Users API*
++
+Example:
+image::tut-api-publish.png["Publish Retrieve Users API"]
+
 . Confirm the artifact ID: *Retrieve-Users-API*
 . Confirm the asset version: *1.0.0*.
 . Confirm the API version: *v1*.
 +
-The status bar displays the progress, first *Publishing API Specification to Exchange* and when done, a message that the project *has been successfully published to Exchange*. Then the IDE updates your Mule project POM file to point to `v1.0.0` of your API specification.
-+
-. To work iteratively on a new version of your API specification, close the current workspace and re-import version 1.0.0 of your API from Design Center, and implement it locally again.
+The status bar displays the progress before the IDE updates your Mule project POM file to point to `v1.0.0` of your API specification: 
 
+.. The message *Publishing API Specification to Exchange* 
+.. A message the project *has been successfully published to Exchange*. 
+
+The specification is now available on https://anypoint.mulesoft.com/exchange/?show=org&sort=last[Anypoint Exchange^] for team members in your business group to scaffold into their projects and implement. 
+
+Use the command `Implement an API Specification` to get started with this process:
+
+. Open a new VS Code instance. 
+. Import version 1.0.0 of your API from Design Center:
+.. Enter this command:
++
+----
+Implement an API Specification
+----
+.. In the *Implement an API Specification* tab that opens: 
+
+* Provide a new name for the implementation.
+* Select or create a new project location.
+* Find your API specification on Anypoint Exchange, and click *Add* to insert the API name into the field. 
+.. Click *Create Project* to start scaffolding the specification into a new implementation.  
+. Implement the scaffolded specification in your IDE.
+
+//TODO: RETEST THIS PROCEDURE. CREATE STORY.
 [[display-command]]
 == Display the Command MuleSoft: Implement this Local API
 
@@ -375,5 +416,11 @@ File: Open Folder
 .. In the Explorer, click the filename for the specification, `retrieve-users-api.raml`.
 . Wait for the <<icon-implement-this-api, X-shaped icon> for the `MuleSoft: Implement this API` command to appear in the UI. 
 +
-To monitor the status of this process, open the *OUTPUT* panel with Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac) and selecting *MS DX Server* from it drop-down menu. 
+To monitor the status of this process, open the *Output* panel with Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac) and select *MS DX Server* from its drop-down menu. 
 . Proceed to <<scaffold>> to start the implementation process.
+
+== Close a Multi-root Workspace
+
+Close a multi-root workspace with the command `Workspaces: Close Workspace`. 
+
+After closing, you can reopen a synchronized project from the workspace that you create when implementing the API.
