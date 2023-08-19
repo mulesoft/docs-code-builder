@@ -5,7 +5,7 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+include::partial$acb-ide-logos.adoc[tags="desktop-only"]
 
 Scaffold an API specification into a separate interface project within your IDE, and synchronize changes to the specification with the interface without first publishing to Anypoint Exchange. The interface is a configuration XML file automatically created during the scaffolding process. 
 
@@ -13,16 +13,17 @@ For example, after adding a new endpoint to your API specification, you can re-s
 
 Iterative API design and implementation within the IDE takes place in a _multi-root workspace_ in VS Code. VS Code uses a file with the extension `.code-workspace` to identify a multi-root workspace. The IDE permits only one pair of iterative design and implementation projects per multi-root workspace. To avoid issues related to multi-root workspaces, the API specification and implementation projects that you create avoid placing the `.code-workspace` file _within_ either project folder. For information in the VS Code documentation, see https://code.visualstudio.com/docs/editor/multi-root-workspaces[Multi-root Workspaces^].
 
+NOTE::
+The procedures are currently written for the desktop IDE only, though most steps are the same or similar for the web IDE.
+
 == Before You Begin
 
 Follow procedures in xref:setup.adoc[Set Up and Access Anypoint Code Builder].
 
 [[create]]
-== Create an API Specification in a New VS Code Window
+== Create an API Specification
 
-To avoid potential issues from limitations of multi-root workspaces when implementing a local API specification, start with a new VS Code window: 
-
-. Open a new window in VS Code by pressing Cmd+Shift+n (Mac) or Ctrl+Shift+n (Windows).
+. In the desktop IDE, open a new window in VS Code by pressing Cmd+Shift+n (Mac) or Ctrl+Shift+n (Windows).
 +
 This step helps prevent the possibility of creating an API specification in a multi-root workspace that already contains iterative design and implementation projects and ensures that the command required in the next procedure, <<scaffold>>, is available.
 . Open Anypoint Code Builder by clicking the *Anypoint Code Builder* (MuleSoft) icon in the activity bar. 
@@ -44,7 +45,7 @@ image::design-api-ui-first.png["Configure Retrieve Users API"]
 .. In *Project name*, type: `*Retrieve Users API*`.
 .. In *Project Location*, click *Browse*. 
 +
-In the file menu that opens, create a folder such as `workspace-retrieve-users` for your project's multi-root workspace, and then select that folder's location.
+In the file menu that opens in the desktop IDE, create a folder such as `workspace-retrieve-users` for your project's multi-root workspace, and then select that folder's location.
 +
 When you are done, the full path in the *Project Location* field is similar to `/Users/me/workspace-retrieve-users`
 +
@@ -149,13 +150,13 @@ _Do not save this file within your API specification project folder_. Proceed to
 .. Make sure that your *Mule DX Server* output is available for tracking the progress of internal processes in the *Output* panel.
 +
 The UI provides a message *Implementing local API implementation, please wait.* Wait for up to a minute for the field *Mule project name* to appear at the top of the UI.
-.. Start the scaffolding process by entering a name for your Mule implementation project, such as `retrieve-users-implementation`.
-. Click  *Select target folder*. 
+. Start the scaffolding process by entering a name for your Mule implementation project, such as `retrieve-users-implementation`.
+. When prompted, click  *Select target folder*. 
 +
-This is the workspace folder you created when starting your API specification.
+The target folder is the project folder where you created your API specification.
 +
-The UI provides updates while the scaffolding process takes place:
-[arabic]
+The UI also provides updates while the scaffolding process takes place:
+[loweralpha]
 ... *Executing scaffolding operation, please wait*
 ... *Scaffolding process ended. You can now start iterating over your local API and implementation project*
 . From your multi-root workspace in the Explorer, open the configuration XML for the scaffolded specification in your new Mule project. For example:
