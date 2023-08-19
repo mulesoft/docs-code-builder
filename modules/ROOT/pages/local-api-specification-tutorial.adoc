@@ -415,7 +415,12 @@ MuleSoft: Implement an API Specification
 [[display-command]]
 == Display the Command MuleSoft: Implement this Local API
 
-If `MuleSoft: Implement this Local API Command` does not appear in the command palette from your open API specification project, it is likely that another project in your multi-root workspace is implementing a local API specification. 
+If `MuleSoft: Implement this Local API Command` does not appear in the command palette from your open API specification project, potential causes are: 
+
+* Another project in your multi-root workspace is implementing a local API specification. 
+* The API specification is already has a snapshot version. 
++
+The `exchange.json` file in the specification project should not have the `-SNAPSHOT` postfix.
 
 . In the Explorer, right-click your new API specification folder, select *Remove project from workspace*.
 . Open a new VS Code window by pressing Ctrl+Shift+n (Mac) or Cmd+Shift+n (Windows).
