@@ -139,8 +139,6 @@ _Do not select_ the command `MuleSoft: Implement an API Specification`, which is
 
 .. Click *OK* when the UI displays the message *We'll create a workspace to keep your API specification and Mule project in sync.*
 +
-If you don't find the icon or command, go to <<display-command>>.
-+
 The UI asks you to save a file with the extension `.code-workspace` for a multi-root workspace. 
 +
 IMPORTANT::
@@ -389,10 +387,10 @@ image::tut-api-publish.png["Publish Retrieve Users API"]
 . Confirm the asset version: *1.0.0*.
 . Confirm the API version: *v1*.
 +
-The status bar displays the progress before the IDE updates your Mule project POM file to point to `v1.0.0` of your API specification: 
+The status bar provides progress-related messages before the IDE updates your Mule project POM file to point to `v1.0.0` of your API specification: 
 
-.. The message *Publishing API Specification to Exchange* 
-.. A message the project *has been successfully published to Exchange*. 
+.. *Publishing API Specification to Exchange* 
+.. Project *has been successfully published to Exchange*
 
 The specification is now available on https://anypoint.mulesoft.com/exchange/?show=org&sort=last[Anypoint Exchange^] for team members in your business group to scaffold into their projects and implement. See <<scaffold-from-exchange>>.
 
@@ -416,7 +414,8 @@ MuleSoft: Implement an API Specification
 .. Click *Create Project* to start scaffolding the specification into a new implementation.  
 . Implement the scaffolded specification in your IDE.
 
-//TODO: RETEST THIS PROCEDURE. CREATE STORY.
+////
+//TODO: ON HOLD. RETEST THIS PROCEDURE. CREATE STORY. FIX ANY ISSUES.
 [[display-command]]
 == Display the Command MuleSoft: Implement this Local API
 
@@ -426,6 +425,8 @@ If `MuleSoft: Implement this Local API Command` does not appear in the command p
 * The API specification is already has a snapshot version. 
 +
 The `exchange.json` file in the specification project should not have the `-SNAPSHOT` postfix.
+
+To remove your project from a multi-root workspace:
 
 . In the Explorer, right-click your new API specification folder, select *Remove project from workspace*.
 . Open a new VS Code window by pressing Ctrl+Shift+n (Mac) or Cmd+Shift+n (Windows).
@@ -438,10 +439,11 @@ File: Open Folder
 ----
 .. Navigate to the root directory of the folder that contains your API specification. 
 .. In the Explorer, click the filename for the specification, `retrieve-users-api.raml`.
-. Wait for the <<icon-implement-this-api, X-shaped icon> for the `MuleSoft: Implement this API` command to appear in the UI. 
+. Wait for the <<icon-implement-this-api, X-shaped icon>> for the `MuleSoft: Implement this API` command to appear in the UI. 
 +
 To monitor the status of this process, open the *Output* panel with Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac) and select *MS DX Server* from its drop-down menu. 
 . Proceed to <<scaffold>> to start the implementation process.
+////
 
 == Close a Multi-root Workspace
 
