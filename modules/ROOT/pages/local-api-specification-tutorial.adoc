@@ -7,9 +7,9 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Scaffold an API specification into an interface within your IDE, and synchronize changes to the specification with the interface without first publishing to Anypoint Exchange. The interface is a configuration XML file automatically created during the scaffolding process.
+Scaffold an API specification into a separate interface project within your IDE, and synchronize changes to the specification with the interface without first publishing to Anypoint Exchange. The interface is a configuration XML file automatically created during the scaffolding process. 
 
-For example, after adding a new endpoint to your API specification, you can re-scaffold the change into your implementation XML to add a flow for that endpoint.
+For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the configuration XML for your interface to add a flow for that endpoint.
 
 Iterative API design and implementation within the IDE takes place in a _multi-root workspace_ in VS Code. The IDE permits only one pair of iterative design and implementation projects per multi-root workspace. 
 
@@ -42,9 +42,16 @@ image::design-api-ui-first.png["Configure Retrieve Users API"]
 --
 [calloutlist]
 .. In *Project name*, type: `*Retrieve Users API*`.
-.. In *Project Location*, select *Browse*, create a folder for your project's multi-root workspace, and select that folder's location. For example:
+.. In *Project Location*, click *Browse*. 
 +
-`/Users/me/workspace-retrieve-users`
+In the file menu that opens, create a folder such as `workspace-retrieve-users` for your project's multi-root workspace, and then select that folder's location.
++
+When you are done, the full path in the *Project Location* field is something like this one:
++
+[source, project location]
+----
+/Users/me/workspace-retrieve-users
+----
 +
 NOTE::
 To avoid potential issues related to multi-root workspaces, do not use a pre-existing project folder for iterative design and implementation projects.
@@ -53,6 +60,8 @@ To avoid potential issues related to multi-root workspaces, do not use a pre-exi
 +
 See xref:access-management::business-groups.adoc[Business Groups] for more information. 
 --
++
+image::tut-api-create.png["Design an API configuration"]
 . Select *Create Project*.
 +
 This process creates a project that contains your API specification within your workspace.
@@ -144,11 +153,14 @@ _Do not save this file within your API specification project folder_. Proceed to
 .. Make sure that your *Mule DX Server* output is available for tracking the progress of internal processes in the *Output* panel.
 +
 The UI provides a message *Implementing local API implementation, please wait.* Wait for up to a minute for the field *Mule project name* to appear at the top of the UI.
-.. Start the scaffolding process by entering a name for your Mule implementation project, such as `retrieve-users-implementation`, and selecting your workspace folder as the target folder the project.
+.. Start the scaffolding process by entering a name for your Mule implementation project, such as `retrieve-users-implementation`.
+. Click  *Select target folder*. 
++
+This is the workspace folder you created when starting your API specification.
 +
 The UI provides updates while the scaffolding process takes place:
 [arabic]
-... *Implementing local API Implementation, please wait*
+... *Executing scaffolding operation, please wait*
 ... *Scaffolding process ended. You can now start iterating over your local API and implementation project*
 . From your multi-root workspace in the Explorer, open the configuration XML for the scaffolded specification in your new Mule project. For example:
 +
@@ -157,7 +169,7 @@ The UI provides updates while the scaffolding process takes place:
 retrieve-users-implementation/src/main/mule/retrieve-users-implementation.xml
 ----
 * The UI canvas for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
-* In the implementation XML, the flow `<flow name="get:\users:design-an-api-config"/>` contains an `<ee:transform/>` element with your example:
+* In the implementation XML, the flow `<flow name="get:\users:retrieve-users-api-config">` contains an `<ee:transform/>` element with your example:
 +
 [source,XML,linenums]
 --
@@ -358,7 +370,7 @@ Your changes are now stored in the Design Center SCM.
 
 After committing your changes to Design Center, publish the API specification to Anypoint Exchange to make the specification discoverable by your team members.
 
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
 [source,command]
 ----
@@ -389,7 +401,7 @@ Team members in your business group can import your scaffolded API specification
 .. Enter this command:
 +
 ----
-Implement an API Specification
+MuleSoft: Implement an API Specification
 ----
 .. In the *Implement an API Specification* tab that opens: 
 
