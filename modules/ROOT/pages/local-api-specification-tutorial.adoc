@@ -11,7 +11,7 @@ Scaffold an API specification into a separate interface project within your IDE,
 
 For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the configuration XML for your interface to add a flow for that endpoint.
 
-Iterative API design and implementation within the IDE takes place in a _multi-root workspace_ in VS Code. The IDE permits only one pair of iterative design and implementation projects per multi-root workspace. 
+Iterative API design and implementation within the IDE takes place in a _multi-root workspace_ in VS Code. VS Code uses a file with the extension `.code-workspace` to identify a multi-root workspace. The IDE permits only one pair of iterative design and implementation projects per multi-root workspace. To avoid issues related to multi-root workspaces, the API specification and implementation projects that you create avoid placing the `.code-workspace` file _within_ either project folder. For information in the VS Code documentation, see https://code.visualstudio.com/docs/editor/multi-root-workspaces[Multi-root Workspaces^].
 
 == Before You Begin
 
@@ -20,7 +20,7 @@ Follow procedures in xref:setup.adoc[Set Up and Access Anypoint Code Builder].
 [[create]]
 == Create an API Specification in a New VS Code Window
 
-To avoid potential issues from limitations of multi-root workspaces when implementing a local API specification, start with a new VS Code window and folder for your workspace. 
+To avoid potential issues from limitations of multi-root workspaces when implementing a local API specification, start with a new VS Code window: 
 
 . Open a new window in VS Code by pressing Cmd+Shift+n (Mac) or Ctrl+Shift+n (Windows).
 +
@@ -46,20 +46,17 @@ image::design-api-ui-first.png["Configure Retrieve Users API"]
 +
 In the file menu that opens, create a folder such as `workspace-retrieve-users` for your project's multi-root workspace, and then select that folder's location.
 +
-When you are done, the full path in the *Project Location* field is something like this one:
+When you are done, the full path in the *Project Location* field is similar to `/Users/me/workspace-retrieve-users`
 +
-[source, project location]
-----
-/Users/me/workspace-retrieve-users
-----
-+
-NOTE::
+IMPORTANT::
 To avoid potential issues related to multi-root workspaces, do not use a pre-existing project folder for iterative design and implementation projects.
 .. In *API Specification Language*, select *RAML 1.0*.
 .. In *Business Group*, select the business group for your API specification. You can't change business groups after you create your API specification.
 +
 See xref:access-management::business-groups.adoc[Business Groups] for more information. 
 --
+When complete, *Design an API* is similar to this one:
++
 image::tut-api-create.png["Design an API configuration"]
 . Select *Create Project*.
 +
