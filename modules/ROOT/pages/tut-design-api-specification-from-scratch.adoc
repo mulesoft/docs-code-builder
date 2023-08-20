@@ -36,10 +36,11 @@ For more guidance, see xref:design-api-specification.adoc#start-spec[Start an AP
 |===
 | Field Name | Field Value
 
-| *Project Name* | *American Flights API* or a similar name of your choice
-| *Project Location* | Your home directory or another directory you create
+| *Project Name* | *American Flights API* +
+                    Alternatively, provide a similar name of your choice. The name must be unique. The name of the project and specification file is based on the name you provide.
+| *Project Location* | Your home directory or another directory you create (see xref:work-on-home-directory.adoc[])
 | *API Specification Language* | *RAML 1.0*
-| *Business Group* | Group for your API specification
+| *Business Group* | Group in Anypoint Platform for your API specification (see xref:access-management::business-groups.adoc[])
 |===
 . Select *Create Project* to generate the American Flights API project file: `american-flights-api.raml`.
 +
@@ -51,6 +52,15 @@ The file name is based on the name you provide for the project.
 
 In American Flights API, start configuring the specification, and try its *GET* method from the API Console. 
 
+//TODO: CREATE AN INCLUDE FOR THIS COMMON STEP (make description more generic for multiple)
+. Before starting the configuration, open the *Output* panel to the *Mule DX Server* to track the progress of internal processing.
++
+To open the panel from the command line:
+
+.. Press Cmd+Shift+u (Mac) or Ctrl+Shift+u (Windows) to open the Output panel.
+.. Select *Mule DX Server* from the drop-down menu in the panel.
++
+For more guidance, see xref:configure-default-output-panel.adoc[].
 . In `american-flights-api.raml`, paste this RAML code for the `/flights` endpoint and `get` method into the file:
 +
 [source,raml,linenums]
@@ -72,22 +82,18 @@ title: American Flights API
   get:
   post:
 ----
-+
 . Click the API Console icon to display your specification in the console.
 +
 image::acb-api-console.png["A specification with get and post methods"]
 +
-If you encounter a delay: 
-.. Wait for the API Console to load. 
-.. Click your specification file in the editor.
+.. Monitor *Mule DX Server* in the *Output* panel while waiting for API Console to load.
+.. Click your specification file in the editor to display endpoints for the specification file in API Console.
 .. Wait for the endpoint icons to render in API Console.
 +
 Endpoint and methods in the API console:
 +
-//TODO: Consider changing image. The API Console shows "Documentation" as the title instead of the project's name created.
+//NOTE internal: image modified to have heading "Documentation"
 image::get-post-methods-api-console.png["GET and POST methods highlighted in *API Console*"]
-//TODO: hn: this is not the case for me. I see the name of the raml file.
-//TODO: duke: I'm getting weirdness of Documentation, but I can click the hamburger in the console to display the API Console. Is this a BUG???
 . Proceed to <<add-query-params-nested-resources>>.
 
 [[add-query-params-nested-resources]]
