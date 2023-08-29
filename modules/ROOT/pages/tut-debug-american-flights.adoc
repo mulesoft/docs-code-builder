@@ -14,9 +14,11 @@ Debug your American Flights interface and implementation.
 . xref:develop-integration.adoc##create-the-american-flights-integration-example[Create the American Flights Integration Example]
 . xref:implement-api-specification.adoc[Implement the American Flights API Specification]
 
-== Add Logger and Set Variable Components to Your Implementation
+== Add Components
 
-. Open the _implementaion_ file (`implementation.xml`) for your American Flights application.
+To facilitate debugging, add Set Variable and Logger components to your American Flights implementation:
+
+. Open the implementation file (`implementation.xml`).
 . Below the Database Select operation (`<db:select/>`) named *Query Flights*, add a Set Variable component. 
 . In the configuration XML, provide this `<set-variable/>` configuration:
 +
@@ -95,21 +97,20 @@ Debug your American Flights interface and implementation.
 Learn to set up breakpoints to pause execution of your application.
 
 [[add-breakpoint]]
-== Add Breakpoints to Your Interface
+== Add Breakpoints
 
-Add breakpoints to your American Flights interface:
+Add breakpoints to your American Flights project:
 
 . Open the _interface_ (`interface.xml`) for your American Flights project. 
 . Select the *Run and Debug* icon in the activity bar:
 +
 image::run-and-debug.png[]
-. On the that contains the `<flow-ref/>` component, click to add a breakpoint.
+. In implementation (`interface.xml`), add a breakpoint to the line that contains the `<flow-ref/>` component.
 +
 image::add-breakpoint.png[]
 +
 Alternatively, use `F9` to add a breakpoint to the line.
-. Open the _implementation_ (`implementation.xml`) for your American Flights project. 
-. In your implementation, add breakpoints to the `<db:select/>` and `<set-variable/>` components.
+. Open the implementation file (`implementation.xml`) for your American Flights project, and add breakpoints to the `<db:select/>` and `<set-variable/>` components.
 +
 . Notice that all the breakpoints are now listed in the *Breakpoints* panel:
 +
@@ -121,7 +122,7 @@ Run a debugging session, and inspect the message and variables at different poin
 [[debug]]
 == Start a Debugging Session
 
-. From the *Run and Debug* panel, click *Debug Mule Application*.
+. From the *Run and Debug* menu, click *Debug Mule Application*.
 +
 image::start-debugging.png[]
 +
@@ -131,40 +132,48 @@ image::packaged-and-running-terminals.png[]
 . Proceed to <<test>>.
 
 [[test]]
-== Test Your Mule Application
+== Test Your American Flights Application
 
-. From a REST client or your browser, make a GET request to the running application to trigger the debugger. 
+After starting your debugging session:
+
+. Make a GET request to the listener in the _interface_ (`interface.xml`) instead of the implementation:
+
+* From the desktop IDE: `+http://localhost:8081/api/flight+`
+* From the web IDE: `+https://<web-IDE-instance>/proxy/8081/api/flight+`
 +
-For guidance, see xref:ping-locally-deployed-app.adoc[].
-//TODO: duke NEED TO MAKE flow-ref BREAKPOINT VISIBLE WHEN TRIGGERING APP
+Notice the `_/api/flight_` in the URI for the listener in the interface. For more guidance with URIs, see xref:ping-locally-deployed-app.adoc[].
 . In your American Flights project, notice that the execution of the application stops at your first breakpoint.
 +
 image::debug-stop-at-flow-ref.png[]
-. Click the *Step Over* button on your debug toolbar to continue execution to next breakpoint.
-. In the Debug sidebar, notice that the *Variables* panel provides information about the Mule event at the breakpoint.
++
+The breakpoint is located in you interface file (`interface.xml`).
+. In your debug toolbar, click the *Step Over* button to continue execution to the next breakpoint, at the `<db:select/>` element in `implementation.xml`.
+. In the *Run and Debug* sidebar, notice that the *Variables* panel provides information about the Mule event at the breakpoint.
 +
 image::debugger-stop-db-select.png[]
-. Click the *Step Over* button on your debug toolbar to continue execution to your next breakpoint.
-. In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables and note that you can inspect the database response as an array.
+. Click the *Step Over* button on your debug toolbar to continue execution to your next breakpoint, at the `<set-variable/>` element.
+. In the *Variables* panel, navigate to *Mule Message* > *Payload*, and notice that the database response is an array of flight data.
 +
 image::debugger-stop-set-variable.png[]
+. Proceed to <<watch>>.
 
+[[watch]]
 == Add a Watch Expression
 
-. Open the *Run and Debug* sidebar.
-. From the *Watch* panel in the sidebar, select the `plus` icon, and add the expression `payload.^mediaType`.
+. From the *Run and Debug* sidebar, open the *Watch* panel.
+. Select the `plus` icon in the panel, and add the expression `payload.^mediaType`.
 +
 image::debug-add-expression.png[]
-. Select the *Step Over* button until your execution moves to the Set Payload component (`<set-payload/>`).
-. Notice that your payload is `application/java`.
+. Click the *Step Over* button until your execution moves to the Transform Message component (`<ee:transform/>`).
+. Notice that the payload is `application/java`.
 +
 image:tut-debug-mediatype-java.png[]
-. Select the *Step Over* button until execution continues to the Logger component (`<logger>`).
+. Continue clicking the *Step Over* button until you reach the Logger component (`<logger>`).
 . Notice that your payload transforms to `application/json`.
 +
 image::tut-debug-mediatype-json.png[]
 //image::debuger-watch-expression-json.png[]
-. Select the *Continue* button on your debug toolbar, and notice  that the application returns the response from the database to your REST client or browser.
+. Click the *Continue* button in the debug toolbar, and notice that the application returns the response from the database to your REST client or browser.
 +
 .Click for the complete implementation XML example.
 [%collapsible]
@@ -317,8 +326,8 @@ image::tut-debug-mediatype-json.png[]
     }
 ]
 --
-. Proceed to <<stop>>.
 ====
+. Proceed to <<stop>>.
 
 [[stop]]
 == Stop the Debugging Session
