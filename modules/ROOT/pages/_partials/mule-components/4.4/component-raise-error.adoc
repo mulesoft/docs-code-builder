@@ -1,0 +1,245 @@
+//
+//tag::component-title[]
+
+= Raise Error (<raise-error/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Generates a Mule error, as if a failure had occurred. 
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+You can customize the error's description and type. Use this component to raise:
+
+* Core runtime errors, such as `MULE:SECURITY`, `MULE:CONNECTIVITY`, etc.
+* Custom error types.
+
+You cannot raise an error from another connector or module like `FILE:FILE_NOT_FOUND`, `JSON:INVALID_SCHEMA`. You cannot use a connector's existing namespace.
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<raise-error 
+  type="MULE:CONNECTIVITY" 
+  description="Error description message" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<raise-error/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `type` 
+| The type of error.
+
+| `description` 
+| The error description.
+
+|===
+//end::component-xml-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+//end::component-examples-title[]
+
+//tag::component-examples-intro[]
+
+The following examples show how to raise a custom error when a user provides an invalid value while making an API request and raise a custom error after comparing a value received in an API response. 
+//end::component-examples-intro[]
+
+
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+=== Example: Raising an Error After an Invalid User Input 
+
+The following example of a driving lessons platform checks that the user is over 16 years old to drive. The flow raises a custom `PRECONDITIONS:INCORRECT_AGE` error when the user enters an age lower than 16 years.
+
+* The Choice router components adds conditional processing to the flow.
+* If the age parameter sent in the request is lower than 16 `+http://localhost:8081/test?age=15+`, the Raise Error component raises the error type `PRECONDITIONS:INCORRECT_AGE` and description `Minimum age of 16 required to drive`.
+* Then, an On-Error Continue component matches the type of the error `PRECONDITIONS:INCORRECT_AGE` and executes the Logger component inside its scope. The Logger component logs the error message `Minimum age of 16 required to drive`.
+* If the age parameter is greater than 16 in the request `+http://localhost:8081/test?age=17+`, a Logger component returns the default message `User age above 16 years. Allowed to drive`.
+* If no age parameter is passed in the request `+http://localhost:8081/test+` the choice component automatically raises a `MULE:EXPRESSION` error when trying to evaluate the expression `#[message.attributes.queryParams.age &lt; 16]` because no age parameter was provided in the request, so its value is null.
+* Then, an On-Error Continue component matches the type of the error `MULE:EXPRESSION` and executes the Logger component inside its scope. The Logger component returns the message `The parameter age is missing or invalid`.
+
+[source,xml]
+----
+<http:listener-config name="HTTP_Listener_config">
+  <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+<flow name="raise-error-example-flow">
+  <http:listener config-ref="HTTP_Listener_config" path="/test"/>
+  <choice>
+    <when expression="#[message.attributes.queryParams.age &lt; 16]">
+      <raise-error type="PRECONDITIONS:INCORRECT_AGE" description="Minimum age of 16 required to drive" />
+    </when>
+    <otherwise >
+      <logger level="INFO" message="User age above 16 years. Allowed to drive"/>
+    </otherwise>
+  </choice>
+  <error-handler >
+    <on-error-continue enableNotifications="true" logException="true" type="PRECONDITIONS:INCORRECT_AGE">
+      <logger level="INFO" message="Minimum age to drive is 16 years old"/>
+    </on-error-continue>
+    <on-error-continue enableNotifications="true" logException="true"  type="MULE:EXPRESSION">
+      <logger level="INFO" message="The parameter age is missing or invalid"/>
+    </on-error-continue>
+  </error-handler>
+</flow>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+=== Example: Raising an Error After Comparing Values
+
+The following example makes a request to an API (+https://unsecurebank.com/balance+) and stores the returned account balance in the _balance_ variable, then compares the variable with `payload.amount` to determine if the operation is possible. The Choice router produces an `ACCOUNT:INSUFFICIENT_FUNDS` error when a transfer amount surpasses the available balance, preventing the transfer from taking place. Additionally, it generates a dynamic description by providing an expression with failure details.
+
+[source,xml]
+----
+<flow name="raise-error-example-flow">
+  <http:request url="https://unsecurebank.com/balance" target="balance"/>
+  <choice>
+    <when expression="#[payload.amount > vars.balance]">
+      <raise-error type="ACCOUNT:INSUFFICIENT_FUNDS" description="#['Cannot transfer $(payload.amount) since only $(vars.balance) are available.']"/>
+    </when>
+  </choice>
+  <http:request url="https://unsecurebank.com/transfer"/>
+</flow>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::mule-error-concept.adoc[]
+* xref:acb-component-error-handler.adoc[]
+
+//end::see-also[]
