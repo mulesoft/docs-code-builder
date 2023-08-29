@@ -8,12 +8,12 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Use Anypoint Code Builder to create and implement an API specification that returns flight information from a MySQL database: 
 
-. xref:tut-design-api-specification-from-scratch.adoc[]
+. xref:tut-design-api-specification-from-scratch.adoc[]:
 
 * Start the American Flights API specification. 
 * Add a RAML resource and methods.
 * Add query parameters and nested resources.
-. xref:tut-design-api-add-request-response-details.adoc[]
+. xref:tut-design-api-add-request-response-details.adoc[]:
 
 * Add API fragments from Exchange for a data type and examples to the American Flights API specification. 
 * Create your own examples for the specification.
@@ -21,39 +21,41 @@ Use Anypoint Code Builder to create and implement an API specification that retu
 . xref:test-api-specification.adoc[] 
 +
 Use the Mocking Service in the API Console to check the request and responses that you configured for American Flights API.
-. xref:synchronize-with-design-center.adoc[] 
+. xref:synchronize-with-design-center.adoc[]:
 +
 Use the built-in integrated source control management (SCM) to sync American Flights API with Anypoint Design Center (Design Center). The Design Center SCM is built on Git.
-. xref:publish-api-spec-to-exchange.adoc[] 
+. xref:publish-api-spec-to-exchange.adoc[]:
 +
 Publish American Flights API specification to Exchange so that other team members can find and implement it.
 //develop example:
 . Start an integration application for the American Flights example: 
 
-.. xref:create-xml-snippets.adoc[] 
+.. xref:create-xml-snippets.adoc[]:
 +
 Define user snippets for the American Flights project. Snippets are reusable code patterns that you can insert from the IDE into the configuration XML of Mule applications.
-.. xref:create-basic-integration.adoc[] 
+.. xref:create-basic-integration.adoc[]:
 +
 Start by creating a basic integration for the American Flights example. This integration provides some of the logic for processing requests from the American Flights API.
-.. xref:connect-to-a-db.adoc[] 
+.. xref:connect-to-a-db.adoc[]:
 
 * Import the Database (Database Connector) from Exchange. 
 * Configure a database operation to connect to an external database from your Mule flow.
-.. xref:use-dataweave-to-transform-data.adoc[] +
+.. xref:use-dataweave-to-transform-data.adoc[]:
++
 Use DataWeave to transform and match flight data to your API specification.
 //implement example:
-. xref:/implement-api-specification.adoc[]
+. xref:/implement-api-specification.adoc[]:
 
 * Import your American Flights API specification from Anypoint Exchange. 
 * Scaffold the specification into the American Flights project that you are developing.
 * Add logic to implement an endpoint in the API.
 //debug example:
-. xref:tut-debug-american-flights.adoc[]
+. xref:tut-debug-american-flights.adoc[]:
 
 * Prepare to debug your Mule application by adding Logger and Set Variable components to better understand the behavior of your flows.
 * Set up breakpoints to stop your Mule application at specific points during a debug session.
 * Run a debug session, and inspect the message and variables at different points during your application's execution.
 //deploy example:
-. xref:deploy-mule-application.adoc[Deploy a Mule Application]. +
+. xref:deploy-mule-application.adoc[Deploy a Mule Application]: 
++
 Deploy your American Flights application to Cloudhub. Enable your team to send requests to your API and return flight information from a database.
