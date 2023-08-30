@@ -1,0 +1,304 @@
+//
+//tag::component-title[]
+
+= Set Variable (<set-variable/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Creates or updates a xref:mule-runtime::about-mule-variables.adoc[Mule variable] to store values for use within the flow of a Mule app.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+A Mule variable is part of the xref:mule-runtime::about-mule-event.adoc[Mule event]. You can store simple literal values such as strings or messages, message payloads, or attribute objects. For example, you might store the original payload of a message (before it is processed) so you can use it later in the flow or within an error handler.
+
+Don't use Set Variable for complex expressions or transformations, instead use it for simple operations, such as selections, and use the xref:transform-component-about.adoc[Transform Component] for complex scenarios.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<set-variable 
+  value="myValue" 
+  doc:name="Set variable" 
+  doc:id="mrsngz" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+<set-variable 
+  value="#[$1]" 
+  variableName="$2" 
+  doc:name="Set variable" 
+  doc:id="uwboqc" />
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<set-variable/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `variableName` 
+| Name of the variable, which can be a string or a DataWeave expression. Variable names are must include only numbers, characters, and underscores. This attribute is required.
+
+| `value` 
+| Value for the variable, which can be a string or a DataWeave expression. For an example that uses an expression, see xref:dataweave::dataweave-cookbook-writer-prop-mule.adoc[]. This attribute is required.
+
+| `mimeType`
+| Sets the variable MIME type, such as `text/plain` or `application/json`.
+
+| `encoding`
+| Sets the variable encoding, such as `ISO 10646/Unicode(UTF-8)`.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+//end::component-examples-title[]
+
+//tag::component-examples-intro[]
+
+The following examples show different operations such as setting a variable to a String value, to a DataWeave operation's result, to the message payload, to the message attributes,  to a map value, and to a Java Object. 
+//end::component-examples-intro[]
+
+
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+=== Example: Setting a Variable With a String Value
+
+The following example assigns a String value to a variable: 
+
+[source,xml]
+----
+<set-variable 
+  value="My First Variable" 
+  variableName="myVar" />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+=== Example: Setting the Result of a DataWeave Expression as a Variable
+
+The following example assigns the result of a DataWeave expression to a variable: 
+
+[source,xml]
+----
+<set-variable 
+  value=#[max([1,2,3] ++ [3,4,5])]
+  variableName="myResult" />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+//tag::component-xml-ex3[]
+[[example3]]
+
+=== Example: Setting a Variable to the Message Payload
+
+The following example assigns the message payload to a variable: 
+
+[source,xml]
+----
+<set-variable 
+  value=#[payload]
+  variableName="myPayload" />
+----
+
+//end::component-xml-ex3[]
+
+//tag::component-xml-ex4[]
+[[example4]]
+
+=== Example: Setting a Variable to the Message Attributes
+
+The following example assigns the message attributes to a variable: 
+
+[source,xml]
+----
+<set-variable 
+  value=#[attributes]
+  variableName="myAttributes" />
+----
+
+//end::component-xml-ex4[]
+
+//tag::component-xml-ex5[]
+[[example5]]
+
+=== Example: Setting a Variable With a Map Value
+
+The following example assigns a map value to a variable: 
+
+[source,xml]
+----
+<set-variable 
+  value="{ 'name' : 'Ana', 'office' : 'BA' }"
+  variableName="employee"  
+  mimeType="application/json" 
+  encoding="UTF-8"/>
+----
+
+//end::component-xml-ex5[]
+
+//tag::component-xml-ex6[]
+[[example6]]
+
+=== Example: Setting a Variable to a Java Object
+
+The following example assigns a Java object to a variable by using a DataWeave script: 
+
+[source,xml]
+----
+<set-variable 
+  value='#[%dw 2.0 output application/java 
+        --- 
+        { 
+          name: "Tomo", 
+          lastName: "Chibana", 
+          expirationDate: now(), 
+          salesRepr: 
+          { 
+            name: "Mariano", 
+            lastName: "de Achaval", 
+          } 
+        } as Object {class: "Customer"}]' 
+  variableName="Variable to Java Object"/>
+----
+
+//end::component-xml-ex6[]
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+// tag::accessing-variables[] 
+== Accessing Variables in Other Event Processors
+
+Set Variable sets a variable in the current Mule event, and the variables then travel with the Mule event to downstream event processors. You can access any variable with DataWeave using `vars`. So if you set a variable named _lastMessage_, you can access it as `vars.lastMessage`. You can set variables in a Transform Message component, and also many connectors and event processors have a Target variable that you can set. All these are flow variables and you access them through the keyword `vars.`.
+
+// end::accessing-variables[] 
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::about-mule-variables.adoc[Variables in Mule Events]
+* xref:mule-runtime::target-variables.adoc[Enrich Data with Target Variables]
+
+//end::see-also[]
