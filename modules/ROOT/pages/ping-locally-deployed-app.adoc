@@ -7,27 +7,27 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 When an integration that you are developing builds successfully, the application deploys within your development environment, whether on your desktop or the web-based host for your Anypoint Code Builder applications. 
 
-It is common to configure an HTTP Listener to trigger the execution of a flow in your deployed application through a URL. The URLs to use for the desktop and web IDEs differ for deployments to your development environment in Anypoint Code Builder:
+It is common to configure an HTTP Listener to trigger the execution of a flow in your deployed application through a URL. The URLs to use for the desktop and cloud IDEs differ for deployments to your development environment in Anypoint Code Builder:
 
 * In the desktop IDE, a URI configured for the listener, such as `+http://localhost:8081/some-endpoint+`, works if no other applications are using that port. 
 +
 Add `/api` to the URI for a listener in a scaffolded interface that you generate when implementing an API specification in the IDE, for example:
 `+http://localhost:8081/api/some-endpoint+`.
 
-* In the web IDE, your development environment is hosted remotely, so you must configure a URL to a proxy for your application's host. 
+* In the cloud IDE, your development environment is hosted remotely, so you must configure a URL to a proxy for your application's host. 
 +
-For guidance constructing the URL in the web IDE, see:
+For guidance constructing the URL in the cloud IDE, see:
 
 ** <<ping-browser>> 
 ** <<ping-rest-client>>
 
 
 [[ping-browser]]
-== Ping a Locally Deployed Application on the Web IDE Using a Browser
+== Ping a Locally Deployed Application on the Cloud IDE Using a Browser
 
 . Open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
 . After your application deploys successfully, open a new tab in your browser.
-. Type the URL of your web IDE instance, add the `/proxy/` path, and then add the port number you configured as a new path:
+. Type the URL of your cloud IDE instance, add the `/proxy/` path, and then add the port number you configured as a new path:
 `+https://<web-IDE-instance>/api/<port-you-configured-on-your-listener>/+`
 +
 For example:
@@ -38,14 +38,14 @@ https://lavender-ndm0yl.builder.code.com/proxy/8081/
 --
 +
 See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct instance URL.
-. When pinging that URL, the web IDE triggers the Mule flow.
+. When pinging that URL, the cloud IDE triggers the Mule flow.
 
 [[ping-rest-client]]
-== Ping a Locally Deployed Application on the Web IDE Using a REST Client
+== Ping a Locally Deployed Application on the Cloud IDE Using a REST Client
 
-. Open the web IDE using your browser's Developer Tools (`F12`).
+. Open the cloud IDE using your browser's Developer Tools (`F12`).
 . Navigate to your *Application* tab.
-. Under *Storage*, expand the *Cookies* section and select the URL of your web IDE instance.
+. Under *Storage*, expand the *Cookies* section and select the URL of your cloud IDE instance.
 . Search for the term _proxysession_:
 +
 image::application-storage-cookies.png[]
@@ -60,9 +60,9 @@ proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx
 --
 The `proxysession` cookie name varies depending on the user.
 --
-. In the web IDE, open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
+. In the cloud IDE, open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
 . After your application deploys successfully, open your preferred REST client application.
-. Type the URL of your web IDE instance in the request URL section, add the `/proxy/` path, and then add the port number you configured as a new path:
+. Type the URL of your cloud IDE instance in the request URL section, add the `/proxy/` path, and then add the port number you configured as a new path:
 `+https://<web-IDE-instance>/api/<port-you-configured-on-your-listener>/+`
 +
 For example:
@@ -76,4 +76,4 @@ See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct
 . Configure the headers to send the necessary cookies that you copied earlier:
 +
 image::send-request-with-cookies.png[]
-. When pinging that URL, the web IDE triggers the Mule flow.
+. When pinging that URL, the cloud IDE triggers the Mule flow.
