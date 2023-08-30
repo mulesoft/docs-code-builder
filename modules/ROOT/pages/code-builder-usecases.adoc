@@ -1,20 +1,44 @@
-= Anypoint Code Builder Use Cases
+= Use Cases and Tutorials
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-The following tutorials show you specific use cases for Anypoint Code Builder.
+Use Anypoint Code Builder for common use cases. Follow the tutorials to learn more complex workflows.
 
-== Create a Synchronization API
+== Use Cases 
 
-Learn how to create an API from scratch that synchronizes your own contacts database with Salesforce.
+Perform common tasks for Mule applications:
 
-Start to xref:create-synchronization-sfdc-api.adoc[Create a Contacts Synchronization API with Salesforce].
+* xref:ping-locally-deployed-app.adoc[Trigger a Flow in Your Development Environment]
+* xref:upload-a-project.adoc[]
+* xref:package-mule-application.adoc[]
+* xref:int-create-secure-configs.adoc[]
+* xref:dataweave-validations.adoc[Address DataWeave Errors]
+* xref:mock-data-using-dw-library.adoc[Mock Data Using a DataWeave Library]
+* xref:import-dataweave-library.adoc[Import a DataWeave Library]
 
-== Create a Salesforce, Slack, and Email integration.
+== Tutorials
 
-Learn how to develop an integration that triggers an email for a new escalated case on your Salesforce organization, or sends a notification in Slack whenever you receive a new case.
-
-Start to xref:create-escalation-slack-api.adoc[Create an Escalation API between Slack and Salesforce].
+//tutorial: iterative design & develop
+* xref:local-api-specification-tutorial.adoc[]
+//tutorial: sync Salesforce contacts
+* xref:create-synchronization-sfdc-api.adoc[Create a Contacts Synchronization API with Salesforce]
++
+Create an API that synchronizes your contacts database with Salesforce.
+** xref:create-config-files.adoc[Create a Reusable Configuration File]
+** xref:sync-api-configure-queries.adoc[Configure Your Queries to Your Services]
+** xref:store-data-in-parallel.adoc[Store Data in Parallel]
+//tutorial: slack & salesforce
+* xref:create-escalation-slack-api.adoc[Create an Escalation API between Slack and Salesforce]
++
+Develop an integration that triggers an email for a new escalated case on your Salesforce organization, or sends a notification in Slack when you receive a new case.
+** xref:create-config-files-slack-sfdc.adoc[Create a Configuration File for Slack and Salesforce]
+** xref:extract-payload-information.adoc[Extract Payload Information to Variables]
+** xref:add-condition-to-your-flow.adoc[Add a Condition to Your Flow Logic]
+** xref:configure-slack-integration.adoc[Configure Slack Integration]
+//tutorial: graphQL
+* xref:implement-a-graphql-api.adoc[Implement a GraphQL API]
+** xref:test-graphql-first-implementation.adoc[Test Your GraphQL Implementation]
+** xref:configure-graphql-flow-responses.adoc[Configure Responses for Your GraphQL Implementation]
