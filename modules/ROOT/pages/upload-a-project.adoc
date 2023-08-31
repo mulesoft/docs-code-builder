@@ -1,4 +1,5 @@
 = Import a Project into an IDE Workspace
+:imagesdir: ../assets/images
 //variable used in multiple places on this page:
 :root-dir: This directory is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
 //variable used in multiple places on this page:
@@ -14,6 +15,8 @@ Import a project directory or a packaged project into a workspace in your IDE. A
 Visual Studio Code treats a project directory as a workspace when you open it to the project's root directory or if your project folder is located in a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^]. 
 
 To _export_ a JAR file that packages a project with resources from your application, see xref:package-mule-application.adoc[].
+
+If you encounter an import issue, check for workarounds in xref:acb-release-notes.adoc#import-issues[Known Issues] in the Anypoint Code Builder Release Notes or xref:troubleshooting.adoc[].
 
 //H2: DESKTOP
 [[import-desktop]]
@@ -131,17 +134,18 @@ image::upload-progress-expanded.png[]
 +
 [source,command]
 ----
-MuleSoft: Import a Project
+MuleSoft: Import a Mule Project
 ----
 +
-image::import-a-project.png[]
-.. Select *Mule Project Type*:
-+
-image::import-mule-project.png[]
-.. Select the JAR file that you uploaded.
+//TODO: cc: Do we need the following screenshot? I think the step is already self-explanatory without the screenshot. Asking with an eye towards reducing unnecessary screenshots. Also, we don't have screenshots for other steps that refer to the command palette.
+//image::import-a-project.png[]
+// .. Select *Mule Project Type*:
+// +
+// image::import-mule-project.png[]
+. Select the JAR file that you uploaded.
 +
 Anypoint Code Builder unpacks your application into a project folder.
-. Navigate to your the _root_ of the project folder, using the following command to open the folder and load your workspace to the IDE:
+. Navigate to the _root_ of the project folder, using the following command to open the folder and load your workspace in the IDE:
 +
 [source,command]
 ----
