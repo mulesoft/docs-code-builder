@@ -3,16 +3,17 @@
 //variable used in multiple places on this page:
 :root-dir: This directory is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
 //variable used in multiple places on this page:
-:open-root: If you do not open the root directory, the UI canvas for your project does not load correctly because Visual Studio Code does not recognize the directory as a workspace.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Import a project directory or a packaged project into a workspace in your IDE. A project directory contains an API specification or a Mule application for an implementation or integration. 
+Import a project JAR file or folder into a workspace in your IDE. A project directory contains a Mule application for an implementation or integration, or contains an API specification. 
 
-Visual Studio Code treats a project directory as a workspace when you open it to the project's root directory or if your project folder is located in a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^]. 
+////
+Visual Studio Code treats a directory as a workspace. To open a project folder for a Mule application into a VS Code workspace, open the project's root directory. If the project is part of a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^], open the project from the workspace. 
+////
 
 To _export_ a JAR file that packages a project with resources from your application, see xref:package-mule-application.adoc[].
 
@@ -35,14 +36,20 @@ Import a sharable JAR file for a snapshot of a Mule project into the desktop IDE
 
 // include for this procedure
 include::partial$acb-open-packaged-sources.adoc[tags="load-sharable-jar"]
+include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-dir"]
+include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
+include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
 
 [[desktop-project-folder]]
 === Import a Project Folder into the Desktop IDE
 
-Import a Mule project folder into the desktop IDE, and open the project in a VS Code workspace.
+Though it is more common to import a sharable JAR file, you can also drag a sharable Mule project folder into the Explorer and open the project in a VS Code workspace.
 
 // include for this procedure
 include::partial$acb-open-packaged-sources.adoc[tags="import-project-folder-desktop"]
+include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-dir"]
+include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
+include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
 
 [[desktop-open-project-folder]]
 === Open a Project Workspace from the Desktop IDE
@@ -51,6 +58,7 @@ Open the a project workspace for your application.
 
 // include for this procedure
 include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-dir"]
+include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
 
 //H2: WEB
 [[import-web]]
@@ -112,9 +120,6 @@ Anypoint Code Builder unpacks your application into a project folder.
 ----
  File: Open Folder...
 ----
-+
-// see text for this variable defined under title
-{open-root}
 
 //WEB: PROJECT FOLDER TO WORKSPACE
 [[web-project-folder]]
@@ -142,9 +147,6 @@ image::trust-home-directory.png[]
 Anypoint Code Builder displays an upload progress bar that you can click to expand.
 
 . To load the project into a workspace, open the _root_ directory for the imported project folder.
-+
-// see text for this variable defined under title
-{open-root}
 
 .. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +

@@ -1,3 +1,5 @@
+//tags are for upload-a-project.adoc
+
 //
 // tag::load-sharable-jar[]
 //variable used in multiple places on this page:
@@ -11,25 +13,27 @@ To import a sharable JAR file in your desktop IDE:
 MuleSoft: Import a Mule Project
 ----
 . Navigate to the JAR file, and click *Select jar file to import*.
-. Navigate to a folder of your choice or create a folder for the unpacked JAR file contents, and click *Select a folder to work*. 
+. Navigate to (or create) a folder for the unpacked JAR file contents, and click *Select a folder to work*. 
 +
 The IDE unpacks the JAR file for your project into the selected folder, which becomes the parent folder for your Mule project folder.
-. To open the project workspace, navigate to the root directory of the Mule project folder with this command: 
-+
-[source,command]
-----
-File: Open Folder
-----
-+
-When you open a Mule project at its root, VS Code treats the root as a workspace, which enables the IDE to load the UI canvas properly.
-. Open a configuration XML for your project, and launch the UI canvas by clicking the *Show Mule graphical mode* (vertical tree diagram) icon.
+// end::load-sharable-jar[]
+
+//
+// Shared steps for loading the project
+// tag::load-project[]
+. Open a configuration XML for your project, and launch the UI canvas by clicking the *Show Mule graphical mode* (vertical tree diagram) icon. 
 +
 image::show-mule-graphical-mode.png["Launch graphical UI with Show Mule graphical mode icon"]
-. To monitor the process, open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac), and select *Mule DX Server*.
+. To monitor progress as the project loads, open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac), and select *Mule DX Server* from the drop-down menu in the output panel.
+// end::load-project[]
+//
+
+//
+// note at the end of import procedures
+// tag::import-note[]
 +
 In addition to loading the graphical UI canvas, the IDE also loads dependencies defined in the `pom.xml` for the project. Libraries load to the `target/repositories` directory within the project folder.
-
-// end::load-sharable-jar[]
+// end::import-note[]
 //
 
 //
@@ -47,47 +51,30 @@ To import a project folder to your desktop IDE:
 File: Open Folder
 ----
 .. Navigate to and open a parent folder for your project.
-. Drag and copy your project directory to the Explorer. For example:
+. Drag your project directory to the Explorer. For example:
 +
-image::drag-folder-explorer.png["Add Project Folder to Explorer"]
-. If prompted, select *Copy Folder* and _not_ *Add Folder to Workspace*.
+image::drag-project-folder.png["Drag Project Folder to Explorer"]
+. Select *Copy Folder*.
 +
-If you add the folder to a workspace, select the project in the Explorer, and then right click and select *Remove Folder from Workspace*. After removing, drag and copy the project folder to the IDE without adding it to a workspace. 
-. Navigate to the root directory of the project folder by using this command: 
-+
-[source,command]
-----
-File: Open Folder
-----
-+
-When you open a Mule project at the root, VS Code treats the root as a workspace, which enables the IDE to load the UI canvas properly.
-. To monitor the process, open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac), and select *Mule DX Server*.
-
+If you instead select *Add Folder to Workspace*, you can start over by selecting the project in the Explorer, right clicking, and then selecting *Remove Folder from Workspace*. After removing, drag and copy the project folder to the IDE without adding it to a workspace. 
 // end::import-project-folder-desktop[]
 //
 
 //
 // tag::open-workspace-dir[]
-:root-dir: This directory is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
-//variable used in multiple places on this page:
-:open-root: If you do not open the root directory, the UI canvas for your project does not load correctly because Visual Studio Code does not recognize the directory as a workspace.
-
 [[open-directory]]
+. Open the workspace at the project's _root_ directory: 
 
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
+.. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
 [source,command]
 ----
 File: Open Folder...
 ----
-. Navigate to the _root_ directory for your project. 
+.. Navigate to the _root_ directory for your project. 
 +
-// see text for this variable defined under title
-{root-dir}
+VS Code treats the root as a workspace, which enables the IDE to load the UI canvas properly.
 +
-// see text for this variable defined under title
-{open-root}
-. Check that the application loads successfully in the IDE.
-
+The root is the top-level folder that Anypoint Code Builder generates when you create a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
 // end::open-workspace-dir[]
 //
