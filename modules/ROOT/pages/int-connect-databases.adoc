@@ -1,39 +1,40 @@
 = Connect to a Database
 
+// connect-to-a-db
+
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-You can use the Database connector to connect to an external database from your Mule flow.
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Use Anypoint Connector for Database (Database Connector) to connect to an external database from your Mule flow.
 
 == Before You Begin
 
-Before getting started, ensure you:
+. xref:create-xml-snippets.adoc[]
+. xref:create-basic-integration.adoc[] 
 
-* Set up your MuleSoft environment. +
-See xref:setup.adoc[] for more information.
-* Created an XML snippet. +
-See xref:create-xml-snippets.adoc[] for more information.
-* Created a basic integration using Anypoint Code Builder. +
-See xref:create-basic-integration.adoc[]
-* Installed a REST client like Postman or AdvancedRestClient.
+== Open Your American Flights Application
 
-== Open Your Existing Mule Application.
-
-. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
-. Remove your existing `<set-payload>` component:
+. In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
+. Remove the `<set-payload>` component from the configuration XML:
 +
-[source,xml,linenums]
+[source,xml]
 --
 <set-payload value="Flight info" doc:name="Set Response" />
 --
 
 == Add a Database Driver Dependency
 
-Because the Database connector can connect to a wide variety of JDBC databases, you must include a dependency for the particular driver your need. In this case, use a `mySQL` driver:
+The Database Connector supports a variety of Java Database Connectivity (JDBC) databases. 
 
-. In Project Explorer, select the `pom.xml` file.
-. Add a new dependency using the code in the following sample:
+Provide the dependency for the `mySQL` driver: 
+
+. Open the *EXPLORER* menu by pressing Cmd+Shift+e (Mac) or Ctrl+Shift+e (Windows).
+. Open the `pom.xml` file.
+. Add a new dependency within the `<dependencies/>` element:
 +
-[source,xml,linenums]
+[source,xml]
 --
 <dependency>
    <groupId>mysql</groupId>
@@ -42,7 +43,8 @@ Because the Database connector can connect to a wide variety of JDBC databases, 
 </dependency>
 --
 +
-image::add-mysql-driver-dependency.png[]
+image::add-mysql-driver-dependency.png["pom.xml with new dependency highlighted"]
+//TODO: hamburger menu
 . Replace the existing `<configuration/>` element within your `mule-maven-plugin` with a new shared library:
 +
 [source,xml,linenums]
@@ -52,7 +54,7 @@ image::add-mysql-driver-dependency.png[]
     <artifactId>mule-maven-plugin</artifactId>
     <version>${mule.maven.plugin.version}</version>
     <extensions>true</extensions>
-    <configuration> //<1>
+    <configuration>
      <sharedLibraries>
        <sharedLibrary>
          <groupId>mysql</groupId>
@@ -62,26 +64,28 @@ image::add-mysql-driver-dependency.png[]
     </configuration>
 </plugin>
 --
-[calloutlist]
-.. Add a shared library configuration.
-+
-image::add-shared-library.png[]
+. Proceed to <<add-db-config>>. 
 
-
+[[add-db-config]]
 == Add a Database Connector Configuration
 
-. In Anypoint Code Builder, open your `american-ws-anypoint-code-builder.xml` file.
-. Go to a line between your existing `</http:listener-config>` and `<flow>` elements.
-. Start typing `_database_` and select `db-mysql-config`.
-. Move through the attributes and set the following values:
+. In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
+. In the configuration XML, add the global `<db:config/>` snippet:
+.. Above the `<flow/>` element, insert the snippet XML by pressing Ctrl+Spacebar (Mac) or Cmd+Spacebar (Windows), typing `mysql` to search for the snippet, and selecting the snippet `db:mysql-config`.
 +
-name:: `_Database_Config_`
-doc:name:: `_mySQL DB_`
-host:: `_mudb.learn.mulesoft.com_`
-port:: `_3306_`
-user:: `_mule_`
-password:: `_mule_`
-database:: `_training_`
+.Snippet XML above the <flow/> element:
+[source,xml]
+----
+<db:config name="Mysql_Database_Config" >
+  <db:my-sql-connection host="${mysql.host}" port="${mysql.port}"
+      user="${mysql.username}" password="${mysql.password}"
+      database="${mysql.database}" />
+</db:config>
+
+<flow name="getFlights" >
+...
+---- 
+.. Edit the attributes in `<db:config/>` to produce this XML configuration:
 +
 [source,xml]
 --
@@ -94,9 +98,8 @@ database:: `_training_`
       database="training" />
 </db:config>
 --
-
-Review your XML code:
-
+. Review the complete configuration XML:
++
 [source,XML]
 --
 <http:listener-config name="inbound-request" doc:name="HTTP Config">
@@ -104,49 +107,22 @@ Review your XML code:
 </http:listener-config>
 
 <db:config name="Database_Config" doc:name="mySQL DB">
-    <db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" user="mule" password="mule" database="training" />
+    <db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" 
+        user="mule" password="mule" database="training" />
 </db:config>
 
 <flow name="getFlights">
-    <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+    <http:listener path="flights" config-ref="inbound-request" 
+          doc:name="HTTP /flights" />
 </flow>
-
 --
+. Proceed to <<write>>.
 
+[[write]]
 == Write a Query to Return All Flights
 
-. Select the `plus` icon after the Listener component:
-+
-image::select-db-select-canvas.png[]
-. Start typing `_select_` and select `Database:select`.
-+
-image::select-db-select.png[]
-+
-[source,XML]
---
-<db:select doc:name="Query Flights" config-ref="Database_Config" >
-  <db:sql/>
-</db:select>
---
-. Move through the attributes and set the following values:
-+
-doc:name:: `_Query Flights_`
-config-ref:: `_Database_Config_`
-+
-[TIP]
---
-You must add the `config-ref` attribute. Start typing `_config_` and use the autocomplete feature to define your attribute.
-
-image::add-config-ref-auto-complete.png[]
---
-. Inside your `<db:sql>` element, type your query:
-+
-[source,xml,linenums]
---
-<db:sql>
-  <![CDATA[Select * FROM american]]>
-</db:sql>
---
+. From the UI canvas, select the `plus` icon below the HTTP Listener component, and add the user snippet *Database Select*.
+. Provide this configuration for the snippet:
 +
 [source,XML]
 --
@@ -156,10 +132,8 @@ image::add-config-ref-auto-complete.png[]
   </db:sql>
 </db:select>
 --
-
-
-Review your XML code:
-
+. Review the complete configuration XML:
++
 [source,XML]
 --
 <http:listener-config name="inbound-request" doc:name="HTTP Config">
@@ -167,7 +141,8 @@ Review your XML code:
 </http:listener-config>
 
 <db:config name="Database_Config" doc:name="mySQL DB">
-    <db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" user="mule" password="mule" database="training" />
+    <db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" 
+        user="mule" password="mule" database="training" />
 </db:config>
 
 <flow name="getFlights">
@@ -179,8 +154,6 @@ Review your XML code:
     </db:select>
 </flow>
 --
-
-== Next Step
-
-* xref:use-dataweave-to-transform-data.adoc[Use DataWeave to Transform Data]. +
-Learn the basics of DataWeave to transform the database response to match your API specification examples.
+. Proceed to xref:use-dataweave-to-transform-data.adoc[]. 
++
+Use DataWeave to make the database response match examples in your American Flight API specification. 

@@ -1,101 +1,110 @@
-= Synchronize Changes with Design Center
+= Synchronize the API Specification with Design Center
+
+// tut-design-api-synchronize-with-design-center
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-Anypoint Code Builder has integrated source control management (SCM) and includes Git support.
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Use the integrated SCM in Anypoint Code Builder to synchronize your local API with Anypoint Design Center.
-
+Use the built-in integrated source control management (SCM) to sync American Flights API with Anypoint Design Center (Design Center). The Design Center SCM is built on Git.
 
 == Before You Begin
 
-Before getting started, ensure you:
+If you haven't started the American Flight API specification, follow these procedures before attempting to synchronize:
 
-* Set up your MuleSoft environment. +
-See xref:setup.adoc[] for more information.
-* Created a basic structure for your API specification. +
-See xref:design-api-specification.adoc[].
-* Configured request and response data for your API specification. +
-See xref:design-api-specification.adoc[].
+. xref:tut-design-api-specification-from-scratch.adoc[]
+. xref:tut-design-api-add-request-response-details.adoc[]
+. xref:tut-design-api-test-specification.adoc[]
 
+[[review]]
+== Review Changes in Files
 
-== Reviewing Changes in Files
+Identify changes to files in your API project since the last synchronization with the main branch in Design Center. When you change your API project, the Source Control icon in the Activity Bar identifies the number of changes to the API project. 
 
-Anypoint Code Builder highlights differences made in files since you last synchronized them with the main branch on Design Center.
+//TODO duke: hamburger menu present; maybe ok since it's fairly inobtrusive
+image::changes-and-staged-changes.png["Changes and Staged Changes highlighted in the source control section"]
 
-When you change your API specification, the Source Control icon in the Activity Bar on the left shows you an overview of how many changes you currently have. Selecting the icon shows you the details of your current changes: *CHANGES*, and *STAGED CHANGES*:
+To review changes to your API project:
 
-image::changes-and-staged-changes.png[]
-
-To review your changes to your API specification:
-
-. In Anypoint Code Builder, select your Source Control view.
+. In Anypoint Code Builder, open the *Source Control* menu by pressing Ctrl+Shift+g (Mac) or Cmd+Shift+g (Windows).
++
+Alternatively, click the *Source Control* icon in the activity bar.
 . Open your `exchange.json` file.
-. Review the working tree and see how deletions (red) and additions (green) are highlighted.
+. Review the working tree and notice the shading for deletions (red) and additions (green).
 +
-image::explore-changes-api-specification.png[]
+//TODO duke: hamburger menu present; maybe ok if fairly inobtrusive
+image::explore-changes-api-specification.png["exchange.json file highlighted to show the source control changes"]
 +
-In this case, you added some dependencies to the API by reusing API fragments you downloaded from Anypoint Exchange.
+This example adds some dependencies to the API specification by reusing the API fragments downloaded from Anypoint Exchange.
+. Proceed to <<stage>>.
 
-== Staging Your Changes Individually
+[[stage]]
+== Stage Changes to the Built-in SCM
 
-The `git add` command adds a change from your working directory to the staging area. This command informs Git that you want to include updates to a particular file in the next commit. In Anypoint Code Builder you can do this by using the buttons in the UI:
+Stage changes from one or more files from the UI or through the command line, with a Git command. The UI uses the `git add` command to add changes from your working directory to the staging area. This area includes updates for the next commit.
+
+image::stage-american-flights-api.png["Source control number and plus icon of american-flight-api.raml file highlighted"]
+
+* <<stage-one>>
+* <<stage-multiple>>
+
+[[stage-one]]
+=== Stage Changes to a Single File
+
+To stage individual changes through the UI:
 
 . In Anypoint Code Builder, select your Source Control view.
-. Select the plus icon next to `american-flight-api.raml`.
+. Select the plus icon beside your RAML specification file, such as `american-flight-api.raml`.
 +
-image::stage-american-flights-api.png[]
-. Review the changes in the Source Control view. Note that the file has moved into *Staged Changes*.
+The file moves to *Staged Changes* section.
+. Review the changes in the Source Control section.
+. Proceed to <<stage-multiple>> to stage changes to more than one file in your API project.
+
+[[stage-multiple]]
+=== Stage Changes to Multiple Files
+
+Stage multiple files at the same time:
+
+. Select your Source Control view for your API project.
+. Click the plus icon in the *Changes* header to stage your remaining changes.
 +
-image::staged-changes.png[]
+image::stage-all-changes.png["Plus icon highlighted to stage all changes"]
+. Proceed to <<commit>>.
 
-Additionally, you can perform these actions using the embedded command line.
+[[commit]]
+== Commit Changes
 
-=== Staging Multiple Changes
+The UI uses the `git commit` command to save the changes you staged to your local repository. 
 
-You can add multiple files at the same time:
+To commit staged changes:
 
 . In Anypoint Code Builder, select your Source Control view.
-. Click the plus icon in the section header to stage the remaining changes.
+. In the message field, summarize your changes, and click *Commit*.
 +
-image::stage-all-changes.png[]
+image::add-commit-message.png["Message box highlighted"]
+. Your Source Control view now displays no changes to commit.
+. Proceed to <<push>>.
 
-Additionally, you can perform these actions using the embedded command line.
+[[push]]
+== Push Changes to Anypoint Design Center
 
-== Committing Changes
+Use the `git push` command from the UI to upload your local content to Design Center.
 
-Use the `git commit` command to save the changes you staged earlier to your local repository:
+To push your changes:
 
-. In Anypoint Code Builder, select your Source Control view.
-. Click in the message box at the beginning of the view.
-. Enter a message that summarizes the change or changes being made.
-+
-image::add-commit-message.png[]
-+
-A good commit message helps summarize the changes being made across multiple files by multiple developers.
-. Click the tick mark in the *Source Control* header to commit the changes.
-+
-image::commit-changes.png[]
-. Your Source Control view now shows no changes to commit.
-
-
-== Pushing Changes to Anypoint Design Center
-
-Use the `git push` command to upload your local content to Anypoint Design Center:
-
-. In Anypoint Code Builder, select your Source Control view.
-. Select the three dots that appear in the *Source Control* header.
+. Open the Source Control view.
+. In the *Source Control* header, click the More actions menu (ellipsis).
 . Select *Push*.
 +
-image::push-changes.png[]
-
+//TODO duke: hamburger in screenshot; does Sync Changes appear?
+image::push-changes.png["Push command highlighted in the source control section"]
++
 Your changes are now published in Design Center.
++
+If the UI prompts you to `periodically run 'git fetch'`, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API.
++
+image::fetch-periodically-check.png["Periodically run git fetch message highlighted"]
+. Proceed to xref:tut-design-api-publish-api-spec-to-exchange.adoc[] so that your team can find and implement the specification.
 
-The integrated SCM within Anypoint Code Builder might prompt you to `peridoically run 'git fetch'`. This option enables Anypoint Code Builder to check for updates of your API in Design Center and prompt you to update your local version of the API.
 
-image::fetch-periodically-check.png[]
-
-== Next Step
-
-* xref:publish-api-spec-to-exchange.adoc[Publish an API Specification to Exchange]. +
-Publish your API specification to Exchange as a new asset and make it discoverable to your entire team.

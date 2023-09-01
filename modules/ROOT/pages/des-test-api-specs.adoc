@@ -1,44 +1,50 @@
-= Test an API Specification Using Mocking Service
+= Test the API Specification Using Mocking Service
+// tut-design-api-test-specification
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-With a designed API specification, you can use Mocking Service to mock your API and test
-the request and responses you designed in your API specification.
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-== Before you Begin
+Use the Mocking Service in the API Console to check the request and responses that you configured for American Flights API in xref:add-request-response-details.adoc[].
 
-Before getting started, ensure you:
+== Before You Begin
 
-* Set up your MuleSoft environment. +
-See xref:setup.adoc[] for more information.
-* Created a basic structure for your API specification. +
-See xref:design-api-specification.adoc[].
-* Configured request and response data for your API specification. +
-See xref:design-api-specification.adoc[].
+If you haven't started the American Flight API specification, follow these procedures before attempting to test:
 
-== Test your API Specification
+. xref:tut-design-api-specification-from-scratch.adoc[]
+. xref:tut-design-api-add-request-response-details.adoc[]
 
-. In Anypoint Code Builder, open your `american-flights-api.raml` file.
-. Select the API Console icon on the top right of your screen.
+== Test Your API Specification
+
+. In Anypoint Code Builder, open the RAML file for your American Flights API specification (`american-flights-api.raml`).
+. Select the API Console icon in the editor toolbar.
 +
-image::api-console-button.png[]
+image::api-console-button.png["API Console icon highlighted in the editor toolbar"]
+//TODO duke: screenshot bad res per crispy
 . In API Console, select the `get` method for the `flights/` resource.
 +
-image::select-get-method.png[]
+image::select-get-method.png["get method for the flights/ resource highlighted in the API Console"]
+//TODO duke: screenshot bad res per crispy
 . Select the *Try It* button.
 +
-image::select-try-it-button.png[]
+image::select-try-it-button.png["Try it button highlighted in the API console"]
+//TODO duke: screenshot bad res per crispy
 . Select the *destination* text box inside *Query Parameters* and verify that the three values you defined in your API specification show up.
 +
-image::select-query-params.png[]
+image::select-query-params.png["Values highlighted in the API console"]
+//TODO duke: screenshot bad res per crispy 
 . Select *Send*.
-. Verify that API Console returns the response you defined with the imported fragment.
+. Verify that API Console returns the response you defined with the imported fragment (`AmericanFlightsExample.raml`).
 +
-image::api-console-reponse.png[]
+image::api-console-reponse.png["A 200 OK response highlighted in the API console"]
++
+The logic for selecting specific destinations is not yet implemented. 
++
+Optionally, review your configured response examples when querying your mocked API endpoints.
 
-Additionally, you can review your configured response examples when querying your mocked API endpoints.
+. Proceed to xref:synchronize-with-design-center.adoc[]. 
++
+Use the integrated source control management (SCM) to upload your API specification to Design Center.
 
-== Next Step
 
-* xref:synchronize-with-design-center.adoc[Synchronize Changes with Design Center]. +
-Learn how to use the integrated source control management (SCM) to upload your API specification to Design Center, enabling other developers on your team to contribute to your API.
