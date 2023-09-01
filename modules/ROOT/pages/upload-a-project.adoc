@@ -37,9 +37,15 @@ Shareable JAR files are generated through the process described in xref:package-
 // include for this procedure
 include::partial$acb-open-packaged-sources.adoc[tags="load-sharable-jar"]
 
-See <<desktop-project-folder>>.
+[[desktop-project-package]]
+=== Import a Project Folder into the Desktop IDE
 
-[[desktop-project-folder]]
+Import a Mule project folder into the desktop IDE, and open the project in a VS Code workspace.
+
+// include for this procedure
+include::partial$acb-open-packaged-sources.adoc[tags="import-project-folder-desktop"]
+
+[[desktop-open-project-folder]]
 === Open a Project Workspace from the Desktop IDE
 
 Open the a project workspace for your application.
@@ -53,46 +59,8 @@ include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-dir"]
 
 The cloud IDE enables you to upload a project directory or JAR file into a workspace.
 
-* <<web-project-folder>>
 * <<web-project-package>>
-
-//WEB: PROJECT FOLDER TO WORKSPACE
-[[web-project-folder]]
-=== Import a Project Folder into a Cloud IDE Workspace
-
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
-+
-[source,command]
-----
-File: Open Folder...
-----
-+
-image::file-open-folder-command.png[]
-. Select your Anypoint Code Builder home directory:
-+
-image::select-home-directory.png[]
-. After Anypoint Code Builder loads your home directory, drag your project directory to your Explorer view:
-+
-image::drag-folder-explorer.png[]
-+
-If prompted, trust the authors of your file or directory:
-+
-image::trust-home-directory.png[]
-+
-Anypoint Code Builder displays an upload progress bar that you can click to expand.
-
-. To load the project into a workspace, open the _root_ directory for the imported project folder.
-+
-// see text for this variable defined under title
-{open-root}
-
-.. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
-+
-[source,command]
-----
-File: Open Folder...
-----
-.. Provide the path to the root directory of the project, and click *OK* to load the project root directory into the workspace.
+* <<web-project-folder>>
 
 
 //WEB: PACKAGED PROJECT TO WORKSPACE
@@ -136,12 +104,6 @@ image::upload-progress-expanded.png[]
 ----
 MuleSoft: Import a Mule Project
 ----
-+
-//TODO: cc: Do we need the following screenshot? I think the step is already self-explanatory without the screenshot. Asking with an eye towards reducing unnecessary screenshots. Also, we don't have screenshots for other steps that refer to the command palette.
-//image::import-a-project.png[]
-// .. Select *Mule Project Type*:
-// +
-// image::import-mule-project.png[]
 . Select the JAR file that you uploaded.
 +
 Anypoint Code Builder unpacks your application into a project folder.
@@ -154,6 +116,44 @@ Anypoint Code Builder unpacks your application into a project folder.
 +
 // see text for this variable defined under title
 {open-root}
+
+//WEB: PROJECT FOLDER TO WORKSPACE
+[[web-project-folder]]
+=== Import a Project Folder into a Cloud IDE Workspace
+
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+File: Open Folder...
+----
++
+image::file-open-folder-command.png[]
+. Select your Anypoint Code Builder home directory:
++
+image::select-home-directory.png[]
+. After Anypoint Code Builder loads your home directory, drag your project directory to your Explorer view:
++
+image::drag-folder-explorer.png[]
++
+If prompted, trust the authors of your file or directory:
++
+image::trust-home-directory.png[]
++
+Anypoint Code Builder displays an upload progress bar that you can click to expand.
+
+. To load the project into a workspace, open the _root_ directory for the imported project folder.
++
+// see text for this variable defined under title
+{open-root}
+
+.. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+File: Open Folder...
+----
+.. Provide the path to the root directory of the project, and click *OK* to load the project root directory into the workspace.
 
 
 [[use-dw-imported-project]]
