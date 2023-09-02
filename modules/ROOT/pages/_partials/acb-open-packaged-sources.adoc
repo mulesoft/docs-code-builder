@@ -1,36 +1,68 @@
+//tags are for upload-a-project.adoc
+
 //
 // tag::load-sharable-jar[]
 //variable used in multiple places on this page:
-
-To import a sharable JAR file in your desktop IDE:
-
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
 +
 [source,command]
 ----
-MuleSoft: Import a Project
+MuleSoft: Import a Mule Project
 ----
-. Select *Mule Project Type*:
-+
-image::import-mule-project.png[]
 . Navigate to the JAR file, and click *Select jar file to import*.
-. Navigate to a folder of your choice to unpack the JAR file, and click *Select a folder to work*. 
+. Navigate to a folder for the unpacked JAR file contents, and click *Select a folder to work* (desktop IDE) or *OK* (cloud IDE). 
 +
-The IDE unpacks the JAR file into that folder, which is the parent directory of the unpacked workspace.
-. To open the project workspace properly, navigate to the root directory for the unpacked source files. 
-
+The IDE unpacks the JAR file for your project into the selected folder, which becomes the parent folder for your Mule project folder.
 // end::load-sharable-jar[]
+
+//
+// Shared steps for loading the project
+// tag::load-project[]
+. Open a configuration XML for your project if the file does not open automatically, and launch the UI canvas by clicking the *Show Mule graphical mode* (vertical tree diagram) icon if the canvas does not open automatically. 
++
+image::show-mule-graphical-mode.png["Launch graphical UI with Show Mule graphical mode icon"]
+. To monitor progress as the project loads, open the output panel by pressing Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac), and select *Mule DX Server* from the drop-down menu in the output panel.
+// end::load-project[]
 //
 
 //
-// tag::open-workspace-dir[]
-:root-dir: This directory is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
+// note at the end of import procedures
+// tag::import-note[]
++
+In addition to loading the graphical UI canvas, the IDE also loads dependencies defined in the `pom.xml` for the project. Libraries load to the `target/repositories` directory within the project folder.
+// end::import-note[]
+//
+
+//
+// tag::import-project-folder-desktop[]
 //variable used in multiple places on this page:
-:open-root: If you do not open the root directory, the UI canvas for your project does not load correctly because Visual Studio Code does not recognize the directory as a workspace.
 
-[[open-directory]]
+To import a project folder to your desktop IDE:
+
+. In the desktop IDE, navigate to a location for your project folder, such as your home directory:
 
 .. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+File: Open Folder
+----
+.. Navigate to and open a parent folder for your project.
+. Drag your project directory to the Explorer. For example:
++
+image::drag-project-folder.png["Drag Project Folder to Explorer"]
+. Select *Copy Folder*.
++
+If you instead select *Add Folder to Workspace*, you can start over by selecting the project in the Explorer, right clicking, and then selecting *Remove Folder from Workspace*. After removing, drag and copy the project folder to the IDE without adding it to a workspace. 
+// end::import-project-folder-desktop[]
+//
+
+//
+// tag::open-workspace-root[]
+[[open-directory]]
+. Open the workspace at the project's _root_ directory: 
+
+.. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
 [source,command]
 ----
@@ -38,13 +70,8 @@ File: Open Folder...
 ----
 .. Navigate to the _root_ directory for your project. 
 +
-// see text for this variable defined under title
-{root-dir}
+VS Code treats the root as a workspace, which enables the IDE to load the UI canvas properly.
 +
-// see text for this variable defined under title
-{open-root}
-. Check that the application loads successfully in the IDE.
-
-// end::open-workspace-dir[]
+The root is the top-level folder that Anypoint Code Builder generates when you create a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
+// end::open-workspace-root[]
 //
-

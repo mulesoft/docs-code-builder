@@ -6,39 +6,61 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-The following tutorial walks you through the entire process of designing a RAML 1.0 API specification, publishing the API specification to Exchange, developing a basic integration, and implementing your API specification to use as an interface to handle requests to your API's logic.
+Use Anypoint Code Builder to create and implement an API specification that returns flight information from a MySQL database: 
 
-The tutorial enables you to create your first API that returns flight information from a MySQL database.
+. xref:tut-design-api-specification-from-scratch.adoc[]:
 
-== Tutorial Overview
+* Start the American Flights API specification. 
+* Add a RAML resource and methods.
+* Add query parameters and nested resources.
+. xref:tut-design-api-add-request-response-details.adoc[]:
 
-Follow the steps below to start creating your first API:
+* Add API fragments from Exchange for a data type and examples to the American Flights API specification. 
+* Create your own examples for the specification.
+* Add a custom message for a response.
+. xref:test-api-specification.adoc[] 
++
+Use the Mocking Service in the API Console to check the request and responses that you configured for American Flights API.
+. xref:synchronize-with-design-center.adoc[]:
++
+Use the built-in integrated source control management (SCM) to sync American Flights API with Anypoint Design Center (Design Center). The Design Center SCM is built on Git.
+. xref:publish-api-spec-to-exchange.adoc[]:
++
+Publish American Flights API specification to Exchange so that other team members can find and implement it.
+//develop example:
+. Create an integration application for the American Flights example: 
 
-. xref:design-api-specification-from-scratch.adoc[Create an API Specification]. +
-Learn the basics to create your first API specification.
-. xref:add-request-response-details.adoc[Add Request and Response Details]. +
-Build over your API specification detailing request and response examples. Learn how to import existing API fragments from Exchange to re-use and discover data types and examples.
-. xref:test-api-specification.adoc[Test an API Specification Using Mocking Service]. +
-Discover API Console and test the endpoints of the API that you designed using the mocking service embedded with Anypoint Code Builder.
-. xref:synchronize-with-design-center.adoc[Synchronize Changes with Design Center]. +
-Learn how to use the integrated source control management (SCM) to upload your API specification to Design Center, enabling other developers on your team to contribute to your API.
-. xref:publish-api-spec-to-exchange.adoc[Publish an API Specification to Exchange]. +
-Publish your API specification to Exchange as a new asset and make it discoverable to your entire team.
-. xref:create-basic-integration.adoc[Create a Basic Integration]. +
-Learn the basics to develop your first basic integration.
-. xref:connect-to-a-db.adoc[Connect to a Database]. +
-Import a connector from Exchange and configure it to connect to an existing database that returns real information about flights for your API.
-. xref:use-dataweave-to-transform-data.adoc[Use DataWeave to Transform Data]. +
-Learn the basics of DataWeave to transform the Database response to match your API specification examples.
-. xref:import-api-specification-from-exchange.adoc[Import an API From Exchange]. +
-Learn the basics of implementing an API and scaffolding flows for your endpoints.
-. xref:implement-api-interface-logic.adoc[Implement the API Interface Logic]. +
-Build over your API and define your flow's logic to handle requests to your implemented API back to your database integration.
-. xref:debug-add-logger-set-variables.adoc[Add Components to Help You Debug Your Application]. +
-Prepare to debug your Mule application by adding Logger and Set Variable components to better understand the behavior of your flows.
-. xref:debug-add-breakpoints.adoc[Add Breakpoints]. +
-Learn how to set up breakpoints to stop your Mule application at specific points during a debug session.
-. xref:run-a-debug-session.adoc[Run a Debug Session]. +
-Run your first debug session and inspect the message and variables at different points during your application's execution.
-. xref:deploy-mule-application.adoc[Deploy a Mule Application]. +
-Deploy your Mule application to Cloudhub and enable your entire team to send requests to your API and return actual flight information from a database.
+.. xref:create-xml-snippets.adoc[]:
++
+Define user snippets for the American Flights project. Snippets are reusable code patterns that you can insert from the IDE into the configuration XML of Mule applications.
+.. xref:create-basic-integration.adoc[]:
++
+Start by creating a basic integration for the American Flights example. This integration provides some of the logic for processing requests from the American Flights API.
+.. xref:connect-to-a-db.adoc[]:
+
+* Import the Database (Database Connector) from Exchange. 
+* Configure a database operation to connect to an external database from your Mule flow.
+.. xref:use-dataweave-to-transform-data.adoc[]:
++
+Use DataWeave to transform and match flight data to your API specification.
+//implement example:
+. xref:/implement-api-specification.adoc[]:
+
+* Import your American Flights API specification from Anypoint Exchange. 
+* Scaffold the specification into the American Flights project that you are developing.
+* Add logic to implement an endpoint in the API.
+//debug example:
+. xref:tut-debug-american-flights.adoc[]:
+
+* Prepare to debug your Mule application by adding Logger and Set Variable components to better understand the behavior of your flows.
+* Set up breakpoints to stop your Mule application at specific points during a debug session.
+* Run a debug session, and inspect the message and variables at different points during your application's execution.
+//deploy example:
+. xref:deploy-mule-application.adoc[Deploy a Mule Application]: 
+
+* Deploy your American Flights application to Cloudhub. 
+* Enable your team to send requests to your API and return flight information from a database.
+
+== See Also
+
+* xref:code-builder-usecases.adoc[]

@@ -1,5 +1,5 @@
 = Add Examples to the API Specification
-:page-aliases: tut-api-add-request-response-details.adoc
+:page-aliases: add-request-response-details.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -10,9 +10,7 @@ Add API fragments from Exchange for a data type and examples to the American Fli
 
 == Before You Begin
 
-If you haven't started the American Flight API specification, complete this procedure before attempting to add examples:
-
-xref:tut-api-design-api-specification-from-scratch.adoc[]
+Complete all the procedures in xref:tut-design-api-specification-from-scratch.adoc[].
 
 == Add Fragments from Exchange to Your Project
 
@@ -23,27 +21,29 @@ Add fragments to the project directory so that you can include them in your spec
 
 To add the fragments: 
 
-. In Anypoint Code Builder, open `american-flights-api.raml`.
+. In Anypoint Code Builder, open your American Flights API specification, `american-flights-api.raml`.
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
 [source,command]
 ----
 MuleSoft: Add fragment dependency from Exchange
 ----
-. Provide the name of the asset to add:
+. If prompted, log in to Anypoint Platform so that you can download an asset.
+. In the *Search for Asset* field, provide the name of the data type asset to add:
 +
 [source,command]
 ----
 Training: American Flight Data Type
 ----
-. Select the latest version of the asset.
+. Select the asset from the *Assets From Exchange* menu.
+. Select the latest version of the asset, such as *v1.0.1*.
 +
-When the process is complete, check for the `AmericanFlightDataType.raml` asset in your project's `/exchange_modules` directory. For example: 
+When the process is complete, check for the `AmericanFlightDataType.raml` asset in your project's `exchange_modules/` directory. For example: 
 +
 ----
 exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
 ----
-. From the Command Palette, add a fragment:
+. From the Command Palette, add another fragment:
 +
 [source,command]
 ----
@@ -57,7 +57,7 @@ Training: American Flights Example
 ----
 . Select the latest version of the *American Flights Example* asset.
 +
-When the process is complete, check for the `AmericanFlightsExample.raml` asset in your project's `/exchange_modules` directory. For example: 
+When the process is complete, check for the `AmericanFlightsExample.raml` asset in your project's `exchange_modules/` directory. For example: 
 +
 ----
 exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-example/1.0.1/AmericanFlightsExample.raml
@@ -109,6 +109,16 @@ types: //<1>
 --
 [calloutlist]
 .. Uses `!include` to add the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type
++
+Note that you can use built-in functionality to insert the `!include` directive and file path from the specification file. For example:
++
+[loweralpha]
+... After typing `AmericanFlight:&nbsp;`(with a space at the end), click Ctrl+Spacebar, start typing `!include`, and select `!include` from the drop-down menu in the RAML file. For example:
++
+image::tut-api-include-directive.png["Include directive in RAML drop-down menu"]
+... Follow the same process to add the example, selecting `exchange_modules` directory and progressing step-by-step to `AmericanFlightsDataType.raml`. For example:
++
+image::tut-api-include-path.png["Included path in RAML drop-down menu"]
 .. Sets the format of the body of the response to JSON (`application/json`) and configures the type of the response as an array of `AmericanFlight` objects (`AmericanFlight[]`)
 .. Adds the `AmericanFlightsExample.raml` example
 . Proceed to <<post-response-example>>.
@@ -124,7 +134,7 @@ image::add-new-folder.png[alt="New Folder option highlighted in the context menu
 . Right-click your `examples` folder, and create a new file named `AmericanFlightExample.raml`.
 +
 image::create-american-fligh-example-file.png[alt="AmericanFlightExample.raml file highlighted"]
-. Open the file, and add the following example:
+. In the open file, add this example:
 +
 [source,raml]
 --
@@ -246,8 +256,9 @@ value:
 --
 +
 To simulate a new flight record, this example does not provide an `ID` parameter.
-. In the `american-flights-api.raml` file, add the example as a response to the `post` method, and include a custom message:
+. In the `american-flights-api.raml` file, add the example as a response to the `post` method, and include a custom message.
 +
+.Notice the `!include` directive at number 5:
 [source,RAML]
 ----
 #%RAML 1.0

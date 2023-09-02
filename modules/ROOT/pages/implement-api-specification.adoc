@@ -1,4 +1,4 @@
-= Implement an API Specification
+= Implement the American Flights API Specification
 :page-aliases: help-overview-implement.adoc, implement-an-api-specification.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
@@ -6,8 +6,204 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-You can use Anypoint Code Builder to implement a RAML or OAS API specification. Implementing an API specification means that you can import the specification as a dependency, and create a Mule application that adds logic to each endpoint.
+Import your American Flights API specification from Anypoint Exchange. Scaffold the specification into the American Flights project that you are developing, and add the logic to implement an endpoint in the API.
 
-The following section teaches you how to import your API specification from Exchange, scaffold flows for your API endpoints, and define the logic for each flow of your Mule application.
+== Before You Begin
 
-Start by xref:import-api-specification-from-exchange.adoc[Importing Your Flights API From Exchange].
+. xref:design-api-specification.adoc[]: Complete all tasks from creating to publishing the specification to Anypoint Exchange. 
+. xref:develop-integration.adoc[]: Complete all tasks from creating user snippets to transforming response data with DataWeave.
+
+== Import and Scaffold Your American Flights API Specification
+
+Import your American Flights API specification from Anypoint Exchange, and scaffold the specification into an interface for your American Flights integration project.
+
+. In Anypoint Code Builder, open your integration, `american-ws-anypoint-code-builder`.
++
+For information about this application, see xref:create-basic-integration.adoc[].
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
++
+[source,command]
+----
+MuleSoft: Import Asset from Exchange
+----
+. Select *Rest API*. 
++
+image::rest-api-asset-type.png["Rest API option highlighted after selecting MuleSoft: Import Asset from Exchange"]
+. If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code. 
+. Type the name of your American Flights API specification. For example:
++
+[source,spec name]
+----
+American Flights API
+----
++
+For information about this specification, see xref:design-api-specification-from-scratch.adoc[].
+. Wait for the IDE to load a list of matches to the name: 
++
+image::select-api-asset-from-exchange.png["American Flights API asset is highlighted"]
+. When prompted for a version, select the version of the API to import, such as `_1.0.0_`.
+. Select *Yes* when prompted to scaffold the API dependency.
++
+This step adds the API specification as a dependency in your project's `pom.xml` file and creates a new configuration XML file, such as `american-flights-api.xml`:
++
+image::scafolded-mule-config-file.png["American-flights.xml file highlighted in the package explorer section"]
+
+== Tour the Interface File
+
+Examine the scaffolded flows and error handlers for your interface in the UI canvas and configuration XML.
+
+image::scafolded-flow-canvas.png["The main flow is highlighted"]
+
+. From the *EXPLORER* menu, open the configuration file for your interface, `american-flight-api.xml`.
+. Use the *Flow List* panel to navigate through flows:
++
+image::outline-list-select-flow.png["American-flights-api-main flow highlighted"]
+
+.. Expand the *Flow List* panel.
+.. Select a flow from the list.
+.. Click the flow in the UI canvas to highlight the flow in the configuration XML.
+. In the configuration XML, locate the flows created for the endpoints in your API specification:
+
+* `get:\flights`
++
+[source,xml]
+----
+<flow name="get:\flights:american-flight-api-config">
+</flow>
+----
+* `post:\flight`
++
+[source,xml]
+----
+<flow name="post:\flights:application\json:american-flight-api-config">
+</flow>
+----
+* `get:\flights{ID}`
++
+[source,xml,linenums]
+----
+<flow name="get:\flights\(ID):application\json:american-flight-api-config">
+</flow>
+----
+. Notice the automatically generated Error Handler components. For example: 
++
+//TODO: WE SHOULD SHOW HOW TO DO SOME BASIC ERROR HANDLING...
++
+[source,xml]
+----
+<apikit:router config-ref="american-flights-api-config" />
+<error-handler>
+    <on-error-propagate type="APIKIT:BAD_REQUEST">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_FOUND">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+
+    </on-error-propagate>
+    <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+
+    </on-error-propagate>
+</error-handler>
+----
+
+. Proceed to <<rename>>.
+
+[[rename]]
+== Name Your Interface and Implementation Files
+
+Provide descriptive names for the interface and implementation files in your American Flights project. The interface receives all incoming requests to your application. The scaffolded flows in the interface validate and route requests. The implementation provides the backend logic for calls to the interface.
+
+image::api-interface-rename.png["Rename option highlighted the context menu of american-flight-api-acb.xml file"]
+
+. Rename `american-flight-api-acb.xml` to `interface.xml` by right-clicking the file name, selecting *Rename*, and providing the new name. 
+. Rename `american-ws-anypoint-code-builder.xml` to `implementation.xml`.
+. Proceed to <<endpoint>>.
+
+[[endpoint]]
+== Configure an Endpoint through the Interface 
+
+To receive HTTP requests through the interface, remove the HTTP listener from `implementation.xml`, and in your interface file (`interface.xml`), add a Flow Ref component (`<flow-ref/>`) to the `getFlights` flow in your implementation.
+
+. Open `implementation.xml`.
++ 
+image::get-flights-select-listener.png["HTTP listener highlighted in the implementation.xml file"]
+. Delete the *HTTP /flights* listener XML from the configuration XML:
++
+[source,xml]
+--
+<http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+--
++
+.Click for the resulting flow.
+[%collapsible]
+====
+[source,xml]
+--
+<flow name="getFlights">
+    <db:select doc:name="Query Flights" doc:id="pvuqsc" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
+
+    <ee:transform doc:name="Transform Message" doc:id="uniqueId" >
+        <ee:message >
+            <ee:set-payload >
+                <![CDATA[
+                %dw 2.0
+                output application/json
+                ---
+                payload map ( payload01 , indexOfPayload01 ) -> {
+                  ID: payload01.ID,
+                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  price: payload01.price default 0,
+                  departureDate: payload01.takeOffDate as String default "",
+                  origin: payload01.fromAirport default "",
+                  destination: payload01.toAirport default "",
+                  emptySeats: payload01.seatsAvailable default 0,
+                  plane: {
+                    "type": payload01.planeType default "",
+                    totalSeats: payload01.totalSeats default 0
+                  }
+                }
+                ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+
+</flow>
+--
+====
+. In Anypoint Code Builder, open your `interface.xml` file.
+. Locate the `get:\flights:american-flights-api-config` flow: 
++
+[source,xml]
+--
+<flow name="get:\flights:american-flights-api-config">
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+--
+. Above the `<logger/>` element in the flow, add a Flow Reference component (`<flow-ref/>`) that references the flow `getFlights` in the implementation:
++
+[source,xml]
+--
+<flow name="get:\flights:american-flights-api-config">
+    <flow-ref doc:name="getFlightsRef" name="getFlights"/>
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+--
+. Optional: Trigger a flow through your interface, and process the request with your implementation.
++
+For guidance, see xref:ping-locally-deployed-app.adoc[].
+
+== Next Step
+
+xref:debug-a-mule-application.adoc[Debug a Mule Application]
