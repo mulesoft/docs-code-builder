@@ -1,0 +1,313 @@
+//
+//tag::component-title[]
+
+= Parallel For Each (<parallel-foreach/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Process a collection of messages by splitting the collection into parts that are simultaneously processed.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+After processing all messages, the component aggregates the results following the same order they were in before the split, and then the flow continues.
+
+Parallel For Each buffers all processing routes' results in a list to return it after the scope finishes processing, which can cause out-of-memory errors when processing a large number of entries. To process large payloads, use Batch Processing instead.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<parallel-foreach 
+  doc:name="Parallel foreach" 
+  doc:id="tbfiiz" 
+  collection="#[payload]" 
+  timeout=30000
+  maxConcurrency=15 />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[src,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<parallel-foreach/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `collection` 
+| An expression that returns a collection. Defaults to `#[payload]`.
+
+| `timeout` 
+| Specifies the timeout in milliseconds for each parallel route.
+
+| `maxConcurrency`
+| Specifies the maximum level of parallelism for the router to use.
++
+By default, all routes run in parallel.
+
+| `target`
+| Specifies a variable to use for storing the processed payload. By default, the output is saved in the flow’s payload.
++
+By default, Parallel For Each saves the output in the flow’s payload.
+
+| `targetValue`
+| Specifies an expression to evaluate against the operation’s output value. Parallel For Each stores the outcome of this expression in the `target` variable. 
++
+By default, this is the same as the operation’s output value.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+//end::component-examples-title[]
+
+//tag::component-examples-intro[]
+
+The following examples show how to use Parallel For each to append a string to every element in a collection and how modifying variables inside the scope does not affect the values after the execution. 
+//end::component-examples-intro[]
+
+
+
+
+//tag::component-xml-ex1[]
+[[example1]]
+
+=== Example: Appending Values
+The following example appends the string `"-result"` to every element in the collection:
+
+[source,xml]
+----
+<flow name="myFlow">
+
+  <parallel-foreach collection="#[['apple', 'banana', 'orange']]">
+      <set-payload value="#[payload ++ '-result']"/>
+  </parallel-foreach>
+
+</flow>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+=== Example: Modifying Variables
+
+The following example demonstrates that changes to existing variables inside the Parallel For Each scope are temporary and do not persist after the execution finishes:
+
+[source,xml]
+----
+<flow name="myFlow">
+
+  <set-variable variableName="var1" value="var1"/>
+  <set-variable variableName="var2" value="var2"/>
+  <parallel-foreach collection="#[['apple', 'banana', 'orange']]">
+      <choice>
+          <when expression="#[payload == 'apple']">
+              <set-variable variableName="var2" value="newValue"/>
+              <set-variable variableName="var3" value="appleVal"/>
+          </when>
+          <when expression="#[payload == 'banana']">
+              <set-variable variableName="var3" value="bananaVal"/>
+          </when>
+          <otherwise>
+              <set-variable variableName="var3" value="otherVal"/>
+              <set-variable variableName="var4" value="val4"/>
+          </otherwise>
+      </choice>
+  </parallel-foreach>
+
+</flow>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+The example produces the following output: 
+
+[source,json]
+----
+{
+      var1: "var1", 
+      var2: "var2"
+}
+----
+
+Every execution of the Parallel For Each scope starts with the same variables and values as before the execution of the block.
+
+New variables or modifications of already existing variables while processing one element are not visible while processing another element. All of those variable changes are not available outside the Parallel For Each scope. The set of variables (and their values) after the execution of the Parallel For Each Scope remains the same as before the execution.
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+Because the scope processes every route in parallel, if an error occurs in one route, processing continues in all of the other routes until all finish processing. After that, Parallel For Each aggregates all results (and any errors) and processes them by the error handler, as shown in the following example:
+
+[source,xml,linenums]
+----
+<flow name="myFlow">
+
+  <parallel-foreach collection="#[['banana', 'apple']]">
+      <choice>
+          <when expression="#[payload == 'banana']">
+              <!-- Processor that throws error -->
+          </when>
+          <otherwise>
+              <set-payload value="#[payload ++ '-result']"/>
+          </otherwise>
+      </choice>
+  </parallel-foreach>
+  <error-handler>
+      <on-error-continue type="COMPOSITE_ROUTING">
+          <!-- This will have the error thrown by the previous processor -->
+          <logger message="#[error.errorMessage.payload.failures['0']]"/>
+          <!-- This will be a null value -->
+          <logger message="#[error.errorMessage.payload.failures['1']]"/>
+          <!-- This will be a null value -->
+          <logger message="#[error.errorMessage.payload.results['0']]"/>
+          <!-- This will have the result of this (correctly executed) route -->
+          <logger message="#[error.errorMessage.payload.results['1']]"/>
+      </on-error-continue>
+  </error-handler>
+
+</flow>
+----
+
+=== Throws
+
+* `MULE:COMPOSITE_ROUTING`
+
+//end::component-error-handling[]
+//
+
+//tag::parallelforeach-vs-foreach[]
+
+== Differences between For Each and Parallel For Each Scopes
+
+Both For Each and Parallel For Each split the defined collection, and the
+components within the scope process each element in the collection. Also, in
+both cases, each route runs with the same initial context. The difference
+between these two scopes are:
+
+* For Each works sequentially, while the Parallel For Each processes in parallel.
+This difference affects _error handling_:
++
+Because of the processing differences, the execution of For Each execution is
+interrupted when an error is raised (and the Error Handler is invoked), while
+Parallel For Each processes every route before invoking the Error Handler with a
+`MULE:COMPOSITE_ROUTE` error type.
++
+* For Each does not modify the payload, while the Parallel For Each outputs a
+collection of the output messages from each iteration.
+
+//end::parallelforeach-vs-foreach[]
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:acb-component-for-each.adoc[For Each Scope].
+* xref:mule-runtime::transaction-management.adoc#tx_scopes_routers[How Transactions Affect Scopes and Routers]
+
+//end::see-also[]
