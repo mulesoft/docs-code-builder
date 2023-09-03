@@ -106,9 +106,9 @@ Assume that For Each receives its input from a scheduled HTTP request for this h
 
 [source,xml]
 ----
-<!-- 1: For Each -->
-<foreach doc:name="For Each"  collection="#[payload]">
-  <!-- 2. Transform Message -->
+<!--1-->
+<foreach doc:name="For Each" collection="#[payload]">
+  <!--2-->
   <ee:transform doc:name="Transform Message" >
     <ee:message >
       <ee:set-payload ><![CDATA[%dw 2.0
@@ -117,15 +117,18 @@ output application/json
 payload.company]]></ee:set-payload>
     </ee:message>
   </ee:transform>
-  <!-- 3. File Write -->
+  <!--3-->
   <file:write doc:name="Write"
     path='#[(payload.name replace " " with("-") ++ "-") ++ (now() as String {format: "uuuuMMddHHmmss"}) ++ ".json"]'
     config-ref="File_Config" mode="CREATE_NEW"/>
-  <!-- 4: Logger -->
+  <!--4-->
   <logger level="INFO" doc:name="Logger" message="#[payload]"/>
 </foreach>
 ----
 
+For Each processes the input array: 
+
+[calloutlist]
 . For Each (`<foreach />`) collects the entire input payload and splits it into the ten top-level JSON objects within it, such as this one:
 +
 [source,json]
