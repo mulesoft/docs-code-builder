@@ -58,7 +58,7 @@ This component supports the following XML structure:
 //
 //
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
-//tag::component-xml-root[]
+//tag::component-xml-attributes-root[]
 
 [%header,cols="1,3a"]
 |===
@@ -84,7 +84,7 @@ This component supports the following XML structure:
 | Configurable name of the variable that stores the complete, un-split Mule message from the original input to For Each. The message contains the payload and any attributes but does not contain any variables (`vars`), which are part of the Mule event that contains the Mule message. Within For Each, you can gain access to the value of the payload of the message with `vars.rootMessage.payload` and to attributes of the message with `vars.rootMessage.attributes`. For Each consumes this variable, so you can access it only from within the scope. Outside For Each, the variable returns `null`. Defaults to `rootMessage`.
 
 |===
-//end::component-xml-root[]
+//end::component-xml-attributes-root[]
 //
 
 //SECTION: EXAMPLES
