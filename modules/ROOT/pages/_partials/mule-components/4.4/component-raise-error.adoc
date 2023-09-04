@@ -150,7 +150,7 @@ The following examples show how to raise a custom error when a user provides an 
 The following example of a driving lessons platform checks that the user is over 16 years old. The flow raises a custom `PRECONDITIONS:INCORRECT_AGE` error when the user enters an age lower than 16 years.
 
 * The Choice router components adds conditional processing to the flow.
-* If the age parameter sent in the request is lower than 16 `+http://localhost:8081/test?age=15+`, the Raise Error component raises the error type `PRECONDITIONS:INCORRECT_AGE` and description `Minimum age of 16 required to drive`.
+* If the age parameter sent in the request is lower than 16 `+http://localhost:8081/test?age=15+`, the Raise Error component raises the error type `PRECONDITIONS:INCORRECT_AGE` with the description `Minimum age of 16 required to drive`.
 * Then, an On-Error Continue component matches the type of the error `PRECONDITIONS:INCORRECT_AGE` and executes the Logger component inside its scope. The Logger component logs the error message `Minimum age of 16 required to drive`.
 * If the age parameter is greater than 16 in the request `+http://localhost:8081/test?age=17+`, a Logger component returns the default message `User age above 16 years. Allowed to drive`.
 * If no age parameter is passed in the request `+http://localhost:8081/test+` the choice component automatically raises a `MULE:EXPRESSION` error when trying to evaluate the expression `#[message.attributes.queryParams.age &lt; 16]` because no age parameter was provided in the request, so its value is null.
