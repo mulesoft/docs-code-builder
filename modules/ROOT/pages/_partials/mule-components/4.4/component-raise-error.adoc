@@ -195,7 +195,7 @@ The following example of a driving lessons platform checks that the user is over
 
 === Example: Raising an Error After Comparing Values
 
-The following example makes a request to an API (+https://unsecurebank.com/balance+) and stores the returned account balance in the _balance_ variable, then compares the variable with `payload.amount` to determine if the operation is possible. The Choice router produces an `ACCOUNT:INSUFFICIENT_FUNDS` error when a transfer amount surpasses the available balance, preventing the transfer from taking place. Additionally, it generates a dynamic description by providing an expression with failure details.
+The following example makes a request to an API (+https://unsecurebank.com/balance+) and stores the returned account balance in the _balance_ variable, then compares the variable with `payload.amount` to determine if the operation is possible. The Choice router produces an `ACCOUNT:INSUFFICIENT_FUNDS` error when a transfer amount surpasses the available balance, preventing the transfer from taking place. The description dynamically provides failure details.
 
 [source,xml]
 ----
