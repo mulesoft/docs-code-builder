@@ -1,41 +1,52 @@
 = Implement a GraphQL API
 
+//implement-a-graphql-api
+
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-This walkthrough enables you to create a Mule application from scratch that implements a GraphQL API that you published to Exchange.
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+This tutorial guides you through creating a Mule application from scratch, implementing a GraphQL API that you publish to Exchange.
 
 Before you begin, ensure that you:
 
 * Set up your MuleSoft environment. +
 See xref:setup.adoc[] for more information.
-* Downloaded the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
+* Download the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
 
 == Publish the GraphQL API to Exchange
 
-You can only implement a GraphQL API that exists in Exchange. Additionally, you can only add a GraphQL API by manually publishing it to Exchange:
+To implement a GraphQL API, the API must first be manually published to Exchange:
 
 . In Anypoint Platform, navigate to *Exchange*.
-. Select *Publish a new asset*.
-. Under *Name*, type _books-api_.
-. Under *Asset types*, select *GraphQL API*.
-. Under *Method*, select *Upload a GraphQL API Schema*.
+. Select *Publish new asset*.
+. For *Name*, type _books-api_.
+. For *Asset types*, select *GraphQL API*.
+. For *Method*, select *Upload a GraphQL API Schema*.
 +
 image::upload-graphql-api-exchange-method-select.png[]
 +
-. Under *File upload*, select *Choose file* and browse your `books-api.graphql` schema file.
-. Under *Lifecycle*, select *Stable*.
+. For *File upload*, select *Choose file* and browse for your `books-api.graphql` schema file.
+. For *Lifecycle state*, select *Stable*.
 . Select *Publish*.
 
 == Implement the GraphQL API
 
-. Navigate to Anypoint Code Builder.
-. In the Anypoint Code Builder central page, select *Launch webIDE*.
-. In the web IDE instance, navigate to your Anypoint Code Builder view:
+// . Navigate to Anypoint Code Builder.
+// . In the Anypoint Code Builder central page, select *Launch webIDE*.
+. In Anypoint Code Builder, open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and type _MuleSoft: Implement an API Specification_.
 +
-image::anypoint-code-builder-view.png[]
-. Select *Implement an API*.
+. Select the command.
 +
-image::implement-api-option-mat.png[]
+// . In the cloud IDE instance, navigate to your Anypoint Code Builder view:
+// +
+//TODO: cc: I wonder if we need this screenshot?
+// image::anypoint-code-builder-view.png[]
+// . Select *Implement an API*.
+// +
+//TODO: cc: I wonder if we need this screenshot?
+// image::implement-api-option-mat.png[]
 . Configure your project using the following values:
 +
 image::implement-api-configure-in-task.png[]
@@ -44,15 +55,17 @@ image::implement-api-configure-in-task.png[]
 .. *Project Name*: _books-implementation_.
 .. *Project Location*: select *Browse*, and then select your home directory.
 +
-image::select-home-directory.png[]
+//TODO: cc: I wonder if we need this screenshot? The step seems self-explantory without one. Plus, the screenshot differs from the desktop IDE UI.
+// image::select-home-directory.png[]
 +
 .. Search for an API specification published in Exchange to implement. +
-Start typing _books_ and hit `enter` to get a list of possible results. Click *Add asset* next to the *books-api.graphql* asset.
+Start typing _books_ and press Return to display a list of possible results. Click *Add Asset* next to the *books-api* asset.
 +
 image::select-books-graphql-api.png[]
 +
 . Select *Create Project*.
 
+// TODO: cc: Desktop IDE prompted me to save a `.code-workspace` file here. Is this correct behavior?
 Anypoint Code Builder scaffolds your GraphQL API and creates an empty flow for each type in your Books API GraphQL schema.
 
 
@@ -105,63 +118,3 @@ Anypoint Code Builder also creates a `<graphql-router:data-fetcher>` as sources 
 
 * xref:test-graphql-first-implementation.adoc[Test Your GraphQL Implementation]. +
 Run your application on Anypoint Code Builder and post GraphQL queries to your endpoint.
-
-// implement-a-graphql-api-specification
-////
-
-Anypoint Code Builder enables you to implement GraphQL API specifications.
-
-== Before You Begin
-
-Before getting started, ensure that your API specification is published on Exchange.
-
-You can only publish your GraphQL API specification by publishing a new asset on Exchange:
-
-. In Anypoint Platform, navigate to *Exchange*.
-. Select *Publish a new asset*.
-. Under *Name*, enter a name for your API asset.
-. Under *Asset types*, select *GraphQL API*.
-. Under *Method*, select *Upload a GraphQL API Schema*.
-+
-image::upload-graphql-api-exchange-method-select.png[]
-. Under *File upload*, select *Choose file* and browse your GraphQL schema file.
-. Under *Lifecycle*, select the lifecycle status of your API specification.
-. Select *Publish*.
-
-
-== Implement an API Specification
-
-. In your web IDE instance, navigate to your Anypoint Code Builder view:
-+
-image::anypoint-code-builder-view.png[]
-. Select *Implement an API*.
-+
-image::implement-api-option-mat.png[]
-. Configure your project using the following values:
-+
-image::implement-api-configure-1.png[]
-+
-[calloutlist]
-.. *Project Name*: Type a name for your project.
-.. *Project Location*: Select *Browse*, browse through your home directory, and click *OK* to select a specific location for your project.
-.. Search for an API specification published in Exchange to implement. +
-Start typing the name of the API specification that you want to implement and hit `enter` to get a list of possible results. Click *Add asset* to select the API specification that you want:
-+
-image::implement-api-add-asset-graphql.png[]
-.. *Show filters*: Enables you to filter search results. See xref:filter-search-results.adoc[] for more information.
-+
-[CAUTION]
---
-To retrieve private assets from your organization, ensure that you are logged in to Anypoint Platform by verifying that your username shows in the bottom right corner of Anypoint Code Builder:
-
-image::username-status-location.png[]
---
-
-Anypoint Code Builder creates the necessary flows for each endpoint on your API specification endpoints.
-
-[NOTE]
---
-Because GraphQL schemas don't allow examples, Anypoint Code Builder creates empty flows when scaffolding a project based on a GraphQL API.
---
-
-////
