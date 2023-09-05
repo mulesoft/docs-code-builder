@@ -1,4 +1,4 @@
-= Implement the American Flights API Specification
+= Implementing API Specifications
 
 // implement-api-specification
 
@@ -7,21 +7,25 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Import your American Flights API specification from Anypoint Exchange. Scaffold the specification into the American Flights project that you are developing, and add the logic to implement an endpoint in the API.
+Import your API specification from Anypoint Exchange.
+Scaffold the specification into the Mule project that you are developing, and add the logic to implement an endpoint in the API.
 
 == Before You Begin
 
 . xref:design-api-specification.adoc[]: Complete all tasks from creating to publishing the specification to Anypoint Exchange. 
 . xref:develop-integration.adoc[]: Complete all tasks from creating user snippets to transforming response data with DataWeave.
 
-== Import and Scaffold Your American Flights API Specification
+To open the Command Palette:
 
-Import your American Flights API specification from Anypoint Exchange, and scaffold the specification into an interface for your American Flights integration project.
+* Windows: Ctrl+Shift+p
+* Mac: Cmd+Shift+p
 
-. In Anypoint Code Builder, open your integration, `american-ws-anypoint-code-builder`.
-+
-For information about this application, see xref:create-basic-integration.adoc[].
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
+== Import and Scaffold Your API Specification
+
+. In Anypoint Code Builder, open an integration.
+// +
+// For information about this application, see xref:create-basic-integration.adoc[].
+. In the Command Palette, provide this command:
 +
 [source,command]
 ----
@@ -31,14 +35,14 @@ MuleSoft: Import Asset from Exchange
 +
 image::rest-api-asset-type.png["Rest API option highlighted after selecting MuleSoft: Import Asset from Exchange"]
 . If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code. 
-. Type the name of your American Flights API specification. For example:
+. Type the name of your API specification. For example:
 +
 [source,spec name]
 ----
 American Flights API
 ----
-+
-For information about this specification, see xref:design-api-specification-from-scratch.adoc[].
+// +
+// For information about this specification, see xref:design-api-specification-from-scratch.adoc[].
 . Wait for the IDE to load a list of matches to the name: 
 +
 image::select-api-asset-from-exchange.png["American Flights API asset is highlighted"]
@@ -115,12 +119,14 @@ image::outline-list-select-flow.png["American-flights-api-main flow highlighted"
 </error-handler>
 ----
 
-. Proceed to <<rename>>.
-
 [[rename]]
 == Name Your Interface and Implementation Files
 
-Provide descriptive names for the interface and implementation files in your American Flights project. The interface receives all incoming requests to your application. The scaffolded flows in the interface validate and route requests. The implementation provides the backend logic for calls to the interface.
+Provide descriptive names for the interface and implementation files in your project.
+
+* Interface: receives all incoming requests to your application.
+* Scaffolded flows in the interface: validate and route requests.
+* Implementation: provides the backend logic for calls to the interface.
 
 image::api-interface-rename.png["Rename option highlighted the context menu of american-flight-api-acb.xml file"]
 

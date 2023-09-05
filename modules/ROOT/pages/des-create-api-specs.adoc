@@ -3,7 +3,20 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Create a basic RAML API specification using Anypoint Code Builder.
+Use Anypoint Code Builder to create, test, synchronize with Design Center, and publish a basic RAML API specification to Exchange.
+
+To build, test, and synchronize, and publish the specification:
+
+. <<design-new-api-spec>>
+. <<add-resources-and-methods>>
+. <<add-query-params-nested-resources>>
+. xref:tut-design-api-add-request-response-details.adoc[]
+. xref:tut-design-api-test-specification.adoc[]
+. xref:tut-design-api-synchronize-with-design-center.adoc[]
+. xref:tut-design-api-publish-api-spec-to-exchange.adoc[]
+
+After creating, testing, synchronizing, and publishing the American Flights API specification, you can xref:implement-api-specification.adoc[implement] the specification within an xref:develop-integration.adoc[integration].
+
 
 == Before You Begin
 
@@ -13,19 +26,25 @@ Create a basic RAML API specification using Anypoint Code Builder.
 API specifications belong to a business group.
 * Review the xref:user-guide.adoc[Tutorial] for tips on autocomplete.
 
+[[design-new-api-spec]]
 == Design a New API Specification
 
 To design a new API specification:
 
-. In the activity bar of the IDE, click the *Anypoint Code Builder* (MuleSoft) to navigate to Anypoint Code Builder.
+. In the activity bar of the IDE, click the *Anypoint Code Builder* (MuleSoft) icon to navigate to Anypoint Code Builder.
 . From *Quick Actions*, click *Design an API*.
 . Complete the *API Specification* form and click *Create Project*.
 +
-*Business Group* is the business group in which you want to create your API specification.
-NOTE: You can't change business groups after you create your API specification.
-. In the In the `project-name.raml` file, add your first resource.
+NOTE: The business group you select is permanent and cannot change after you create your API specification.
 +
-For example:
+If prompted, trust the authors of the files in the folder.
++
+When the project is ready for editing, the API project and specification open in the IDE.
+
+[[add-resources-and-methods]]
+== Add Resources and Methods to Your Specification
+
+. In the `<project-name>.raml` file, add your first resource. For example:
 +
 [source,raml,linenums]
 --
@@ -35,9 +54,7 @@ title: My New API
 /flights:
 --
 
-. Add methods to the resource. 
-+
-For example:
+. Add methods to the resource. For example:
 +
 [source,raml,linenums]
 --
@@ -46,10 +63,10 @@ For example:
   post:
 --
 
-. Add query parameters for your resources:
-+
-For example
-+
+== Add Query Parameters for Your Resources
+
+In the `<project-name>.raml` file, add query parameters to a method. For example:
+
 [source,raml,linenums]
 --
 /flights:
@@ -62,10 +79,11 @@ For example
           - LAX
           - CLE
 --
-. Add nested resources and methods.
-+
-For example:
-+
+
+== Add Nested Resources and Methods
+
+In the `<project-name>.raml` file, add nested resources and methods. For example:
+
 [source,raml,linenums]
 --
   post:
@@ -73,6 +91,9 @@ For example:
   /{ID}:
     get:
 --
-. Click the *API Console* icon to display your specification in the console.
-+
+
+== Review Your Specification in the API Console
+
+Click the *API Console* icon to display your specification in the console.
+
 image::sub-methods-api-console.png["API Console with methods, query parameters, and nested resources"]
