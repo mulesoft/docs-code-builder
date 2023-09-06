@@ -21,10 +21,10 @@ Generates a Mule error, as if a failure had occurred.
 
 You can customize the error's description and type. Use this component to raise:
 
-* Core runtime errors, such as `MULE:SECURITY`, `MULE:CONNECTIVITY`, etc.
+* Core runtime errors, such as `MULE:SECURITY` and `MULE:CONNECTIVITY`.
 * Custom error types.
 
-You cannot raise an error from another connector or module like `FILE:FILE_NOT_FOUND`, `JSON:INVALID_SCHEMA`. You cannot use a connector's existing namespace.
+You cannot raise an error from another connector or module, such as `FILE:FILE_NOT_FOUND` or `JSON:INVALID_SCHEMA`. You cannot use a connector's existing namespace.
 //end::component-long-description[]
 //
 
@@ -147,14 +147,7 @@ The following examples show how to raise a custom error when a user provides an 
 
 === Example: Raising an Error After an Invalid User Input 
 
-The following example of a driving lessons platform checks that the user is over 16 years old to drive. The flow raises a custom `PRECONDITIONS:INCORRECT_AGE` error when the user enters an age lower than 16 years.
-
-* The Choice router components adds conditional processing to the flow.
-* If the age parameter sent in the request is lower than 16 `+http://localhost:8081/test?age=15+`, the Raise Error component raises the error type `PRECONDITIONS:INCORRECT_AGE` and description `Minimum age of 16 required to drive`.
-* Then, an On-Error Continue component matches the type of the error `PRECONDITIONS:INCORRECT_AGE` and executes the Logger component inside its scope. The Logger component logs the error message `Minimum age of 16 required to drive`.
-* If the age parameter is greater than 16 in the request `+http://localhost:8081/test?age=17+`, a Logger component returns the default message `User age above 16 years. Allowed to drive`.
-* If no age parameter is passed in the request `+http://localhost:8081/test+` the choice component automatically raises a `MULE:EXPRESSION` error when trying to evaluate the expression `#[message.attributes.queryParams.age &lt; 16]` because no age parameter was provided in the request, so its value is null.
-* Then, an On-Error Continue component matches the type of the error `MULE:EXPRESSION` and executes the Logger component inside its scope. The Logger component returns the message `The parameter age is missing or invalid`.
+The following example of a driving lessons platform checks that the user is over 16 years old. The flow raises a custom `PRECONDITIONS:INCORRECT_AGE` error when the user enters an age lower than 16 years.
 
 [source,xml]
 ----
@@ -163,24 +156,32 @@ The following example of a driving lessons platform checks that the user is over
 </http:listener-config>
 <flow name="raise-error-example-flow">
   <http:listener config-ref="HTTP_Listener_config" path="/test"/>
-  <choice>
-    <when expression="#[message.attributes.queryParams.age &lt; 16]">
+  <choice> <!--1-->
+    <when expression="#[message.attributes.queryParams.age &lt; 16]"> <!--2-->
       <raise-error type="PRECONDITIONS:INCORRECT_AGE" description="Minimum age of 16 required to drive" />
     </when>
-    <otherwise >
+    <otherwise > <!--3-->
       <logger level="INFO" message="User age above 16 years. Allowed to drive"/>
     </otherwise>
   </choice>
   <error-handler >
-    <on-error-continue enableNotifications="true" logException="true" type="PRECONDITIONS:INCORRECT_AGE">
+    <on-error-continue enableNotifications="true" logException="true" type="PRECONDITIONS:INCORRECT_AGE"> <!--4-->
       <logger level="INFO" message="Minimum age to drive is 16 years old"/>
     </on-error-continue>
-    <on-error-continue enableNotifications="true" logException="true"  type="MULE:EXPRESSION">
+    <on-error-continue enableNotifications="true" logException="true"  type="MULE:EXPRESSION"> <!--5-->
       <logger level="INFO" message="The parameter age is missing or invalid"/>
     </on-error-continue>
   </error-handler>
 </flow>
 ----
+[calloutlist]
+.. The Choice router components adds conditional processing to the flow.
+.. If the age parameter sent in the request is lower than 16 (`+http://localhost:8081/test?age=15+`), the Raise Error component raises the error type `PRECONDITIONS:INCORRECT_AGE` with the description `Minimum age of 16 required to drive`.
+.. If the age parameter is greater than 16 in the request (`+http://localhost:8081/test?age=17+`), a Logger component returns the default message `User age above 16 years. Allowed to drive`.
+.. An On-Error Continue component matches the type of the error `PRECONDITIONS:INCORRECT_AGE` and executes the Logger component inside its scope. The Logger component logs the error message `Minimum age of 16 required to drive`.
+.. If no age parameter is passed in the request (`+http://localhost:8081/test+`) the choice component automatically raises a `MULE:EXPRESSION` error when trying to evaluate the expression `#[message.attributes.queryParams.age &lt; 16]`. No age parameter was provided in the request, so its value is null. 
++
+Then, an On-Error Continue component matches the type of the error `MULE:EXPRESSION` and executes the Logger component inside its scope. The Logger component returns the message `The parameter age is missing or invalid`.
 
 //OPTIONAL: SHOW OUTPUT IF HELPFUL
 //The example produces the following output: 
@@ -195,7 +196,7 @@ The following example of a driving lessons platform checks that the user is over
 
 === Example: Raising an Error After Comparing Values
 
-The following example makes a request to an API (+https://unsecurebank.com/balance+) and stores the returned account balance in the _balance_ variable, then compares the variable with `payload.amount` to determine if the operation is possible. The Choice router produces an `ACCOUNT:INSUFFICIENT_FUNDS` error when a transfer amount surpasses the available balance, preventing the transfer from taking place. Additionally, it generates a dynamic description by providing an expression with failure details.
+The following example makes a request to an API (+https://unsecurebank.com/balance+) and stores the returned account balance in the _balance_ variable, then compares the variable with `payload.amount` to determine if the operation is possible. The Choice router produces an `ACCOUNT:INSUFFICIENT_FUNDS` error when a transfer amount surpasses the available balance, preventing the transfer from taking place. The description dynamically provides failure details.
 
 [source,xml]
 ----
