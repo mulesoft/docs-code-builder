@@ -1,4 +1,4 @@
-= Synchronize the API Specification with Design Center
+= Synchronize API Specifications with Design Center
 
 // tut-design-api-synchronize-with-design-center
 
@@ -11,11 +11,13 @@ Use the built-in integrated source control management (SCM) to sync American Fli
 
 == Before You Begin
 
-If you haven't started the American Flight API specification, follow these procedures before attempting to synchronize:
+Before synchronizing with Design Center:
 
-. xref:tut-design-api-specification-from-scratch.adoc[]
-. xref:tut-design-api-add-request-response-details.adoc[]
-. xref:tut-design-api-test-specification.adoc[]
+. xref:des-create-api-specs.adoc[Create an API specification].
+// . xref:des-add-examples-to-specs.adoc[Add examples to your specification].
+. xref:des-test-api-specs.adoc[Test your API specification using mocking service].
+
+
 
 [[review]]
 == Review Changes in Files
@@ -27,9 +29,15 @@ image::changes-and-staged-changes.png["Changes and Staged Changes highlighted in
 
 To review changes to your API project:
 
-. In Anypoint Code Builder, open the *Source Control* menu by pressing Ctrl+Shift+g (Mac) or Cmd+Shift+g (Windows).
+. In Anypoint Code Builder, open the *Source Control* menu.
 +
+[%collapsible]
+====
+* Mac: Ctrl+Shift+g
+* Windows: Cmd+Shift+g
+
 Alternatively, click the *Source Control* icon in the activity bar.
+====
 . Open your `exchange.json` file.
 . Review the working tree and notice the shading for deletions (red) and additions (green).
 +

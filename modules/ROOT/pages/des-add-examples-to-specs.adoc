@@ -1,14 +1,19 @@
-= Add Examples to the API Specification
+= Adding Examples to API Specifications
 
-// added tut-design-api-add-request-response-details
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+// tut-design-api-add-request-response-details
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Add API fragments from Exchange for a data type and examples to the American Flights API specification. Then create your own examples for the specification, and add a custom message for a response. 
+Add API fragments from Exchange for a data type and examples to your API specification.
+Then create your own examples for the specification, and add a custom message for a response. 
 
 == Before You Begin
 
-Complete all the procedures in xref:tut-design-api-specification-from-scratch.adoc[].
+Before adding examples:
+
+. xref:des-create-api-specs.adoc[Create an API specification].
 
 == Add Fragments from Exchange to Your Project
 
@@ -19,15 +24,16 @@ Add fragments to the project directory so that you can include them in your spec
 
 To add the fragments: 
 
-. In Anypoint Code Builder, open your American Flights API specification, `american-flights-api.raml`.
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
+. In Anypoint Code Builder, open your API specification. For example, `american-flights-api.raml`.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[use-command-palette]
 +
 [source,command]
 ----
 MuleSoft: Add fragment dependency from Exchange
 ----
-. If prompted, log in to Anypoint Platform so that you can download an asset.
-. In the *Search for Asset* field, provide the name of the data type asset to add:
+. If prompted, log in to Anypoint Platform.
+. In the *Search for Asset* field, provide the name of the data type asset to add. For example:
 +
 [source,command]
 ----
@@ -36,7 +42,7 @@ Training: American Flight Data Type
 . Select the asset from the *Assets From Exchange* menu.
 . Select the latest version of the asset, such as *v1.0.1*.
 +
-When the process is complete, check for the `AmericanFlightDataType.raml` asset in your project's `exchange_modules/` directory. For example: 
+When the process is complete, check for the asset, such as `AmericanFlightDataType.raml`, in your project's `exchange_modules/` directory. For example: 
 +
 ----
 exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml

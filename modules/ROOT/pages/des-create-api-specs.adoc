@@ -1,21 +1,17 @@
-= Create an API Specification
+= Creating API Specifications
 // need to reconcile with changes to tut-design-api-specification-from-scratch
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Use Anypoint Code Builder to create, test, synchronize with Design Center, and publish a basic RAML API specification to Exchange.
-
-To build, test, and synchronize, and publish the specification:
+Use Anypoint Code Builder to create, test, synch with Design Center, and publish a basic RAML API specification to Exchange:
 
 . <<design-new-api-spec>>
 . <<add-resources-and-methods>>
 . <<add-query-params-nested-resources>>
-. xref:tut-design-api-add-request-response-details.adoc[]
-. xref:tut-design-api-test-specification.adoc[]
-. xref:tut-design-api-synchronize-with-design-center.adoc[]
-. xref:tut-design-api-publish-api-spec-to-exchange.adoc[]
+. <<add-nested-resources-methods>>
+. <<review-spec-console>>
 
-After creating, testing, synchronizing, and publishing the American Flights API specification, you can xref:implement-api-specification.adoc[implement] the specification within an xref:develop-integration.adoc[integration].
+After creating, testing, synchronizing, and publishing your API specification, you can xref:imp-implementing-api-specs.adoc[implement the specification] within an integration.
 
 
 == Before You Begin
@@ -27,9 +23,9 @@ API specifications belong to a business group.
 * Review the xref:user-guide.adoc[Tutorial] for tips on autocomplete.
 
 [[design-new-api-spec]]
-== Design a New API Specification
+== Create a New API Specification Project
 
-To design a new API specification:
+To create a new API specification project:
 
 . In the activity bar of the IDE, click the *Anypoint Code Builder* (MuleSoft) icon to navigate to Anypoint Code Builder.
 . From *Quick Actions*, click *Design an API*.
@@ -63,6 +59,7 @@ title: My New API
   post:
 --
 
+[[add-query-params-nested-resources]]
 == Add Query Parameters for Your Resources
 
 In the `<project-name>.raml` file, add query parameters to a method. For example:
@@ -80,6 +77,7 @@ In the `<project-name>.raml` file, add query parameters to a method. For example
           - CLE
 --
 
+[[add-nested-resources-methods]]
 == Add Nested Resources and Methods
 
 In the `<project-name>.raml` file, add nested resources and methods. For example:
@@ -92,8 +90,11 @@ In the `<project-name>.raml` file, add nested resources and methods. For example
     get:
 --
 
+[[review-spec-console]]
 == Review Your Specification in the API Console
 
 Click the *API Console* icon to display your specification in the console.
+
+// Replace image with picture of icon and new contents.
 
 image::sub-methods-api-console.png["API Console with methods, query parameters, and nested resources"]
