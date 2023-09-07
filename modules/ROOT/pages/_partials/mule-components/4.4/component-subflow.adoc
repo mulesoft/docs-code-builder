@@ -1,0 +1,278 @@
+//
+//tag::component-title[]
+
+= Subflow (<sub-flow/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Group together a sequence of Core components and operations (provided by connectors and modules) inside a scope that you invoke from a Flow Reference in your Mule application.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+The Subflow component works in a similar way to the xref:acb-component-flow.adoc[Flow] component but with the following differences: 
+
+* Subflows do not support Mule event sources.
+* Subflows do not have a built-in error handling scope.
++ 
+//TODO: Uncomment when Try doc is ready in ACB
+//Use the xref:acb-component-try.adoc[Try] scope within a subflow to perform error handling.
+* During design, subflows work as macros that replace the Flow Reference components that call them.
++
+When you build the application, Code Builder replaces all Flow Reference components that call a subflow with the contents of the referenced subflow.
+* Referencing subflows results in better performance than referencing a flow.
+
+//TODO: Uncomment when Try doc is ready in ACB
+//Use the xref:acb-component-try.adoc[Try] scope within a subflow to perform error handling.
+You can create multiple subflows in your Mule application. 
+
+For a more in-depth discussion of uses, capabilities, and limits of flows and subflows, see xref:mule-runtime::about-flows.adoc[Flows and Subflows].
+
+//TODO: Uncomment when Async doc is ready in ACB
+//Flows always function synchronously. To achieve asynchronous patterns, such as Fire-and-Forget, use the xref:acb-component-async.adoc[Async Scope].
+
+== Limitations
+
+Because the contents of a subflow replace each Flow Reference component that references that subflow, several instances of the event processors inside that subflow exist in the application at runtime. This behavior can cause issues with event processors that depend on unique IDs or instances to execute.
+//TODO: Uncomment when Batch docs are ready.
+//For example, configuring a batch job inside a subflow causes the application to fail during deployment if the subflow is referenced from more than one Flow Reference component. The application fails to deploy because multiple instances of a batch job with the same job instance ID exist, which is not allowed.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<sub-flow name="mySubFlow">
+
+</sub-flow>
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1a,3a"]
+|===
+| `<sub-flow/>` Attributes 
+| Description
+
+| `name` 
+| Editable name for the flow.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Example: Flow and Subflows
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following example uses a Scheduler as a source to trigger the execution of a flow every 10 seconds and then connects to a subflow (`<sub-flow/>`) through a Flow Ref (`<flow-ref/>`) component. The subflow then connects to another subflow, also using a Flow Ref component.
+
+[source,xml]
+----
+<flow name="flow_component_ex">
+  <scheduler doc:name="Scheduler" >
+    <scheduling-strategy >
+      <fixed-frequency frequency="10" timeUnit="SECONDS"/>
+    </scheduling-strategy>
+  </scheduler>
+  <ee:transform doc:name="Transform Message">
+    <ee:message >
+      <ee:set-payload ><![CDATA[
+ %dw 2.0
+ var myXml =  read('<prices>
+    <basic>9.99</basic>
+    <premium>53</premium>
+    <vip>398.99</vip>
+  </prices>', 'application/xml')
+ output application/xml
+ ---
+ myXml
+]]></ee:set-payload>
+    </ee:message>
+  </ee:transform>
+  <flow-ref name="subflow_ex1"/>
+</flow>
+<sub-flow name="subflow_ex1">
+  <ee:transform doc:name="Transform Message">
+    <ee:message>
+      <ee:set-payload><![CDATA[%dw 2.0
+import * from dw::util::Timer
+output application/json
+var conversionRate=13
+---
+priceList: payload.prices mapObject(value, key, index) -> {
+  (key) : {
+       dollars: value,
+       localCurrency: value * conversionRate,
+       index_plus_1: index + 1,
+       timer : currentMilliseconds()
+   }
+}]]>
+      </ee:set-payload>
+   </ee:message>
+ </ee:transform>
+ <flow-ref name="subflow_ex2"/>
+</sub-flow>
+<sub-flow name="subflow_ex2">
+  <logger level="INFO" doc:name="Logger" message="#[payload]" />
+</sub-flow>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+The example produces the following output: 
+
+[source,json]
+----
+{
+  "priceList": {
+    "basic": {
+      "dollars": "9.99",
+      "localCurrency": 129.87,
+      "index_plus_1": 1,
+      "timer": 1533024312658
+    },
+    "premium": {
+      "dollars": "53",
+      "localCurrency": 689,
+      "index_plus_1": 2,
+      "timer": 1533024312659
+    },
+    "vip": {
+      "dollars": "398.99",
+      "localCurrency": 5186.87,
+      "index_plus_1": 3,
+      "timer": 1533024312659
+    }
+  }
+}
+----
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:acb-component-flow.adoc[Flow]
+
+//TODO: Uncomment when Flow Ref doc is ready
+//* xref:acb-component-flow-ref.adoc[Flow Reference]
+
+//end::see-also[]
