@@ -1,4 +1,4 @@
-= Create an Escalation API between Slack and Salesforce
+= Integrate Salesforce Data into Slack and Email Notifications
 :imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -6,13 +6,13 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-This walkthrough enables you to create an integration that notifies you either through email or Slack, when a new case is created in Salesforce.
+Create an integration that notifies you through email or Slack when a new case is created in Salesforce.
 
 The integration that you build contains a flow with the following logic:
 
 * The creation of a new case in Salesforce triggers your flow.
 * If the case is escalated, your application sends an email to the regional leader including the case number, origin, reason, priority, and status.
-* If the case is not escalated, your application sends a message to a Slack channel with the same information as before.
+* If the case is not escalated, your application sends a message to a Slack channel with the same information.
 
 == Before You Begin
 
