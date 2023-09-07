@@ -1,4 +1,4 @@
-= Synchronize API Specifications with Design Center
+= Synchronizing API Specifications with Design Center
 
 // tut-design-api-synchronize-with-design-center
 
@@ -13,34 +13,24 @@ Use the built-in integrated source control management (SCM) in Anypoint Code Bui
 
 The process for syncing with Design Center is:
 
-. <<review, Review changes in files>>.
-. <<stage, Stage changes to the built-in SCM>>.
-+
-You can stage changes in either one or multiple files.
-. <<commit, Commit changes to your local repository>>.
-. <<push, Push changes to Design Center>>.
+. Review changes to files in your API project since the last sync with the main branch in Design Center.
+. Stage changes from one or more files to the built-in SCM.
+. Commit changes to your local repository.
+. Push changes to Design Center.
+
 
 
 == Before You Begin
 
 Before synchronizing with Design Center:
 
-* Set up and access the web or desktop IDE. See xref:setup.adoc[] for guidance.
+* xref:setup.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create an API specification].
 // . xref:des-add-examples-to-specs.adoc[Add examples to your specification].
 * xref:des-test-api-specs.adoc[Test your API specification using the Mocking Service].
 * Review the xref:user-guide.adoc[Tutorial] for tips on autocomplete.
 
-[[review]]
-== Review Changes in Files
-
-Identify changes to files in your API project since the last synchronization with the main branch in Design Center.
-When you change your API project, the *Source Control* icon in the Activity Bar identifies the number of changes to the API project. 
-
-//TODO duke: hamburger menu present; maybe ok since it's fairly inobtrusive
-image::changes-and-staged-changes.png["Changes and Staged Changes highlighted in the Source Control section"]
-
-To review changes to your API project:
+== Sync Changes to Design Center 
 
 . In Anypoint Code Builder, open the *Source Control* pane.
 +
@@ -51,84 +41,44 @@ Click the image:icon-source-control.png["",15,15] (*Source Control*) icon in the
 * Mac: Ctrl+Shift+g
 * Windows: Cmd+Shift+g
 ====
-. Open a file, for example `exchange.json`.
-. Review the working tree and notice the shading for deletions (red) and additions (green).
+. Review changes by clicking files in the *Source Control* pane:
++
+.. Open a file, for example `exchange.json`.
+.. Review the working tree and notice the shading for deletions (red) and additions (green):
 +
 image::explore-changes-api-specification.png["exchange.json file highlighted to show the source control changes"]
-+
-This example adds some dependencies to the API specification by reusing the API fragments downloaded from Anypoint Exchange.
-
-[[stage]]
-== Stage Changes to the Built-in SCM
-
-Stage changes from one or more files from the UI or through the command line, with a Git command.
-The UI uses the `git add` command to add changes from your working directory to the staging area. This area includes updates for the next commit.
-
-image::stage-american-flights-api.png["Source control number and plus icon of american-flight-api.raml file highlighted"]
-
-To stage individual changes through the UI:
-
-. In Anypoint Code Builder, open the *Source Control* pane.
-+
-[%collapsible]
-====
-Click the image:icon-source-control.png["",15,15] (*Source Control*) icon in the activity bar or use the keyboard shortcuts:
-
-* Mac: Ctrl+Shift+g
-* Windows: Cmd+Shift+g
-====
-. Select the plus icon:
+. Stage changes by clicking the plus icon in the *Source Control* pane:
 +
 ** To stage a single file, click the plus icon for that file.
 ** To stage all changed files, click the plus icon on the *Changes* line.
 +
 The files move to *Staged Changes* section.
-
-[[commit]]
-== Commit Changes to Your Local Repository
-
-The UI uses the `git commit` command to save the changes you staged to your local repository. 
-
-To commit staged changes:
-
-. In Anypoint Code Builder, open the *Source Control* pane.
 +
-[%collapsible]
-====
-Click the image:icon-source-control.png["",15,15] (*Source Control*) icon in the activity bar or use the keyboard shortcuts:
-
-* Mac: Ctrl+Shift+g
-* Windows: Cmd+Shift+g
-====
-. In the *Message field*, summarize your changes, and click *Commit*.
+The UI uses the `git add` command to add changes from your working directory to the staging area.
+. Commit staged changes:
 +
-The *Source Control* pane now displays no changes to commit.
-
-[[push]]
-== Push Changes to Design Center
-
-Use the `git push` command from the UI to upload your local content to Design Center.
-
-To push your changes:
-
-. In Anypoint Code Builder, open the *Source Control* pane.
+.. In the *Message field*, summarize your changes.
+.. Click *Commit*.
 +
-[%collapsible]
-====
-Click the image:icon-source-control.png["",15,15] (*Source Control*) icon in the activity bar or use the keyboard shortcuts:
-
-* Mac: Ctrl+Shift+g
-* Windows: Cmd+Shift+g
-====
-. In the *Source Control* header, click the *More actions* menu (ellipsis).
-. Select *Pull, Push* > *Push*.
+The UI uses the `git commit` command to save the changes you staged to your local repository.
 +
-//TODO duke: hamburger in screenshot; does Sync Changes appear?
+If you staged all files, the *Source Control* pane now displays no changes to commit.
+. Push your changes to Design Center by clicking *Sync Changes* in the *Source Control* pane.
++
+NOTE: *Sync Changes* also pulls any changes from Design Center.
++
+If you want to push changes without pulling:
++
+.. In the *Source Control* header, click the *More actions* menu (ellipsis).
+.. Select *Push*.
++
 image::push-changes.png["Push command highlighted in the source control section"]
 +
+The UI uses the `git push` command to upload your local content to Design Center.
+
 Your changes are now published in Design Center.
-+
-If the UI prompts you to `periodically run 'git fetch'`, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API.
-+
+
+If the UI prompts you, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API.
+
 image::fetch-periodically-check.png["Periodically run git fetch message highlighted"]
 
