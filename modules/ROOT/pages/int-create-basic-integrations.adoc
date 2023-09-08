@@ -1,4 +1,4 @@
-= Create a Basic Integration
+= Creating Integrations
 // create-basic-integration
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -6,33 +6,50 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Start by creating a basic integration for the American Flights example. This integration provides some of the logic for processing requests from the American Flights API.
+
+Create a basic integration, add dependencies and connectors to your Mule application, and transform the payload of your response by using DataWeave:
+
+. <<create-integration-project, Create a new integration project>>.
+. xref:int-create-xml-snippets.adoc[]
+. xref:int-connect-databases.adoc[]
+. xref:use-dw-to-transform-data.adoc[]
+
 
 == Before You Begin
 
 * xref:create-xml-snippets.adoc[]
 * Install a REST client such as Postman or Advanced REST Client. 
 
-== Create a Mule Application
 
-Start an integration application for the American Flights example. For more guidance, see xref:develop-integration.adoc#start-an-integration[Start an Integration].
+[[create-integration-project]]
+== Create a New Integration Project
 
-. Open Anypoint Code Builder from the IDE.
-. Select *Develop an Integration* from the *Quick Actions* menu.
-. Configure your integration using the following values:
+To create a new integration project:
+
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[open-ide]
+. From *Quick Actions*, click *Develop an Integration*.
+
+. Complete the form.
 +
-.. Under *Project Name*, type `american-ws-anypoint-code-builder`.
-.. Under *Project Location*, select *Browse*, and then select your home directory.
-+
-. Select *Create Project*.
-. Proceed to <<configure>>.
+[%header,cols="20a,60a"] 
+|===
+| Field Name | Field Value
+
+| *Project Name* | Unique name for your project. This name is used as the title and name of the specification file.
+| *Project Location* | Your home directory or another directory you create (see xref:work-on-home-directory.adoc[]). Click *Browse* to select a different directory for the integration.
+
+Don't create the application within another project directory.
+|===
+. Click *Create Project*.
+
 
 [[configure]]
 == Configure an HTTP Listener Operation and Set a Payload
 
 The listener is for triggering the flow, and Set Payload provides some test data for the integration.
 
-. In Project Explorer, select the `american-ws-anypoint-code-builder.xml` file.
+. In Project Explorer, select the `project-name.xml` file. For example:
 +
 image::empty-canvas-state.png["american-ws-anypoint-code-builder.xml file shown in visual representation of its Mule flow and the Mule Configuration file"]
 +
@@ -42,7 +59,7 @@ You see two different views:
 .. The canvas UI provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
 . Select *Flow* from the canvas to create an empty flow.
-. In the configuration XML, replace the name of your flow with `getFlights`.
+. In the configuration XML, replace the name of your flow with your flow name. For example,  `getFlights`.
 +
 [%header,cols="1a,1a"]
 |===
@@ -65,24 +82,30 @@ You see two different views:
 ----
 |===
 . Add the HTTP Listener component to your configuration XML:
-.. In the UI canvas, after your *Flow* component, select the `plus` icon:
-+
-image::main-tutorial-add-first-http-listener.png["Plus icon highlighted in the flow"]
-.. Search for and select *Listener* from the *HTTP* results:
+.. In the UI canvas, after your *Flow* component, click the image:icon-plus.png["",15,15] (*Add component*) icon.
+.. In the *Add Component* pane, search for and select *Listener* from the *HTTP* results:
 +
 image::main-tutorial-add-first-listener.png["Listener component highlighted in the Add Component section"]
 +
-The configuration XML file adds the XML for the HTTP Listener into the `<flow/>` element. For example:
+The configuration XML file now includes the XML for the HTTP Listener into the `<flow/>` element. For example:
 +
 [source,XML]
 ----
 <flow name="name1" >
   <http:listener path="" config-ref="" doc:name="Listener" doc:id="ojzfry" />
-  
+
 </flow>
 ----
 . In the configuration XML, above the `<flow/>` element, add the `<http:listener-config/>` component: 
-.. In the configuration XML, press Ctrl+Spacebar (Mac) or Cmd+Spacebar(Windows) to open the XML configuration menu.
+.. Open the XML configuration menu.
++
+[%collapsible]
+====
+Click the image:icon-source-control.png["",15,15] (*Source Control*) icon in the activity bar or use the keyboard shortcuts:
+
+* Mac: Ctrl+Spacebar
+* Windows: Cmd+Spacebar
+====
 .. Type `http`, and select the _snippet_ `muledx:http-listener-config`.
 +
 image::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu"]
