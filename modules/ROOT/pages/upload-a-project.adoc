@@ -32,7 +32,7 @@ Use the desktop IDE to upload a project directory or sharable JAR file into a pr
 [[desktop-project-package]]
 === Import a Sharable Project JAR File into the Desktop IDE
 
-Import a sharable JAR file for a snapshot of a Mule project into the desktop IDE. Shareable JAR files are generated through the process described in xref:package-mule-application.adoc#sharable[Package a Project in a Sharable JAR File]. The contents are lightweight because they lack dependencies. The IDE generates the dependencies configured in the `pom.xml` for the file when preparing a UI canvas for your project. 
+Import a sharable JAR file for a snapshot of a Mule project into the desktop IDE. Shareable JAR files are generated through the process described in xref:package-mule-application.adoc#sharable[Package a Project in a Sharable JAR File]. The contents are lightweight because they lack dependencies. The IDE generates the dependencies configured in the `pom.xml` for the project. 
 
 To import a sharable JAR file in your desktop IDE:
 
@@ -47,7 +47,8 @@ include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
 
 Though it is more common to import a sharable JAR file, you can also drag a sharable Mule project folder into the Explorer and open the project in a VS Code workspace.
 
-// include for this procedure
+To import a project folder to your desktop IDE:
+
 include::partial$acb-open-packaged-sources.adoc[tags="import-project-folder-desktop"]
 include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-root"]
 include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
@@ -78,17 +79,8 @@ The cloud IDE enables you to upload a project directory or JAR file into a works
 
 Import a JAR file for a Mule project and load the unpacked project into a workspace in the IDE.
 
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
-+
-[source,command]
-----
- File: Open Folder...
-----
-+
-image::file-open-folder-command.png[]
-. Select an Anypoint Code Builder directory, such as your home directory:
-+
-image::select-home-directory.png[]
+//includes first 2 steps, shared cloud steps
+include::partial$acb-open-packaged-sources.adoc[tags="preliminary-cloud-import-steps"]
 +
 If prompted, trust the authors of the files in the directory.
 . After Anypoint Code Builder loads your directory, drag your JAR file to your Explorer view:
@@ -115,17 +107,8 @@ include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
 [[web-project-folder]]
 === Import a Project Folder into a Cloud IDE Workspace
 
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
-+
-[source,command]
-----
-File: Open Folder...
-----
-+
-image::file-open-folder-command.png[]
-. Select your Anypoint Code Builder home directory or subdirectory of your choice:
-+
-image::select-home-directory.png[]
+//includes first 2 steps, shared cloud steps
+include::partial$acb-open-packaged-sources.adoc[tags="preliminary-cloud-import-steps"]
 . After Anypoint Code Builder loads your directory, drag your project directory to your Explorer view:
 +
 image::drag-project-folder.png["Drag Project Folder to Explorer"]
