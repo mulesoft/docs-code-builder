@@ -461,6 +461,14 @@ from properties provider environment properties provider
 ----
 +
 In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key-value` is the value used to encrypt the properties through the Secure Properties Tool.
+.. If you are using a variable such as `$\{env}` in `$\{env}.secure.yaml` to identify the properties file in `<secure-properties:config/>`, append a value for `$\{env}` to the *Runtime: Default Arguments* field. 
++
+For example, for a file `dev.secure.yaml` that contains properties for the development environment within the IDE:
++
+[source,env-configuration]
+----
+-M-Dmule.env=dev
+----
 . Deploy the application locally within the IDE by pressing Cmd+shift+p (Mac) or Ctrl+shift+p (Windows), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
 +
 A successful deployment produces the following message in the *OUTPUT* tab of the output panel. For information about the output panel, see xref:configure-default-output-panel.adoc[].
