@@ -125,7 +125,7 @@ image::http-highlight-flow.png["HTTP Listener highlighted in the flow and in the
 </http:listener-config>
   
 <flow name="getFlights" >
-  <http:listener path="" config-ref="inbound-request" doc:name="HTTP /flights" doc:id="htprur" />
+  <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" doc:id="htprur" />
   <!--1-->
   <set-payload value="Flight info" doc:name="Set Response" doc:id="e43e98-1a9a01"/>
 </flow>
