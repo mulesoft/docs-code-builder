@@ -1,24 +1,12 @@
-= Run a Debug Session
+= Running Debug Sessions
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 After setting up your debug conditions, you can run a debug session and evaluate your Mule application at each breakpoint.
 
+
 == Before You Begin
 
-Before you begin, ensure that:
-
-* You designed an API specification. +
-See xref:design-api-specification.adoc[].
-* You developed an integration. +
-See xref:develop-integration.adoc[].
-* You implemented the API. +
-See xref:implement-api-specification.adoc[].
-* You added components to help your debug. +
-See xref:debug-add-logger-set-variables.adoc[].
-* You added breakpoints. +
-See xref:debug-add-breakpoints.adoc[].
-* Install a REST client like Postman or AdvancedRestClient.
 
 == Start a Debug Session
 
@@ -59,6 +47,8 @@ image::debug-add-expression.png[]
 image::debuger-watch-expression-json.png[]
 . Select the *Continue* button on your debug toolbar. Note that the application returns the response from the database to your REST client.
 +
+[%collapsible]
+====
 [source,JSON]
 --
 [
@@ -207,6 +197,7 @@ image::debuger-watch-expression-json.png[]
     }
 ]
 --
+====
 
 == Stop Debug Session
 
@@ -214,6 +205,3 @@ To stop your debug session, select the *Stop* button on your debug toolbar.
 
 image::debugger-stop.png[]
 
-== Next Step
-
-* Move to a new section of the tutorial and learn how to xref:deploy-mule-application.adoc[Deploy a Mule Application].
