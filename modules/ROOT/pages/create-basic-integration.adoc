@@ -81,17 +81,17 @@ The configuration XML file adds the XML for the HTTP Listener into the `<flow/>`
   
 </flow>
 ----
-. In the configuration XML, above the `<flow/>` element, add the `<http:listener-config/>` component: 
+. In the configuration XML, before the `<flow/>` element, add the `<http:listener-config/>` component: 
 .. In the configuration XML, press Ctrl+Spacebar (Mac) or Cmd+Spacebar(Windows) to open the XML configuration menu.
-.. Type `http`, and select the _snippet_ `muledx:http-listener-config`.
+.. Type `http`, and select the `http:listener-config` snippet.
 +
 image::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu"]
 +
 .Snippet XML example:
 [source,xml]
 ----
-<http:listener-config name="httpListenerConfig" doc:name="Listener Config" doc:id="b5c62f-a84a3a">
-  <http:listener-connection host="Host" port="Port"/>
+<http:listener-config name="HTTP_Listener_config" >
+  <http:listener-connection host="0.0.0.0" port="8081" />
 </http:listener-config>
 ----
 . Configure the attributes for the HTTP Listener operation `<http:listener/>` and `<http:listener-config/>`:

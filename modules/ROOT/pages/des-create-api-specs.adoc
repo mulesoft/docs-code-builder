@@ -1,0 +1,110 @@
+= Creating API Specifications
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Use Anypoint Code Builder to create, test, synch with Design Center, and publish a basic RAML API specification to Exchange:
+
+. <<design-new-api-spec, Create a new API specification project>>.
+. <<add-resources-and-methods, Add resources and methods>>.
+. <<add-query-params-nested-resources, Add query parameters for your resources>>.
+. <<add-nested-resources-methods, Add nested resources and methods>>.
+. <<review-spec-console, Review your specification in the API Console>>.
+
+After creating, testing, synchronizing, and publishing your API specification, you can xref:imp-implementing-api-specs.adoc[implement the specification] within an integration.
+
+
+== Before You Begin
+
+* xref:setup.adoc[Set up and access the web or desktop IDE].
+* Have some familiarity with xref:access-management::business-groups.adoc[business groups].
++
+API specifications belong to a business group.
+* Review the xref:user-guide.adoc[Tutorial] for tips on autocomplete.
+
+[[design-new-api-spec]]
+== Create a New API Specification Project
+
+To create a new API specification project:
+
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
+. From *Quick Actions*, click *Design an API*.
+. Complete the *API Specification* form.
++
+[%header,cols="20a,60a"] 
+|===
+| Field Name | Field Value
+
+| *Project Name* | Unique name for your project. This name is used as the title and name of the specification file.
+| *Project Location* | Your home directory or another directory you create (see xref:work-on-home-directory.adoc[]).
+| *API Specification Language* | See xref:des-designing-api-specs.adoc#supported-spec-languages[Supported OAS and RAML Versions].
+| *Business Group* | Business Group in Anypoint Platform for your API specification.
+See xref:access-management::business-groups.adoc[].
+
+NOTE: You cannot change the selected business group after creating the API specification.
+|===
+. Click *Create Project*.
+
+When the project is ready for editing, the API project and specification open in the IDE.
+
+[[add-resources-and-methods]]
+== Add Resources and Methods to Your Specification
+
+. xref:configure-default-output-panel.adoc[Open the output panel] to track the progress of internal processing as you design your API.
+. In the `<project-name>.raml` file, add your first resource. For example:
++
+[source,raml,linenums]
+--
+#%RAML 1.0
+title: My Project
+
+/flights:
+--
+
+. Add methods to the resource. For example:
++
+[source,raml,linenums]
+--
+/flights:
+  get:
+  post:
+--
+
+[[add-query-params-nested-resources]]
+== Add Query Parameters for Your Resources
+
+In the `<project-name>.raml` file, add query parameters to a method. For example:
+
+[source,raml,linenums]
+--
+/flights:
+  get:
+    queryParameters:
+      destination:
+        required: false
+        enum:
+          - SFO
+          - LAX
+          - CLE
+--
+
+[[add-nested-resources-methods]]
+== Add Nested Resources and Methods
+
+In the `<project-name>.raml` file, add nested resources and methods. For example:
+
+[source,raml,linenums]
+--
+  post:
+
+  /{ID}:
+    get:
+--
+
+[[review-spec-console]]
+== Review Your Specification in the API Console
+
+. Click the image:icon-api-console.png["",14,14] (*API Console*) icon to display your specification in the console.
+. Select methods from the menu in the API Console to view different parts of your specification.
++
+image::api-console.png["API Console with resources, methods, and query parameters"]

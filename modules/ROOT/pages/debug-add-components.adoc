@@ -1,0 +1,136 @@
+= Add Components to Help You Debug Your Application
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+// no corresponding Tutorial topic?
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+include::partial$acb-reusable-steps.adoc[tags="in-progress"]
+
+
+////
+You can use Logger and Set Variable components to help debug your Mule application.
+
+== Before You Begin
+
+Before you begin, ensure that:
+
+* You designed an API specification. +
+See xref:design-api-specification.adoc[]
+* You developed an integration. +
+See xref:develop-integration.adoc[]
+* You implemented the API. +
+See xref:implement-api-specification.adoc[]
+
+== Add Logger and Set Variable Components
+
+. In Anypoint Code Builder, on the Explorer view, open your `implementation.xml`.
+. Add a new line after your `</db:select>` element and indent it to the same level.
+. Start typing `_set variable_` and select `mule:set-variable`:
++
+[source,xml]
+--
+<flow name="getFlights">
+    <logger doc:name="Logger"/>
+    <db:select doc:name="Query Flights" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
+
+    <set-variable value="#[payload]" doc:name="Set variable Payload" variableName="databasePayload" /> //<1>
+
+    <ee:transform doc:name="Transform Message">
+        <ee:message >
+            <ee:set-payload >
+                <![CDATA[
+                %dw 2.0
+                output application/json
+                ---
+                payload map ( payload01 , indexOfPayload01 ) -> {
+                  ID: payload01.ID,
+                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  price: payload01.price default 0,
+                  departureDate: payload01.takeOffDate as String default "",
+                  origin: payload01.fromAirport default "",
+                  destination: payload01.toAirport default "",
+                  emptySeats: payload01.seatsAvailable default 0,
+                  plane: {
+                    "type": payload01.planeType default "",
+                    totalSeats: payload01.totalSeats default 0
+                  }
+                }
+                ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+
+</flow>
+--
+[calloutlist]
+.. Move through the attributes of the snippet and set the following values:
++
+value:: `_#[payload]_`.
+doc:name:: `_Set Database Payload_`.
+variableName:: `_databasePayload_`.
+. Create a new line below before your `</flow>` element and indent to the same level.
+. Start typing `_logger_` and select `mule::Logger`:
++
+[source,XML]
+--
+<flow name="getFlights">
+    <logger doc:name="Logger" doc:id="ahcnzm" />
+    <db:select doc:name="Query Flights" doc:id="pvuqsc" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
+
+    <set-variable value="#[payload]" doc:name="Set variable Payload" variableName="databasePayload" doc:id="vtptsr" />
+
+    <ee:transform doc:name="Transform Message" doc:id="uniqueId" >
+        <ee:message >
+            <ee:set-payload >
+                <![CDATA[
+                %dw 2.0
+                output application/json
+                ---
+                payload map ( payload01 , indexOfPayload01 ) -> {
+                  ID: payload01.ID,
+                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  price: payload01.price default 0,
+                  departureDate: payload01.takeOffDate as String default "",
+                  origin: payload01.fromAirport default "",
+                  destination: payload01.toAirport default "",
+                  emptySeats: payload01.seatsAvailable default 0,
+                  plane: {
+                    "type": payload01.planeType default "",
+                    totalSeats: payload01.totalSeats default 0
+                  }
+                }
+                ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+
+<logger doc:name="Log Payload" message="#[
+    %dw 2.0
+    output application/json
+    ---
+    payload]" /> //<1>
+
+</flow>
+--
+[calloutlist]
+.. Move through the attributes of the snippet and set the following values:
++
+doc:name:: `_Log Payload_`.
+message:: `_#[%dw 2.0 output application/json --- payload]_`.
+
+== Next Step
+
+* xref:debug-add-breakpoints.adoc[Add Breakpoints]. +
+Learn how to set up breakpoints to stop your Mule application at specific points during its execution.
+////
