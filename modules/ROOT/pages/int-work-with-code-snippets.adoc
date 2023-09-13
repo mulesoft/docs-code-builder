@@ -179,12 +179,13 @@ The value of `doc:id` is randomly generated because of the `$RANDOM_HEX` value i
 
 You can also use the auto-complete feature to insert user snippets directly into the XML configuration file.
 
-=== Configure User Snippets
+=== Configure User Snippets in the IDE
 
 To configure user snippets:
 
 . In Anypoint Code Builder, select *Configure User Snippets*.
 +
+.Navigate to Configure User Snippets
 [%collapsible]
 ====
 * In the desktop IDE, navigate to *Code* > *Settings* > *Configure User Snippets*.
@@ -227,10 +228,13 @@ mule-xml.json (Mule XML)
 }
 --
 
-. Add this snippet code to the file: 
+. Add your snippet code to the file. 
 +
+.Example Snippet Code
+[%collapsible]
+====
 [source,json]
-----
+--
 {
 	"Mule Flow": {
 		"prefix": "muledx:flow",
@@ -303,8 +307,8 @@ mule-xml.json (Mule XML)
 		]
 	 }
   }
-----
-
+--
+====
 
 
 [[autocomplete]]
@@ -314,10 +318,9 @@ To add snippets directly to the configuration XML for a Mule application:
 
 . In the configuration XML, open the *Auto Complete* menu.
 +
+.Use the keyboard shortcuts
 [%collapsible]
 ====
-Use the keyboard shortcuts:
-
 * Mac: Ctrl+Space
 * Windows: Cmd+Space
 ====
@@ -346,7 +349,8 @@ Compare the built-in Choice snippet configuration to the basic XML configuration
 --
 +
 <1> XML for the built-in Choice snippet is `flow:choice` in the auto-complete list. The icon for snippets in this menu is a one-dimensional square. 
-<2> XML for the minimally configured Choice component, which is also available by navigating to *Core Processors* > *Flow Control* > *Choice* from the UI canvas. The icon for this XML is a three-dimensional square. 
+<2> XML for the minimally configured Choice component, which is also available by navigating to *Core Processors* > *Flow Control* > *Choice* from the UI canvas.
+The icon for this XML is a three-dimensional square. 
 
 * For a user snippet, search for and select the name of the user snippet (as configured in `mule-xml.json`). For example:
 +
