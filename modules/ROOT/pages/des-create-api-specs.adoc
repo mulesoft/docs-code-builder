@@ -2,24 +2,23 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Use Anypoint Code Builder to create, test, synch with Design Center, and publish a basic RAML API specification to Exchange:
+Use Anypoint Code Builder to create and test basic API specification to Exchange:
 
 . <<design-new-api-spec, Create a new API specification project>>.
-. <<add-resources-and-methods, Add resources and methods>>.
-. <<add-query-params-nested-resources, Add query parameters for your resources>>.
-. <<add-nested-resources-methods, Add nested resources and methods>>.
-. <<review-spec-console, Review your specification in the API Console>>.
-
-After creating, testing, synchronizing, and publishing your API specification, you can xref:imp-implementing-api-specs.adoc[implement the specification] within an integration.
+. <<use-autocomplete, Use auto-complete in the API editor>>.
+. <<open-output-panel, Track progress in the output panel>>.
+. <<review-spec-console, Review your specification in the API console>>.
 
 
 == Before You Begin
 
 * xref:setup.adoc[Set up and access the web or desktop IDE].
+* Understand the basics of designing API specifications. 
++
+See the xref:user-guide.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 +
 API specifications belong to a business group.
-* Review the xref:user-guide.adoc[Tutorial] for tips on autocomplete.
 
 [[design-new-api-spec]]
 == Create a New API Specification Project
@@ -28,7 +27,12 @@ To create a new API specification project:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
++
+image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
 . From *Quick Actions*, click *Design an API*.
++
+image::design-api-1.png["*Design an API* link highlighted in the *Getting Started* section"]
+
 . Complete the *API Specification* form.
 +
 [%header,cols="20a,60a"] 
@@ -36,75 +40,201 @@ include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 | Field Name | Field Value
 
 | *Project Name* | Unique name for your project. This name is used as the title and name of the specification file.
+For example, if the project name is "OAS Example", the specification file name is `oas-example`.
 | *Project Location* | Your home directory or another directory you create (see xref:work-on-home-directory.adoc[]).
 | *API Specification Language* | See xref:des-designing-api-specs.adoc#supported-spec-languages[Supported OAS and RAML Versions].
+
+Select *OAS 3.0 (YAML)* to use the example in this procedure.
 | *Business Group* | Business Group in Anypoint Platform for your API specification.
 See xref:access-management::business-groups.adoc[].
 
 NOTE: You cannot change the selected business group after creating the API specification.
 |===
 . Click *Create Project*.
-
-When the project is ready for editing, the API project and specification open in the IDE.
-
-[[add-resources-and-methods]]
-== Add Resources and Methods to Your Specification
-
-. xref:configure-default-output-panel.adoc[Open the output panel] to track the progress of internal processing as you design your API.
-. In the `<project-name>.raml` file, add your first resource. For example:
 +
-[source,raml,linenums]
---
-#%RAML 1.0
-title: My Project
-
-/flights:
---
-
-. Add methods to the resource. For example:
+If prompted, trust the authors of the files in the folder.
 +
-[source,raml,linenums]
+When the project is ready for editing, the API project opens the specification in editor view.
+For example, this OAS 3.0 (YAML) specification:
++
+image::des-oas-create.png[New OAS 3.0 (YAML) API Project]
+. Continue designing your API specification. 
++
+As you enter elements, use <<use-auto-complete, auto-complete>> (Ctrl+Space) to display available options within the context. 
+
+== Example OAS 3.0 (YAML) API Specification 
+
+If you created an OAS 3.0 (YAML) project, replace the initial specification with following example code:
+
+.Example OAS 3.0 (YAML) API Specification
+[%collapsible]
+
+====
+[source,yaml,linenums]
 --
-/flights:
-  get:
-  post:
+{
+  openapi: "3.0.0"
+  info:
+    version: 1.0.0
+    title: oas-example
+  paths:
+    /contacts:
+      get:
+        summary: Retrieve a list of contacts
+        description: Returns a list of contacts.
+        responses:
+          '200':
+            description: Successful response
+            content:
+              application/json:
+                example:
+                  - id: 1
+                    firstName: John
+                    lastName: Doe
+                    company: Example Corp
+                  - id: 2
+                    firstName: Jane
+                    lastName: Smith
+                    company: Another Company
+
+      post:
+        summary: Create a new contact
+        description: Creates a new contact.
+        requestBody:
+          description: Contact object to be created
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        responses:
+          '201':
+            description: Contact created successfully
+            content:
+              application/json:
+                example:
+                  id: 3
+                  firstName: John
+                  lastName: Doe
+                  company: Example Corp
+          '400':
+            description: Invalid request
+          '500':
+            description: Internal server error
+
+    '/contacts/{contactId}':
+      put:
+        summary: Update a contact
+        description: Updates an existing contact based on the contact ID.
+        parameters:
+          - name: contactId
+            in: path
+            description: ID of the contact to update
+            required: true
+            schema:
+              type: integer
+              format: int64
+        requestBody:
+          description: Updated contact object
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        responses:
+          '200':
+            description: Contact updated successfully
+            content:
+              application/json:
+                example:
+                  id: 3
+                  firstName: John
+                  lastName: Doe
+                  company: Updated Corp
+          '400':
+            description: Invalid request
+          '404':
+            description: Contact not found
+          '500':
+            description: Internal server error
+
+  components:
+    schemas:
+      Contact:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          firstName:
+            type: string
+          lastName:
+            type: string
+          company:
+            type: string
+        required:
+          - firstName
+          - lastName
+}
 --
+====
 
-[[add-query-params-nested-resources]]
-== Add Query Parameters for Your Resources
+[[use-autocomplete]]
+== Use Auto-Complete in the API Editor
 
-In the `<project-name>.raml` file, add query parameters to a method. For example:
+. In the editor view, press Ctrl+Space to display available options.
+For example:
++
+image::des-autocomplete.png[Auto-complete options for `get`]
++
+Auto-complete shows different options, depending on the context.
+For example:
++
+image::des-autocomplete-context.png[Auto-complete options for `responses`]
+. Use the arrow keys to navigate the list and click to select.
++
+Auto-complete adds the element to the code and places the cursor for you to add values.
 
-[source,raml,linenums]
---
-/flights:
-  get:
-    queryParameters:
-      destination:
-        required: false
-        enum:
-          - SFO
-          - LAX
-          - CLE
---
+[[open-output-panel]]
+== Track Progress in the Output Panel
 
-[[add-nested-resources-methods]]
-== Add Nested Resources and Methods
+To track the progress of internal processing as you design your API:
 
-In the `<project-name>.raml` file, add nested resources and methods. For example:
+. Open the output panel.
++
+.Show me how
+[%collapsible]
+====
+* Use the keyboard shortcuts:
++
+** Mac: Cmd+Shift+u
+** Windows: Ctrl+Shift+u
+* In the desktop IDE, select *View* > *Output*.
+* In the cloud IDE, select *File* > *View* > *Output*.
+====
+. Select *Mule DX Server* from the dropdown:
++
+image::des-output-panel.png[Mule DX Server in the output panel]
 
-[source,raml,linenums]
---
-  post:
-
-  /{ID}:
-    get:
---
 
 [[review-spec-console]]
 == Review Your Specification in the API Console
 
-. Click the image:icon-api-console.png["",14,14] (*API Console*) icon to display your specification in the console.
-. Select methods from the menu in the API Console to view different parts of your specification.
+To display your specification in the console:
+
+. Click your specification file in the editor.
+. Click the image:icon-api-console.png["",14,14] (*API Console*) icon.
+. Wait for the endpoints to render in the API Console.
 +
-image::api-console.png["API Console with resources, methods, and query parameters"]
+The API Console show the endpoints for the specification in API Console.
+For example:
++
+image::des-api-console.png[API specification in the API Console]
++
+[calloutlist]
+.. Click a method to view details.
+.. Display the console menu.
+. Click methods in the console or select items from the menu to view different parts of your specification.
+For example, click *GET*:
++
+image::des-api-console-detail.png["API Console with Get details"]

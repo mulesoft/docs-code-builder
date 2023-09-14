@@ -17,12 +17,16 @@ The process for debugging a Mule app is:
 . Set breakpoints to pause the execution of a flow at lines that you want to inspect or fix.
 +
 Breakpoints are markers that you add on line numbers in a configuration XML file for a Mule application that you are developing.
-. Start the debugger.
++
+See <<add-breakpoint>>.
+. Run the application in debug mode.
 // .. Use the *Run and Debug* icon in the activity bar to open *Run and Debug* menu. 
 // .. Click *Start Debugging (F5)* icon to start the debugger.
++
+See <<run-debug-mode>>.
 . Start execution of a flow in your Mule application.
 +
-For example, trigger an HTTP listener or configure a Scheduler component.
+For example, trigger an HTTP Listener or configure a Scheduler component.
 . When the execution stops at a breakpoint, inspect and fix issues.
 . After addressing an issue at a breakpoint, redeploy (_hot deploy_) the running instance of your application.
 +
@@ -30,18 +34,21 @@ See <<hot-deploy>>.
 . Execute your flow again, and continue debugging until you address all issues. 
 
 
-
 == Debug Console Overview 
 
 image::debugger-view.png["Elements of the debugger view"]
 
 [calloutlist]
-. *Start Debugging*: Start an instance of a Mule application in debugging mode.
-. *Debug Toolbar*: Use shortcuts to control debugging of Mule applications.
+. *Start Debugging*: Starts an instance of a Mule application in debugging mode.
+. *Debug Toolbar*: Controls debugging of Mule applications.
 +
 See <<debug-toolbar>>.
-. *Variables* panel: Provides Mule event and parameter data. The Mule event includes message payload and attribute details, as well as Mule variable data. The parameters include component data, such as the component name.
-. *Run and Debug* (MuleSoft) icon: Opens the *Run and Debug* panel, where you can click *Start Debugging* and find debugging information. Key command: Cmd+Shift+d (Mac) or Ctrl+Shift+d (Windows) 
+. *Variables* panel: Provides Mule event and parameter data.
++
+The Mule event includes message payload and attribute details, as well as Mule variable data. The parameters include component data, such as the component name.
+. *Run and Debug* (MuleSoft) icon: Opens the *Run and Debug* panel, where you can click *Start Debugging* and find debugging information.
++
+Keyboard shortcut: Cmd+Shift+d (Mac) or Ctrl+Shift+d (Windows) 
 . *Watch* panel: Helps you evaluate variables and expressions.
 . *Call Stack* panel: Identifies the functions or procedures that are currently in the stack.
 . *Breakpoints* panel: Lists all breakpoints in your Mule application.
@@ -49,30 +56,102 @@ See <<debug-toolbar>>.
 . *Breakpoint* icon: Identifies a line in the configuration XML to pause execution of the flow so that you can check for and fix any issues.
 
 
+[[add-breakpoint]]
+== Add a Breakpoint
+
+A breakpoint enables you to pause your Mule application at a specific place to learn more about what is happening.
+
+To add a breakpoint to your Mule application:
+
+. In Anypoint Code Builder, on the Explorer view, open your configuration XML file. For example, `my-project-name.xml`.
+. Open the *Run and Debug* panel.
++
+.Show me how
+[%collapsible]
+====
+** Click the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar.
+** Use the keyboard shortcuts:
++
+*** Mac: Cmd+Shift+d
+*** Windows: Ctrl+Shift+d
+** In the desktop IDE, select *View* > *Run*.
+** In the cloud IDE, select *File* > *View* > *Run*.
+====
+
+. Click the line number in your `<flow-ref>` component to add a breakpoint on that component.
++
+image::deb-add-breakpoint.png[]
++
+NOTE: You can also use F9 to add a breakpoint to the current line.
+. In your configuration XML file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components.
+
+All breakpoints appear in the *Breakpoints* panel:
+
+image::breakpoints-panel.png[Breakpoints panel]
+
+
+[[run-debug-mode]]
+== Run Your Application in Debug Mode
+
+After setting up your debug conditions, run a debug session and evaluate your Mule application at each breakpoint:
+
+. Open the *Run and Debug* panel.
++
+.Show me how
+[%collapsible]
+====
+** Click the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar.
+** Use the keyboard shortcuts:
++
+*** Mac: Cmd+Shift+d
+*** Windows: Ctrl+Shift+d
+** In the desktop IDE, select *View* > *Run*.
+** In the cloud IDE, select *File* > *View* > *Run*.
+====
+. In the *Run and Debug* panel, click the image:icon-start-debug.png["",15,15] (*Start Debugging (F5)*) icon for *Debug Mule Application*.
++
+--
+image::run-debugger.png["Run the debugger."]
+
+NOTE: Selecting *Run* > *Start without Debugging* produces an error.
+
+Anypoint Code Builder packages your application and deploys the application to the embedded Mule runtime engine.
+A terminal opens so you can view the status.
+
+image::deb-terminal-running.png[]
+
+The terminal displays a message and the status bar turns red to indicate that the application is running.
+--
+. Use buttons on the <<debug-toolbar, debug toolbar>> to control debugging of Mule applications.
+
+////
+.Open the Terminal
+[%collapsible]
+====
+* In the desktop IDE, select *View* > *Terminal*.
+* In the cloud IDE, select *File* > *View* > *Terminal*
+====
+////
+
 [[debug-toolbar]]
 == Debug Toolbar
-
-Use shortcuts to control debugging of Mule applications:
-// retake this with the latest xml file, fix order of options.
 
 image::debugger-toolbar.png["Debug Toolbar"]
 
 [calloutlist]
-. *Continue*: Proceed to the next breakpoint, if present, and pause execution of the application. Otherwise, continue to the end of the application. Key command: F5
-. *Step Over*: Proceed to the next component in the flow, where execution pauses. At a Flow Ref component (`<flow-ref/>`), clicking *Step Over* proceeds to the next component in the flow but _does not_ follow the Flow Ref logic to a referenced flow or proceed to another flow. Key command: F10
-+ 
-See <<step-over>>.
-. *Step Into*: Proceed to the next component in the flow, where execution pauses. At a Flow Ref component (`<flow-ref/>`), clicking *Step Into* follows the logic of the component and proceeds to the first component in the referenced flow. If a component in a flow follows a Flow Ref component, *Step Into* returns to that component after the last component in the referenced flow (or flows). Key command: F11
+. *Continue* F5
 +
-See <<step-into>>.
-. *Step Out*: Exit the current flow and attempts to return to a previous flow. If a previous flow doesn't exist, the debugger behaves like *Continue*. Key command: Shift+F11
-. *Restart*: Stop and restart the application without packaging new dependencies, such as new connector dependencies in your `pom.xml` file. Key command: Shift+Cmd+F5 (Mac) or Shift+Ctrl+F5 (Windows)
-. *Stop*: Stop execution of the application. The next debugging session that you start packages the application with any new dependencies. Key command: Shift+F5
-
-[[step-over]]
-=== Step Over 
-
-.Configuration XML example:
+Proceeds to the next breakpoint, if present, and pauses execution of the application.
+Otherwise, continues to the end of the application.
+. *Step Over* F10
++
+Proceeds to the next component in the flow, where execution pauses.
+At a Flow Ref component (`<flow-ref/>`), clicking *Step Over* proceeds to the next component in the flow but _does not_ follow the Flow Ref logic to a referenced flow or proceed to another flow. 
++
+.Step Over Details
+[%collapsible]
+====
+*Configuration XML example*:
 [source,xml]
 ----
 <flow name="flow1" doc:name="Flow" >
@@ -85,15 +164,20 @@ See <<step-into>>.
   <logger doc:name="Logger2" message="test2"/>
 </flow>
 ----
-.*Step Over* behavior:
+*Step Over behavior*:
 [calloutlist]
 . Skips `<flow-ref/>` logic
 . Reaches `<logger/>` named `Logger1`
-
-[[step-into]]
-=== Step Into
-
-.Configuration XML example:
+====
+. *Step Into* F11
++
+Proceeds to the next component in the flow, where execution pauses.
+At a Flow Ref component (`<flow-ref/>`), clicking *Step Into* follows the logic of the component and proceeds to the first component in the referenced flow. If a component in a flow follows a Flow Ref component, *Step Into* returns to that component after the last component in the referenced flow (or flows).
++
+.Step Into Details
+[%collapsible]
+====
+*Configuration XML example*:
 [source,xml]
 ----
 <flow name="flow1" doc:name="Flow" >
@@ -106,63 +190,24 @@ See <<step-into>>.
   <logger doc:name="Logger2" message="test2"/> <!--2-->
 </flow>
 ----
-.*Step Into* behavior:
+*Step Into behavior*:
 [calloutlist]
 . Enters `<flow-ref/>` to follow logic to `myNewFlow`
 . Reaches `Logger2` in next flow, `myNewFlow`
 . Returns to flow `flow1` to reach `Logger1`
-
-
-== Add a Breakpoint
-
-A breakpoint enables you to pause your Mule application at a specific place to learn more about what is happening.
-
-To add a breakpoint to your Mule application:
-
-. In Anypoint Code Builder, on the Explorer view, open your `interface.xml`.
-. Select the *Run and Debug* icon in the activity bar:
+====
+. *Step Out* Shift+F11
 +
-image::run-and-debug.png[]
-. Click the line number in your `<flow-ref>` component to add a breakpoint on that component.
+Exits the current flow and attempts to return to a previous flow. If a previous flow doesn't exist, the debugger behaves like *Continue*.
+. *Restart* Shift+Cmd+F5 (Mac) or Shift+Ctrl+F5 (Windows)
++ 
+Stop and restart the application without packaging new dependencies, such as new connector dependencies in your `pom.xml` file. 
+. *Stop* Shift+F5
 +
-image::add-breakpoint.png[]
-+
-NOTE: You can also use F9 to add a breakpoint to the current line.
-. In your `implementation.xml` file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components.
-
-All breakpoints appear in the *Breakpoints* panel:
-
-image::breakpoints-panel.png[]
+Stop execution of the application. The next debugging session that you start packages the application with any new dependencies.
 
 
-== Start a Debug Session
-
-After setting up your debug conditions, you can run a debug session and evaluate your Mule application at each breakpoint.
-
-. In Anypoint Code Builder, on your Run and Debug view, click *Run and Debug*.
-+
-image::start-debugging.png[]
-+
-Anypoint Code Builder packages your application and opens a new terminal that deploys the application to the embedded Mule runtime engine:
-+
-image::packaged-and-running-terminals.png[]
-
-== Test Your Mule Application
-
-. Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/api/flights+`. +
-See xref:ping-locally-deployed-app.adoc[] for more information about how to send requests to your application.
-. In Anypoint Code Builder, notice that the application execution stopped at your first breakpoint.
-+
-image::debug-stop-at-flow-ref.png[]
-. Click *Step Over* on your debug toolbar to move the execution to your next breakpoint.
-+
-In the Debug sidebar, the *Variables* panel shows details about the Mule event at that particular part of the flow.
-+
-image::debugger-stop-db-select.png[]
-. Select the *Step Over* button on your debug toolbar to move the execution to your next breakpoint.
-. In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables and note that you can inspect the database response as an array.
-+
-image::debugger-stop-set-variable.png[]
+////
 
 == Add a Watch Expression
 
@@ -335,22 +380,72 @@ Note that the application returns the response from the database to your REST cl
 --
 ====
 
-== Stop a Debug Session
-
-To stop your debug session, click *Stop* on your debug toolbar.
-
-image::debugger-stop.png[Stop button on the Debug Toolbar]
-
-
+////
 
 [[hot-deploy]]
-== Hot Deploy When Debugging
+== Perform a Hot Deploy When Debugging
 
-Hot deploy as you debug your application. A hot deployment updates a running instance of your application but does not package new dependencies, such as new connector dependencies in your `pom.xml`:
+As you debug your application, periodically perform a hot deployment.
+A hot deployment updates a running instance of your application but does not package new dependencies, such as new connector dependencies in your `pom.xml`.
+
+To perform a hot deploy:
 
 . Ensure your Mule application is running in the IDE.
 . Make an update to your application.
 . Click the *Save and Hot-deploy to Mule Runtime* (lightning) icon to deploy the application with the change.
 +
-image::acb-hot-deploy.png["Hot-deploy (lightning) icon in a running Mule application"]
+image::deb-hot-deploy.png["Hot-deploy (lightning) icon in a running Mule application"]
 
+
+[[stop]]
+== Stop a Debug Session
+
+To stop your debug session, in the *Run and Debug* panel, click the image:icon-stop.png["",15,15] (*Stop*) icon. 
+
+The status bar no longer indicates that the application is running.
+
+////
+
+[[test]]
+== Test Your Application
+
+Use your REST client or a browser to trigger the flow.
+
+. Submit a request.
+For example:
++
+** For the desktop IDE, submit a URI.
++
+[source,URI]
+----
+http://0.0.0.0:8081/flights
+----
+** For the cloud IDE, submit a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. 
++
+See xref:ping-locally-deployed-app.adoc[] for guidance with the URI.
+. In your REST client or browser, check for the response *Flight info*.
++
+If you don't receive this response or if you receive a connection error:
++
+.. Review your XML configuration.
+.. Make sure your application is deployed.
+.. Recheck your HTTP Listener connection.
+
+
+== Test Your Mule Application
+
+. Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/api/flights+`. +
+See xref:ping-locally-deployed-app.adoc[] for more information about how to send requests to your application.
+. In Anypoint Code Builder, notice that the application execution stopped at your first breakpoint.
++
+image::debug-stop-at-flow-ref.png[]
+. Click *Step Over* on your debug toolbar to move the execution to your next breakpoint.
++
+In the Debug sidebar, the *Variables* panel shows details about the Mule event at that particular part of the flow.
++
+image::debugger-stop-db-select.png[]
+. Select the *Step Over* button on your debug toolbar to move the execution to your next breakpoint.
+. In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables and note that you can inspect the database response as an array.
++
+image::debugger-stop-set-variable.png[]
+////
