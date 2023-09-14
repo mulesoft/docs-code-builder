@@ -1,0 +1,255 @@
+//
+//tag::component-title[]
+
+= Until Successful (<component-xml-root/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Executes processors inside its scope, in order, until they all succeed or the scope exhausts the maximum number of retries. 
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+Until Successful runs synchronously. If any processor within the scope fails to connect or to produce a successful result, Until Successful retries all the processors within it, including the one that failed, until all configured retries are exhausted. If a retry succeeds, the scope proceeds to the next component. If the final retry does not succeed, Until Successful produces an error.
+
+Routing is successful if no exception is raised or if the response matches an expression.
+
+Common processes that use Until Successful include:
+
+* Dispatching to outbound endpoints, for example, when calling a remote web service that might have availability issues.
+* Executing a component method, for example, when executing on a Spring bean that may depend on unreliable resources.
+* Using a sub-flow to re-execute several actions until they all succeed.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<until-successful 
+  doc:name="Until successful" 
+  doc:id="mbqhsp" >
+  <!-- Components to execute inside the scope -->     
+</until-successful>
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<until-successful/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `maxRetries` 
+| Maximum number of retries allowed. This attribute can be either a number or an expression that resolves to a number. Error messages show in the following form: `Message: 'until-successful' retries exhausted`. The Mule error type is `MULE:RETRY_EXHAUSTED`.
+
+| `millisBetweenRetries` 
+| Specifies, in milliseconds, the minimum interval between two retries. The actual interval depends on the previous execution, but it should not exceed twice this number. This attribute can be either a number or an expression that resolves to a number. Defaults to `60000` milliseconds (one minute). 
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Example Configuration of the Until Successful Scope
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following XML example configures a flow triggered by a Scheduler component and an Until Successful scope that executes an FTP Write operation:
+
+[source,xml]
+----
+<!-- FTP Connector config-->
+<ftp:config name="FTP_Config" doc:name="FTP Config" >
+  <ftp:connection workingDir="${ftp.dir}" host="${ftp.host}" />
+</ftp:config>
+
+<flow name="untilSuccessfulFlow" >
+  <!-- Scheduler component to trigger the flow-->
+  <scheduler doc:name="Scheduler" >
+    <scheduling-strategy >
+      <fixed-frequency frequency="15" timeUnit="SECONDS"/>
+    </scheduling-strategy>
+  </scheduler>
+  <!-- Until Successful scope-->
+  <until-successful maxRetries="5" doc:name="Until Successful" millisBetweenRetries="3000">
+    <!-- FTP Write operation that executes as part of the Until Successful Scope -->
+    <ftp:write doc:name="Write" config-ref="FTP_Config" path="/"/>
+  </until-successful>
+  <logger level="INFO" doc:name="File upload success" message="File upload success"/>
+  <!-- Error Handler at flow level-->
+  <error-handler>
+    <on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" type="RETRY_EXHAUSTED">
+      <logger level="INFO" doc:name="File upload failed" message="File upload failed"/>
+    </on-error-continue>
+  </error-handler>
+</flow>
+----
+
+Behavior of the example application:
+
+* If the FTP Write operation fails
++
+The Until Successful scope retries the operation every `3000` milliseconds until the operation succeeds, with a limit of `5` retries. If the last execution fails, the scope throws a `MULE:RETRY_EXHAUSTED` error. Then, the `<on-error-continue>` handles the error and executes the Logger with the message: `File upload failed`. 
++
+Before throwing `MULE:RETRY_EXHAUSTED`, Mule also logs each unsuccessful attempt to retry execution of the processors on the Mule event, for example:
++
+[source,logs]
+----
+ERROR 2022-12-09 17:41:44,910 ... event: cdad31c0-782b-11ed-af21-147ddaaf4f97] 
+...UntilSuccessfulRouter: Retrying execution of event, attempt 1 of 5.
+...
+ERROR 2022-12-09 17:41:55,079 ... event: cdad31c0-782b-11ed-af21-147ddaaf4f97] 
+...UntilSuccessfulRouter: Retrying execution of event, attempt 5 of 5.
+----
+* If the FTP Write operation executes successfully in any of the attempts
++
+The next processor after the Until Successful scope executes, in this case, the Logger showing the message: `File upload success`.
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+//tag::variable-propagation[]
+
+== Variable Propagation
+
+Every execution of the Until Successful scope starts with the same variables and values present before the execution of the block. New variables or modifications to already-existing variables while processing one element are not visible in the next execution (in case there is an error). If the execution finishes correctly, the variables (and payload) are propagated to the rest of the flow.
+
+//end::variable-propagation[]
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::transaction-management.adoc#tx_scopes_routers[How Transactions Affect Scopes and Routers]
+
+//end::see-also[]
