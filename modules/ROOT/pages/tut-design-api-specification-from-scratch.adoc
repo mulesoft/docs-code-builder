@@ -1,5 +1,6 @@
 = Create the American Flights API Example
-:page-aliases: ui-tut-design.adoc, design-api-specification-from-scratch.adoc
+//ACB UI links to ui-tut-design.adoc (DO NOT REMOVE)
+:page-aliases: ui-tut-design.adoc, design-api-specification.adoc, design-api-specification-from-scratch.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -10,6 +11,7 @@ Use Anypoint Code Builder to create an API specification example called American
 
 To build, test, synchronize, and publish the specification:
 
+. Meet prerequisites in <<prereqs>>.
 . <<start-spec>>
 . <<add-flight-resource>>
 . <<add-query-params-nested-resources>>
@@ -20,16 +22,24 @@ To build, test, synchronize, and publish the specification:
 
 After creating, testing, synchronizing, and publishing the American Flights API specification, you can xref:implement-api-specification.adoc[implement] the specification within an xref:develop-integration.adoc[integration].
 
+[[prereqs]]
+== Before You Begin
+
+* Set up and access the web or desktop IDE. See xref:setup.adoc[] for guidance.
+
+* Have some familiarity with xref:access-management::business-groups.adoc[business groups]. API specifications belong to a business group.
+
 [[start-spec]]
 == Start American Flights API
 
 Start creating the American Flights API specification. 
 
-image::acb-api-project.png["Project for American Airlines API"]
+image::design-api-1.png["Link to Design an API in the MuleSoft panel"]
 
-. In the activity bar of the IDE, click the *Anypoint Code Builder* (MuleSoft) icon to navigate to Anypoint Code Builder.
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 +
-For more guidance, see xref:design-api-specification.adoc#start-spec[Start an API Specification].
+For more guidance, see xref:des-create-api-specs.adoc.adoc#design-new-api-spec[Create a New API Specification Project].
 . From the *Quick Actions* menu, click *Design an API* from the Anypoint Code Builder menu to start the API specification project:
 +
 [%header,cols="1a,1a"] 
@@ -39,12 +49,15 @@ For more guidance, see xref:design-api-specification.adoc#start-spec[Start an AP
 | *Project Name* | *American Flights API* +
                     Alternatively, provide a similar name of your choice. The name must be unique. The name of the project and specification file is based on the name you provide.
 | *Project Location* | Your home directory or another directory you create (see xref:work-on-home-directory.adoc[])
-| *API Specification Language* | *RAML 1.0*
+| *API Specification Language* | *RAML 1.0* +
+                                  Anypoint Code Builder supports OAS and RAML. 
 | *Business Group* | Group in Anypoint Platform for your API specification (see xref:access-management::business-groups.adoc[])
 |===
 . Select *Create Project* to generate the American Flights API project file: `american-flights-api.raml`.
 +
 The file name is based on the name you provide for the project.
++
+image::acb-api-project.png["Project for American Airlines API"]
 . Proceed to <<add-flight-resource>>.
 
 [[add-flight-resource]]
@@ -55,7 +68,7 @@ In American Flights API, start configuring the specification, and try its *GET* 
 //TODO: CREATE AN INCLUDE FOR THIS COMMON STEP (make description more generic for multiple)
 . Before starting the configuration, open the *Output* panel to the *Mule DX Server* to track the progress of internal processing.
 +
-To open the panel from the command line:
+To open the panel:
 
 .. Press Cmd+Shift+u (Mac) or Ctrl+Shift+u (Windows) to open the Output panel.
 .. Select *Mule DX Server* from the drop-down menu in the panel.
