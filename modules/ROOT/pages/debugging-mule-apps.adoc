@@ -63,21 +63,31 @@ A breakpoint enables you to pause your Mule application at a specific place to l
 
 To add a breakpoint to your Mule application:
 
-. In Anypoint Code Builder, on the Explorer view, open your `interface.xml`.
-. Select the *Run and Debug* icon in the activity bar:
+. In Anypoint Code Builder, on the Explorer view, open your configuration XML file. For example, `my-project-name.xml`.
+. Open the *Run and Debug* pane.
 +
-image::run-and-debug.png[]
+.Show me how
+[%collapsible]
+====
+** Click the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar.
+** Use the keyboard shortcuts:
++
+*** Mac: Cmd+Shift+d
+*** Windows: Ctrl+Shift+d
+** In the desktop IDE, select *View* > *Run*.
+** In the cloud IDE, select *File* > *View* > *Run*.
+====
+
 . Click the line number in your `<flow-ref>` component to add a breakpoint on that component.
 +
-image::add-breakpoint.png[]
+image::deb-add-breakpoint.png[]
 +
 NOTE: You can also use F9 to add a breakpoint to the current line.
-. In your `implementation.xml` file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components.
+. In your configuration XML file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components.
 
 All breakpoints appear in the *Breakpoints* panel:
 
 image::breakpoints-panel.png[]
-
 
 
 [[run-debug-mode]]
@@ -129,8 +139,14 @@ The terminal displays a message and the status bar turns red to indicate that th
 image::debugger-toolbar.png["Debug Toolbar"]
 
 [calloutlist]
-. *Continue*: Proceed to the next breakpoint, if present, and pause execution of the application. Otherwise, continue to the end of the application. Key command: F5
-. *Step Over*: Proceed to the next component in the flow, where execution pauses. At a Flow Ref component (`<flow-ref/>`), clicking *Step Over* proceeds to the next component in the flow but _does not_ follow the Flow Ref logic to a referenced flow or proceed to another flow. Key command: F10
+. *Continue* F5
++
+Proceeds to the next breakpoint, if present, and pauses execution of the application.
+Otherwise, continues to the end of the application.
+. *Step Over* F10
++
+Proceeds to the next component in the flow, where execution pauses.
+At a Flow Ref component (`<flow-ref/>`), clicking *Step Over* proceeds to the next component in the flow but _does not_ follow the Flow Ref logic to a referenced flow or proceed to another flow. 
 +
 .Step Over Details
 [%collapsible]
@@ -153,7 +169,10 @@ image::debugger-toolbar.png["Debug Toolbar"]
 . Skips `<flow-ref/>` logic
 . Reaches `<logger/>` named `Logger1`
 ====
-. *Step Into*: Proceed to the next component in the flow, where execution pauses. At a Flow Ref component (`<flow-ref/>`), clicking *Step Into* follows the logic of the component and proceeds to the first component in the referenced flow. If a component in a flow follows a Flow Ref component, *Step Into* returns to that component after the last component in the referenced flow (or flows). Key command: F11
+. *Step Into* F11
++
+Proceeds to the next component in the flow, where execution pauses.
+At a Flow Ref component (`<flow-ref/>`), clicking *Step Into* follows the logic of the component and proceeds to the first component in the referenced flow. If a component in a flow follows a Flow Ref component, *Step Into* returns to that component after the last component in the referenced flow (or flows).
 +
 .Step Into Details
 [%collapsible]
@@ -177,9 +196,15 @@ image::debugger-toolbar.png["Debug Toolbar"]
 . Reaches `Logger2` in next flow, `myNewFlow`
 . Returns to flow `flow1` to reach `Logger1`
 ====
-. *Step Out*: Exit the current flow and attempts to return to a previous flow. If a previous flow doesn't exist, the debugger behaves like *Continue*. Key command: Shift+F11
-. *Restart*: Stop and restart the application without packaging new dependencies, such as new connector dependencies in your `pom.xml` file. Key command: Shift+Cmd+F5 (Mac) or Shift+Ctrl+F5 (Windows)
-. *Stop*: Stop execution of the application. The next debugging session that you start packages the application with any new dependencies. Key command: Shift+F5
+. *Step Out* Shift+F11
++
+Exits the current flow and attempts to return to a previous flow. If a previous flow doesn't exist, the debugger behaves like *Continue*.
+. *Restart* Shift+Cmd+F5 (Mac) or Shift+Ctrl+F5 (Windows)
++ 
+Stop and restart the application without packaging new dependencies, such as new connector dependencies in your `pom.xml` file. 
+. *Stop* Shift+F5
++
+Stop execution of the application. The next debugging session that you start packages the application with any new dependencies.
 
 
 ////
