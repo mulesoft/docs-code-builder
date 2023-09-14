@@ -7,13 +7,11 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 
-Create a basic integration, add dependencies and connectors to your Mule application, and transform the payload of your response by using DataWeave:
+Create a basic integration, add dependencies and connectors to your Mule application, and configure attributes:
 
 . <<create-integration-project, Create a new integration project>>.
-. <<configure-listener, Configure an HTTP Listener operation and set a payload>>.
-. <<run, Run your application in debug mode>>.
-. <<test, Test your application>>.
-. <<stop, Stop your application>>.
+. <<add-components, Add components to your project>>.
+. <<configure-attributes, Configure attributes for a component>>.
 
 
 == Before You Begin
@@ -28,11 +26,12 @@ To create a new integration project:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
-. From *Quick Actions*, click *Develop an Integration*.
-
+. From *Quick Actions*, click *Develop an Integration*:
++
+image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
 . Complete the form.
 +
-* *Project Name* is a unique name for your project.
+* *Project Name* is a unique name for your project, such as `my-project-name`.
 +
 This name is used as the title and name of the specification file.
 * *Project Location*: Your home directory or another directory you create.
@@ -43,22 +42,22 @@ Don't create the application within another project directory.
 . Click *Create Project*.
 
 
-[[configure-listener]]
-== Configure an HTTP Listener Operation and Set a Payload
+[[add-components]]
+== Add Components to Your Project
 
 The listener is for triggering the flow, and Set Payload provides some test data for the integration.
 
-. In Project Explorer, select the `<project-name>.xml` file. For example:
+. In Project Explorer, select the XML file for your project, such as `my-project-name.xml`.
 +
-image::empty-canvas-state.png["american-ws-anypoint-code-builder.xml file shown in visual representation of its Mule flow and the Mule Configuration file"]
+image::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
 +
 [calloutlist]
-.. The canvas UI provides space for a visual representation of your Mule flows or subflows.
+.. The canvas provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
 . Select *Flow* from the canvas to create an empty flow.
-. In the configuration XML, replace the name of your flow with your flow name. For example,  `getFlights`.
-. Add the HTTP Listener component to your configuration XML:
-.. In the canvas, after your *Flow* component, click the image:icon-plus.png["",15,15] (*Add component*) icon.
+. In the configuration XML, replace the name of the flow `name1` with your flow name. For example, `getFlights`.
+. Add a component to your project from the canvas. For example, add the HTTP Listener component.
+.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* pane, search for and select *Listener* from the *HTTP* results:
 +
 image::main-tutorial-add-first-listener.png["Listener component highlighted in the Add Component section"]
@@ -67,13 +66,16 @@ The configuration XML file now includes the XML for the HTTP Listener into the `
 +
 [source,XML]
 ----
-<flow name="name1" >
+<flow name="getFlights" >
   <http:listener path="" config-ref="" doc:name="Listener" doc:id="ojzfry" />
 
 </flow>
 ----
-. In the configuration XML, before the `<flow/>` element, add the `<http:listener-config/>` component: 
-.. Open the XML configuration menu.
+. Add another component, this time using the XML configuration menu. For example, add the `<http:listener-config/>` component from a snippet.
++
+For more information about snippets, see xref:int-work-with-code-snippets.adoc[].
++
+.. In the configuration XML, before the `<flow/>` element, open the XML configuration menu.
 +
 .Use the keyboard shortcuts
 [%collapsible]
@@ -81,6 +83,8 @@ The configuration XML file now includes the XML for the HTTP Listener into the `
 * Mac: Ctrl+Spacebar
 * Windows: Cmd+Spacebar
 ====
++
+NOTE: Ensure that the cursor is not inside the `flow` element.
 .. Type `http`, and select the `http:listener-config` snippet.
 +
 image::add-http-config-snippet.png["http:listener-config snippet highlighted in the configuration XML menu"]
@@ -93,8 +97,50 @@ The snippet adds the following code:
   <http:listener-connection host="0.0.0.0" port="8081" />
 </http:listener-config>
 ----
-. Configure the attributes for the HTTP Listener operation `<http:listener/>` and `<http:listener-config/>`. For example:
+. Add another component to your flow.
 +
+For example, add a Set Payload component to your HTTP Listener operation:
++
+.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
+.. In the *Add Component* pane, search for and select *Set payload* from the *Transformer* results.
+
+
+Your configuration XML file now looks similar to the following:
+
+[source,xml]
+--
+  <http:listener-config name="HTTP_Listener_config" >
+    <http:listener-connection host="0.0.0.0" port="8081" />
+  </http:listener-config>
+
+  <flow name="getFlights" >
+    <http:listener path="" config-ref="" doc:name="Listener" doc:id="uvapcx" />
+    <set-payload value="" doc:name="Set payload" doc:id="hnxirg" />
+    
+  </flow>
+--
+
+Notice that the Listener component in the canvas now shows an error:
+
+image::int-canvas-error.png["Listener error in the canvas"]
+
+To determine where the error is, select the processor in the canvas.
+Anypoint Code Builder highlights its location within the configuration XML.
+For example:
+
+image::int-error-highlight.png["HTTP Listener highlighted in the flow and in the XML code"]
+
+To fix the error, configure the attributes.
+
+For more information about debugging, see xref:debugging-mule-apps.adoc[].
+
+[[configure-attributes]]
+== Configure Attributes for a Component
+
+After you add the components to the project, configure the attributes. 
+
+For example, configure these attributes for the`<http:listener-config/>`,  `<http:listener/>`, and `<set-payload/>` elements:
+
 [source,xml]
 ----
 <http:listener-config name="inbound-request" doc:name="Listener Config" doc:id="b5c62f-a84a3a"> 
@@ -102,30 +148,19 @@ The snippet adds the following code:
 </http:listener-config>
 
 <flow name="getFlights">
-    <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+    <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" doc:id="htprur" />
+    <set-payload value="Flight info" doc:name="Set Response" doc:id="e43e98-1a9a01"/>
 </flow>
 ----
-+
-When you select a processor in the canvas, Anypoint Code Builder highlights its location within the configuration XML.
-For example:
-+
-image::http-highlight-flow.png["HTTP Listener highlighted in the flow and in the XML code"]
-. Add a Set Payload component to your HTTP Listener operation, and configure its attributes in the configuration XML.
-For example:
-+
-[source,xml]
-----
-<flow name="getFlights" >
-  <http:listener path="" config-ref="inbound-request" doc:name="HTTP /flights" doc:id="htprur" />
-  <set-payload value="Flight info" doc:name="Set Response" doc:id="e43e98-1a9a01"/>
-</flow>
-----
+
 [[check-connection]]
-. Click *Test Connection* in the configuration XML to test the HTTP Listener connection:
-+
+== Test an HTTP Listener Connection
+
+To test an HTTP Listener connection, click *Test Connection* in the configuration XML:
+
 image::http-listener-test-connection.png["HTTP Listener Test Connection link in the configuration XML"]
-+
-The status bar shows the progress.
+
+The status bar shows the progress:
 
 * *Verifying connection inbound-request* indicates that the test is in progress.
 * *Connection is valid* indicates a successful connection. 
@@ -133,78 +168,9 @@ The status bar shows the progress.
 +
 A common code `500` error is `port 8081: Address already in use`. For port conflicts, configure a different port, such as `8082`, and retest the connection. 
 
-[[run]]
-== Run Your Application in Debug Mode
+Before publishing, run your application in debug mode.
 
-. Open the *Run and Debug* pane.
-+
-[%collapsible]
-====
-** Click the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar.
-** In the desktop IDE, select *View* > *Run*.
-** In the cloud IDE, select *File* > *View* > *Run*.
-** Use the keyboard shortcuts:
-+
-*** Mac: Cmd+Shift+d
-*** Windows: Ctrl+Shift+d
-====
+== See Also
 
-. In the *Run and Debug* pane, click the image:icon-start-debug.png["",15,15] (*Start Debugging (F5)*) icon to select *Debug Mule Application*.
-+
-image::run-debugger.png["Run the debugger."]
-+
-Anypoint Code Builder uses Maven to build and deploy your application to its embedded Mule runtime engine.
-+
-Selecting *Run* > *Start without Debugging* produces an error.
-. Open the terminal to monitor the build process.
-+
-[%collapsible]
-====
-* In the desktop IDE, select *View* > *Terminal*.
-* In the cloud IDE, select *File* > *View* > *Terminal*
-====
-+
-For example:
-+
-[source, terminal]
-----
-*******************************************************************************
-* - -  + APPLICATION + - -   *   - - + DOMAIN + - -      * - - + STATUS + - - *
-*******************************************************************************
-* american-ws-anypoint-code-builder-1.0.0-SNAPS * default   * DEPLOYED        *
-*******************************************************************************
-----
-
-For more information about debugging applications, including setting breakpoints, see
-xref:debugging-mule-apps.adoc[].
-
-[[test]]
-== Test Your Application
-
-Use your REST client or a browser to trigger the flow.
-
-. Submit a request.
-For example:
-+
-** For the desktop IDE, submit a URI.
-+
-[source,URI]
-----
-http://0.0.0.0:8081/flights
-----
-** For the cloud IDE, submit a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. 
-+
-See xref:ping-locally-deployed-app.adoc[] for guidance with the URI.
-. In your REST client or browser, check for the response *Flight info*.
-+
-If you don't receive this response or if you receive a connection error:
-+
-.. Review your XML configuration.
-.. Make sure your application is deployed.
-.. Recheck your HTTP Listener connection.
-
-[[stop]]
-== Stop Your Application
-
-To stop the application, in the *Run and Debug* pane, click the image:icon-stop.png["",15,15] (*Stop*) icon. 
-
+* xref:int-work-with-code-snippets.adoc[]
+* xref:debugging-mule-apps.adoc[]

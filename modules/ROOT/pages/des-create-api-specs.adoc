@@ -28,7 +28,12 @@ To create a new API specification project:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
++
+image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
 . From *Quick Actions*, click *Design an API*.
++
+image::design-api-1.png["*Design an API* link highlighted in the *Getting Started* section"]
+
 . Complete the *API Specification* form.
 +
 [%header,cols="20a,60a"] 
@@ -44,14 +49,27 @@ See xref:access-management::business-groups.adoc[].
 NOTE: You cannot change the selected business group after creating the API specification.
 |===
 . Click *Create Project*.
++
+If prompted, trust the authors of the files in the folder.
 
 When the project is ready for editing, the API project and specification open in the IDE.
 
 [[add-resources-and-methods]]
 == Add Resources and Methods to Your Specification
 
-. xref:configure-default-output-panel.adoc[Open the output panel] to track the progress of internal processing as you design your API.
-. In the `<project-name>.raml` file, add your first resource. For example:
+. Open the output panel to track the progress of internal processing as you design your API.
++
+.Open the Output Panel
+[%collapsible]
+====
+* Use the keyboard shortcuts:
++
+** Mac: Cmd+Shift+u
+** Windows: Ctrl+Shift+u
+* In the desktop IDE, select *View* > *Output*.
+* In the cloud IDE, select *File* > *View* > *Output*:
+====
+. In the `my-project-name` file, add your first resource. For example:
 +
 [source,raml,linenums]
 --
@@ -73,7 +91,7 @@ title: My Project
 [[add-query-params-nested-resources]]
 == Add Query Parameters for Your Resources
 
-In the `<project-name>.raml` file, add query parameters to a method. For example:
+In the `my-project-name` file, add query parameters to a method. For example:
 
 [source,raml,linenums]
 --
@@ -91,7 +109,7 @@ In the `<project-name>.raml` file, add query parameters to a method. For example
 [[add-nested-resources-methods]]
 == Add Nested Resources and Methods
 
-In the `<project-name>.raml` file, add nested resources and methods. For example:
+In the `my-project-name` file, add nested resources and methods. For example:
 
 [source,raml,linenums]
 --
