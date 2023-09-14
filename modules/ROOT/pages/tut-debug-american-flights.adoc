@@ -1,4 +1,4 @@
-= Debug Your American Flights Application
+= Debug American Flights
 :page-aliases: debug-add-logger-set-variables.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
@@ -10,9 +10,9 @@ Debug your American Flights interface and implementation.
 
 == Before You Begin
 
-. xref:design-api-specification-from-scratch.adoc[Create the American Flights API Specification]
-. xref:develop-integration.adoc##create-the-american-flights-integration-example[Create the American Flights Integration Example]
-. xref:implement-api-specification.adoc[Implement the American Flights API Specification]
+. xref:design-api-specification-from-scratch.adoc[]
+. xref:develop-integration.adoc##create-the-american-flights-integration-example[]
+. xref:implement-api-specification.adoc[]
 
 == Add Components
 
@@ -94,7 +94,7 @@ To facilitate debugging, add Set Variable and Logger components to your American
 ====
 . Proceed to <<add-breakpoint>>. 
 +
-Learn to set up breakpoints to pause execution of your application.
+Learn to set up breakpoints to pause execution of your app.
 
 [[add-breakpoint]]
 == Add Breakpoints
@@ -117,7 +117,7 @@ Alternatively, use `F9` to add a breakpoint to the line.
 image::breakpoints-panel.png[]
 . Proceed to <<debug>>. 
 +
-Run a debugging session, and inspect the message and variables at different points during your application's execution.
+Run a debugging session, and inspect the message and variables at different points during your app's execution.
 
 [[debug]]
 == Start a Debugging Session
@@ -126,13 +126,13 @@ Run a debugging session, and inspect the message and variables at different poin
 +
 image::start-debugging.png[]
 +
-The IDE packages the application and opens a new terminal that deploys the application to the embedded Mule runtime engine:
+The IDE packages the app and opens a new terminal that deploys the app to the embedded Mule runtime engine:
 +
 image::packaged-and-running-terminals.png[]
 . Proceed to <<test>>.
 
 [[test]]
-== Test Your American Flights Application
+== Test Your American Flights App
 
 After starting your debugging session:
 
@@ -142,7 +142,7 @@ After starting your debugging session:
 * From the cloud IDE: `+https://<web-IDE-instance>/proxy/8081/api/flight+`
 +
 Notice the `_/api/flight_` in the URI for the listener in the interface. For more guidance with URIs, see xref:ping-locally-deployed-app.adoc[].
-. In your American Flights project, notice that the execution of the application stops at your first breakpoint.
+. In your American Flights project, notice that the execution of the app stops at your first breakpoint.
 +
 image::debug-stop-at-flow-ref.png[]
 +
@@ -173,7 +173,7 @@ image:tut-debug-mediatype-java.png[]
 +
 image::tut-debug-mediatype-json.png[]
 //image::debuger-watch-expression-json.png[]
-. Click the *Continue* button in the debug toolbar, and notice that the application returns the response from the database to your REST client or browser.
+. Click the *Continue* button in the debug toolbar, and notice that the app returns the response from the database to your REST client or browser.
 +
 .Click for the complete implementation XML example.
 [%collapsible]
@@ -337,5 +337,5 @@ To stop your debugging session:
 . Select the *Stop* button on your debug toolbar.
 +
 image::debugger-stop.png[]
-. Proceed to xref:deploy-mule-application.adoc[Deploy a Mule Application]
+. Proceed to xref:deploy-mule-application.adoc[]
 
