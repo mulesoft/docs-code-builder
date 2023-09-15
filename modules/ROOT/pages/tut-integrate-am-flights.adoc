@@ -7,7 +7,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Start by creating a basic integration for the American Flights example. This integration provides some of the logic for processing requests from the American Flights API.
+Start by creating a basic integration for the American Flights example. This integration is a Mule application that provides some of the logic for processing requests from the American Flights API.
 
 == Before You Begin
 
@@ -26,7 +26,7 @@ image::acb-mulesoft-in-activity-bar.png["MuleSoft icon in the VS Code Activity B
 . From *Quick Actions*, click *Develop an Integration*:
 +
 image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
-. Configure your integration using these values:
+. Configure your integration project using these values:
 +
 .. Under *Project Name*, type `american-ws-anypoint-code-builder`.
 .. Under *Project Location*, select *Browse*, and then select your home directory.
@@ -90,7 +90,7 @@ The configuration XML file adds the XML for the HTTP Listener into the `<flow/>`
 ----
 . In the configuration XML, before the `<flow/>` element, add the `<http:listener-config/>` component: 
 .. In the configuration XML, press Ctrl+Spacebar (Mac) or Cmd+Spacebar(Windows) to open the XML configuration menu.
-.. Type `http`, and select the `http:listener-config` snippet.
+.. Type `http`, and select the built-in `<http:listener-config/>` snippet.
 +
 image::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu"]
 +
@@ -101,6 +101,8 @@ image::add-http-config-snippet.png["http:listener-config highlighted in the conf
   <http:listener-connection host="0.0.0.0" port="8081" />
 </http:listener-config>
 ----
++
+In the menu, the snippet is a partially configured Mule component that is represented by a _two-dimensional_ box icon. Three-dimensional box icons are reserved for basic component XML that is not preconfigured. For information about code snippets, see xref:int-work-with-code-snippets.adoc[].
 . Configure the attributes for the HTTP Listener operation `<http:listener/>` and `<http:listener-config/>`:
 +
 [source,xml]
@@ -157,10 +159,10 @@ A common code `500` error is `port 8081: Address already in use`. For port confl
 [[run]]
 == Run Your Application in Debug Mode
 
-. Open the *RUN AND DEBUG* panel by pressing Ctrl+Shift+d (Windows) or Cmd+Shift+d (Mac).
+. Open the *Run and Debug* panel by pressing Ctrl+Shift+d (Windows) or Cmd+Shift+d (Mac).
 +
 image::run-debugger.png["Run the debugger."]
-. From the *RUN AND DEBUG* panel, click the triangle icon (*Start Debugging (F5)*) to select *Debug Mule Application*. 
+. From the *Run and Debug* panel, click the triangle icon (*Start Debugging (F5)*) to select *Debug Mule Application*. 
 +
 Anypoint Code Builder uses Maven to build and deploy your application to its embedded Mule runtime engine.
 +

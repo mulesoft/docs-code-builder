@@ -1,4 +1,4 @@
-= Connecting to a Database from American Flights
+= Connecting to a Database from the Integration
 :page-aliases: connect-to-a-db.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -28,7 +28,7 @@ The Database Connector supports a variety of Java Database Connectivity (JDBC) d
 
 Provide the dependency for the `mySQL` driver: 
 
-. Open the *EXPLORER* menu by pressing Cmd+Shift+e (Mac) or Ctrl+Shift+e (Windows).
+. Open the *Explorer* menu by pressing Cmd+Shift+e (Mac) or Ctrl+Shift+e (Windows).
 . Open the `pom.xml` file.
 . Add a new dependency within the `<dependencies/>` element:
 +
@@ -43,7 +43,8 @@ Provide the dependency for the `mySQL` driver:
 +
 image::add-mysql-driver-dependency.png["pom.xml with new dependency highlighted"]
 //TODO: hamburger menu
-. Replace the existing `<configuration/>` element within your `mule-maven-plugin` with a new shared library:
+. If you receive a popup with the message _A build file was modified. Do you want to synchronize the Java classpath/configuration?_, select *Yes*.
+. In the `pom.xml`, replace the existing `<configuration/>` element within your `mule-maven-plugin` with a new shared library:
 +
 [source,xml,linenums]
 --
@@ -62,6 +63,7 @@ image::add-mysql-driver-dependency.png["pom.xml with new dependency highlighted"
     </configuration>
 </plugin>
 --
+. If requested, accept *Yes* to synchronize the Java classpath.
 . Proceed to <<add-db-config>>. 
 
 [[add-db-config]]
@@ -119,7 +121,10 @@ image::add-mysql-driver-dependency.png["pom.xml with new dependency highlighted"
 [[write]]
 == Write a Query to Return All Flights
 
-. From the UI canvas, select the `plus` icon below the HTTP Listener component, and add the user snippet *Database Select*.
+. From the UI canvas, select the `plus` icon below the HTTP Listener component.
+. Add the *Select* operation for Anypoint Connector for Database (Database Connector):
++
+Either search for *Select* or navigate to the operation from *Connectors* > *Database* > *Select*.
 . Provide this configuration for the snippet:
 +
 [source,XML]
@@ -130,6 +135,8 @@ image::add-mysql-driver-dependency.png["pom.xml with new dependency highlighted"
   </db:sql>
 </db:select>
 --
++
+Notice that the `config-ref` attribute references the database connection configuration in `<db:config/>` by its `name`.
 . Review the complete configuration XML:
 +
 [source,XML]
