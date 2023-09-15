@@ -21,31 +21,36 @@ Before publishing an API specification:
 
 To publish your API to Exchange:
 
-. In Anypoint Code Builder, open the specification for your API project, such as `my-project-name`.
+. In Anypoint Code Builder, open the specification for your API project, such as `oas-example`.
 // Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="use-command-palette"]
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Enter `publish` and select the following command:
 +
 [source,command]
 ----
 MuleSoft: Publish API Specification to Exchange
 ----
 +
-image::publish-to-exchange.png["MuleSoft: Publish API Specification to Exchange highlighted in Command Palette"]
+image::des-publish-to-exchange.png["MuleSoft: Publish API Specification to Exchange highlighted in Command Palette"]
 +
 If prompted, allow sign in to Anypoint Platform.
-. Type the project name and press Enter.
-. Confirm each item by pressing Enter:
++
+If you have uncommitted changes, push them before publishing to Exchange.
+. In *Set Project Name*, confirm or type the project name and press Enter.
+. Confirm or change each item and press Enter:
 +
 --
-** Artifact ID 
-** Asset version
-** API version
+** Artifact ID, such as `OAS-Example`
+** Asset version, such as `1.0.0`
+** API version, such as `v1`
 --
++
+Press Escape to cancel publishing.
 +
 The status bar shows the progress.
 When complete, you see a message that the API specification successfully published to Exchange.
 +
-image::publishing-to-exchange-dialog.png["Publishing API specification to Exchange notification highlighted"]
+image::des-publish-to-exchange-dialog.png["Publishing API specification to Exchange notification highlighted"]
 
 . When prompted to implement the API, select:
 +
@@ -60,7 +65,10 @@ After publishing your API specification, you can find it in Anypoint Exchange:
 . Navigate to https://anypoint.mulesoft.com/[Anypoint Platform^] and log in using your credentials.
 . Navigate to https://docs.mulesoft.com/exchange/[Exchange^].
 +
-Your API specification appears as an asset in your organization.
+Your API specification appears as an asset in your organization. For example:
++
+image::des-api-exchange.png["API specification in Exchange"]
+
 
 You can select the API, navigate through its summary, and see all the endpoints you defined in the previous tasks.
 
