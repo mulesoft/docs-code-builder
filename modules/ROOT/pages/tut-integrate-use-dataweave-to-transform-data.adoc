@@ -1,4 +1,4 @@
-= Use DataWeave to Transform Data from the American Flights API Example
+= Transforming Flight Data with DataWeave
 :page-aliases: use-dataweave-to-transform-data.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -15,11 +15,141 @@ Complete these procedures:
 . xref:tut-integrate-am-flights.adoc[] 
 . xref:tut-integrate-connect-to-a-db.adoc[]
 
+
+[[snippets]]
+== Create a User Snippet for the Transformation
+
+Define user snippets in the `mule-xml.json` file. For information about user snippets, see xref:work-with-code-snippets.adoc[].
+
+. In Anypoint Code Builder, navigate to *Configure User Snippets*:
+
+* In the desktop IDE, navigate to *Code* > *Settings* > *Configure User Snippets*.
+* In the cloud IDE, navigate from the File menu to *Preferences* > *Configure User Snippets*.
+* In either IDE, open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
++
+[source,command]
+----
+Snippets: Configure User Snippets
+----
+. In the *Select Snippets File or Create Snippets* field that opens, enter:
++
+[source,command]
+----
+mule-xml.json (Mule XML)
+----
+. If the file has no configurations, `mule-xml.json` provides comments within curly braces:
++
+[source,json]
+--
+{
+	// Place your snippets for mule-xml here. Each snippet is defined under a snippet name and has a prefix, body and
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+}
+--
+. Add this user snippet code to the file: 
++
+[[collapsible]]
+[source,json]
+----
+{
+  "Transform Message": {
+    "prefix": "muledx:transform-message",
+    "body": [
+      "<ee:transform doc:name=\"${1:Transform Message}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+      "  <ee:message>",
+      "    <ee:set-payload>",
+      "      <![CDATA[${2:DataWeave}]]>",
+      "    </ee:set-payload>",
+      "  </ee:message>",
+      "</ee:transform>"
+    ]
+  },
+  "Mule Flow": {
+    "prefix": "muledx:flow",
+    "body": [
+      "<flow name=\"${1:$TM_FILENAME_BASE-Flow}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+        "",
+      "</flow>"
+  ]
+  },
+  "HTTP Listener Config": {
+    "prefix": "muledx:http-listener-config",
+    "body": [
+      "<http:listener-config name=\"${1:httpListenerConfig}\" doc:name=\"${2:Listener Config}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+      "  <http:listener-connection host=\"${3:Host}\" port=\"${4:Port}\"/>",
+      "</http:listener-config>"
+    ]
+  },
+  "HTTP Listener": {
+    "prefix": "muledx:http-listener",
+    "body": [
+      "<http:listener path=\"/${1:path}\" config-ref=\"${2:httpListenerConfig}\" doc:name=\"${3:Listener}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
+    ]
+  },
+  "Set Payload": {
+    "prefix": "muledx:set-payload",
+    "body": [
+      "<set-payload value=\"${1:#[payload]}\" doc:name=\"${2:Set Payload}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
+    ]
+  },
+  "Set Variable": {
+    "prefix": "muledx:set-variable",
+    "body": [
+      "<set-variable variableName=\"${1:name}\" value=\"${2:#[payload]}\" doc:name=\"${3:Set Variable}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
+    ]
+  },
+  "Logger": {
+    "prefix": "muledx:logger",
+    "body": [
+      "<logger level=\"INFO\" message=\"${1:#[payload]}\" doc:name=\"${2:Logger}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
+    ]
+  },
+  "Database Config - MySQL": {
+    "prefix": "muledx:db-config-mysql",
+    "body": [
+      "<db:config name=\"${1:DatabaseConfig}\" doc:name=\"${2:mySQL DB}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+      "  <db:my-sql-connection host=\"${3:Host}\" port=\"${4:Port}\" user=\"${5:Username}\" password=\"${6:Password}\" database=\"${7:DatabaseName}\" />",
+      "</db:config>"
+    ]
+  },
+  "Database Select": {
+    "prefix": "muledx:db-select",
+    "body": [
+      "<db:select config-ref=\"${1:DatabaseConfigRef}\" doc:name=\"${2:Select}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+      "  <db:sql>",
+      "    <![CDATA[${3:SQL}]]>",
+      "  </db:sql>",
+      "</db:select>"
+    ]
+  }
+}
+----
++
+The user snippets provide starting configurations for several Mule components, including Transform Message. 
+. Proceed to <<return-payload>>. 
+
+[[return-payload]]
 == Return the Payload as JSON
 
 . In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
-. From the UI canvas, insert the user snippet `Transform Message` below the Database Select operation.
+. From the UI canvas, insert the user snippet `Transform Message` below the Database Select operation:
 +
+Below the Listener, click the *+* icon, and navigate to *Snippets* > *User Snippets* > *Transform Message*.
++
+If the *User Snippets* pane is empty at first, wait a moment, and try again. Alternatively, navigate to the `muledx:transform-message` snippet from the configuration XML.
++
+//TODO: image seems out of date; where's the plus icon?
 image::transform-with-output-json.png["Transform component highlighted"]
 +
 .User snippet XML:
@@ -33,7 +163,13 @@ image::transform-with-output-json.png["Transform component highlighted"]
   </ee:message>
 </ee:transform>
 ----
-. Within the `<![CDATA[]]>` add a DataWeave script that outputs the message payload to a JSON format:
+. In the configuration XML, add the `doc:name` value *Transform Message* or similar to the `<ee:transform/>` component:
++
+----
+<ee:transform doc:name="Transform Message" doc:id="423214-fac9c4">
+...
+----
+. Within `<![CDATA[]]>` add a DataWeave script that outputs the message payload to a JSON format:
 +
 [source,dataweave]
 --
