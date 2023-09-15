@@ -1,5 +1,6 @@
-= Create an Integration for the American Flights Example
-:page-aliases: ui-tut-integrate.adoc
+= Integrating American Flights
+//ACB UI links to ui-tut-integrate.adoc (DO NOT REMOVE)
+:page-aliases: ui-tut-integrate.adoc, create-basic-integration.adoc, develop-integration.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -10,16 +11,22 @@ Start by creating a basic integration for the American Flights example. This int
 
 == Before You Begin
 
-* xref:create-xml-snippets.adoc[]
-* Install a REST client such as Postman or Advanced REST Client. 
+Complete these procedures:
+
+* xref:tut-design-am-flights-api.adoc[] (all tasks from creating the API specification to publishing the specification to Exchange)
+* Installing a REST client such as Postman or Advanced REST Client. 
 
 == Create a Mule Application
 
-Start an integration application for the American Flights example. For more guidance, see xref:develop-integration.adoc#start-an-integration[Start an Integration].
+Start an integration application for the American Flights example.
 
-. Open Anypoint Code Builder from the IDE.
-. Select *Develop an Integration* from the *Quick Actions* menu.
-. Configure your integration using the following values:
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
++
+image::acb-mulesoft-in-activity-bar.png["MuleSoft icon in the VS Code Activity Bar"]
+. From *Quick Actions*, click *Develop an Integration*:
++
+image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
+. Configure your integration using these values:
 +
 .. Under *Project Name*, type `american-ws-anypoint-code-builder`.
 .. Under *Project Location*, select *Browse*, and then select your home directory.
@@ -200,6 +207,6 @@ If you do not receive this response or if you receive a connection error, review
 . In Anypoint Code Builder, select the stop icon from the toolbar.
 +
 image::stop-mule-application.png["Stop icon highlighted in the toolbar"]
-. Proceed to xref:connect-to-a-db.adoc[]. 
+. Proceed to xref:tut-integrate-connect-to-a-db.adoc[]. 
 +
 Import a connector from Exchange, and connect to an existing database that returns data about flights for the American Flights API.
