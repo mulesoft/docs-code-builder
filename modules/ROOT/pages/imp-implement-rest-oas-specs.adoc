@@ -1,92 +1,83 @@
-= Implementing REST or OAS API Specifications
+= Implementing an OAS or RAML  API Specifications
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
-
-// no corresponding Tutorial topic
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-include::partial$acb-reusable-steps.adoc[tags="in-progress"]
 
-////
-
-Anypoint Code Builder enables you to implement RAML 0.8, 1.0 and OAS 2.0 and 3.0 API specifications.
+Use Anypoint Code Builder implement OAS 2.0 and 3.0 and RAML 0.8 and 1.0 API specifications.
 
 == Before You Begin
 
-Before getting started, ensure that your API specification is published on Exchange.
+. xref:setup.adoc[Set up and access the web or desktop IDE].
+. xref:des-publish-api-spec-to-exchange.adoc[Publish your API specification to Exchange].
+. xref:int-create-integrations.adoc[Create your integration (Mule app)]
 
-You can publish your RAML or OAS API specification to exchange using different methods:
-
-* Manually publish your API specification files by publishing a new asset on Exchange. +
-See xref:exchange::to-create-an-asset.adoc#create-an-api-asset[Create an API Asset].
-* Publish your API specification from Anypoint Studio. +
-See xref:studio::publish-api-project-to-exchange.adoc[Publish an API Project to Exchange]
-* Publish your API specification using Anypoint CLI. +
-See xref:anypoint-cli::exchange-assets.adoc#exchange-asset-upload[Exchange Assets].
 
 == Implement an API Specification
 
-. In your cloud IDE instance, navigate to your Anypoint Code Builder view:
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 +
-image::anypoint-code-builder-view.png[]
-. Select *Implement an API*.
+image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
+. From *Quick Actions*, click *Implement an API*.
 +
-image::implement-api-option-mat.png[]
-. Configure your project using the following values:
+image::implement-api-option-mat.png["*Implement an API* link highlighted in the *Getting Started* section"]
+. Complete the *Implement an API Specification* form.
 +
-image::implement-api-configure-1.png[]
+[%header,cols="20a,60a"] 
+|===
+| Field Name | Field Value
+
+| *Project Name* | Unique name for your project. This name is used as the title and name of the specification file.
+For example, if the project name is "OAS Example", the specification file name is `oas-example`.
+| *Project Location* | Your home directory or another directory you create (see xref:work-on-home-directory.adoc[]).
+
+| *Show filters* |See xref:filter-search-results.adoc[] for more information.
+|===
+
+. In *Search Asset by name*:
 +
-[calloutlist]
-.. *Project Name*: Type a name for your project.
-.. *Project Location*: Select *Browse*, browse through your home directory, and click *OK* to select a specific location for your project.
-.. Search for an API specification published in Exchange to implement. +
-Start typing the name of the API specification that you want to implement and hit `enter` to get a list of possible results. Click *Add asset* to select the API specification that you want:
+.. Start typing the name of an API specification that is published to Exchange.
+.. Press Enter to display a list of possible results.
+.. Click *Add Asset* to select the API specification:
 +
-image::implement-api-add-asset.png[]
-.. *Show filters*: Enables you to filter search results. See xref:filter-search-results.adoc[] for more information.
+image::imp-api-search.png[Search an API from Exchange]
 
 Anypoint Code Builder creates the necessary flows for each endpoint on your API specification endpoints.
 
-// implement-a-rest-oas-api-specification
 
-Anypoint Code Builder enables you to implement RAML 0.8, 1.0 and OAS 2.0 and 3.0 API specifications.
+== Import an API Specification into an Implementation
 
-== Before You Begin
+If you have already xref:int-create-integrations.adoc[created an integration], you can import your API specification into it:
 
-Before getting started, ensure that your API specification is published on Exchange.
-
-You can publish your RAML or OAS API specification to exchange using different methods:
-
-* Manually publish your API specification files by publishing a new asset on Exchange. +
-See xref:exchange::to-create-an-asset.adoc#create-an-api-asset[Create an API Asset].
-* Publish your API specification from Anypoint Studio. +
-See xref:studio::publish-api-project-to-exchange.adoc[Publish an API Project to Exchange]
-* Publish your API specification using Anypoint CLI. +
-See xref:anypoint-cli::exchange-assets.adoc#exchange-asset-upload[Exchange Assets].
-
-== Implement an API Specification
-
-. In your cloud IDE instance, navigate to your Anypoint Code Builder view:
+. In Anypoint Code Builder, open your integration project in the explorer view. For example, `my-project-name`.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Enter `import` and select the following command:
 +
-image::anypoint-code-builder-view.png[]
-. Select *Implement an API*.
+[source,command]
+--
+MuleSoft: Import Asset from Exchange
+--
+. Select *Rest API*.
+. If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code.
+. Type the name of your API specification and press Enter. For example, `OAS Example`.
+. Wait for the IDE to load a list of matches to the name:
 +
-image::implement-api-option-mat.png[]
-. Configure your project using the following values:
+image::imp-assets-from-exchange.png["Assets from Exchange dropdown"]
+. At the prompt, select the version of the API to import, such as `v1.0.1`.
+. When prompted to scaffold the API dependency, select *Yes*.
 +
-image::implement-api-configure-1.png[]
+This step adds the API specification as a dependency in your project's `pom.xml` file
+and creates a new configuration XML file, such as `oas-example.xml`:
 +
-[calloutlist]
-.. *Project Name*: Type a name for your project.
-.. *Project Location*: Select *Browse*, browse through your home directory, and click *OK* to select a specific location for your project.
-.. Search for an API specification published in Exchange to implement. +
-Start typing the name of the API specification that you want to implement and hit `enter` to get a list of possible results. Click *Add asset* to select the API specification that you want:
-+
-image::implement-api-add-asset.png[]
-.. *Show filters*: Enables you to filter search results. See xref:filter-search-results.adoc[] for more information.
+image::imp-new-config-file.png["New configuration file in the explorer view"]
 
-Anypoint Code Builder creates the necessary flows for each endpoint on your API specification endpoints.
 
-////
+// add relevant stuff from tut-implement-am-flights-api
+
+== See Also
+
+* xref:int-create-integrations.adoc[]
