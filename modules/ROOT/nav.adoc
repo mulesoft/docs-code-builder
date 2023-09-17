@@ -1,49 +1,47 @@
 .xref:index.adoc[Anypoint Code Builder]
-* xref:index.adoc[]
+* xref:index.adoc[Anypoint Code Builder Overview]
 * xref:acb-release-notes.adoc[Release Notes]
 
-//TODO: CHANGE FILE NAME (and TITLE?) of setup.adoc
-* xref:setup.adoc[Getting Started]
-** xref:configure-permissions.adoc[]
-** xref:use-the-command-palette.adoc[]
-** xref:customize-look-and-feel.adoc[]
-** xref:work-on-home-directory.adoc[]
+* xref:setup.adoc[Setting Up and Accessing Anypoint Code Builder]
+** xref:accept-terms-and-conditions.adoc[Accept Terms and Conditions]
+** xref:configure-permissions.adoc[Assign Permissions]
+** xref:load-acb-web-ide.adoc[Launch the Cloud IDE]
+*** xref:connect-eu-cloud.adoc[Access Code Builder From EU Cloud]
+** xref:log-in-anypoint-platform.adoc[Connect to Your Anypoint Platform Account]
+** xref:configure-default-output-panel.adoc[Configure the Default Output Panel]
+** xref:manage-web-ide-instance.adoc[Manage Your Cloud IDE Instance]
+
+* xref:get-started.adoc[Get Started]
+** xref:use-the-command-palette.adoc[Browse the Command Palette]
+** xref:customize-look-and-feel.adoc[Specify the Theme]
+** xref:work-on-home-directory.adoc[Configure Your Home Directory]
+** xref:filter-search-results.adoc[Filter Search Results]
+** xref:deploy-a-mule-application-to-cloudhub.adoc[Deploy a Mule Application to CloudHub]
+** xref:ping-locally-deployed-app.adoc[Trigger a Flow in Your Development Environment]
+
 
 // TUTORIALS
 * xref:tutorials.adoc[]
+** xref:tut-design-am-flights-api.adoc[]
+*** xref:tut-design-api-add-request-response-details.adoc[]
+*** xref:tut-design-api-test-specification.adoc[]
+*** xref:tut-design-api-synchronize-with-design-center.adoc[]
+*** xref:tut-design-api-publish-api-spec-to-exchange.adoc[]
 
-** xref:tut-af-amflights-overview.adoc[]
-*** xref:tut-af-design-am-flights-api.adoc[]
-**** xref:tut-af-design-api-add-request-response-details.adoc[]
-**** xref:tut-af-design-api-test-specification.adoc[]
-**** xref:tut-af-design-api-synchronize-with-design-center.adoc[]
-**** xref:tut-af-design-api-publish-api-spec-to-exchange.adoc[]
+** xref:tut-integrate-am-flights.adoc[]
+*** xref:tut-integrate-connect-to-a-db.adoc[]
+*** xref:tut-integrate-use-dataweave-to-transform-data.adoc[]
 
-*** xref:tut-af-integrate-am-flights.adoc[]
-**** xref:tut-af-integrate-connect-to-a-db.adoc[]
-**** xref:tut-af-integrate-use-dataweave.adoc[]
-
-*** xref:tut-af-implement-am-flights-api.adoc[]
-*** xref:tut-af-debug-am-flights.adoc[]
-*** xref:tut-af-deploy-am-flights.adoc[]
-
-** xref:tut-local-api-specification.adoc[]
-
-** xref:tut-graphql-implement-api.adoc[]
-*** xref:tut-graphql-test-first-implementation.adoc[]
-*** xref:tut-graphql-configure-flow-responses.adoc[]
-
-** xref:tut-contacts-create-synchronization-sfdc-api.adoc[]
-*** xref:tut-contacts-create-config-files.adoc[]
-*** xref:tut-contacts-sync-api-configure-queries.adoc[]
-*** xref:tut-contacts-store-data-in-parallel.adoc[]
-
-** xref:tut-slack-create-escalation-api.adoc[]
-*** xref:tut-slack-create-config-files-sfdc.adoc[]
-*** xref:tut-slack-extract-payload-information.adoc[]
-*** xref:tut-slack-add-condition-to-your-flow.adoc[]
-*** xref:tut-slack-configure-integration.adoc[]
-
+** xref:tut-implement-am-flights-api.adoc[]
+** xref:tut-debug-am-flights.adoc[]
+** xref:tut-deploy-am-flights.adoc[]
+//THESE SHOULD MOVE (SUGGEST TO INTEGRATE), NOT TUTORIALS:
+** xref:package-mule-application.adoc[]
+** xref:dataweave-validations.adoc[]
+** xref:import-dataweave-library.adoc[]
+//THIS SHOULD MOVE (SUGGEST TO INTEGRATE):
+// non-tutorial
+* xref:upload-a-project.adoc[Importing Projects]
 
 // DESIGN
 * xref:des-designing-api-specs.adoc[]
@@ -57,7 +55,7 @@
 ** xref:int-create-integrations.adoc[]
 ** xref:int-work-with-code-snippets.adoc[]
 ** xref:int-create-secure-configs.adoc[]
-** Using DataWeave (suggest landing page)
+** xref:int-use-dw-to-transform-data.adoc[]
 // *** xref:int-preview-dw-transforms.adoc[Preview DataWeave Transformations]
 // *** xref:int-address-dw-errors.adoc[Address DataWeave Errors]
 // *** xref:int-mock-data-using-dw-libraries.adoc[Mock Data Using DataWeave Libraries]
@@ -70,27 +68,37 @@
 ** xref:imp-implement-local-api-specs.adoc[Implement Local API Specs]
 
 
+
+// DEBUG DEPLOY PACKAGE
+* xref:debugging-deploying-packaging.adoc[]
+** xref:debugging-mule-apps.adoc[]
+** xref:deploy-mule-apps.adoc[Deploy Mule Apps]
+** xref:package-mule-apps.adoc[Package Mule Apps]
+
+//THESE SHOULD MOVE (SUGGEST TO TUTORIALS):
+// EXAMPLES did not touch (except to fix errors)
+* xref:code-builder-usecases.adoc[Examples]
+** xref:create-synchronization-sfdc-api.adoc[]
+*** xref:create-config-files.adoc[]
+*** xref:sync-api-configure-queries.adoc[]
+*** xref:store-data-in-parallel.adoc[]
+** xref:create-escalation-slack-api.adoc[]
+*** xref:create-config-files-slack-sfdc.adoc[]
+*** xref:extract-payload-information.adoc[]
+*** xref:add-condition-to-your-flow.adoc[]
+*** xref:configure-slack-integration.adoc[]
+
+** xref:local-api-specification-tutorial.adoc[]
+
+** xref:implement-a-graphql-api.adoc[]
+*** xref:test-graphql-first-implementation.adoc[]
+*** xref:configure-graphql-flow-responses.adoc[]
+
+
 * xref:troubleshooting.adoc[]
 // ** xref:manage-mule-runtime.adoc[Troubleshooting Mule Runtime in Code Builder]
 ** xref:troubleshoot-app-loading-errors.adoc[]
 ** xref:troubleshoot-mule-runtime-errors.adoc[]
 
-//TODO: JUST COMPONENTS RIGHT NOW; WILL GROW AND REQ LANDING PAGE POST GA
-* xref:acb-components.adoc[Reference]
-
-//TODOS
-* TODO: DISCUSS TOC OPTIONS
-** xref:configure-default-output-panel.adoc[]
-** xref:connect-databases.adoc[]
-** xref:connect-eu-cloud.adoc[]
-** xref:create-xml-snippets.adoc[]
-** xref:debug-mule-apps.adoc[]
-** xref:debugging-deploying-packaging.adoc[]
-** xref:debugging-mule-apps.adoc[]
-** xref:get-started.adoc[]
-** xref:load-acb-web-ide.adoc[]
-** xref:log-in-anypoint-platform.adoc[]
-** xref:mock-data-using-dw-library.adoc[]
-** xref:package-mule-apps.adoc[]
-** xref:ref-commands.adoc[]
-** xref:send-feedback.adoc[]
+//TODO: NEED TO ADD COMPONENT REFS AND LANDING PAGE
+* xref:ref-commands.adoc[Command Reference]
