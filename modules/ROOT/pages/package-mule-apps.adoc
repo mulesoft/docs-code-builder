@@ -1,0 +1,37 @@
+= Package a Mule Application
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+To package a Mule application into a deployable JAR file:
+
+. Open the Mule project you want to package in Anypoint Code Builder.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _Task: Run Task_.
++
+image::run-task-acb.png[]
+. Select *mule*.
++
+image::run-task-acb-mule.png[]
+. Select *mule: Package*.
++
+image::mule-package-task.png[]
+. After getting a *BUILD SUCCESS* message on your terminal, navigate to the *target* directory on your root project's directory and find your packaged Mule application JAR file.
+
+== Use a Lightweight Package
+
+A lightweight package of a Mule application does not include any dependencies declared in the `pom.xml` file. This JAR file cannot be deployed to a Mule runtime engine, it only offers a way to archive just the Mule application’s source files and metadata required to import the JAR package back into Anypoint Studio.
+
+. Open the Mule project you want to package in Anypoint Code Builder.
+. Open the Command Palette (`ctrl/cmd + shift + P`) and type _Task: Run Task_.
++
+image::run-task-acb.png[]
+. Select *mule*.
++
+image::run-task-acb-mule.png[]
+. Select *mule: Package Only Sources*.
++
+image::mule-only-sources-task.png[]
+. After getting a *BUILD SUCCESS* message on your terminal, navigate to the *target* directory on your root project's directory and find your packaged Mule application JAR file.
+
+== See Also
+
+* xref:mule-runtime::package-a-mule-application.adoc[Package a Mule Application]

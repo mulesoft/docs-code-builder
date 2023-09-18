@@ -1,0 +1,343 @@
+= Debugging the American Flights App
+:page-aliases: debug-add-logger-set-variables.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Debug your American Flights interface and implementation. 
+
+== Before You Begin
+
+Complete these procedures:
+
+. xref:tut-design-am-flights-api.adoc[]
+. xref:tut-integrate-am-flights.adoc[]
+. xref:tut-implement-am-flights-api.adoc[]
+
+== Add Components
+
+To facilitate debugging, add Set Variable and Logger components to your American Flights implementation:
+
+. Open the implementation file (`implementation.xml`).
+. Below the Database Select operation (`<db:select/>`) named *Query Flights*, add a Set Variable component. 
+. In the configuration XML, provide this `<set-variable/>` configuration:
++
+[source,xml]
+----
+<set-variable value="#[payload]" 
+     doc:name="Set variable Payload" 
+     variableName="databasePayload" />
+----
+. Below the Set Variable component, add a Logger component with this configuration:
++
+[source,xml]
+----
+<logger doc:name="Log Payload" message="#[
+    %dw 2.0
+    output application/json
+    ---
+    payload]" /> 
+----
++
+.Click for the complete implementation XML example.
+[%collapsible]
+====
+[source,xml]
+--
+<flow name="getFlights">
+    <logger doc:name="Logger" doc:id="ahcnzm" />
+    <db:select doc:name="Query Flights" doc:id="pvuqsc" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
+
+    <set-variable value="#[payload]" doc:name="Set variable Payload" 
+         variableName="databasePayload" doc:id="vtptsr" />  //<1>
+
+    <ee:transform doc:name="Transform Message" doc:id="uniqueId" >
+        <ee:message >
+            <ee:set-payload >
+                <![CDATA[
+                %dw 2.0
+                output application/json
+                ---
+                payload map ( payload01 , indexOfPayload01 ) -> {
+                  ID: payload01.ID,
+                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  price: payload01.price default 0,
+                  departureDate: payload01.takeOffDate as String default "",
+                  origin: payload01.fromAirport default "",
+                  destination: payload01.toAirport default "",
+                  emptySeats: payload01.seatsAvailable default 0,
+                  plane: {
+                    "type": payload01.planeType default "",
+                    totalSeats: payload01.totalSeats default 0
+                  }
+                }
+                ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+
+<logger doc:name="Log Payload" message="#[
+    %dw 2.0
+    output application/json
+    ---
+    payload]" /> //<1>
+
+</flow>
+--
+[calloutlist]
+.. Set Variable component
+.. Logger component
+====
+. Proceed to <<add-breakpoint>>. 
++
+Learn to set up breakpoints to pause execution of your app.
+
+[[add-breakpoint]]
+== Add Breakpoints
+
+Add breakpoints to your American Flights project:
+
+. Open the _interface_ (`interface.xml`) for your American Flights project. 
+. Select the *Run and Debug* icon in the activity bar:
++
+image::run-and-debug.png[]
+. In implementation (`interface.xml`), add a breakpoint to the line that contains the `<flow-ref/>` component.
++
+image::add-breakpoint.png[]
++
+Alternatively, use `F9` to add a breakpoint to the line.
+. Open the implementation file (`implementation.xml`) for your American Flights project, and add breakpoints to the `<db:select/>` and `<set-variable/>` components.
++
+. Notice that all the breakpoints are now listed in the *Breakpoints* panel:
++
+image::breakpoints-panel.png[]
+. Proceed to <<debug>>. 
++
+Run a debugging session, and inspect the message and variables at different points during your app's execution.
+
+[[debug]]
+== Start a Debugging Session
+
+. From the *Run and Debug* menu, click *Debug Mule Application*.
++
+image::start-debugging.png[]
++
+The IDE packages the app and opens a new terminal that deploys the app to the embedded Mule runtime engine:
++
+image::packaged-and-running-terminals.png[]
+. Proceed to <<test>>.
+
+[[test]]
+== Test Your American Flights App
+
+After starting your debugging session:
+
+. Make a GET request to the listener in the _interface_ (`interface.xml`) instead of the implementation:
+
+* From the desktop IDE: `+http://localhost:8081/api/flight+`
+* From the cloud IDE: `+https://<web-IDE-instance>/proxy/8081/api/flight+`
++
+Notice the `_/api/flight_` in the URI for the listener in the interface. For more guidance with URIs, see xref:ping-locally-deployed-app.adoc[].
+. In your American Flights project, notice that the execution of the app stops at your first breakpoint.
++
+image::debug-stop-at-flow-ref.png[]
++
+The breakpoint is located in you interface file (`interface.xml`).
+. In your debug toolbar, click the *Step Over* button to continue execution to the next breakpoint, at the `<db:select/>` element in `implementation.xml`.
+. In the *Run and Debug* sidebar, notice that the *Variables* panel provides information about the Mule event at the breakpoint.
++
+image::debugger-stop-db-select.png[]
+. Click the *Step Over* button on your debug toolbar to continue execution to your next breakpoint, at the `<set-variable/>` element.
+. In the *Variables* panel, navigate to *Mule Message* > *Payload*, and notice that the database response is an array of flight data.
++
+image::debugger-stop-set-variable.png[]
+. Proceed to <<watch>>.
+
+[[watch]]
+== Add a Watch Expression
+
+. From the *Run and Debug* sidebar, open the *Watch* panel.
+. Select the `plus` icon in the panel, and add the expression `payload.^mediaType`.
++
+image::debug-add-expression.png[]
+. Click the *Step Over* button until your execution moves to the Transform Message component (`<ee:transform/>`).
+. Notice that the payload is `application/java`.
++
+image:tut-debug-mediatype-java.png[]
+. Continue clicking the *Step Over* button until you reach the Logger component (`<logger>`).
+. Notice that your payload transforms to `application/json`.
++
+image::tut-debug-mediatype-json.png[]
+//image::debuger-watch-expression-json.png[]
+. Click the *Continue* button in the debug toolbar, and notice that the app returns the response from the database to your REST client or browser.
++
+.Click for the complete implementation XML example.
+[%collapsible]
+====
+[source,JSON]
+--
+[
+    {
+        "ID": 1,
+        "code": "rree0001",
+        "price": 541,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 787",
+            "totalSeats": 200
+        }
+    },
+    {
+        "ID": 2,
+        "code": "eefd0123",
+        "price": 300,
+        "departureDate": "2016-01-25T00:00:00",
+        "origin": "MUA",
+        "destination": "CLE",
+        "emptySeats": 7,
+        "plane": {
+            "type": "Boeing 747",
+            "totalSeats": 345
+        }
+    },
+    {
+        "ID": 3,
+        "code": "ffee0192",
+        "price": 300,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 777",
+            "totalSeats": 300
+        }
+    },
+    {
+        "ID": 4,
+        "code": "rree1000",
+        "price": 200,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "CLE",
+        "emptySeats": 5,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 5,
+        "code": "rree1093",
+        "price": 142,
+        "departureDate": "2016-02-11T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 1,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 6,
+        "code": "ffee1112",
+        "price": 954,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "CLE",
+        "emptySeats": 100,
+        "plane": {
+            "type": "Boeing 787",
+            "totalSeats": 200
+        }
+    },
+    {
+        "ID": 7,
+        "code": "eefd1994",
+        "price": 676,
+        "departureDate": "2016-01-01T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 777",
+            "totalSeats": 300
+        }
+    },
+    {
+        "ID": 8,
+        "code": "ffee2000",
+        "price": 300,
+        "departureDate": "2016-02-20T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 30,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 9,
+        "code": "eefd3000",
+        "price": 900,
+        "departureDate": "2016-02-01T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 10,
+        "code": "eefd4511",
+        "price": 900,
+        "departureDate": "2016-01-15T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 100,
+        "plane": {
+            "type": "Boeing 777",
+            "totalSeats": 300
+        }
+    },
+    {
+        "ID": 11,
+        "code": "rree4567",
+        "price": 456,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 100,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    }
+]
+--
+====
+. Proceed to <<stop>>.
+
+[[stop]]
+== Stop the Debugging Session
+
+To stop your debugging session: 
+
+. Select the *Stop* button on your debug toolbar.
++
+image::debugger-stop.png[]
+. Proceed to xref:tut-deploy-am-flights.adoc[]
+
