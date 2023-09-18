@@ -1,0 +1,334 @@
+//
+//tag::component-title[]
+
+= Cache Scope (<ee:cache/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Store and reuse frequently called data.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+You can use a Cache scope to reduce the processing load on the Mule instance and to increase the speed of message processing within a flow. It is particularly effective for these tasks:
+
+* Processing repeated requests for the same information.
+* Processing requests for information that involve large repeatable streams.
+
+When a message processor in a Mule app sends a message to the Cache scope, the parent flow expects an output. The Cache scope processes the message payload, delivers the output to the parent flow, and saves the output (that is, caches the response). The next time the Cache scope receives the same kind of message payload, the scope can offer a cached response rather than invoking a potentially time-consuming process again.
+
+For instance, you can use a Cache scope to manage customer requests for flight information. Many customers might request the same pricing information about flights from San Francisco to Buenos Aires. Rather than using a lot of processing power to send separate requests to several airline databases with each customer query, you can use a Cache scope to arrange to send a request to the databases fewer times – say, once every ten minutes – and present users with the cached flight pricing information. Where timeliness of data is not critical, Cache scope can save time and processing power.
+
+Note that you can put any number of message processors (such as connectors or components) into a Cache scope and configure the caching strategy to store the responses (which contain the payload of the response message) produced by the processing that occurs within the scope.
+
+The cache scope also works in clustered environments because the object store configured in the caching strategy is shared across all nodes in the cluster.
+
+//end::component-long-description[]
+//
+
+// tag::caching-process[]
+
+== Caching Process
+
+The Cache scope caches repeatable streams. It does not cache nonrepeatable streams, which can be read only once before they are lost. By default, all streams are repeatable in Mule unless a component's streaming strategy is configured to be nonrepeatable.
+
+In general, the caching process follows this sequence:
+
+. A message enters the Cache scope.
+. The Cache scope determines whether the message payload is nonrepeatable.
+. The Cache scope generates a key to identify the message’s payload.
++
+By default, Mule uses an SHA256KeyGenerator and a SHA256 digest to generate a unique key for the message payload. However, you can set up your own key through a custom caching strategy.
++
+. The Cache scope compares the newly generated key to cached responses that it has previously processed and saves it in the ObjectStore you set up (recommended) or in the default `InMemoryObjectStore`.
++
+* If there is no cached response event (a _cache miss_), the Cache scope processes the new message and produces a response.
++
+It also saves the resulting response in the object store (if the response is repeatable).
++
+* If there is a cached response event (a _cache hit_), the caching strategy generates a response that combines data from both the new request and the cached response.
++
+Note that if the generated response is a nonrepeatable stream, the scope does not cache the response.
++
+. The Cache scope pushes the response out into the parent flow for continued processing.
+
+// end::caching-process[]
+
+// tag::caching-strategy[]
+==  Caching Strategy
+
+A caching strategy defines the actions a Cache scope takes when a message enters its sub-flow. By default, the Cache scope uses a caching strategy that stores data in an in-memory object store. You can create a custom caching strategy that references an existing object store, or you can create a new custom object store to use in this caching strategy.
+
+You can configure the cache size, expiration time, and maximum allowed entries by setting these values in the object store that you define or reference from the caching strategy. You can also configure a caching strategy to sync access to the cache, to avoid different message processors from using the cache at the same time.
+
+Your caching strategy can also reference these customizations:
+
+* Event Key for the ObjectStore, which is a DataWeave expression or Java object used to create the key to use for storing the payload in the ObjectStore.
+* Response Generator for your strategy, which is a reference to a Java object that is used to create the responses returned by the caching strategy.
+* Event Copy Strategy for mutable or immutable data.
+
+=== Synchronized Access to a Cache
+
+By default, Mule synchronizes access to a cache to avoid unexpected results if multiple message processors (on the same or different Mule instances) use the cache at the same time.
+
+Consider a scenario where two message processors attempt to retrieve a value from a cache but do not find the value in the cache. So each message processor calculates the value independently and inserts it into the cache. If access to the cache is not synchronized, the value inserted by the second message processor overwrites the value inserted by the first message processor. If the values are different, then two different results are obtained for the same input, with only the last one stored in the cache.
+
+In some scenarios this outcome is valid, but it can be a problem if the application requires cache coherence. Synchronizing the caching strategy ensures this coherence. A synchronized cache is locked when it is being modified by a message processor. In the previous scenario, a locked cache forces the second message processor to wait until the first message processor has calculated the value, and then it retrieves the value from the cache.
+
+You can disable cache synchronization by defining the `synchronized` property in the `<ee:object-store-caching-strategy>` element and setting it to `false`.
+
+[IMPORTANT]
+Synchronization affects performance, and the impact is most severe in cluster mode.
+
+// end::caching-strategy[]
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<!-- Caching Strategy definition --> 
+<ee:object-store-caching-strategy 
+  name="Caching_Strategy" 
+  doc:name="Caching Strategy">
+    <!-- Object Store to use for the caching strategy --> 
+</ee:object-store-caching-strategy>
+
+<!-- Cache scope referencing the strategy -->
+<ee:cache 
+  doc:name="Cache" 
+  doc:id="ahiceg"
+  cachingStrategy-ref="Caching_Strategy" >
+     <!-- Processing logic to cache -->      
+</ee:cache>
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<ee:cache/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `cachingStrategy-ref` 
+| The caching strategy to reference.
+
+|===
+
+[%header,cols="1,3a"]
+|===
+| `<ee:object-store-caching-strategy/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `keyGenerationExpression`
+| Optional. A DataWeave expression to generate the key. For example, `keyGenerationExpression="#[vars.requestId]"`.
+
+| `synchronized`
+| Specifies wether Mule syncs access to a cache. Accepted values are `true` or `false`. Defaults to `true`.
+
+|===
+
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+The following examples show how to configure a Cache Scope and a Caching Strategy.
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+=== Example: Cache Scope Configuration
+
+The following example shows the configuration of a Caching Strategy, which is then referenced by a Cache Scope that contains a Database Select operation and a Transform component:
+
+[source, xml, linenums]
+----
+<!-- Caching Strategy definition-->
+<ee:object-store-caching-strategy name="Caching_Strategy" doc:name="Caching Strategy" />
+
+<!-- The Database Connector config is necessary in this example because there is a Database Select operation-->
+<db:config name="Database_Config" doc:name="Database Config" >
+    <!-- Database Connector Configuration -->
+</db:config>
+
+<!-- Cache Scope configuration referencing the Caching Strategy-->
+<ee:cache doc:name="Cache" cachingStrategy-ref="Caching_Strategy">
+  <db:select doc:name="Select" config-ref="Database_Config">
+    <db:sql >
+      <!-- An SQL query-->
+    </db:sql>
+  </db:select>
+  <ee:transform doc:name="Transform Message" >
+    <ee:message >
+      <ee:set-payload >
+        <!-- A DataWeave transformation for the query results -->
+      </ee:set-payload>
+    </ee:message>
+  </ee:transform>
+</ee:cache>
+----
+
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+=== Example: Caching Strategy
+
+The following XML snippet shows the configuration of a caching strategy that synchronizes access to the cache, and defines a persistent Object Store to store the cached responses. The caching strategy is then referenced by a Cache scope:
+
+[source, xml, linenums]
+----
+<!-- Caching strategy definition -->
+<ee:object-store-caching-strategy 
+  name="Caching_Strategy" 
+  doc:name="Caching Strategy">
+  <!-- Object Store defined for the caching strategy-->
+  <os:private-object-store
+    alias="CachingStrategy_ObjectStore"
+    maxEntries="100"
+    entryTtl="10"
+    expirationInterval="5"
+    config-ref="ObjectStore_Config" />
+</ee:object-store-caching-strategy>
+
+<!-- Cache scope referencing the strategy-->
+<ee:cache doc:name="Cache" cachingStrategy-ref="Caching_Strategy">
+      <!-- Some processing logic to cache-->
+</ee:cache>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::streaming-about.adoc[Streaming in Mule Applications]
+* xref:mule-runtime::mule-object-stores.adoc[Object Store Configuration]
+
+//end::see-also[]
