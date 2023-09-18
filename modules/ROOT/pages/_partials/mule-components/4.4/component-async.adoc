@@ -1,0 +1,251 @@
+//
+//tag::component-title[]
+
+= Async (<async/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Group components in a scope and execute them simultaneously with the main flow in an asynchronous fashion.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+The main flow of the application continues to execute after it initiates and processes the Async scope. The flow does not have to pause until the last message processor embedded in the asynchronous flow has completed its task. Async is useful for executing time-consuming operations that do not require you to send a response back to the initiating flow (such as printing a file or connecting to a mail server).
+
+To facilitate simultaneous branch processing, the Async scope sends one copy of the message it has received to the first embedded message processor in its own processing block. At the same time, it sends another copy of the message to the next message processor in the main flow.  
+
+Because the Async scope is executed in a "fire and forget" manner, the result of the processing within the scope is not available in the main flow.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<async>
+      <!-- Components to execute asynchronously --> 
+</async>
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<async/>` Attributes 
+| Description
+
+| `name` 
+| Editable name for the component.
+
+| `maxConcurrency` 
+a| Sets the maximum number of concurrent messages that the scope can process. By default, the container thread pool determines the maximum number of threads to use to optimize the performance when processing messages. When the scope is processing the maximum number of concurrent messages, it cannot receive additional requests.
+{sp} +
+{sp} +
+Set `maxConcurrency` to `1` to cause the scope to process requests one at a time.
+{sp} +
+{sp} +
+See xref:mule-runtime::execution-engine.adoc#backpressure[Back-Pressure Management] for details about Mule behavior after reaching the maximum concurrency value.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+// tag::async-vs-subflow[]
+== Async Scopes versus Subflows
+
+Unlike a subflow, an Async scope:
+
+* Does not inherit the exception strategy of the main flow.
++
+To handle errors in an Async scope, use the Try scope.
++
+* Processes messages asynchronously.
+* Does not pass data back to the main flow.
+* Exists inline with the main flow thread.
+* Is not called by a Flow Reference component.
+* Is not reusable
+
+Even though the Async scope receives a copy of the Mule message, the payload is not copied. The same payload objects are referenced by both Mule messages: One that continues down the original flow, and the one processed by the Async scope.
+
+If the payload of your message is a mutable object (for example, a bean with different fields in it) and a message processor in your Async scope changes the value of one of the fields, the message processors outside of the Async scope see the changed values.
+// end::async-vs-subflow[]
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Example Async Scope Configuration
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following XML fragment shows an example configuration of an Async scope inside an application flow. The Async scope contains a `file:read` operation that executes asynchronously once triggered, while the application continues processing the next operation in the flow, `http:request`.
+
+[source,xml]
+----
+<!-- Main application flow -->
+<flow name="myMainFlow" >
+  <!-- HTTP Listener as event source -->
+  <http:listener doc:name="Listener" />
+  <!-- A Transform operation that executes as part of the main flow -->
+  <ee:transform doc:name="Transform Message" >
+    <ee:message >
+      <ee:set-payload >
+        <![CDATA[%dw 2.0
+        output application/json
+        ---
+        payload]]>
+      </ee:set-payload>
+    </ee:message>
+  </ee:transform>
+    <!-- The Async scope executes its message processors in a different thread, while the main flow continues its execution -->
+    <async doc:name="Async" >
+      <!-- A Try scope to handle errors, because the async scope does not inherit the error strategy from the flow -->
+      <try doc:name="Try" >
+        <!-- A Write operation -->
+        <file:write doc:name="Write" path="/" />
+        <!-- Error handling strategy defined in the Try scope, to handle errors during the Async scope execution -->
+        <error-handler >
+          <on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" type="ANY">
+            <!-- Some error handling logic for this strategy -->
+            ...
+          </on-error-continue>
+        </error-handler>
+      </try>
+    </async>
+  <!-- This HTTP Request operation starts executing without waiting for the Async scope to finish its execution -->
+  <http:request method="GET" doc:name="Request" />
+</flow>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+//* xref:mule-runtime::about-components.adoc[Core Components]
+* xref:mule-runtime::transaction-management.adoc#tx_scopes_routers[How Transactions Affect Scopes and Routers]
+* xref:mule-runtime::tuning-backpressure-maxconcurrency.adoc[Back-Pressure and MaxConcurrency]
+
+//end::see-also[]
