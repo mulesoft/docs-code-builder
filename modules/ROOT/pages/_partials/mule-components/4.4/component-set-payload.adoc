@@ -1,0 +1,211 @@
+//
+//tag::component-title[]
+
+= Set Payload (<set-payload/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Updates the payload of the message.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+The payload can be a literal string or a DataWeave expression. Use the `set-payload` component for simple expressions or transformation. 
+//For complex scenarios, use the xref:acb-component-transform.adoc[Transform Message Component].
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<set-payload 
+  value="" 
+  doc:name="Set payload" 
+  doc:id="vnjpqo" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<set-payload/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `value` 
+| Accepts a literal string or DataWeave expression that defines how to set the payload. For example, ``"some string"`` or `#[now()]`. This attribute is required. 
+
+| `mimeType` 
+| The mime type of the value assigned to the payload. For example, `text/plain` or `application/json`.
+
+| `encoding`
+| The encoding of the value assigned to the payload. For example, `UTF-8`.
+
+|===
+
+[WARNING]
+--
+The `mimeType` and `encoding` attributes do not affect a DataWeave expression used as `value`. They only affect the output Mule Message. If a transformation is required, the DataWeave expression must contain an explicit output directive.
+--
+
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+The following examples show how to set the payload using a static value or a DataWeave expression. 
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+=== Example: Set the Payload with a Static Value
+The following example sets a payload with static values:
+
+[source,xml]
+----
+<set-payload value="{ 'name' : 'Ana', 'office' : 'BA' }" mimeType="application/json" encoding="UTF-8"/>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+=== Example: Set the Payload Using a DataWeave Expression
+
+The following example sets the message payload to `"Hello, World"` appending today's date using a DataWeave expression:
+`#['Hello World!' &#43;&#43; ' Today is ' &#43;&#43; now()]`
+
+[source,xml]
+----
+<set-payload value="#['Hello World!' ++ ' Today is ' ++ now()]"/>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::about-mule-message.adoc[Mule Message Structure]
+* xref:dataweave::dataweave.adoc[DataWeave Language]
+
+//end::see-also[]
