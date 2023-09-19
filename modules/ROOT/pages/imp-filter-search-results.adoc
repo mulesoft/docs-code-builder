@@ -1,0 +1,46 @@
+= Filter Search Results
+:page-aliases: filter-search-results.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+When implementing an API, Anypoint Code Builder enables you to use advanced search filters to find the API specification you want to work with.
+
+To search for an API using the search filters:
+
+. Navigate to your Anypoint Code Builder view:
++
+image::anypoint-code-builder-view.png[]
+. Select *Implement an API*.
++
+image::implement-api-option-mat.png[]
+. Select *Show Filters* to display the search filters:
++
+image::implement-api-show-filters.png[Implement API specification screen with the show filters label highlighted]
+
+Anypoint Code Builder supports the following filters for your API assets:
+
+image::implement-api-filters-view.png["Implement API specification screen with the 'show filters' label and filters highlighted"]
+
+* Type +
+Types can be:
++
+** GraphQL API +
+A schema definition that contains the object types and definitions used to interact with the API through the GraphQL specification. GraphQL enables you to query an API that supports this language in a much more flexible way than REST.
+** REST APIs +
+RAML or OAS files that specify APIs referenced by an HTTP Request connector to expose metadata to Anypoint Studio.
++
+The resulting list of asset types depends on which types are available in a business group.
+* Organization +
+Business groups for which you have permission to view their assets.
++
+The search filters display the business group from which to retrieve your API in the *Organization* column:
++
+image::implement-api-business-group.png[Implement API specification screen with the Organization column highlighted.]
+* Lifecycle state +
+Lifecycle state can be `stable`, `deprecated`, or `development`.
++
+IMPORTANT: Do not use deprecated APIs because those are no longer supported, nor updated.
+
