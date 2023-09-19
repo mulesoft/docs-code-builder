@@ -1,4 +1,5 @@
-= Setting Up and Accessing Anypoint Code Builder
+= Getting Started
+:page-aliases: setup.adoc, connect-eu-cloud.adoc, load-acb-web-ide.adoc, log-in-anypoint-platform.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -74,7 +75,21 @@ image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder i
 [[set-up-web]]
 == Cloud IDE Access
 
-On the web, Anypoint Code Builder IDE is available from Anypoint Platform. 
+Anypoint Code Builder is available on separate US and EU cloud hosts for Anypoint Platform. To help your organization meet emerging regulatory requirements that differ by region, Anypoint Platform does not share organization information, permissions, account data, or API and Mule projects between US and EU hosts. 
+
+* US Cloud: 
++
+MuleSoft hosts this control plane within data centers in the United States.
+* EU Cloud: 
++
+MuleSoft hosts this control plane within EU (Dublin) data centers. 
+
+If you have an account in one cloud but need to work in another, you must create an account in that cloud to create and work on your projects. In addition to hosting your cloud-specific projects, Anypoint Platform also hosts deployment targets for managed runtimes and related data, including data and metadata about your Mule implementations.
+
+Your cloud IDE environment is associated with your user account, which other users cannot access. The environment has a unique URL that only you can access. To share a project that you are working on with your team, do not attempt to share the URL with others. Instead, xref:package-mule-application.adoc[export] a Mule project to a sharable JAR file, xref:des-publish-api-spec-to-exchange.adoc#publish-an-api-to-exchange[publish] your API specification project or fragment to Anypoint Exchange, or store shared work in a git repository. 
+//TODO: LINK TO INFO ON GIT SETUP - COMING SOON
+
+See xref:hosting-home::index.adoc[] for more information.
 
 === Before You Begin
 
@@ -84,7 +99,8 @@ On the web, Anypoint Code Builder IDE is available from Anypoint Platform.
 +
 Organization Administrators for Anypoint Platform are allowed to add the permission to your user account or to the team to which your user account belongs. 
 
-=== Launch the Cloud IDE in Anypoint Platform
+//TODO: REQUIRES EDITS AND POSSIBLE REVAMP
+== Launch the Cloud IDE 
 
 . Log in to Anypoint Platform:
 +
@@ -98,7 +114,7 @@ Anypoint Platform is hosted on EU-compliant and U.S. instances:
 . Accept any terms and conditions for use of Anypoint Platform.
 . Click *Launch Cloud IDE*.
 +
-After provisioning of your cloud IDE is complete, the IDE opens.
+After provisioning of your cloud IDE is complete, the IDE opens. The provisioning process can take a few minutes.
 . Click the MuleSoft icon in the activity bar to see and use Anypoint Code Builder features.
 //TODO: ADD SCREENSHOT HERE OR SOMEWHERE ELSE THAT MAKES SENSE
 
@@ -113,8 +129,52 @@ If you are using an Anypoint Platform trial account that loses access to Anypoin
 Do not use Anypoint Code Builder to develop APIs, integrations, or automations for production environments.
 --
 
-== See Also 
+//TODO: REQUIRES EDITS AND POSSIBLE REVAMP
+== Log in to Anypoint Platform from the IDE
 
-* xref:accept-terms-and-conditions.adoc[Accept Terms and Conditions]
-* xref:load-acb-web-ide.adoc[Load Anypoint Code Builder]
-* xref:log-in-anypoint-platform.adoc[Log in to Anypoint Platform]
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Some Anypoint Code Builder features require a connection from the IDE to Anypoint Platform. Log in to Anypoint Platform, either from the Anypoint Code Builder IDE when you work from the web or from your desktop IDE for Anypoint Code Builder. 
+
+The status bar shows your login status.
+
+* *Not logged in to Anypoint Platform* indicates that you must log in to perform tasks that require a connection to Anypoint Platform. 
++
+image::acb-not-logged-in.png[]
+* A link to your user name indicates that you are logged in.
+
+//TODO: DO WE HAVE A LIST OF FEATURES THAT DO AND DON'T REQUIRE LOGIN? AND IS THERE A WAY TO CREATE A SHORT LIST?
+
+=== Before You Begin
+
+include::partial$acb-prereq-login.adoc[]
+
+
+=== Log in to Anypoint Platform from the IDE
+
+In the web and desktop IDEs, use the Command Palette in Anypoint Code Builder to log in: 
+
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Login to Anypoint Platform
+----
++
+image::login-to-anypoint-platform.png[]
++
+[TIP]
+--
+You can type _login_ and use the filter in the results to select the command you want.
+--
+. Select *Allow* when prompted to sign in to the platform.
++
+image::allow-login-to-anypoint-platform.png[]
++
+After logging you in, Anypoint Platform displays a *You can close this page now* message.
++
+. To verify your login, ensure that *<your-username>* replaces *Not logged in to Anypoint Platform*. 
+
