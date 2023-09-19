@@ -17,7 +17,7 @@ Use Anypoint Code Builder to create and test basic API specification to Exchange
 * xref:setup.adoc[Set up and access the web or desktop IDE].
 * Understand the basics of designing API specifications. 
 +
-See the xref:tutorial.adoc[] for details.
+See the xref:tutorials.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 +
 API specifications belong to a business group.
@@ -41,13 +41,18 @@ image::design-api-1.png["*Design an API* link highlighted in the *Getting Starte
 |===
 | Field Name | Field Value
 
-| *Project Name* | Unique name for your project. This name is used as the title and name of the specification file.
+| *Project Name* | Unique name for your project.
+
+This name is used as the title and name of the specification file.
 For example, if the project name is "OAS Example", the specification file name is `oas-example`.
-| *Project Location* | Your home directory or another directory you create (see xref:work-on-home-directory.adoc[]).
+| *Project Location* | Your home directory or another directory you create.
+
+See xref:work-on-home-directory.adoc[].
 | *API Specification Language* | See xref:des-designing-api-specs.adoc#supported-spec-languages[Supported OAS and RAML Versions].
 
 Select *OAS 3.0 (YAML)* to use the example in this procedure.
 | *Business Group* | Business Group in Anypoint Platform for your API specification.
+
 See xref:access-management::business-groups.adoc[].
 
 NOTE: You cannot change the selected business group after creating the API specification.
@@ -202,18 +207,8 @@ Auto-complete adds the element to the code and places the cursor for you to add 
 
 To track the progress of internal processing as you design your API:
 
-. Open the output panel.
-+
-.Show me how
-[%collapsible]
-====
-* Use the keyboard shortcuts:
-+
-** Mac: Cmd+Shift+u
-** Windows: Ctrl+Shift+u
-* In the desktop IDE, select *View* > *Output*.
-* In the cloud IDE, select *File* > *View* > *Output*.
-====
+// Pointer to Output Panel
+include::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
 . Select *Mule DX Server* from the dropdown:
 +
 image::des-output-panel.png[Mule DX Server in the output panel]

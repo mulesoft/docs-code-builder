@@ -1,11 +1,11 @@
-= Application Loading Errors
+= Project Loading Errors
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Errors sometimes occur when you open an application in Anypoint Code Builder. 
+Errors sometimes occur when you open or start a project in Anypoint Code Builder. 
 
 == Loading Error in the Application UI
 
@@ -39,7 +39,15 @@ The root is the top-level folder that Anypoint Code Builder generates when it cr
 
 See also, xref:upload-a-project.adoc[].
 
+[[mule-dx]]
+== Mule DX API Component Was Not Installed
 
+Wait for *Mule DX API Component was not installed* to disappear before retrying your action.
 
+The error indicates that some Anypoint Code Builder dependencies have not finished loading. This issue typically occurs when you click *Design an API* and is often accompanied by the notification *Extracting Mule runtime: This operation may take a while...*. The extraction process can take several minutes, particularly after you install or update Anypoint Extension Pack on the desktop IDE.
 
+To monitor the progress of backend processes:
+
+. Press Cmd+Shift+ (Mac) or Ctrl+Shift+u (Windows) to open Output panel.
+. Select *Mule DX Server* from the drop-down menu in the panel. 
 

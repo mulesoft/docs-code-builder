@@ -14,24 +14,20 @@ Debug your Mule application using the embedded debugger in Anypoint Code Builder
 
 The process for debugging a Mule app is:
 
-. Set breakpoints to pause the execution of a flow at lines that you want to inspect or fix.
+.  <<add-breakpoint, Set breakpoints>> to pause the execution of a flow at lines that you want to inspect or fix.
 +
 Breakpoints are markers that you add on line numbers in a configuration XML file for a Mule application that you are developing.
-+
-See <<add-breakpoint>>.
-. Run the application in debug mode.
+. <<run-debug-mode, Run the application in debug mode>>.
 // .. Use the *Run and Debug* icon in the activity bar to open *Run and Debug* menu. 
 // .. Click *Start Debugging (F5)* icon to start the debugger.
-+
-See <<run-debug-mode>>.
 . Start execution of a flow in your Mule application.
 +
 For example, trigger an HTTP Listener or configure a Scheduler component.
-. When the execution stops at a breakpoint, inspect and fix issues.
-. After addressing an issue at a breakpoint, redeploy (_hot deploy_) the running instance of your application.
-+
-See <<hot-deploy>>.
-. Execute your flow again, and continue debugging until you address all issues. 
+// need example of how to do this
+. When the execution stops at a breakpoint, use the <<debug-toolbar, debug toolbar>> to navigate, inspect, and fix issues.
+. After addressing an issue at a breakpoint, redeploy (<<hot-deploy, hot deploy>>) the running instance of your application.
+. Execute your flow again, and continue debugging until you address all issues.
+. <<stop-debug, Stop the debug session>>.
 
 
 == Debug Console Overview 
@@ -64,20 +60,8 @@ A breakpoint enables you to pause your Mule application at a specific place to l
 To add a breakpoint to your Mule application:
 
 . In Anypoint Code Builder, on the Explorer view, open your configuration XML file. For example, `my-project-name.xml`.
-. Open the *Run and Debug* panel.
-+
-.Show me how
-[%collapsible]
-====
-** Click the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar.
-** Use the keyboard shortcuts:
-+
-*** Mac: Cmd+Shift+d
-*** Windows: Ctrl+Shift+d
-** In the desktop IDE, select *View* > *Run*.
-** In the cloud IDE, select *File* > *View* > *Run*.
-====
-
+// Pointer to Run and Debug
+include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 . Click the line number in your `<flow-ref>` component to add a breakpoint on that component.
 +
 image::deb-add-breakpoint.png[]
@@ -95,20 +79,9 @@ image::breakpoints-panel.png[Breakpoints panel]
 
 After setting up your debug conditions, run a debug session and evaluate your Mule application at each breakpoint:
 
-. Open the *Run and Debug* panel.
-+
-.Show me how
-[%collapsible]
-====
-** Click the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar.
-** Use the keyboard shortcuts:
-+
-*** Mac: Cmd+Shift+d
-*** Windows: Ctrl+Shift+d
-** In the desktop IDE, select *View* > *Run*.
-** In the cloud IDE, select *File* > *View* > *Run*.
-====
-. In the *Run and Debug* panel, click the image:icon-start-debug.png["",15,15] (*Start Debugging (F5)*) icon for *Debug Mule Application*.
+// Pointer to Run and Debug
+include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
+. Click the image:icon-start-debug.png["",15,15] (*Start Debugging (F5)*) icon for *Debug Mule Application*.
 +
 --
 image::run-debugger.png["Run the debugger."]
@@ -221,7 +194,7 @@ To perform a hot deploy:
 image::deb-hot-deploy.png["Hot-deploy (lightning) icon in a running Mule application"]
 
 
-[[stop]]
+[[stop-debug]]
 == Stop a Debug Session
 
 To stop your debug session, in the *Run and Debug* panel, click the image:icon-stop.png["",15,15] (*Stop*) icon. 
