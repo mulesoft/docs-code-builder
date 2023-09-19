@@ -1,0 +1,48 @@
+= Testing the API Spec with the Mocking Service
+:page-aliases: test-api-specification.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Use the Mocking Service in the API Console to check the request and responses that you configured for American Flights API in xref:tut-af-design-api-add-request-response-details.adoc[].
+
+== Before You Begin
+
+If you haven't started the American Flight API specification, complete these procedures before attempting to test:
+
+. xref:tut-af-design-am-flights-api.adoc[]
+. xref:tut-af-design-api-add-request-response-details.adoc[]
+
+== Test Your API Specification
+
+. In Anypoint Code Builder, open the RAML file for your American Flights API specification (`american-flights-api.raml`).
+. Select the API Console icon in the editor toolbar.
++
+image::api-console-button.png["API Console icon highlighted in the editor toolbar"]
+//DONE (hn) TODO duke: screenshot bad res per crispy
+. In API Console, select the `get` method for the `flights/` resource.
++
+image::select-get-method.png["get method for the flights/ resource highlighted in the API Console"]
+// DONE (hn) TODO duke: screenshot bad res per crispy
+. Click *Try It*.
++
+image::select-try-it-button.png["Try it button highlighted in the API Console"]
+//DONE (hn) TODO duke: screenshot bad res per crispy
+. Select the *destination* text box inside *Query Parameters* and verify that the three values you defined in your API specification show up.
++
+image::select-query-params.png["Values highlighted in the API Console"]
+//DONE (hn) TODO duke: screenshot bad res per crispy 
+. Click *Send*.
+. Verify that the API Console returns the response you defined with the imported fragment (`AmericanFlightsExample.raml`).
++
+image::api-console-reponse.png["A 200 OK response highlighted in the API Console"]
++
+The logic for selecting specific destinations is not yet implemented. 
++
+Optionally, review your configured response examples when querying your mocked API endpoints.
+
+. Proceed to xref:synchronize-with-design-center.adoc[]. 
++
+Use the integrated source control management (SCM) to upload your API specification to Design Center.

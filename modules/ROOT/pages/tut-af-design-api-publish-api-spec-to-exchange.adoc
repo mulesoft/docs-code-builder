@@ -1,0 +1,67 @@
+= Publishing the API Spec to Anypoint Exchange
+:page-aliases: publish-api-spec-to-exchange.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Publish American Flights API specification to Exchange so that other team members can find and implement it.
+
+== Before You Begin
+
+If you haven't started the American Flight API specification, follow these procedures before attempting to publish:
+
+. xref:tut-af-design-am-flights-api.adoc[]
+. xref:tut-af-design-api-add-request-response-details.adoc[]
+. xref:tut-af-design-api-test-specification.adoc[]
+. xref:tut-af-design-api-synchronize-with-design-center.adoc[]
+
+
+== Publish an API to Exchange
+
+To publish your API to Exchange:
+
+. In Anypoint Code Builder, open the specification for your American Flights API project, such as `american-flights-api.raml`.
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Publish API Specification to Exchange
+----
++
+// Fixed (hn) TODO: Cloud IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
+// Fixed (hn) TODO duke: fix/redo image
+image::publish-to-exchange.png["MuleSoft: Publish API Specification to Exchange highlighted in Command Palette"]
+. Type a project name: +
+* *American Flights API ACB*.
++
+image::set-asset-name.png["American Flights API option highlighted"]
+. Confirm the artifact ID: *American-Flights-API*
+. Confirm the asset version: *1.0.0*.
+. Confirm the API version: *v1*.
+The status bar shows the progress.
++
+// Fixed (hn) TODO: Cloud IDE only because it contains hamburger menu. Need to make generic. Plus, take a SS in a lower resolution, or only a part of the screen. Hi-res SS are hard to read in a 13 inch display.
+// Fixed (hn) TODO duke: fix/redo image
+image::publishing-to-exchange-dialog.png["Publishing API specification to Exchange notification highlighted"]
+
+. When prompted to implement the API now, select *No* to avoid scaffolding the American Flights API specification into your integration.
+For example:
++
+image::scaffold-project-no.png["No option highlighted in the API implementation"]
++
+Selecting *Yes* scaffolds the API specification into your project. Instead of scaffolding now, you will scaffold in xref:tut-af-implement-am-flights-api.adoc[].
+
+== Locate Your API in Exchange
+
+After publishing your API specification, you can find it in Anypoint Exchange:
+
+. Navigate to Anypoint Platform and log in using your credentials.
+. Navigate to Anypoint Exchange.
+. Notice that your API specification is listed as an asset. +
+You can select the API, navigate through its summary, and see all the endpoints you defined in the previous tasks.
+
+== Next Step
+
+Start an integration app for American Flights: xref:tut-af-integrate-am-flights.adoc[]
