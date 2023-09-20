@@ -1,4 +1,4 @@
-= Export a Mule Application
+= Exporting Mule Projects
 :page-aliases: package-mule-application.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -11,6 +11,12 @@ Package a snapshot of Mule application resources in a shareable or deployable JA
 * A <<sharable, shareable JAR file>> is lightweight, packaging only the source code of the application. The source code includes configuration files but not libraries or other dependencies required for your application to run and deploy successfully. You or your teammates can import the JAR file into Anypoint Studio (Studio) or an Anypoint Code Builder instance. The IDEs generate the dependencies automatically based on the settings in the POM file (`pom.xml`). 
 
 * A <<deployable, deployable JAR file>> contains the compiled code and all dependencies. Deploy the JAR file to any supported environment, such as CloudHub or on-premises. 
+
+== Before You Begin
+
+* xref:setup.adoc[Set up and access the web or desktop IDE].
+* xref:int-create-integrations.adoc[Create an integration].
+
 
 [[sharable]]
 == Export to a Shareable JAR File
