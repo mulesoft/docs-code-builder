@@ -39,7 +39,10 @@ This name is used as the title and name of the specification file.
 For example, if the project name is "OAS Example", the specification file name is `oas-example`.
 | *Project Location* | Your home directory or another directory you create.
 
-See xref:work-on-home-directory.adoc[].
+See xref:start-add-folders.adoc[].
+
+[IMPORTANT]
+include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 
 | *Show filters* |See xref:filter-search-results.adoc[] for more information.
 |===
@@ -69,12 +72,15 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 MuleSoft: Import Asset from Exchange
 --
 . Select *Rest API*.
-. If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code.
-. Type the name of your API specification and press Enter. For example, `OAS Example`.
+. If prompted, log in to Anypoint Platform, allowing the extension to sign in,
+open an external web site, and open Visual Studio Code.
+. Type the name of your API specification and press Enter.
+For example, `OAS Example`.
 . Wait for the IDE to load a list of matches to the name:
 +
 image::imp-assets-from-exchange.png["Assets from Exchange dropdown"]
-. At the prompt, select the version of the API to import, such as `v1.0.1`.
+. Select the API spec.
+. At the prompt, select the version of the API spec to import, such as `v1.0.1`.
 . When prompted to scaffold the API dependency, select *Yes*.
 +
 This step adds the API specification as a dependency in your project's `pom.xml` file
