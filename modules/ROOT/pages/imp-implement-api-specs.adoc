@@ -8,7 +8,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 
-Use Anypoint Code Builder implement OAS 2.0 and 3.0 and RAML 0.8 and 1.0 API specifications.
+Use Anypoint Code Builder to implement OAS, RAML, and GraphQL API specifications.
 
 == Before You Begin
 
@@ -55,7 +55,10 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 +
 image::imp-api-search.png[Search an API from Exchange]
 
-Anypoint Code Builder creates the necessary flows for each endpoint on your API specification endpoints.
+Anypoint Code Builder scaffolds your API and creates the necessary flows for each endpoint on your API specification endpoints.
+
+For GraphQL APIs, Anypoint Code Builder also creates a data fetcher (`<graphql-router:data-fetcher>`) as a source for each Mule flow.
+See xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
 
 
 == Import an API Specification into an Implementation
@@ -88,12 +91,6 @@ and creates a new configuration XML file, such as `oas-example.xml`:
 +
 image::imp-new-config-file.png["New configuration file in the Explorer view"]
 
-[[implement-graphql-spec]]
-== Implement a GraphQL API Specification
-
-. Upload your GraphQL API spec to Exchange.
-+
-See xref:publish-graphql-to-exchange[Publish a GraphQL API Spec to Exchange]
 
 // add relevant stuff from tut-implement-am-flights-api
 // Then, add the logic to implement an endpoint in the API.
@@ -297,3 +294,4 @@ For guidance, see xref:ping-locally-deployed-app.adoc[].
 == See Also
 
 * xref:int-create-integrations.adoc[]
+* xref:tut-graphql-implement-api.adoc[]
