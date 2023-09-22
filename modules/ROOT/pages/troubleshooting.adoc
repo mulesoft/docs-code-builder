@@ -11,5 +11,26 @@ Troubleshoot errors and warnings you receive when using Anypoint Code Builder.
 * xref:troubleshoot-loading-errors.adoc[]
 * xref:troubleshoot-mule-runtime-errors.adoc[]
 
-
 For other issues and workarounds, see xref:acb-release-notes.adoc#known-issues[Known Issues] in Anypoint Code Builder Release Notes.
+
+== Export Troubleshooting Information
+
+If the MuleSoft support team requests troubleshooting information about your project, export a compressed file that contains your project's workspace folders, logs, and information about environment variables, CPU, operating system, and system properties.
+
+. From a project in the IDE, open the Command Palette, and provide this command:
++
+[source, command]
+----
+MuleSoft: Export Troubleshooting Information
+----
+. When you receive a notification about the information that the command extracts, click *Continue*. 
++
+When the process is complete the IDE provides this message:
++
+----
+Collecting information...: Generating compressed file
+----
+. Click *Open folder* to locate the file. 
++
+The command places the file in your home directory. The filename begins with the prefix `acb-troubleshooting`. For example, `/Users/me/acb-troubleshooting-w9ffppmq-.tar.gz`.
+. Provide a copy of the file to the support team. 
