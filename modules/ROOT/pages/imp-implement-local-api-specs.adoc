@@ -10,49 +10,48 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 include::partial$acb-reusable-steps.adoc[tags="in-progress"]
 
 
-Using Anypoint Code Builder, you can scaffold an API specification into an interface project without first publishing it to Anypoint Exchange.
-As you make changes, you sync changes in the interface project by re-scaffolding the spec.
-
-For example, after adding a new endpoint to your API specification,
+Using Anypoint Code Builder, you can scaffold an API specification into a new integration project without first publishing the API to Anypoint Exchange.
+As you make changes, you sync changes in the project by re-scaffolding the spec.
+For example, after adding a new endpoint to your API spec,
 you can re-scaffold to add a new flow for that endpoint to the configuration XML file.
 
-Implementing a local API enables you to reflect your changes to your API design directly into the Mule project that implements your API specification.
+Implementing the API in this way enables you to reflect your changes to your API design directly into the interface in your Mule project.
+By iterating between the API design and implementation tasks you can speed up the development process.
 
 After the API specification and the related Mule project are synced, you can modify the API specification and implement changes simultaneously.
 
-
-When you are ready, you can publish your API specification to Exchange and deploy your Mule project.
+When you are ready, you can then publish your API specification to Exchange and deploy your Mule project.
 
 == Overview of the Scaffolding Process
 
-When you scaffold an API, Anypoint Code Builder creates a _multi-root workspace_ in VS Code with both the API specification and interface project and keeps them synchronized.
+When you scaffold an API, Anypoint Code Builder creates a _multi-root workspace_ in VS Code with both the API specification and integration project and keeps them synchronized.
 
-
-By iterating between the API design and implementation tasks you can speed up the development process.
-
-
-When you scaffold your API specification into a new interface project,
+When you scaffold your API specification into a new integration project,
 Anypoint Code Builder creates a configuration XML for your implementation.
 
+////
 Local projects reside in the Anypoint Code Builder IDE, whether the projects are in your desktop IDE or in the cloud IDE associated with your user account in Anypoint Platform.
 
 . You define an API in a specification file.
-. You scaffold the API by implementing the local API.
+. You implement the API.
 . The scaffolding process creates the interface XML file in a Mule project.
+////
+
+== Multi-Root Workspaces
 
 Iterative API design and implementation within the IDE takes place in a _multi-root workspace_ in VS Code.
 To map project folders for your API specification and implementation projects into a multi-root workspace, VS Code uses a file with the extension `.code-workspace`.
-For your projects to work properly, this file _must not reside within_ either project folder.
+For your projects to work properly, this file _must not reside_ within either project folder.
 In addition, Anypoint Code Builder permits only one pair of iterative design and implementation project folders per multi-root workspace.
 
-The procedures for creating the specification and implementation projects are designed to meet these requirements. For information in the VS Code documentation, see https://code.visualstudio.com/docs/editor/multi-root-workspaces[Multi-root Workspaces^].
+The procedures for creating the specification and implementation projects are designed to meet these requirements.
+For information in the VS Code documentation, see https://code.visualstudio.com/docs/editor/multi-root-workspaces[Multi-root Workspaces^].
 
 
 == Before You Begin 
 
 * xref:setup.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create and test your API specification].
-// or import from Design Center?
 
 
 == Scaffold an API Spec into a New Interface Project
@@ -63,10 +62,18 @@ To scaffold the current API spec into a new interface project:
 +
 image::imp-local-api.png[Implement this local API icon in the activity bar]
 +
-Alternatively, use the Command Palette:
+Alternatively, use the Command Palette.
 +
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+.Show me how
+[%collapsible]
+====
+* Use the keyboard shortcuts
+** Mac: Cmd+Shift+p
+** Windows: Ctrl+Shift+p
+* From the desktop IDE, select *View* > *Command Palette*. 
+* From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
+====
+
 . Select the following command:
 +
 [source,command]
