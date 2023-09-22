@@ -1,0 +1,304 @@
+//
+//tag::component-title[]
+
+= Transform (<transform/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Converts input data to a new output structure or format.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+A single Transform component element (`<ee:transform/>`) can specify content for all parts of the Mule Event:
+
+* `<ee:message/>` can contain `<ee:set-payload/>` and `<ee:set-attributes/>`.
+* `<ee:variables/>` can contain one or more `<ee:set-variable/>` elements.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<ee:transform 
+  doc:name="Transform" 
+  doc:id="iweyzv" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+<ee:transform doc:name="" doc:id="cfjrpz" >
+    <ee:message >
+        <ee:set-payload doc:name="Set payload" doc:id="nsvzzr" >
+            <![CDATA[%dw 2.0
+            output application/json
+            ---
+            {
+                firstName : "",
+                lastName : "",
+            }]]>
+        </ee:set-payload>
+    </ee:message>
+</ee:transform>
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<transform/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `mode` 
+| Specifies the DataWeave script execution mode. Accepted values: `immediate` or `deferred`. See xref:dataweave::dataweave-memory-management.adoc[DataWeave Memory Management] for additional information.
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+The following examples show how to configure an inline transformations, call DataWeave scripts to apply a transformation. 
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+=== Example: Inline DataWeave Transformation
+
+The following example sets the payload using an inline DataWeave script.
+
+[source,xml]
+----
+<ee:transform 
+  doc:id="747f74d4-cb66-4f8e-8222-24784e6863ae"
+  doc:name="Transform" >
+    <ee:message>
+        <ee:set-payload>
+          <![CDATA[%dw 2.0
+            output application/json
+            ---
+            {
+                message @(id: "DSF-829"): "Hello World!",
+                date: |2017-03-21|,
+                items: 
+                {
+                    item1: 728,
+                    item2: "14422"
+                }
+            }
+          ]]>
+       </ee:set-payload>
+    </ee:message>
+</ee:transform>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+=== Example: Calling an External DataWeave Script
+
+The following example calls an external DataWeave script to set the payload. 
+
+[source,xml]
+----
+<ee:transform doc:id="747f74d4-cb66-4f8e-8222-24784e6863ae"
+  doc:name="Transform" doc:mode="immediate">
+    <ee:message>
+      <ee:set-payload resource="transform.dwl" />
+    </ee:message>
+</ee:transform>
+----
+//end::component-xml-ex2[]
+
+//tag::component-xml-ex3[]
+
+[[example3]]
+
+=== Example: Payload, Attribute, and Variable Transformation
+
+The following example creates transformations for the payload, an attribute, and a variable.
+
+[source,xml]
+----
+<ee:transform 
+  doc:id="747f74d4-cb66-4f8e-8222-24784e6863ae"
+  doc:name="Transform" >
+    <ee:message>
+        <ee:set-payload>
+        <![CDATA[%dw 2.0
+        output application/json
+        ---
+        (payload map (value0, index0) -> 
+        {
+            id: value0.id,
+            username: value0.username,
+            address: 
+            {
+                street: value0.address.street
+            },
+            website: value0.website
+        })]]>
+        </ee:set-payload>
+        <ee:set-attributes>
+        <![CDATA[%dw 2.0
+        output application/json
+        ---
+        {
+            reasonPhrase: attributes.reasonPhrase
+        }]]>
+        </ee:set-attributes>
+    </ee:message>
+    <ee:variables>
+        <ee:set-variable variableName="myVar">
+            <![CDATA[%dw 2.0
+            output application/json
+            ---
+            {
+                a: payload[0].phone
+            }]]>
+        </ee:set-variable>
+    </ee:variables>
+</ee:transform>
+----
+//end::component-xml-ex3[]
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+// tag::metadata[]
+
+The Transform component accepts input and output metadata for the message payload, a variable or an attribute. You can provide format-specific resources and settings for xref:dataweave::dataweave-formats.adoc[supported mime types (formats)]:
+
+* CSV example or RAML definition
+* Copybook file or schema
+* Excel column name and type definitions (including String, Number, Boolean, Date, and DateTime) for one more sheets
+* Fixed Width column name, type (String, Integer, Decimal, Boolean, Date, and DateTime), width, and format settings
+* Flat File schema
+* JSON example or schema
+* Object class or RAML definition
+* Simple Type (String, Number, Integer, Boolean, Date, or DateTime)
+* XML example or schema
+// end::metadata[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:dataweave::dataweave.adoc[DataWeave Language]
+* xref:dataweave::dataweave-selectors.adoc[DataWeave Selectors]
+
+//end::see-also[]
