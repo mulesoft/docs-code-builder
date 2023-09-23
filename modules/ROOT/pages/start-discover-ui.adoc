@@ -8,71 +8,45 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Get familiar with the Anypoint Code Builder UI and elements to design, develop, and deploy APIs and integrations.
 
-== Welcome Mat
-
-To access the welcome mat, select the Anypoint Code Builder view:
-
-image::anypoint-code-builder-view.png[]
-
-Then click the Show Welcome icon on the Anypoint Code Builder view:
-
-image::show-welcome-button.png[]
-
 image::welcome-mat-reference.png[]
 
 [calloutlist]
-. *Show Welcome*: Shows the welcome mat with links to the tutorials.
-. *Getting Started*: Contains links to the main tasks.
-. *Help*: Contains links to the documentation.
-. *Tutorial*: Contains links to tutorials and walkthroughs.
+. *Activity Bar*: Open the *Explorer* to find and work on a project, *Source Control* for your project files, *Run and Debug* for integrations and implementations, *Extensions* for installations and updates in the desktop IDE, and *Manage* for a variety of management options.
+. *Anypoint Code Builder* (MuleSoft) icon: Open the *Anypoint Code Builder* panel to start a project.
+. *Quick Actions*: Start a project for API specification design, implementation, or integration development.
+. *Configuration*: Set Anypoint Code Builder configurations, including the US or EU cloud setting for your IDE.
 
+Use the tutorials to get started with API specification design, implementation, and integration development.
 
-== IDE
-
-The web and desktop IDEs divided into the following areas:
-
-image::ui-elements.png[Anypoint Code Builder UI overview highlighting five main areas.]
-
-[calloutlist]
-. *Activity Bar*: Located on the far left side, the Activity Bar enables you to switch between views and gives you additional context-specific indicators, like the number of outgoing changes when you've enabled source control management.
-. *Editor*: The main area to edit your integration and implementation files. You can open as many editors as you like and arrange them side by side, as well as vertically and horizontally.
-. *Panels*: You can display different panels below the editor to see output and debug information and errors and warnings, or to use the integrated terminal.
-. *Status Bar*: Displays information about the opened project and the files you edit.
-. *Side Bar*: Contains different views like the Explorer to assist you while working on your Mule project.
-
-//TODO: VERIFY STEPS ON THEMES, CONSOLIDATE, SIMPLIFY IF POSSIBLE
 == Change the Look and Feel of the IDE
 
 Select a new theme to change the look and feel of the desktop or cloud IDE.
 
-=== Select a Different Theme from the Cloud IDE
+. Select the *Manage* (gear) icon from the activity bar.
+. Select *Themes* > *Color Themes*
 
-To change your Anypoint Code Builder theme:
+== IDE UI
 
-. Navigate to your menu and select *Help* > *Get Started*.
-+
-image::toggle-get-started.png[]
-. Select *Get Started with VS Code in the Web*.
-+
-image::get-started-vs-code-web.png[]
-. Use the *Choose the look you want* option to select your preferred theme.
-+
-image::browse-themes.png[]
+The UIs of the web and desktop IDEs share the same structure. 
 
-== Select a Different Theme from the Desktop or Cloud IDE
+Integration and implementation projects are Mule applications with similar UIs:
 
-Locate options for themes through the Command Palette: 
+image::ui-elements.png["Anypoint Code Builder UI with Integration Project"]
 
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
-+
-[source,command]
-----
-Welcome: Open Walkthrough...
-----
-. In the Command Palette, provide the following command to open the *Get Started with VS Code* screen:
-+
-[source,command]
-----
-Get Started With VS Code
-----
-. Select a theme from the *Get Started with VS Code* screen.
+[calloutlist]
+. *Explorer*: Open a project workspace.
+. *Editor*: Configure your project files.
+. *Status Bar*: Log into Anypoint Platform. Check for your user name to learn if you are logged in.
+. *Output Panel*: View output and logs in *Mule DX Server*. Open a command terminal. View problems and ports.
+
+See xref:/int-developing-integrations.adoc[] and anypoint-code-builder/imp-implementing-api-specs.adoc[] for more detail.
+
+Implementation projects include a service for mocking endpoints: 
+
+image::ui-elements-api.png["Anypoint Code Builder UI with Integration Project"]
+
+[calloutlist]
+. *Editor*: Configure API specification project files.
+. *API Console*: Test endpoints on your examples.
+
+See xref:des-designing-api-specs.adoc[] for more detail.

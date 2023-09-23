@@ -18,18 +18,14 @@ Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studi
 
 The desktop-based IDE extensions in Anypoint Extension Pack are available from the Visual Studio Marketplace.
 
-Before you begin: +
+Before you begin: 
+
 Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, an Anypoint Extension Pack extension (Anypoint Code Builder - API Extension) depends on this requirement. 
 
-* <<update-pack>>
 * <<install-pack>>
+* <<update-pack>>
 
 For information about OS and system compatibility, see xref:acb-release-notes.adoc[].
-
-[[update-pack]]
-=== Update Anypoint Service Pack 
-
-If Anypoint Service Pack is installed on your desktop IDE, update to the latest version of the service pack by following VS Code instructions in https://code.visualstudio.com/docs/editor/extension-marketplace#_update-an-extension-manually[Update an extension manually^].
 
 [[install-pack]]
 === Install Anypoint Service Pack
@@ -78,6 +74,11 @@ image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder i
 
 //TODO: TROUBLESHOOTING IF IT DOESN'T LOAD
 
+[[update-pack]]
+=== Update Anypoint Service Pack 
+
+If Anypoint Service Pack is installed on your desktop IDE, update to the latest version of the service pack by following VS Code instructions in https://code.visualstudio.com/docs/editor/extension-marketplace#_update-an-extension-manually[Update an extension manually^].
+
 [[set-up-web]]
 == Launch the Cloud IDE 
 
@@ -89,15 +90,21 @@ Before You Begin:
 
 * An administrator with an Anypoint Platform organization account must provide you with access to Anypoint Code Builder. See xref:configure-permissions.adoc[Configure Permissions]. 
 
+* Review important open beta information:
++
 [WARNING]
 --
 During the open beta, your cloud IDE instance might get deleted, causing you to lose your integrations, automations, and APIs.
 
+.Click for more information:
+[%collapsible]
+====
 To save your work, you must either deploy your Mule projects to CloudHub, commit them to source control, or publish your API specifications to Design Center.
 
 If you are using an Anypoint Platform trial account that loses access to Anypoint Code Builder after your trial expires, the cloud IDE instances are deleted.
 
 Do not use the beta version of Anypoint Code Builder to develop APIs, integrations, or automations for production environments.
+====
 --
 
 To launch your cloud IDE from Anypoint Platform:
@@ -111,6 +118,8 @@ If you have an account in one cloud but need to work in another, you must create
 
 . Accept any terms and conditions for use of Anypoint Platform.
 . Click *Launch Cloud IDE*.
++
+image::acb-launch-cloud-ide.png["Launch button for the cloud IDE in Anypoint Platform"]
 +
 After provisioning of your cloud IDE is complete, the IDE opens. The provisioning process can take a few minutes.
 +
