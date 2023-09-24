@@ -9,7 +9,7 @@ Errors sometimes occur when you open or start a project in Anypoint Code Builder
 
 == Loading Error in the Application UI
 
-A *Loading...* error in the UI can occur when:
+A *Loading...* error in the UI canvas often occurs under these conditions:
 
 * When importing a project due to a missing dependency 
 +
@@ -18,7 +18,7 @@ To check for a missing dependency:
 //step open output panel
 include::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
 . Select "Mule DX Server" from the drop-down menu.
-. Search for the error caused by the missing dependency, similar to this one:
+. Search for an error caused by the missing dependency, similar to this one:
 +
 ----
 Caused by: org.eclipse.aether.transfer.ArtifactNotFoundException: 
@@ -39,18 +39,6 @@ To address this issue, try:
 +
 * Disabling browser extensions and reloading the application 
 * Using another browser that is not using extensions
-
-
-If the canvas UI does not open (the load state image keeps showing) after importing an existing project, it may be caused by a missing dependency. Follow these steps:
-
-Open the output (I thin this is already described in another section)
-Select "Mule DX Server" in the dropdown
-Search for an error caused by a missing dependency. It will look similar to this:
-Caused by: org.eclipse.aether.transfer.ArtifactNotFoundException: Failure to find org.mule.examples:accelerator-common-config-module:jar:mule-plugin:1.1.0 in https://repo.maven.apache.org/maven2/ was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced
-
-Make sure to sign into the Aypoint platform, so that all dependencies in Exchange can be found
-After all dependency issues have resolved, the canvas UI should come up
-
 
 == Canvas UI Renders Without Configured Flows or Subflows
 
