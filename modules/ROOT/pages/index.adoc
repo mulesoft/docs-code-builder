@@ -24,7 +24,7 @@ Get the Anypoint Code Builder experience through the Anypoint Extension Pack for
 [[us-eu-clouds]]
 == US and UE Cloud Hosts
 
-Anypoint Code Builder is available on Anypoint Platform from US and EU cloud hosts. To help your organization meet emerging regulatory requirements that differ by region, Anypoint Platform does not share organization information, permissions, account data, or projects between hosts. In addition to hosting your projects, Anypoint Platform also hosts deployment targets for managed runtimes and related data, including data and metadata about your Mule implementations.
+Anypoint Code Builder is available through Anypoint Platform from US and EU cloud hosts. To help your organization meet emerging regulatory requirements that differ by region, Anypoint Platform does not share organization information, permissions, account data, or projects between hosts. In addition to hosting your projects, Anypoint Platform also hosts deployment targets for managed runtimes and related data, including data and metadata about your Mule implementations. API specification projects also store source files in the source control management (SCM) in Design Center on the cloud that you use.
 
 * US Cloud (non-EU region host): https://anypoint.mulesoft.com/login/[anypoint.mulesoft.com^] 
 +
@@ -36,7 +36,7 @@ MuleSoft hosts this control plane within EU (Dublin) data centers.
 
 Access to the Anypoint Code Builder requires permissions set by an organization administrator (see xref:configure-permissions.adoc[]). 
 
-To open Anypoint Code Builder from Anypoint Platform, see xref:start-acb.adoc#set-up-web[Launch the Cloud IDE]. If you do not have an Anypoint Platform account through your organization, you can sign up in the US or EU Cloud host for Anypoint Platform.
+To open Anypoint Code Builder from Anypoint Platform, see xref:start-acb.adoc#set-up-web[Launch the Cloud IDE]. If you do not have an Anypoint Platform account through your organization, you can sign up in the US or EU Cloud host for Anypoint Platform. 
 
 See xref:hosting-home::index.adoc[] for more information.
 
@@ -76,13 +76,15 @@ A flow reference enables you to to trigger execution of a flow or subflow from a
 == Anypoint Platform Product Integrations
 
 //relationships to our other products
-Both the web and desktop Anypoint Code Builder IDEs integrate with key Anypoint Platform products: 
+Both the web and desktop Anypoint Code Builder IDEs integrate with key Anypoint Platform products and features: 
 
 * Anypoint Exchange for publishing the API specifications that you create, and for importing API specifications and development resources (such as connectors) into your projects
 * CloudHub for deploying the implementations and integrations that you build 
 * Design Center for storing API specifications as they are developed
 
+The use of features provided by Anypoint Platform products through the cloud and desktop IDEs requires a connection from the IDE to Anypoint Platform. You establish this connection by logging in to your Anypoint Platform account from the IDE. For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform from the IDE].
 
+//TODO: CONSIDER MOVING TO REF SECTION
 [[builtin-connectors]]
 == Built-In Connectors
 
@@ -95,18 +97,6 @@ Built-in connectors include:
 
 Many other connectors are available through https://www.mulesoft.com/exchange/[Anypoint Exchange^] from your Anypoint Code Builder IDE.
 
-//what do people need to know to get started?
-//NOT YET: While built-in features, such as AI-generated suggestions, help guide your work in Anypoint Code Builder, the following background is necessary: 
-
-//TODO: ADD Learning resources are available in the connector docs, Mule docs, DataWeave docs, and dataweave.mulesoft.com, which provides a tutorial and playground for trying out DataWeave scripts.  
-
-//seems like we have no choice but to introduce them to key things they
-//need to understand and point them to resources for more info
-
-//TODO: SHOULD WE ADD SOMETHING LIKE THIS (WITH IMPROVED DESCRIPTIONS)?
-//TODO: QA and refine the "starter" descriptions below, of course
-//Important concepts include the following:
-
 == Feedback
 
 You can provide feedback about Anypoint Code Builder as a https://github.com/forcedotcom/try-acb-feedback/issues[GitHub issue^]. 
@@ -115,6 +105,7 @@ For questions or general discussion about Code Builder, see https://trailhead.sa
 
 == See Also
 
+* xref:access-management::index.adoc[]
 * xref:exchange::index.adoc[]
 * xref:connectors::index.adoc[]
 * xref:dataweave::index.adoc[]
