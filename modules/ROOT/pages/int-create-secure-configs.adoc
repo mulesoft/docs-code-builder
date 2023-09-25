@@ -12,6 +12,12 @@ Create properties that enable you to:
 * Define and use variables instead of literal strings when setting values in the configuration XML.
 * Configure a variable for selecting different property files for a specific deployment environment, such as development, sandbox, or production.
 
+
+== Before You Begin
+
+* xref:setup.adoc[Set up and access the web or desktop IDE].
+* xref:int-create-integrations.adoc[Create an integration].
+
 [[get-familiar]]
 == Configuration Properties and Encryption
 
@@ -489,7 +495,7 @@ This procedure shows how to hide the encryption key value in Runtime Manager.
 [[deploy-to-cloudhub]]
 == Deploy to CloudHub with Sensitive Values Hidden
 
-When you deploy an application that you build with Anypoint Code Builder to CloudHub, hide the value of your encryption key to prevent Runtime Manager UI from displaying the value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
+When you deploy an application that you build with Anypoint Code Builder to CloudHub, hide the value of your encryption key to prevent Runtime Manager UI from displaying the value (see xref:cloudhub::cloudhub-manage-props.adoc[]). 
 
 Runtime Manager serves as the management console for CloudHub deployments. The encryption key value serves as the password for encryption and decryption.
 
@@ -521,7 +527,7 @@ MuleSoft: Deploy to CloudHub
 +
 Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
 +
-image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
+image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub rocket icon"]
 . When prompted, enter _the same value_ you used to encrypt your secure properties.
 +
 If you do not enter the same value, the application is able to upload to CloudHub, but the deployment fails because the encryption key value does not work.
@@ -546,7 +552,7 @@ To fix this error:
 +
 Runtime Manager applies your changes and attempts to deploy your application. 
 
-For more information, see xref:runtime-manager::index.adoc[]. For information about CloudHub, see xref:cloudhub-1::index.adoc[].
+For more information, see xref:runtime-manager::index.adoc[]. For information about CloudHub, see xref:cloudhub::index.adoc[].
 
 [[create-prop-file]]
 == Provide Settings for Different Environments
@@ -629,7 +635,7 @@ MuleSoft: Deploy to CloudHub
 +
 Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
 +
-image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub "rocket" icon with deploy.json open"]
+image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub rocket icon with deploy.json open"]
 . _Before opting to deploy_, edit `deploy.json` to specify the correct prefix to your properties file. For example:
 +
 [source,deploy.json]

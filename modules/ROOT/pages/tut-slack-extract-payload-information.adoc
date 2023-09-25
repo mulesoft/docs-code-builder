@@ -1,0 +1,73 @@
+= Extract Payload Information to Variables
+:imagesdir: ../assets/images
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+This section of the walkthrough teaches you how to extract information from the payload into different variables to refer to those values later in the flow.
+
+== Before You Begin
+
+Complete these procedures:
+
+* xref:tut-slack-create-escalation-api.adoc[]
+* xref:tut-slack-create-config-files-sfdc.adoc[] 
+* Configure your Salesforce integration
+
+== Extract Values From the Payload
+
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file.
+. Select the `plus` icon after the *On New Case* Salesforce component:
++
+image::add-transform-from-canvas-slack.png[]
+. Type `Transform` and select *Transform*:
++
+image::drag-transform-message-slack-case-canvas.png[]
+. Configure the Transform Message component to extract data from the payload to variables:
++
+[source,XML]
+--
+<ee:transform doc:name="Extract Values from Case" >
+    <ee:variables>
+      <ee:set-variable variableName="casestatus"> //<1>
+          <![CDATA[%dw 2.0 output application/java --- payload.Status]]>
+      </ee:set-variable>
+      <ee:set-variable variableName="casenumber"> //<2>
+          <![CDATA[%dw 2.0 output application/java --- payload.CaseNumber]]>
+      </ee:set-variable>
+<ee:set-variable variableName="slackchannel"> //<3>
+          <![CDATA["this-is-a-test"]]>
+      </ee:set-variable>
+    </ee:variables>
+  </ee:transform>
+--
+[calloutlist]
+.. `casestatus` retrieves the Salesforce case status: *New*, *Working*, or *Escalated*.
+.. `casenumber` retrieves the case number created by Salesforce.
+.. Set the `slackchannel` to the channel name that you set earlier in the walkthrough.
+
+
+== Concatenate Your Values in The Payload
+
+Add a Set Payload component to concatenate the value of your variables in the resulting payload of your application:
+
+. Select the `plus` icon after the Transform Message component:
++
+image::add-set-payload-slack-case-canvas.png[]
+. Type `_set_` and select *Set Payload*:
++
+image::drag-set-payload-slack-case-canvas.png[]
+. Configure the Set Payload component with the following code:
++
+[source,XML]
+--
+<set-payload doc:name="Set Case Info" value='#["Case Number: " ++ (payload.CaseNumber default "") ++  ", Origin: " ++ (payload.Origin default "") ++ ", Case Type: " ++ (payload.Type default "") ++ ", Priority: " ++ (payload.Priority default "") ++ ", Status: " ++ (payload.Status default "")]'/>
+--
+
+== Next Step
+
+* xref:tut-slack-add-condition-to-your-flow.adoc[].
++
+Create a condition to send an Email if the case is escalated, otherwise inform about the case in a Slack channel.
