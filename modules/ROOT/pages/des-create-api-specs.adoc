@@ -6,7 +6,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 Use Anypoint Code Builder to create and test basic API specification to Exchange:
 
 . <<design-new-api-spec, Create a new API specification project>>.
-. <<use-autocomplete, Use auto-complete in the API editor>>.
+
 . <<open-output-panel, Track progress in the output panel>>.
 . <<review-spec-console, Review your specification in the API console>>.
 . <<test-spec, Test your specification using the mocking service>>.
@@ -67,7 +67,7 @@ If prompted, trust the authors of the files in the folder.
 When the project is ready for editing, the API project opens the specification in the Editor view.
 For example, this OAS 3.0 (YAML) specification:
 +
-image::des-oas-create.png[New OAS 3.0 (YAML) API Project]
+image::des-oas-create.png[New OAS 3.0 (YAML) API project]
 . Continue designing your API specification. 
 +
 As you enter elements, use <<use-autocomplete, auto-complete>> (Ctrl+Space) to display available options within the context. 
@@ -188,22 +188,6 @@ If you created an OAS 3.0 (YAML) project, replace the initial specification with
 --
 ====
 
-[[use-autocomplete]]
-== Use Auto-Complete in the API Editor
-
-. In the editor view, press Ctrl+Space to display available options.
-For example:
-+
-image::des-autocomplete.png[Auto-complete options for `get`]
-+
-Auto-complete shows different options, depending on the context.
-For example:
-+
-image::des-autocomplete-context.png[Auto-complete options for `responses`]
-. Use the arrow keys to navigate the list and click to select.
-+
-Auto-complete adds the element to the code and places the cursor for you to add values.
-
 [[open-output-panel]]
 == Track Progress in the Output Panel
 
@@ -213,7 +197,8 @@ To track the progress of internal processing as you design your API:
 include::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
 . Select *Mule DX Server* from the dropdown:
 +
-image::des-output-panel.png[Mule DX Server in the output panel]
+image::des-output-panel.png["Mule DX Server in the output pane"]
+
 
 
 [[review-spec-console]]
@@ -228,7 +213,7 @@ To display your specification in the console:
 The API Console show the endpoints for the specification in API Console.
 For example:
 +
-image::des-api-console.png[API specification in the API Console]
+image::des-api-console.png["API specification in the API Console"]
 +
 [calloutlist]
 .. Click a method to view details.
@@ -249,12 +234,12 @@ that you configured in your API specification.
 . In the API Console, click a method, such as GET or POST.
 . Click *Try It*.
 +
-image::des-api-console-try-it.png[Try It button in the API console]
+image::des-api-console-try-it.png["Try It button in the API console"]
 . Confirm that the parameters that you've defined are correct and click *Send*.
 . Verify that API console returns the response you defined.
 For example:
 +
-image::des-api-console-response.png[Example response in the API console]
+image::des-api-console-response.png["Example response in the API console"]
 . Optionally, review your configured response examples when querying your mocked API endpoints.
 
 
@@ -273,3 +258,4 @@ To delete an API specification:
 * xref:setup.adoc[]
 * xref:tutorials.adoc[]
 * xref:access-management::business-groups.adoc[]
+* xref:start-discover-ui.adoc#use-autocomplete[Use IntelliSense to Auto-Complete in the Editor].

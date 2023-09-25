@@ -69,14 +69,14 @@ To add a breakpoint to your Mule application:
 include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 . Click the line number in your `<flow-ref>` component to add a breakpoint on that component.
 +
-image::deb-add-breakpoint.png[]
+image::deb-add-breakpoint.png["Add breakpoint on a line number"]
 +
 NOTE: You can also use F9 to add a breakpoint to the current line.
 . In your configuration XML file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components.
 
 All breakpoints appear in the *Breakpoints* panel:
 
-image::int-breakpoints-panel.png[Breakpoints panel]
+image::int-breakpoints-panel.png["Breakpoints panel"]
 
 
 [[run-debug-mode]]
@@ -89,14 +89,14 @@ include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 . Click the image:icon-start-debug.png["",15,15] (*Start Debugging (F5)*) icon for *Debug Mule Application*.
 +
 --
-image::run-debugger.png["Run the debugger."]
+image::run-debugger.png["Run the debugger"]
 
 NOTE: Selecting *Run* > *Start without Debugging* produces an error.
 
 Anypoint Code Builder packages your application and deploys the application to the embedded Mule runtime engine.
 A terminal opens so you can view the status.
 
-image::deb-terminal-running.png[]
+image::deb-terminal-running.png["Debugging status in a terminal window"]
 
 The terminal displays a message and the status bar turns red to indicate that the application is running.
 --
@@ -114,7 +114,7 @@ The terminal displays a message and the status bar turns red to indicate that th
 [[debug-toolbar]]
 == Debug Toolbar
 
-image::debugger-toolbar.png["Debug Toolbar"]
+image::debugger-toolbar.png["Debug toolbar"]
 
 [calloutlist]
 . *Continue* F5
@@ -240,14 +240,14 @@ If you don't receive this response or if you receive a connection error:
 See xref:ping-locally-deployed-app.adoc[] for more information about how to send requests to your application.
 . In Anypoint Code Builder, notice that the application execution stopped at your first breakpoint.
 +
-image::debug-stop-at-flow-ref.png[]
+image::debug-stop-at-flow-ref.png["Stop at first breakpoint"]
 . Click *Step Over* on your debug toolbar to move the execution to your next breakpoint.
 +
-In the Debug sidebar, the *Variables* panel shows details about the Mule event at that particular part of the flow.
+In the Debug sidebar, the *Variables* pane shows details about the Mule event at that particular part of the flow.
 +
-image::debugger-stop-db-select.png[]
+image::debugger-stop-db-select.png["Variables pane with details about the Mule event]
 . Select the *Step Over* button on your debug toolbar to move the execution to your next breakpoint.
-. In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables and note that you can inspect the database response as an array.
+. In the Debug sidebar on the *Variables* pane, expand the *Mule Message* and the *Payload* variables and note that you can inspect the database response as an array.
 +
-image::debugger-stop-set-variable.png[]
+image::debugger-stop-set-variable.png["Inspect the database response as an array"]
 ////

@@ -1,4 +1,4 @@
-= Implementing OAS, RAML, and GraphQL API Specifications
+= Implementing OAS, RAML, and GraphQL API Specs
 // :page-aliases: imp-implement-rest-oas-specs.adoc, imp-implement-graphql-specs.adoc
 
 
@@ -8,17 +8,32 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 
-Use Anypoint Code Builder implement OAS 2.0 and 3.0 and RAML 0.8 and 1.0 API specifications.
+Use Anypoint Code Builder to implement OAS, RAML, and GraphQL API specifications.
+
+When you implement an API spec, Anypoint Code Builder automatically scaffolds the spec into
+an integration project,
+creating flows for each endpoint in the spec, error handlers, and a built-in router.
+You then implement the interface within the Mule app.
+
+The process you use to implement your spec depends on whether you already created an integration project:
+
+* To implement an API spec and create the integration project, see <<implement-api-spec>>.
+* To implement an API spec in an existing project, see <<import-spec-into-project>>.
 
 == Before You Begin
 
 * xref:setup.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create and test your API specification].
 * xref:des-publish-api-spec-to-exchange.adoc[Publish your API specification to Exchange].
-* xref:int-create-integrations.adoc[Create your integration (Mule app)]
+* Optionally, xref:int-create-integrations.adoc[create your integration project (Mule app)].
 
 
+
+[[implement-api-spec]]
 == Implement an API Specification
+
+If you have not already created an integration project, use Anypoint Code Builder to
+scaffold the API spec into a new Mule project:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
@@ -35,8 +50,8 @@ image::implement-api-option-mat.png["*Implement an API* link highlighted in the 
 
 | *Project Name* | Unique name for your project.
 
-This name is used as the title and name of the specification file.
-For example, if the project name is "OAS Example", the specification file name is `oas-example`.
+This name is used as the title and name of the project file.
+For example, if the project name is "OAS Integration", the project file name is `oas-integration`.
 | *Project Location* | Your home directory or another directory you create.
 
 See xref:start-add-folders.adoc[].
@@ -47,22 +62,45 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 | *Show filters* |See xref:filter-search-results.adoc[] for more information.
 |===
 
-. In *Search Asset by name*:
+. Search for an API specification on Exchange:
 +
-.. Start typing the name of an API specification that is published to Exchange.
+.. Start typing the name of an API specification.
 .. Press Enter to display a list of possible results.
-.. Click *Add Asset* to select the API specification:
+.. Click *Add Asset* to add the selected API specification:
 +
-image::imp-api-search.png[Search an API from Exchange]
+image::imp-api-search.png["Search an API from Exchange"]
++
+The form shows the selected API spec. 
+For example:
++
+image:imp-api-selected.png["OAS Example API selected in the Implement an API Specification form"]
+. Click *Create Project*.
 
-Anypoint Code Builder creates the necessary flows for each endpoint on your API specification endpoints.
+Anypoint Code Builder scaffolds your API into the new integration project and opens the project XML file.
+For example:
+
+image:imp-api-scaffolded.png["OAS Example Integration in Anypoint Code Builder"]
+
+This example includes:
+
+* The main flow
+* An HTTP Listener with a router
+* Several error handlers
+
+For GraphQL APIs, Anypoint Code Builder also creates a data fetcher (`<graphql-router:data-fetcher>`) as a source for each Mule flow.
+See the xref:tut-graphql-implement-api.adoc[] tutorial for an example GraphQL API and xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
 
 
-== Import an API Specification into an Implementation
 
-If you have already xref:int-create-integrations.adoc[created an integration], you can import your API specification into it:
+[[import-spec-into-project]]
+== Import an API Spec into an Implementation Project
 
-. In Anypoint Code Builder, open your integration project in the explorer view. For example, `my-project-name`.
+If you have already xref:int-create-integrations.adoc[created an integration project],
+you can scaffold your API specification by importing it from Exchange.
+In this case, Anypoint Code Builder creates a separate configuration XML file for the interface in your integration project.
+
+. In Anypoint Code Builder, open your integration project in the Explorer view.
+For example, `my-project-name`.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Enter `import` and select the following command:
@@ -71,10 +109,13 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 --
 MuleSoft: Import Asset from Exchange
 --
-. Select *Rest API*.
+. Depending on the language of your API spec:
++
+* *Rest API* for OAS or RAML
+* *GraphQL API*
 . If prompted, log in to Anypoint Platform, allowing the extension to sign in,
 open an external web site, and open Visual Studio Code.
-. Type the name of your API specification and press Enter.
+. Type the name of your API spec and press Enter.
 For example, `OAS Example`.
 . Wait for the IDE to load a list of matches to the name:
 +
@@ -83,56 +124,33 @@ image::imp-assets-from-exchange.png["Assets from Exchange dropdown"]
 . At the prompt, select the version of the API spec to import, such as `v1.0.1`.
 . When prompted to scaffold the API dependency, select *Yes*.
 +
-This step adds the API specification as a dependency in your project's `pom.xml` file
-and creates a new configuration XML file, such as `oas-example.xml`:
+This step:
++
+** Adds the API specification as a dependency in your project's `pom.xml` file:
++
+[source,XML]
+--
+<dependency>
+    <groupId>e91cab06-650b-4634-9c6f-5bc4f4fc4d17</groupId>
+    <artifactId>OAS-Example</artifactId>
+    <version>1.0.1</version>
+    <classifier>oas</classifier>
+    <type>zip</type>
+</dependency>
+--
+** Creates a new configuration XML file in the project, such as `oas-example.xml`:
 +
 image::imp-new-config-file.png["New configuration file in the Explorer view"]
-
-[[implement-graphql-spec]]
-== Implement a GraphQL API Specification
-
-. Upload your GraphQL API spec to Exchange.
 +
-See xref:publish-graphql-to-exchange[Publish a GraphQL API Spec to Exchange]
+The new configuration XML file includes the interface for your integration project,
+with flows for each endpoint in the spec, error handlers, and a built-in router.
+You then implement the interface within the Mule app.
 
 // add relevant stuff from tut-implement-am-flights-api
 // Then, add the logic to implement an endpoint in the API.
 
 ////
 
-== Import and Scaffold Your API Specification
-
-. In Anypoint Code Builder, open an integration.
-For example, `my-project-name`.
-// +
-// For information about this application, see xref:create-basic-integration.adoc[].
-. In the Command Palette, provide this command:
-+
-[source,command]
-----
-MuleSoft: Import Asset from Exchange
-----
-. Select *Rest API*. 
-+
-image::rest-api-asset-type.png["Rest API option highlighted after selecting MuleSoft: Import Asset from Exchange"]
-. If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code. 
-. Type the name of your API specification. For example:
-+
-[source,spec name]
-----
-American Flights API
-----
-// +
-// For information about this specification, see xref:design-api-specification-from-scratch.adoc[].
-. Wait for the IDE to load a list of matches to the name: 
-+
-image::select-api-asset-from-exchange.png["American Flights API asset is highlighted"]
-. When prompted for a version, select the version of the API to import, such as `_1.0.0_`.
-. Select *Yes* when prompted to scaffold the API dependency.
-+
-This step adds the API specification as a dependency in your project's `pom.xml` file and creates a new configuration XML file, such as `american-flights-api.xml`:
-+
-image::scafolded-mule-config-file.png["American-flights.xml file highlighted in the package explorer section"]
 
 == Tour the Interface File
 
@@ -297,3 +315,4 @@ For guidance, see xref:ping-locally-deployed-app.adoc[].
 == See Also
 
 * xref:int-create-integrations.adoc[]
+* xref:tut-graphql-implement-api.adoc[]
