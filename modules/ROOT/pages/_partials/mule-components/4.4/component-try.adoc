@@ -11,7 +11,7 @@
 //     Short description of the form "Do something..." 
 //     Example: "Configure log messages anywhere in a flow."
 
-Handle errors that may occur when attempting to execute any of the components inside the scope.
+Handle errors that might occur during the execution of components inside the scope.
 
 //end::component-short-description[]
 //
@@ -19,11 +19,11 @@ Handle errors that may occur when attempting to execute any of the components in
 //
 //tag::component-long-description[]
 
-A Try scope wraps one or more operations, then catches and handles any exceptions that might be thrown by any of these enclosed operations. The behavior is as if you extracted those enclosed event components into a separate flow with its own error handling strategy, but inline, without having to actually define a new flow.
+The Try scope catches and handles exceptions thrown by the components that you add to the scope. Error handling within the scope is similar to error handling within a Flow component. Instead of configuring a separate flow, you can use Try within a Flow component. 
 
 Every payload modification or variable addition, modification, or removal is propagated through the rest of the execution. This propagation includes modifications that take place inside the error handlers.
 
-The Try scope supports transactions. A transaction is a series of actions that should never be partially executed. Configure a Try scope so that it is a set of operations that are considered one unit that either succeeds or fails, depending on whether errors are propagated and the transaction rolled back, or handled and the transaction committed. In either case, the process flow in which the Try scope resides continues.
+The Try scope supports transactions. A transaction is a series of actions that must execute successfully. Configure components within the Try scope as a single unit that either succeeds or fails, depending on whether errors are propagated and the transaction rolled back, or handled and the transaction committed. In either case, the flow that contains the Try scope continues.
 
 //end::component-long-description[]
 //
