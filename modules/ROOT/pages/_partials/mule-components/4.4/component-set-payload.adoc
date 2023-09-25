@@ -11,7 +11,7 @@
 //     Short description of the form "Do something..." 
 //     Example: "Configure log messages anywhere in a flow."
 
-Updates the payload of the message.
+Sets or updates the payload of the message.
 
 //end::component-short-description[]
 //
@@ -19,8 +19,8 @@ Updates the payload of the message.
 //
 //tag::component-long-description[]
 
-The payload can be a literal string or a DataWeave expression. Use the `set-payload` component for simple expressions or transformation. 
-//For complex scenarios, use the xref:acb-component-transform.adoc[Transform Message Component].
+The payload can be a literal string or a DataWeave expression. Use the `set-payload` component only for simple expressions or transformations.
+For complex scenarios, use the xref:acb-component-transform.adoc[Transform Message Component].
 
 //end::component-long-description[]
 //
@@ -85,8 +85,11 @@ SNIPPET_XML_HERE
 | `value` 
 | Accepts a literal string or DataWeave expression that defines how to set the payload. For example, ``"some string"`` or `#[now()]`. This attribute is required. 
 
+| `resource`
+|  Points to a `.dwl` file containing a DataWeave transformation script. These values are resolved statically (not dynamically). For example, using `<ee:set-payload resource="myscript-${env}.dwl"/>` generates an error.
+
 | `mimeType` 
-| The mime type of the value assigned to the payload. For example, `text/plain` or `application/json`.
+| The MIME type of the value assigned to the payload. For example, `text/plain` or `application/json`.
 
 | `encoding`
 | The encoding of the value assigned to the payload. For example, `UTF-8`.
@@ -95,7 +98,7 @@ SNIPPET_XML_HERE
 
 [WARNING]
 --
-The `mimeType` and `encoding` attributes do not affect a DataWeave expression used as `value`. They only affect the output Mule Message. If a transformation is required, the DataWeave expression must contain an explicit output directive.
+The `mimeType` and `encoding` attributes do not affect a DataWeave expression used as a `value`. These attributes affect the _output_ Mule Message only. If a transformation is required, the DataWeave expression must contain an explicit `output` directive.
 --
 
 //end::component-xml-attributes-root[]
