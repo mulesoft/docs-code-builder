@@ -1,7 +1,7 @@
 //
 //tag::component-title[]
 
-= Until Successful (<component-xml-root/>)
+= Until Successful (<until-successful/>)
 
 //end::component-title[]
 //
@@ -25,9 +25,9 @@ Routing is successful if no exception is raised or if the response matches an ex
 
 Common processes that use Until Successful include:
 
-* Dispatching to outbound endpoints, for example, when calling a remote web service that might have availability issues.
-* Executing a component method, for example, when executing on a Spring bean that may depend on unreliable resources.
-* Using a sub-flow to re-execute several actions until they all succeed.
+* Dispatching to outbound endpoints, for example, when calling a remote web service that might have availability issues
+* Executing a component method, for example, when executing on a Spring bean that might depend on unreliable resources
+* Using a Subflow component (`<sub-flow/>`) to re-execute several actions until they all succeed
 
 //end::component-long-description[]
 //
@@ -91,10 +91,10 @@ SNIPPET_XML_HERE
 | Automatically generated identifier for the component.
 
 | `maxRetries` 
-| Maximum number of retries allowed. This attribute can be either a number or an expression that resolves to a number. Error messages show in the following form: `Message: 'until-successful' retries exhausted`. The Mule error type is `MULE:RETRY_EXHAUSTED`.
+| Maximum number of retries allowed. This attribute can be either a number or an expression that resolves to a number. Error messages look like this: `Message: 'until-successful' retries exhausted`. The Mule error type is `MULE:RETRY_EXHAUSTED`.
 
 | `millisBetweenRetries` 
-| Specifies, in milliseconds, the minimum interval between two retries. The actual interval depends on the previous execution, but it should not exceed twice this number. This attribute can be either a number or an expression that resolves to a number. Defaults to `60000` milliseconds (one minute). 
+| Specifies, in milliseconds, the minimum interval between two retries. The length of the interval is affected by a previous execution but typically does not exceed twice the minimum. This attribute can be a number or an expression that resolves to a number. Defaults to `60000` milliseconds (one minute). 
 
 |===
 //end::component-xml-attributes-root[]
@@ -178,9 +178,9 @@ The following XML example configures a flow triggered by a Scheduler component a
 
 Behavior of the example application:
 
-* If the FTP Write operation fails
+* If the FTP Write operation fails, Until Successful scope retries the operation every `3000` milliseconds until the operation succeeds, with a limit of `5` retries. 
 +
-The Until Successful scope retries the operation every `3000` milliseconds until the operation succeeds, with a limit of `5` retries. If the last execution fails, the scope throws a `MULE:RETRY_EXHAUSTED` error. Then, the `<on-error-continue>` handles the error and executes the Logger with the message: `File upload failed`. 
+If the last execution fails, the scope throws a `MULE:RETRY_EXHAUSTED` error. Then the `<on-error-continue>` handles the error and executes the Logger with the message `File upload failed`. 
 +
 Before throwing `MULE:RETRY_EXHAUSTED`, Mule also logs each unsuccessful attempt to retry execution of the processors on the Mule event, for example:
 +
@@ -192,9 +192,7 @@ ERROR 2022-12-09 17:41:44,910 ... event: cdad31c0-782b-11ed-af21-147ddaaf4f97]
 ERROR 2022-12-09 17:41:55,079 ... event: cdad31c0-782b-11ed-af21-147ddaaf4f97] 
 ...UntilSuccessfulRouter: Retrying execution of event, attempt 5 of 5.
 ----
-* If the FTP Write operation executes successfully in any of the attempts
-+
-The next processor after the Until Successful scope executes, in this case, the Logger showing the message: `File upload success`.
+* If the FTP Write operation executes successfully in any of the attempts, the next processor after the Until Successful scope executes. In this example, the Logger executes with the message `File upload success`.
 
 //OPTIONAL: SHOW OUTPUT IF HELPFUL
 //The example produces the following output: 
