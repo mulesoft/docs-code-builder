@@ -1,0 +1,333 @@
+//
+//tag::component-title[]
+
+= Try Scope (<try/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Handle errors that might occur during the execution of components inside the scope.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+The Try scope catches and handles exceptions thrown by the components that you add to the scope. Error handling within the scope is similar to error handling within a Flow component. Instead of configuring a separate flow, you can use Try within a Flow component. 
+
+Every payload modification or variable addition, modification, or removal is propagated through the rest of the execution. This propagation includes modifications that take place inside the error handlers.
+
+The Try scope supports transactions. A transaction is a series of actions that must execute successfully. Configure components within the Try scope as a single unit that either succeeds or fails, depending on whether errors are propagated and the transaction rolled back, or handled and the transaction committed. In either case, the flow that contains the Try scope continues.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<try 
+  doc:name="Try" 
+  doc:id="dieaig" 
+  transactionalAction="${action}" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<try/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `transactionalAction` 
+a| Defines how to handle a transaction. Accepted values are:
+
+* Ignore (`INDIFFERENT`)
++
+Default. If a transaction is active, the scope joins it. If not, the scope does not create a transaction.
+
+* Always Begin (`ALWAYS_BEGIN`)
++
+A new transaction is started every time the scope is executed.
+
+* Begin or Join (`BEGIN_OR_JOIN`)
++
+Relevant only when execution order might vary (for example, due to asynchronous actions occurring outside the flow).
+If current flow processing has already started a transaction, the scope joins it. If not, the scope initiates a new transaction.
+
+| `transactionType`
+| Specifies the type of transaction. Accepted values are: 
+
+* `LOCAL`
++
+Default. A single or local transaction. 
+
+* `XA` 
++
+A transaction that groups operations from multiple resources and follows the Extended Architecture (XA) standard.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+The following examples show how to configure the Try scope to handle transactions in different situations. 
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+=== Example: Different Transactional Actions in Try Scope
+
+The following example shows a `jms:listener` operation configured to initiate a transaction at flow level, a Try scope that tries to initiate or join the transaction (depending on its configuration), and a `jms:publish` operation configured to run outside of the transaction:
+
+[source,xml,linenums]
+----
+<flow name="someFlow">
+	<jms:listener config-ref="JMS_Config" destination="test.in" transactionalAction="ALWAYS_BEGIN"/>
+	<!-- Processors -->
+	<try transactionalAction="${action}">
+		<!-- Processors -->
+		<!-- Join if possible is the default value for jms:publish operation -->
+		<jms:publish config-ref="JMS_Config" destination="test.out" transactionalAction="NOT_SUPPORTED"/>
+		<raise-error type="APP:SOME"/>
+		<!-- More Processors -->
+	</try>
+	<!-- Processors -->
+</flow>
+----
+
+If the operations within the Try scope do not produce an error, the scope finishes the execution and commits the transaction, independently of the configured `transactionalAction` value.
+
+The transaction and the messages are handled differently when a `<raise-error/>` component is added, depending on the `transactionalAction` of the Try scope:
+
+* Ignore (`INDIFFERENT`)
++
+In this case, the transaction continues while executing the operations inside the Try scope. When the error is raised, it is propagated to the source (which does not handle it with an `<on-error-continue>` error handler). The transaction is rolled back, and the message is available again in the JMS queue. This rollback does not affect the completed `jms:publish` operation, which was outside of the transaction scope because `transactionAction` was set to its default, `NOT_SUPPORTED`.
++
+Had `transactionAction` been set to `JOIN_IF_POSSIBLE`, the `jms:publish` operation would have been rolled back.
++
+* Always Begin (`ALWAYS_BEGIN`)
++
+This raises an error because an active transaction already exists.
+* Begin or Join (`BEGIN_OR_JOIN`)
++
+In this case, a transaction was already initiated so the scope joins the active transaction. The result is the same as in `INDIFFERENT`.
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+=== Example: Error Handling at Flow Level
+
+The following example includes an error handler at flow level:
+
+In the following example, an error handler is added at flow level:
+
+[source,xml,linenums]
+----
+<flow name="someFlow">
+	<jms:listener config-ref="JMS_Config" destination="test.in" transactionalAction="ALWAYS_BEGIN"/>
+	<!-- Processors -->
+	<try transactionalAction="${action}">
+		<!-- Processors -->
+		<!-- Join if possible is the default value for jms:publish operation -->
+		<jms:publish config-ref="JMS_Config" destination="test.out"/>
+		<raise-error type="APP:SOME"/>
+		<!-- More Processors -->
+	</try>
+	<!-- Processors -->
+	<error-handler>
+		<on-error-continue/>
+	</error-handler>
+</flow>
+----
+
+The behavior in this example is:
+
+* Ignore (`INDIFFERENT`)
++
+The transaction continues. Because the error is handled by an `on-error-continue` error handler, the transaction is committed. The message read from the `jms:listener` source is consumed, and the message processed by the `jms:publish` operation is actually sent.
+* Always Begin (`ALWAYS_BEGIN`)
++
+Raises an error because an active transaction already exists.
+* Begin or Join (`BEGIN_OR_JOIN`)
++
+Displays the same behavior as `INDIFFERENT`.
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+//tag::component-xml-ex3[]
+[[example3]]
+
+=== Example: Error Handling Inside the Try Scope
+
+In the following example, the error handler is inside the Try scope and the error occurs after the execution of the scope:
+
+[source,xml,linenums]
+----
+<flow name="someFlow">
+	<jms:listener config-ref="JMS_Config" destination="test.in" transactionalAction="ALWAYS_BEGIN"/>
+	<!-- Processors -->
+	<try transactionalAction="${action}">
+		<!-- Processors -->
+		<!-- Join if possible is the default value for jms:publish operation -->
+		<jms:publish config-ref="JMS_Config" destination="test.out"/>
+		<!-- More Processors -->
+		<!-- There could be a component that raises an error, it will be handled by the error handler -->
+		<error-handler>
+			<on-error-continue/>
+		</error-handler>
+	</try>
+	<!-- Processors -->
+	<raise-error type="APP:SOME"/>
+</flow>
+----
+
+Depending on the configured `transactionalAction`, the behavior in the Try scope is one of the following:
+
+* Ignore (`INDIFFERENT`)
++
+The transaction continues but the error is not handled by an `on-error-continue` at the flow level, causing the transaction to be rolled back, and the message to not be sent.
+* Always Begin (`ALWAYS_BEGIN`)
++
+Raises an error because an active transaction already exists.
+* Begin or Join (`BEGIN_OR_JOIN`)
++
+Displays the same behavior as `INDIFFERENT`.
+
+//end::component-xml-ex3[]
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+When designing your flow, group those operations that are likely to experience errors inside a Try scope. The Try scope enables you to isolate potentially troublesome operations in your flow and assign them an error-handling method. You can also configure the operations inside the Try scope to be processed as a transaction.
+
+The Try scope has an error handling strategy that you configure in the same way you configure error handling for a flow.
+
+The Try scope can distinguish among various error type conditions and apply different behaviors. If an error is raised by a component inside a Try scope, then the Try scope's error handler is executed. At this point, the error is available for inspection, so the handlers can execute and act accordingly:
+
+* On Error Continue
++
+Executes and sends the result of the execution to its container Try scope, which uses that result to complete the execution successfully. Any transactions at this point are also committed.
+* On Error Propagate
++
+Rolls back any transactions, then executes and uses that result to re-throw the existing error, causing its container Try scope's execution to fail.
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::single-resource-transaction.adoc[]
+* xref:mule-runtime::xa-transactions.adoc[]
+
+//end::see-also[]
