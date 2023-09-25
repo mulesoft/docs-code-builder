@@ -1,0 +1,142 @@
+= Getting Started with Anypoint Code Builder
+:page-aliases: setup.adoc, connect-eu-cloud.adoc, load-acb-web-ide.adoc, log-in-anypoint-platform.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studio Code. Both the desktop and cloud IDEs for Anypoint Code Builder share these extensions. The cloud IDE provides built-in extensions to the code-server implementation of Visual Studio Code for the web.
+
+//TODO: ADD GRAPHIC TO SHOW MULESOFT ICON IN THE ACTIVITY BAR AND THE MAIN PAGE
+
+* <<set-up-desktop>>: For the desktop IDE, you must load the extension pack to your local Visual Studio Code IDE. 
+* <<set-up-web>>: For the cloud IDE, you must log in to Anypoint Platform and acquire the permission to use Anypoint Code Builder. 
+
+[[set-up-desktop]]
+== Desktop IDE Setup
+
+The desktop-based IDE extensions in Anypoint Extension Pack are available from the Visual Studio Marketplace.
+
+Before you begin: +
+Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, an Anypoint Extension Pack extension (Anypoint Code Builder - API Extension) depends on this requirement. 
+
+For information about OS and system compatibility, see xref:acb-release-notes.adoc[].
+
+. Open VS Code. 
+. Find *Anypoint Extension Pack* from the desktop IDE or from https://marketplace.visualstudio.com/items?itemName=salesforce.mule-dx-extension-pack[Visual Studio Marketplace^].
++
+[NOTE] 
+.To avoid installation errors:
+==== 
+Do not install the individual Anypoint Code Builder extensions that are also available separately from the marketplace.
+====
+
+* To install from the desktop IDE, launch the Extensions menu by clicking the Extensions icon from the activity menu or pressing Cmd+Shift+x (Mac) or Ctrl+Shift+x (Windows), and search for the extension pack.
++
+Select *Install Release Version*.
+
+* To install from the Visual Studio Marketplace website, find the extension pack, and install:
++
+Select *Install Release Version*.
++
+For additional guidance, see the https://code.visualstudio.com/learn/get-started/extensions[Visual Studio Code website^].
+. Open the Extensions menu, and review the extensions in Anypoint Extension Pack:
++
+//TODO: FOR GA NEW IMAGE FOR NEEDED
+image::acb-setup-extensions-list.png[]
++
+Anypoint Extension Pack contains these extensions:
+
+* Anypoint Code Builder - API Extension
+* Anypoint Code Builder - APIKit Extension
+* Anypoint Code Builder - DataWeave Extension
+* Anypoint Code Builder - Dependencies Extension
+* Anypoint Code Builder - Integration Extension
+* Anypoint Code Builder - Mule Runtime Extension
+* Anypoint Code Builder - Platform Extension
+
+. Click the MuleSoft icon in the activity bar to access and use Anypoint Code Builder features.
++
+[[acb-menu]]
+image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder in the activity bar"]
+
+. Check that the IDE loads the <<acb-menu, Anypoint Code Builder menu>> with *Quick Actions* and *Documentation* links.
+
+//TODO: TROUBLESHOOTING IF IT DOESN'T LOAD
+
+[[set-up-web]]
+== Launch the Cloud IDE 
+
+Launch your cloud IDE from Anypoint Platform. Your Anypoint Platform user account and business organization are hosted in the US or EU cloud and are not shared across the hosts.
+
+Before You Begin:
+
+* Anypoint Platform requires a user account. You can use an existing account or create one. Trial accounts are allowed. 
+
+* An administrator with an Anypoint Platform organization account must provide you with access to Anypoint Code Builder. See xref:configure-permissions.adoc[Configure Permissions]. 
+
+[WARNING]
+--
+During the open beta, your cloud IDE instance might get deleted, causing you to lose your integrations, automations, and APIs.
+
+To save your work, you must either deploy your Mule projects to CloudHub, commit them to source control, or publish your API specifications to Design Center.
+
+If you are using an Anypoint Platform trial account that loses access to Anypoint Code Builder after your trial expires, the cloud IDE instances are deleted.
+
+Do not use the beta version of Anypoint Code Builder to develop APIs, integrations, or automations for production environments.
+--
+
+To launch your cloud IDE from Anypoint Platform:
+
+. Log in to Anypoint Platform:
+
+* https://anypoint.mulesoft.com/login/[anypoint.mulesoft.com^] for the U.S. host (supports all non-EU regions)
+* https://eu1.anypoint.mulesoft.com/login[eu1.anypoint.mulesoft.com^] for the EU-compliant host 
++
+If you have an account in one cloud but need to work in another, you must create an account in that cloud to create and work on your projects. 
+
+. Accept any terms and conditions for use of Anypoint Platform.
+. Click *Launch Cloud IDE*.
++
+After provisioning of your cloud IDE is complete, the IDE opens. The provisioning process can take a few minutes.
++
+Your cloud IDE environment is associated with your user account, which other users cannot access. The environment has a unique URL that only you can access.
+. Click the MuleSoft icon in the activity bar to see and use Anypoint Code Builder features.
+//TODO: ADD SCREENSHOT HERE OR SOMEWHERE ELSE THAT MAKES SENSE
+
+== Log in to Anypoint Platform from the IDE
+
+Some Anypoint Code Builder features requires you to log in directly from the IDE to Anypoint Platform. The IDE prompts you when login is necessary and guides you through the login process. However, it is a good practice to log in from the IDE after opening MuleSoft features in the IDE. 
+
+The status bar in the IDE shows your login status:
+
+* *Not logged in to Anypoint Platform* indicates that you must log in to perform tasks that require a connection to Anypoint Platform. 
++
+image::acb-not-logged-in.png[]
+* A link to your user name indicates that you are logged in.
+
+To log in from the IDE:
+
+. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
++
+[source,command]
+----
+MuleSoft: Login to Anypoint Platform
+----
++
+image::login-to-anypoint-platform.png[]
++
+[TIP]
+--
+You can type _login_ and use the filter in the results to select the command you want.
+--
+. Select *Allow* when prompted to sign in to the platform.
++
+image::allow-login-to-anypoint-platform.png[]
++
+After logging you in, Anypoint Platform displays a *You can close this page now* message.
++
+. To verify your login, ensure that *<your-username>* replaces *Not logged in to Anypoint Platform*. 
+
+
