@@ -15,7 +15,7 @@ Create properties that enable you to:
 
 == Before You Begin
 
-* xref:setup.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
 
 [[get-familiar]]
@@ -269,7 +269,6 @@ For reference, the examples shown in the steps in this procedure are based on th
     http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
     http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 	http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
-  <global-property name="env" value="dev" />
   
   <secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="utlnst" file="${env}.secure.yaml" key="${encryption.key}" >
     <secure-properties:encrypt algorithm="Blowfish" />
@@ -527,7 +526,7 @@ MuleSoft: Deploy to CloudHub
 +
 Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
 +
-image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
+image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub rocket icon"]
 . When prompted, enter _the same value_ you used to encrypt your secure properties.
 +
 If you do not enter the same value, the application is able to upload to CloudHub, but the deployment fails because the encryption key value does not work.
@@ -635,7 +634,7 @@ MuleSoft: Deploy to CloudHub
 +
 Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
 +
-image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub "rocket" icon with deploy.json open"]
+image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub rocket icon with deploy.json open"]
 . _Before opting to deploy_, edit `deploy.json` to specify the correct prefix to your properties file. For example:
 +
 [source,deploy.json]
