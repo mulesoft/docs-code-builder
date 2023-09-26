@@ -32,15 +32,15 @@ This step prevents the import process from adding the project as a subfolder of 
 * From the desktop IDE, select *View* > *Command Palette*. 
 * From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
 ====
-. Provide the following command:
+. Select the following command:
 +
 [source,command]
 ----
 MuleSoft: Import a Mule Project
 ----
-. Navigate to the JAR file, and click *Select jar file to import*.
-. After selecting the JAR file, navigate to a folder for the unpacked JAR file contents, such as your home directory or a folder _outside_ of a Mule project folder.
-. Click *Select a folder to work* (desktop IDE) or *OK* (cloud IDE). 
+. Navigate to the JAR file to import, and click *Select jar file to import*.
+. Navigate to a folder to which to unpack the JAR file, such as your home directory or any folder _outside_ of a Mule project folder.
+. Click *Select project folder*. 
 +
 The IDE unpacks the JAR file for your project into the selected folder.
 // end::load-sharable-jar[]
@@ -48,10 +48,9 @@ The IDE unpacks the JAR file for your project into the selected folder.
 //
 // Shared steps for loading the project
 // tag::load-project[]
-. Open a configuration XML for your project if the file does not open automatically, and launch the UI canvas by clicking the *Show Mule graphical mode* (vertical tree diagram) icon if the canvas does not open automatically. 
-+
-image::show-mule-graphical-mode.png["Launch graphical UI with Show Mule graphical mode icon"]
-. To monitor progress as the project loads, open the Output panel and select *Mule DX Server* from the drop-down menu.
+. Click a configuration XML file for your project if it doesn't open automatically.
+. Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the UI canvas if it doesn't open automatically.
+. To monitor progress as the project loads, open the Output panel.
 +
 .Show me how
 [%collapsible]
@@ -63,14 +62,16 @@ image::show-mule-graphical-mode.png["Launch graphical UI with Show Mule graphica
 * In the desktop IDE, select *View* > *Output*.
 * In the cloud IDE, select *File* > *View* > *Output*.
 ====
+. Select *Mule DX Server* from the drop-down menu.
 // end::load-project[]
 //
 
 //
 // note at the end of import procedures
 // tag::import-note[]
-+
-In addition to loading the graphical UI canvas, the IDE also loads dependencies defined in the `pom.xml` for the project. Libraries load to the `target/repositories` directory within the project folder.
+
+In addition to loading the graphical UI canvas, the IDE also loads dependencies defined in the `pom.xml` for the project.
+Libraries load to the `target/repositories` directory within the project folder.
 // end::import-note[]
 //
 
@@ -90,7 +91,7 @@ In addition to loading the graphical UI canvas, the IDE also loads dependencies 
 * From the desktop IDE, select *View* > *Command Palette*. 
 * From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
 ====
-.. Provide the following command:
+.. Select the following command:
 +
 [source,command]
 ----
@@ -122,17 +123,17 @@ If you instead select *Add Folder to Workspace*, you can start over by selecting
 * From the desktop IDE, select *View* > *Command Palette*. 
 * From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
 ====
-.. Provide the following command:
+.. Select the following command:
 +
 [source,command]
 ----
 File: Open Folder...
 ----
-.. Navigate to the _root_ directory for your project. 
+.. Navigate to and select the _root_ directory for your project. 
 +
 VS Code treats the root as a workspace, which enables the IDE to load the UI canvas properly.
 +
-The root is the top-level folder that Anypoint Code Builder generates when you create a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
+The root is the top-level folder that Anypoint Code Builder generates when you create a project. Do not navigate to the project's parent or ancestor directory or to one of its child or descendant directories.
 // end::open-workspace-root[]
 //
 
@@ -149,16 +150,12 @@ The root is the top-level folder that Anypoint Code Builder generates when you c
 ** From the desktop IDE, select *View* > *Command Palette*. 
 ** From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
 ====
-. Provide the following command:
+. Select the following command:
 +
 [source,command]
 ----
  File: Open Folder...
 ----
-+
-image::file-open-folder-command.png[]
-. Select your Anypoint Code Builder home directory or a directory _outside_ of a Mule project folder:
-+
-image::select-home-directory.png[]
+. Select your Anypoint Code Builder home directory or any directory _outside_ of a Mule project folder.
 // end::preliminary-cloud-import-steps[]
 //
