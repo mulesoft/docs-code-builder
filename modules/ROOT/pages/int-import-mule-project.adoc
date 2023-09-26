@@ -25,9 +25,12 @@ If you encounter an import issue, check for workarounds in xref:acb-release-note
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
-* Close any open project in your IDE:
+* Close any open project in your IDE.
 +
-From the Explorer, select the *File* > *Close Folder* (desktop IDE) or menu icon > *File* > *Close Folder* (cloud IDE).
+--
+// Pointer to Close Project
+include::partial$acb-reusable-steps.adoc[tags="close-project"]
+--
 +
 NOTE: Never open or unpack a project folder within another project folder.
 
@@ -43,7 +46,11 @@ Use the desktop IDE to upload a project directory or sharable JAR file into a pr
 [[desktop-project-package]]
 === Import a Sharable Project JAR File into the Desktop IDE
 
-Import a sharable JAR file for a snapshot of a Mule project into the desktop IDE. Shareable JAR files are generated through the process described in xref:package-mule-application.adoc#sharable[Package a Project in a Sharable JAR File]. The contents are lightweight because they lack dependencies. The IDE generates the dependencies configured in the `pom.xml` for the project. 
+Import a sharable JAR file for a snapshot of a Mule project into the desktop IDE.
+
+To create a shareable JAR file, see xref:int-export-mule-project.adoc#sharable[Export to a Shareable JAR File].
+The contents are lightweight because they don't include dependencies.
+The IDE generates the dependencies configured in the `pom.xml` for the project. 
 
 To import a sharable JAR file in your desktop IDE:
 
