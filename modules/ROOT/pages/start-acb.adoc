@@ -1,10 +1,11 @@
 = Getting Started with Anypoint Code Builder
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: setup.adoc, connect-eu-cloud.adoc, load-acb-web-ide.adoc, log-in-anypoint-platform.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studio Code. Both the desktop and cloud IDEs for Anypoint Code Builder share these extensions. The cloud IDE provides built-in extensions to the code-server implementation of Visual Studio Code for the web.
 
@@ -18,12 +19,12 @@ Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studi
 
 The desktop-based IDE extensions in Anypoint Extension Pack are available from the Visual Studio Marketplace.
 
-Before you begin: 
-
-Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, an Anypoint Extension Pack extension (Anypoint Code Builder - API Extension) depends on this requirement. 
-
 * <<install-pack>>
 * <<update-pack>>
+
+=== Before You Begin Desktop IDE Setup
+
+Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, an Anypoint Extension Pack extension (Anypoint Code Builder - API Extension) depends on this requirement. 
 
 For information about OS and system compatibility, see xref:acb-release-notes.adoc[].
 
@@ -82,9 +83,11 @@ If Anypoint Extension Pack is installed on your desktop IDE, update to the lates
 [[set-up-web]]
 == Launch the Cloud IDE 
 
-Launch your cloud IDE from Anypoint Platform. Your Anypoint Platform user account and business organization are hosted in the US or EU cloud and are not shared across the hosts.
+Launch the cloud IDE from Anypoint Platform. Your Anypoint Platform user account and business organization are hosted in the US or EU cloud and are not shared across the hosts.
 
-Before You Begin:
+=== Before You Begin 
+
+Meet prerequisites before attempting to launch the cloud IDE: 
 
 * Anypoint Platform requires a user account. You can use an existing account or create one. Trial accounts are allowed. 
 
@@ -107,7 +110,9 @@ Do not use the beta version of Anypoint Code Builder to develop APIs, integratio
 ====
 --
 
-To launch your cloud IDE from Anypoint Platform:
+=== Open the Cloud IDE from Anypoint Platform
+
+To launch the cloud IDE:
 
 . Log in to Anypoint Platform:
 
@@ -145,7 +150,9 @@ You can also use the Command Palette to log in to Anypoint Platform.
 
 To log in from the IDE from the Command Palette:
 
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select the following command:
 +
 [source,command]
 ----

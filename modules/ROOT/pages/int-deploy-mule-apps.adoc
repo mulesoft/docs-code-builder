@@ -1,4 +1,5 @@
 = Deploying Mule Apps to CloudHub
+:page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -13,24 +14,27 @@ Anypoint Code Builder can only deploy applications to CloudHub 1.0
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
-* Install a REST client such as Postman or AdvancedRestClient
+* Install a REST client, such as Postman or AdvancedRestClient.
 
 == Deploy an Application to CloudHub
 
-To deploy to CloudHub you must configure a `deploy.json` file in your `src/main/resources` directory. If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you to create one the first time you deploy your application:
+To deploy to CloudHub you must configure a `deploy.json` file in your `src/main/resources` directory.
+If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you to create one the first time you deploy your application.
 
-. Open Anypoint Code Builder.
+To deploy your app to CloudHub:
+
+// Open IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Enter `deploy` and select the following command:
+. Select the following command:
 +
 [source,command]
 --
 MuleSoft: Deploy to CloudHub
 --
 +
-image::deploy-to-cloudhub.png["Deploy to CloudHub"]
-. Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review:
+Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review:
 +
 [source,json]
 --
@@ -45,7 +49,7 @@ image::deploy-to-cloudhub.png["Deploy to CloudHub"]
 [calloutlist]
 .. The `applicationName` property defines part of the URL that you use to access your application on CloudHub. +
 The name must be unique across all applications deployed to CloudHub.
-. After reviewing the deployment configuration, select *Deploy* to deploy the application to CloudHub.
+. After reviewing the deployment configuration, click *Deploy* to deploy the application to CloudHub.
 +
 image::deploy-config-created.png["Deployment configuration file created pop-up message"]
 . Select your preferred environment.
@@ -53,7 +57,7 @@ image::deploy-config-created.png["Deployment configuration file created pop-up m
 image::select-deployment-environment.png["Select the environment"]
 +
 Anypoint Code Builder packages the application and deploys it to CloudHub.
-. After deployment completes, select *Open in Runtime Manager*.
+. After deployment completes, click *Open in Runtime Manager*.
 . Select your application from the list applications.
 . Note the domain name for your application: +american-ws-anypoint-code-builder.eu-s1.cloudhub.io+.
 . Open your preferred REST client and make a `GET` request to +http://american-ws-anypoint-code-builder.eu-s1.cloudhub.io/api/flights+.
