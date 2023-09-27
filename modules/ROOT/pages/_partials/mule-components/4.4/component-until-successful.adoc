@@ -237,7 +237,7 @@ ERROR_HANDLING_DETAILS_HERE
 
 == Variable Propagation
 
-Every execution of the Until Successful scope starts with the same variables and values present before the execution of the block. New variables or modifications to already-existing variables while processing one element are not visible in the next execution (in case there is an error). If the execution finishes correctly, the variables (and payload) are propagated to the rest of the flow.
+Every execution of the Until Successful scope starts with the same variables and values present before the execution of the block, even if an error occurs within the scope before the maximum number of retries is exhausted. New variables or modifications to already-existing variables while processing one element are not present when the scope executes. If the execution finishes successfully, the variables (and payload) are propagated to the rest of the flow.
 
 //end::variable-propagation[]
 
