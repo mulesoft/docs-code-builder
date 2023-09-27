@@ -1,18 +1,26 @@
-= Define and Secure Properties for a Mule Application
+= Defining and Securing Properties for a Mule Application
+:page-deployment-options: cloud-ide, desktop-ide
 
+// no corresponding Tutorial topic
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Create properties that enable you to:
 
-* Encrypt sensitive values used in your Mule application
-* Define and use variables instead of literal strings when setting values in the configuration XML
-* Configure a variable for selecting different property files for a specific deployment environment, such as development, sandbox, or production
+* Encrypt sensitive values used in your Mule application.
+* Define and use variables instead of literal strings when setting values in the configuration XML.
+* Configure a variable for selecting different property files for a specific deployment environment, such as development, sandbox, or production.
+
+
+== Before You Begin
+
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:int-create-integrations.adoc[Create an integration].
 
 [[get-familiar]]
-== Get Familiar With Configuration Properties and Encryption
+== Configuration Properties and Encryption
 
 Before following step-by-step procedures for encrypting properties or deploying applications that use them, learn the basics: 
 
@@ -229,8 +237,7 @@ my-key-value \
 /MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5
 ----
 +
-IMPORTANT::
-Be sure to store your encryption key value (password) in a secure location. You’ll need your key value later, when you deploy your application.
+IMPORTANT: Store your encryption key value (password) in a secure location. You'll need your key value later, when you deploy your application.
 . In your properties file, add each encrypted property value within `![]` brackets.
 +
 .Example that replaces the unencrypted value `"mysensitivevalue"` with the encrypted value `"![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"`:
@@ -263,7 +270,6 @@ For reference, the examples shown in the steps in this procedure are based on th
     http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
     http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 	http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
-  <global-property name="env" value="dev" />
   
   <secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="utlnst" file="${env}.secure.yaml" key="${encryption.key}" >
     <secure-properties:encrypt algorithm="Blowfish" />
@@ -385,11 +391,11 @@ The POM file includes dependencies for the components in the configuration XML.
 
 To use an encrypted value in a Mule application: 
 
-. Above the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Cmd+Space (Mac) or Ctrl+Space (Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
+. Before the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Cmd+Space (Mac) or Ctrl+Space (Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
 +
 image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties Snippet"]
 +
-The XML for an unmodified snippet looks like this above a `<flow/>` element:
+The XML for an unmodified snippet looks like this before a `<flow/>` element:
 +
 [source,xml]
 ----
@@ -489,12 +495,11 @@ This procedure shows how to hide the encryption key value in Runtime Manager.
 [[deploy-to-cloudhub]]
 == Deploy to CloudHub with Sensitive Values Hidden
 
-When you deploy an application that you build with Anypoint Code Builder to CloudHub, hide the value of your encryption key to prevent Runtime Manager UI from displaying the value (see xref:cloudhub-1::cloudhub-manage-props.adoc[]). 
+When you deploy an application that you build with Anypoint Code Builder to CloudHub, hide the value of your encryption key to prevent Runtime Manager UI from displaying the value (see xref:cloudhub::cloudhub-manage-props.adoc[]). 
 
 Runtime Manager serves as the management console for CloudHub deployments. The encryption key value serves as the password for encryption and decryption.
 
-IMPORTANT::
-This procedure configures the _name_ of your encryption key but not its value in `mule-artifact.json`. For security, never configure the _value_ of your encryption key in this or any other file that is packaged within a deployed project.
+IMPORTANT: This procedure configures the _name_ of your encryption key but not its value in `mule-artifact.json`. For security, never configure the _value_ of your encryption key in this or any other file that is packaged within a deployed project.
 
 Before you begin: 
 
@@ -522,10 +527,10 @@ MuleSoft: Deploy to CloudHub
 +
 Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
 +
-image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
+image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub rocket icon"]
 . When prompted, enter _the same value_ you used to encrypt your secure properties.
 +
-If you do not enter the same value, the application is able to upload to CloudHub, but the deployment fails because the encryption key value will not work.
+If you do not enter the same value, the application is able to upload to CloudHub, but the deployment fails because the encryption key value does not work.
 . Select the *Sandbox* environment for your deployment.
 +
 Other environments are not supported, and attempts to deploy to the *Design* environment fail with a `500` error code. While the deployment is in progress, the IDE provides the status of the process and prompts you to open the application in Runtime Manager when the deployment completes.  
@@ -547,7 +552,7 @@ To fix this error:
 +
 Runtime Manager applies your changes and attempts to deploy your application. 
 
-For more information, see xref:runtime-manager::index.adoc[]. For information about CloudHub, see xref:cloudhub-1::index.adoc[].
+For more information, see xref:runtime-manager::index.adoc[]. For information about CloudHub, see xref:cloudhub::index.adoc[].
 
 [[create-prop-file]]
 == Provide Settings for Different Environments
@@ -581,7 +586,7 @@ Notice the value of the `file` attribute in this example:
       <secure-properties:encrypt algorithm="Blowfish" />
 </secure-properties:config>
 ----
-//. Above the `<flow/>` element, add a `<global-property/>` element to the configuration XML that defines the value of `env` property. 
+//. Before the `<flow/>` element, add a `<global-property/>` element to the configuration XML that defines the value of `env` property. 
 //+
 //[source,xml]
 //----
@@ -630,7 +635,7 @@ MuleSoft: Deploy to CloudHub
 +
 Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
 +
-image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub "rocket" icon with deploy.json open"]
+image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub rocket icon with deploy.json open"]
 . _Before opting to deploy_, edit `deploy.json` to specify the correct prefix to your properties file. For example:
 +
 [source,deploy.json]

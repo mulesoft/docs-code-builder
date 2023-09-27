@@ -1,0 +1,59 @@
+= Filtering Search Results
+:page-deployment-options: cloud-ide, desktop-ide
+:page-aliases: filter-search-results.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+When implementing an API, use the advanced search filters to find API specifications 
+in Exchange.
+
+To search for an API using the search filters:
+
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
++
+image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
+. From *Quick Actions*, click *Implement an API*.
++
+image::implement-api-option-mat.png["Implement an API in the Quick Actions menu"]
+. Select *Show Filters* to display the search filters.
++
+image::imp-api-filters.png["Implement API specification screen with the Show filters label highlighted"]
++
+Anypoint Code Builder supports the following filters for your API assets:
++
+* Tag
++
+Keyword or term that describes a specific search.
+* Type
++
+The list of asset types depends on which types are available in a business group, 
+such as:
++
+** GraphQL API
++
+A schema definition that contains the object types and definitions used to interact with the API through the GraphQL specification.
+GraphQL enables you to query an API that supports this language in a much more flexible way than REST.
+** REST APIs
++
+RAML or OAS files that specify APIs referenced by an HTTP Request connector to expose metadata.
++
+* Category/Industry
++
+Specific groupings of assets set by the administrator of a business group or an organization owner.
+* Organization
++
+Business groups for which you have permission to view their assets.
++
+The search filters display the business group from which to retrieve your API in the *Organization* column:
++
+image::imp-api-business-group.png["Implement API specification screen with the Organization column highlighted"]
+// * Lifecycle state
+// +
+// Lifecycle state can be `stable`, `deprecated`, or `development`.
+// +
+// IMPORTANT: Do not use deprecated APIs because those are no longer supported, nor updated.
+. Click *Add Asset* to add the selected API specification to the Mule application project.

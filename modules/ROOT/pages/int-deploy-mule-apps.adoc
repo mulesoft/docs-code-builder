@@ -1,0 +1,67 @@
+= Deploying Mule Apps to CloudHub
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
+
+NOTE: Anypoint Code Builder can deploy applications only to CloudHub 1.0.
+
+
+== Before You Begin
+
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:int-create-integrations.adoc[Create an integration].
+* Install a REST client, such as Postman or AdvancedRestClient.
+
+== Deploy an App to CloudHub
+
+To deploy an application to CloudHub, you must configure a `deploy.json` file in your `src/main/resources` directory.
+If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you to create one the first time you deploy your application.
+
+To deploy your app to CloudHub:
+
+// Open IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
+. Open and place your cursor in the configuration XML file in a project for the Mule app to deploy.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select the following command:
++
+[source,command]
+--
+MuleSoft: Deploy to CloudHub
+--
+. If prompted, click *Allow* to allow sign in using Anypoint Platform and select the business group.
++
+If the project doesn't already have a `deploy.json` file, Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review.
+For example:
++
+image::int-deploy-json-desktop.png["Review deploy.json file"]
++
+The `applicationName` property defines part of the URL that you use to access your application on CloudHub.
++
+This name must be unique across all applications deployed to CloudHub.
+. After reviewing the deployment configuration, click *Deploy* to deploy the application to CloudHub.
+. At the prompt, select the environment to deploy to.
++
+Anypoint Code Builder packages the application and deploys it to CloudHub.
+The Output panel opens with *Mule Maven Output* selected:
++
+image::int-deploy-output.png["Output panel with Mule Maven Output selected"]
+. After deployment completes, click *Open in Runtime Manager*.
++
+Your app opens in Runtime Manager in Anypoint Platform.
++
+Note the domain name for your application.
+The domain name of the application varies, but it follows a similar structure such as: `app-with-100-schedulers.us-w1.cloudhub.io`.
+. Open your preferred REST client and make a `GET` request to the domain name as 
+displayed in Runtime Manager.
++
+For example, `+http://app-with-100-schedulers.us-w1.cloudhub.io/api/flights+`.
+
+
+== See Also
+
+* xref:cloudhub::deploying-to-cloudhub.adoc[]
+* xref:runtime-manager::index.adoc[]

@@ -1,0 +1,80 @@
+= Synchronizing API Specs and Fragments with Design Center
+:page-deployment-options: cloud-ide, desktop-ide
+
+// tut-af-design-api-synchronize-with-design-center
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+//LOGO (web, desktop, or both)
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Before you can publish your API to Exchange, you must sync it with Anypoint Design Center. 
+Use the built-in integrated source control management (SCM) in Anypoint Code Builder to upload your API specification to Design Center.
+
+
+The process for syncing with Design Center is:
+
+. Review changes to files in your API project since the last sync with the main branch in Design Center.
+. Stage changes from one or more files to the built-in SCM.
+. Commit changes to your local repository.
+. Push changes to Design Center.
+
+
+
+== Before You Begin
+
+Before synchronizing with Design Center:
+
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:des-create-api-specs.adoc[Create and test your API specification].
+
+== Sync Changes to Design Center 
+
+. Open your API specification in Anypoint Code Builder.
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
+. Review changes by clicking files in the Source Control panel:
++
+.. Open a file, for example `oas-example.yaml`.
+.. Review the working tree and notice the shading for deletions (red) and additions (green):
++
+image::des-source-control-changes.png["oas-example.yaml file highlighted to show the source control changes"]
+. Stage changes by clicking the plus icon in the *Source Control* panel:
++
+--
+** To stage a single file, click the plus icon for that file.
+** To stage all changed files, click the plus icon on the *Changes* line.
+--
++
+The files move to *Staged Changes* section.
++
+The UI uses the `git add` command to add changes from your working directory to the staging area.
+. Commit staged changes:
++
+--
+.. In the *Message field*, summarize your changes.
+.. Click *Commit*.
+--
++
+If you staged all files, the *Source Control* panel now displays no changes to commit.
++
+The UI uses the `git commit` command to save the changes you staged to your local repository.
+. Push your changes to Design Center by clicking *Sync Changes* in the *Source Control* panel.
++
+NOTE: *Sync Changes* also pulls any changes from Design Center.
++
+To push changes without pulling changes:
++
+.. In the *Source Control* header, click the *More actions* menu (ellipsis).
+.. Select *Push*.
++
+image::push-changes.png["Push command highlighted in the source control section"]
++
+The UI uses the `git push` command to upload your local content to Design Center.
+
+Your changes are now published in Design Center.
+
+If the UI prompts you, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API.
+
+image::fetch-periodically-check.png["Periodically run git fetch message highlighted"]
+

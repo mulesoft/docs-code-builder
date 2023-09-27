@@ -1,82 +1,98 @@
 .xref:index.adoc[Anypoint Code Builder]
 * xref:index.adoc[Overview]
 * xref:acb-release-notes.adoc[Release Notes]
-* xref:setup.adoc[Setup and Installation]
-** xref:accept-terms-and-conditions.adoc[Accept Terms and Conditions]
-** xref:configure-permissions.adoc[Configure Permissions]
-** xref:load-acb-web-ide.adoc[Launch the Web IDE]
-** xref:connect-eu-cloud.adoc[Access Code Builder From EU Cloud]
-** xref:log-in-anypoint-platform.adoc[Log in to Anypoint Platform]
-** xref:configure-default-output-panel.adoc[Configure the Default Output Panel]
-** xref:manage-web-ide-instance.adoc[Manage Your Web IDE Instance]
 
-* xref:get-started.adoc[Get Started]
-** xref:customize-look-and-feel.adoc[Customize Look and Feel]
-** xref:use-the-command-palette.adoc[Browse the Command Palette]
-** xref:send-feedback.adoc[Send Feedback]
-** xref:work-on-home-directory.adoc[Customize your Home Directory]
-** xref:business-group-support.adoc[Work With Business Groups]
-** xref:work-with-code-snippets.adoc[Work with Code Snippets]
-** xref:filter-search-results.adoc[Filter Search Results]
-** xref:deploy-a-mule-application-to-cloudhub.adoc[Deploy a Mule Application to CloudHub]
+* xref:start-acb.adoc[Getting Started]
+** xref:start-configure-permissions.adoc[]
+** xref:start-discover-ui.adoc[]
+//TODO: CONSIDER moving command-palette to troubleshooting 
+** xref:use-the-command-palette.adoc[]
+** xref:start-add-folders.adoc[]
+//TODO: better to tweak for troubleshooting? (It's about Mule DX Server; not setting a default output panel)
+** xref:configure-default-output-panel.adoc[]
 
-* xref:user-guide.adoc[User Guide]
 
-** xref:design-api-specification.adoc[Design an API Specification]
-*** xref:design-api-specification-from-scratch.adoc[]
-*** xref:add-request-response-details.adoc[]
-*** xref:test-api-specification.adoc[]
-*** xref:synchronize-with-design-center.adoc[]
-*** xref:publish-api-spec-to-exchange.adoc[]
+// TUTORIALS
+* xref:tutorials.adoc[]
 
-** xref:develop-integration.adoc[Develop an Integration]
-*** xref:create-xml-snippets.adoc[Create XML Snippets]
-*** xref:create-basic-integration.adoc[Create a Basic Integration]
-*** xref:connect-to-a-db.adoc[Connect to a Database]
-*** xref:use-dataweave-to-transform-data.adoc[Use DataWeave to Transform Data]
+** xref:tut-af-amflights-overview.adoc[]
+*** xref:tut-af-design-am-flights-api.adoc[]
+**** xref:tut-af-design-api-add-request-response-details.adoc[]
+**** xref:tut-af-design-api-test-specification.adoc[]
+**** xref:tut-af-design-api-synchronize-with-design-center.adoc[]
+**** xref:tut-af-design-api-publish-api-spec-to-exchange.adoc[]
 
-** xref:implement-api-specification.adoc[Implement an API Specification]
-//deleted and their content consolidated into implement-api-specification.adoc
-//*** xref:import-api-specification-from-exchange.adoc[Import an API From Exchange]
-//*** xref:implement-api-interface-logic.adoc[Implement the API Interface Logic]
-//
-//DEBUG (consolidated the three children and renamed file)
-** xref:debug-a-mule-application.adoc[Debug a Mule Application]
-*** xref:tut-debug-american-flights.adoc[]
-//*** xref:debug-add-breakpoints.adoc[]
-//*** xref:run-a-debug-session.adoc[]
-//
-** xref:deploy-mule-application.adoc[Deploy a Mule Application]
+*** xref:tut-af-integrate-am-flights.adoc[]
+**** xref:tut-af-integrate-connect-to-a-db.adoc[]
+**** xref:tut-af-integrate-use-dataweave.adoc[]
 
-//DELETED due to so much duplication in local-api-specification-tutorial.adoc
-//** xref:implement-a-local-api-guide.adoc[Implement a Local API]
+*** xref:tut-af-implement-am-flights-api.adoc[]
+*** xref:tut-af-debug-am-flights.adoc[]
+*** xref:tut-af-deploy-am-flights.adoc[]
 
-* xref:code-builder-usecases.adoc[]
-** xref:upload-a-project.adoc[]
-** xref:package-mule-application.adoc[]
+** xref:tut-local-api-specification.adoc[]
+
+** xref:tut-graphql-implement-api.adoc[]
+*** xref:tut-graphql-test-first-implementation.adoc[]
+*** xref:tut-graphql-configure-flow-responses.adoc[]
+
+** xref:tut-contacts-create-synchronization-sfdc-api.adoc[]
+*** xref:tut-contacts-create-config-files.adoc[]
+*** xref:tut-contacts-sync-api-configure-queries.adoc[]
+*** xref:tut-contacts-store-data-in-parallel.adoc[]
+
+** xref:tut-slack-create-escalation-api.adoc[]
+*** xref:tut-slack-create-config-files-sfdc.adoc[]
+*** xref:tut-slack-extract-payload-information.adoc[]
+*** xref:tut-slack-add-condition-to-your-flow.adoc[]
+*** xref:tut-slack-configure-integration.adoc[]
+
+
+// DESIGN
+* xref:des-designing-api-specs.adoc[]
+** xref:des-create-api-specs.adoc[]
+** xref:des-create-api-fragments.adoc[]
+** xref:des-sync-with-design-center.adoc[]
+** xref:des-publish-api-spec-to-exchange.adoc[]
+
+// INTEGRATE
+* xref:int-developing-integrations.adoc[]
+** xref:int-create-integrations.adoc[]
+** xref:int-work-with-code-snippets.adoc[]
 ** xref:int-create-secure-configs.adoc[]
-** xref:ping-locally-deployed-app.adoc[Trigger a Flow in Your Development Environment]
-** xref:dataweave-validations.adoc[Address DataWeave Errors]
-** xref:mock-data-using-dw-library.adoc[Mock Data Using a DataWeave Library]
-** xref:import-dataweave-library.adoc[Import a DataWeave Library]
-//tutorial: iterative design & develop
-** xref:local-api-specification-tutorial.adoc[]
-//tutorial: sync Salesforce contacts
-** xref:create-synchronization-sfdc-api.adoc[Create a Contacts Synchronization API with Salesforce]
-*** xref:create-config-files.adoc[Create a Reusable Configuration File]
-*** xref:sync-api-configure-queries.adoc[Configure Your Queries to Your Services]
-*** xref:store-data-in-parallel.adoc[Store Data in Parallel]
-//tutorial: slack & salesforce
-** xref:create-escalation-slack-api.adoc[Create an Escalation API between Slack and Salesforce]
-*** xref:create-config-files-slack-sfdc.adoc[Create a Configuration File for Slack and Salesforce]
-*** xref:extract-payload-information.adoc[Extract Payload Information to Variables]
-*** xref:add-condition-to-your-flow.adoc[Add a Condition to Your Flow Logic]
-*** xref:configure-slack-integration.adoc[Configure Slack Integration]
-//tutorial: graphQL
-** xref:implement-a-graphql-api.adoc[Implement a GraphQL API]
-*** xref:test-graphql-first-implementation.adoc[Test Your GraphQL Implementation]
-*** xref:configure-graphql-flow-responses.adoc[Configure Responses for Your GraphQL Implementation]
+** xref:int-trigger-flows.adoc[]
+** xref:int-use-dw-to-transform-data.adoc[]
+*** xref:int-address-dw-errors.adoc[]
+*** xref:int-import-dw-libraries.adoc[]
+*** xref:int-mock-data-using-dw-libraries.adoc[]
+** xref:int-debug-mule-apps.adoc[]
+//TODO: evaluate snippets for duplication:
+// Already done - see xref:int-work-with-code-snippets.adoc[]
+// ** xref:create-xml-snippets.adoc[]
+** xref:int-export-mule-project.adoc[]
+** xref:int-import-mule-project.adoc[]
+//TODO: evaluate deploy for duplication:
+** xref:int-deploy-mule-apps.adoc[]
+// ** xref:deploy-a-mule-application-to-cloudhub.adoc[]
 
-* xref:troubleshooting.adoc[Troubleshooting]
-** xref:troubleshoot-app-loading-errors.adoc[]
+
+// IMPLEMENT
+* xref:imp-implementing-api-specs.adoc[]
+** xref:imp-implement-api-specs.adoc[]
+// ** xref:imp-implement-graphql-specs.adoc[]
+** xref:imp-implement-local-api-specs.adoc[]
+//DUKE ADDED TO NAV
+** xref:imp-filter-search-results.adoc[]
+
+* xref:troubleshooting.adoc[]
+// ** xref:manage-mule-runtime.adoc[Troubleshooting Mule Runtime in Code Builder]
+** xref:troubleshoot-loading-errors.adoc[]
 ** xref:troubleshoot-mule-runtime-errors.adoc[]
+
+//TODO: JUST COMPONENTS RIGHT NOW; WILL GROW AND REQ LANDING PAGE POST GA
+* xref:acb-components.adoc[Reference]
+
+
+
+
+

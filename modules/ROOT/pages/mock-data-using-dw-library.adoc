@@ -1,10 +1,11 @@
 = Mock Data Using a DataWeave Library
+:page-deployment-options: cloud-ide, desktop-ide
 :imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 The following walkthrough shows you how to develop an integration, import the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^] from Exchange, and use  the custom library to return a random value from the library.
 
@@ -130,7 +131,7 @@ Anypoint Code Builder displays a message indicating that the dependency was succ
 +
 [source,command]
 ----
-MuleSoft: Deploy to Cloudhub
+MuleSoft: Deploy to CloudHub
 ----
 . Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review:
 +
@@ -150,7 +151,7 @@ The name must be unique across all applications deployed to CloudHub.
 . After reviewing the deployment configuration, select *Deploy* to deploy the application to CloudHub.
 . Select your preferred environment.
 +
-Anypoint Code Builder packages the application and deploys it to Cloudhub.
+Anypoint Code Builder packages the application and deploys it to CloudHub.
 . After deployment completes, select *Open in Runtime Manager*.
 . Select your application from the application list. +
 The domain name of the application varies, but it follows a similar structure such as: `+mock-dw-library.eu-s1.cloudhub.io+`.
