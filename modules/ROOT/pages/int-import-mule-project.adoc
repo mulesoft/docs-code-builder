@@ -1,16 +1,14 @@
-= Importing Projects into Workspaces
-:imagesdir: ../assets/images
+= Importing Projects into the IDE
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: upload-a-project.adoc[]
-//variable used in multiple places on this page:
-:root-dir: This directory is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Import a project JAR file or folder into a workspace in your IDE. A project directory contains a Mule application for an integration or implementation. 
+Import a project JAR file or folder into a workspace in your IDE.
+A project directory contains a Mule application for an integration or implementation. 
 
 ////
 Visual Studio Code treats a directory as a workspace. To open a project folder for a Mule application into a VS Code workspace, open the project's root directory. If the project is part of a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^], open the project from the workspace. 
@@ -33,7 +31,7 @@ If you encounter an import issue, check for workarounds in xref:acb-release-note
 include::partial$acb-reusable-steps.adoc[tags="close-project"]
 --
 +
-NOTE: Never open or unpack a project folder within another project folder.
+IMPORTANT: Never open or unpack a project folder within another project folder.
 
 //H2: DESKTOP
 [[import-desktop]]
@@ -43,6 +41,8 @@ Use the desktop IDE to upload a project directory or sharable JAR file into a pr
 
 * <<desktop-project-package>>
 * <<desktop-project-folder>>
+* <<both-open-project-folder>>
+
 
 [[desktop-project-package]]
 === Import a Sharable Project JAR File into the Desktop IDE
@@ -55,11 +55,15 @@ The IDE generates the dependencies configured in the `pom.xml` for the project.
 
 To import a sharable JAR file in your desktop IDE:
 
+. Ensure that no project is open in the IDE.
 // include for this procedure
+include::partial$acb-open-packaged-sources.adoc[tags="open-command-palette-desktop"]
 include::partial$acb-open-packaged-sources.adoc[tags="load-sharable-jar"]
-include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-root"]
-include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
+. If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
+
 include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
+
+
 
 [[desktop-project-folder]]
 === Import a Project Folder into the Desktop IDE
@@ -67,21 +71,14 @@ include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
 Although it is more common to import a sharable JAR file, you can also drag a sharable Mule project folder
 into the Explorer view and open the project in a VS Code workspace.
 
-To import a project folder to your desktop IDE:
+To import a project folder to the desktop IDE:
 
+. Ensure that no project is open in the IDE.
 include::partial$acb-open-packaged-sources.adoc[tags="import-project-folder-desktop"]
-include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-root"]
-include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
+. If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
+
 include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
 
-[[desktop-open-project-folder]]
-=== Open a Project Workspace from the Desktop IDE
-
-Open or reopen a project workspace for your application.
-
-// include for this procedure
-include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-root"]
-include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
 
 //H2: WEB
 [[import-web]]
@@ -91,6 +88,7 @@ The cloud IDE enables you to upload a project directory or JAR file into a works
 
 * <<web-project-package>>
 * <<web-project-folder>>
+* <<both-open-project-folder>>
 
 
 //WEB: PACKAGED PROJECT TO WORKSPACE
@@ -99,51 +97,90 @@ The cloud IDE enables you to upload a project directory or JAR file into a works
 
 Import a JAR file for a Mule project and load the unpacked project into a workspace in the IDE.
 
+. Ensure that no project is open in the cloud IDE.
 //includes first 2 steps, shared cloud steps
 include::partial$acb-open-packaged-sources.adoc[tags="preliminary-cloud-import-steps"]
 +
 If prompted, trust the authors of the files in the directory.
-. After Anypoint Code Builder loads your directory, drag your JAR file to your Explorer view:
 +
-image::upload-jar-file.png["Upload a JAR file in the Explorer"]
-
-* If prompted, trust the authors of your file or directory.
-* _Do not click_ *Open Anyway* in response to this warning in the IDE: _This file is not displayed in the text editor because it is a binary or uses an unsupported encoding._
+Anypoint Code Builder loads your directory.
+. Drag your shareable JAR file from your computer to the Explorer view in the cloud IDE.
+For example:
 +
-If the file is large, Anypoint Code Builder displays the upload progress on the bottom left side of your screen:
+image::int-drag-jar-cloud.png["Drag a JAR file to the Explorer view in the cloud IDE"]
 +
-image::upload-progress.png["Upload progress in the status pane"]
+If prompted, trust the authors of your file or directory.
 +
-You can expand the progress bar by clicking it:
+IMPORTANT: Do not click *Open Anyway* in response to this warning in the IDE: `This file is not displayed in the text editor because it is either binary or uses an unsupported encoding.`
 +
-image::upload-progress-expanded.png["Expanded progress bar"]
+If the imported folder is large, Anypoint Code Builder displays an upload progress bar that you can click to expand.
 //last steps:
-include::partial$acb-open-packaged-sources.adoc[tags="load-sharable-jar"]
-include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-root"]
-include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
+// include::partial$acb-open-packaged-sources.adoc[tags="load-sharable-jar"]
+// Different in cloud.
+. Open the Command Palette.
++
+.Show me how
+[%collapsible]
+====
+* Use the keyboard shortcuts
+** Mac: Cmd+Shift+p
+** Windows: Ctrl+Shift+p
+* Click the menu icon, and select *View* > *Command Palette*.
+====
+. Select the following command:
++
+[source,command]
+----
+MuleSoft: Import a Mule Project
+----
+. Navigate to and select the shareable JAR file to import.
+. Navigate to a folder to which to unpack the JAR file, such as your home directory or any folder _outside_ of a Mule project folder, and click *OK*.
++
+The IDE unpacks the shareable JAR file for your project into the selected folder.
+. If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
+
 include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
+
 
 //WEB: PROJECT FOLDER TO WORKSPACE
 [[web-project-folder]]
-=== Import a Project Folder into a Cloud IDE Workspace
+=== Import a Project Folder into the Cloud IDE
 
+. Ensure that no project is open in the cloud IDE.
 //includes first 2 steps, shared cloud steps
 include::partial$acb-open-packaged-sources.adoc[tags="preliminary-cloud-import-steps"]
-. After Anypoint Code Builder loads your directory, drag your project directory to your Explorer view:
 +
-image::drag-project-folder.png["Drag Project Folder to Explorer"]
+If prompted, trust the authors of the files in the directory.
 +
-If prompted, trust the authors of your file or directory. If the imported folder is large, Anypoint Code Builder displays an upload progress bar that you can click to expand.
-//last steps:
+Anypoint Code Builder loads your directory.
+. Drag your project folder from your computer to the Explorer view in the cloud IDE.
+For example:
++
+image::int-drag-folder-cloud.png["Drag a project folder to the Explorer view in the cloud IDE"]
++
+If prompted, trust the authors of your file or directory.
++
+If the imported folder is large, Anypoint Code Builder displays an upload progress bar that you can click to expand.
+. If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
+
+include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
+
+
+[[both-open-project-folder]]
+== Open a Project Workspace from the Desktop or Cloud IDE
+
+Open or reopen a project workspace for your application.
+
+// include for this procedure
 include::partial$acb-open-packaged-sources.adoc[tags="open-workspace-root"]
 include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
-include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
 
 
 [[use-dw-imported-project]]
 == Use DataWeave with Imported Projects
 
-To use DataWeave in an imported project, a `mule-service-weave-ee` dependency must be configured in your project `pom.xml` file, for example:
+To use DataWeave in an imported project, you must configure a `mule-service-weave-ee` dependency in your project `pom.xml` file.
+For example:
 
 [source,XML]
 ----

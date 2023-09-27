@@ -18,8 +18,7 @@ This step prevents the import process from adding the project as a subfolder of 
 // end::close-folder[]
 //
 
-//
-// tag::load-sharable-jar[]
+// tag::open-command-palette-cloud[]
 //variable used in multiple places on this page:
 . Open the Command Palette.
 +
@@ -29,20 +28,39 @@ This step prevents the import process from adding the project as a subfolder of 
 * Use the keyboard shortcuts
 ** Mac: Cmd+Shift+p
 ** Windows: Ctrl+Shift+p
-* From the desktop IDE, select *View* > *Command Palette*. 
-* From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
+* Click the menu icon, and select *View* > *Command Palette*.
 ====
+// end::open-command-palette-cloud[]
+
+// tag::open-command-palette-desktop[]
+//variable used in multiple places on this page:
+. Open the Command Palette.
++
+.Show me how
+[%collapsible]
+====
+* Use the keyboard shortcuts
+** Mac: Cmd+Shift+p
+** Windows: Ctrl+Shift+p
+* Select *View* > *Command Palette*.
+====
+// end::open-command-palette-desktop[]
+
+
+//
+// tag::load-sharable-jar[]
+//variable used in multiple places on this page:
 . Select the following command:
 +
 [source,command]
 ----
 MuleSoft: Import a Mule Project
 ----
-. Navigate to the JAR file to import, and click *Select jar file to import*.
+. Navigate to the shareable JAR file to import, and click *Select jar file to import*.
 . Navigate to a folder to which to unpack the JAR file, such as your home directory or any folder _outside_ of a Mule project folder.
 . Click *Select project folder*. 
 +
-The IDE unpacks the JAR file for your project into the selected folder.
+The IDE unpacks the shareable JAR file for your project into the selected folder.
 // end::load-sharable-jar[]
 
 //
@@ -59,8 +77,9 @@ The IDE unpacks the JAR file for your project into the selected folder.
 +
 ** Mac: Cmd+Shift+u
 ** Windows: Ctrl+Shift+u
-* In the desktop IDE, select *View* > *Output*.
-* In the cloud IDE, select *File* > *View* > *Output*.
+* From the desktop IDE, select *View* > *Output*.
+* From the cloud IDE, click the menu icon, and select *View* > *Output*.
+
 ====
 . Select *Mule DX Server* from the drop-down menu.
 // end::load-project[]
@@ -78,7 +97,7 @@ Libraries load to the `target/repositories` directory within the project folder.
 //
 // tag::import-project-folder-desktop[]
 //variable used in multiple places on this page:
-. In the desktop IDE, navigate to a location for your project folder:
+. Navigate to a location for your project folder:
 
 .. Open the Command Palette.
 +
@@ -88,8 +107,9 @@ Libraries load to the `target/repositories` directory within the project folder.
 * Use the keyboard shortcuts
 ** Mac: Cmd+Shift+p
 ** Windows: Ctrl+Shift+p
-* From the desktop IDE, select *View* > *Command Palette*. 
-* From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
+* Select *View* > *Command Palette*. 
+// * From the desktop IDE, select *View* > *Command Palette*. 
+// * From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
 ====
 .. Select the following command:
 +
@@ -97,20 +117,22 @@ Libraries load to the `target/repositories` directory within the project folder.
 ----
 File: Open Folder
 ----
-.. Navigate to and open a folder for your project, such as your home directory or a folder _outside_ of a Mule project folder.
-. Drag your project directory to the Explorer. For example:
+.. Navigate to and select a folder for your imported project, such as your home directory or any folder _outside_ of a Mule project folder, and then click *Open*.
+. Drag your project directory from your computer to the Explorer view in VS Code.
+For example:
 +
-image::drag-project-folder.png["Drag Project Folder to Explorer"]
+image::int-drag-folder.png["Drag project folder to Explorer view"]
 . Select *Copy Folder*.
 +
-If you instead select *Add Folder to Workspace*, you can start over by selecting the project in the Explorer, right clicking, and then selecting *Remove Folder from Workspace*. After removing, drag and copy the project folder to the IDE without adding it to a workspace. 
+If you instead select *Add Folder to Workspace*, you can start over by selecting the project in the Explorer, right clicking, and then selecting *Remove Folder from Workspace*.
+After removing, drag and copy the project folder to the IDE without adding it to a workspace. 
 // end::import-project-folder-desktop[]
 //
 
 //
 // tag::open-workspace-root[]
 [[open-directory]]
-. If your Mule project folder is closed, open a workspace for the project at the project's _root_ directory: 
+. If your Mule project folder is closed, open a workspace for the project at the project's _root_ directory:
 +
 .. Open the Command Palette.
 +
@@ -120,6 +142,7 @@ If you instead select *Add Folder to Workspace*, you can start over by selecting
 * Use the keyboard shortcuts
 ** Mac: Cmd+Shift+p
 ** Windows: Ctrl+Shift+p
+// * Select *View* > *Command Palette*. 
 * From the desktop IDE, select *View* > *Command Palette*. 
 * From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
 ====
@@ -129,11 +152,16 @@ If you instead select *Add Folder to Workspace*, you can start over by selecting
 ----
 File: Open Folder...
 ----
-.. Navigate to and select the _root_ directory for your project. 
+.. Navigate to and select the _root_ folder for your project. 
 +
 VS Code treats the root as a workspace, which enables the IDE to load the UI canvas properly.
 +
 The root is the top-level folder that Anypoint Code Builder generates when you create a project. Do not navigate to the project's parent or ancestor directory or to one of its child or descendant directories.
++
+The project opens at the root.
+For example:
++
+image::int-open-root.png[Project root folder]
 // end::open-workspace-root[]
 //
 
@@ -147,15 +175,16 @@ The root is the top-level folder that Anypoint Code Builder generates when you c
 ** Use the keyboard shortcuts
 *** Mac: Cmd+Shift+p
 *** Windows: Ctrl+Shift+p
-** From the desktop IDE, select *View* > *Command Palette*. 
-** From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
+// ** From the desktop IDE, select *View* > *Command Palette*. 
+// ** From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
+** Click the menu icon, and select *View* > *Command Palette*.
 ====
 . Select the following command:
 +
 [source,command]
-----
+--
  File: Open Folder...
-----
-. Select your Anypoint Code Builder home directory or any directory _outside_ of a Mule project folder.
+--
+. Select your Anypoint Code Builder home directory or any directory _outside_ of a Mule project folder and click *OK*.
 // end::preliminary-cloud-import-steps[]
 //
