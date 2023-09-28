@@ -24,8 +24,7 @@ The desktop-based IDE extensions in Anypoint Extension Pack are available from t
 
 === Before You Begin Desktop IDE Setup
 
-* Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, an Anypoint Extension Pack extension (Anypoint Code Builder - API Extension) depends on this requirement. 
-* 
+Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, an Anypoint Extension Pack extension (Anypoint Code Builder - API Extension) depends on this requirement.  
 
 For information about OS and system compatibility, see xref:acb-release-notes.adoc[].
 
@@ -55,8 +54,8 @@ For additional guidance, see the https://code.visualstudio.com/learn/get-started
 . Open the Extensions menu, and review the extensions in Anypoint Extension Pack:
 +
 //TODO: FOR GA NEW IMAGE FOR NEEDED
-image::acb-setup-extensions-list.png[]
-+
+//image::acb-setup-extensions-list.png[]
+//+
 Anypoint Extension Pack contains these extensions:
 
 * Anypoint Code Builder - API Extension
@@ -73,6 +72,10 @@ Anypoint Extension Pack contains these extensions:
 image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder in the activity bar"]
 
 . Check that the IDE loads the <<acb-menu, Anypoint Code Builder menu>> with *Quick Actions* and *Documentation* links.
+
+. If you work in the EU region and your Anypoint Platform account resides in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud*. 
++
+For guidance, see <<change-clouds>>. 
 
 //TODO: TROUBLESHOOTING IF IT DOESN'T LOAD
 
@@ -176,6 +179,7 @@ After logging you in, Anypoint Platform displays a *You can close this page now*
 +
 . To verify your login, ensure that *<your-username>* replaces *Not logged in to Anypoint Platform*. 
 
+[[change-clouds]]
 == Set the Desktop IDE to the EU or US Cloud
 
 In the desktop IDE, you can change your Anypoint Platform control plane to the US or EU Cloud. Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:start-acb.adoc#cloud-hosts[US and UE Cloud Hosts]. 
@@ -185,7 +189,9 @@ In the desktop IDE, you can change your Anypoint Platform control plane to the U
 * Desktop IDE: Select *File* > *Close Folder* 
 * Cloud IDE: Select the menu icon > *File* > *Close Folder*
 
-. Open the Settings tab:
+. Open the Settings tab from the activity bar in the desktop IDE:
++
+image::acb-activity-bar-select-cloud.png["Selecting the EU Cloud from the Desktop IDE"]
 
 * From the Anypoint Code Builder panel, click the *Open ACB Settings* (gear) icon.
 * From the activity bar, click the *Manage* (gear) icon, select *Settings*, and Search for `Mule.` in the *Settings* tab.
