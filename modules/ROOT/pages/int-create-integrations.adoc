@@ -17,6 +17,7 @@ to process your business logic, and configure attributes:
 . <<import-connectors, Import connectors from Exchange>>.
 . <<configure-attributes, Configure attributes for a component>>.
 . <<check-connection, Test an HTTP Listener connection>>.
+. <<create-new-config, Create a new XML configuration file>>.
 
 
 == Before You Begin
@@ -236,6 +237,45 @@ The status bar shows the progress:
 A common code `500` error is `port 8081: Address already in use`. For port conflicts, configure a different port, such as `8082`, and retest the connection. 
 
 Before publishing, run your application in debug mode.
+
+
+[[create-new-config]]
+== Create a New Configuration XML File
+
+Anypoint Code Builder creates the initial Mule configuration XML file in `src/main/mule`
+within the Mule project.
+This file contains global configurations and/or flow structures.
+
+You can create additional configuration files, for example to store global configurations.
+
+To create a new XML configuration file:
+
+. In the Explorer view, right-click the `mule` folder (`src/main/mule`) and select *New File*.
++
+Alternatively, select the `mule` folder, and then:
++
+** In the desktop IDE, select *View* > *Run*.
+** In the cloud IDE, select *File* > *View* > *Run*.
+. Enter a name for the new file with the `.xml` extension.
+. In the Editor view for the new file, press Ctrl+Space to display available options.
+. Select *Empty mule configuration*.
++
+image::int-new-mule-config.png[New mule configuration option in auto-correct]
++
+This command adds the following code to the file:
++
+[source,xml]
+--
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+    
+</mule>
+--
+
 
 == See Also
 
