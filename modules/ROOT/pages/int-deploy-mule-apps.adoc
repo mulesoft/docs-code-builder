@@ -7,6 +7,9 @@ You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
 
 NOTE: Anypoint Code Builder can deploy applications only to CloudHub 1.0.
 
+To deploy to another supported environment, create a deployable JAR file.
+For information, see xref:int-export-mule-project.adoc#deployable[Export to a Deployable JAR File].
+
 
 == Before You Begin
 
@@ -16,22 +19,21 @@ NOTE: Anypoint Code Builder can deploy applications only to CloudHub 1.0.
 
 == Deploy an App to CloudHub
 
-To deploy an application to CloudHub, you must configure a `deploy.json` file in your `src/main/resources` directory.
-If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you to create one the first time you deploy your application.
+When you deploy an application to CloudHub, Anypoint Code Builder configures a default `deploy.json` file in your `src/main/resources` directory.
+If you need to configure properties at deployment time, for example, 
+to xref:int-create-secure-configs.adoc[create secure properties], Anypoint Code Builder prompts you to modify `deploy.json` during deployment the deployment process.
 
 To deploy your app to CloudHub:
 
 // Open IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
-. Open and place your cursor in the configuration XML file in a project for the Mule app to deploy.
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Select the following command:
+. Open the configuration XML file for the Mule app to deploy.
+. Click the image:icon-deploy.png["",20,20] (*Deploy to CloudHub*) icon.
 +
-[source,command]
---
-MuleSoft: Deploy to CloudHub
---
+Alternatively, open the Command Palette and select `MuleSoft: Deploy to CloudHub`.
+// +
+// Pointer to Command Palette
+// include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . If prompted, click *Allow* to allow sign in using Anypoint Platform and select the business group.
 +
 If the project doesn't already have a `deploy.json` file, Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review.
@@ -65,3 +67,4 @@ For example, `+http://app-with-100-schedulers.us-w1.cloudhub.io/api/flights+`.
 
 * xref:cloudhub::deploying-to-cloudhub.adoc[]
 * xref:runtime-manager::index.adoc[]
+* xref:int-export-mule-project.adoc#deployable[Export to a Deployable JAR File]

@@ -18,7 +18,14 @@ You or your teammates can import the JAR file and continue developing in Anypoin
 
 * A <<deployable, deployable JAR file>> contains the compiled code and all dependencies.
 +
-You can deploy the JAR file to any supported environment, such as CloudHub or on-premises. 
+You can deploy the JAR file to any supported environment, such as CloudHub or on-premises.
++
+To deploy a JAR file to CloudHub, see
+xref:cloudhub::deploying-to-cloudhub.adoc[].
++
+You don't need to create a deployable JAR file to deploy to CloudHub.
+To deploy an app directly from Anypoint Code Builder, see
+xref:int-deploy-mule-apps.adoc[].
 
 == Before You Begin
 
@@ -53,8 +60,8 @@ The terminal window in the IDE opens automatically to provide the status of the 
 . Find or download the JAR file by following the prompts that appear in the IDE after the packaging process completes successfully:
 +
 ** In the desktop IDE, click *Open Folder* to open the directory that contains the JAR file in the Explorer view.
-+
-The file name for the JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application-light-package.jar`, for example, `my-app-example-1.0.0-SNAPSHOT-mule-application-light-package.jar`.
+// +
+// The file name for the JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application-light-package.jar`, for example, `my-app-example-1.0.0-SNAPSHOT-mule-application-light-package.jar`.
 +
 The terminal window in the IDE also provides the path to the JAR, in the `/target` directory under your project folder.
 In the Desktop IDE, you can find the JAR file in the Explorer view, in the `target` folder and also under *JAVA PROJECTS*:
@@ -71,12 +78,13 @@ image::int-export-shareable.png["Shareable JAR file in the JAVA PROJECTS folder"
 ... At the prompt, click *View files* to allow the site to view the files in the folder you select.
 ... Click *Save Changes*.
 --
-+
-The file name for the downloaded shareable JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-shareable-mule-application.jar`, for example, `my-app-example-1.0.0-SNAPSHOT-shareable-mule-application.jar`.
+// +
+// The file name for the downloaded shareable JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-shareable-mule-application.jar`, for example, `my-app-example-1.0.0-SNAPSHOT-shareable-mule-application.jar`.
 +
 The terminal window in the IDE also provides the path to the JAR, in the `/target` directory under your project folder.
 // but good luck finding it!
 
+The file name for the downloaded shareable JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application-light-package.jar`, for example, `my-app-example-1.0.0-SNAPSHOT-mule-application-light-package.jar`.
 
 To open a sharable JAR file in a project workspace within Anypoint Code Builder, see xref:int-import-mule-project.adoc#desktop-project-package[Import a Sharable Project JAR File into the Desktop IDE] and xref:int-import-mule-project.adoc#web-project-package[Import a Sharable Project JAR File into the Cloud IDE].
 // To import to Anypoint Studio, see xref:studio::import-export-packages.adoc[].
@@ -109,8 +117,8 @@ The terminal window in the IDE opens automatically to provide the status of the 
 . Find or download the JAR file by following the prompts that appear in the IDE after the packaging process completes successfully:
 +
 ** *In the desktop IDE*, click *Open Folder* to open the directory that contains the JAR file in the Explorer view.
-+
-The file name for the JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application.jar`, for example: `my-app-example-1.0.0-SNAPSHOT-mule-application.jar`.
+// +
+// The file name for the JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application.jar`, for example: `my-app-example-1.0.0-SNAPSHOT-mule-application.jar`.
 +
 The terminal window in the IDE also provides the path to the JAR, in the `/target` directory under your project folder.
 In the Desktop IDE, you can find the JAR file in the Explorer, under *JAVA PROJECTS*:
@@ -127,8 +135,9 @@ image::int-export-deployable.png["Deployable JAR file in the JAVA PROJECTS folde
 ... At the prompt, click *View files* to allow the site to view the files in the folder you select.
 ... Click *Save Changes*.
 --
-+
+
 The file name for the downloaded deployable JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application.jar`, for example: `my-app-example-1.0.0-SNAPSHOT-mule-application.jar`.
+
 
 
 
@@ -136,3 +145,6 @@ The file name for the downloaded deployable JAR file follows the pattern `_appli
 
 * xref:int-import-mule-project.adoc[]
 * xref:mule-runtime::package-a-mule-application.adoc[Package a Mule Application]
+* xref:cloudhub::deploying-to-cloudhub.adoc[]
+* xref:int-deploy-mule-apps[]
+
