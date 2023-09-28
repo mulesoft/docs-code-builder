@@ -1,6 +1,8 @@
-= Creating Integrations Using AI
+= Creating Integrations Using Generative Flows
 
+The Generative Flow feature transforms your natural language prompt, which describes your business logic, into the order of components needed to accomplish the specified task. 
 
+For example, if you want to create a flow that reads contacts from Salesforce in JSON format, you can enter a prompt describing that task. The prompt is then transformed into a series of connectors and processors that are needed to execute that task: `Listener`, `Query`, `Transformer`, and `Logger`. A flow is generated, which you can then further customize to suit your needs. 
 
 
 == Before You Begin
@@ -35,30 +37,33 @@ image::develop-integration-option-mat.png["Develop an Integration link highlight
 | *Project Name* | Unique name for your project.
 
 This name is used as the title and name of the integration specification file.
-For example, if the project name is "My Integration", the name of the folder for the integration project is my-integration-app, and the configuration XML file name is `my-integration-app.xml`.
-| *Project Location* | Your home directory or another directory you create. Click *Browse* to select a different directory for the integration.
+For example, if the project name is "My Integration", the name of the folder for the integration project is `my-integration-app`, and the configuration XML file name is `my-integration-app.xml`.
+| *Project Location* | Your home directory or another directory you create. Click *Browse* to select a directory for the integration if you don't want to use the default.
 |===
 +
 . Click *Create Project*.
 +
 The flow builder canvas appears with two cards:
 
-//Is that called the flow builder canvas or...? Should we have an image that shows the two cards?
+//Is that called the flow builder canvas or...? Should we have an image that shows the two cards? Placeholder image. 
 
-You can:
+image:acb-starting-cards.png
 
-* Click *Open Einsten* in the *Start with AI* card
-* 
+You can either:
+
+* Click *Open Einsten* in the *Start with AI* card to use the generative flow feature.
+* Click the *Build a flow* in the *Start From Scratch* card to begin building your flow from scratch.
 
 == Add a Flow to Your Project
 
-You can build flows using generative AI or you can develop the flow on your own, from scratch. 
+You can build flows using generative AI or you can develop the flow on your own, from scratch. Either way, it is a good idea to design your flow and know what your use is before getting started. 
 
 To use generative AI:
 
-. If you already have a good idea of the type of flow you want to design, click *Open Einstein* in the *Start with AI* card.
+. Click *Open Einstein* in the *Start with AI* card.
 +
 Optionally, you can click on either of the example prompts on the card to get an idea of how this feature works.
+. 
 
 
 == Customize Your Flow

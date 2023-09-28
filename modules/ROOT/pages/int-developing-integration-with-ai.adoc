@@ -4,6 +4,9 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Use Einstein for Anypoint Code Builder: Generative Flows (Einstein) to jumpstart your integration development by using natural language prompts to generate your flows. The engine for these generative flows is the pre-trained large language model (LLM) that is natively embedded within Salesforce. These LLMs are the heart of Generative AI capabilities in Anypoint Code Builder. 
 
+This feature transforms your natural language prompt into the order of components needed to accomplish a task. For instance, suppose a developer wanted a flow that reads contacts from Salesforce in a JSON format. This feature will mark the beginning of the development process by transforming such a prompt into a series of connectors and processors that will be needed to execute that task: [‘Listener’, ‘Query’, ‘Transformer’, ‘Logger’]. In doing so, our developers will never have to start from scratch because they have a template they can further configure for their specific needs. 
+
+
 == Trust Layer
 
 The Einstein trust layer bridges our platform and the Salesforce native LLMs. 
@@ -14,14 +17,13 @@ image::acb-einstein-trust-layer-png[]
 //Image is describing the following flow
 Anypoint Code Builder user sends prompt to Einstein. 
 
-MuleSoft proprietary data to grounds the prompts before sending them to Open AI via the gateway. 
+MuleSoft proprietary data grounds the prompts before sending them to Open AI via the gateway. 
 
-We make sure that prompts are sent securely and safely to these external models, and that there is Zero data retained outside of Salesforce. 
+MuleSoft ensures that prompts are sent securely and safely to these external LLMs, and that there is Zero data retained outside of Salesforce. 
 
-After a response is generated, it is sent back through the gateway, and we do a validity check to make sure that the flows work with the MuleSoft ecosystem. 
+After a response is generated, it is sent back through the gateway, and MuleSoft does a validity check to make sure that the flows work with the MuleSoft ecosystem. 
 
-Lastly, we log the prompt and generated responses for monitoring before surfacing the validated response in Anypoint Code Builder.
-
+The prompt and generated responses are logged for monitoring before surfacing the validated response in Anypoint Code Builder.
 
 
 
