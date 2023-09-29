@@ -34,8 +34,6 @@ include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 . From *Quick Actions*, click *Develop an Integration*:
 +
 image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
-. Complete the form.
-
 . Complete the *Develop an Integration* form.
 +
 [%header,cols="20a,60a"] 
@@ -85,21 +83,15 @@ The configuration XML file now includes the XML for the HTTP Listener into the `
 
 </flow>
 ----
-. Add another component, this time using the XML configuration menu. For example, add the `<http:listener-config/>` component from a snippet.
+. Add another component, this time using the XML configuration menu.
+For example, add the `<http:listener-config/>` component from a snippet.
 +
 For more information about snippets, see xref:int-work-with-code-snippets.adoc[].
 +
-.. In the configuration XML, before the `<flow/>` element, open the XML configuration menu.
-+
-.Show me how
-[%collapsible]
-====
-* Mac: Ctrl+Spacebar
-* Windows: Cmd+Spacebar
-====
+.. In the configuration XML, place your cursor before the `<flow/>` element and type `http`.
 +
 NOTE: Ensure that the cursor is not inside the `flow` element.
-.. Type `http`, and select the `http:listener-config` snippet.
+. Select the `http:listener-config` snippet.
 +
 image::add-http-config-snippet.png["http:listener-config snippet highlighted in the configuration XML menu"]
 +
@@ -157,10 +149,33 @@ In addition to the xref:acb-components.adoc#builtin-connectors[built-in connecto
 you can download many other connectors from Anypoint Exchange.
 
 
-To import a connector from Exchange:
+To import a connector from Exchange and add it to your code:
 
 . In the Explorer view, open the configuration XML file for your project, such as `my-project-name.xml`.
 . Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the UI canvas if it doesn't open automatically.
+
+. Add the connector the same way you added other components from the canvas:
+.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
+.. In the *Add Component* panel, click *Connectors*.
+.. Click the connector name and then click the operation to add, such as *Publish*:
++
+image::int-add-connector-operation.png["Add Publish operation from the Anypoint MQ Connector"]
++
+If the connector is not available locally, click the image:icon-search-exchange.png["",15,15] (*Search in Exchange*) toggle:
++
+image::int-connector-search-exchange.png["Search in Exchange toggle"]
++
+--
+[calloutlist]
+. Search locally
+. Search in Exchange
+--
+.. Select the connector to add to your project.
+.. Select the operation from the *Add Component* panel.
+
+
+To import a connector from Exchange to use later in your project:
+
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Select the following command:
@@ -178,22 +193,6 @@ image::int-import-connect-exchange.png["Import MQ Connector from Exchange]
 . At the prompt, select the version of the connector to import, such as `v4.0.3`.
 +
 Anypoint Code Builder imports the connector and makes it available in the Components list.
-. Add the connector the same way you added other components from the canvas:
-.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
-.. In the *Add Component* panel, click *Connectors*.
-.. Click the connector name and then click the operation to add, such as *Publish*:
-+
-image::int-add-connector-operation.png["Add Publish operation from the Anypoint MQ Connector"]
-+
-If the connector is not available locally, click the image:icon-search-exchange.png["",15,15] (*Search in Exchange*) toggle:
-+
-image::int-connector-search-exchange.png["Search in Exchange toggle"]
-+
---
-[calloutlist]
-. Search locally
-. Search in Exchange
---
 
 For more information about the connectors available on Exchange, see 
 xref:connectors::index.adoc[]. 
@@ -207,7 +206,7 @@ xref:exchange::index.adoc[].
 
 After you add the components to the project, configure the attributes. 
 
-For example, configure these attributes for the`<http:listener-config/>`,  `<http:listener/>`, and `<set-payload/>` elements:
+For example, configure these attributes for the `<http:listener-config/>`,  `<http:listener/>`, and `<set-payload/>` elements:
 
 [source,xml]
 ----
@@ -252,10 +251,16 @@ To create a new XML configuration file:
 
 . In the Explorer view, right-click the `mule` folder (`src/main/mule`) and select *New File*.
 +
-Alternatively, select the `mule` folder, and then:
+Alternatively, use the menu.
 +
-** In the desktop IDE, select *View* > *Run*.
-** In the cloud IDE, select *File* > *View* > *Run*.
+.Show me how
+[%collapsible]
+====
+Select the `mule` folder, and then:
+
+** In the desktop IDE, select *File* > *New File*.
+** In the cloud IDE, click the menu icon, and select *File* > *New File*.
+====
 . Enter a name for the new file with the `.xml` extension.
 . In the Editor view for the new file, press Ctrl+Space to display available options.
 . Select *Empty mule configuration*.
