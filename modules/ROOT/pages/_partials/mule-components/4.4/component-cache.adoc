@@ -28,7 +28,7 @@ When a message processor in a Mule app sends a message to the Cache scope, the p
 
 For instance, you can use a Cache scope to manage customer requests for flight information. Many customers might request the same pricing information about flights from San Francisco to Buenos Aires. Rather than using a lot of processing power to send separate requests to several airline databases with each customer query, you can use a Cache scope to schedule periodic requests to airline databases and present users with the cached prices. When the timeliness of data is not critical, Cache scope can save time and processing power.
 
-Note that you can put any number of message processors (such as connectors or components) into a Cache scope and configure the caching strategy to store the responses (which contain the payload of the response message) produced by the processing that occurs within the scope.
+Put any number of message processors (such as connectors or components) into a Cache scope and configure the caching strategy to store the responses (which contain the payload of the response message) produced by the processing that occurs within the scope.
 
 The cache scope also works in clustered environments because the object store configured in the caching strategy is shared across all nodes in the cluster.
 
