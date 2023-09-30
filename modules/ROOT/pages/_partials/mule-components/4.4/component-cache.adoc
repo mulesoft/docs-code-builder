@@ -49,7 +49,7 @@ In general, the caching process follows this sequence:
 +
 By default, Mule uses an SHA256KeyGenerator and a SHA256 digest to generate a unique key for the message payload. However, you can set up your own key through a custom caching strategy.
 +
-. The Cache scope compares the newly generated key to cached responses that it has previously processed and saves it in the ObjectStore you set up (recommended) or in the default `InMemoryObjectStore`.
+. The Cache scope compares the newly generated key to cached responses that it has previously processed and saves it in the object store you set up (recommended) or in the default `InMemoryObjectStore`.
 +
 * If there is no cached response event (a _cache miss_), the Cache scope processes the new message and produces a response.
 +
