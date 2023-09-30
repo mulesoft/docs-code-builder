@@ -66,13 +66,13 @@ If the generated response is a nonrepeatable stream, the scope does not cache th
 // tag::caching-strategy[]
 ==  Caching Strategy
 
-A caching strategy defines the actions a Cache scope takes when a message enters its sub-flow. By default, the Cache scope uses a caching strategy that stores data in an in-memory object store. You can create a custom caching strategy that references an existing object store, or you can create a new custom object store to use in this caching strategy.
+A caching strategy defines the actions a Cache scope takes when a message enters it. By default, the Cache scope uses a caching strategy that stores data in an in-memory object store. You can create a custom caching strategy that references an existing object store, or you can create a new custom object store to use in this caching strategy.
 
 You can configure the cache size, expiration time, and maximum allowed entries by setting these values in the object store that you define or reference from the caching strategy. You can also configure a caching strategy to sync access to the cache, to avoid different message processors from using the cache at the same time.
 
 Your caching strategy can also reference these customizations:
 
-* Event Key for the ObjectStore, which is a DataWeave expression or Java object used to create the key to use for storing the payload in the ObjectStore.
+* Event Key for the object store, which is a DataWeave expression or Java object used to create the key to use for storing the payload in the object store.
 * Response Generator for your strategy, which is a reference to a Java object that is used to create the responses returned by the caching strategy.
 * Event Copy Strategy for mutable or immutable data.
 
@@ -80,9 +80,9 @@ Your caching strategy can also reference these customizations:
 
 By default, Mule synchronizes access to a cache to avoid unexpected results if multiple message processors (on the same or different Mule instances) use the cache at the same time.
 
-Consider a scenario where two message processors attempt to retrieve a value from a cache but do not find the value in the cache. So each message processor calculates the value independently and inserts it into the cache. If access to the cache is not synchronized, the value inserted by the second message processor overwrites the value inserted by the first message processor. If the values are different, then two different results are obtained for the same input, with only the last one stored in the cache.
+Consider a scenario in which two message processors attempt to retrieve a value from a cache but do not find the value in the cache. Each message processor calculates the value independently and inserts it into the cache. If access to the cache is not synchronized, the value inserted by the second message processor overwrites the value inserted by the first message processor. If the values are different, then two different results are obtained for the same input, with only the last one stored in the cache.
 
-In some scenarios this outcome is valid, but it can be a problem if the application requires cache coherence. Synchronizing the caching strategy ensures this coherence. A synchronized cache is locked when it is being modified by a message processor. In the previous scenario, a locked cache forces the second message processor to wait until the first message processor has calculated the value, and then it retrieves the value from the cache.
+In some scenarios this outcome is valid, but this outcome is an issue if the application requires cache coherence. Synchronizing the caching strategy ensures coherence. A synchronized cache is locked when it undergoes modifications by a message processor. In this scenario, a locked cache forces the second message processor to wait until the first message processor has calculated the value, and then it retrieves the value from the cache.
 
 You can disable cache synchronization by defining the `synchronized` property in the `<ee:object-store-caching-strategy>` element and setting it to `false`.
 
@@ -177,7 +177,7 @@ SNIPPET_XML_HERE
 | Optional. A DataWeave expression to generate the key. For example, `keyGenerationExpression="#[vars.requestId]"`.
 
 | `synchronized`
-| Specifies wether Mule syncs access to a cache. Accepted values are `true` or `false`. Defaults to `true`.
+| Indicates whether Mule syncs access to a cache. Accepted values are `true` or `false`. Defaults to `true`.
 
 |===
 
@@ -223,7 +223,7 @@ SNIPPET_XML_HERE
 
 == Examples
 
-The following examples show how to configure a Cache Scope and a Caching Strategy.
+The following examples show how to configure a Cache scope and a Caching Strategy.
 
 //end::component-examples-title[]
 //
@@ -276,7 +276,7 @@ The following example shows the configuration of a Caching Strategy, which is th
 
 === Example: Caching Strategy
 
-The following XML snippet shows the configuration of a caching strategy that synchronizes access to the cache, and defines a persistent Object Store to store the cached responses. The caching strategy is then referenced by a Cache scope:
+The following XML example shows the configuration of a caching strategy that synchronizes access to the cache, and defines a persistent object store to store the cached responses. The caching strategy is then referenced by a Cache scope:
 
 [source, xml, linenums]
 ----
