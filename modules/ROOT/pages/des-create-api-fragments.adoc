@@ -54,8 +54,10 @@ image:des-api-fragment.png[API Fragment tab on the Design an API page]
 
 | *Project Name* | Unique name for your fragment.
 
-This name is used as the title and name of the fragment file.
-For example, if the project name is "Frag - User", the specification file name is `frag-user`.
+This name is used as the fragment title in Exchange and name of the fragment file.
+For example, if the project name is "Example OAS Fragment", the specification file name is `example-oas-fragment`.
+
+NOTE: Once created, you cannot reuse the project name, even if you delete the project. 
 | *Project Location* | Your home directory or another directory you create.
 
 See xref:start-add-folders.adoc[].
@@ -64,10 +66,9 @@ See xref:start-add-folders.adoc[].
 include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 | *API Specification Language* | See xref:des-designing-api-specs.adoc#supported-fragment-languages[Supported Specification Languages for API Fragments].
 
-Select *OAS 3.0* to use the example in this procedure.
-| *<Language> Syntax* | The syntax for the selected language.
+Select *OAS 3.0 (YAML)* to use the <<example-oas-api-frag,example>> in this procedure.| *<Language> Syntax* | The syntax for the selected language.
 
-Select *YAML* to use the example in this procedure.
+Select *YAML* to use the <<example-oas-api-frag,example>> in this procedure.
 | *Business Group* | Business Group in Anypoint Platform for your API fragment.
 
 See xref:access-management::business-groups.adoc[].
@@ -85,6 +86,9 @@ image:des-api-fragment-new.png["API Fragment tab on the Design an API page"]
 . Continue designing your API fragment. 
 +
 As you enter elements, use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within the context.
++
+If you created an OAS 3.0 (YAML) fragment project, you can replace the initial API fragment with the <<example-oas-api-frag,example>> code.
+
 . Follow the steps in xref:des-sync-with-design-center.adoc[] to sync your fragment to Design Center.
 . Follow the steps in xref:des-publish-api-spec-to-exchange.adoc[] to publish your fragment to Exchange.
 +
@@ -94,6 +98,67 @@ Your API fragment appears as an asset in your organization:
 For example:
 +
 image::des-api-frag-exchange.png["API fragment in Exchange"]
+
+
+[[example-oas-api-frag]]
+== Example OAS 3.0 (YAML) API Fragment 
+
+If you created an OAS 3.0 (YAML) fragment project, you can replace the initial API fragment with following example code:
+
+.Example OAS 3.0 (YAML) API Fragment
+[%collapsible]
+
+====
+[source,yaml,linenums]
+--
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: ExampleComponents
+paths: {}
+
+components: 
+  schemas:
+    AmericanFlightDataType:
+      type: object
+      description: American Flight Data Type
+      properties:
+        ID: 
+          type: number
+        code:  
+          type: string
+        price:  
+          type: number
+        departureDate:  
+          type: string
+        origin:  
+          type: string
+        destination:  
+          type: string
+        emptySeats:  
+          type: number
+        plane:
+          type: object
+          properties: 
+            type:  
+              type: string
+            totalSeats:  
+              type: number
+      example: 
+        ID: 1
+        code: ER38sd
+        price: 400
+        departureDate: 2017/07/26
+        origin: CLE
+        destination: SFO
+        emptySeats: 0
+        plane:
+          type: Boeing 737
+          totalSeats: 150
+--
+====
+
+
 
 [[add-fragment-to-project]]
 == Add a Fragment from Exchange to Your Project
