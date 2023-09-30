@@ -1,11 +1,12 @@
-= Synchronizing API Specifications with Design Center
+= Synchronizing API Specs and Fragments with Design Center
+:page-deployment-options: cloud-ide, desktop-ide
 
-// tut-design-api-synchronize-with-design-center
+// tut-af-design-api-synchronize-with-design-center
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Before you can publish your API to Exchange, you must sync it with Anypoint Design Center. 
 Use the built-in integrated source control management (SCM) in Anypoint Code Builder to upload your API specification to Design Center.
@@ -24,9 +25,8 @@ The process for syncing with Design Center is:
 
 Before synchronizing with Design Center:
 
-* xref:setup.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create and test your API specification].
-// . xref:des-add-examples-to-specs.adoc[Add examples to your specification].
 
 == Sync Changes to Design Center 
 
@@ -35,7 +35,7 @@ Before synchronizing with Design Center:
 include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
 . Review changes by clicking files in the Source Control panel:
 +
-.. Open a file, for example `oas-example.yaml`.
+.. Open a file, for example <<example-oas-api-spec,`oas-example.yaml`>>.
 .. Review the working tree and notice the shading for deletions (red) and additions (green):
 +
 image::des-source-control-changes.png["oas-example.yaml file highlighted to show the source control changes"]
