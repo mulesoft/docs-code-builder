@@ -10,8 +10,14 @@ Authentication errors sometimes occur in Anypoint Code Builder when you attempt 
 
 == Failed to Authenticate to Git
 
-The error `Failed to authenticate to git remote` occurs if you select a different cloud region (EU Cloud or US Cloud) from the desktop IDE than your API specification project needs to synchronize your project in the Design Center SCM.
-+
-To address this issue, ensure that your IDE is set to the correct region for your project. 
+All commands that involve `git` actions, such as publishing to Exchange and committing changes to an API specification, require authentication with the correct Anypoint Platform host cloud. If authentication fails, the action throws this VS Code error: 
+
+----
+Failed to authenticate to git remote
+----
+
+For example, this error occurs if you select a different cloud region (EU Cloud or US Cloud) from the desktop IDE than your API specification project needs to synchronize your project in the Design Center SCM.
+
+To address this issue, ensure that your IDE is set to the correct region for your project and that you have logged in to Anypoint Platform. 
 
 //* TODO: hanna reported another way this occurs, but we haven't isolated yet
