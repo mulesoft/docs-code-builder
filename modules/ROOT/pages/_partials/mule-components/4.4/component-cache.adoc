@@ -24,7 +24,7 @@ Use a Cache scope to reduce the processing load on the Mule instance and to incr
 * Processing repeated requests for the same information.
 * Processing requests for information that involve large repeatable streams.
 
-When a message processor in a Mule app sends a message to the Cache scope, the parent flow expects an output. The Cache scope processes the message payload, delivers the output to the parent flow, and saves the output (that is, caches the response). The next time the Cache scope receives the same kind of message payload, the scope can offer a cached response rather than invoking a potentially time-consuming process again.
+When a message processor in a Mule app sends a message to the Cache scope, the parent flow expects an output. The Cache scope processes the message payload, delivers the output to the parent flow, and saves the output (that is, caches the response). The next time the Cache scope receives the same kind of message payload, the scope can produce a cached response rather than invoking a potentially time-consuming process again.
 
 For instance, you can use a Cache scope to manage customer requests for flight information. Many customers might request the same pricing information about flights from San Francisco to Buenos Aires. Rather than using a lot of processing power to send separate requests to several airline databases with each customer query, you can use a Cache scope to arrange to send a request to the databases fewer times – say, once every ten minutes – and present users with the cached flight pricing information. Where timeliness of data is not critical, Cache scope can save time and processing power.
 
