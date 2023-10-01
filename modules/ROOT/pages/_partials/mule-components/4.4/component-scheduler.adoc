@@ -1,0 +1,352 @@
+//
+//tag::component-title[]
+
+= Scheduler (<scheduler/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Trigger execution of a flow based on a time-based condition. For example, a Scheduler might create and send a message that will trigger the flow processing every 5 seconds or every day at 12:00 in a given time zone.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+When adding a Scheduler to your Mule application, consider these points:
+
+* Schedulers use the same timezone as the machine on which Mule is running. However, if an application is running in CloudHub, the Scheduler conforms to the UTC timezone, regardless of the geographic region in which the application is running.
++
+To set a different time zone for the Scheduler, see `timeZone` in <<props_cron_expressions>>.
+* The `disallowConcurrentExecution` property enables you to prevent the Scheduler from triggering the execution of the flow while a previously-triggered execution is running.
+* If xref:execution-engine.adoc#backpressure[back-pressure] occurs because no resources are available at the time of the scheduled trigger, Mule skips that execution.
+//Enhancement request for this: MULE-14930
+* In a Mule runtime engine cluster or multi-worker CloudHub deployment, the Scheduler executes only on the primary node (that is, only in one Mule instance).
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<scheduler doc:name="Scheduler" doc:id="snswxf" >
+  <scheduling-strategy/>
+</scheduler>
+----
+
+The Scheduler sets a scheduling strategy at a fixed frequency or an interval based on a cron expression. For example:
+
+* The fixed frequency setting in the following Scheduler executes every fifteen seconds:
++
+[source, xml]
+----
+<flow name="ex-fixed-frequency-flow" >
+  <scheduler doc:name="Scheduler">
+    <scheduling-strategy>
+      <fixed-frequency frequency="15" timeUnit="SECONDS" />
+    </scheduling-strategy>
+  </scheduler>
+  <!-- One or more processors here. -->
+</flow>
+----
++
+* The cron expression in this Scheduler triggers the generation of a Mule message in a new execution of the flow every fifteen seconds:
++
+[source, xml]
+----
+<flow name="ex-cron-expression-flow" >
+  <scheduler doc:name="Scheduler" >
+    <scheduling-strategy >
+      <cron expression='0/15 * * * * ? '/>
+    </scheduling-strategy>
+  </scheduler>
+  <!-- One or more processors here. -->
+</flow>
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<scheduler/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+|`disallowConcurrentExecution`
+| When this attribute is set to `true`, the Scheduler skips its scheduled execution if a previous execution is still running. Once the flow finishes, the Scheduler executes at the next configured interval. The default value is `false`.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//
+//tag::component-xml-child1[]
+
+The fixed frequency (`<fixed-frequency/>`) scheduling strategy accepts the these attributes:
+
+[%header, cols="1,3"]
+|===
+| <fixed-frequency/> Attributes | Description
+
+| `frequency` | The frequency at which the Scheduler triggers the flow given the `timeUnit` setting. Defaults to `1000`.
+| `startDelay` | The amount of time to delay execution of the Scheduler for the first time after the application starts. This property uses the same `timeUnit` as the frequency. Defaults to `0`.
+| `timeUnit` | One of the following time units for the values of `frequency` and `startDelay`: `MILLISECONDS`, `SECONDS`, `MINUTES`, `HOURS`, or `DAYS`. Defaults to `MILLISECONDS`.
+
+|===
+
+See the <<example2, fixed frequency example>>. 
+
+//end::component-xml-child1[]
+//
+//
+//
+//tag::component-xml-child2[]
+
+For more complex scheduling strategies, use a cron expression.
+
+[%header, cols="1,3"]
+|===
+| <cron/> Attributes | Description
+
+| `expression` | A cron expression for triggering the Scheduler. There is no default cron expression. For guidance with expressions, see <<cron_expressions>>. Example: `expression="1 1 1 1,7 * ?"`.
+| `timeZone` | Time zone passed as a system property, or in a machine's operating system. https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html[Java time zone^] values are supported. Avoid Java abbreviations, such as `PST` and `AGT`, and instead use the full-name Java equivalents, such as `America/Los_Angeles`. Example: `timeZone="America/Argentina/Buenos_Aires"`.
+
+|===
+
+See the <<example3, Cron example>>. 
+
+//end::component-xml-child2[]
+//
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+In the following example, the Scheduler skips its execution if the flow takes longer to complete than the fixed frequency of 10 milliseconds:
+
+[source,xml]
+----
+<flow name="scheduler-disallowConcurrentExecution-ex" >
+  <scheduler doc:name="Scheduler" disallowConcurrentExecution="true" >
+    <scheduling-strategy>
+      <fixed-frequency frequency="10" timeUnit="MILLISECONDS"/>
+    </scheduling-strategy>
+  </scheduler>
+  <!-- processors here -->
+</flow>
+----
+
+Each time a Scheduler skips its execution, Mule logs an `Execution skipped` message, for example (edited for readability):
+
+[source,logs]
+----
+INFO  2022-11-09 15:15:43,082 ...
+...scheduler.DefaultSchedulerMessageSource:
+Flow 'scheduler-disallowConcurrentExecution-ex' is already running and
+'disallowConcurrentExecution' is set to 'true'. Execution skipped.
+
+INFO  2022-11-09 15:15:43,083 ...
+...scheduler.DefaultSchedulerMessageSource:
+Flow 'scheduler-disallowConcurrentExecution-ex' is already running and
+'disallowConcurrentExecution' is set to 'true'. Execution skipped.
+----
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example shows a fixed-frequency scheduling strategy that executes the Scheduler every 10 seconds after an initial 10 second delay:
+
+[source,xml]
+----
+<scheduler doc:name="Scheduler" >
+  <scheduling-strategy >
+    <fixed-frequency frequency="10" timeUnit="SECONDS" startDelay="10"/>
+  </scheduling-strategy>
+</scheduler>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+//
+//tag::component-xml-ex3[]
+[[example3]]
+The following example uses a cron expression to trigger the flow at 12:00 every day in the `America/Los_Angeles` time zone.
+
+[source,xml]
+----
+<flow name="componentsFlow">
+  <scheduler>
+    <scheduling-strategy>
+      <cron expression="0 0 12 * * ?" timeZone="America/Los_Angeles"/>
+    </scheduling-strategy>
+  </scheduler>
+  <logger message="my message"/>
+</flow>
+----
+//end::component-xml-ex3[]
+//
+
+//CUSTOM TAG - NOT IN TEMPLATE
+//tag::cron-expressions[]
+[[cron_expressions]]
+== Cron Expressions
+
+Cron is a widely used standard for describing time and date information. The Cron Expression (`<cron expression />` scheduling strategy (`<scheduling-strategy >`) is useful for triggering a flow at intervals not available through the Fixed Frequency scheduling strategy.
+
+The Scheduler keeps track of every second and creates a Mule event when the
+Quartz Cron expression matches your time-date setting. You can trigger the event
+just once or at regular intervals.
+
+A date-time expression consists of six required settings and can include the
+optional year setting. Specify the settings in the following order:
+
+. Seconds (`0`-`59`)
+. Minutes (`0`-`59`)
+. Hours (`0`-`23`)
+. Day of month (`1`-`31`)
+. Month (`1`-`12` or `JAN`-`DEC`)
+. Day of the week (`1`-`7` or `SUN`-`SAT`)
+. Year (empty or a 4-digit year between `1970`-`2099`, for example, `2019`)
+
+The Scheduler supports Quartz Cron expressions. Here are a few examples:
+
+[%header,cols="2*"]
+|===
+|Expression |Behavior
+|`1/2 * * * * ?` |Run every 2 seconds of the day, every day.
+|`0 15 10 ? * *` |Run at 10:15 a.m., every day. `0 15 10 * * ? *` and
+`0 15 10 * * ?` produce the same effect.
+|`0 15 10 * * ? 2019` |Run at 10:15 a.m., every day during the year 2019.
+|`0 * 14 * * ?` |Run every minute starting at 2pm and ending at 2:59pm, every day.
+|`0 0/5 14 * * ?` |Run every 5 minutes starting at 2pm and ending at 2:55pm, every day
+|`1 1 1 1,7 * ?` |Run the first second of the first minute of the first hour, on the first and seventh day, every month.
+|===
+
+The Scheduler component also supports Quartz Scheduler special characters:
+
+* `*`: All values.
+* `?`: No specific value.
+* `-`: Range of values, for example, `1-3`.
+* `,`: Additional values, for example, `1,7`.
+* `/`: Incremental values, for example, `1/7`.
+* `L`: Last day of the week or month, or last specific day of the month
+  (such as `6L` for the last Saturday of the month).
+* `W`: Weekday, which is valid in the month and day-of-the-week fields.
+* `#`: "nth" day of the month. For example, `#3` is the third day of the month.
+
+//source info: +http://www.quartz-scheduler.org/documentation/quartz-2.x/tutorials/crontrigger.html+
+
+This example logs the message "hello" every second:
+
+[source,XML,linenums]
+----
+<flow name="cronFlow" >
+  <scheduler doc:name="Scheduler" >
+    <scheduling-strategy >
+      <cron expression="* * * * * ?" />
+    </scheduling-strategy>
+  </scheduler>
+  <logger level="INFO" doc:name="Logger" message='"hello"'/>
+</flow>
+----
+
+Note that there are a number of free online tools that can help you build Cron expressions.
+//end::cron-expressions[]
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+At least one processor must follow the Scheduler. Processors include Mule components and connector operations, such as an HTTP Request operation or Transform Message component. Failure to provide a processor produces a `MuleRuntimeException` and causes the deployment of the Mule application to fail with the following ERROR message in the logs (edited for readability):
+
+[source,logs]
+----
+ERROR ...MuleRuntimeException ...
+The content of element 'flow' is not complete.
+One of '{"http://www.mulesoft.org/schema/mule/core":abstract-message-processor,
+"http://www.mulesoft.org/schema/mule/core":abstract-mixed-content-message-processor}'
+is expected.
+----
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+//end::see-also[]
