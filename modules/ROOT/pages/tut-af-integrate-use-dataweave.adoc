@@ -1,0 +1,699 @@
+= Transforming Flight Data with DataWeave
+:page-deployment-options: cloud-ide, desktop-ide
+:page-aliases: use-dataweave.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Use DataWeave to transform and match flight data to your API specification.
+
+== Before You Begin
+
+Complete these procedures:
+
+. xref:tut-af-integrate-am-flights.adoc[] 
+. xref:tut-af-integrate-connect-to-a-db.adoc[]
+
+
+[[snippets]]
+== Create a User Snippet for the Transformation
+
+Define user snippets in the `mule-xml.json` file. For information about user snippets, see xref:work-with-code-snippets.adoc[].
+
+. In Anypoint Code Builder, navigate to *Configure User Snippets*:
+
+* In the desktop IDE, navigate to *Code* > *Settings* > *Configure User Snippets*.
+* In the cloud IDE, navigate from the File menu to *Preferences* > *Configure User Snippets*.
+* In either IDE, open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
++
+[source,command]
+----
+Snippets: Configure User Snippets
+----
+. In the *Select Snippets File or Create Snippets* field that opens, enter:
++
+[source,command]
+----
+mule-xml.json (Mule XML)
+----
+. If the file has no configurations, `mule-xml.json` provides comments within curly braces:
++
+[source,json]
+--
+{
+	// Place your snippets for mule-xml here. Each snippet is defined under a snippet name and has a prefix, body and
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+}
+--
+. Add this user snippet code to the file: 
++
+[[collapsible]]
+[source,json]
+----
+{
+  "Transform Message": {
+    "prefix": "muledx:transform-message",
+    "body": [
+      "<ee:transform doc:name=\"${1:Transform Message}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+      "  <ee:message>",
+      "    <ee:set-payload>",
+      "      <![CDATA[${2:DataWeave}]]>",
+      "    </ee:set-payload>",
+      "  </ee:message>",
+      "</ee:transform>"
+    ]
+  },
+  "Mule Flow": {
+    "prefix": "muledx:flow",
+    "body": [
+      "<flow name=\"${1:$TM_FILENAME_BASE-Flow}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+        "",
+      "</flow>"
+  ]
+  },
+  "HTTP Listener Config": {
+    "prefix": "muledx:http-listener-config",
+    "body": [
+      "<http:listener-config name=\"${1:httpListenerConfig}\" doc:name=\"${2:Listener Config}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+      "  <http:listener-connection host=\"${3:Host}\" port=\"${4:Port}\"/>",
+      "</http:listener-config>"
+    ]
+  },
+  "HTTP Listener": {
+    "prefix": "muledx:http-listener",
+    "body": [
+      "<http:listener path=\"/${1:path}\" config-ref=\"${2:httpListenerConfig}\" doc:name=\"${3:Listener}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
+    ]
+  },
+  "Set Payload": {
+    "prefix": "muledx:set-payload",
+    "body": [
+      "<set-payload value=\"${1:#[payload]}\" doc:name=\"${2:Set Payload}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
+    ]
+  },
+  "Set Variable": {
+    "prefix": "muledx:set-variable",
+    "body": [
+      "<set-variable variableName=\"${1:name}\" value=\"${2:#[payload]}\" doc:name=\"${3:Set Variable}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
+    ]
+  },
+  "Logger": {
+    "prefix": "muledx:logger",
+    "body": [
+      "<logger level=\"INFO\" message=\"${1:#[payload]}\" doc:name=\"${2:Logger}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
+    ]
+  },
+  "Database Config - MySQL": {
+    "prefix": "muledx:db-config-mysql",
+    "body": [
+      "<db:config name=\"${1:DatabaseConfig}\" doc:name=\"${2:mySQL DB}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+      "  <db:my-sql-connection host=\"${3:Host}\" port=\"${4:Port}\" user=\"${5:Username}\" password=\"${6:Password}\" database=\"${7:DatabaseName}\" />",
+      "</db:config>"
+    ]
+  },
+  "Database Select": {
+    "prefix": "muledx:db-select",
+    "body": [
+      "<db:select config-ref=\"${1:DatabaseConfigRef}\" doc:name=\"${2:Select}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
+      "  <db:sql>",
+      "    <![CDATA[${3:SQL}]]>",
+      "  </db:sql>",
+      "</db:select>"
+    ]
+  }
+}
+----
++
+The user snippets provide starting configurations for several Mule components, including Transform Message. 
+. Proceed to <<return-payload>>. 
+
+[[return-payload]]
+== Return the Payload as JSON
+
+. In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
+. From the UI canvas, insert the user snippet `Transform Message` below the Database Select operation:
++
+Below the Listener, click the *+* icon, and navigate to *Snippets* > *User Snippets* > *Transform Message*.
++
+If the *User Snippets* pane is empty at first, wait a moment, and try again. Alternatively, navigate to the `muledx:transform-message` snippet from the configuration XML.
++
+//TODO: image seems out of date; where's the plus icon?
+image::transform-with-output-json.png["Transform component highlighted"]
++
+.User snippet XML:
+[source,xml]
+----
+<ee:transform doc:name="" doc:id="51fed3-afee8c">
+  <ee:message>
+    <ee:set-payload>
+      <![CDATA[]]>
+    </ee:set-payload>
+  </ee:message>
+</ee:transform>
+----
+. In the configuration XML, add the `doc:name` value *Transform Message* or similar to the `<ee:transform/>` component:
++
+----
+<ee:transform doc:name="Transform Message" doc:id="423214-fac9c4">
+...
+----
+. Within `<![CDATA[]]>` add a DataWeave script that outputs the message payload to a JSON format:
++
+[source,dataweave]
+--
+<ee:transform doc:name="Transform Message" doc:id="51fed3-afee8c">
+  <ee:message>
+    <ee:set-payload>
+      <![CDATA[
+      %dw 2.0
+      output application/json
+      ---
+      payload      
+      ]]>
+    </ee:set-payload>
+  </ee:message>
+</ee:transform>
+--
+. Deploy your app within the IDE by executing to *Run* > *Start Debugging* (`F5`).
++
+For guidance, see xref:tut-af-integrate-am-flights.adoc#run[Run Your App in Debug Mode].
+. After the app deploys successfully, use a REST Client or browser to trigger a response.
++
+For guidance, see xref:tut-af-integrate-am-flights.adoc#test[Test Your App].
+. View the response data from the MySQL database. For example:
++
+[source,JSON]
+----
+[
+  {
+    "planeType": "Boeing 787",
+    "code2": "0001",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 541,
+    "seatsAvailable": 0,
+    "toAirport": "LAX",
+    "ID": 1,
+    "airlineName": "American Airlines",
+    "totalSeats": 200
+  },
+    ...
+]
+----
++
+.Click for the complete response.
+[%collapsible]
+====
+[source,json]
+----
+[
+  {
+    "planeType": "Boeing 787",
+    "code2": "0001",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 541,
+    "seatsAvailable": 0,
+    "toAirport": "LAX",
+    "ID": 1,
+    "airlineName": "American Airlines",
+    "totalSeats": 200
+  },
+  {
+    "planeType": "Boeing 747",
+    "code2": "0123",
+    "takeOffDate": "2016-01-25T00:00:00",
+    "code1": "eefd",
+    "fromAirport": "MUA",
+    "price": 300,
+    "seatsAvailable": 7,
+    "toAirport": "CLE",
+    "ID": 2,
+    "airlineName": "American Airlines",
+    "totalSeats": 345
+  },
+  {
+    "planeType": "Boeing 777",
+    "code2": "0192",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "ffee",
+    "fromAirport": "MUA",
+    "price": 300,
+    "seatsAvailable": 0,
+    "toAirport": "LAX",
+    "ID": 3,
+    "airlineName": "American Airlines",
+    "totalSeats": 300
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "1000",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 200,
+    "seatsAvailable": 5,
+    "toAirport": "CLE",
+    "ID": 4,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "1093",
+    "takeOffDate": "2016-02-11T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 142,
+    "seatsAvailable": 1,
+    "toAirport": "SFO",
+    "ID": 5,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  },
+  {
+    "planeType": "Boeing 787",
+    "code2": "1112",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "ffee",
+    "fromAirport": "MUA",
+    "price": 954,
+    "seatsAvailable": 100,
+    "toAirport": "CLE",
+    "ID": 6,
+    "airlineName": "American Airlines",
+    "totalSeats": 200
+  },
+  {
+    "planeType": "Boeing 777",
+    "code2": "1994",
+    "takeOffDate": "2016-01-01T00:00:00",
+    "code1": "eefd",
+    "fromAirport": "MUA",
+    "price": 676,
+    "seatsAvailable": 0,
+    "toAirport": "SFO",
+    "ID": 7,
+    "airlineName": "American Airlines",
+    "totalSeats": 300
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "2000",
+    "takeOffDate": "2016-02-20T00:00:00",
+    "code1": "ffee",
+    "fromAirport": "MUA",
+    "price": 300,
+    "seatsAvailable": 30,
+    "toAirport": "SFO",
+    "ID": 8,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "3000",
+    "takeOffDate": "2016-02-01T00:00:00",
+    "code1": "eefd",
+    "fromAirport": "MUA",
+    "price": 900,
+    "seatsAvailable": 0,
+    "toAirport": "SFO",
+    "ID": 9,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  },
+  {
+    "planeType": "Boeing 777",
+    "code2": "4511",
+    "takeOffDate": "2016-01-15T00:00:00",
+    "code1": "eefd",
+    "fromAirport": "MUA",
+    "price": 900,
+    "seatsAvailable": 100,
+    "toAirport": "LAX",
+    "ID": 10,
+    "airlineName": "American Airlines",
+    "totalSeats": 300
+  },
+  {
+    "planeType": "Boeing 737",
+    "code2": "4567",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 456,
+    "seatsAvailable": 100,
+    "toAirport": "SFO",
+    "ID": 11,
+    "airlineName": "American Airlines",
+    "totalSeats": 150
+  }
+]
+----
+====
++
+If the MySQL test server is not available, this error occurs:
++
+[[source,error]]
+----
+Cannot get connection for URL jdbc:mysql://mudb.learn.mulesoft.com:3306/ : 
+Communications link failure"`. 
+----
++
+To address the issue, try again until you get a successful response.
+. Proceed to <<restructure>>.
+
+[[restructure]]
+== Transform the Response Data
+
+Transform the JSON output to the structure required by your API specification.
+
+Your *American Flights API* in Anypoint Exchange uses a different structure for its flight data than your request to the database returns. 
+
+To find the required JSON structure, search for the JSON example under the `GET` method for your `/flights` endpoint. For guidance, see xref:publish-api-spec-to-exchange.adoc#locate-your-api-in-exchange[Locate Your API in Exchange] or open the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-api/minor/2.0/console/method/%2373/[public version of the API on Exchange^].
+
+[%header,%autowidth.spread,cols="1a,1a"]
+|===
+| API Specification Response Structure | Actual Response Structure
+|
+[source,json]
+--
+[
+  {
+     "code": "ER38sd",
+     "price": 400,
+     "departureDate": "2017/07/26",
+     "origin": "CLE",
+     "destination": "SFO",
+     "emptySeats": 0,
+     "plane": {
+       "type": "Boeing 737",
+       "totalSeats": 150
+     }
+  }
+]
+--
+|
+[source,json]
+--
+[
+  {
+    "planeType": "Boeing 787",
+    "code2": "0001",
+    "takeOffDate": "2016-01-20T00:00:00",
+    "code1": "rree",
+    "fromAirport": "MUA",
+    "price": 541,
+    "seatsAvailable": 0,
+    "toAirport": "LAX",
+    "ID": 1,
+    "airlineName": "American Airlines",
+    "totalSeats": 200
+  }
+]
+--
+|===
+
+Use DataWeave to transform the response:
+
+. In the configuration XML, replace the script within the `<![CDATA]]>` with a DataWeave mapping:
++
+[source,xml]
+--
+<ee:transform doc:name="Transform Message" doc:id="51fed3-afee8c">
+  <ee:message>
+    <ee:set-payload>
+      <![CDATA[
+      %dw 2.0
+      output application/json
+      ---
+      payload map ( payload01 , indexOfPayload01 ) -> {
+        ID: payload01.ID,
+        code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+        price: payload01.price default 0,
+        departureDate: payload01.takeOffDate as String default "",
+        origin: payload01.fromAirport default "",
+        destination: payload01.toAirport default "",
+        emptySeats: payload01.seatsAvailable default 0,
+        plane: {
+          "type": payload01.planeType default "",
+          totalSeats: payload01.totalSeats default 0
+        }
+      }    
+      ]]>
+    </ee:set-payload>
+  </ee:message>
+</ee:transform>
+--
+. Review your configuration XML.
++
+[source,xml]
+----
+<http:listener-config name="inbound-request" doc:name="HTTP Config">
+    <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+
+<db:config name="Database_Config" doc:name="mySQL DB">
+    <db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" 
+        user="mule" password="mule" database="training" />
+</db:config>
+
+<flow name="getFlights">
+    <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+    <db:select doc:name="Query Flights" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
+
+    <ee:transform doc:name="Transform Message">
+        <ee:message >
+            <ee:set-payload >
+            <![CDATA[
+            %dw 2.0
+            output application/json
+            ---
+            payload map ( payload01 , indexOfPayload01 ) -> {
+              ID: payload01.ID,
+              code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+              price: payload01.price default 0,
+              departureDate: payload01.takeOffDate as String default "",
+              origin: payload01.fromAirport default "",
+              destination: payload01.toAirport default "",
+              emptySeats: payload01.seatsAvailable default 0,
+              plane: {
+                type: payload01.planeType default "",
+                totalSeats: payload01.totalSeats default 0
+              }
+            }
+            ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+</flow>
+----
+. Proceed to <<run-test>>.
+
+[[run-test]]
+== Run and Test Your App
+
+. Deploy your app within the IDE by executing to *Run* > *Start Debugging* (`F5`).
++
+For guidance, see xref:tut-af-integrate-am-flights.adoc#run[Run Your App in Debug Mode].
+. After the app deploys successfully, use a REST Client or browser to trigger flow.
++
+For guidance, see xref:tut-af-integrate-am-flights.adoc#test[Test Your App].
++
+Notice that the transformed data structure conforms to the API requirements. For example:
++
+[source,JSON]
+----
+[
+    {
+        "ID": 1,
+        "code": "rree0001",
+        "price": 541,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 787",
+            "totalSeats": 200
+        }
+    },
+    ...
+----
++
+[%collapsible]
+.Click for the complete response.
+====
+[source,JSON]
+----
+[
+    {
+        "ID": 1,
+        "code": "rree0001",
+        "price": 541,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 787",
+            "totalSeats": 200
+        }
+    },
+    {
+        "ID": 2,
+        "code": "eefd0123",
+        "price": 300,
+        "departureDate": "2016-01-25T00:00:00",
+        "origin": "MUA",
+        "destination": "CLE",
+        "emptySeats": 7,
+        "plane": {
+            "type": "Boeing 747",
+            "totalSeats": 345
+        }
+    },
+    {
+        "ID": 3,
+        "code": "ffee0192",
+        "price": 300,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 777",
+            "totalSeats": 300
+        }
+    },
+    {
+        "ID": 4,
+        "code": "rree1000",
+        "price": 200,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "CLE",
+        "emptySeats": 5,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 5,
+        "code": "rree1093",
+        "price": 142,
+        "departureDate": "2016-02-11T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 1,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 6,
+        "code": "ffee1112",
+        "price": 954,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "CLE",
+        "emptySeats": 100,
+        "plane": {
+            "type": "Boeing 787",
+            "totalSeats": 200
+        }
+    },
+    {
+        "ID": 7,
+        "code": "eefd1994",
+        "price": 676,
+        "departureDate": "2016-01-01T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 777",
+            "totalSeats": 300
+        }
+    },
+    {
+        "ID": 8,
+        "code": "ffee2000",
+        "price": 300,
+        "departureDate": "2016-02-20T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 30,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 9,
+        "code": "eefd3000",
+        "price": 900,
+        "departureDate": "2016-02-01T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 0,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    },
+    {
+        "ID": 10,
+        "code": "eefd4511",
+        "price": 900,
+        "departureDate": "2016-01-15T00:00:00",
+        "origin": "MUA",
+        "destination": "LAX",
+        "emptySeats": 100,
+        "plane": {
+            "type": "Boeing 777",
+            "totalSeats": 300
+        }
+    },
+    {
+        "ID": 11,
+        "code": "rree4567",
+        "price": 456,
+        "departureDate": "2016-01-20T00:00:00",
+        "origin": "MUA",
+        "destination": "SFO",
+        "emptySeats": 100,
+        "plane": {
+            "type": "Boeing 737",
+            "totalSeats": 150
+        }
+    }
+]
+----
+====
+. Stop your app. 
++
+For guidance, see xref:tut-af-integrate-am-flights.adoc#stop[Stop Your App].
+. Proceed to xref:tut-af-implement-am-flights-api.adoc[].

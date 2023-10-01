@@ -1,0 +1,191 @@
+= Store Data in Parallel
+:page-deployment-options: cloud-ide, desktop-ide
+:page-aliases: store-data-in-parallel.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Now that you retrieved the contact record from Salesforce, you can add logic to determine if the record needs to be updated. If it does, you must update the stored information with the new values. To do so, you can use the Scatter-Gather processor to execute requests in parallel to both your Salesforce organization and your MySQL database.
+
+== Before You Begin
+
+Complete these procedures:
+
+* xref:tut-contacts-create-synchronization-sfdc-api.adoc[]
+* xref:tut-contacts-create-config-files.adoc[]
+* Configure a query to your Salesforce environment. +
+See xref:tut-contacts-sync-api-configure-queries.adoc[] for more information.
+* Install a REST client like Postman or AdvancedRestClient.
+
+== Add a Scatter-Gather to Store Data in Parallel
+
+. In Anypoint Code Builder, open the `contact-sync.xml` file.
+. Select the `plus` icon after the *Set Return Message* Set Variable component:
++
+image::add-scatter-gather-canvas.png[]
+. Type `_scatter_` and select `Scatter Gather`:
++
+image::scatter-gather-operation-canvas.png[]
+. Add the following logic within the Scatter-Gather component:
++
+[source,XML]
+--
+<scatter-gather doc:name="SF and DB update">
+    <route doc:name="SF Update">
+
+    </route>
+    <route doc:name="DB Update">
+
+    </route>
+
+</scatter-gather>
+--
+
+== Update Salesforce Record
+
+You can start by implementing the steps to update a record in Salesforce if it is needed. For this purpose, you must define:
+
+* A logic to decide if the update is needed.
+* The operations required to update the record using the Salesforce connector.
+
+Earlier in this walkthrough, you stored the phone number retrieved from the record in a variable named `phonenumberSFVar`. You can now compare that variable to the value received in your POST request query parameter, stored in another variable named `phonenumberVar`.
+
+To compare the phone number in your POST request, and the number retrieved from Salesforce, add a Choice router with a DataWeave expression to check if the existing and new phone numbers in Salesforce are the same. If they are the same, log a message saying *Phone number in Salesforce already up to date*, and add a Set Variable component to set the value *Phone number in Salesforce already up to date* to variable `ReturnMessageSF`:
+
+. In Anypoint Code Builder, open the `contact-sync.xml` file.
+. Add a choice router right after your *SF Update* route:
++
+[source,XML]
+--
+<choice doc:name="Phone needs update?">
+    <when doc:name="No Update needed" expression="#[vars.phonenumberSFVar == vars.phonenumberVar]">
+        <logger doc:name="Logger" message='#["Phone number in Salesforce already up to date"]' />
+        <set-variable value='#["Phone number in Salesforce already up to date. "]' doc:name="Set Return Message" variableName="ReturnMessageSF" />
+    </when>
+    <otherwise doc:name="Update needed" >
+
+    </otherwise>
+</choice>
+--
+. Populate the `otherwise` element with:
++
+* A Transform Message component to upsert the phone number using the variables `IdVar` and `phonenumberVar`.
+* Log the successful update and assign the value *Phone number in Salesforce successfully updated* to the `ReturnMessageSF` variable:
++
+[source,XML]
+--
+<ee:transform doc:name="SF update message">
+	<ee:message>
+		<ee:set-payload>
+			<![CDATA[%dw 2.0
+			output application/java
+			---
+			[{
+			Id: vars.IDVar,
+			Phone: vars.phonenumberVar
+			}]]]>
+		</ee:set-payload>
+	</ee:message>
+</ee:transform>
+<salesforce:update type="contact" config-ref="Salesforce_Config" doc:name="Update" />
+<logger doc:name="Logger" message='#["Phone number in Salesforce successfully updated"]' />
+--
+
+== Update Database Record
+
+To implement the steps to update a record in your target MySQL database if needed, you must define:
+
+* A logic to decide if the update is needed.
+* The operations required to update the record using the Database connector.
+
+. In Anypoint Code Builder, open the `contact-sync.xml` file.
+. Add a `db:select` processor under the *DB Update* `route` processor to select all the fields from the *Contacts* table and filter by the contact’s first and last name:
++
+[source,XML]
+--
+<db:select config-ref="Database_Config" doc:name="Select Contact from DB" >
+     <db:sql>
+         <![CDATA[SELECT * FROM Contacts WHERE FirstName = :firstname AND LastName = :lastname]]>
+     </db:sql>
+     <db:input-parameters>
+<![CDATA[#[{
+firstname: vars.firstnameVar,
+lastname: vars.lastnameVar
+}]]]>
+     </db:input-parameters>
+</db:select>
+<logger doc:name="Logger" />
+
+--
++
+image::db-update-scatter-gather-sync-api.png[]
+. Add the logic to detect whether the contact already exists in the database using a Choice router.
++
+[source,XML]
+--
+<choice doc:name="Does Contact exist in DB?" doc:id="piomzk" >
+    <when expression="#[payload.phoneNumber[0] == null]" doc:name="Contact does not exist" >
+
+    </when>
+</choice>
+--
++
+image::second-choice-router-db-update.png[]
+. Because the contact does not exist in the database, use the *contact does not exist* `when` branch of your Choice router to insert a new row with the contact details and set a `ReturnMessageDB` variable accordingly. The following code details the steps:
++
+[source,XML]
+--
+<db:insert config-ref="Database_Config" doc:name="Insert Contact in DB">
+     <db:sql>
+           <![CDATA[INSERT INTO Contacts (FirstName, LastName, PhoneNumber) VALUES (:firstname, :lastname, :phone)]]>
+     </db:sql>
+     <db:input-parameters>
+          <![CDATA[#[{
+          firstname: vars.firstnameVar,
+          lastname: vars.lastnameVar,
+          phone: vars.phonenumberVar
+          }]]]>
+     </db:input-parameters>
+</db:insert>
+<logger level="INFO" message='#["Contact in database created"]' />
+<logger doc:name="Logger" message='#["Contact in database created"]' />
+<set-variable value='#["Contact in database created. "]' doc:name="Set ReturnMessageDB" variableName="ReturnMessageDB"/>
+--
+. Now, if the record exists in the database, create an `otherwise` branch inside the Choice router to extract the phone number and assign it to a variable named `phonenumberDBVar`, casting the contact phone number as String:
++
+[source,XML]
+--
+<otherwise doc:name="Contact exists in the DB" >
+    <set-variable value="#[payload.phoneNumber[0] as String]" doc:name="Set phone in DB" doc:id="tkqxdt" variableName="phonenumberDBVar"/>
+</otherwise>
+--
+. Add another Choice router to check if the old and the new phone numbers are the same. If the numbers are the same, log and update the `ReturnMessageDB` accordingly, otherwise update the phone number in the database and then log and update the `ReturnVariableDB`. +
+Add the following code sample under your *Set Phone in DB* `set-variable` component:
++
+[source,XML]
+--
+<choice doc:name="Does phone number need update">
+     <when doc:name="Already up to date" expression="#[vars.phonenumberDBVar == vars.phonenumberVar]">
+          <logger doc:name="Logger" message='#["Phone number in Database already up to date"]' />
+          <set-variable doc:name="Set ReturnMessageDB" value='#["Phone number in Database already up to date. "]' variableName="ReturnMessageDB" />
+     </when>
+     <otherwise doc:name="Needs update" >
+          <db:update config-ref="Database_Config" doc:name="Update phone number in DB">
+               <db:sql>
+                   <![CDATA[UPDATE Contacts SET PhoneNumber = :Phone WHERE FirstName = :firstname AND LastName = :lastname]]>
+               </db:sql>
+               <db:input-parameters>
+                    <![CDATA[#[{
+                    firstname: vars.firstnameVar,
+                    lastname: vars.lastnameVar,
+                    Phone: vars.phonenumberVar
+                    }]]]>
+               </db:input-parameters>
+          </db:update>
+          <logger doc:name="Logger" message='#["Phone number in Database successfully updated"]' />
+          <set-variable doc:name="Set ReturnMessageDB" value='#["Phone number in Database successfully updated. "]' variableName="ReturnMessageDB" />
+     </otherwise>
+</choice>
+--

@@ -1,25 +1,28 @@
 = Creating Integrations
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: int-create-basic-integrations.adoc
-
 
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 
-Create a basic integration, add dependencies and connectors to your Mule application, and configure attributes:
+Create a basic integration, add connectors and other components to your Mule application
+to process your business logic, and configure attributes:
 
 . <<create-integration-project, Create a new integration project>>.
 . <<add-components, Add components to your project>>.
+. <<import-connectors, Import connectors from Exchange>>.
 . <<configure-attributes, Configure attributes for a component>>.
+. <<check-connection, Test an HTTP Listener connection>>.
+. <<create-new-config, Create a new XML configuration file>>.
 
 
 == Before You Begin
 
-Install a REST client such as Postman or Advanced REST Client. 
-
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
 
 [[create-integration-project]]
 == Create a New Integration Project
@@ -41,23 +44,24 @@ image::develop-integration-option-mat.png["Develop an Integration link highlight
 
 | *Project Name* | Unique name for your project.
 
-This name is used as the title and name of the integration specification file.
-For example, if the project name is "OAS Example", the specification file name is `oas-example`.
+This name is used as the title and name of the integration project file.
+For example, if the project name is "OAS Integration," the project file name is `oas-integration`.
 | *Project Location* | Your home directory or another directory you create. Click *Browse* to select a different directory for the integration.
 
-See xref:work-on-home-directory.adoc[]).
+See xref:start-add-folders.adoc[].
 
-Don't create the application within another project directory.
+[IMPORTANT]
+include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 |===
 . Click *Create Project*.
 
 
 [[add-components]]
-== Add Components to Your Project
+== Add a Component to Your Project
 
 The listener is for triggering the flow, and Set Payload provides some test data for the integration.
 
-. In Project Explorer, select the XML file for your project, such as `my-project-name.xml`.
+. In the Explorer view, select the XML file for your project, such as `my-project-name.xml`.
 +
 image::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
 +
@@ -144,6 +148,60 @@ To fix the error, configure the attributes.
 
 For more information about debugging, see xref:debugging-mule-apps.adoc[].
 
+
+[[import-connectors-from-exchange]]
+== Import a Connector from Exchange
+
+Anypoint Connectors provide operations for retrieving, modifying, and sending data to and from systems.
+In addition to the xref:acb-components.adoc#builtin-connectors[built-in connectors] that Anypoint Code Builder provides,
+you can download many other connectors from Anypoint Exchange.
+
+
+To import a connector from Exchange:
+
+. In the Explorer view, open the configuration XML file for your project, such as `my-project-name.xml`.
+. Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the UI canvas if it doesn't open automatically.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select the following command:
++
+[source,command]
+----
+MuleSoft: Import Asset from Exchange
+----
+. Select *Connector*.
+. Search for the connector name to import, such as "MQ".
+For example:
++
+image::int-import-connect-exchange.png["Import MQ Connector from Exchange]
+. Select the connector.
+. At the prompt, select the version of the connector to import, such as `v4.0.3`.
++
+Anypoint Code Builder imports the connector and makes it available in the Components list.
+. Add the connector the same way you added other components from the canvas:
+.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
+.. In the *Add Component* panel, click *Connectors*.
+.. Click the connector name and then click the operation to add, such as *Publish*:
++
+image::int-add-connector-operation.png["Add Publish operation from the Anypoint MQ Connector"]
++
+If the connector is not available locally, click the image:icon-search-exchange.png["",15,15] (*Search in Exchange*) toggle:
++
+image::int-connector-search-exchange.png["Search in Exchange toggle"]
++
+--
+[calloutlist]
+. Search locally
+. Search in Exchange
+--
+
+For more information about the connectors available on Exchange, see 
+xref:connectors::index.adoc[]. 
+For more information about Exchange, see 
+https://anypoint.mulesoft.com/exchange/[Exchange^] and
+xref:exchange::index.adoc[].
+
+
 [[configure-attributes]]
 == Configure Attributes for a Component
 
@@ -179,6 +237,45 @@ The status bar shows the progress:
 A common code `500` error is `port 8081: Address already in use`. For port conflicts, configure a different port, such as `8082`, and retest the connection. 
 
 Before publishing, run your application in debug mode.
+
+
+[[create-new-config]]
+== Create a New Configuration XML File
+
+Anypoint Code Builder creates the initial Mule configuration XML file in `src/main/mule`
+within the Mule project.
+This file contains global configurations and/or flow structures.
+
+You can create additional configuration files, for example to store global configurations.
+
+To create a new XML configuration file:
+
+. In the Explorer view, right-click the `mule` folder (`src/main/mule`) and select *New File*.
++
+Alternatively, select the `mule` folder, and then:
++
+** In the desktop IDE, select *View* > *Run*.
+** In the cloud IDE, select *File* > *View* > *Run*.
+. Enter a name for the new file with the `.xml` extension.
+. In the Editor view for the new file, press Ctrl+Space to display available options.
+. Select *Empty mule configuration*.
++
+image::int-new-mule-config.png[New mule configuration option in auto-correct]
++
+This command adds the following code to the file:
++
+[source,xml]
+--
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+    
+</mule>
+--
+
 
 == See Also
 
