@@ -1,0 +1,374 @@
+= Implementing OAS, RAML, and GraphQL APIs
+:page-deployment-options: cloud-ide, desktop-ide
+// :page-aliases: imp-implement-rest-oas-specs.adoc, imp-implement-graphql-specs.adoc
+
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+
+After you create your API spec, use Anypoint Code Builder to scaffold your API 
+into an implementation project (Mule app).
+
+Anypoint Code Builder uses the information that you defined in your spec to 
+autogenerate a basic interface in your implementation project.
+This interface includes flows for each endpoint, a built-in XML-based router, and error handlers,
+which you then implement within a Mule application.
+
+
+// * Interface: receives all incoming requests to your application.
+// * Scaffolded flows in the interface: validate and route requests.
+// * Implementation: provides the backend logic for calls to the interface.
+
+The process you use to implement your API depends on whether you already
+created an integration project or published the spec to Exchange:
+
+* To scaffold an API using a spec from Exchange into:
+
+** A new integration project, see <<scaffold-new-integration>>.
+** An existing integration project, see <<import-spec-into-project>>.
+
+* To scaffold an API into an integration project without publishing 
+the spec to Exchange, see 
+xref:imp-implement-local-apis.adoc[].
+
+== Before You Begin
+
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:des-create-api-specs.adoc[Create and test your API specification].
+* xref:des-publish-api-spec-to-exchange.adoc[Publish your API specification to Exchange].
+* Optionally, xref:int-create-integrations.adoc[create your integration project (Mule app)].
+
+
+[[scaffold-new-integration]]
+== Scaffold an API and Create an Integration Project
+
+If you have not already created an integration project, use Anypoint Code Builder to
+scaffold the API in a new Mule project:
+
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
++
+image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
+. From *Quick Actions*, click *Implement an API*.
++
+image::implement-api-option-mat.png["*Implement an API* link highlighted in the *Getting Started* section"]
+. Complete the *Implement an API Specification* form.
++
+[%header,cols="20a,60a"] 
+|===
+| Field Name | Field Value
+
+| *Project Name* | Unique name for your project.
+
+This name is used as the title and name of the project file.
+For example, if the project name is "OAS Integration", the project file name is `oas-integration`.
+| *Project Location* | Your home directory or another directory you create.
+
+See xref:start-add-folders.adoc[].
+
+[IMPORTANT]
+include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
+
+| *Show filters* |See xref:filter-search-results.adoc[] for more information.
+|===
+
+. Search for an API specification on Exchange:
++
+.. Start typing the name of an API specification.
+.. Press Enter to display a list of possible results.
+.. Click *Add Asset* to add the selected API specification:
++
+image::imp-api-search.png["Search an API from Exchange"]
++
+The form shows the selected API spec. 
+For example:
++
+image:imp-api-selected.png["OAS Example API selected in the Implement an API Specification form"]
+. Click *Create Project*.
++
+When you create the project, Anypoint Code Builder:
++
+** Adds the API spec as a dependency in your project's `pom.xml` file:
++
+[source,XML]
+--
+<dependency>
+    <groupId>e91cab06-650b-4634-9c6f-5bc4f4fc4d17</groupId>
+    <artifactId>OAS-Example</artifactId>
+    <version>1.0.1</version>
+    <classifier>oas</classifier>
+    <type>zip</type>
+</dependency>
+--
++
+** Scaffolds your API into the new integration project and opens the configuration XML file.
++
+The configuration XML file includes the interface for your integration project,
+with flows for each endpoint in the spec, error handlers, and a built-in router.
+For example:
++
+image:imp-api-scaffolded.png["OAS Example Integration in Anypoint Code Builder"]
+This example includes:
++
+--
+* The main flow
+* An HTTP Listener with a built-in router
+* Several error handlers
+--
++
+For GraphQL APIs, Anypoint Code Builder also creates a data fetcher (`<graphql-router:data-fetcher>`) as a source for each Mule flow.
+See the xref:tut-graphql-implement-api.adoc[] tutorial for an example GraphQL API and xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
+
+You can now implement the interface within the Mule app.
+
+
+
+[[import-spec-into-project]]
+== Import an API Spec into an Existing Implementation Project
+
+If you have already xref:int-create-integrations.adoc[created an integration project],
+you can scaffold your API by importing the spec from Exchange.
+In this case, Anypoint Code Builder creates a separate configuration XML file for the interface in your integration project.
+
+. In Anypoint Code Builder, open your integration project in the Explorer view.
+For example, `my-project-name`.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Enter `import` and select the following command:
++
+[source,command]
+--
+MuleSoft: Import Asset from Exchange
+--
+. Depending on the language of your API spec:
++
+* *Rest API* for OAS or RAML
+* *GraphQL API*
+. If prompted, click *Allow* to allow sign in using Anypoint Platform and select the business group.
+. Type the name of your API spec and press Enter.
+For example, `OAS Example`.
+. Wait for the IDE to load a list of matches to the name:
++
+image::imp-assets-from-exchange.png["Assets from Exchange dropdown"]
+. Select the API spec to import.
+. At the prompt, select the version of the API spec, such as `v1.0.1`.
+. When prompted to scaffold the API dependency, select *Yes*.
++
+When you scaffold the API dependency, Anypoint Code Builder:
++
+** Adds the API specification as a dependency in your project's `pom.xml` file:
++
+[source,XML]
+--
+<dependency>
+    <groupId>e91cab06-650b-4634-9c6f-5bc4f4fc4d17</groupId>
+    <artifactId>OAS-Example</artifactId>
+    <version>1.0.1</version>
+    <classifier>oas</classifier>
+    <type>zip</type>
+</dependency>
+--
+** Adds a new configuration XML file, such as `oas-example.xml`, to the project:
++
+--
+image::imp-new-config-file.png["New configuration file in the Explorer view"]
+
+The new configuration XML file includes the interface for your integration project,
+with flows for each endpoint in the spec, error handlers, and a built-in router.
+For example:
+
+image:imp-api-imported.png["OAS Example Integration in Anypoint Code Builder"]
+
+This example includes:
+
+* The main flow
+* An HTTP Listener with a built-in router
+* Several error handlers
+--
++
+For GraphQL APIs, Anypoint Code Builder also creates a data fetcher (`<graphql-router:data-fetcher>`) as a source for each Mule flow.
+See the xref:tut-graphql-implement-api.adoc[] tutorial for an example GraphQL API and xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
+
+You can now implement the interface within the Mule app.
+
+
+
+// add relevant stuff from tut-implement-am-flights-api
+// Then, add the logic to implement an endpoint in the API.
+
+
+== Tour the Interface File
+
+Examine the scaffolded flows and error handlers for your interface in the UI canvas and configuration XML.
+
+image::imp-scaffolded-flow-canvas.png["Scaffolded flows in the Canvas"]
+
+. In the Explorer view, open the configuration XML file for your interface.
+. Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the UI canvas if it doesn't open automatically.
+. Click *Flow List* to navigate through flows:
++
+image::int-flow-list.png["Flow List example"]
+
+. In the configuration XML, locate the flows created for the endpoints in your API specification.
++
+.Example Flow
+[%collapsible]
+====
+[source,xml]
+--
+    <flow name="oas-example-console">
+        <http:listener config-ref="oas-example-httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="oas-example-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+--
+====
+
+. Review the automatically generated Error Handler components.
+//TODO: WE SHOULD SHOW HOW TO DO SOME BASIC ERROR HANDLING...
++
+.Example Error Handler Component
+[%collapsible]
+====
+[source,xml]
+--
+<apikit:console config-ref="oas-example-config" />
+    <error-handler>
+        <on-error-propagate type="APIKIT:NOT_FOUND">
+            <ee:transform doc:name="Transform Message">
+                <ee:message>
+                    <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                </ee:message>
+                <ee:variables>
+                    <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                </ee:variables>
+            </ee:transform>
+        </on-error-propagate>
+    </error-handler>
+--
+====
+
+[[rename]]
+== Name Your Interface and Implementation Files
+
+When you import an API spec into an existing integration, Anypoint Code Builder
+automatically names the configuration XML file based on the API spec name. 
+You can change the file names to something more descriptive, such as based on their function.
+For example:
+
+* `interface.xml` receives all incoming requests to your application and scaffolded flows validate and route requests.
+* `implementation.xml` provides the backend logic for calls to the interface.
+
+To rename a file, right-click on the file, select *Rename*, and provide a new name.
+
+////
+[[endpoint]]
+== Configure an Endpoint through the Interface 
+
+To receive HTTP requests through the interface, remove the HTTP listener from your implementation file
+and add a Flow Ref component (`<flow-ref/>`) to a flow in your interface file.
+
+. Open `implementation.xml`.
++ 
+image::get-flights-select-listener.png["HTTP listener highlighted in the implementation.xml file"]
+. Delete the *HTTP /flights* listener XML from the configuration XML:
++
+[source,xml]
+--
+<http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
+--
++
+.Click for the resulting flow.
+[%collapsible]
+====
+[source,xml]
+--
+<flow name="getFlights">
+    <db:select doc:name="Query Flights" doc:id="pvuqsc" config-ref="Database_Config" >
+        <db:sql>
+            <![CDATA[Select * FROM american]]>
+        </db:sql>
+    </db:select>
+
+    <ee:transform doc:name="Transform Message" doc:id="uniqueId" >
+        <ee:message >
+            <ee:set-payload >
+                <![CDATA[
+                %dw 2.0
+                output application/json
+                ---
+                payload map ( payload01 , indexOfPayload01 ) -> {
+                  ID: payload01.ID,
+                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  price: payload01.price default 0,
+                  departureDate: payload01.takeOffDate as String default "",
+                  origin: payload01.fromAirport default "",
+                  destination: payload01.toAirport default "",
+                  emptySeats: payload01.seatsAvailable default 0,
+                  plane: {
+                    "type": payload01.planeType default "",
+                    totalSeats: payload01.totalSeats default 0
+                  }
+                }
+                ]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+
+</flow>
+--
+====
+. In Anypoint Code Builder, open your `interface.xml` file.
+. Locate the `get:\flights:american-flights-api-config` flow: 
++
+[source,xml]
+--
+<flow name="get:\flights:american-flights-api-config">
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+--
+. Above the `<logger/>` element in the flow, add a Flow Reference component (`<flow-ref/>`) that references the flow `getFlights` in the implementation:
++
+[source,xml]
+--
+<flow name="get:\flights:american-flights-api-config">
+    <flow-ref doc:name="getFlightsRef" name="getFlights"/>
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+--
+. Optionally, trigger a flow through your interface, and process the request with your implementation.
++
+See xref:int-trigger-flows.adoc[].
+
+////
+
+== See Also
+
+* xref:int-create-integrations.adoc[]
+* xref:imp-implement-local-apis.adoc[]
+* xref:tut-graphql-implement-api.adoc[] Tutorial
