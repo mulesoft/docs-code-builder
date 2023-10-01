@@ -19,9 +19,9 @@ Process a template and obtain a result.
 //
 //tag::component-long-description[]
 
-A template is defined as text with embedded DataWeave expressions that Mule evaluates and replaces with their result.
+A template includes text with embedded DataWeave expressions that Mule evaluates and replaces with their result.
 
-You can configure a template through an external file reference or you can embed the template in the component definition.
+Configure a template through an external file reference or you can embed the template in the component definition.
 
 //end::component-long-description[]
 //
@@ -84,13 +84,13 @@ SNIPPET_XML_HERE
 | Automatically generated identifier for the component.
 
 | `location` 
-| Location of the file that Mule uses as a template into which to insert values extracted from the message properties or variables.
+| Location of the template file. Mule inserts values extracted from the message properties or variables into this file.
 
 | `content`
-| String representing the template to be used where the embedded expressions will be evaluated and replaced by their results.
+| String representing the template where embedded expressions are evaluated and replaced by their results.
 
 | `target`
-| Name of the variable where the result of the expression defined in `targetValue` is stored after the Parse Template is executed.
+| Name of the variable where the result of the expression defined in `targetValue` is stored after Parse Template executes.
 
 | `targetValue`
 | Value of the data to store in the target variable. The field accepts any value that a variable accepts: any supported data type, DataWeave expressions, the keywords `payload`, `attributes`, and `message`, but not the keyword `vars`. Defaults to the message payload (`payload`).
