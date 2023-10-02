@@ -10,21 +10,24 @@ Manage user access to Anypoint Code Builder and Anypoint Platform features used 
 [[permissions]]
 == Required Permissions 
 
-* Cloud IDE only: *Anypoint Code Builder Developer* allows a user to launch Anypoint Code Builder from Anypoint Platform.
+These permissions are required: 
 
-* Cloud and Desktop IDEs: 
+* Cloud IDE users only: 
++
+*Anypoint Code Builder Developer* allows a user to launch Anypoint Code Builder from Anypoint Platform.
 
-** *Exchange Contributor* is the minimum requirement for importing assets from Anypoint Exchange to a project in the IDE and publishing assets to Exchange from the IDE. Assets include API specifications, fragments, and connectors. 
-+
-For details, see xref:access-management::permissions-by-product.adoc#exchange[Exchange permissions].
-//TODO: permission to use isn't clear
-** *TODOTODOTODO* is a Runtime Manager permission that allows the IDE to deploy a Mule application to CloudHub. 
-+
-For details, see xref:access-management::permissions-by-product.adoc#runtime-manager[Runtime Manager permissions].
-//TODO: verify that DC permission is needed
-** *Design Center Creator* is the minimum requirement for syncing API specifications and fragments that you create from the IDE with the source control management (SCM) repository in Design Center.
-+
-For details, see xref:access-management::permissions-by-product.adoc#design-center[Design Center permissions].
+* Cloud and Desktop IDE users: 
+
+** Set these xref:access-management::permissions-by-product.adoc#exchange[Anypoint Exchange permissions] so that users can download and publish assets:
+*** *Viewer*
+*** *Creator*
+** Set these xref:access-management::permissions-by-product.adoc#runtime-manager[Runtime Manager permissions] to enable services related to CloudHub, such as deploying applications:
+*** *Read applications*
+*** *Create applications*
+*** *Delete applications*
+** Set these xref:access-management::permissions-by-product.adoc#design-center[Design Center permissions] so that users can view and create APIs:
+*** *Viewer*
+*** *Creator*
 
 For a complete list of permissions, see xref:access-management::permissions-by-product.adoc[].
 
