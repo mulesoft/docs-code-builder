@@ -90,6 +90,7 @@ The IDE unpacks the shareable JAR file for your project into the selected folder
 // tag::import-note[]
 
 In addition to loading the graphical canvas UI, the IDE also loads dependencies defined in the `pom.xml` for the project.
+
 Libraries load to the `target/repositories` directory within the project folder.
 // end::import-note[]
 //
@@ -187,4 +188,16 @@ image::int-open-root.png[Project root folder]
 --
 . Select your Anypoint Code Builder home directory or any directory _outside_ of a Mule project folder and click *OK*.
 // end::preliminary-cloud-import-steps[]
+//
+
+//
+// step to test the project after opening
+// tag::test-project[]
+. Test your project:
+.. In the open project, check for errors and make sure that the configuration XML and canvas UI load correctly, which indicates that component dependencies resolved.
+.. Check for any configurations to modify, such as ports or file paths in the configuration XML.
+.. Run and debug your project: 
++
+For guidance, see xref:anypoint-code-builder::int-debug-mule-apps.adoc#run-debug-mode[Run Your Application in Debug Mode].
+// end::test-project[]
 //
