@@ -1,0 +1,59 @@
+= Generative Flow Examples
+
+These are some use cases with examples of the prompts used to generate flows you can get started with. 
+
+=== New Case Notification
+
+Say your company receives numerous customer inquiries and support requests on a daily basis. To ensure timely responses and effective case management, you want to implement email notifications whenever a new case is created in Salesforce. Receiving prompt email notifications for new cases enables you to respond quickly, increasisng customer satisfaction and efficient case resolution.
+
+To generate a flow for this task, enter a prompt like: `Generate a flow that sends an email when a case is created in Salesforce.`
+
+This generates the following code: 
+
+[source, xml]
+----
+<flow name="sendEmailOnNewCaseFlow">
+    <salesforce:new-object-listener objectType="Case" doc:name="On New Object" doc:id="8b5dec5e-31a2-4b78-9188-b681891898be" config-ref="Salesforce_Sfdc_config">
+        <scheduling-strategy>
+            <fixed-frequency />
+        </scheduling-strategy>
+    </salesforce:new-object-listener>
+    <salesforce:query-result-list doc:name="Query result list" doc:id="79da7485-339c-4ab6-956a-0684210b2ded" config-ref="Salesforce_Sfdc_config"/>
+    <salesforce:query-result-stream-by-id doc:name="Query result stream by id" doc:id="bdf16fc8-017f-439b-b1fc-3bff23d881d8" config-ref="Salesforce_Sfdc_config"/>
+    <ee:transform doc:name="Transform Message"  >
+        <ee:message >
+            <ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map {
+    CaseNumber:\$.CaseNumber,
+    Subject:\$.Subject,
+    Description:\$.Description,
+    Status:\$.Status,
+    Priority:\$.Priority
+}]]></ee:set-payload>
+        </ee:message>
+    </ee:transform>
+    <email:send config-ref="Email_SMTP" fromAddress="user1@domain.com" subject="New Case Created">
+        <email:to-addresses >
+            <email:to-address value="user3@domain.com" />
+            <email:to-address value="user2@domain.com" />
+        </email:to-addresses>
+        <email:body contentType="text/html" >
+            <email:content ><![CDATA["<h1>New Case Created:</h1>"]]></email:content>
+        </email:body>
+    </email:send>
+</flow>
+----
+
+
+=== Update a Phone Number
+Create a flow that listens for an API call and updates the phone number of a Salesforce Account object.
+
+=== Synchronize Account Objects
+
+Create a flow that syncs the phone field of account objects between a Salesforce org and a database.
+
+=== New Record Notification
+
+Generate a flow to send an email when a record is created in the database.
