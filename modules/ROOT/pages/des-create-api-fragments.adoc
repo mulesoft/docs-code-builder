@@ -115,25 +115,28 @@ Your API specification appears as an API spec fragment type asset in your organi
 +
 image::des-api-frag-exchange.png["API Spec Fragment in Exchange"]
 +
+--
 If your API specification appears as a REST API rather than an API spec fragment, check that the
 the `classifier` attribute in the `exchange.json` file is set to one of the following, depending on the language:
-+
+
 ** OAS: `oas-components`
 ** RAML: `raml-fragment`
 ** JSON Schema: `json-schema`
+--
 +
+--
 If it's set to one of the following, the project is an API spec rather than a fragment:
-+
+
 ** OAS: `oas`
 ** RAML: `raml`
-
+--
 
 [[add-fragment-to-project]]
 == Add a Fragment from Exchange to Your Project
 
 To add an API spec fragment to the project directory so that you can include them in your specification:
 
-. Open your API spec project file. For example, `example-oas-spec`.
+. Open your API spec project file. For example, <<example-oas-api-spec,`example-oas-spec`>>.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Enter `mulesoft` and select the following command:
@@ -162,11 +165,11 @@ image::des-verify-frag-from-exchange.png["Verify the fragment dependency in the 
 [[add-fragments-to-spec]]
 == Add an API Fragment to Your API Spec
 
+Depending on the API spec language:
 
 * OAS specs: Use the `$ref` directive.
 * RAML specs: Use the `!include` directive.
  
-
 To add an API spec fragment to a spec:
 
 . Open your API spec project file. For example, `example-oas-spec`.
@@ -209,12 +212,14 @@ types:
 [[create-add-fragment-directly]]
 == Create and Add a Fragment Directly in Your Spec
 
+Depending on the API spec language:
+
 * OAS specs: Use the `$ref` directive.
 * RAML specs: Use the `!include` directive.
 
 You can create a fragment in your project and include it in your specification.
 
-. Open your API spec project file. For example, `example-oas-spec`.
+. Open your API spec project file. For example, <<example-oas-api-spec,`example-oas-spec`>>.
 . In the Explorer view, right-click on an empty space, and create a folder for your fragments, such as `fragments`.
 . In the `fragments` folder, create a new file, such as `my-fragment` and add your example code.
 +
