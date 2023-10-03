@@ -16,17 +16,24 @@ or create fragments in your project to add directly to your API specification.
 The process for adding a fragment from Exchange is:
 
 . <<add-fragment-to-project,Add the API fragment from Exchange>> to your API spec project as a dependency.
-. <<add-fragment-to-spec, Add the API fragment to your API spec>> using the `$ref` or `!include` directives.
-
++
 You don't need to add a fragment to Exchange to include it in your spec. 
 See <<create-add-fragment-directly>>.
+. <<add-fragment-to-spec, Add the API fragment to your API spec>> using the `$ref` or `!include` directives.
 
 
 == Before You Begin
 
 Before adding fragments:
 
+
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* Understand the basics of designing API specifications. 
++
+See the xref:tutorials.adoc[] for details.
+* Have some familiarity with xref:access-management::business-groups.adoc[business groups].
++
+API specifications belong to a business group.
 // * xref:des-create-api-specs.adoc[Create and test your API specification].
 
 
@@ -46,6 +53,8 @@ image::design-api-1.png["*Design an API* link highlighted in the *Quick Actions*
 . In *Design an API*, click the *API Fragment* tab:
 +
 image:des-api-fragment.png[API Fragment tab on the Design an API page]
++
+IMPORTANT: Ensure that you select the *API Fragment* tab.
 . Complete the *API Fragment* form.
 +
 [%header,cols="20a,60a"] 
@@ -57,7 +66,8 @@ image:des-api-fragment.png[API Fragment tab on the Design an API page]
 This name is used as the fragment title in Exchange and name of the fragment file.
 For example, if the project name is "Example OAS Fragment", the specification file name is `example-oas-fragment`.
 
-NOTE: Once created, you cannot reuse the project name, even if you delete the project. 
+[NOTE]
+include::partial$acb-reusable-steps.adoc[tags="no-project-name-reuse"]
 | *Project Location* | Your home directory or another directory you create.
 
 See xref:start-add-folders.adoc[].
@@ -93,23 +103,166 @@ If you created an OAS 3.0 (YAML) fragment project, you can replace the initial A
 . Follow the steps in xref:des-publish-api-spec-to-exchange.adoc[] to publish your fragment to Exchange.
 +
 The status bar shows the progress. When complete, you see a message that the API fragment successfully published to Exchange.
+. Navigate to Anypoint Platform and log in using your credentials.
 +
-Your API fragment appears as an asset in your organization:
+--
+// Pointer to Platform URLs
+include::partial$acb-reusable-steps.adoc[tags="platform-urls"]
+--
+. Navigate to https://anypoint.mulesoft.com/exchange/[Exchange^].
++
+Your API specification appears as an API spec fragment type asset in your organization. For example:
++
+image::des-api-frag-exchange.png["API Spec Fragment in Exchange"]
++
+If your API specification appears as a REST API rather than an API spec fragment, check that the
+the `classifier` attribute in the `exchange.json` file is set to one of the following, depending on the language:
++
+** OAS: `oas-components`
+** RAML: `raml-fragment`
+** JSON Schema: `json-schema`
++
+If it's set to one of the following, the project is an API spec rather than a fragment:
++
+** OAS: `oas`
+** RAML: `raml`
+
+
+[[add-fragment-to-project]]
+== Add a Fragment from Exchange to Your Project
+
+To add an API spec fragment to the project directory so that you can include them in your specification:
+
+. Open your API spec project file. For example, `example-oas-spec`.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Enter `mulesoft` and select the following command:
++
+[source,command]
+----
+MuleSoft: Add Fragment dependency from Exchange
+----
+. If prompted, log in to Anypoint Platform.
+. In the *Search for Asset* field, provide the name of the data type asset to add.
++
+To search for assets, type the search term and press enter. For example:
++
+image::des-add-frag-from-exchange.png["Search for fragment in Assets from Exchange dropdown"]
+. Select the fragment from the *Assets From Exchange* menu.
+. Select a version of the fragment.
++
+The status bar shows the progress. When complete, you see a message that the selected API fragment was successfully added to the project.
+
+To verify that the fragment dependency was added, check the `dependencies` section of the `exchange.json` file. 
+For example:
+
+image::des-verify-frag-from-exchange.png["Verify the fragment dependency in the exchange.json file"]
+
+
+[[add-fragments-to-spec]]
+== Add an API Fragment to Your API Spec
+
+
+* OAS specs: Use the `$ref` directive.
+* RAML specs: Use the `!include` directive.
+ 
+
+To add an API spec fragment to a spec:
+
+. Open your API spec project file. For example, `example-oas-spec`.
++
+.. Place the cursor where you want to add the fragment.
+.. Depending on the API spec language, select the directive to add the fragment to your specification.
++
+Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context.
 For example:
 +
-image::des-api-frag-exchange.png["API fragment in Exchange"]
+image::des-add-frag-to-spec.png["Add the fragment to your API spec"]
++ 
+[tabs]
+====
+OAS::
++
+Use the `$ref` directive to add a fragment to the specification.
++
+For example, this `$ref` directive adds the `AmericanFlightDataType` from `example-oas-fragment` as a data type:
++
+[source,YAML]
+--
+schema:
+  $ref: exchange_modules/e91cab06-650b-4634-9c6f-5bc4f4fc4d17/example-oas-fragment/1.0.0/example-oas-fragment.yaml#/components/schemas/AmericanFlightDataType
+--
+
+RAML::
++
+Use the `!include` directive to add a fragment to the specification.
++
+For example, this `!include` directive adds the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type:
++
+[source,RAML]
+--
+types:
+  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml 
+--
+====
+
+[[create-add-fragment-directly]]
+== Create and Add a Fragment Directly in Your Spec
+
+* OAS specs: Use the `$ref` directive.
+* RAML specs: Use the `!include` directive.
+
+You can create a fragment in your project and include it in your specification.
+
+. Open your API spec project file. For example, `example-oas-spec`.
+. In the Explorer view, right-click on an empty space, and create a folder for your fragments, such as `fragments`.
+. In the `fragments` folder, create a new file, such as `my-fragment` and add your example code.
++
+.. Place the cursor where you want to add the fragment.
+.. Depending on the API spec language, select the directive to add the fragment from the folder to your spec.
++
+Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context.
+For example:
++
+image::des-add-frag-from-folder-to-spec.png["Add the fragment from a folder to your API spec"]
++ 
+[tabs]
+====
+OAS::
++
+Use the `$ref` directive to add the fragment from the `fragments` folder to your spec.
+For example:
++
+[source,YAML]
+--
+api-key:
+    $ref: fragments/my-fragment.yaml#/components/securitySchemes/api_key
+--
+
+
+RAML::
++
+Use the `!include` directive to add the fragment from the `examples` folder to your spec.
+For example:
++
+[source,RAML]
+--
+examples: 
+  output: !include examples/AmericanFlightExample.raml
+--
+====
 
 
 [[example-oas-api-frag]]
-== Example OAS 3.0 (YAML) API Fragment 
+== Example OAS 3.0 (YAML) API Spec Fragment 
 
 If you created an OAS 3.0 (YAML) fragment project, you can replace the initial API fragment with following example code:
 
-.Example OAS 3.0 (YAML) API Fragment
+.Example OAS 3.0 (YAML) API Spec Fragment
 [%collapsible]
 
 ====
-[source,yaml,linenums]
+[source,YAML,linenums]
 --
 openapi: "3.0.0"
 info:
@@ -159,94 +312,43 @@ components:
 ====
 
 
+[[example-oas-api-spec]]
+== Example OAS 3.0 (YAML) API Spec 
 
-[[add-fragment-to-project]]
-== Add a Fragment from Exchange to Your Project
+If you created an OAS 3.0 (YAML) API spec project, you can replace the initial API spec with following example code to test adding the API spec fragments:
 
-To add fragments to the project directory so that you can include them in your specification:
+.Example OAS 3.0 (YAML) API Spec
+[%collapsible]
 
-. Open your API specification. For example, `oas-example`.
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Enter `mulesoft` and select the following command:
-+
-[source,command]
-----
-MuleSoft: Add Fragment dependency from Exchange
-----
-. If prompted, log in to Anypoint Platform.
-. In the *Search for Asset* field, provide the name of the data type asset to add.
-+
-To search for assets, type the search term and press enter. For example:
-+
-image::des-add-frag-from-exchange.png["Search for fragment in Assets from Exchange dropdown"]
-. Select the fragment from the *Assets From Exchange* menu.
-. Select a version of the fragment.
-+
-The status bar shows the progress. When complete, you see a message that the API fragment was successfully added to the project.
-+
-* For OAS specs, NEED INFO HERE
-* For RAML specs, check that the assets appear in your project's `exchange_modules/` directory. For example: 
-+
-image:exchange-modules.png["exchange_modules directory"]
-
-[[add-fragments-to-spec]]
-== Add an API Fragment to Your API Spec
-
-
-* For OAS specs, use the `$ref` directive.
-* For RAML specs, use the `!include` directive.
- 
-
-To add fragments to a spec:
-
-. Open your API specification file from the project directory in the Explorer view.
-For example, `oas-example`.
-. Depending on the API spec language, specify the directive to add the fragments to your specification.
-+
-For example, this `!include` directive adds the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type:
-+
-[source,RAML]
+====
+[source,YAML,linenums]
 --
-types:
-  AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml 
---
-+
-Anypoint Code Builder auto-completes as you type.
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Example OAS Spec
+paths:
 
-
-[[create-add-fragment-directly]]
-== Create and Add a Fragment Directly in Your Spec
-
-You can create a fragment in your project and include it in your specification.
-
-. In the Explorer view, right-click on an empty space, and create a folder named `fragments`.
-. In the `fragments` folder, create a new file and add your example code. For example:
-+
-[source,raml]
---
-EXAMPLE OAS FRAGMENT HERE
---
-. In your API specification, include the file you just created.
-For example:
-+
-** This directive adds your fragment from the `/examples` folder to a RAML spec:
-+
-[source,raml]
---
-examples:
-  output: !include examples/myFrag.raml 
---
-** This directive adds your fragment from the `/fragments` folder to an OAS spec:
-+
-[source,raml]
---
-examples:
-  output: $ref fragments/myFrag.yaml 
---
+  /flights/{ID}:
+    get:
+      parameters:
+        -
+          name: ID
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Flight with ID"
+          content:
+            application/json:
+              schema:
+====
 
 
 == See Also
 
 * xref:des-sync-with-design-center.adoc[]
 * xref:des-publish-api-spec-to-exchange.adoc[]
+* xref:tut-af-design-api-add-request-response-details.adoc[] Tutorial
