@@ -76,14 +76,56 @@ output application/java
 </flow>
 ----
 
-
 == Synchronize Account Objects
 
-Create a flow that syncs the phone field of account objects between a Salesforce org and a database.
+This flow enables real-time updates between Salesforce and the database to ensure the data is always current and accurate across both platforms. As soon as a change is made in the phone field in Salesforce, it is immediately updated in the database and vice versa.
+
+To generate a flow for this task, enter a prompt like: `Create a flow that syncs the phone field of account objects between a Salesforce org and a database`.
+
+This generates the following code: 
+
+[source, xml]
+----
+<flow name="syncAccountPhone" doc:id="1">
+    <scheduler doc:name="Scheduler" doc:id="2">
+        <scheduling-strategy>
+            <fixed-frequency frequency="10000"/>
+        </scheduling-strategy>
+    </scheduler>
+    <salesforce:query config-ref="Salesforce_Config" doc:name="Query Salesforce Account" doc:id="3">
+        <salesforce:salesforce-query>
+            <![CDATA[SELECT Id, Phone FROM Account]]>
+        </salesforce:salesforce-query>
+    </salesforce:query>
+    <db:select config-ref="Database_Config" doc:name="Select from Database" doc:id="4">
+        <db:sql>
+            <![CDATA[SELECT id, phone FROM account]]>
+        </db:sql>
+    </db:select>
+    <ee:transform doc:name="Transform Salesforce Account" doc:id="5">
+        <ee:message>
+            <ee:set-payload>
+                <![CDATA[%dw 2.0
+                output application/java
+                ---
+                payload map {
+                    Id: \$.Id,
+                    Phone: \$.Phone
+                }]]>
+            </ee:set-payload>
+        </ee:message>
+    </ee:transform>
+    <db:update config-ref="Database_Config" doc:name="Update Database Account" doc:id="6">
+        <db:sql>
+            <![CDATA[UPDATE account SET phone = :#[payload.Phone] WHERE id = :#[payload.Id]]]>
+        </db:sql>
+    </db:update>
+</flow>
+----
 
 == New Record Notification
 
-Generate a flow to send an email when a record is created in the database.
+`Generate a flow to send an email when a record is created in the database`.
 
 == See Also
 
