@@ -1,0 +1,23 @@
+= Authentication Errors
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+In Anypoint Code Builder, authentication errors sometimes occur when you attempt to perform actions that require a connection to Anypoint Platform or to services that the cloud and desktop IDEs rely on. 
+
+== Failed to Authenticate to Git
+
+All commands that involve `git` actions, such as publishing to Exchange and committing changes to an API specification, require authentication with the correct Anypoint Platform host cloud. If authentication fails, the action throws this VS Code error: 
+
+----
+Failed to authenticate to git remote
+----
+
+For example, this error occurs if you select a different cloud region (EU Cloud or US Cloud) from the desktop IDE than your API specification project needs to synchronize your project in the Design Center SCM.
+
+To address this issue, cancel the error notification, and ensure that your IDE is set to the correct region for your project and that you are logged in to Anypoint Platform. 
+
+//* TODO: hanna reported another way this occurs, but we haven't isolated yet

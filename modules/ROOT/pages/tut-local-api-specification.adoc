@@ -8,7 +8,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="desktop-only"]
 
-Scaffold an API specification into an interface project within your IDE, and synchronize changes to the specification with the interface without first publishing to Anypoint Exchange. For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the interface to add a flow for that endpoint to the interface's configuration XML file.
+Scaffold an API specification into an implementation project within your IDE, and synchronize changes to the specification with the interface without first publishing to Anypoint Exchange. For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the interface to add a flow for that endpoint to the interface's configuration XML file.
 
 The interface XML is automatically created in a Mule project during the scaffolding process. You define an API in a specification file within an API Design project.
 
@@ -170,7 +170,7 @@ The configuration XML file for the implementation (`retrieve-users-implementatio
 ----
 retrieve-users-implementation/src/main/mule/retrieve-users-implementation.xml
 ----
-* The UI canvas for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
+* The canvas UI for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
 * In the implementation XML, the flow `<flow name="get:\users:retrieve-users-api-config">` contains an `<ee:transform/>` element with your example:
 +
 [source,XML,linenums]
@@ -397,7 +397,7 @@ The specification is now available on https://anypoint.mulesoft.com/exchange/?sh
 [[scaffold-from-exchange]]
 == Scaffold the API Specification from Exchange
 
-Team members in your business group can import your scaffolded API specification from Exchange:
+Team members in your business group can import your API specification from Exchange:
 
 . Open a new VS Code instance. 
 . Import version 1.0.0 of your API from Design Center:
