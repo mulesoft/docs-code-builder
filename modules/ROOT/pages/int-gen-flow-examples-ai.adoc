@@ -8,7 +8,7 @@ Say your company receives numerous customer inquiries and support requests on a 
 
 To generate a flow for this task, enter a prompt like: `Generate a flow that sends an email when a case is created in Salesforce`.
 
-This generates the following code: 
+This generates XML code for the new flow, similar to this:  
 
 [source, xml]
 ----
@@ -53,7 +53,7 @@ In this scenario, you want to update the phone number of a Salesforce Account ob
 
 To generate a flow for this task, enter a prompt like: `Create a flow that listens for an API call and updates the phone number of a Salesforce Account object`.
 
-This generates the following code: 
+This generates XML code for the new flow, similar to this:  
 
 [source, xml]
 ----
@@ -82,7 +82,7 @@ This flow enables real-time updates between Salesforce and the database to ensur
 
 To generate a flow for this task, enter a prompt like: `Create a flow that syncs the phone field of account objects between a Salesforce org and a database`.
 
-This generates the following code: 
+This generates XML code for the new flow, similar to this: 
 
 [source, xml]
 ----
@@ -125,8 +125,35 @@ This generates the following code:
 
 == New Record Notification
 
-`Generate a flow to send an email when a record is created in the database`.
+Manually notifying individuals about new database records is time-consuming and prone to errors. This example builds a flow to automate email notifications to eliminate manual intervention, which improves efficiency and reduces the chances of oversight or delays. 
+
+To generate a flow for this task, enter a prompt like: `Generate a flow to send an email when a record is created in the database`.
+
+This generates XML code for the new flow, similar to this: 
+
+[source, xml]
+----
+<flow name="sendEmailFlow">
+    <db:listener table="database_table" doc:name="On Table Row" doc:id="dbListener" watermarkColumn="CREATION_DATE">
+        <scheduling-strategy>
+            <fixed-frequency frequency="10" timeUnit="MINUTES"/>
+        </scheduling-strategy>
+    </db:listener>
+    <set-variable variableName="emailPayload" value="#[payload]" doc:name="Set Email Payload" doc:id="setVariable"/>
+    <flow-ref name="sendEmailSubFlow" doc:name="Send Email SubFlow" doc:id="sendEmailSubFlow"/>
+</flow><sub-flow name="sendEmailSubFlow" doc:id="sendEmailSubFlow">
+    <email:send config-ref="SMTP_Config" fromAddress="sender@example.com" subject="New Record Created">
+        <email:to-addresses>
+            <email:to-address value="recipient@example.com"/>
+        </email:to-addresses>
+        <email:body contentType="text/plain">
+            <email:content><![CDATA[New record created in the database.]]></email:content>
+        </email:body>
+    </email:send>
+</sub-flow>
+----
 
 == See Also
 
-* xref:int-crafting-prompt-ai.adoc[]
+* xref:int-create-integrations-ai.adoc[]
+* xref:acb-components.adoc[]

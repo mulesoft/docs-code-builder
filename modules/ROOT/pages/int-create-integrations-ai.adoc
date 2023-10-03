@@ -1,4 +1,4 @@
-= Creating Integrations Using Generative Flows
+= Creating Integrations Using Einstein
 
 The Generative Flow feature transforms your natural language prompt, which describes your business logic, into a flow, containing the connectors and components needed to accomplish the specified task. 
 
@@ -70,9 +70,9 @@ image::acb-einstein-panel.png[]
 +
 . Enter the prompt to create the initial flow for your task and click the send icon.
 +
-Optionally, you can click on one of the supplied prompts to get started.
+Optionally, click on one of the supplied example prompts to get started.
 +
-While your flow is being generated, you see the message `Einstein is thinking` in the prompt box.
+While your flow is generated, you see the message `Einstein is thinking` in the prompt box.
 +
 When your flow is ready, the code and a description of the components of the flow appear in the *Einstein* panel. 
 +
@@ -80,15 +80,11 @@ image::acb-generated-flow-case-notification-email.png[]
 . Optionally, click the thumbs up or thumbs down icon that appears after the generated code. 
 +
 //I made this up. Does this work this way?
-
 Rating the flow that's created for you helps Einstein learn so that over time, the generated flows improve.
 . Inspect the generated code, and if you are satisfied, click the insert code icon to insert the code in to your flow. 
 +
 If you aren't satisfied with the generated flow, reword your prompt and send it again. 
-
-
 //probably need screenshot
-
 . After the code is inserted, the initial flow is built and the visual representation of the flow is displayed in the canvas next to the XML code tab. 
 +
 The error icon is displayed for components that require further configuration. 
@@ -96,13 +92,42 @@ The error icon is displayed for components that require further configuration.
 To determine where the error is, select the component in the canvas.
 Anypoint Code Builder highlights the location of the error within the configuration XML.
 
+[[craft-ai-prompt]]
+== Craft Your Prompt
+Craft your prompt using natural language, and keep in mind that the more concise and specific you can make your prompt, the more effective it will be when it generates your flow. 
+
+Here are some best practices for writing prompts:
+
+* Be clear and precise:
++ 
+Use clear and specific language to describe the use case for the flow to build.
+* Include trigger events 
++
+Mention the trigger events that initiate the flow, for example, sending an email when a new case is created. 
+* Emphasize key components:
++
+Highlight the key MuleSoft components to include in the flow, for example, HTTP *Listener* and Email *Send*.
+* Specify data objects:
++
+* Clearly mention the data objects involved, such as "Salesforce Account object" or any other relevant data source.
+* Proofread and revise:
++
+Before submitting the prompt, proofread your prompt to ensure that it is clear and comprehensive.
+
+After the initial flow is generated for you, you can then customize the code for your specific needs.
+
+[[customize-gen-flow]]
 == Customize Your Flow
 
 Generative Flow builds the initial flow for you so that all you need to do is fill in the information that's specific to your configuration. 
 
+[[view-prompt history]]
+== View the Prompt History
+Explain how the prompt history works for this feature.
+
+Last 50 queries are displayed. 
 
 == See Also
 
-* xref:int-crafting-prompt-ai.adoc[]
 * xref:int-create-integrations.adoc[]
 * xref:acb-components.adoc[]
