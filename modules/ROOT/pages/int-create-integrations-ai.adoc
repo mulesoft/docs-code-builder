@@ -38,13 +38,13 @@ image::develop-integration-option-mat.png["Develop an Integration link highlight
 | *Project Name* | Unique name for your project.
 
 This name is used as the title and name of the integration specification file.
-For example, if the project name is "My Integration", the name of the folder for the integration project is `my-integration-app`, and the configuration XML file name is `my-integration-app.xml`.
+For example, if the project name is "My Integration", the name of the folder for the integration project is `my-integration`, and the configuration XML file name is `my-integration.xml`.
 | *Project Location* | Your home directory or another directory you create. Click *Browse* to select a directory for the integration if you don't want to use the default.
 |===
 +
 . Click *Create Project*.
 +
-The flow builder canvas appears with two cards:
+The flow builder canvas appears with the starting cards, *Start with AI* and *Start From Scratch*:
 
 //Is that called the flow builder canvas or...? Should we have an image that shows the two cards? Placeholder image. 
 
@@ -55,9 +55,10 @@ You can either:
 * Click *Open Einsten* in the *Start with AI* card to use the generative flow feature.
 * Click the *Build a flow* in the *Start From Scratch* card to begin building your flow from scratch.
 
+[[create-gen-flow]]
 == Add a Flow to Your Project
 
-Use the Generaive Flow feature to add a flow to your project.
+Use the Generaive Flow feature to add a flow to your integration project.
 
 . In the *Start with AI* card, click *Open Einstein*.
 +
@@ -82,6 +83,9 @@ image::acb-generated-flow-case-notification-email.png[]
 
 Rating the flow that's created for you helps Einstein learn so that over time, the generated flows improve.
 . Inspect the generated code, and if you are satisfied, click the insert code icon to insert the code in to your flow. 
++
+If you aren't satisfied with the generated flow, reword your prompt and send it again. 
+
 
 //probably need screenshot
 
@@ -92,11 +96,9 @@ The error icon is displayed for components that require further configuration.
 To determine where the error is, select the component in the canvas.
 Anypoint Code Builder highlights the location of the error within the configuration XML.
 
-
 == Customize Your Flow
 
 Generative Flow builds the initial flow for you so that all you need to do is fill in the information that's specific to your configuration. 
-
 
 
 == See Also
