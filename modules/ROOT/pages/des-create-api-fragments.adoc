@@ -17,9 +17,8 @@ The process for adding a fragment from Exchange is:
 
 . <<add-fragment-to-project,Add the API fragment from Exchange>> to your API spec project as a dependency.
 +
-You don't need to add a fragment to Exchange to include it in your spec. 
-See <<create-add-fragment-directly>>.
-. <<add-fragment-to-spec, Add the API fragment to your API spec>> using the `$ref` or `!include` directives.
+You can also <<create-add-fragment-directly, create and add a fragment directly in your project>> without publishing it to Exchange.
+. <<add-fragment-to-spec, Add the API fragment to your API spec>> using the `$ref` (OAS) or `!include` (RAML) directives.
 
 
 == Before You Begin
@@ -97,12 +96,13 @@ image:des-api-fragment-new.png["API Fragment tab on the Design an API page"]
 +
 As you enter elements, use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within the context.
 +
-If you created an OAS 3.0 (YAML) fragment project, you can replace the initial API fragment with the <<example-oas-api-frag,example>> code.
+If you created an OAS 3.0 (YAML) fragment project, you can replace the initial API fragment with the <<example-oas-api-frag,example>> code to test adding fragments to a spec.
 
-. Follow the steps in xref:des-sync-with-design-center.adoc[] to sync your fragment to Design Center.
-. Follow the steps in xref:des-publish-api-spec-to-exchange.adoc[] to publish your fragment to Exchange.
+. xref:des-sync-with-design-center.adoc[Sync your fragment with Design Center].
+. xref:des-publish-api-spec-to-exchange.adoc[Publish your fragment to Exchange].
 +
-The status bar shows the progress. When complete, you see a message that the API fragment successfully published to Exchange.
+The status bar shows the progress.
+When complete, you see a message that the API fragment successfully published to Exchange.
 . Navigate to Anypoint Platform and log in using your credentials.
 +
 --
@@ -116,8 +116,7 @@ Your API specification appears as an API spec fragment type asset in your organi
 image::des-api-frag-exchange.png["API Spec Fragment in Exchange"]
 +
 --
-If your API specification appears as a REST API rather than an API spec fragment, check that the
-the `classifier` attribute in the `exchange.json` file is set to one of the following, depending on the language:
+If your API specification appears as a REST API rather than an API spec fragment, check that the `classifier` attribute in the `exchange.json` file is set to one of the following, depending on the language:
 
 ** OAS: `oas-components`
 ** RAML: `raml-fragment`
@@ -155,40 +154,38 @@ image::des-add-frag-from-exchange.png["Search for fragment in Assets from Exchan
 . Select a version of the fragment.
 +
 The status bar shows the progress. When complete, you see a message that the selected API fragment was successfully added to the project.
-
-To verify that the fragment dependency was added, check the `dependencies` section of the `exchange.json` file. 
+. Verify that the fragment dependency was added by checking the `dependencies` section of the `exchange.json` file. 
 For example:
-
++
 image::des-verify-frag-from-exchange.png["Verify the fragment dependency in the exchange.json file"]
++
+You can also see the fragment in the Explorer view under *PROJECT DEPENDENCIES*.
+For example:
++
+image::des-api-frag-dependencies.png["API fragment in the Explorer view"]
++
+The fragment files are located on your system in `~/.exchange_modules`.
 
 
 [[add-fragments-to-spec]]
 == Add an API Fragment to Your API Spec
 
-Depending on the API spec language:
-
-* OAS specs: Use the `$ref` directive.
-* RAML specs: Use the `!include` directive.
- 
 To add an API spec fragment to a spec:
 
 . Open your API spec project file. For example, `example-oas-spec`.
+. Place the cursor where you want to add the fragment.
+. Depending on the API spec language, select the directive to add the fragment to your specification.
 +
-.. Place the cursor where you want to add the fragment.
-.. Depending on the API spec language, select the directive to add the fragment to your specification.
+--
+** OAS specs: Use the `$ref` directive.
+** RAML specs: Use the `!include` directive.
+--
 +
-Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context.
-For example:
-+
-image::des-add-frag-to-spec.png["Add the fragment to your API spec"]
-+ 
 [tabs]
 ====
-OAS::
+OAS Example::
 +
-Use the `$ref` directive to add a fragment to the specification.
-+
-For example, this `$ref` directive adds the `AmericanFlightDataType` from `example-oas-fragment` as a data type:
+This `$ref` directive adds the `AmericanFlightDataType` from `example-oas-fragment` as a data type:
 +
 [source,YAML]
 --
@@ -196,11 +193,9 @@ schema:
   $ref: exchange_modules/e91cab06-650b-4634-9c6f-5bc4f4fc4d17/example-oas-fragment/1.0.0/example-oas-fragment.yaml#/components/schemas/AmericanFlightDataType
 --
 
-RAML::
+RAML Example::
 +
-Use the `!include` directive to add a fragment to the specification.
-+
-For example, this `!include` directive adds the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type:
+This `!include` directive adds the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type:
 +
 [source,RAML]
 --
@@ -209,34 +204,40 @@ types:
 --
 ====
 
+. Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context.
+For example:
++
+image::des-add-frag-to-spec.png["Add the fragment to your API spec"]
+// Reference an Element
+include::partial$acb-reusable-steps.adoc[tags="ref-element"]
+
+
+// After Adding Fragment
+include::partial$acb-reusable-steps.adoc[tags="tag::after-add-fragment"]
+
+
 [[create-add-fragment-directly]]
 == Create and Add a Fragment Directly in Your Spec
 
-Depending on the API spec language:
 
-* OAS specs: Use the `$ref` directive.
-* RAML specs: Use the `!include` directive.
-
-You can create a fragment in your project and include it in your specification.
+To create a fragment in your project and include it in your specification:
 
 . Open your API spec project file. For example, <<example-oas-api-spec,`example-oas-spec`>>.
 . In the Explorer view, right-click on an empty space, and create a folder for your fragments, such as `fragments`.
 . In the `fragments` folder, create a new file, such as `my-fragment` and add your example code.
+. Place the cursor where you want to add the fragment.
+. Depending on the API spec language, select the directive to add the fragment from the folder to your spec:
 +
-.. Place the cursor where you want to add the fragment.
-.. Depending on the API spec language, select the directive to add the fragment from the folder to your spec.
-+
-Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context.
-For example:
-+
-image::des-add-frag-from-folder-to-spec.png["Add the fragment from a folder to your API spec"]
+--
+* OAS specs: Use the `$ref` directive.
+* RAML specs: Use the `!include` directive.
+--
 + 
 [tabs]
 ====
-OAS::
+OAS Example::
 +
-Use the `$ref` directive to add the fragment from the `fragments` folder to your spec.
-For example:
+This `$ref` directive adds the `api_key` object from the `my-fragment.yaml` file:
 +
 [source,YAML]
 --
@@ -244,11 +245,9 @@ api-key:
     $ref: fragments/my-fragment.yaml#/components/securitySchemes/api_key
 --
 
-
-RAML::
+RAML Example::
 +
-Use the `!include` directive to add the fragment from the `examples` folder to your spec.
-For example:
+This `!include` directive adds the `AmericanFlightsExample.raml` example:
 +
 [source,RAML]
 --
@@ -256,7 +255,15 @@ examples:
   output: !include examples/AmericanFlightExample.raml
 --
 ====
+. Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context.
+For example:
++
+image::des-add-frag-from-folder-to-spec.png["Add the fragment from a folder to your API spec"]
+// Reference an Element
+include::partial$acb-reusable-steps.adoc[tags="ref-element"]
 
+// After Adding Fragment
+include::partial$acb-reusable-steps.adoc[tags="tag::after-add-fragment"]
 
 [[example-oas-api-frag]]
 == Example OAS 3.0 (YAML) API Spec Fragment 
