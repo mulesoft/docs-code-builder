@@ -1,6 +1,6 @@
 = Creating Integrations Using Einstein
 
-The Generative Flow feature transforms your natural language prompt, which describes your business logic, into a flow, containing the connectors and components needed to accomplish the specified task. 
+The Generative Flow feature transforms your natural language prompt, which describes your business logic, into a flow that contains the connectors and components, in the order needed, to accomplish the specified task. 
 
 For example, if you want to create a flow that reads contacts from Salesforce in JSON format, you can enter a prompt describing that task. The prompt is then transformed into a series of connectors and processors that are needed to execute that task, in this case: `Listener`, `Query`, `Transformer`, and `Logger`. A flow is generated, which you can then further customize to suit your needs. 
 
@@ -15,8 +15,6 @@ Before you start creating your integration using Generative Flows:
 ** Mule Developer Generative AI User
 +
 If you see the *Start with AI* card in the canvas when you start building a new integration, you have the correct permissions.
-* Install a REST client such as Postman or Advanced REST Client. 
-
 
 [[create-integration-project]]
 == Create a New Integration Project
@@ -45,8 +43,6 @@ For example, if the project name is "My Integration", the name of the folder for
 . Click *Create Project*.
 +
 The flow builder canvas appears with the following starting cards, *Start with AI* and *Start From Scratch*:
-
-//Is that called the flow builder canvas or...? Should we have an image that shows the two cards? Placeholder image. 
 
 image::int-gen-flow-starting-cards.png[Starting cards on new project canvas]
 
@@ -94,7 +90,7 @@ image::int-view-prompt-history.png[Einstein panel with arrow pointing to open pr
 A list of the last 50 queries is displayed. 
 . Click on a prompt in the list to see the details of the generated flow. 
 +
-You can insert the code that was generated into your flow, or you can copy the code snippet and use it elsewhere. 
+You can insert the code that was generated into your flow, or you can copy the code snippet and use or modify it elsewhere. 
 
 
 [[create-gen-flow]]
@@ -106,11 +102,12 @@ Use the Generaive Flow feature to add a flow to your integration project.
 +
 Optionally, click on either of the example prompts on the *Start with AI* card to get an idea of how this feature works.
 . If this is the first time you are using this feature, agree to the terms, and continue. 
++
 The *Einstein* panel opens.
 +
 image::acb-einstein-panel.png["Einstein panel with welcome message, two example prompts, and empty prompt field"]
 +
-. Enter the prompt to create the initial flow for your task and click the send icon image:int-send-prompt.png["",15,15].
+. Enter the prompt to create the initial flow for your task and click the send icon image:icon-send-prompt.png[""].
 +
 Optionally, click on one of the supplied example prompts to get started.
 +
@@ -118,7 +115,7 @@ While your flow is generated, you see the message `Einstein is thinking` in the 
 +
 When your flow is ready, the code and a description of the components of the flow appear in the *Einstein* panel. 
 +
-image::acb-generated-flow-case-notification-email.png[]
+image::acb-generated-case-notification-email.png[]
 . Optionally, click the thumbs up or thumbs down icon that appears after the generated code. 
 +
 //I made this up. Does this work this way?
