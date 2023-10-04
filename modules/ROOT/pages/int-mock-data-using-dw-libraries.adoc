@@ -1,15 +1,16 @@
 = Mocking Data Using a DataWeave Library
-:imagesdir: ../assets/images
+:page-deployment-options: cloud-ide, desktop-ide
 // :page-aliases: mock-data-using-dw-library
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 include::partial$acb-reusable-steps.adoc[tags="in-progress"]
 
-Use Anypoint Code Builder to import the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^] from Exchange and use  the custom library to return a random value from the library.
+The DataWeave 
+https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^]
+includes functions to generate random mock data for testing purposes.
+Use Anypoint Code Builder to import this library from Exchange and use it to return a random value from the library.
 
 == Before You Begin
 
@@ -18,62 +19,9 @@ Before getting started, ensure you:
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration (Mule App)].
 
-////
-== Create a Mule Application
+== Mock Data Using a DataWeave Library
 
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Enter `develop` and select the following command:
-+
-[source,command]
---
-MuleSoft: Develop an Integration
---
-+
-// . In your cloud IDE instance, navigate to your Anypoint Code Builder view:
-// +
-// TODO: cc: I don't think we need this screenshot.
-// image::anypoint-code-builder-view.png[]
-// . Select *Develop an Integration*.
-// +
-// TODO: cc: I don't think we need this screenshot.
-// image::develop-integration-option-mat.png[]
-. Configure your integration using the following values:
-+
-image::integration-create-ui.png[]
-+
-[calloutlist]
-.. For *Project Name*, type `_mock-dw-library_`.
-.. For *Project Location*, select *Browse*, and then select your home directory.
-. Select *Create Project*.
-////
-
-== Create a Flow
-
-Start by configuring a flow with an HTTP listener that exposes a root path (`/`):
-
-. Between the `<mule>` and `</mule>` elements, create an HTTP Listener global configuration:
-+
-[source,XML]
---
-<http:listener-config name="HTTP_Listener_config" >
-  <http:listener-connection host="0.0.0.0" port="8081" />
-</http:listener-config>
---
-. After the `</http:listener-config>` element, add a flow and an HTTP Listener element:
-+
-[source,XML]
---
-<flow name="receive-request" doc:name="Flow" >
-  <http:listener path="/" config-ref="HTTP_Listener_config" doc:name="Listener" doc:id="bbzemf" />
-</flow>
---
-
-== Import the DataWeave Library
-
-To import the DataWeave library, see xref:int-import-dw-libraries.adoc[].
-
-////
+. Open your integration project in Anypoint Code Builder.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Enter `import` and select the following command:
@@ -82,20 +30,11 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 --
 MuleSoft: Import Asset from Exchange
 --
-+
-// TODO: cc: I don't think we need this screenshot.
-// image::import-asset-from-exchange-db.png[]
 . Select *DataWeave Library*.
-. Start typing _DataWeave_, and press Return to list assets that match your search.
-. Select *DataWeave Mock Data Generators Library*.
-. Select version *1.0.0*.
-
-Anypoint Code Builder displays a message indicating that the dependency was successfully added.
-////
-
-== Use the DataWeave Library
-
-. After the `<http:listener>` element, add a new line and create a Set Payload processor:
+. Enter *mock* and select *DataWeave Mock Data Generators Library*.
+. Configure a flow with an HTTP listener that exposes a root path (`/`).
++
+For example:
 +
 [source,XML]
 --
@@ -117,8 +56,8 @@ import * from mocks::DataGenerators
 mocks::DataGenerators::randomCity()
 --
 
-Review your XML code:
-
+. Review your XML code:
++
 [source,XML]
 --
 <flow name="receive-request" doc:name="Flow" >
@@ -129,28 +68,19 @@ Review your XML code:
     />
 </flow>
 --
-
-== Import the HTTP Connector Library
-
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Enter `import` and select the following command:
+. Import the *HTTP Connector - Mule 4* library from Exchange. 
 +
-[source,command]
---
-MuleSoft: Import Asset from Exchange
---
+For information about importing connectors, see
+xref:int-create-integrations.adoc#import-connectors-from-exchange[Import a Connector from Exchange].
 
+. DO SOMETHING ELSE. 
 +
-. Select *Connector*.
-. Start typing _HTTP_, and press Return to list assets that match your search.
-. Select *HTTP Connector - Mule 4*.
-. Select the latest version.
+BUT WHAT?
++
+For reference, see this:
+https://docs.mulesoft.com/anypoint-code-builder/mock-data-using-dw-library#import-the-http-connector-library
 
-Anypoint Code Builder displays a message indicating that the dependency was successfully added.
+== See Also 
 
-== Deploy the Application
-
-Deploy the app to CloudHub.
-See xref:int-deploy-mule-apps.adoc[].
-
+* xref:int-create-integrations.adoc#add-components[Add a Component to Your Project]
+* xref:int-deploy-mule-apps.adoc[]
