@@ -1,11 +1,12 @@
 = Publishing API Specs and Fragments to Exchange
+:page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Publish your API spec or fragment to Anypoint Exchange so that other team members can find and implement it.
+Publish your API spec or fragment to Anypoint Exchange so that other team members can find and use it.
 
 == Before You Begin
 
@@ -13,7 +14,7 @@ Before publishing an API spec or fragment:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create and test your API specification].
-* xref:des-add-fragments-to-specs.adoc[Create an API fragment].
+* xref:des-create-api-fragments.adoc[Create an API fragment].
 * xref:des-sync-with-design-center.adoc[Synchronize your API specification with Design Center].
 
 
@@ -33,7 +34,7 @@ MuleSoft: Publish API Specification to Exchange
 +
 image::des-publish-to-exchange.png["MuleSoft: Publish API Specification to Exchange highlighted in Command Palette"]
 +
-If prompted, allow sign in to Anypoint Platform.
+. If prompted, click *Allow* to allow sign in using Anypoint Platform.
 +
 If you have uncommitted changes, push them before publishing to Exchange.
 . In *Set Project Name*, confirm or type the project name and press Enter.
@@ -62,8 +63,13 @@ image::des-publish-to-exchange-dialog.png["Publishing API specification to Excha
 
 After publishing your API specification, you can find it in Anypoint Exchange:
 
-. Navigate to https://anypoint.mulesoft.com/[Anypoint Platform^] and log in using your credentials.
-. Navigate to https://docs.mulesoft.com/exchange/[Exchange^].
+. Navigate to Anypoint Platform and log in using your credentials.
++
+--
+// Pointer to Platform URLs
+include::partial$acb-reusable-steps.adoc[tags="platform-urls"]
+--
+. Navigate to https://anypoint.mulesoft.com/exchange/[Exchange^].
 +
 Your API specification appears as an asset in your organization. For example:
 +
@@ -78,11 +84,16 @@ You can select the API, navigate through its summary, and see all the endpoints 
 
 To publish a GraphQL API specification to Exchange:
 
-. Navigate to https://anypoint.mulesoft.com/[Anypoint Platform^] and log in using your credentials.
-. Navigate to https://docs.mulesoft.com/exchange/[Exchange^].
+. Navigate to Anypoint Platform and log in using your credentials.
++
+--
+// Pointer to Platform URLs
+include::partial$acb-reusable-steps.adoc[tags="platform-urls"]
+--
+. Navigate to https://anypoint.mulesoft.com/exchange/[Exchange^].
 . Click *Publish new asset*:
 +
-image::des-publish-asset-exchange".png["Publish new asset button in Exchange"]
+image::des-publish-asset-exchange.png["Publish new asset button in Exchange"]
 . Complete the *Publish a new asset* form:
 +
 image::des-graphql-publish-exchange.png["Publish a new asset form on Exchange"]

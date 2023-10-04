@@ -1,14 +1,15 @@
 = Developing Integrations
+:page-deployment-options: cloud-ide, desktop-ide
 // develop-integration
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Use Anypoint Code Builder to build integrations within a Mule application.
 Integrations with Anypoint Code Builder rely on a service-based framework that decouples your source from protocols and routing requirements.
-You can reuse or change operations in the application when your systems or business needs change. 
+You can reuse or change operations and processors in the application when your systems or business needs change. 
 
 Integrations enable multiple services to work as one.
 Some common use cases are:
@@ -17,14 +18,18 @@ Some common use cases are:
 * Connecting cloud and on-premises applications
 * Event processing in which multiple services are composed and operate simultaneously
 
-When developing API integrations, you can:
 
-* xref:int-create-integrations.adoc[Create your integration project].
+After you xref:int-create-integrations.adoc[create your integration project],
+you can optionally:
+
 * xref:int-work-with-code-snippets.adoc[Work with code snippets].
 * xref:int-create-secure-configs.adoc[Define and secure properties for your Mule application].
 * xref:int-trigger-flows.adoc[Trigger flows in your development environment].
-* xref:int-use-dw.adoc[Use the DataWeave language].
+* xref:int-use-dw-to-transform-data.adoc[Use the DataWeave language].
 * xref:int-debug-mule-apps.adoc[Debug Mule apps].
+
+Other tasks you can do with your integration apps are:
+
 * xref:int-export-mule-project.adoc[Export Mule projects into a shareable or deployable JAR file].
 * xref:int-import-mule-project.adoc[Import project JAR files into a workspace in your IDE].
 * xref:int-deploy-mule-apps.adoc[Deploy Mule apps to CloudHub]
