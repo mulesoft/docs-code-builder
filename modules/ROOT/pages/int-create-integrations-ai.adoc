@@ -44,53 +44,16 @@ For example, if the project name is "My Integration", the name of the folder for
 +
 . Click *Create Project*.
 +
-The flow builder canvas appears with the starting cards, *Start with AI* and *Start From Scratch*:
+The flow builder canvas appears with the following starting cards, *Start with AI* and *Start From Scratch*:
 
 //Is that called the flow builder canvas or...? Should we have an image that shows the two cards? Placeholder image. 
 
-image::int-gen-flow-starting-cards.png[]
+image::int-gen-flow-starting-cards.png[Starting cards on new project canvas]
 
 You can either:
 
 * Click *Open Einsten* in the *Start with AI* card to use the generative flow feature.
 * Click the *Build a flow* in the *Start From Scratch* card to begin building your flow from scratch.
-
-[[create-gen-flow]]
-== Add a Flow to Your Project
-
-Use the Generaive Flow feature to add a flow to your integration project.
-
-. In the *Start with AI* card, click *Open Einstein*.
-+
-Optionally, click on either of the example prompts on the *Start with AI* card to get an idea of how this feature works.
-. If this is the first time you are using this feature, agree to the terms, and continue. 
-The *Einstein* panel opens.
-+
-image::acb-einstein-panel.png[]
-+
-. Enter the prompt to create the initial flow for your task and click the send icon.
-+
-Optionally, click on one of the supplied example prompts to get started.
-+
-While your flow is generated, you see the message `Einstein is thinking` in the prompt box.
-+
-When your flow is ready, the code and a description of the components of the flow appear in the *Einstein* panel. 
-+
-image::acb-generated-flow-case-notification-email.png[]
-. Optionally, click the thumbs up or thumbs down icon that appears after the generated code. 
-+
-//I made this up. Does this work this way?
-Rating the flow that's created for you helps Einstein learn so that over time, the generated flows improve.
-. Inspect the generated code, and if you are satisfied, click the insert code icon to insert the code in to your flow. 
-+
-If you aren't satisfied with the generated flow, reword your prompt and send it again. 
-//probably need screenshot
-. After the code is inserted, the initial flow is built and the visual representation of the flow is displayed in the canvas next to the XML code tab. 
-+
-The error icon is displayed for components that require further configuration. 
-+
-To determine where the error is, select the component in the canvas.
-Anypoint Code Builder highlights the location of the error within the configuration XML.
 
 [[craft-ai-prompt]]
 == Craft Your Prompt
@@ -116,16 +79,58 @@ Before submitting the prompt, proofread your prompt to ensure that it is clear a
 
 After the initial flow is generated for you, you can then customize the code for your specific needs.
 
+[[view-prompt history]]
+== View Your Prompt History
+Explain how the prompt history works for this feature.
+
+image::int-view-prompt-history.png[Einstein panel with arrow pointing to open prompt history clock icon]
+
+Last 50 queries are displayed. 
+
+[[create-gen-flow]]
+== Add a Flow to Your Project
+
+Use the Generaive Flow feature to add a flow to your integration project.
+
+. In the *Start with AI* card, click *Open Einstein*.
++
+Optionally, click on either of the example prompts on the *Start with AI* card to get an idea of how this feature works.
+. If this is the first time you are using this feature, agree to the terms, and continue. 
+The *Einstein* panel opens.
++
+image::acb-einstein-panel.png["Einstein panel with welcome message, two example prompts, and empty prompt field"]
++
+. Enter the prompt to create the initial flow for your task and click the send icon.
++
+Optionally, click on one of the supplied example prompts to get started.
++
+While your flow is generated, you see the message `Einstein is thinking` in the prompt box.
++
+When your flow is ready, the code and a description of the components of the flow appear in the *Einstein* panel. 
++
+image::acb-generated-flow-case-notification-email.png[]
+. Optionally, click the thumbs up or thumbs down icon that appears after the generated code. 
++
+//I made this up. Does this work this way?
+Rating the flow that's created for you helps Einstein learn so that over time, the generated flows improve.
+. Inspect the generated code, and if you are satisfied, click the insert code icon to insert the code in to your flow. 
++
+If you aren't satisfied with the generated flow, reword your prompt and send it again. 
+//probably need screenshot
+. After the code is inserted, the initial flow is built and the visual representation of the flow is displayed in the canvas next to the XML code tab. 
++
+The error icon is displayed for components that require further configuration. 
++
+To determine where the error is, select the component in the canvas.
+Anypoint Code Builder highlights the location of the error within the configuration XML.
+
+
 [[customize-gen-flow]]
-== Customize Your Flow
+== Complete Your Flow
 
 Generative Flow builds the initial flow for you so that all you need to do is fill in the information that's specific to your configuration. 
 
-[[view-prompt history]]
-== View the Prompt History
-Explain how the prompt history works for this feature.
 
-Last 50 queries are displayed. 
 
 == See Also
 
