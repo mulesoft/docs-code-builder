@@ -12,20 +12,23 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 Using Anypoint Code Builder, you can create your own API fragments and publish them to Anypoint Exchange to share with other people,
 add fragments from Exchange to your API specification,
 or create fragments in your project to add directly to your API specification.
+Alternatively, you can create and add a fragment directly in your project without publishing it to Exchange.
+
+
 
 The process for adding a fragment from Exchange is:
 
 . <<add-fragment-to-project,Add the API fragment from Exchange>> to your API spec project as a dependency.
 . <<add-fragment-to-spec, Add the API fragment to your API spec>> using the `$ref` (OAS) or `!include` (RAML) directives.
 
-Alternatively, <<create-add-fragment-directly, create and add a fragment directly in your project>> without publishing it to Exchange.
+The process for adding a fragment without publishing it to Exchange is:
 
+* <<create-add-fragment-directly, Create and add a fragment directly in your project>> without publishing it to Exchange.
 
 Use these examples to explore the functionality of Anypoint Code Builder:
 
 * <<example-oas-api-frag,`example-oas-fragment`>> API spec fragment
 * <<example-oas-api-spec,`example-oas-api-spec`>> API spec
-
 
 
 == Before You Begin
@@ -146,7 +149,7 @@ If it's set to one of the following, the project is an API spec rather than a fr
 
 To add an API spec fragment from Exchange to the project directory so that you can include the fragment in your spec:
 
-. Open your API spec fragment project file, for example, <<example-oas-api-spec,`example-oas-spec`>>.
+. Open your API spec project file, for example, <<example-oas-api-spec,`example-oas-spec`>>.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Enter `mulesoft` and select the following command:
@@ -173,7 +176,7 @@ You can also see the fragment in the Explorer view under Project Dependencies, f
 +
 image::des-api-frag-dependencies.png["API fragment in the Explorer view"]
 +
-The fragment files are located on your system in `~/.exchange_modules`.
+The fragment files are located in your home directory on your system in the `.exchange_modules` directory, for example, `~/.exchange_modules` (Mac).
 
 
 [[add-fragments-to-spec]]
@@ -181,7 +184,7 @@ The fragment files are located on your system in `~/.exchange_modules`.
 
 To add an API spec fragment to a spec:
 
-. Open your API spec project file, for example, `example-oas-spec`.
+. Open your API spec project file, for example, <<example-oas-api-spec,`example-oas-spec`>>.
 . Place the cursor where you want to add the fragment.
 . Depending on the API spec language, select the directive to add the fragment to your specification.
 +
@@ -232,7 +235,7 @@ To create a fragment in your project and include it in your specification:
 
 . Open your API spec project file, for example, <<example-oas-api-spec,`example-oas-spec`>>.
 . In the Explorer view, right-click on an empty space, and create a folder for your fragments, such as `fragments`.
-. In the `fragments` folder, create a new file, such as `my-fragment` and add your example code.
+. In the `fragments` folder, create a new file, such as `my-fragment` and add your fragment code.
 . Place the cursor where you want to add the fragment.
 . Depending on the API spec language, select the directive to add the fragment from the folder to your spec:
 +
