@@ -1,4 +1,4 @@
-= Creating and Using API Fragments
+= Creating and Using API Spec Fragments
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: des-add-examples-to-specs.adoc
 
@@ -16,9 +16,16 @@ or create fragments in your project to add directly to your API specification.
 The process for adding a fragment from Exchange is:
 
 . <<add-fragment-to-project,Add the API fragment from Exchange>> to your API spec project as a dependency.
-+
-You can also <<create-add-fragment-directly, create and add a fragment directly in your project>> without publishing it to Exchange.
 . <<add-fragment-to-spec, Add the API fragment to your API spec>> using the `$ref` (OAS) or `!include` (RAML) directives.
+
+Alternatively, <<create-add-fragment-directly, create and add a fragment directly in your project>> without publishing it to Exchange.
+
+
+Use these examples to explore the functionality of Anypoint Code Builder:
+
+* <<example-oas-api-frag,`example-oas-fragment`>> API spec fragment
+* <<example-oas-api-spec,`example-oas-api-spec`>> API spec
+
 
 
 == Before You Begin
@@ -65,7 +72,6 @@ IMPORTANT: Ensure that you select the *API Fragment* tab.
 This name is used as the fragment title in Exchange and name of the fragment file.
 For example, if the project name is "Example OAS Fragment", the specification file name is `example-oas-fragment`.
 
-[NOTE]
 include::partial$acb-reusable-steps.adoc[tags="no-project-name-reuse"]
 | *Project Location* | Your home directory or another directory you create.
 
@@ -109,14 +115,19 @@ When complete, you see a message that the API fragment successfully published to
 // Pointer to Platform URLs
 include::partial$acb-reusable-steps.adoc[tags="platform-urls"]
 --
-. Navigate to https://anypoint.mulesoft.com/exchange/[Exchange^].
+. Navigate to Exchange.
 +
-Your API specification appears as an API spec fragment type asset in your organization. For example:
+--
+// Pointer to Exchange URLs
+include::partial$acb-reusable-steps.adoc[tags="exchange-urls"]
+--
++
+Your API specification appears as an API spec fragment type asset in your organization, for example:
 +
 image::des-api-frag-exchange.png["API Spec Fragment in Exchange"]
 +
 --
-If your API specification appears as a REST API rather than an API spec fragment, check that the `classifier` attribute in the `exchange.json` file is set to one of the following, depending on the language:
+If your API specification appears on Exchange as a REST API rather than an API spec fragment, check that the `classifier` attribute in the `exchange.json` file in the project folder in your IDE is set to one of the following, depending on the language:
 
 ** OAS: `oas-components`
 ** RAML: `raml-fragment`
@@ -133,9 +144,9 @@ If it's set to one of the following, the project is an API spec rather than a fr
 [[add-fragment-to-project]]
 == Add a Fragment from Exchange to Your Project
 
-To add an API spec fragment to the project directory so that you can include them in your specification:
+To add an API spec fragment from Exchange to the project directory so that you can include the fragment in your spec:
 
-. Open your API spec project file. For example, <<example-oas-api-spec,`example-oas-spec`>>.
+. Open your API spec project file, for example, <<example-oas-api-spec,`example-oas-spec`>>.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Enter `mulesoft` and select the following command:
@@ -147,20 +158,18 @@ MuleSoft: Add Fragment dependency from Exchange
 . If prompted, log in to Anypoint Platform.
 . In the *Search for Asset* field, provide the name of the data type asset to add.
 +
-To search for assets, type the search term and press enter. For example:
+To search for assets, type the search term and press Enter, for example:
 +
 image::des-add-frag-from-exchange.png["Search for fragment in Assets from Exchange dropdown"]
 . Select the fragment from the *Assets From Exchange* menu.
 . Select a version of the fragment.
 +
 The status bar shows the progress. When complete, you see a message that the selected API fragment was successfully added to the project.
-. Verify that the fragment dependency was added by checking the `dependencies` section of the `exchange.json` file. 
-For example:
+. Verify that the fragment dependency was added by checking the `dependencies` section of the `exchange.json` file, for example:
 +
 image::des-verify-frag-from-exchange.png["Verify the fragment dependency in the exchange.json file"]
 +
-You can also see the fragment in the Explorer view under *PROJECT DEPENDENCIES*.
-For example:
+You can also see the fragment in the Explorer view under the Project Dependencies folder, for example:
 +
 image::des-api-frag-dependencies.png["API fragment in the Explorer view"]
 +
@@ -172,7 +181,7 @@ The fragment files are located on your system in `~/.exchange_modules`.
 
 To add an API spec fragment to a spec:
 
-. Open your API spec project file. For example, `example-oas-spec`.
+. Open your API spec project file, for example, `example-oas-spec`.
 . Place the cursor where you want to add the fragment.
 . Depending on the API spec language, select the directive to add the fragment to your specification.
 +
@@ -204,8 +213,7 @@ types:
 --
 ====
 
-. Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context.
-For example:
+. Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context, for example:
 +
 image::des-add-frag-to-spec.png["Add the fragment to your API spec"]
 // Reference an Element
@@ -222,7 +230,7 @@ include::partial$acb-reusable-steps.adoc[tags="tag::after-add-fragment"]
 
 To create a fragment in your project and include it in your specification:
 
-. Open your API spec project file. For example, <<example-oas-api-spec,`example-oas-spec`>>.
+. Open your API spec project file, for example, <<example-oas-api-spec,`example-oas-spec`>>.
 . In the Explorer view, right-click on an empty space, and create a folder for your fragments, such as `fragments`.
 . In the `fragments` folder, create a new file, such as `my-fragment` and add your example code.
 . Place the cursor where you want to add the fragment.
@@ -255,8 +263,7 @@ examples:
   output: !include examples/AmericanFlightExample.raml
 --
 ====
-. Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context.
-For example:
+. Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context, for example:
 +
 image::des-add-frag-from-folder-to-spec.png["Add the fragment from a folder to your API spec"]
 // Reference an Element
@@ -364,3 +371,4 @@ paths:
 * xref:des-sync-with-design-center.adoc[]
 * xref:des-publish-api-spec-to-exchange.adoc[]
 * xref:tut-af-design-api-add-request-response-details.adoc[] Tutorial
+* xref:des-delete-api-projects.adoc[]
