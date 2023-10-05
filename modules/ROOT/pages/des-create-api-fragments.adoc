@@ -42,15 +42,15 @@ Before adding fragments:
 See the xref:tutorials.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 +
-API specifications belong to a business group.
+API spec fragments belong to a business group.
 // * xref:des-create-api-specs.adoc[Create and test your API specification].
 
 
 == Create an API Fragment and Publish it to Exchange
 
-The process for creating and publishing API fragments is similar to the process for API specifications.
+The process for creating and publishing API spec fragments is similar to the process for API specs.
 
-To create an API fragment:
+To create an API spec fragment:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
@@ -87,7 +87,6 @@ Select *OAS 3.0 (YAML)* to use the <<example-oas-api-frag,example>> in this proc
 
 Select *YAML* to use the <<example-oas-api-frag,example>> in this procedure.
 | *Business Group* | Business Group in Anypoint Platform for your API fragment.
-
 See xref:access-management::business-groups.adoc[].
 
 You cannot change the selected business group after creating the API fragment.
@@ -129,7 +128,7 @@ Your API specification appears as an API spec fragment type asset in your organi
 image::des-api-frag-exchange.png["API Spec Fragment in Exchange"]
 +
 --
-If your API specification appears on Exchange as a REST API rather than an API spec fragment, check that the `classifier` attribute in the `exchange.json` file in the project folder in your IDE is set to one of the following, depending on the language:
+If your API spec appears on Exchange as a REST API rather than an API spec fragment, check that the `classifier` attribute in the `exchange.json` file in the project folder in your IDE is set to one of the following, depending on the language:
 
 ** OAS: `oas-components`
 ** RAML: `raml-fragment`
@@ -137,7 +136,7 @@ If your API specification appears on Exchange as a REST API rather than an API s
 --
 +
 --
-If it's set to one of the following, the project is an API spec rather than a fragment:
+If the attribute is set to one of the following, the project is an API spec rather than a fragment:
 
 ** OAS: `oas`
 ** RAML: `raml`
