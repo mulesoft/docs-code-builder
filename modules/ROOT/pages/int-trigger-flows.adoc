@@ -27,7 +27,7 @@ The URL to use for triggering the HTTP Listener in a scaffolded interface genera
 * Desktop IDE example for an integration project _without_ a scaffolded interface to trigger a locally deployed endpoint: 
 +
 ----
-http://0.0.0.0:8081/some-endpoint
+http://localhost:8081/some-endpoint
 ----
 +
 Notice the configuration in the `<http:listener-connection/>` element:
@@ -46,7 +46,7 @@ Notice the configuration in the `<http:listener-connection/>` element:
 * Desktop IDE example for an implementation or integration project _with_ a scaffolded interface to trigger a locally deployed endpoint: 
 +
 ----
-http://0.0.0.0:8081/api/some-endpoint
+http://localhost:8081/api/some-endpoint
 ----
 +
 Notice that the URL adds `api/` to the URL to make the request trigger the `<http:listener/>`. This listener is located before the router (`<apikit:router/>`) in the scaffolded interface within the configuration XML. Notice the automatically set attribute `path="/api/*"` in the listener's XML:
@@ -119,25 +119,26 @@ Make sure that the application deploys successfully with the `DEPLOYED` log mess
 //open terminal
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
 //next steps:
-. In the terminal, click the name of the shell to use in the terminal, such as `bash` or `zsh`. 
+. In the terminal, click the name of the shell to use in the terminal, such as PowerShell (Windows), `bash`, or `zsh` (Mac). 
 +
 Alternatively, you can click the *+* icon in the terminal to open a new command prompt.
 . At the command prompt, provide a `curl` command to trigger the flow, for example:
 +
-* For triggering an app from a listener:
+* For triggering an integration app from a listener:
 +
 ----
-$ curl 0.0.0.0:8081/mypath \n
+$ curl localhost:8081/mypath
 ----
 +
-The optional `\n` forces the command to place the response on a separate line, without a trailing command prompt.
+In the desktop IDE, use `localhost` instead of `0.0.0.0`. 
 +
 If successful, the command returns a response. 
 
+//TODO: TEST/DOUBLE CHECK THIS ONE!
 * For triggering a flow in an app from the listener in the scaffolded interface:
 +
 ----
-$ curl 0.0.0.0:8081/api/myendpoint \n
+$ curl localhost:8081/api/myendpoint
 ----
 
 [[browser]]
@@ -148,18 +149,49 @@ Use your browser to trigger a flow through an HTTP Listener in an integration or
 //first generic steps
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
-. TODO
+//open output panel
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
+. Find and copy the URL to your app:
++
+image::acb-port-list.png["Port list in the IDE"]
+
+.. Click the *Ports* tab to open a list of ports used by your app.
+.. Select the row for the port you configured for the HTTP Listener, such as `8081`. 
+.. From the *Forwarded Address* column, copy the URL at the selected port. 
+. Copy the URL into your browser, _and_ append the value of the `path` from your `<http:listener/>` configuration.
++
+For example, the value of `path` is `mypath` in this configuration:
++
+[source,xml]
+----
+<http:listener path="mypath" config-ref="HTTP_Listener_config"
+      doc:name="Listener" doc:id="ehdpqp" />
+---- 
++
+A full URL with the path `mypath` is similar to this one:
++
+[source,url]
+----
+https://lavender-abc1d2.efg.007.ap-code-builder.platform.salesforce.com/proxy/8081/mypath
+----
 
 
 [[rest-client]]
 === Trigger a Flow from Your REST Client
 
-Use a REST client to trigger a flow through an HTTP Listener in an integration or implementation project.
+Use a REST client to trigger a flow through an HTTP Listener in an integration or implementation project. 
+
+This process is simpler for the desktop IDE than the cloud IDE, which requires you to discover the `proxysession` value from the cookies listed in your browser and providing that value to the REST client. 
 
 //first generic steps
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
-. TODO
+. 
+
+
+This example in Advanced REST Client applies the `proxysession` setting as a cookie within the header of the request. The URL to the application is in the GET field. 
+
+image::acb-proxysession-trigger-flow.png["Finding proxysession cookie in your browser"]
 
 
 ////
@@ -185,7 +217,7 @@ See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct
 . Open the cloud IDE using your browser's Developer Tools (`F12`).
 . Navigate to your *Application* tab.
 . Under *Storage*, expand the *Cookies* section and select the URL of your cloud IDE instance.
-. Search for the term _proxysession_:
+. Search for the term _c_:
 +
 image::application-storage-cookies.png[]
 . Copy the cookie name and value. For example:
