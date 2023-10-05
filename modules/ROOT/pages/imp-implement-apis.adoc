@@ -66,7 +66,6 @@ For example, if the project name is "OAS Integration", the project file name is 
 
 See xref:start-add-folders.adoc[].
 
-[IMPORTANT]
 include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 
 | *Show filters* |See xref:filter-search-results.adoc[] for more information.
@@ -80,8 +79,7 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 +
 image::imp-api-search.png["Search an API from Exchange"]
 +
-The form shows the selected API spec. 
-For example:
+The form shows the selected API spec, for example:
 +
 image:imp-api-selected.png["OAS Example API selected in the Implement an API Specification form"]
 . Click *Create Project*.
@@ -104,8 +102,7 @@ When you create the project, Anypoint Code Builder:
 ** Scaffolds your API into the new integration project and opens the configuration XML file.
 +
 The configuration XML file includes the interface for your integration project,
-with flows for each endpoint in the spec, error handlers, and a built-in router.
-For example:
+with flows for each endpoint in the spec, error handlers, and a built-in router, for example:
 +
 image:imp-api-scaffolded.png["OAS Example Integration in Anypoint Code Builder"]
 This example includes:
@@ -130,8 +127,7 @@ If you have already xref:int-create-integrations.adoc[created an integration pro
 you can scaffold your API by importing the spec from Exchange.
 In this case, Anypoint Code Builder creates a separate configuration XML file for the interface in your integration project.
 
-. In Anypoint Code Builder, open your integration project in the Explorer view.
-For example, `my-project-name`.
+. In Anypoint Code Builder, open your integration project in the Explorer view, for example, `my-project-name`.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Enter `import` and select the following command:
@@ -145,8 +141,7 @@ MuleSoft: Import Asset from Exchange
 * *Rest API* for OAS or RAML
 * *GraphQL API*
 . If prompted, click *Allow* to allow sign in using Anypoint Platform and select the business group.
-. Type the name of your API spec and press Enter.
-For example, `OAS Example`.
+. Type the name of your API spec and press Enter, for example, `OAS Example`.
 . Wait for the IDE to load a list of matches to the name:
 +
 image::imp-assets-from-exchange.png["Assets from Exchange dropdown"]
@@ -174,8 +169,7 @@ When you scaffold the API dependency, Anypoint Code Builder:
 image::imp-new-config-file.png["New configuration file in the Explorer view"]
 
 The new configuration XML file includes the interface for your integration project,
-with flows for each endpoint in the spec, error handlers, and a built-in router.
-For example:
+with flows for each endpoint in the spec, error handlers, and a built-in router, for example:
 
 image:imp-api-imported.png["OAS Example Integration in Anypoint Code Builder"]
 
@@ -199,7 +193,7 @@ You can now implement the interface within the Mule app.
 
 == Tour the Interface File
 
-Examine the scaffolded flows and error handlers for your interface in the canvas UI and configuration XML.
+After you scaffold your API spec into an interface, examine the scaffolded flows and error handlers for your interface in the UI canvas and configuration XML.
 
 image::imp-scaffolded-flow-canvas.png["Scaffolded flows in the Canvas"]
 
@@ -278,8 +272,7 @@ output application/json
 
 When you import an API spec into an existing integration, Anypoint Code Builder
 automatically names the configuration XML file based on the API spec name. 
-You can change the file names to something more descriptive, such as based on their function.
-For example:
+You can change the file names to something more descriptive, such as based on their function, for example:
 
 * `interface.xml` receives all incoming requests to your application and scaffolded flows validate and route requests.
 * `implementation.xml` provides the backend logic for calls to the interface.

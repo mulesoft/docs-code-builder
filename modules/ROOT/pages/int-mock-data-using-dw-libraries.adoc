@@ -7,10 +7,12 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 include::partial$acb-reusable-steps.adoc[tags="in-progress"]
 
-The DataWeave 
-https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^]
+The DataWeave Mock Data Generators Library on Exchange
 includes functions to generate random mock data for testing purposes.
 Use Anypoint Code Builder to import this library from Exchange and use it to return a random value from the library.
+
+* US Cloud (non-EU host): https://www.anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^]
+* EU Cloud (EU host): https://eu1.anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^]
 
 == Before You Begin
 
@@ -32,9 +34,8 @@ MuleSoft: Import Asset from Exchange
 --
 . Select *DataWeave Library*.
 . Enter *mock* and select *DataWeave Mock Data Generators Library*.
-. Configure a flow with an HTTP listener that exposes a root path (`/`).
-+
-For example:
+. Configure a flow with an HTTP listener that exposes a root path (`/`), 
+for example:
 +
 [source,XML]
 --
@@ -72,13 +73,14 @@ mocks::DataGenerators::randomCity()
 +
 For information about importing connectors, see
 xref:int-create-integrations.adoc#import-connectors-from-exchange[Import a Connector from Exchange].
-
+////
 . DO SOMETHING ELSE. 
 +
 BUT WHAT?
 +
 For reference, see this:
 https://docs.mulesoft.com/anypoint-code-builder/mock-data-using-dw-library#import-the-http-connector-library
+////
 
 == See Also 
 
