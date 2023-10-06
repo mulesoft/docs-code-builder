@@ -8,6 +8,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Errors sometimes occur when you open or start a project in Anypoint Code Builder. 
 
+
 == Loading Error in the Application UI
 
 A *Loading...* error in the canvas UI often occurs under these conditions:
@@ -75,4 +76,10 @@ To monitor the progress of backend processes:
 //step to open output panel:
 include::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
 . Select *Mule DX Server* from the drop-down menu in the panel. 
+
+== Dependency Resolution Error
+
+The error `There was an issue solving the dependencies for the asset` occurs when a dependency is missing. Usually, the appears after you import or open an integration or implementation project that is missing one or more dependencies for a connector operation. 
+
+To address this issue and avoid other errors, try logging in to Anypoint Platform from the IDE, and wait for the project to finish loading before attempting to resolve any missing dependencies that remain.
 
