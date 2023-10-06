@@ -6,11 +6,9 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 // work-with-code-snippets, create-xml-snippets
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 _Code snippets_ are code patterns that you insert from the IDE into the configuration XML files of your Mule application flows or subflows.
-With snippets, you can reuse a code pattern, which helps you work more efficiently and reduces the potential for configuration errors.
+Using code snippets for reusable code patterns helps you work more efficiently and reduces the potential for configuration errors.
 
 Use snippets to provide configurations for any element supported by the Mule DSL, such as commonly used connector operations, message processing patterns supported by Core components, or multi-element configurations in the configuration XML.
 You can configure snippets for connector operations, Core processors, and other processors in the XML configuration file for your Mule applications.  
@@ -28,8 +26,7 @@ Code snippets are a VS Code feature. For more information, see https://code.visu
 
 == Benefits of Using Built-in Snippets
 
-Using the XML generated from snippets helps you configure applications more quickly and consistently than with the basic XML elements available from the configuration XML.
-For example:
+Using the XML generated from snippets helps you configure applications more quickly and consistently than with the basic XML elements available from the configuration XML, for example:
 
 * Built-in Logger snippet:
 +
@@ -105,7 +102,7 @@ Create user snippets from either the canvas or from the Command Palette.
 
 Create reusable user snippets for your Mule applications. 
 
-NOTE: User snippets are specific to your IDE instance and not shared in projects for applications that you export for others to import and work on.
+User snippets are specific to your IDE instance and not shared in projects for applications that you export for others to import and work on.
 
 . In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon where you want to add the snippet.
 +
@@ -149,13 +146,13 @@ Anypoint Code Builder adds the snippet to your configuration XML:
 +
 The value of `doc:id` is randomly generated because of the `$RANDOM_HEX` value in the snippet.
 +
-. Add any required values or configurations to the XML, such as a `level` and `message` value. For example:
+. Add any required values or configurations to the XML, such as a `level` and `message` value, for example:
 +
 [source,xml]
 ----
 <logger level="WARN" message='This is a warning message.' doc:name="Logger" doc:id="sgxbfo" />
 ----
-. Add any other snippets to your `mule-xml.json` by adding a comma after the `}` and defining your new snippet. For example:
+. Add any other snippets to your `mule-xml.json` by adding a comma after the `}` and defining your new snippet, for example:
 +
 [source,JSON]
 --
@@ -307,7 +304,7 @@ To add snippets directly to the configuration XML for a Mule application:
 include::partial$acb-reusable-steps.adoc[tags="open-auto-complete"]
 . Insert the snippet into your flow or subflow:
 +
-** For a built-in snippet, search for and select the name of the built-in snippet. For example:
+** For a built-in snippet, search for and select the name of the built-in snippet, for example:
 +
 image::acb-auto-complete-options.png["Auto-completion options for the Choice router"]
 +
@@ -330,10 +327,10 @@ Compare the built-in Choice snippet configuration to the basic XML configuration
 --
 +
 <1> XML for the built-in Choice snippet is `flow:choice` in the auto-complete list. The icon for snippets in this menu is a one-dimensional square. 
-<2> XML for the minimally configured Choice component, which is also available by navigating to *Core Processors* > *Flow Control* > *Choice* from the UI canvas.
+<2> XML for the minimally configured Choice component, which is also available by navigating to *Core Processors* > *Flow Control* > *Choice* from the canvas UI.
 The icon for this XML is a three-dimensional square. 
 
-* For a user snippet, search for and select the name of the user snippet (as configured in `mule-xml.json`). For example:
+* For a user snippet, search for and select the name of the user snippet (as configured in `mule-xml.json`), for example:
 +
 image::acb-auto-complete-user-snip.png["Auto-completion options for the Log a message user snippet"]
 

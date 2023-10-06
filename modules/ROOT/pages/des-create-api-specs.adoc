@@ -4,15 +4,14 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Use Anypoint Code Builder to create and test basic API specification to Exchange:
+Use Anypoint Code Builder to create and test API specifications before publishing to Exchange or implementing:
 
 . <<design-new-api-spec, Create a new API specification project>>.
 . <<open-output-panel, Track progress in the output panel>>.
-. <<review-spec-console, Review your specification in the API console>>.
-. <<test-spec, Test your specification using the mocking service>>.
+. <<review-spec-console, Review your spec in the API console>>.
+. <<test-spec, Test your spec using the mocking service>>.
 
-You can use the <<example-oas-api-spec,`oas-example`>> API spec to explore the functionality of Anypoint Code Builder. 
-
+Use the <<example-oas-api-spec,`oas-example`>> API spec to explore the functionality of Anypoint Code Builder. 
 
 
 == Before You Begin
@@ -46,15 +45,14 @@ image::design-api-1.png["*Design an API* link highlighted in the *Quick Actions*
 
 | *Project Name* | Unique name for your project.
 
-This name is used as the title and name of the specification file.
+This name is used as the API spec title in Exchange and name of the specification file.
 For example, if the project name is "OAS Example", the specification file name is `oas-example`.
 
-NOTE: Once created, you cannot reuse the project name, even if you delete the project. 
+include::partial$acb-reusable-steps.adoc[tags="no-project-name-reuse"]
 | *Project Location* | Your home directory or another directory you create.
 
 See xref:start-add-folders.adoc[].
 
-[IMPORTANT]
 include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 | *API Specification Language* | See xref:des-designing-api-specs.adoc#supported-spec-languages[Supported OAS and RAML Versions].
 
@@ -63,19 +61,72 @@ Select *OAS 3.0 (YAML)* to use the <<example-oas-api-spec,example>> in this proc
 
 See xref:access-management::business-groups.adoc[].
 
-NOTE: You cannot change the selected business group after creating the API specification.
+You cannot change the selected business group after creating the API specification.
 |===
 . Click *Create Project*.
 +
 If prompted, trust the authors of the files in the folder.
 +
-When the project is ready for editing, the API project opens the specification in the Editor view.
-For example, this OAS 3.0 (YAML) specification:
+When the project is ready for editing, the API project opens the specification in the Editor view, for example, this OAS 3.0 (YAML) specification:
 +
 image::des-oas-create.png[New OAS 3.0 (YAML) API project]
 . Continue designing your API specification. 
 +
 As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context. 
+
+
+
+[[open-output-panel]]
+== Track Progress in the Output Panel
+
+To track the progress of internal processing as you design your API:
+
+// Pointer to Output Panel
+include::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
+. Select *Mule DX Server* from the dropdown:
++
+image::des-output-panel.png["Mule DX Server in the output pane"]
+
+
+[[review-spec-console]]
+== Review Your Spec in the API Console
+
+To display your specification in the console:
+
+. Click your specification file in the editor.
+. Click the image:icon-api-console.png["",14,14] (*API Console*) icon.
+. Wait for the endpoints to render in the API Console.
++
+The API Console show the endpoints for the specification in API Console, for example:
++
+image::des-api-console.png["API specification in the API Console"]
++
+[calloutlist]
+.. Click a method to view details.
+.. Display the console menu.
+. Click methods in the console or select items from the menu to view different parts of your specification.
+For example, click *GET*:
++
+image::des-api-console-detail.png["API Console with Get details"]
+
+[[test-spec]]
+== Test Your API Spec Using the Mocking Service
+
+Use the Mocking Service in the API Console to check the request and responses
+that you configured in your API specification.
+
+. In Anypoint Code Builder, open the specification for your API project, such as <<example-oas-api-spec,`oas-example`>>.
+. Click the image:icon-api-console.png["",14,14] (*API Console*) icon to display your specification in the console.
+. In the API Console, click a method, such as GET or POST.
+. Click *Try It*.
++
+image::des-api-console-try-it.png["Try It button in the API console"]
+. Confirm that the parameters that you've defined are correct and click *Send*.
+. Verify that API console returns the response you defined, for example:
++
+image::des-api-console-response.png["Example response in the API console"]
+. Optionally, review your configured response examples when querying your mocked API endpoints.
+
 
 [[example-oas-api-spec]]
 == Example OAS 3.0 (YAML) API Specification 
@@ -86,7 +137,7 @@ If you created an OAS 3.0 (YAML) project, you can replace the initial specificat
 [%collapsible]
 
 ====
-[source,yaml,linenums]
+[source,YAML,linenums]
 --
 
   openapi: "3.0.0"
@@ -194,69 +245,7 @@ If you created an OAS 3.0 (YAML) project, you can replace the initial specificat
 --
 ====
 
-[[open-output-panel]]
-== Track Progress in the Output Panel
 
-To track the progress of internal processing as you design your API:
-
-// Pointer to Output Panel
-include::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
-. Select *Mule DX Server* from the dropdown:
-+
-image::des-output-panel.png["Mule DX Server in the output pane"]
-
-
-
-[[review-spec-console]]
-== Review Your Specification in the API Console
-
-To display your specification in the console:
-
-. Click your specification file in the editor.
-. Click the image:icon-api-console.png["",14,14] (*API Console*) icon.
-. Wait for the endpoints to render in the API Console.
-+
-The API Console show the endpoints for the specification in API Console.
-For example:
-+
-image::des-api-console.png["API specification in the API Console"]
-+
-[calloutlist]
-.. Click a method to view details.
-.. Display the console menu.
-. Click methods in the console or select items from the menu to view different parts of your specification.
-For example, click *GET*:
-+
-image::des-api-console-detail.png["API Console with Get details"]
-
-[[test-spec]]
-== Test Your API Specification Using the Mocking Service
-
-Use the Mocking Service in the API Console to check the request and responses
-that you configured in your API specification.
-
-. In Anypoint Code Builder, open the specification for your API project, such as <<example-oas-api-spec,`oas-example`>>.
-. Click the image:icon-api-console.png["",14,14] (*API Console*) icon to display your specification in the console.
-. In the API Console, click a method, such as GET or POST.
-. Click *Try It*.
-+
-image::des-api-console-try-it.png["Try It button in the API console"]
-. Confirm that the parameters that you've defined are correct and click *Send*.
-. Verify that API console returns the response you defined.
-For example:
-+
-image::des-api-console-response.png["Example response in the API console"]
-. Optionally, review your configured response examples when querying your mocked API endpoints.
-
-
-[[delete-spec]]
-== Delete an API Specification
-
-To delete an API specification:
-
-. In the Explorer view, right-click on the folder and select *File > Open Folder*. 
-. Locate the folder for the project to delete.
-. Right-click and select to delete the folder.
 
 
 == See Also
@@ -264,4 +253,6 @@ To delete an API specification:
 * xref:start-acb.adoc[]
 * xref:tutorials.adoc[]
 * xref:access-management::business-groups.adoc[]
-* xref:start-discover-ui.adoc#use-autocomplete[Use IntelliSense to Auto-Complete in the Editor].
+* xref:start-discover-ui.adoc#use-autocomplete[Use IntelliSense to Auto-Complete in the Editor]
+* xref:tut-af-design-am-flights-api.adoc[] Tutorial
+* xref:des-delete-api-projects.adoc[]
