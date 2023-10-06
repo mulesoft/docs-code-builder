@@ -46,6 +46,64 @@ payload map {
 </flow>
 ----
 
+After reviewing and inserting the generated flow, you need to:
+
+. Update the target email to one that fits your use case by explicitly typing the email address within your flow:
++ 
+`<email:to-address value="demo@gmail.com" />`
+. Add the target email, `${email.username}` to your xref:int-create-secure-configs#properties.adoc[configuration properties file]. 
+. Update the frequency of the trigger to one that fits your needs by changing the frequency attribute in the scheduler. 
++
+This example flow is configured to poll for new cases every 1000 milliseconds.
+. Use built-in snippets to add configurations for your Salesforce instance and email inbox.
+
+The following is an example of a completed flow:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:email="http://www.mulesoft.org/schema/mule/email" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+
+
+<salesforce:sfdc-config name="Salesforce_Config">
+<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
+</salesforce:sfdc-config>
+
+<email:smtp-config name="Email_SMTP">
+<email:smtps-connection host="${email.host}" user="${email.username}" password="${email.password}">
+<tls:context>
+<tls:trust-store insecure="true" />
+</tls:context>
+</email:smtps-connection>
+</email:smtp-config>
+
+
+<flow name="sendEmailOnNewCase">
+<salesforce:new-object-listener objectType="Case" config-ref="Salesforce_Config">
+<scheduling-strategy>
+<fixed-frequency frequency="5000" />
+</scheduling-strategy>
+</salesforce:new-object-listener>
+<set-variable variableName="caseNumber" value="#[payload.CaseNumber]" doc:name="caseNumberVar" doc:id="vysmen" />
+<set-variable variableName="status" value="#[payload.Status]" doc:name="statusVar" doc:id="yeakie" />
+<email:send config-ref="Email_SMTP" doc:name="Send Email" subject="#['Case ' ++ vars.caseNumber ++ ' was created']">
+<email:to-addresses>
+<email:to-address value="demo@gmail.com" />
+</email:to-addresses>
+<email:body contentType="text/html">
+<email:content>
+<![CDATA[#['New case ' ++ vars.caseNumber ++ ' was created with status ' ++ vars.status]]]>
+</email:content>
+</email:body>
+</email:send>
+</flow>
+</mule>
+----
 
 == Update a Phone Number
 
@@ -74,6 +132,47 @@ output application/java
         <salesforce:records>#[payload]</salesforce:records>
     </salesforce:update>
 </flow>
+----
+
+To run this flow, use built-in snippets to add configurations for your Salesforce instance.
+
+The following is an example of a completed flow:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+xmlns:http="http://www.mulesoft.org/schema/mule/http"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+<http:listener-config name="HTTP_Listener_config" >
+<http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+<salesforce:sfdc-config name="Salesforce_Config" >
+<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}"/>
+</salesforce:sfdc-config>
+
+<flow name="updateAccountPhone">
+<http:listener config-ref="HTTP_Listener_config" doc:name="Listener" path="/updateAccountPhone" allowedMethods="POST" doc:id="listener" />
+<set-variable variableName="accountIdVar" value="#[payload.accountId]" mimeType="application/json" doc:name="Set Account ID var" doc:id="set-variable-accountId" />
+<set-variable variableName="phoneVar" value="#[payload.phoneNumber]" mimeType="application/json" doc:name="Set Phone var" doc:id="set-variable-phone" />
+<salesforce:update type="Account" config-ref="Salesforce_Config" doc:name="Update Salesforce Account" doc:id="update-account">
+<salesforce:records>
+<![CDATA[#[output application/json ---
+[{
+"Id": vars.accountIdVar,
+"Phone": vars.phoneVar
+}]]]]>
+</salesforce:records>
+</salesforce:update>
+<logger doc:name="Logger" message="Phone number updated for Account with Id: #[vars.accountIdVar]" doc:id="logger" />
+</flow>
+</mule>
 ----
 
 == Synchronize Account Objects
@@ -123,6 +222,64 @@ This generates XML code for the new flow, similar to this:
 </flow>
 ----
 
+. After reviewing and inserting the generated flow, update the name of the database table and fields to match what is configured in your MySQL database. 
+. To run this flow, use built-in snippets to add configurations for your Salesforce instance.
+
+The following is an example of a completed flow:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+xmlns:db="http://www.mulesoft.org/schema/mule/db" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+
+<salesforce:sfdc-config name="Salesforce_Config">
+<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
+</salesforce:sfdc-config>
+
+<db:config name="Mysql_Database_Config" >
+<db:my-sql-connection host="${mysql.host}" port="${mysql.port}" user="${mysql.username}" password="${mysql.password}" database="${mysql.database}" />
+</db:config>
+
+<flow name="SyncAccountPhoneToDatabase">
+<salesforce:modified-object-listener objectType="Account" config-ref="Salesforce_Config" doc:name="On Modified Object" doc:id="listener">
+<scheduling-strategy>
+<fixed-frequency />
+</scheduling-strategy>
+</salesforce:modified-object-listener>
+
+<ee:transform doc:name="Transform Message" doc:id="transform">
+<ee:message>
+<ee:set-payload>
+<![CDATA[%dw 2.0
+output application/json
+---
+{
+Id: payload.Id,
+Phone: payload.Phone
+}]]>
+</ee:set-payload>
+</ee:message>
+</ee:transform>
+
+<db:update doc:name="Update Phone in Database" doc:id="update">
+<db:sql>
+<![CDATA[UPDATE Account SET Phone = :Phone WHERE Id = :Id]]>
+</db:sql>
+<db:input-parameters>
+<![CDATA[#[{
+Phone: payload.Phone,
+Id: payload.Id
+}]]]>
+</db:input-parameters>
+</db:update>
+</flow>
+</mule>
+----
+
 == New Record Notification
 
 Manually notifying individuals about new database records is time-consuming and prone to errors. This example builds a flow to automate email notifications to eliminate manual intervention, which improves efficiency and reduces the chances of oversight or delays. 
@@ -153,7 +310,62 @@ This generates XML code for the new flow, similar to this:
 </sub-flow>
 ----
 
+After reviewing and inserting the generated flow, you need to:
+
+. Update the sender email address, recipient email addresses, and email body to fit your specific needs.
+. Update the database table name so that it corresponds to the table to which the flow should listen for new records.
+. Update the `watermarkColumn` in the database listener to whichever column should be used to indicate new records. 
++
+Values taken from this column are used to filter the contents of the next poll, so that only rows with a greater watermark value are processed.
+. To run this flow, use built-in snippets to add configurations for your database and email inbox.
+
+The following is an example of a completed flow:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+
+<db:config name="Mysql_Database_Config" >
+<db:my-sql-connection host="${mysql.host}" port="${mysql.port}" user="${mysql.username}" password="${mysql.password}" database="${mysql.database}" />
+</db:config>
+
+<email:smtp-config name="Email_SMTP">
+<email:smtps-connection host="${email.host}" user="${email.username}" password="${email.password}">
+<tls:context>
+<tls:trust-store insecure="true" />
+</tls:context>
+</email:smtps-connection>
+</email:smtp-config>
+
+
+<flow name="sendEmailFlow">
+<db:listener table="records" doc:name="On Table Row" doc:id="dbListener" watermarkColumn="CREATION_DATE" config-ref="Mysql_Database_Config">
+<scheduling-strategy>
+<fixed-frequency frequency="1" timeUnit="SECONDS" />
+</scheduling-strategy>
+</db:listener>
+<set-variable variableName="record" value="#[payload]" doc:name="Set Variable" doc:id="setVariable" />
+<email:send config-ref="Email_SMTP" fromAddress="sender@example.com" subject="New Record Created">
+<email:to-addresses>
+<email:to-address value="recipient@example.com" />
+</email:to-addresses>
+<email:body contentType="text/plain">
+<email:content>
+<![CDATA[New record created with ID #[vars.record.id]]]>
+</email:content>
+</email:body>
+</email:send>
+</flow>
+</mule>
+----
 == See Also
 
+* xref:int-work-with-code-snippets.adoc[]
 * xref:int-create-integrations-ai.adoc[]
 * xref:acb-components.adoc[]
+* xref:int-create-secure-configs.adoc[]
