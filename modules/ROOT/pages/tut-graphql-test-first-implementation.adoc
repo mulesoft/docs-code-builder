@@ -1,10 +1,11 @@
 = Test Your GraphQL Implementation
+:page-deployment-options: cloud-ide, desktop-ide
 :imagesdir: ../assets/images
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 With a scaffolded project, run your application locally and test the endpoints of your Mule application.
 
@@ -59,7 +60,7 @@ image::ports-panel-local-address-8081.png[]
 [NOTE]
 --
 The URL to ping varies depending on the webIDE instance ID. It follows the format `+https://<web-IDE-instance>/proxy/<port-you-configured-on-your-listener>/+`. In this case, because you are pinging the 8081 port, your URL is `+https://<web-IDE-instance>/proxy/8081/+`.
-See xref:ping-locally-deployed-app.adoc[] for more information.
+See xref:int-trigger-flows.adoc[] for more information.
 --
 . Using `curl`, create a `POST` request to the local address, adding the `/graphql` path: `+https://<web-IDE-instance>/proxy/8081/graphql+`, and the `proxysession` cookie:
 +

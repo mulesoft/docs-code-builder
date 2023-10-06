@@ -1,10 +1,11 @@
 = Getting Started with Anypoint Code Builder
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: setup.adoc, connect-eu-cloud.adoc, load-acb-web-ide.adoc, log-in-anypoint-platform.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studio Code. Both the desktop and cloud IDEs for Anypoint Code Builder share these extensions. The cloud IDE provides built-in extensions to the code-server implementation of Visual Studio Code for the web.
 
@@ -18,10 +19,19 @@ Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studi
 
 The desktop-based IDE extensions in Anypoint Extension Pack are available from the Visual Studio Marketplace.
 
-Before you begin: +
-Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, an Anypoint Extension Pack extension (Anypoint Code Builder - API Extension) depends on this requirement. 
+* <<install-pack>>
+* <<update-pack>>
+
+=== Before You Begin Desktop IDE Setup
+
+Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, some Anypoint Extension Pack extensions depend on this requirement.  
 
 For information about OS and system compatibility, see xref:acb-release-notes.adoc[].
+
+[[install-pack]]
+=== Install Anypoint Extension Pack
+
+To install the Anypoint Extension Pack into the desktop IDE: 
 
 . Open VS Code. 
 . Find *Anypoint Extension Pack* from the desktop IDE or from https://marketplace.visualstudio.com/items?itemName=salesforce.mule-dx-extension-pack[Visual Studio Marketplace^].
@@ -29,34 +39,27 @@ For information about OS and system compatibility, see xref:acb-release-notes.ad
 [NOTE] 
 .To avoid installation errors:
 ==== 
-* For the Beta release, install the _pre-release_ version of the extension pack.
-+
-Attempting to install the _release_ version produces the error `Can't install release version of 'salesforce.mule-dx-extension-pack' extension because it has no release version.`  
-
-* Do not install the individual Anypoint Code Builder extensions that are also available separately from the marketplace.
+Do not install the individual Anypoint Code Builder extensions that are also available separately from Anypoint Extension Pack in Visual Studio Marketplace.
 ====
 
 * To install from the desktop IDE, launch the Extensions menu by clicking the Extensions icon from the activity menu or pressing Cmd+Shift+x (Mac) or Ctrl+Shift+x (Windows), and search for the extension pack.
 +
-image::acb-setup-desktop-extensions-ide.png["Installing Anypoint Extension Pack from VS Code Marketplace"]
-+
-Select *Install Pre-Release Version*.
+Select *Install Release Version*.
 
 * To install from the Visual Studio Marketplace website, find the extension pack, and install:
 +
-image::acb-setup-desktop-extensions.png["Installing Anypoint Extension Pack from VS Code Marketplace"]
-+
-Select *Install Pre-Release Version*.
+Select *Install Release Version*.
 +
 For additional guidance, see the https://code.visualstudio.com/learn/get-started/extensions[Visual Studio Code website^].
 . Open the Extensions menu, and review the extensions in Anypoint Extension Pack:
 +
-image::acb-setup-extensions-list.png[]
-+
+//TODO: FOR GA NEW IMAGE FOR NEEDED
+//image::acb-setup-extensions-list.png[]
+//+
 Anypoint Extension Pack contains these extensions:
 
 * Anypoint Code Builder - API Extension
-* Anypoint Code Builder - APIKit Extension
+* Anypoint Code Builder - APIkit Extension
 * Anypoint Code Builder - DataWeave Extension
 * Anypoint Code Builder - Dependencies Extension
 * Anypoint Code Builder - Integration Extension
@@ -70,94 +73,92 @@ image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder i
 
 . Check that the IDE loads the <<acb-menu, Anypoint Code Builder menu>> with *Quick Actions* and *Documentation* links.
 
+. If you work in the EU region and your Anypoint Platform account resides in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud*. 
++
+For guidance, see <<change-clouds>>. 
+
 //TODO: TROUBLESHOOTING IF IT DOESN'T LOAD
 
+[[update-pack]]
+=== Update Anypoint Extension Pack 
+
+If Anypoint Extension Pack is installed on your desktop IDE, update to the latest version of the extension pack by following VS Code instructions in https://code.visualstudio.com/docs/editor/extension-marketplace#_update-an-extension-manually[Update an extension manually^].
+
 [[set-up-web]]
-== Cloud IDE Access
-
-Anypoint Code Builder is available on separate US and EU cloud hosts for Anypoint Platform. To help your organization meet emerging regulatory requirements that differ by region, Anypoint Platform does not share organization information, permissions, account data, or API and Mule projects between US and EU hosts. 
-
-* US Cloud: 
-+
-MuleSoft hosts this control plane within data centers in the United States.
-* EU Cloud: 
-+
-MuleSoft hosts this control plane within EU (Dublin) data centers. 
-
-If you have an account in one cloud but need to work in another, you must create an account in that cloud to create and work on your projects. In addition to hosting your cloud-specific projects, Anypoint Platform also hosts deployment targets for managed runtimes and related data, including data and metadata about your Mule implementations.
-
-Your cloud IDE environment is associated with your user account, which other users cannot access. The environment has a unique URL that only you can access. To share a project that you are working on with your team, do not attempt to share the URL with others. Instead, xref:package-mule-application.adoc[export] a Mule project to a sharable JAR file, xref:des-publish-api-spec-to-exchange.adoc#publish-an-api-to-exchange[publish] your API specification project or fragment to Anypoint Exchange, or store shared work in a git repository. 
-//TODO: LINK TO INFO ON GIT SETUP - COMING SOON
-
-See xref:hosting-home::index.adoc[] for more information.
-
-=== Before You Begin
-
-* Anypoint Platform requires a user account. You can use an existing account or create one. Trial accounts are allowed. 
-
-* An administrator with an Anypoint Platform organization account must provide you with access to Anypoint Code Builder. See xref:configure-permissions.adoc[Configure Permissions]. 
-+
-Organization Administrators for Anypoint Platform are allowed to add the permission to your user account or to the team to which your user account belongs. 
-
-//TODO: REQUIRES EDITS AND POSSIBLE REVAMP
 == Launch the Cloud IDE 
 
-. Log in to Anypoint Platform:
-+
-You must use the URI for the host that contains your user account, which is associated with a specific business organization and Anypoint Platform host. The accounts and business organizations are not shared across the hosts. 
-+
-Anypoint Platform is hosted on EU-compliant and U.S. instances: 
+Launch the cloud IDE from Anypoint Platform. Your Anypoint Platform user account and business organization are hosted in the US or EU cloud and are not shared across the hosts.
 
-* https://anypoint.mulesoft.com/login/[anypoint.mulesoft.com^] for the U.S. host (supports all non-EU regions)
-* https://eu1.anypoint.mulesoft.com/login[eu1.anypoint.mulesoft.com^] for the EU-compliant host 
+=== Before You Begin 
 
-. Accept any terms and conditions for use of Anypoint Platform.
-. Click *Launch Cloud IDE*.
+Meet prerequisites before attempting to launch the cloud IDE: 
+
+* Anypoint Platform requires a user account. You can use an existing account or create one. Unexpired trial accounts are allowed. 
+
+* An administrator with an Anypoint Platform organization account must provide you with access to Anypoint Code Builder. See xref:configure-permissions.adoc[Configure Permissions]. 
+
+* Review important open beta information:
 +
-After provisioning of your cloud IDE is complete, the IDE opens. The provisioning process can take a few minutes.
-. Click the MuleSoft icon in the activity bar to see and use Anypoint Code Builder features.
-//TODO: ADD SCREENSHOT HERE OR SOMEWHERE ELSE THAT MAKES SENSE
-
 [WARNING]
 --
+The cloud IDE remains in an open beta period. 
+
 During the open beta, your cloud IDE instance might get deleted, causing you to lose your integrations, automations, and APIs.
 
+.Click for more information:
+[%collapsible]
+====
 To save your work, you must either deploy your Mule projects to CloudHub, commit them to source control, or publish your API specifications to Design Center.
 
 If you are using an Anypoint Platform trial account that loses access to Anypoint Code Builder after your trial expires, the cloud IDE instances are deleted.
 
-Do not use Anypoint Code Builder to develop APIs, integrations, or automations for production environments.
+Do not use the beta version of Anypoint Code Builder to develop APIs, integrations, or automations for production environments.
+====
 --
 
-//TODO: REQUIRES EDITS AND POSSIBLE REVAMP
+=== Open the Cloud IDE from Anypoint Platform
+
+To launch the cloud IDE:
+
+. Log in to Anypoint Platform:
+
+* https://anypoint.mulesoft.com/login/[anypoint.mulesoft.com^] for the U.S. host (supports all non-EU regions)
+* https://eu1.anypoint.mulesoft.com/login[eu1.anypoint.mulesoft.com^] for the EU-compliant host 
++
+If you have an account in one cloud but need to work in another, you must create an account in that cloud to create and work on your projects. 
+
+. Accept any terms and conditions for use of Anypoint Platform.
+. Click *Launch Cloud IDE*.
++
+image::acb-launch-cloud-ide.png["Launch button for the cloud IDE in Anypoint Platform"]
++
+After provisioning of your cloud IDE is complete, the IDE opens. The provisioning process can take a few minutes.
++
+Your cloud IDE environment is associated with your user account. The cloud environment also has a unique URL that only you can access and that is _not_ embedded within the Anypoint Platform UI. You can reopen your cloud IDE directly from that URL or relaunch it indirectly from Anypoint Code Builder in Anypoint Platform.
+. Click the MuleSoft icon in the activity bar to see and use Anypoint Code Builder features.
+
 == Log in to Anypoint Platform from the IDE
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+Some Anypoint Code Builder features require you to log in directly from the IDE to Anypoint Platform. The IDE prompts you when login is necessary and guides you through the login process. However, it is a good practice to log in from the IDE after opening MuleSoft features in the IDE. 
 
-//LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
-
-Some Anypoint Code Builder features require a connection from the IDE to Anypoint Platform. Log in to Anypoint Platform, either from the Anypoint Code Builder IDE when you work from the web or from your desktop IDE for Anypoint Code Builder. 
-
-The status bar shows your login status.
+The status bar in the IDE shows your login status:
 
 * *Not logged in to Anypoint Platform* indicates that you must log in to perform tasks that require a connection to Anypoint Platform. 
 +
-image::acb-not-logged-in.png[]
+image::acb-not-logged-in.png["Login status message in the status bar"]
++ 
+You can log in by clicking this notification and following the prompts to log in.
 * A link to your user name indicates that you are logged in.
++
+You can log out by clicking your user name and following the prompts.
 
-//TODO: DO WE HAVE A LIST OF FEATURES THAT DO AND DON'T REQUIRE LOGIN? AND IS THERE A WAY TO CREATE A SHORT LIST?
+You can also use the Command Palette to log in to Anypoint Platform. 
 
-=== Before You Begin
+To log in from the IDE from the Command Palette:
 
-include::partial$acb-prereq-login.adoc[]
-
-
-=== Log in to Anypoint Platform from the IDE
-
-In the web and desktop IDEs, use the Command Palette in Anypoint Code Builder to log in: 
-
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select the following command:
 +
 [source,command]
 ----
@@ -178,3 +179,22 @@ After logging you in, Anypoint Platform displays a *You can close this page now*
 +
 . To verify your login, ensure that *<your-username>* replaces *Not logged in to Anypoint Platform*. 
 
+[[change-clouds]]
+== Set the Desktop IDE to the EU or US Cloud
+
+In the desktop IDE, you can change your Anypoint Platform control plane to the US or EU Cloud. Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:start-acb.adoc#cloud-hosts[US and UE Cloud Hosts]. 
+
+. If an API specification is open in the Explorer, close the project to avoid a synchronization error when you switch clouds. 
++
+* Desktop IDE: Select *File* > *Close Folder* 
+* Cloud IDE: Select the menu icon > *File* > *Close Folder*
+
+. Open the Settings tab from the activity bar in the desktop IDE:
++
+image::acb-activity-bar-select-cloud.png["Selecting the EU Cloud from the Desktop IDE"]
+
+* From the Anypoint Code Builder panel, click the *Open ACB Settings* (gear) icon.
+* From the activity bar, click the *Manage* (gear) icon, select *Settings*, and search for `mule` in the *Settings* tab.
+
+. Scroll to *Mule: Control Plane*.
+. Select the US or EU Cloud.

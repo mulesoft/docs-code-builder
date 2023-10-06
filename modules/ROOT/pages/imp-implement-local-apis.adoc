@@ -1,100 +1,119 @@
-= Iteratively Design and Implement API Specs
+= Iteratively Design and Implement APIs
+:page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 // local-api-specification-tutorial
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 include::partial$acb-reusable-steps.adoc[tags="in-progress"]
 
 
-Using Anypoint Code Builder, you can scaffold an API specification into an interface project without first publishing it to Anypoint Exchange.
-As you make changes, you sync changes in the interface project by re-scaffolding the spec.
+Using Anypoint Code Builder, you can scaffold an API specification into a new integration project without first publishing the API to Anypoint Exchange.
+As you make changes, you sync changes in the project by re-scaffolding the spec.
+For example, after adding a new endpoint to your API spec,
+you re-scaffold to add a new flow for that endpoint to the configuration XML file.
 
-For example, after adding a new endpoint to your API specification,
-you can re-scaffold to add a new flow for that endpoint to the configuration XML file.
+After syncing the API spec and related Mule project, you can modify the API specification and implement changes simultaneously.
 
-Implementing a local API enables you to reflect your changes to your API design directly into the Mule project that implements your API specification.
+By using this method to implement the API, you reflect your changes to your API design directly into the interface in your Mule project.
+Iterating between API design and implementation tasks speeds up the development process.
 
-After the API specification and the related Mule project are synced, you can modify the API specification and implement changes simultaneously.
+When you're ready, publish your API specification to Exchange and deploy your Mule project.
 
-
-When you are ready, you can publish your API specification to Exchange and deploy your Mule project.
-
-== Overview of the Scaffolding Process
-
-When you scaffold an API, Anypoint Code Builder creates a _multi-root workspace_ in VS Code with both the API specification and interface project and keeps them synchronized.
-
-
-By iterating between the API design and implementation tasks you can speed up the development process.
-
-
-When you scaffold your API specification into a new interface project,
+When you scaffold your API specification into a new integration project,
 Anypoint Code Builder creates a configuration XML for your implementation.
 
+////
 Local projects reside in the Anypoint Code Builder IDE, whether the projects are in your desktop IDE or in the cloud IDE associated with your user account in Anypoint Platform.
 
 . You define an API in a specification file.
-. You scaffold the API by implementing the local API.
+. You implement the API.
 . The scaffolding process creates the interface XML file in a Mule project.
+////
 
-Iterative API design and implementation within the IDE takes place in a _multi-root workspace_ in VS Code.
-To map project folders for your API specification and implementation projects into a multi-root workspace, VS Code uses a file with the extension `.code-workspace`.
-For your projects to work properly, this file _must not reside within_ either project folder.
+== Multi-root Workspace Considerations
+
+When you scaffold an API, Anypoint Code Builder creates a _multi-root workspace_ in VS Code 
+with both the API spec and integration projects and keeps them synchronized.
+
+VS Code uses a file with the extension `.code-workspace` to store your multi-root workspace.
+This file maps the folders for your API spec and implementation projects.
+
+[IMPORTANT]
+For your projects to work properly, the `.code-workspace` file _must not reside_ within either project folder.
+
 In addition, Anypoint Code Builder permits only one pair of iterative design and implementation project folders per multi-root workspace.
 
-The procedures for creating the specification and implementation projects are designed to meet these requirements. For information in the VS Code documentation, see https://code.visualstudio.com/docs/editor/multi-root-workspaces[Multi-root Workspaces^].
+For more information, see https://code.visualstudio.com/docs/editor/multi-root-workspaces[Multi-root Workspaces^] in the VS Code documentation.
 
 
 == Before You Begin 
 
-* xref:setup.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create and test your API specification].
-// or import from Design Center?
 
+[[scaffold-spec-into-project]]
+== Scaffold an API Spec into a New Implementation Project
 
-== Scaffold an API Spec into a New Interface Project
-
-To scaffold the current API spec into a new interface project:
+To scaffold the current API spec into a new implementation project:
 
 . Click the image:icon-implement-api.png["",15,15] (*Implement this local API*) icon in the activity bar:
 +
-image::imp-local-api.png[Implement this local API icon in the activity bar]
+image::imp-local-api.png["Implement this local API icon in the activity bar"]
 +
-Alternatively, use the Command Palette:
+Alternatively, use the Command Palette.
 +
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+.Show me how
+[%collapsible]
+====
+. Open the Command Palette
+
+** Use the keyboard shortcuts
+*** Mac: Cmd+Shift+p
+*** Windows: Ctrl+Shift+p
+** From the desktop IDE, select *View* > *Command Palette*. 
+** From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
+
 . Select the following command:
 +
 [source,command]
-----
+--
 MuleSoft: Implement this Local API
-----
+--
+====
+
+. At the prompt, click *OK*:
++
+image::imp-local-workspace-prompt.png["Create workspace prompt"]
 +
 Anypoint Code Builder creates a multi-root workspace with your API specification and Mule project. 
 In the multi-root workspace, you can work with both your API specification and Mule project folders at the same time.
 +
 After the workspace is created, Anypoint Code Builder builds and packages the API specification and publishes it to a local Maven repository as a snapshot.
-. Choose a location to store your workspace.
-+
-Your multi-root workspace is a `.code-workspace` file extension that keeps both of your directories coordinates.
+. Choose your home directory as the location to store your workspace.
 +
 [IMPORTANT]
 --
-Save your `.code-workspace` file on your home directory. Do not save it inside your API specification folder.
+Do not accept the default location.
+
+Save your `.code-workspace` file in your home directory. Do not save it in your API specification folder.
 --
 . Choose a project name for your Mule project.
 . Choose a location for your Mule project.
-. Code Builder scaffolds your current local API specification into a new Mule project.
 
-You can now start iterating between your API specification and its related Mule project.
+Anypoint Code Builder scaffolds your current local API specification into a new Mule project.
+
+Both the API spec and the Mule project open in your IDE and you can work on both in the Explorer view.
+
+// screenshot here
 
 To close your multi-root workspace, see <<close-workspace>>. 
 
 
+[[rescaffold-api-spec]]
 == Re-Scaffold the API Spec
 
 After making changes to your API spec, re-scaffold the spec to update your Mule project:
@@ -111,8 +130,6 @@ MuleSoft: Re-scaffold this local API
 ----
 +
 After receiving a message that your project *has been rescaffolded successfully*, navigate to your implementation XML file, and notice the new flow (`<flow name="get:\users\userbyid:design-an-api-config"/>`) for the `userbyid` endpoint:
-
-
 
 
 
@@ -150,7 +167,7 @@ File: Open Workspace from File...
 ----
 . Navigate to and double-click the `.code-workspace` file for projects in the workspace.
 +
-The projects open in the Explorer view, and the heading for the multi-root-workspace appends a *(WORKSPACE)* identifier. For example:
+The projects open in the Explorer view, and the heading for the multi-root-workspace appends a *(WORKSPACE)* identifier, for example:
 +
 image::tut-api-multiroot-workspace.png["A multi-root workspace in the Explorer"]
 

@@ -1,78 +1,84 @@
 = Discovering the UI
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: learn-ui-elements.adoc, customize-look-and-feel.adoc, 
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Get familiar with the Anypoint Code Builder UI and elements to design, develop, and deploy APIs and integrations.
 
-== Welcome Mat
-
-To access the welcome mat, select the Anypoint Code Builder view:
-
-image::anypoint-code-builder-view.png[]
-
-Then click the Show Welcome icon on the Anypoint Code Builder view:
-
-image::show-welcome-button.png[]
-
-image::welcome-mat-reference.png[]
+image::welcome-mat-reference.png["Welcome mat in the Anypoint Code Builder IDE"]
 
 [calloutlist]
-. *Show Welcome*: Shows the welcome mat with links to the tutorials.
-. *Getting Started*: Contains links to the main tasks.
-. *Help*: Contains links to the documentation.
-. *Tutorial*: Contains links to tutorials and walkthroughs.
+. *Activity Bar*: Use VS Code Activity Bar items as you work on your projects. Mouse over the items to find their names:
++
+image:acb-activity-bar-buttons.png["Activity Bar buttons"]  
++
+In addition to Anypoint Code Builder (MuleSoft icon), commonly used items in the Activity Bar include:
++
+* *Explorer*: Open project files and folders.
+* *Source Control*: Store your project files.
+* *Run and Debug*: Run and debug integrations and implementations.
+* *Extensions*: Open for installations and updates in the desktop IDE.
++
+You can change the order of the items in your activity bar. 
 
+. *Anypoint Code Builder* (MuleSoft icon): Open the *Anypoint Code Builder* panel to start a project. Follow the tutorials to get started with API specification design, implementation, and integration development in Anypoint Code Builder.
+. *Quick Actions*: Start an API specification, implementation, or integration project.
+. *Settings*: Set Anypoint Code Builder configurations, including the xref:index.adoc#us-eu-clouds[US or EU cloud] for your IDE. Select the cloud where your Anypoint Platform user account resides.
 
-== IDE
+== Compare Project UIs in the IDE 
 
-The web and desktop IDEs divided into the following areas:
+The UIs of the web and desktop IDEs share the same structure. 
 
-image::ui-elements.png[Anypoint Code Builder UI overview highlighting five main areas.]
+Integration and implementation projects are Mule applications with similar UIs:
 
+image::ui-elements.png["Anypoint Code Builder UI with integration project"]
 [calloutlist]
-. *Activity Bar*: Located on the far left side, the Activity Bar enables you to switch between views and gives you additional context-specific indicators, like the number of outgoing changes when you've enabled source control management.
-. *Editor*: The main area to edit your integration and implementation files. You can open as many editors as you like and arrange them side by side, as well as vertically and horizontally.
-. *Panels*: You can display different panels below the editor to see output and debug information and errors and warnings, or to use the integrated terminal.
-. *Status Bar*: Displays information about the opened project and the files you edit.
-. *Side Bar*: Contains different views like the Explorer to assist you while working on your Mule project.
+. *Explorer*: Open a workspace for your project.
+. *Editors*: Develop your project in the canvas UI and configuration XML files. Configuration XML files support <<use-autocomplete, auto-completion>>. 
+. *Status Bar*: Check for your user name to learn if you are logged in to Anypoint Platform. 
+. *Output Panel*: As your projects run in Anypoint Code Builder, view output and logs from *Mule DX Server*. Open the built-in command terminal. View problems and ports.
++
+See xref:int-developing-integrations.adoc[] and xref:imp-implementing-apis.adoc[] for more detail.
 
-//TODO: VERIFY STEPS ON THEMES, CONSOLIDATE, SIMPLIFY IF POSSIBLE
+API design projects include a service for mocking endpoints in the API Console: 
+
+image::ui-elements-api.png["Anypoint Code Builder UI with integration project"]
+[calloutlist]
+. *Editor*: Configure API specification project files. This editor supports <<use-autocomplete, auto-completion>>. 
+. *API Console*: Test endpoints on your examples.
++
+See xref:des-designing-api-specs.adoc[] for more detail.
+
+[[use-autocomplete]]
+== Use IntelliSense to Auto-Complete in the Editors
+
+Anypoint Code Builder uses IntelliSense, a built-in code-completion feature of VS Code, 
+to provide auto-completion in Editor views.
+
+. In the Editor view, press Ctrl+Space to display available options.
+. Enter a search term to narrow the results, for example:
++
+image::des-autocomplete.png[Auto-complete options for `get`]
++
+IntelliSense shows different options, depending on the context, for example:
++
+image::des-autocomplete-context.png[Auto-complete options for `responses`]
+. Use the arrow keys to navigate the list.
+. Press Enter or Tab to insert the selected element.
++
+Auto-complete adds the element to the code and places the cursor for you to add values.
+
+For more information, see https://code.visualstudio.com/docs/editor/intellisense[IntelliSense^] in the VS Code documentation.
+
 == Change the Look and Feel of the IDE
 
-Select a new theme to change the look and feel of the desktop or cloud IDE.
+Select a theme to change the look and feel of the desktop or cloud IDE.
 
-=== Select a Different Theme from the Cloud IDE
-
-To change your Anypoint Code Builder theme:
-
-. Navigate to your menu and select *Help* > *Get Started*.
+. Select the *Manage* (gear) icon from the activity bar.
+. Select *Themes* > *Color Themes*, and select a theme. For example, *Dark Modern*:
 +
-image::toggle-get-started.png[]
-. Select *Get Started with VS Code in the Web*.
-+
-image::get-started-vs-code-web.png[]
-. Use the *Choose the look you want* option to select your preferred theme.
-+
-image::browse-themes.png[]
-
-== Select a Different Theme from the Desktop or Cloud IDE
-
-Locate options for themes through the Command Palette: 
-
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
-+
-[source,command]
-----
-Welcome: Open Walkthrough...
-----
-. In the Command Palette, provide the following command to open the *Get Started with VS Code* screen:
-+
-[source,command]
-----
-Get Started With VS Code
-----
-. Select a theme from the *Get Started with VS Code* screen.
+image::acb-ui-dark-theme.png["IDE using the dark theme"]

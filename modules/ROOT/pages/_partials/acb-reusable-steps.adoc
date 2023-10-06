@@ -102,7 +102,90 @@ Snippets: Configure User Snippets
 // end::open-ide[]
 
 
+// tag::close-project[]
+// Pointer to Close Project
+.Show me how
+[%collapsible]
+====
+* From the desktop IDE, select *File* > *Close Folder*. 
+* From the cloud IDE, click the menu icon, and select *File* > *Close Folder*.
+====
+// end::close-project[]
+
+
+// tag::platform-urls[]
+// Pointer to Platform URLs
+.Show me how
+[%collapsible]
+====
+* US Cloud (non-EU host): https://www.anypoint.mulesoft.com/login/[Anypoint Platform (US)^]
+* EU Cloud (EU host): https://eu1.anypoint.mulesoft.com/login/[Anypoint Platform (EU)^]
+====
+// end::platform-urls[]
+
+// tag::exchange-urls[]
+// Pointer to Exchange URLs
+.Show me how
+[%collapsible]
+====
+* US Cloud (non-EU host): https://www.anypoint.mulesoft.com/exchange/[Exchange (US)^]
+* EU Cloud (EU host): https://eu1.anypoint.mulesoft.com/exchange/[Exchange (EU)^]
+====
+// end::exchange-urls[]
+
+
+
+
+// tag::no-project-name-reuse[]
+// Cannot reuse project name
+To reuse an existing project name, you must delete the project first. See
+xref:des-delete-api-projects.adoc[].
+// end::no-project-name-reuse[]
+
+// tag::ref-element[]
+// Reference an Element
+. To reference an element within a component defined in the fragment file:
++
+--
+.. Select the fragment file name.
+.. Enter `#/`.
+.. Press Ctrl+Space.
+.. Select the element from the options, for example:
++
+image::des-api-frag-ref-element.png["Reference an element in the fragment"]
+--
+// end::ref-element[]
+
+// tag::after-add-fragment[]
+// After Adding Fragment
+After adding the fragment to your spec, you can:
+
+* Navigate to the dependency:
++
+Place the cursor on the fragment reference and press Command+Click.
+For example:
++
+image::des-api-frag-goto-dependencies.png["Navigate to the fragment dependency"]
+* View the dependency in the API Console:
++
+Place the cursor on the fragment reference and click the 
+image:icon-api-console.png["",14,14] (*API Console*) icon to open the fragment in the console.
++
+For more information, see xref:des-create-api-specs.adoc#review-spec-console[Review Your Spec in the API Console].
+// end::after-add-fragment[]
+
+
+
+
 // tag::in-progress[]
 // In Progress
 This topic is in progress.
 // end::in-progress[]
+
+
+// tag::proj-directory-warn[]
+// Project Directory warning
+Don't create the project within another project directory.
+// end::proj-directory-warn[]
+
+
