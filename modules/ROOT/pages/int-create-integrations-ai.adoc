@@ -13,8 +13,18 @@ Before you start creating your integration using Generative Flows:
 * Ensure that you have the following permissions to use the Generative Flow feature:
 ** Anypoint Code Builder Developer
 ** Mule Developer Generative AI User
+
+== Access Einstein
+
+There are two ways to open Einstein:
+
+* When you create a new integration project, click the *Start with AI* card in the flow canvas. 
 +
-If you see the *Start with AI* card in the canvas when you start building a new integration, you have the correct permissions.
+image::int-start-with-ai-card.png[Start with AI or Open Einstein card]
+
+* Click the Einstein icon in the toolbar. 
+
+image::int-einstein-icon-toolbar.png[Arrow pointing to Einstein icon in the toolbar]
 
 [[create-integration-project]]
 == Create a New Integration Project
@@ -42,14 +52,14 @@ For example, if the project name is "My Integration", the name of the folder for
 +
 . Click *Create Project*.
 +
-The flow builder canvas appears with the following starting cards, *Start with AI* and *Start From Scratch*:
+The flow builder canvas appears with the following starting cards: 
 
 image::int-gen-flow-starting-cards.png[Starting cards on new project canvas]
 
 You can either:
-
-* Click *Open Einsten* in the *Start with AI* card to use the generative flow feature.
-* Click the *Build a flow* in the *Start From Scratch* card to begin building your flow from scratch.
+[callout list]
+. Click *Open Einsten* in the *Start with AI* card to use the generative flow feature.
+. Click *Build a flow* in the *Start From Scratch* card to begin building your flow from scratch.
 
 [[craft-ai-prompt]]
 == Craft Your Prompt
@@ -124,19 +134,21 @@ Rating the flow that's created for you helps Einstein learn so that over time, t
 . Inspect the generated code, and if you are satisfied, click the insert code icon to insert the code in to your flow. 
 +
 If you aren't satisfied with the generated flow, reword your prompt and send it again. 
-//probably need screenshot
-. After the code is inserted, the initial flow is built and the visual representation of the flow is displayed in the canvas next to the XML code tab. 
-+
-The error icon is displayed for components that require further configuration. 
-+
-To determine where the error is, select the component in the canvas.
-Anypoint Code Builder highlights the location of the error within the configuration XML.
-
 
 [[customize-gen-flow]]
 == Complete Your Flow
 
 Generative Flow builds the initial flow for you so that all you need to do is fill in the information that's specific to your configuration. 
+
+. After you inspect the code for your generated flow, click the Insert icon. 
++
+After the code is inserted, the initial flow is built and the visual representation of the flow is displayed in the flow canvas next to the XML code tab. 
++
+The error icon is displayed for components that require further configuration. 
+. To determine where the error is, select the component in the canvas.
++
+Anypoint Code Builder highlights the location of the error within the configuration XML.
+. 
 
 
 
