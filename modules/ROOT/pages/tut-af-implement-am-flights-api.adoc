@@ -1,11 +1,12 @@
 = Implementing the American Flights API Spec
 //ACB UI links to ui-tut-implement.adoc (DO NOT REMOVE)
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: ui-tut-implement.adoc, implement-api-specification.adoc, implement-an-api-specification.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Import your American Flights API specification from Anypoint Exchange. Scaffold the specification into the American Flights project that you are developing, and add the logic to implement an endpoint in the API.
 
@@ -55,7 +56,7 @@ image::scafolded-mule-config-file.png["American-flights.xml file highlighted in 
 [[tour-canvas]]
 == Tour the Interface File
 
-Examine the scaffolded flows and error handlers for your interface in the UI canvas and configuration XML.
+Examine the scaffolded flows and error handlers for your interface in the canvas UI and configuration XML.
 
 image::scafolded-flow-canvas.png["The main flow is highlighted"]
 
@@ -66,7 +67,7 @@ image::outline-list-select-flow.png["American-flights-api-main flow highlighted"
 
 .. Expand the *Flow List* panel.
 .. Select a flow from the list.
-.. Click the flow in the UI canvas to highlight the flow in the configuration XML.
+.. Click the flow in the canvas UI to highlight the flow in the configuration XML.
 . In the configuration XML, locate the flows created for the endpoints in your API specification:
 
 * `get:\flights`
@@ -207,5 +208,5 @@ image::get-flights-select-listener.png["HTTP listener highlighted in the impleme
 --
 . Optional: Trigger a flow through your interface, and process the request with your implementation.
 +
-For guidance, see xref:ping-locally-deployed-app.adoc[].
+For guidance, see xref:int-trigger-flows.adoc[].
 . Proceed to xref:tut-af-debug-am-flights.adoc[]

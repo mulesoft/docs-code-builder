@@ -1,10 +1,11 @@
 = Addressing DataWeave Errors
+:page-deployment-options: cloud-ide, desktop-ide
 // :page-aliases: dataweave-execution-preview.adoc, dataweave-validations.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 When your DataWeave code contains a syntactic or semantic error, Anypoint Code Builder highlights the error and offers a suggested fix.
 
@@ -15,10 +16,9 @@ include::partial$dw-dependency-warning.adoc[]
 
 == Before You Begin
 
-* xref:setup.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
-* xref:int-use-dw-to-transform-data.adoc[Use DataWeave to transform data].
-
+* xref:int-use-dw-to-transform-data.adoc[Use the DataWeave language].
 
 == Example: Fix an Undefined Function Error
 
@@ -26,11 +26,11 @@ Anypoint Code Builder flags undefined functions automatically.
 
 For example, in this code, DataWeave flags an error with `toUpper`:
 
-image::dw-error.png[]
+image::dw-error.png["Undefined function error"]
 
 When you place your cursor on the function, DataWeave provides information about the error:
 
-image::undefined-function.png[]
+image::undefined-function.png["Information about the undefined function error"]
 
 To fix this issue:
 
@@ -62,8 +62,8 @@ fun toUpper(param0: String) = ???
 
 To preview the result of your function, place the cursor within your DataWeave code, click the *Show Code Actions* icon, and then click *Run Preview*:
 
-image::function-validation-run-preview.png[]
+image::function-validation-run-preview.png["Run Preview"]
 
 Anypoint Code Builder opens a new *Preview Output* tab with the result of the function:
 
-image::dataweave-function-preview-output.png[]
+image::dataweave-function-preview-output.png["Preview Output tab]

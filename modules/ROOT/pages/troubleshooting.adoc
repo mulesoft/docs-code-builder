@@ -1,15 +1,70 @@
 = Troubleshooting
+:page-deployment-options: cloud-ide, desktop-ide
+:page-aliases: manage-web-ide-instance.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Troubleshoot errors and warnings you receive when using Anypoint Code Builder.
-// TODO: We should add the "MuleSoft: Export Troubleshooting Information" topic.
+Troubleshoot errors and warnings you receive when using Anypoint Code Builder:
 
 * xref:troubleshoot-loading-errors.adoc[]
 * xref:troubleshoot-mule-runtime-errors.adoc[]
+* xref:troubleshoot-authentication-errors.adoc[]
++
+For other issues and workarounds, see xref:acb-release-notes.adoc#known-issues[Known Issues] in the Anypoint Code Builder Release Notes.
+* xref:troubleshoot-deploy-errors.adoc[]
 
+For tasks that support the troubleshooting process, see:
 
-For other issues and workarounds, see xref:acb-release-notes.adoc#known-issues[Known Issues] in Anypoint Code Builder Release Notes.
+* <<export-troubleshooting-info>>
+* <<manage-cloud>>
+
+[[export-troubleshooting-info]]
+== Export Troubleshooting Information
+
+If the MuleSoft support team requests troubleshooting information about your project, export a compressed file that contains your project's workspace folders, logs, and information about environment variables, CPU, operating system, and system properties.
+
+//step to open command palette:
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide this command:
++
+[source, command]
+----
+MuleSoft: Export Troubleshooting Information
+----
+. When you receive a notification about the information that the command extracts, click *Continue*. 
++
+When the process is complete, the IDE shows this message:
++
+----
+Collecting information...: Generating compressed file
+----
+. Click *Open folder* to locate the file. 
++
+The command places the file in your home directory. The filename has the prefix `acb-troubleshooting`. For example, `/Users/me/acb-troubleshooting-w9ffppmq.tar.gz`.
+. Provide a copy of the file to the support team. 
+
+[[manage-cloud]]
+== Manage Your Cloud IDE Instance
+
+Manage your cloud IDE instance directly from the Anypoint Code Builder in Anypoint Platform.
+
+image::web-ide-management-central-page.png["Cloud IDE management page"]
+
+[calloutlist]
+. *Version and IDE Details*: 
++
+Shows the version of your Anypoint Code Builder cloud IDE instance. You can hover over *View IDE Details* to view some internal details about your cloud IDE instance:
+* *Image*: The ID of the image of your cloud IDE instance.
+* *URL*: The URL to directly access your cloud IDE instance. +
+This URL is necessary to ping your locally deployed Mule application when debugging.
+* *Created at*: Date and time of the creation of the cloud IDE instance.
+. *Reboot*: Button for rebooting your cloud IDE instance.
+. *Delete*: Button for deleting your cloud IDE instance.
++
+[WARNING]
+--
+Deletion is permanent and cannot be undone. The process removes all the projects hosted on the IDE instance.
+--

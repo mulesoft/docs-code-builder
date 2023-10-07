@@ -1,10 +1,11 @@
 = Debugging the American Flights App
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: debug-add-logger-set-variables.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Debug your American Flights interface and implementation. 
 
@@ -143,7 +144,7 @@ After starting your debugging session:
 * From the desktop IDE: `+http://localhost:8081/api/flight+`
 * From the cloud IDE: `+https://<web-IDE-instance>/proxy/8081/api/flight+`
 +
-Notice the `_/api/flight_` in the URI for the listener in the interface. For more guidance with URIs, see xref:ping-locally-deployed-app.adoc[].
+Notice the `_/api/flight_` in the URI for the listener in the interface. For more guidance with URIs, see xref:int-trigger-flows.adoc[].
 . In your American Flights project, notice that the execution of the app stops at your first breakpoint.
 +
 image::debug-stop-at-flow-ref.png[]
