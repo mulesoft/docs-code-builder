@@ -11,7 +11,7 @@
 //     Short description of the form "Do something..." 
 //     Example: "Configure log messages anywhere in a flow."
 
-Ensures that only unique messages continue through a flow execution by checking the unique ID of the incoming message.
+Ensure that only unique messages continue through a flow execution by checking the unique ID of the incoming message.
 
 //end::component-short-description[]
 //
@@ -131,7 +131,7 @@ SNIPPET_XML_HERE
 
 == Examples
 
-The following examples show how to configure an Idempotent Message Validator to extract an ID from an HTTP request to use as a the unique identifier and how to hash the payload using a DataWeave expression and use the message ID as the unique identifier. 
+The examples show how to configure an Idempotent Message Validator to extract an ID from an HTTP request for use as a unique identifier and how to hash the payload using a DataWeave expression and use the message ID as the unique identifier. 
 
 //end::component-examples-title[]
 //
@@ -141,7 +141,7 @@ The following examples show how to configure an Idempotent Message Validator to 
 
 === Example: Generate an ID from an HTTP Request
 
-The following example shows an Idempotent Message Validator configured to extract the query parameter id from the HTTP request and use that value as a unique identifier to filter the message:
+The following example shows an Idempotent Message Validator configured to extract the query parameter ID from the HTTP request and use that value as a unique identifier to filter the message:
 
 [source,xml]
 ----
@@ -166,7 +166,7 @@ The following example shows an Idempotent Message Validator configured to extrac
 
 === Example: Generate an ID by Hashing the Payload With DataWeave
 
-The following example shows an Idempotent Message Validator configured to hash the payload using a DataWeave expression, store the result in a persistent object store, and then use the processed message IDs as the unique identifier to filter the message:
+The following example shows an Idempotent Message Validator configured to hash the payload using a DataWeave expression, store the result in a persistent object store, and then use the processed message IDs as unique identifiers for filtering the message:
 
 [source,xml]
 ----
