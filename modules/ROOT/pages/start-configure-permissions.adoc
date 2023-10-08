@@ -1,15 +1,35 @@
 = Configuring Permissions
-:page-deployment-options: cloud-ide
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: configure-permissions.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="web-only"]
 
-Manage user access to Anypoint Code Builder from Anypoint Platform either by granting permissions to users individually or through teams in Access Management. 
+Manage user access to Anypoint Code Builder and Anypoint Platform features used by the cloud and desktop IDEs. Use Access Management to grant permissions directly to individual users or assign permissions to teams to which the users belong.
 
-//TODO: DO ADMINS NEED TO SET AI OPT-IN PERMISSION?
+[[permissions]]
+== Required Permissions 
+
+These permissions are required: 
+
+* Cloud IDE users only: 
++
+*Anypoint Code Builder Developer* allows a user to launch Anypoint Code Builder from Anypoint Platform.
+
+* Cloud and Desktop IDE users: 
+
+** Set these xref:access-management::permissions-by-product.adoc#exchange[Anypoint Exchange permissions] so that users can download and publish assets:
+*** *Viewer*
+*** *Creator*
+** Set these xref:access-management::permissions-by-product.adoc#runtime-manager[Runtime Manager permissions] to enable services related to CloudHub, such as deploying applications:
+*** *Read applications*
+*** *Create applications*
+*** *Delete applications*
+** Set these xref:access-management::permissions-by-product.adoc#design-center[Design Center permissions] so that users can view and create APIs:
+*** *Viewer*
+*** *Creator*
+
+For a complete list of permissions, see xref:access-management::permissions-by-product.adoc[].
 
 [[before-you-begin]]
 == Before You Begin
@@ -21,21 +41,19 @@ Log in to Anypoint Platform on your US or EU cloud host.
 
 If you do not have an Anypoint Platform account, you can sign up from one of the hosts.
 
-== Grant Anypoint Code Builder Permission to Users
+== Grant Permissions to Users
 
-To grant the permission to an individual user:
+To grant permissions to an individual user:
 
 . In Anypoint Platform, navigate to *Access Management*.
 +
 For the Anypoint Platform URL, see <<before-you-begin>>.
 
-. Assign the *Anypoint Code Builder Developer* permission to the user:
-
-Follow the steps in xref:access-management::users.adoc#grant-user-permissions[Grant Permissions to Users].
+. Assign <<permissions, permissions>> to the user by following the steps in xref:access-management::users.adoc#grant-user-permissions[Grant Permissions to Users].
 
 The user can now develop using Anypoint Code Builder.
 
-== Grant Anypoint Code Builder Permission to Teams
+== Grant Permissions to Teams
 
 To grant the permission to a team:
 
@@ -47,7 +65,7 @@ For the Anypoint Platform URL, see <<before-you-begin>>.
 . Follow the steps in xref:access-management::configure-teams.adoc[]:
 +
 * If necessary, create the team and add users.  
-* Assign the *Anypoint Code Builder Developer* permission to the team.
+* Assign <<permissions, permissions>> to the team.
 
 // NOT YET:
 // *Mule Developer Generative AI User* to make Einstein GPT available for generating flows in integration apps. 
