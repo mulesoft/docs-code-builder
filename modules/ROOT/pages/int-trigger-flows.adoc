@@ -140,7 +140,23 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-d
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
 //open output panel
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
-. Find and copy the URL to your app:
+. 
+
+* From the desktop IDE, use `localhost` for `host="0.0.0.0"` and the configured `port` number and `path` values, for example:
++
+[source,url]
+----
+http://localhost:8081/mypath
+----
++
+If you are triggering a flow from a scaffolded interface, add `api/` to the path so that your request reaches the router, for example:
++
+[source,url]
+----
+http://localhost:8081/api/mypath
+----
+
+* From the cloud IDE, find and copy the URL to your app:
 +
 image::acb-port-list.png["Port list in the IDE"]
 
@@ -163,7 +179,13 @@ A full URL with the path `mypath` is similar to this one:
 ----
 https://lavender-abc1d2.efg.007.ap-code-builder.platform.salesforce.com/proxy/8081/mypath
 ----
-
++
+If you are triggering a flow from a scaffolded interface, add `api/` to the path so that your request reaches the router, for example:
++
+[source,url]
+----
+https://lavender-abc1d2.efg.007.ap-code-builder.platform.salesforce.com/proxy/8081/api/mypath
+----
 
 [[rest-client]]
 === Trigger a Flow from Your REST Client
