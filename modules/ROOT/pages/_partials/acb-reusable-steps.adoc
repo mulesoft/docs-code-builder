@@ -12,7 +12,18 @@
 * From the cloud IDE, click the menu icon, and select *View* > *Command Palette*.
 ====
 // end::open-command-palette[]
+//
+//
+// tag::check-connection-http[]
+. Before starting your Mule app, confirm that the connection to the listener is successful: 
++
+From the configuration XML, above the HTTP Listener configuration (`<<http:listener-config/>`), click *Test Connection*.
 
+* If the test succeeds, *Connection is valid* appears in a popup message.
+* If the connection fails, an error message indicates that the connection was unsuccessful. If the app is running when you click *Test Connection*, this error message appears: `Invalid Connection Got status code: 500 when trying to resolve a Mule Runtime operation. Reason: 'Internal Server Error.`
+// end::check-connection-http[]
+//
+//
 // tag::open-run-debug[]
 // Pointer to Run and Debug
 . Open the Run and Debug panel.
@@ -29,7 +40,9 @@
 ** In the cloud IDE, select *File* > *View* > *Run*.
 ====
 // end::open-run-debug[]
+//
 
+//
 // tag::open-output-panel[]
 // Pointer to Output Panel
 . Open the Output panel.
@@ -45,7 +58,8 @@
 * In the cloud IDE, select *File* > *View* > *Output*.
 ====
 // end::open-output-panel[]
-
+//
+//
 // tag::open-source-control[]
 // Pointer to Source Control Panel
 . Open the Source Control panel.
@@ -71,8 +85,8 @@ Click the image:icon-source-control.png["",15,15] (*Source Control*) icon in the
 * Windows: Cmd+Space
 ====
 // end::open-auto-complete[]
-
-
+//
+//
 // tag::configure-user-snippets[]
 // Pointer to Configure User Snippets
 . Navigate to Configure User Snippets.
@@ -94,14 +108,14 @@ Snippets: Configure User Snippets
 ----
 ====
 // end::configure-user-snippets[]
-
-
+//
+//
 // tag::open-ide[]
 // Open the ACB IDE
 . In the activity bar of the IDE, click the image:icon-ms-logo.png["",20,20] (*Anypoint Code Builder*) icon.
 // end::open-ide[]
-
-
+//
+//
 // tag::close-project[]
 // Pointer to Close Project
 .Show me how
@@ -111,8 +125,8 @@ Snippets: Configure User Snippets
 * From the cloud IDE, click the menu icon, and select *File* > *Close Folder*.
 ====
 // end::close-project[]
-
-
+//
+//
 // tag::platform-urls[]
 // Pointer to Platform URLs
 .Show me how
@@ -122,7 +136,8 @@ Snippets: Configure User Snippets
 * EU Cloud (EU host): https://eu1.anypoint.mulesoft.com/login/[Anypoint Platform (EU)^]
 ====
 // end::platform-urls[]
-
+//
+//
 // tag::exchange-urls[]
 // Pointer to Exchange URLs
 .Show me how
@@ -132,16 +147,15 @@ Snippets: Configure User Snippets
 * EU Cloud (EU host): https://eu1.anypoint.mulesoft.com/exchange/[Exchange (EU)^]
 ====
 // end::exchange-urls[]
-
-
-
-
+//
+//
 // tag::no-project-name-reuse[]
 // Cannot reuse project name
 To reuse an existing project name, you must delete the project first. See
 xref:des-delete-api-projects.adoc[].
 // end::no-project-name-reuse[]
-
+//
+//
 // tag::ref-element[]
 // Reference an Element
 . To reference an element within a component defined in the fragment file:
@@ -155,7 +169,8 @@ xref:des-delete-api-projects.adoc[].
 image::des-api-frag-ref-element.png["Reference an element in the fragment"]
 --
 // end::ref-element[]
-
+//
+//
 // tag::after-add-fragment[]
 // After Adding Fragment
 After adding the fragment to your spec, you can:
@@ -173,20 +188,19 @@ image:icon-api-console.png["",14,14] (*API Console*) icon to open the fragment i
 +
 For more information, see xref:des-create-api-specs.adoc#review-spec-console[Review Your Spec in the API Console].
 // end::after-add-fragment[]
-
-
-
-
+//
+//
 // tag::in-progress[]
 // In Progress
 This topic is in progress.
 // end::in-progress[]
-
-
+//
+//
 // tag::proj-directory-warn[]
 // Project Directory warning
 Don't create the project within another project directory.
 // end::proj-directory-warn[]
+//
 
 //
 // tag::deploy-locally[]
@@ -198,6 +212,17 @@ Alternatively, if the *Start Debugging (F5)* icon is not present:
 .. If a *Select debugger* dropdown menu appears, select *Mule Xml Debugger* to initiate the debugging session.
 +
 image::anypoint-code-builder::run-debug-imported-folder.png["Run and Debug button and Mule XML Debugger menu item"]
++
+Make sure that the application deploys successfully with the `DEPLOYED` log message in the output panel:
++
+[souce,output panel]
+----
+**********************************************************************
+*              - - + DOMAIN + - -               * - - + STATUS + - - *
+**********************************************************************
+* default                                       * DEPLOYED           *
+**********************************************************************
+----
 // end::deploy-locally[]
 //
 

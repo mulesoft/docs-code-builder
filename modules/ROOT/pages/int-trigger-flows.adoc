@@ -20,9 +20,7 @@ To create a project, see xref:int-create-integrations.adoc[] or xref:imp-impleme
 
 An important difference between integration and implementation projects is that the interface for implementations is typically generated through an automated scaffolding process that generates an HTTP Listener for triggering a flow in your application, as indicated in the American Flights tutorial, in xref:tut-af-implement-am-flights-api.adoc#endpoint[Configure an Endpoint through the Interface]. 
 
-Typically, local deployments within the IDE are configured to trigger the localhost at `0.0.0.0` and port `8081` or similar (such as `8082` if `8081` is currently in use by another application). 
-
-The URL to use for triggering the HTTP Listener in a scaffolded interface generated from an API specification differs slightly from an integration project that does not implement a scaffolded interface. 
+The URL to use for triggering the HTTP Listener in a scaffolded interface generated from an API specification differs slightly from an integration project that does not implement a scaffolded interface: 
 
 * Desktop IDE example for an integration project _without_ a scaffolded interface to trigger a locally deployed endpoint: 
 +
@@ -72,6 +70,8 @@ Notice that the URL adds `api/` to the URL to make the request trigger the `<htt
 </flow>
 ----
 
+Both sets of examples configure the host for the HTTP Listener connection to `0.0.0.0` and the port to `8081` because local deployments within the IDE typically uses these settings or a similar port, such as `8082`, if `8081` is currently in use by another application.
+
 ////
 Another difference the desktop and cloud IDEs differ for deployments to your development environment in Anypoint Code Builder:
 
@@ -92,7 +92,6 @@ For guidance constructing the URL in the cloud IDE, see:
 
 After meeting the prerequisites in <<before-you-begin>>, trigger a integration or implementation application that is deployed locally within the cloud or desktop IDE:
 
-
 * <<terminal>>
 * <<browser>>
 * <<rest-client>>
@@ -102,23 +101,13 @@ After meeting the prerequisites in <<before-you-begin>>, trigger a integration o
 
 Use the Terminal in Anypoint Code Builder to trigger a flow through an HTTP Listener in an integration or implementation project. This procedure works in desktop and cloud IDEs. 
 
+
 //first generic steps
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="check-connection-http"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
-+
-Make sure that the application deploys successfully with the `DEPLOYED` log message in the output panel:
-+
-[souce,output panel]
-----
-**********************************************************************
-*              - - + DOMAIN + - -               * - - + STATUS + - - *
-**********************************************************************
-* default                                       * DEPLOYED           *
-**********************************************************************
-----
 //open terminal
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
-//next steps:
 . In the terminal, click the name of the shell to use in the terminal, such as PowerShell (Windows), `bash`, or `zsh` (Mac). 
 +
 Alternatively, you can click the *+* icon in the terminal to open a new command prompt.
@@ -132,8 +121,7 @@ $ curl localhost:8081/mypath
 +
 In the desktop IDE, use `localhost` instead of `0.0.0.0`. 
 +
-If successful, the command returns a response. 
-
+If successful, the command returns a response.
 //TODO: TEST/DOUBLE CHECK THIS ONE!
 * For triggering a flow in an app from the listener in the scaffolded interface:
 +
@@ -147,6 +135,7 @@ $ curl localhost:8081/api/myendpoint
 Use your browser to trigger a flow through an HTTP Listener in an integration or implementation project.
 
 //first generic steps
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="check-connection-http"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
 //open output panel
@@ -184,11 +173,10 @@ Use a REST client to trigger a flow through an HTTP Listener in an integration o
 This process is simpler for the desktop IDE than the cloud IDE, which requires you to discover the `proxysession` value from the cookies listed in your browser and providing that value to the REST client. 
 
 //first generic steps
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="check-connection-http"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
-include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
-. 
-
-
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"] 
++
 This example in Advanced REST Client applies the `proxysession` setting as a cookie within the header of the request. The URL to the application is in the GET field. 
 
 image::acb-proxysession-trigger-flow.png["Finding proxysession cookie in your browser"]
