@@ -72,34 +72,10 @@ Notice that the URL adds `api/` to the URL to make the request trigger the `<htt
 
 Both sets of examples configure the host for the HTTP Listener connection to `0.0.0.0` and the port to `8081` because local deployments within the IDE typically uses these settings or a similar port, such as `8082`, if `8081` is currently in use by another application.
 
-////
-Another difference the desktop and cloud IDEs differ for deployments to your development environment in Anypoint Code Builder:
-
-* In the desktop IDE, a URI configured for the listener, such as `+http://localhost:8081/some-endpoint+`, works if no other applications are using that port. 
-+
-Add `/api` to the URI for a listener in a scaffolded interface that you generate when implementing an API specification in the IDE, for example:
-`+http://localhost:8081/api/some-endpoint+`.
-
-* In the cloud IDE, your development environment is hosted remotely, so you must configure a URL to a proxy for your application's host. 
-+
-For guidance constructing the URL in the cloud IDE, see:
-
-** <<ping-browser>> 
-** <<ping-rest-client>>
-////
-
-== Trigger Locally Deployed Apps in Cloud IDEs and Desktop IDEs
-
-After meeting the prerequisites in <<before-you-begin>>, trigger a integration or implementation application that is deployed locally within the cloud or desktop IDE:
-
-* <<terminal>>
-* <<browser>>
-* <<rest-client>>
-
 [[terminal]]
-=== Trigger a Flow from the Terminal
+== Trigger a Flow from the Terminal
 
-Use the Terminal in Anypoint Code Builder to trigger a flow through an HTTP Listener in an integration or implementation project. This procedure works in desktop and cloud IDEs. 
+Use the Terminal in Anypoint Code Builder to trigger a flow through an HTTP Listener in an integration or implementation project. This procedure is for apps deployed within the desktop or cloud IDE.   
 
 
 //first generic steps
@@ -112,7 +88,7 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-termin
 +
 Alternatively, you can click the *+* icon in the terminal to open a new command prompt.
 . At the command prompt, provide a `curl` command to trigger the flow, for example:
-+
+
 * For triggering an integration app from a listener:
 +
 ----
@@ -130,9 +106,9 @@ $ curl localhost:8081/api/mypath
 ----
 
 [[browser]]
-=== Trigger a Flow from Your Browser
+== Trigger a Flow from Your Browser
 
-Use your browser to trigger a flow through an HTTP Listener in an integration or implementation project.
+Use your browser to trigger a flow through an HTTP Listener in an integration or implementation project. This procedure is for apps deployed within the desktop or cloud IDE. 
 
 //first generic steps
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="check-connection-http"]
@@ -140,8 +116,17 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-d
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
 //open output panel
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
+. In a new tab in your browser, provide the URL to your app, _and_ append the value of the `path` from your `<http:listener/>` configuration.
++
+For example, the value of `path` is `mypath` in this configuration:
++
+[source,xml]
+----
+<http:listener path="mypath" config-ref="HTTP_Listener_config"
+      doc:name="Listener" doc:id="ehdpqp" />
+---- 
 
-* From the desktop IDE, use `localhost` for `host="0.0.0.0"` and the configured `port` number and `path` values, for example:
+* For the desktop IDE, use `localhost` for `host="0.0.0.0"` and the configured `port` number and `path` values, for example:
 +
 [source,url]
 ----
@@ -162,17 +147,8 @@ image::acb-port-list.png["Port list in the IDE"]
 .. Click the *Ports* tab to open a list of ports used by your app.
 .. Select the row for the port you configured for the HTTP Listener, such as `8081`. 
 .. From the *Forwarded Address* column, copy the URL at the selected port. 
-. Copy the URL into your browser, _and_ append the value of the `path` from your `<http:listener/>` configuration.
 +
-For example, the value of `path` is `mypath` in this configuration:
-+
-[source,xml]
-----
-<http:listener path="mypath" config-ref="HTTP_Listener_config"
-      doc:name="Listener" doc:id="ehdpqp" />
----- 
-+
-A full URL with the path `mypath` is similar to this one:
+In the cloud IDE, the full URL with the path `mypath` is similar to this example:
 +
 [source,url]
 ----
@@ -187,51 +163,110 @@ https://lavender-abc1d2.efg.007.ap-code-builder.platform.salesforce.com/proxy/80
 ----
 
 [[rest-client]]
-=== Trigger a Flow from Your REST Client
+== Trigger a Flow from Your REST Client
 
-Use a REST client to trigger a flow through an HTTP Listener in an integration or implementation project. 
+Use a REST client to trigger a flow through an HTTP Listener in an integration or implementation project. This procedure is for apps deployed within the desktop or cloud IDE. 
 
-This process is simpler for the desktop IDE than the cloud IDE, which requires you to discover the `proxysession` value from the cookies listed in your browser and providing that value to the REST client. 
+* For the desktop IDE, the URL is the same one you provide to your IDE's terminal or to your browser. 
+//TODO: VERIFY
+* For the cloud IDE, use the URL for your cloud IDE session, and configure a header that provides a cookie with the `proxysession` value. This value is available from your browser when your app is running in the cloud IDE.
+
+[[test-run]]
+Before configuring the REST client, check your listener's connection, and run your app in debug mode: 
 
 //first generic steps
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="check-connection-http"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"] 
-+
-This example in Advanced REST Client applies the `proxysession` setting as a cookie within the header of the request. The URL to the application is in the GET field. 
+. Configure your REST client to trigger the flow:
 
+* <<rest-config-desktop>>
+* <<rest-config-cloud>>
+
+[[rest-config-desktop]]
+=== Trigger an App Running on the Desktop IDE from a REST Client
+
+. Follow the <<test-run, preliminary procedures>> to test the listener's connection and run the app in debug mode.
+. In your REST client, provide the URL to your app, _and_ append the value of the `path` from your `<http:listener/>` configuration.
++
+For example, the value of `path` is `mypath` in this configuration:
++
+[source,xml]
+----
+<http:listener path="mypath" config-ref="HTTP_Listener_config"
+      doc:name="Listener" doc:id="ehdpqp" />
+---- 
+. For the desktop IDE, use `localhost` for `host="0.0.0.0"` and the configured `port` number and `path` values, for example:
++
+[source,url]
+----
+http://localhost:8081/mypath
+----
++
+If you are triggering a flow from a scaffolded interface, add `api/` to the path so that your request reaches the router, for example:
++
+[source,url]
+----
+http://localhost:8081/api/mypath
+----
+
+[[rest-config-cloud]]
+=== Trigger an App Running on the Cloud IDE from a REST Client
+
+. Follow the <<test-run, preliminary procedures>> to test the listener's connection and run the app in debug mode.
+. In your REST client, provide the URL to your app, _and_ append the value of the `path` from your `<http:listener/>` configuration.
++
+For example, the value of `path` is `mypath` in this configuration:
++
+[source,xml]
+----
+<http:listener path="mypath" config-ref="HTTP_Listener_config"
+      doc:name="Listener" doc:id="ehdpqp" />
+---- 
+. From the cloud IDE, find and copy the URL to your app:
++
+image::acb-port-list.png["Port list in the IDE"]
+
+.. Click the *Ports* tab to open a list of ports used by your app.
+.. Select the row for the port you configured for the HTTP Listener, such as `8081`. 
+.. From the *Forwarded Address* column, copy the URL at the selected port. 
++
+In the cloud IDE, the full URL with the path `mypath` is similar to this example:
++
+[source,url]
+----
+https://lavender-abc1d2.efg.007.ap-code-builder.platform.salesforce.com/proxy/8081/mypath
+----
++
+If you are triggering a flow from a scaffolded interface, add `api/` to the path so that your request reaches the router, for example:
++
+[source,url]
+----
+https://lavender-abc1d2.efg.007.ap-code-builder.platform.salesforce.com/proxy/8081/api/mypath
+----
+. Locate the `proxysession` key and value in your browser: 
+
+.. Open the Developer Tools in your browser.
++
+For example, in Google Chrome (version 117 on Mac), the path is *View* > *Developer* > *Developer Tools*.
+.. In Developer Tools, find `proxysession` under application cookie storage. 
++
+For example, in Chrome (version 117 on Mac):
++
 image::acb-proxysession-trigger-flow.png["Finding proxysession cookie in your browser"]
 
+... Click the *Application* tab in Developer Tools, and within the tab, find *Cookies* under the *Storage* panel. 
+... Open *Cookies*, and click the URL to your app in the IDE to find the `proxysession` entry.
+. In your REST client, configure a header with a cookie that uses your `proxysession` as a key-value pair.
++
+For example, in Advanced REST Client (version 17.0.9 on Mac):
++
+image::acb-proxysession-header-rest-client.png["Finding proxysession cookie in your browser"]
 
-////
-[[ping-browser]]
-== Trigger a Locally Deployed Application on the Cloud IDE Using a Browser
-
-. Open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
-. After your application deploys successfully, open a new tab in your browser.
-. Type the URL of your cloud IDE instance, add the `/proxy/` path, and then add the port number you configured as a new path:
-`+https://<web-IDE-instance>/api/<port-you-configured-on-your-listener>/+`
+.. In the *Headers* tab, add the header name *Cookie*.
+.. For the *Cookie* value, provide a copy of `proxysession` name and value from your browser. For example:
 +
-For example:
-+
-[source]
---
-https://lavender-ndm0yl.builder.code.com/proxy/8081/
---
-+
-See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct instance URL.
-. When pinging that URL, the cloud IDE triggers the Mule flow.
-
-==================
-. Open the cloud IDE using your browser's Developer Tools (`F12`).
-. Navigate to your *Application* tab.
-. Under *Storage*, expand the *Cookies* section and select the URL of your cloud IDE instance.
-. Search for the term _c_:
-+
-image::application-storage-cookies.png[]
-. Copy the cookie name and value. For example:
-+
-[source]
+[source,cookie value]
 --
 proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx
 --
@@ -240,21 +275,7 @@ proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx
 --
 The `proxysession` cookie name varies depending on the user.
 --
-. In the cloud IDE, open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
-. After your application deploys successfully, open your preferred REST client application.
-. Type the URL of your cloud IDE instance in the request URL section, add the `/proxy/` path, and then add the port number you configured as a new path:
-`+https://<web-IDE-instance>/api/<port-you-configured-on-your-listener>/+`
+.. Send your request. 
 +
-For example:
-+
-[source]
---
-https://lavender-ndm0yl.builder.code.com/proxy/8081/
---
-+
-See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct instance URL.
-. Configure the headers to send the necessary cookies that you copied earlier:
-+
-image::send-request-with-cookies.png[]
-. When pinging that URL, the cloud IDE triggers the Mule flow.
-////
+When successful, the response is *200 OK* in the Advanced REST Client. 
+
