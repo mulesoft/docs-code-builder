@@ -13,7 +13,7 @@ This generates XML code for the new flow, similar to this:
 [source, xml]
 ----
 <flow name="sendEmailOnNewCaseFlow">
-    <salesforce:new-object-listener objectType="Case" doc:name="On New Object" doc:id="8b5dec5e-31a2-4b78-9188-b681891898be" config-ref="Salesforce_Sfdc_config">
+    <salesforce:new-object-listener objectType="Case" doc:name="On New Object" doc:id="8b5dec5e-31a2-4b78-9188-b681891898be" config-ref="Salesforce_Sfdc_config"> <1>
         <scheduling-strategy>
             <fixed-frequency />
         </scheduling-strategy>
@@ -22,7 +22,7 @@ This generates XML code for the new flow, similar to this:
     <salesforce:query-result-stream-by-id doc:name="Query result stream by id" doc:id="bdf16fc8-017f-439b-b1fc-3bff23d881d8" config-ref="Salesforce_Sfdc_config"/>
     <ee:transform doc:name="Transform Message"  >
         <ee:message >
-            <ee:set-payload ><![CDATA[%dw 2.0
+           <ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
 payload map {
@@ -31,20 +31,26 @@ payload map {
     Description:\$.Description,
     Status:\$.Status,
     Priority:\$.Priority
-}]]></ee:set-payload>
+}]]></ee:set-payload> <2>
         </ee:message>
     </ee:transform>
-    <email:send config-ref="Email_SMTP" fromAddress="user1@domain.com" subject="New Case Created">
+    <email:send config-ref="Email_SMTP" fromAddress="user1@domain.com" subject="New Case Created"> <3>
         <email:to-addresses >
             <email:to-address value="user3@domain.com" />
             <email:to-address value="user2@domain.com" />
         </email:to-addresses>
-        <email:body contentType="text/html" >
+        <email:body contentType="text/html" > <4>
             <email:content ><![CDATA["<h1>New Case Created:</h1>"]]></email:content>
         </email:body>
     </email:send>
 </flow>
 ----
+
+The flow starts with a Salesforce new object listener for the "Case" object.
+The payload of the new case is stored in variables using the component.
+The email is sent using the email:send component with the configured SMTP settings.
+The subject of the email is set to "New Case Created: " followed by the case subject.
+The body of the email is set to HTML format and includes the case ID, subject, and description.
 
 After reviewing and inserting the generated flow, you need to:
 
