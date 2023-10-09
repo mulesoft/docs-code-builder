@@ -46,25 +46,34 @@ payload map {
 </flow>
 ----
 
-<1> The flow starts with a Salesforce new object listener for the "Case" object.
+<1> The flow in this example starts with a Salesforce new object listener for the `Case` object.
 <2> The payload of the new case is stored in variables using the component.
-<3> The email is sent using the email:send component with the configured SMTP settings.
+<3> The email is sent using the `email:send` component with the configured SMTP settings.
 +
 The subject of the email is set to "New Case Created: " followed by the case subject.
 <4> The body of the email is set to HTML format and includes the case ID, subject, and description.
 
-After reviewing and inserting the generated flow, you need to:
+=== Complete the Flow
 
-. Update the target email to one that fits your use case by explicitly typing the email address within your flow:
+After reviewing and inserting the generated flow into your project:
+
+. Update the target email with the value that fits your use case by explicitly typing the email address within your flow, for example:
 + 
 `<email:to-address value="demo@gmail.com" />`
 . Add the target email, `${email.username}` to your xref:int-create-secure-configs#properties.adoc[configuration properties file]. 
-. Update the frequency of the trigger to one that fits your needs by changing the frequency attribute in the scheduler. 
+. Update the frequency of the trigger to one that fits your needs by changing the frequency attribute in the scheduler, for example:
 +
-This example flow is configured to poll for new cases every 1000 milliseconds.
+[source, xml]
+----
+<scheduling-strategy>
+<fixed-frequency frequency="5000" />
+</scheduling-strategy>
+----
++
+This example flow is configured to poll for new cases every 5000 milliseconds.
 . Use built-in snippets to add configurations for your Salesforce instance and email inbox.
 
-The following is an example of a completed flow:
+The following is an example of the completed flow:
 
 [source, xml]
 ----
@@ -123,8 +132,8 @@ This generates XML code for the new flow, similar to this:
 [source, xml]
 ----
 <flow name="updatePhoneNumber" doc:id="1">
-    <http:listener doc:name="Listener" doc:id="2" config-ref="HTTP_Listener_config" path="/updatePhoneNumber"/>
-    <ee:transform doc:name="Set Payload" doc:id="3">
+    <http:listener doc:name="Listener" doc:id="2" config-ref="HTTP_Listener_config" path="/updatePhoneNumber"/> <1>
+    <ee:transform doc:name="Set Payload" doc:id="3"> <2>
         <ee:message>
             <ee:set-payload><![CDATA[%dw 2.0
 output application/java
@@ -132,18 +141,27 @@ output application/java
 {
     "accountId": payload.accountId,
     "phoneNumber": payload.phoneNumber
-}]]></ee:set-payload>
+}]]></ee:set-payload> 
         </ee:message>
     </ee:transform>
-    <salesforce:update doc:name="Update Account" doc:id="4" config-ref="Salesforce_Config" type="Account">
-        <salesforce:records>#[payload]</salesforce:records>
+    <salesforce:update doc:name="Update Account" doc:id="4" config-ref="Salesforce_Config" type="Account"> <3>
+        <salesforce:records>#[payload]</salesforce:records> <4>
     </salesforce:update>
 </flow>
 ----
 
+<1> The flow starts with an HTTP listener that listens for an API call on the `/updatePhoneNumber` path.
+<2> The payload is set using the `ee:transform` component to specify the account ID and phone number to update.
+<3> The `salesforce:update` component is used to update the `Account` object in Salesforce. 
++
+The `Type` attribute is set to "Account" to specify the object type to update.
+<4> The payload is passed as the records to update in Salesforce.
+
+=== Complete the Flow 
+
 To run this flow, use built-in snippets to add configurations for your Salesforce instance.
 
-The following is an example of a completed flow:
+The following is an example of the completed flow:
 
 [source, xml]
 ----
@@ -193,43 +211,54 @@ This generates XML code for the new flow, similar to this:
 [source, xml]
 ----
 <flow name="syncAccountPhone" doc:id="1">
-    <scheduler doc:name="Scheduler" doc:id="2">
-        <scheduling-strategy>
-            <fixed-frequency frequency="10000"/>
-        </scheduling-strategy>
-    </scheduler>
-    <salesforce:query config-ref="Salesforce_Config" doc:name="Query Salesforce Account" doc:id="3">
-        <salesforce:salesforce-query>
-            <![CDATA[SELECT Id, Phone FROM Account]]>
-        </salesforce:salesforce-query>
-    </salesforce:query>
-    <db:select config-ref="Database_Config" doc:name="Select from Database" doc:id="4">
-        <db:sql>
-            <![CDATA[SELECT id, phone FROM account]]>
-        </db:sql>
+    <http:listener doc:name="Listener" doc:id="2" config-ref="HTTP_Listener_config" path="/syncAccountPhone" allowedMethods="POST" /> <1>
+    <set-variable variableName="accountId" value="#[payload.accountId]" doc:name="Set Account ID" doc:id="3" /> <2>
+    <set-variable variableName="phone" value="#[payload.phone]" doc:name="Set Phone" doc:id="4" /> <3>
+    <db:select doc:name="Select Account from Database" doc:id="5" config-ref="Database_Config">
+        <db:sql><![CDATA[SELECT * FROM Account WHERE Id = :accountId]]></db:sql> <4>
+        <db:input-parameters><![CDATA[#[{
+            "accountId": vars.accountId
+        }]]]></db:input-parameters>
     </db:select>
-    <ee:transform doc:name="Transform Salesforce Account" doc:id="5">
+    <ee:transform doc:name="Create Update Data" doc:id="6"> <5>
         <ee:message>
-            <ee:set-payload>
-                <![CDATA[%dw 2.0
-                output application/java
-                ---
-                payload map {
-                    Id: \$.Id,
-                    Phone: \$.Phone
-                }]]>
-            </ee:set-payload>
+            <ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+    "Id": vars.accountId,
+    "Phone": vars.phone
+}]]></ee:set-payload>
         </ee:message>
     </ee:transform>
-    <db:update config-ref="Database_Config" doc:name="Update Database Account" doc:id="6">
-        <db:sql>
-            <![CDATA[UPDATE account SET phone = :#[payload.Phone] WHERE id = :#[payload.Id]]]>
-        </db:sql>
+    <salesforce:update config-ref="Salesforce_Config" doc:name="Update Salesforce Account" doc:id="7" type="Account"> 
+        <salesforce:records><![CDATA[#[payload]]]></salesforce:records>
+    </salesforce:update> <6>
+    <db:update doc:name="Update Account in Database" doc:id="8" config-ref="Database_Config"> 
+        <db:sql><![CDATA[UPDATE Account SET Phone = :phone WHERE Id = :accountId]]></db:sql> <7>
+        <db:input-parameters><![CDATA[#[{
+            "accountId": vars.accountId,
+            "phone": vars.phone
+        }]]]></db:input-parameters>
     </db:update>
+    <set-payload value="#['Phone field synced successfully']" doc:name="Set Payload" doc:id="9" /> <8>
 </flow>
 ----
 
-. After reviewing and inserting the generated flow, update the name of the database table and fields to match what is configured in your MySQL database. 
+<1> The HTTP Listener is configured to listen for a POST request on the `/syncAccountPhone` path.
+<2> The account ID is extracted from the payload and stored in a variable named "accountId".
+<3> The phone number is extracted from the payload and stored in a variable named "phone".
+<4> A database select operation is performed to retrieve the account record from the database based on the account ID.
+<5> A DataWeave transformation is used to create the update data for the Salesforce account object.
+<6> The Salesforce account is updated using the `update` operation.
+<7> The account is also updated in the database using a database `update` operation.
+<8> The payload is set to "Phone field synced successfully" to indicate a successful sync.
+
+=== Complete the Flow
+
+After reviewing and inserting the generated flow into your project:
+
+. Update the name of the database table and fields to match what is configured in your MySQL database. 
 . To run this flow, use built-in snippets to add configurations for your Salesforce instance.
 
 The following is an example of a completed flow:
@@ -298,35 +327,41 @@ This generates XML code for the new flow, similar to this:
 [source, xml]
 ----
 <flow name="sendEmailFlow">
-    <db:listener table="database_table" doc:name="On Table Row" doc:id="dbListener" watermarkColumn="CREATION_DATE">
-        <scheduling-strategy>
-            <fixed-frequency frequency="10" timeUnit="MINUTES"/>
+    <db:listener table="record" doc:name="On Table Row" doc:id="dbListener" watermarkColumn="CREATION_DATE">
+        <scheduling-strategy> <2>
+            <fixed-frequency frequency="1" timeUnit="SECONDS"/>
         </scheduling-strategy>
-    </db:listener>
-    <set-variable variableName="emailPayload" value="#[payload]" doc:name="Set Email Payload" doc:id="setVariable"/>
-    <flow-ref name="sendEmailSubFlow" doc:name="Send Email SubFlow" doc:id="sendEmailSubFlow"/>
-</flow><sub-flow name="sendEmailSubFlow" doc:id="sendEmailSubFlow">
-    <email:send config-ref="SMTP_Config" fromAddress="sender@example.com" subject="New Record Created">
+    </db:listener> <1>
+    <set-variable variableName="record" value="#[payload]" doc:name="Set Variable" doc:id="setVariable"/> <3>
+    <email:send config-ref="Email_SMTP" fromAddress="sender@example.com" subject="New Record Created"> <4>
         <email:to-addresses>
-            <email:to-address value="recipient@example.com"/>
+            <email:to-address value="recipient@example.com"/> <5>
         </email:to-addresses>
         <email:body contentType="text/plain">
-            <email:content><![CDATA[New record created in the database.]]></email:content>
+            <email:content><![CDATA[New record created with ID: #[vars.record.id]]]></email:content>
         </email:body>
     </email:send>
-</sub-flow>
+</flow>
 ----
 
-After reviewing and inserting the generated flow, you need to:
+<1> The flow starts with a database listener component that listens for new records in the "record" table.
+<2> The scheduling strategy is set to trigger the flow every 1 second.
+<3> The payload of the listener is stored in a variable named "record" using the `set-variable` component.
+<4> An email is sent from the address "sender@example.com" using the `email:send` component.
+<5> The email is sent to the address "recipient@example.com".
 
-. Update the sender email address, recipient email addresses, and email body to fit your specific needs.
-. Update the database table name so that it corresponds to the table to which the flow should listen for new records.
-. Update the `watermarkColumn` in the database listener to whichever column should be used to indicate new records. 
+=== Complete the Flow
+
+After reviewing and inserting the generated flow into your project:
+
+. Update the sender email address, recipient email addresses, and email body to fit your specific use case.
+. Update the database table name so that it corresponds to the database table on which the flow listens for new records.
+. Update the `watermarkColumn` in the database listener to whichever database column to use to indicate new records. 
 +
-Values taken from this column are used to filter the contents of the next poll, so that only rows with a greater watermark value are processed.
+The values that are taken from this column are used to filter the contents of the next poll, so that only rows with a greater watermark value are processed.
 . To run this flow, use built-in snippets to add configurations for your database and email inbox.
 
-The following is an example of a completed flow:
+The following is an example of the completed flow:
 
 [source, xml]
 ----
@@ -370,9 +405,13 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 </flow>
 </mule>
 ----
+
 == See Also
 
 * xref:int-work-with-code-snippets.adoc[]
 * xref:int-create-integrations-ai.adoc[]
 * xref:acb-components.adoc[]
+* xref:acb-component-scheduler.adoc[]
+* xref:acb-component-set-payload.adoc[]
+* xref:acb-component-set-variable.adoc[]
 * xref:int-create-secure-configs.adoc[]
