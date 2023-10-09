@@ -69,6 +69,7 @@ The IDE adds the fragment as a dependency to *Project Dependencies* and  `exchan
 --
 ** OAS specs: Use the `$ref` directive.
 ** RAML specs: Use the `!include` directive.
+--
 
 * The `AmericanFlight` data type is defined in `AmericanFlightDataType`. 
 * The `AmericanFlightsExample` example is for a `200` response to the `get` request.
@@ -118,12 +119,11 @@ $ref: 'exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-f
  get:
 
 --
-
 RAML Example::
 [source,RAML]
 --
-#%RAML 1.0
-title: American Flights API
+  #%RAML 1.0
+  title: American Flights API
 
 types: //<1>
   AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml 
@@ -154,7 +154,7 @@ types: //<1>
 ====
 
 [calloutlist]
-.. Uses `!include` to add the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type
+.. Uses `!include` for RAML files or `$ref` for OAS 3.0 files to add the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type
 +
 Note that you can use built-in functionality to insert the `!include` directive and file path from the specification file. For example:
 +
@@ -284,6 +284,7 @@ types:
               examples:
                 output: !include examples/AmericanFlightExample.raml
 --
+
 [calloutlist]
 .. Specifies a JSON-formatted body for the `post` method
 .. Configures `AmericanFlight` as the type for the `post` method
