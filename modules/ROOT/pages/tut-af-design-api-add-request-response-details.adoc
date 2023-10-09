@@ -22,7 +22,7 @@ Add fragments to the project directory so that you can include them in your spec
 
 To add the fragments: 
 
-. In Anypoint Code Builder, open your American Flights API specification, `american-flights-api.raml`.
+. In Anypoint Code Builder, open your American Flights API specification, `american-flights-api`.
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
 [source,command]
@@ -39,7 +39,7 @@ Training: American Flight Data Type
 . Select the asset from the *Assets From Exchange* menu.
 . Select the latest version of the asset, such as *v1.0.1*.
 +
-The IDE adds the fragment as a dependency. When the process is complete, check for the `AmericanFlightDataType.raml` asset *Project Dependencies* area of the Explorer. For example: 
+The IDE adds the fragment as a dependency. When the process is complete, check for the `AmericanFlightDataType` asset *Project Dependencies* area of the Explorer. For example: 
 +
 image:tut-design-frag-in-proj-dependencies.png["Fragments from Exchange in Project Dependencies"]
 +
@@ -64,15 +64,63 @@ The IDE adds the fragment as a dependency to *Project Dependencies* and  `exchan
 [[include-fragments]]
 == Include the Fragments in the Specification
 
-Use `!include` directives to add the fragments to the specification:
+. Depending on the API spec language, select the directive to add the fragment to your specification.
++
+--
+** OAS specs: Use the `$ref` directive.
+** RAML specs: Use the `!include` directive.
 
-* The `AmericanFlight` data type is defined in `AmericanFlightDataType.raml`. 
-* The `AmericanFlightsExample.raml` example is for a `200` response to the `get` request.
+* The `AmericanFlight` data type is defined in `AmericanFlightDataType`. 
+* The `AmericanFlightsExample` example is for a `200` response to the `get` request.
 
 To include the fragments: 
 
-. Open *american-flight-api.raml* from the project directory in Explorer.
+. Open *american-flight-api* from the project directory in Explorer.
 . Replace the existing content with this:
++
+[tabs]
+====
+OAS Example::
++
+[source,YAML]
+--
+openapi: 3.0.0
+info:
+  title: American Flights API
+
+
+
+
+  /flights:
+    get:
+      parameters:
+        - in: query
+          name: destination
+          required: false
+            type: //<1>
+$ref: 'exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.json'
+            enum:
+              - SFO
+              - LAX
+              - CLE
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json: //<2>
+              schema:
+                type: AmericanFlight[]
+              Examples: //<3>
+                  $ref: '#/components/examples/AmericanFlightsExample'
+
+	post:
+
+'/{ID}':
+ get:
+
+--
+
+RAML Example::
 +
 [source,RAML]
 --
@@ -103,7 +151,10 @@ types: //<1>
 
   /{ID}:
     get:
+
 --
+====
+
 [calloutlist]
 .. Uses `!include` to add the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type
 +
