@@ -48,7 +48,7 @@ If you receive the error *Mule DX API Component was not installed*, wait for Mul
 |===
 . Select *Create Project* to generate the American Flights API project file: `american-flights-api`.
 +
-The file name is based on the name you provide for the project.
+The file name and extension are based on the name you provide for the project and the API specification language you use.
 +
 image::acb-api-project.png["Project for American Airlines API"]
 . Proceed to <<add-flight-resource>>.
@@ -111,9 +111,7 @@ info:
 paths:
   '/{ID}':
     get:
-      responses:
-        '200': {}
-    post: {}
+      post: {}
 --
 
 RAML Example::
@@ -124,7 +122,7 @@ title: American Flights API
 
 /flights:
   get:
-  post: 
+    post: 
 --
 ====
 
@@ -147,9 +145,40 @@ image::get-post-methods-api-console.png["GET and POST methods highlighted in *AP
 
 Add a nested resource (`/{ID}:`) to use for getting a flight based on its destination, and specify optional query parameters for the destinations (`queryParameters:`) as a set of `enum` values. 
 
-. Replace your RAML content with this specification:
+. Replace your content with this specification:
 +
-[source,raml,linenums]
+[tabs]
+====
+OAS Example::
+
+[source,YAML]
+--
+openapi: 3.0.0
+info:
+  title: American Flights API
+paths:
+  /flights:
+    get:
+      parameters:
+        - in: query
+          name: destination
+          required: false
+          schema:
+            type: string
+            enum:
+              - SFO
+              - LAX
+              - CLE
+    post:
+      parameters: []
+
+  /{ID}:
+    get:
+
+--
+
+RAML Example::
+[source,RAML]
 --
 #%RAML 1.0
 title: American Flights API
@@ -168,6 +197,9 @@ title: American Flights API
   /{ID}:
     get:
 --
+====
+
+
 . View the nested resource in the API Console:
 +
 image::sub-methods-api-console.png["API Console with nested resource"]
