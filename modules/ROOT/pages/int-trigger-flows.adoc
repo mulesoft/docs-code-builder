@@ -23,6 +23,7 @@ For integrations and implementations that you build and deploy within your IDE d
 
 Typically, apps that use an HTTP Listener configure the host to `0.0.0.0` and the port to `8081` or a similar port, such as `8082`, if `8081` is currently in use by another application.
 
+[[trigger-url-no-interface]]
 * Trigger a flow within a configuration XML that _does not_ contain a scaffolded interface by using a URL similar to this one from your IDE's terminal: 
 +
 ----
@@ -42,13 +43,15 @@ The port and host are defined in the `<http:listener-connection/>` element, and 
     ...
 </flow>
 ----
+
+[[trigger-url-interface]]
 * Trigger a flow from listener within a scaffolded interface by using a URL similar to this one from your IDE's terminal: 
 +
 ----
 http://localhost:8081/api/my-endpoint
 ----
 +
-In this case, the endpoint is defined with the `name` attribute of the `<flow/>` element. For example, assume that a flow in a scaffolded interface references a flow (`getFlights`):
+For this case, the endpoint is defined within the `name` attribute of the `<flow/>` element of the interface. For example, assume that a flow in a scaffolded interface references a flow (`getFlights`):
 +
 [source,xml]
 ----
@@ -127,7 +130,7 @@ Alternatively, click the *+* icon in the terminal to open a new command prompt.
 $ curl localhost:8081/mypath
 ----
 +
-Use `localhost` instead of `0.0.0.0`. 
+Use `localhost` instead of `0.0.0.0`. Get <<trigger-url-no-interface, more information>> about triggering this listener.
 +
 If successful, the command returns a response.
 * To trigger a flow from an HTTP listener that resides in a scaffolded interface, use `curl` with a URL similar to this one:
@@ -135,4 +138,5 @@ If successful, the command returns a response.
 ----
 $ curl http://localhost:8081/api/mypath2
 ----
-
++
+Use `localhost` instead of `0.0.0.0`, and add `api` to the URL. Get <<trigger-url-interface, more information>> about triggering this listener.
