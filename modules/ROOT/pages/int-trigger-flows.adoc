@@ -47,7 +47,7 @@ Notice the configuration in the `<http:listener-connection/>` element:
 http://localhost:8081/api/some-endpoint
 ----
 +
-Notice that the URL adds `api/` to the URL to make the request trigger the `<http:listener/>`. This listener is located before the router (`<apikit:router/>`) in the scaffolded interface within the configuration XML. Notice the automatically set attribute `path="/api/*"` in the listener's XML:
+Notice that the URL adds `api/` to the URL to make the request trigger the `<http:listener/>`. This listener is located before the router (`<apikit:router/>`) in the scaffolded interface within the configuration XML. The attribute  `path="/api/*"` in the listener's XML is set automatically during the scaffolding process:
 +
 [source,xml]
 ----
@@ -56,7 +56,7 @@ Notice that the URL adds `api/` to the URL to make the request trigger the `<htt
                outboundHeadersMapName="outboundHeaders"  
                httpStatusVarName="httpStatus" />
 <flow name="american-flight-api-main">
-    <http:listener config-ref="inbound-request" path="/api/*">
+    <http:listener config-ref="inbound-request" path="/api/*"> <!--1-->
         <http:response statusCode="#[vars.httpStatus default 200]">
             <http:headers>#[vars.outboundHeaders default {}]</http:headers>
         </http:response>
@@ -98,12 +98,41 @@ $ curl localhost:8081/mypath
 In the desktop IDE, use `localhost` instead of `0.0.0.0`. 
 +
 If successful, the command returns a response.
-//TODO: TEST/DOUBLE CHECK THIS ONE!
 * For triggering a flow in an app from the listener in the scaffolded interface:
 +
 ----
-$ curl localhost:8081/api/mypath
+$ curl http://localhost:8081/api/mypath2
 ----
++
+For example, assume that a flow in a scaffolded interface references a flow (`getFlights`):
++
+[source,xml]
+----
+<flow name="get:\flights:american-flights-api-config">
+    <flow-ref name="getFlights"/>
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+----
++
+Assume that this is the flow referenced from the interface:
++
+[source,xml]
+----
+<flow name="getFlights" >
+    <set-payload value="Hello Flights!" doc:name="Set payload" doc:id="gwdsmi" />
+    <logger doc:name="Logger" doc:id="dnitvb" message="#[payload]"/>
+</flow>
+----
++
+To trigger this flow from the Terminal in the IDE, use this `curl` command:
++
+----
+$ curl http://localhost:8081/api/flights
+----
++
+Notice that the example uses the endpoint `flights` (and not `getFlights`) to trigger the flow in the interface named `"get:\flights:american-flights-api-config"`. This flow in the inteface contains a Flow Ref (`<flow-ref/>`) that references the `myFlights` flow in the implementation.
++
+When successful, the request returns `Hello Flight` to the terminal.
 
 [[browser]]
 == Trigger a Flow from Your Browser
