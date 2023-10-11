@@ -51,7 +51,9 @@ The port and host are defined in the `<http:listener-connection/>` element, and 
 http://localhost:8081/api/my-endpoint
 ----
 +
-For this case, the endpoint is defined within the `name` attribute of the `<flow/>` element of the interface. For example, assume that a flow in a scaffolded interface references a flow (`getFlights`):
+Notice `/api/end-point` in the example. For this case, the endpoint is defined within the `name` attribute of a `<flow/>` element in the interface, and `api` is defined in an HTTP Listener in the interface. 
++
+For example, assume that a flow in a scaffolded interface references a flow (`getFlights`):
 +
 [source,xml]
 ----
@@ -77,7 +79,7 @@ The URL to trigger this flow uses `flights` as the endpoint:
 http://localhost:8081/api/flights
 ----
 +
-It is also important to notice that the URL adds `/api` before the `/flights` endpoint to make the request through the `<http:listener/>` in the interface. Generally, a listener is located above the router, as in this example:
+The URL adds `/api` before the `/flights` endpoint to make the request through the `<http:listener/>` in the interface. Generally, a listener is located above the router, as in this example:
 +
 [source,xml]
 ----
