@@ -2,9 +2,9 @@
 
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-The Generative Flow feature transforms your natural language prompt, which describes your business logic, into a flow that contains the connectors and components, in the order needed, to accomplish the specified task. 
+The Generative Flow feature transforms your natural language prompt, which describes your business logic, into a flow that contains the connectors and processors, in the order needed, to accomplish the specified task. 
 
-For example, if you want to create a flow that reads contacts from Salesforce in JSON format, you can enter a prompt describing that task. The prompt is then transformed into a series of connectors and processors that are needed to execute that task, in this case: `Listener`, `Query`, `Transformer`, and `Logger`. A flow is generated, which you can then further customize to suit your needs. 
+For example, if you want to create a flow that reads contacts from Salesforce in JSON format, you can enter a prompt describing that task. The prompt is then transformed into a series of connectors and processors that are needed to execute that task, in this case: Listener, Query, Transformer, and Logger. A flow is generated, which you can then further customize to suit your needs. 
 
 [[before-you-begin]]
 == Before You Begin
@@ -12,9 +12,11 @@ For example, if you want to create a flow that reads contacts from Salesforce in
 Before you start creating your integration using Generative Flows:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* Ensure that you have the xref:start-configure-permissions.adoc#permissions[required ACB permissions].
 * Ensure that you have the following permissions to use the Generative Flow feature:
 ** Anypoint Code Builder Developer
 ** Mule Developer Generative AI User
+
 
 [[access-einstein]]
 == Access Einstein
@@ -50,7 +52,7 @@ image::develop-integration-option-mat.png["Develop an Integration link highlight
 
 This name is used as the title and name of the integration specification file.
 For example, if the project name is "My Integration", the name of the folder for the integration project is `my-integration`, and the configuration XML file name is `my-integration.xml`.
-| *Project Location* | Your home directory or another directory you create. Click *Browse* to select a directory for the integration if you don't want to use the default.
+| *Project Location* | Your home directory or another directory you create. Click *Browse* to select a directory for the integration if you don't want to use the prepopulated location.
 |===
 +
 . Click *Create Project*.
@@ -66,27 +68,33 @@ image::int-gen-flow-starting-cards.png[Starting cards on new project canvas]
 [[craft-ai-prompt]]
 == Craft Your Prompt
 
-Before you create a flow, define what you want achieve with the flow, for example, optimizing a business process. Craft your prompt using natural language, and keep in mind that the more concise and specific you make your prompt, the more effective it will be when it generates your flow. 
+Before you create a flow, define what you want achieve with the flow, for example, optimizing a business process. Craft your prompt using natural language, and keep in mind that the more concise and specific you make your prompt, the more effective Einstein is when generating your flow. 
 
 Here are some best practices for writing prompts:
 
 * Be clear and precise:
 + 
 Use clear and specific language to describe the use case for the flow to build.
-* Include trigger events: 
+* Include triggering events: 
 +
-Mention the trigger events that initiate the flow, for example, sending an email when a new case is created. 
+Mention the triggering events that initiate the flow, for example, sending an email when a new case is created. 
 * Emphasize key components:
 +
-Highlight the key MuleSoft components to include in the flow, for example, HTTP *Listener* and Email *Send*.
+Highlight the key MuleSoft components and connector operations to include in the flow, for example, HTTP Connector *Listener* and Email Connector *Send*.
 * Specify data objects:
 +
-* Clearly mention the data objects to include in the flow, such as "Salesforce Account object" or any other relevant data source.
+Clearly mention the data objects to include in the flow, such as "Salesforce Account object" or any other relevant data source.
 * Proofread and revise:
 +
 Before submitting the prompt, proofread your prompt to ensure that it is clear and comprehensive.
 
 After the initial flow is generated for you, you can then customize the code for your specific needs.
+
+For examples of prompts and generated flows, see xref:int-gen-flow-examples-ai.adoc[]
+
+[NOTE]
+* Each prompt is discrete, meaning that it doesn't build upon previous prompts. 
+* The generated response to your prompt will always be unique, depending on the wording you use and which LLM libraries are used. 
 
 [[view-prompt-history]]
 == View Your Prompt History
@@ -129,7 +137,6 @@ image::int-generated-case-notification-email.png[]
 +
 . Optionally, click the thumbs up or thumbs down icon that appears after the generated code. 
 +
-//I made this up. Does this work this way?
 Rating the flow that's created for you helps Einstein learn so that over time, the generated flows improve.
 . Inspect the generated code, and if you are satisfied, click the insert code icon to insert the code in to your flow. 
 +
@@ -148,7 +155,6 @@ The error icon is displayed for components that require further configuration.
 . To determine where the error is, select the component in the canvas.
 +
 Anypoint Code Builder highlights the location of the error within the configuration XML.
-. 
 
 
 

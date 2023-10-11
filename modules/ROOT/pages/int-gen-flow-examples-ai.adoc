@@ -46,11 +46,11 @@ payload map {
 </flow>
 ----
 
-<1> The flow in this example starts with a Salesforce new object listener for the `Case` object.
-<2> The payload of the new case is stored in variables using the component.
-<3> The email is sent using the `email:send` component with the configured SMTP settings.
+<1> The flow in this example starts with a Salesforce Connector On New Object listener for the `Case` object.
+<2> The payload of the new case is stored in variables using the Email component.
+<3> The email is sent using the Email Connector Send operation with the configured SMTP settings.
 +
-The subject of the email is set to "New Case Created: " followed by the case subject.
+The subject of the email is set to `"New Case Created: "` followed by the case subject.
 <4> The body of the email is set to HTML format and includes the case ID, subject, and description.
 
 === Complete the Flow
@@ -59,14 +59,14 @@ After reviewing and inserting the generated flow into your project:
 
 . Update the target email with the value that fits your use case by explicitly typing the email address within your flow, for example:
 + 
-`<email:to-address value="demo@gmail.com" />`
+`<email:to-address value="+demo@gmail.com+" />`
 . Add the target email, `${email.username}` to your xref:int-create-secure-configs#properties.adoc[configuration properties file]. 
 . Update the frequency of the trigger to one that fits your needs by changing the frequency attribute in the scheduler, for example:
 +
 [source, xml]
 ----
 <scheduling-strategy>
-<fixed-frequency frequency="5000" />
+    <fixed-frequency frequency="5000" />
 </scheduling-strategy>
 ----
 +
@@ -78,46 +78,52 @@ The following is an example of the completed flow:
 [source, xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:email="http://www.mulesoft.org/schema/mule/email" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
-http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
-http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+    xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+    xmlns:email="http://www.mulesoft.org/schema/mule/email"
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+    http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+    http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+    http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+    http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
 
+    <salesforce:sfdc-config name="Salesforce_Config">
+        <salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
+    </salesforce:sfdc-config>
 
-<salesforce:sfdc-config name="Salesforce_Config">
-<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
-</salesforce:sfdc-config>
+    <email:smtp-config name="Email_SMTP">
+        <email:smtps-connection host="${email.host}" user="${email.username}" password="${email.password}">
+            <tls:context>
+                <tls:trust-store insecure="true" />
+            </tls:context>
+        </email:smtps-connection>
+    </email:smtp-config>
 
-<email:smtp-config name="Email_SMTP">
-<email:smtps-connection host="${email.host}" user="${email.username}" password="${email.password}">
-<tls:context>
-<tls:trust-store insecure="true" />
-</tls:context>
-</email:smtps-connection>
-</email:smtp-config>
-
-
-<flow name="sendEmailOnNewCase">
-<salesforce:new-object-listener objectType="Case" config-ref="Salesforce_Config">
-<scheduling-strategy>
-<fixed-frequency frequency="5000" />
-</scheduling-strategy>
-</salesforce:new-object-listener>
-<set-variable variableName="caseNumber" value="#[payload.CaseNumber]" doc:name="caseNumberVar" doc:id="vysmen" />
-<set-variable variableName="status" value="#[payload.Status]" doc:name="statusVar" doc:id="yeakie" />
-<email:send config-ref="Email_SMTP" doc:name="Send Email" subject="#['Case ' ++ vars.caseNumber ++ ' was created']">
-<email:to-addresses>
-<email:to-address value="demo@gmail.com" />
-</email:to-addresses>
-<email:body contentType="text/html">
-<email:content>
-<![CDATA[#['New case ' ++ vars.caseNumber ++ ' was created with status ' ++ vars.status]]]>
-</email:content>
-</email:body>
-</email:send>
-</flow>
+    <flow name="sendEmailOnNewCase">
+        <salesforce:new-object-listener objectType="Case" config-ref="Salesforce_Config">
+            <scheduling-strategy>
+                <fixed-frequency frequency="5000" />
+            </scheduling-strategy>
+        </salesforce:new-object-listener>
+        <set-variable variableName="caseNumber" value="#[payload.CaseNumber]" doc:name="caseNumberVar" doc:id="vysmen" />
+        <set-variable variableName="status" value="#[payload.Status]" doc:name="statusVar" doc:id="yeakie" />
+        <email:send config-ref="Email_SMTP" doc:name="Send Email" subject="#['Case ' ++ vars.caseNumber ++ ' was created']">
+            <email:to-addresses>
+                <email:to-address value="demo@gmail.com" />
+            </email:to-addresses>
+            <email:body contentType="text/html">
+                <email:content>
+                    <![CDATA[#['New case ' ++ vars.caseNumber ++ ' was created with status ' ++ vars.status]]]>
+                </email:content>
+            </email:body>
+        </email:send>
+    </flow>
 </mule>
 ----
 
@@ -150,53 +156,53 @@ output application/java
 </flow>
 ----
 
-<1> The flow starts with an HTTP listener that listens for an API call on the `/updatePhoneNumber` path.
-<2> The payload is set using the `ee:transform` component to specify the account ID and phone number to update.
-<3> The `salesforce:update` component is used to update the `Account` object in Salesforce. 
+<1> The flow starts with an HTTP Listener that listens for an API call on the `/updatePhoneNumber` path.
+<2> The payload is set using the `<ee:transform>` operation in the Transform Component to specify the account ID and phone number to update.
+<3> The Salesforce Connector Update operation is used to update the `Account` object in Salesforce. 
 +
-The `Type` attribute is set to "Account" to specify the object type to update.
+The `type` attribute is set to `"Account"` to specify the object type to update.
 <4> The payload is passed as the records to update in Salesforce.
 
 === Complete the Flow 
 
-To run this flow, use built-in snippets to add configurations for your Salesforce instance.
+To run this flow, use built-in snippets to add configurations for your Salesforce instance. For more information about built-in snippets, see xref:int-work-with-code-snippets.adoc[].
 
 The following is an example of the completed flow:
 
 [source, xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-xmlns:http="http://www.mulesoft.org/schema/mule/http"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
-xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
-<http:listener-config name="HTTP_Listener_config" >
-<http:listener-connection host="0.0.0.0" port="8081" />
-</http:listener-config>
-<salesforce:sfdc-config name="Salesforce_Config" >
-<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}"/>
-</salesforce:sfdc-config>
-
-<flow name="updateAccountPhone">
-<http:listener config-ref="HTTP_Listener_config" doc:name="Listener" path="/updateAccountPhone" allowedMethods="POST" doc:id="listener" />
-<set-variable variableName="accountIdVar" value="#[payload.accountId]" mimeType="application/json" doc:name="Set Account ID var" doc:id="set-variable-accountId" />
-<set-variable variableName="phoneVar" value="#[payload.phoneNumber]" mimeType="application/json" doc:name="Set Phone var" doc:id="set-variable-phone" />
-<salesforce:update type="Account" config-ref="Salesforce_Config" doc:name="Update Salesforce Account" doc:id="update-account">
-<salesforce:records>
-<![CDATA[#[output application/json ---
-[{
-"Id": vars.accountIdVar,
-"Phone": vars.phoneVar
-}]]]]>
-</salesforce:records>
-</salesforce:update>
-<logger doc:name="Logger" message="Phone number updated for Account with Id: #[vars.accountIdVar]" doc:id="logger" />
-</flow>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+                          http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+                          http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+                          http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+    <http:listener-config name="HTTP_Listener_config">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>
+    <salesforce:sfdc-config name="Salesforce_Config">
+        <salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
+    </salesforce:sfdc-config>
+    <flow name="updateAccountPhone">
+        <http:listener config-ref="HTTP_Listener_config" doc:name="Listener" path="/updateAccountPhone" allowedMethods="POST" doc:id="listener" />
+        <set-variable variableName="accountIdVar" value="#[payload.accountId]" mimeType="application/json" doc:name="Set Account ID var" doc:id="set-variable-accountId" />
+        <set-variable variableName="phoneVar" value="#[payload.phoneNumber]" mimeType="application/json" doc:name="Set Phone var" doc:id="set-variable-phone" />
+        <salesforce:update type="Account" config-ref="Salesforce_Config" doc:name="Update Salesforce Account" doc:id="update-account">
+            <salesforce:records>
+                <![CDATA[#[output application/json ---
+                [{
+                    "Id": vars.accountIdVar,
+                    "Phone": vars.phoneVar
+                }]]]]>
+            </salesforce:records>
+        </salesforce:update>
+        <logger doc:name="Logger" message="Phone number updated for Account with Id: #[vars.accountIdVar]" doc:id="logger" />
+    </flow>
 </mule>
 ----
 
@@ -245,14 +251,14 @@ output application/java
 </flow>
 ----
 
-<1> The HTTP Listener is configured to listen for a POST request on the `/syncAccountPhone` path.
-<2> The account ID is extracted from the payload and stored in a variable named "accountId".
-<3> The phone number is extracted from the payload and stored in a variable named "phone".
-<4> A database select operation is performed to retrieve the account record from the database based on the account ID.
+<1> The HTTP Listener operation is configured to listen for a POST request on the `/syncAccountPhone` path.
+<2> The account ID is extracted from the payload and stored in a variable named `"accountId"`.
+<3> The phone number is extracted from the payload and stored in a variable named `"phone"`.
+<4> A Database Select operation is performed to retrieve the account record from the database based on the account ID.
 <5> A DataWeave transformation is used to create the update data for the Salesforce account object.
-<6> The Salesforce account is updated using the `update` operation.
-<7> The account is also updated in the database using a database `update` operation.
-<8> The payload is set to "Phone field synced successfully" to indicate a successful sync.
+<6> The Salesforce account is updated using the Update operation.
+<7> The account is also updated in the database using a Database Update operation.
+<8> The payload is set to `"Phone field synced successfully"` to indicate a successful sync.
 
 === Complete the Flow
 
@@ -266,55 +272,62 @@ The following is an example of a completed flow:
 [source, xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
-xmlns:db="http://www.mulesoft.org/schema/mule/db" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
-http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+      xmlns:db="http://www.mulesoft.org/schema/mule/db"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+                          http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+                          http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+                          http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
 
-<salesforce:sfdc-config name="Salesforce_Config">
-<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
-</salesforce:sfdc-config>
+    <salesforce:sfdc-config name="Salesforce_Config">
+        <salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
+    </salesforce:sfdc-config>
 
-<db:config name="Mysql_Database_Config" >
-<db:my-sql-connection host="${mysql.host}" port="${mysql.port}" user="${mysql.username}" password="${mysql.password}" database="${mysql.database}" />
-</db:config>
+    <db:config name="Mysql_Database_Config">
+        <db:my-sql-connection host="${mysql.host}" port="${mysql.port}" user="${mysql.username}" password="${mysql.password}" database="${mysql.database}" />
+    </db:config>
 
-<flow name="SyncAccountPhoneToDatabase">
-<salesforce:modified-object-listener objectType="Account" config-ref="Salesforce_Config" doc:name="On Modified Object" doc:id="listener">
-<scheduling-strategy>
-<fixed-frequency />
-</scheduling-strategy>
-</salesforce:modified-object-listener>
+    <flow name="SyncAccountPhoneToDatabase">
+        <salesforce:modified-object-listener objectType="Account" config-ref="Salesforce_Config" doc:name="On Modified Object" doc:id="listener">
+            <scheduling-strategy>
+                <fixed-frequency />
+            </scheduling-strategy>
+        </salesforce:modified-object-listener>
 
-<ee:transform doc:name="Transform Message" doc:id="transform">
-<ee:message>
-<ee:set-payload>
-<![CDATA[%dw 2.0
-output application/json
----
-{
-Id: payload.Id,
-Phone: payload.Phone
-}]]>
-</ee:set-payload>
-</ee:message>
-</ee:transform>
+        <ee:transform doc:name="Transform Message" doc:id="transform">
+            <ee:message>
+                <ee:set-payload>
+                    <![CDATA[%dw 2.0
+                    output application/json
+                    ---
+                    {
+                        Id: payload.Id,
+                        Phone: payload.Phone
+                    }]]>
+                </ee:set-payload>
+            </ee:message>
+        </ee:transform>
 
-<db:update doc:name="Update Phone in Database" doc:id="update">
-<db:sql>
-<![CDATA[UPDATE Account SET Phone = :Phone WHERE Id = :Id]]>
-</db:sql>
-<db:input-parameters>
-<![CDATA[#[{
-Phone: payload.Phone,
-Id: payload.Id
-}]]]>
-</db:input-parameters>
-</db:update>
-</flow>
+        <db:update doc:name="Update Phone in Database" doc:id="update">
+            <db:sql>
+                <![CDATA[UPDATE Account SET Phone = :Phone WHERE Id = :Id]]>
+            </db:sql>
+            <db:input-parameters>
+                <![CDATA[#[{
+                    Phone: payload.Phone,
+                    Id: payload.Id
+                }]]]>
+            </db:input-parameters>
+        </db:update>
+    </flow>
 </mule>
 ----
+
 
 == New Record Notification
 
@@ -344,11 +357,11 @@ This generates XML code for the new flow, similar to this:
 </flow>
 ----
 
-<1> The flow starts with a database listener component that listens for new records in the "record" table.
+<1> The flow starts with a Database Listener component that listens for new records in the `"record"` table.
 <2> The scheduling strategy is set to trigger the flow every 1 second.
-<3> The payload of the listener is stored in a variable named "record" using the `set-variable` component.
-<4> An email is sent from the address "\sender@example.com" using the `email:send` component.
-<5> The email is sent to the address "\recipient@example.com".
+<3> The payload of the listener is stored in a variable named `"record"` using the Set Variable operation.
+<4> An email is sent from the address `"\sender@example.com"` using the Email Send component.
+<5> The email is sent to the address `"\recipient@example.com"`.
 
 === Complete the Flow
 
@@ -366,45 +379,54 @@ The following is an example of the completed flow:
 [source, xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
-http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
-http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+    xmlns:db="http://www.mulesoft.org/schema/mule/db"
+    xmlns:email="http://www.mulesoft.org/schema/mule/email"
+    xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+    http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+    http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+    http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
 
-<db:config name="Mysql_Database_Config" >
-<db:my-sql-connection host="${mysql.host}" port="${mysql.port}" user="${mysql.username}" password="${mysql.password}" database="${mysql.database}" />
-</db:config>
+    <db:config name="Mysql_Database_Config">
+        <db:my-sql-connection host="${mysql.host}" port="${mysql.port}" user="${mysql.username}" password="${mysql.password}" database="${mysql.database}" />
+    </db:config>
 
-<email:smtp-config name="Email_SMTP">
-<email:smtps-connection host="${email.host}" user="${email.username}" password="${email.password}">
-<tls:context>
-<tls:trust-store insecure="true" />
-</tls:context>
-</email:smtps-connection>
-</email:smtp-config>
+    <email:smtp-config name="Email_SMTP">
+        <email:smtps-connection host="${email.host}" user="${email.username}" password="${email.password}">
+            <tls:context>
+                <tls:trust-store insecure="true" />
+            </tls:context>
+        </email:smtps-connection>
+    </email:smtp-config>
 
-
-<flow name="sendEmailFlow">
-<db:listener table="records" doc:name="On Table Row" doc:id="dbListener" watermarkColumn="CREATION_DATE" config-ref="Mysql_Database_Config">
-<scheduling-strategy>
-<fixed-frequency frequency="1" timeUnit="SECONDS" />
-</scheduling-strategy>
-</db:listener>
-<set-variable variableName="record" value="#[payload]" doc:name="Set Variable" doc:id="setVariable" />
-<email:send config-ref="Email_SMTP" fromAddress="sender@example.com" subject="New Record Created">
-<email:to-addresses>
-<email:to-address value="recipient@example.com" />
-</email:to-addresses>
-<email:body contentType="text/plain">
-<email:content>
-<![CDATA[New record created with ID #[vars.record.id]]]>
-</email:content>
-</email:body>
-</email:send>
-</flow>
+    <flow name="sendEmailFlow">
+        <db:listener table="records" doc:name="On Table Row" doc:id="dbListener" watermarkColumn="CREATION_DATE" config-ref="Mysql_Database_Config">
+            <scheduling-strategy>
+                <fixed-frequency frequency="1" timeUnit="SECONDS" />
+            </scheduling-strategy>
+        </db:listener>
+        <set-variable variableName="record" value="#[payload]" doc:name="Set Variable" doc:id="setVariable" />
+        <email:send config-ref="Email_SMTP" fromAddress="sender@example.com" subject="New Record Created">
+            <email:to-addresses>
+                <email:to-address value="recipient@example.com" />
+            </email:to-addresses>
+            <email:body contentType="text/plain">
+                <email:content>
+                    <![CDATA[New record created with ID #[vars.record.id]]]>
+                </email:content>
+            </email:body>
+        </email:send>
+    </flow>
 </mule>
 ----
+
 
 == See Also
 
