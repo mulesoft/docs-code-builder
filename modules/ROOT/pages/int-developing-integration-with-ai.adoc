@@ -6,24 +6,21 @@ Use Einstein for Anypoint Code Builder: Generative Flows (Einstein) to jumpstart
 
 == Trust Layer
 
-The Einstein trust layer bridges our platform and the Salesforce native LLMs. 
-
-//Need to annotate this image. -valkyrie
+The Einstein trust layer bridges Anypoint Platform and the Salesforce native LLMs. 
 
 image::acb-einstein-trust-layer.png[]
 
-//Image is describing the following flow
-Anypoint Code Builder user sends prompt to Einstein. 
-
-MuleSoft proprietary data grounds what does that mean the prompts before sending them to Open AI via the gateway. 
-
-//I don't know what grounding is. 
-
-MuleSoft ensures that prompts are sent securely and safely to these external LLMs, and that there is Zero data retained outside of Salesforce. 
-
-After a response is generated, it is sent back through the gateway, and MuleSoft does a validity check to make sure that the flows work with the MuleSoft ecosystem. 
-
-The prompt and generated responses are logged for monitoring before surfacing the validated response in Anypoint Code Builder.
+[calloutlist]
+. Anypoint Code Builder user sends prompt to Einstein. 
+. MuleSoft proprietary data grounds the prompts before sending them to Open AI via the gateway. 
+. MuleSoft ensures that prompts are sent securely and safely to these external LLMs, and that there is Zero data retained outside of Salesforce. 
+. After a response is generated, it is sent back through the gateway, and MuleSoft does a validity check to make sure that the flows work with the MuleSoft ecosystem. 
+. The prompt and generated responses are logged for monitoring before surfacing the validated response in Anypoint Code Builder.
 
 [IMPORTANT]
 This feature uses generative AI, which is known to include inaccurate or harmful responses. Before implementing this feature, review the output for accuracy and safety. You assume responsibility for the output when making business decisions.
+
+== See Also
+
+* xref:https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_layer.htm&type=5[Einstein Trust Layer^]
+* xref:int-developing-integration-with-ai.adoc[]
