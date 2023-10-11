@@ -3,13 +3,6 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-// local-api-specification-tutorial
-
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
-
-include::partial$acb-reusable-steps.adoc[tags="in-progress"]
-
 
 Using Anypoint Code Builder, you can scaffold an API specification into a new integration project without first publishing the API to Anypoint Exchange.
 As you make changes, you sync changes in the project by re-scaffolding the spec.
@@ -31,13 +24,6 @@ When you're ready, publish your API specification to Exchange and deploy your Mu
 When you scaffold your API specification into a new integration project,
 Anypoint Code Builder creates a configuration XML for your implementation.
 
-////
-Local projects reside in the Anypoint Code Builder IDE, whether the projects are in your desktop IDE or in the cloud IDE associated with your user account in Anypoint Platform.
-
-. You define an API in a specification file.
-. You implement the API.
-. The scaffolding process creates the interface XML file in a Mule project.
-////
 
 == Multi-Root Workspace Considerations
 
@@ -108,12 +94,28 @@ Save your `.code-workspace` file in your home directory. Do not save it in your 
 --
 . Choose a project name for your Mule project.
 . Choose a location for your Mule project.
-
-Anypoint Code Builder scaffolds your current local API specification into a new Mule project.
-
-Both the API spec and the Mule project open in your IDE and you can work on both in the Explorer view.
-
-// screenshot here
++
+Anypoint Code Builder scaffolds your current local API specification into a new Mule project and displays a message when complete:
++
+image::imp-local-api-scaffolded.png["Scaffolding process ended message"]
++
+Both the API spec and the Mule project open in your IDE, for example:
++
+image::imp-local-api-workspace.png["API spec and implementation project in Explorer view"]
++
+--
+[calloutlist]
+.. API spec
+.. Implementation project
+--
++
+. In the Explorer view, open the configuration XML file for your interface.
+. Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the canvas UI if it doesn't open automatically.
++
+Notice that the new Mule project includes flows for each endpoint, a built-in XML-based router, and error handlers,
+which you then implement within a Mule application.
++
+You can switch between the spec and the implementation project in the Explorer view.
 
 To close your multi-root workspace, see <<close-workspace>>. 
 
@@ -121,10 +123,9 @@ To close your multi-root workspace, see <<close-workspace>>.
 [[rescaffold-api-spec]]
 == Re-Scaffold the API Spec
 
-After making changes to your API spec, re-scaffold the spec to update your Mule project:
+After making changes to your API spec, such as adding a new endpoint, re-scaffold the spec to update your Mule project:
 
-. In the Explorer, navigate to the API spec file.
-. Re-scaffold the API specification to update your Mule project:
+. In the Explorer view, navigate to the API spec file.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Select the following command:
@@ -134,15 +135,14 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 MuleSoft: Re-scaffold this local API
 ----
 +
-After receiving a message that your project *has been rescaffolded successfully*, navigate to your implementation XML file, and notice the new flow (`<flow name="get:\users\userbyid:design-an-api-config"/>`) for the `userbyid` endpoint:
-
+After you see the message that your project was rescaffolded successfully, navigate to your implementation XML file, and notice the new flow was added.
 
 
 [[close-workspace]]
 == Close a Multi-Root Workspace
 
-// Open the ACB IDE
-include::partial$acb-reusable-steps.adoc[tags="open-ide"]
+To close the workspace:
+
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Select the following command:
@@ -158,10 +158,8 @@ See <<open-workspace>>.
 [[open-workspace]]
 == Open a Multi-Root Workspace
 
-Open a multi-root workspace from the `.code-workspace` file, for the projects in the workspace. 
+To open a multi-root workspace from the `.code-workspace` file: 
 
-// Open the ACB IDE
-include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Select the following command:
@@ -170,13 +168,12 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 ----
 File: Open Workspace from File...
 ----
-. Navigate to and double-click the `.code-workspace` file for projects in the workspace.
+. Navigate to your home directory and double-click the `.code-workspace` file for the workspace.
 +
-The projects open in the Explorer view, and the heading for the multi-root-workspace appends a *(WORKSPACE)* identifier, for example:
+The projects open in the Explorer view, and the folder name for the multi-root workspace includes *(WORKSPACE)*, for example:
 +
-image::tut-api-multiroot-workspace.png["A multi-root workspace in the Explorer"]
-
+image::imp-local-api-open-workspace.png["A multi-root workspace in Explorer view"]
 
 == See Also
 
-* xref:local-api-specification-tutorial.adoc[]
+* xref:tut-local-api-specification.adoc[] Tutorial
