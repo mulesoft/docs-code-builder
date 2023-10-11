@@ -71,13 +71,13 @@ Also assume that the `getFlights` flow resides in an XML configuration file for 
 </flow>
 ----
 +
-The URL to trigger this flow uses `flights` as the endpoint, not the value of the `path` in the HTTP Listener in the interface:
+The URL to trigger this flow uses `flights` as the endpoint:
 +
 ----
 http://localhost:8081/api/flights
 ----
 +
-It is also important to notice that the URL adds `api/` to make the request through the `<http:listener/>` in the interface. Generally, a listener is located above the router, as in this example:
+It is also important to notice that the URL adds `/api` before the `/flights` endpoint to make the request through the `<http:listener/>` in the interface. Generally, a listener is located above the router, as in this example:
 +
 [source,xml]
 ----
