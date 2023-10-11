@@ -4,84 +4,139 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
+When your integration or implementation builds successfully within the Anypoint Code Builder IDE, the application deploys to your local development environment, whether you are using the desktop or cloud IDE.
 
-When an integration that you are developing builds successfully, the application deploys within your development environment, whether on your desktop or the cloud-based host for your Anypoint Code Builder applications. 
+It is common to configure the HTTP Listener from  xref:http-connector::index.adoc[Anypoint Connector for HTTP] (HTTP Connector) to trigger the execution of a flow in a deployed application. You can trigger the flow locally from the built-in terminal in Anypoint Code Builder or from a VS Code extension like Thunder Client.
 
-It is common to configure an HTTP Listener to trigger the execution of a flow in your deployed application through a URL. The URLs to use for the desktop and cloud IDEs differ for deployments to your development environment in Anypoint Code Builder:
-
-* In the desktop IDE, a URI configured for the listener, such as `+http://localhost:8081/some-endpoint+`, works if no other applications are using that port. 
-+
-Add `/api` to the URI for a listener in a scaffolded interface that you generate when implementing an API specification in the IDE, for example:
-`+http://localhost:8081/api/some-endpoint+`.
-
-* In the cloud IDE, your development environment is hosted remotely, so you must configure a URL to a proxy for your application's host. 
-+
-For guidance constructing the URL in the cloud IDE, see:
-
-** <<ping-browser>> 
-** <<ping-rest-client>>
-
-
+[[before-you-begin]]
 == Before You Begin
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
-* xref:int-create-integrations.adoc[Create an integration].
+* Complete xref:start-acb.adoc[] for your IDE.
+* Make sure an integration or implementation project with an HTTP Listener (`<http:listener/>`) is available from the cloud or desktop IDE.
++
+To create a project, see xref:int-create-integrations.adoc[] or xref:imp-implementing-apis.adoc[], or follow the procedures in the tutorial xref:tut-af-amflights-overview.adoc[].
+
+[[trigger-urls]]
+== URLs for Triggering a Flow from an HTTP Listener
+
+For integrations and implementations that you build and deploy within your IDE during the development process, the URL to use for triggering an HTTP Listener differs depending on whether the listener is within the configuration XML for a scaffolded interface that is generated from an API specification or within a configuration XML file that does not implement a scaffolded interface.
+
+Typically, for apps that use an HTTP Listener, you configure the host to `0.0.0.0` and the port to `8081`. If port `8081` is in use by another application, you can use a similar port, such as `8082`.
+
+[[trigger-url-no-interface]]
+* Trigger a flow within a configuration XML that _does not_ contain a scaffolded interface by using a URL similar to this one from your IDE's terminal: 
++
+----
+http://localhost:8081/mypath
+----
++
+The port and host are defined in the `<http:listener-connection/>` element, and the endpoint is defined by the `path` attribute in the `<http:listener/>` element:
++
+[source,xml]
+----
+<http:listener-config name="inbound-request" 
+      doc:name="Listener Config" doc:id="b5c62f">
+  <http:listener-connection host="0.0.0.0" port="8081"/>
+</http:listener-config>
+<flow name="myFlow">
+    <http:listener path="mypath" config-ref="inbound-request" doc:name="HTTP /flights" />
+    ...
+</flow>
+----
+
+[[trigger-url-interface]]
+* Trigger a flow from the listener within a scaffolded interface by using a URL similar to this one from your IDE's terminal: 
++
+----
+http://localhost:8081/api/my-endpoint
+----
++
+For this case, the endpoint is defined within the `name` attribute of the `<flow/>` element of the interface. For example, assume that a flow in a scaffolded interface references a flow (`getFlights`):
++
+[source,xml]
+----
+<flow name="get:\flights:american-flights-api-config">
+    <flow-ref name="getFlights"/>
+    <logger level="INFO" message="get:\flights:american-flights-api-config" />
+</flow>
+----
++
+Also assume that the `getFlights` flow resides in an XML configuration file for the implementation.
++
+[source,xml]
+----
+<flow name="getFlights" >
+    <set-payload value="Hello Flights!" doc:name="Set payload" doc:id="gwdsmi" />
+    <logger doc:name="Logger" doc:id="dnitvb" message="#[payload]"/>
+</flow>
+----
++
+The URL to trigger this flow uses `flights` as the endpoint:
++
+----
+http://localhost:8081/api/flights
+----
++
+It is also important to notice that the URL adds `/api` before the `/flights` endpoint to make the request through the `<http:listener/>` in the interface. Generally, a listener is located above the router, as in this example:
++
+[source,xml]
+----
+<apikit:config name="american-flight-api-config" 
+               api="resource::bc64acc7-41ad-43b7-9e0a-092182b03271:American-Flight-API:1.0.0:raml:zip:american-flight-api.raml" 
+               outboundHeadersMapName="outboundHeaders"  
+               httpStatusVarName="httpStatus" />
+<flow name="american-flight-api-main">
+    <http:listener config-ref="inbound-request" path="/api/*"> <!--1-->
+        <http:response statusCode="#[vars.httpStatus default 200]">
+            <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+        </http:response>
+        <http:error-response statusCode="#[vars.httpStatus default 500]">
+            <http:body>#[payload]</http:body>
+            <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+        </http:error-response>
+    </http:listener>
+    <apikit:router config-ref="american-flight-api-config" /> <!--2-->
+    ...
+</flow>
+----
+[calloutlist]
+.. Within the listener (`<http:listener/>`), the attribute `path="/api/*"` is set automatically during the scaffolding process. 
+.. The router (`<apikit:router/>`) is located below the listener in the scaffolded interface within the configuration XML. 
 
 
-[[ping-browser]]
-== Ping a Locally Deployed Application on the Cloud IDE Using a Browser
+[[trigger-flow]]
+== Trigger a Flow
 
-. Open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
-. After your application deploys successfully, open a new tab in your browser.
-. Type the URL of your cloud IDE instance, add the `/proxy/` path, and then add the port number you configured as a new path:
-`+https://<web-IDE-instance>/api/<port-you-configured-on-your-listener>/+`
-+
-For example:
-+
-[source]
---
-https://lavender-ndm0yl.builder.code.com/proxy/8081/
---
-+
-See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct instance URL.
-. When pinging that URL, the cloud IDE triggers the Mule flow.
+Use the terminal in Anypoint Code Builder to trigger a flow through an HTTP Listener in an integration or implementation project that is deployed locally, within your IDE. This procedure is for Mule apps within the desktop or cloud IDE. 
 
-[[ping-rest-client]]
-== Ping a Locally Deployed Application on the Cloud IDE Using a REST Client
+TIP: The examples in this procedure show how to trigger the flow with a `curl` command from the IDE's terminal. You can also use Thunder Client, a third-party extension for VS Code, to trigger a flow with the same URLs. For security reasons, external REST clients, such as Advanced REST Client and Postman, are not allowed to send requests to projects deployed in the cloud IDE.
 
-. Open the cloud IDE using your browser's Developer Tools (`F12`).
-. Navigate to your *Application* tab.
-. Under *Storage*, expand the *Cookies* section and select the URL of your cloud IDE instance.
-. Search for the term _proxysession_:
+Before attempting to trigger a flow, review <<trigger-urls>>, and verify that you meet the prerequisites in <<before-you-begin>>.
+
+//first generic steps
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="check-connection-http"]
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
+//open terminal
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
+. In the IDE's terminal, click the name of the shell to use, such as PowerShell (for Windows), Bash (`bash`), or Z shell (`zsh` for Mac).
 +
-image::application-storage-cookies.png[]
-. Copy the cookie name and value. For example:
+Alternatively, click the *+* icon in the terminal to open a new command prompt.
+. At the command prompt, provide a `curl` command to trigger the flow.
+
+* To trigger a flow from an HTTP Listener that doesn't reside within an interface, use `curl` with a URL similar to this one:
 +
-[source]
---
-proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx
---
+----
+$ curl localhost:8081/mypath
+----
 +
-[NOTE]
---
-The `proxysession` cookie name varies depending on the user.
---
-. In the cloud IDE, open the Mule project that you want to test and navigate to *Run* > *Start Debugging* (`F5`).
-. After your application deploys successfully, open your preferred REST client application.
-. Type the URL of your cloud IDE instance in the request URL section, add the `/proxy/` path, and then add the port number you configured as a new path:
-`+https://<web-IDE-instance>/api/<port-you-configured-on-your-listener>/+`
+Use `localhost` instead of `0.0.0.0`. Get <<trigger-url-no-interface, more information>> about triggering the endpoint.
 +
-For example:
+If successful, the command returns a response.
+* To trigger a flow from an HTTP Listener that resides in a scaffolded interface, use `curl` with a URL similar to this one:
 +
-[source]
---
-https://lavender-ndm0yl.builder.code.com/proxy/8081/
---
+----
+$ curl http://localhost:8081/api/mypath2
+----
 +
-See xref:manage-web-ide-instance.adoc[] to ensure that you are using the correct instance URL.
-. Configure the headers to send the necessary cookies that you copied earlier:
-+
-image::send-request-with-cookies.png[]
-. When pinging that URL, the cloud IDE triggers the Mule flow.
+Use `localhost` instead of `0.0.0.0`, and add `api` to the URL. Get <<trigger-url-interface, more information>> about triggering the endpoint.
