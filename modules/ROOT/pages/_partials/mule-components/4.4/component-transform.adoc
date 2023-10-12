@@ -18,8 +18,8 @@ Convert input data to a new output structure or format.
 
 //
 //tag::component-long-description[]
-
-A single Transform component element (`<ee:transform/>`) can specify content for all parts of the Mule Event:
+TODO:
+A single Transform component element (`<ee:transform/>`) can specify content for all parts of the Mule event:
 
 * `<ee:message/>` can contain `<ee:set-payload/>` and `<ee:set-attributes/>`.
 * `<ee:variables/>` can contain one or more `<ee:set-variable/>` elements.
@@ -44,11 +44,16 @@ This component supports the following XML structure:
 
 [source,xml]
 ----
-<ee:transform 
-  doc:name="Transform" 
-  doc:id="iweyzv" />
+<ee:transform doc:name="Transform" doc:id="5270b6e3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 ----
-
 //end::component-xml[]
 //
 //tag::component-snippet-xml[]
@@ -61,19 +66,6 @@ Snippet XML in Anypoint Code Builder serves as a customizable template for the c
 
 [source,xml]
 ----
-<ee:transform doc:name="" doc:id="cfjrpz" >
-    <ee:message >
-        <ee:set-payload doc:name="Set payload" doc:id="nsvzzr" >
-            <![CDATA[%dw 2.0
-            output application/json
-            ---
-            {
-                firstName : "",
-                lastName : "",
-            }]]>
-        </ee:set-payload>
-    </ee:message>
-</ee:transform>
 ----
 
 //end::component-snippet-xml[]
@@ -108,9 +100,9 @@ Snippet XML in Anypoint Code Builder serves as a customizable template for the c
 
 [%header, cols="1,3"]
 |===
-| <CHILD_ELEMENT/> Attributes | Description
+| <ee:message/> Attributes | Description
 
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `TODO` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 | `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 
 |===
@@ -124,9 +116,9 @@ Snippet XML in Anypoint Code Builder serves as a customizable template for the c
 //tag::component-xml-descendant1[]
 [%header, cols="1,3"]
 |===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
+| <ee:set-payload/> Attributes | Description
 
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `TODO` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 | `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 
 |===
