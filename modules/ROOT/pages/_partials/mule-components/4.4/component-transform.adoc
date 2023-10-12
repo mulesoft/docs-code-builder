@@ -54,6 +54,11 @@ output application/java
         </ee:message>
     </ee:transform>
 ----
+
+A single Transform component element (`<ee:transform/>`) can specify content for all parts of the Mule event:
+
+* Mule message: `<ee:message/>` can contain `<ee:set-payload/>` and `<ee:set-attributes/>`.
+* Mule variables: `<ee:variables/>` can contain one or more `<ee:set-variable/>` elements.
 //end::component-xml[]
 //
 //tag::component-snippet-xml[]
