@@ -6,5 +6,14 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
 
-If you attempt to scaffold an API spec with fragments into an integration, you see the following error:
-`ERROR MESSAGE HERE`
+If you attempt to scaffold an API spec that includes this type of dependency by 
+xref:imp-implement-apis.adoc#import-spec-into-project[importing it from Exchange into an integration project] (using `MuleSoft: Import Asset from Exchange`), you see a message like the following:
+
+*Something failed during scaffolding API, please check logs for more details*
+
+The scaffold fails and the flows and other elements aren't created.
+
+If you attempt to scaffold an API spec that includes this type of dependency into a new implementation project (using xref:imp-implement-local-apis.adoc#scaffold-spec-into-project[multi-root workspaces]),
+the implementation project folder structure is not created and the error message is:
+
+*Something failed while scaffolding API*
