@@ -73,7 +73,7 @@ image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder i
 
 . Check that the IDE loads the <<acb-menu, Anypoint Code Builder menu>> with *Quick Actions* and *Documentation* links.
 
-. If you work in the EU region and your Anypoint Platform account resides in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud*. 
+. If you work in the EU region and your Anypoint Platform account resides in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud*. If you work in the EU region and your Anypoint Platform account resides in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud* and add a system variable. 
 +
 For guidance, see <<change-clouds>>. 
 
@@ -184,6 +184,11 @@ After logging you in, Anypoint Platform displays a *You can close this page now*
 
 In the desktop IDE, you can change your Anypoint Platform control plane to the US or EU Cloud. Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:start-acb.adoc#cloud-hosts[US and UE Cloud Hosts]. 
 
+If you are in the EU Cloud, set the environment variable for your system first:
+
+* <<add-env-variable-windows>>
+* <<add-env-variable-mac>>
+
 . If an API specification is open in the Explorer, close the project to avoid a synchronization error when you switch clouds. 
 +
 * Desktop IDE: Select *File* > *Close Folder* 
@@ -195,6 +200,37 @@ image::acb-activity-bar-select-cloud.png["Selecting the EU Cloud from the Deskto
 
 * From the Anypoint Code Builder panel, click the *Open ACB Settings* (gear) icon.
 * From the activity bar, click the *Manage* (gear) icon, select *Settings*, and search for `mule` in the *Settings* tab.
-
 . Scroll to *Mule: Control Plane*.
 . Select the US or EU Cloud.
+
+[add-env-variable-windows]
+=== Add the Environment Variable on Windows
+
+To ensure you have access to all of the Anypoint Code Builder features, you must add a system environment variable:
+
+. Open *Settings* and:
+.. Type `env` in the search box.
+.. Select the *Edit the system environment variables* option.
+.. Click *Yes*.
+. In *System Properties*, select the *Advanced* tab and click *Environment Variable*.
+. In the *Environment Variables* window, click *New*.
+.. For *Variable Name*, type `ANYPOINT_ENV.`
+.. For *Variable Value*, type `prod-eu`.
+. Click *OK*.
+. Verify that the path is updated:
+.. Click on path and verify that it says `ANYPOINT_ENV=prod-eu`.
+//Duke, This step I'm not sure about. Click on what path?
+. Set the dekstop IDE to EU in Anypoint Code Builder.
+
+[add-env-variable-mac]
+=== Add the Environment Variable on Mac 
+
+To ensure you have access to all of the Anypoint Code Builder features, you must add a system environment variable:
+
+. Open a Terminal window, and enter `vi ~/.zshrc` if you are using zsh shell or `vi ~/.bash_profile` if you are using bash.
+. Press `i` to enter insert mode.
+. Add the environment variable `export ANYPOINT_ENV=prod-eu` and press Escape to exit insert mode.
+. Type `:wq` and press Enter to save and exit the file.
+. Type `source ~/.zshrc` if you are using zsh or `source ~/.bash_profile` if you are using bash, to apply the changes.
+ 
+	
