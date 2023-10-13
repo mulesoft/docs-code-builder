@@ -1,6 +1,7 @@
 = Getting Started with Anypoint Code Builder
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: setup.adoc, connect-eu-cloud.adoc, load-acb-web-ide.adoc, log-in-anypoint-platform.adoc
+:restart-ide: Restart the IDE to load all your changes. 
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -73,11 +74,11 @@ image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder i
 
 . Check that the IDE loads the <<acb-menu, Anypoint Code Builder menu>> with *Quick Actions* and *Documentation* links.
 
-. If you are a customer on the EU control plane with an Anypoint Platform account running in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud* and add a system variable to point to the EU environment. 
+. If you are a customer on the EU control plane with an Anypoint Platform account running in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud*, and add a system variable to point to the EU environment. 
 +
 For guidance, see <<change-clouds>>. 
-
-//TODO: TROUBLESHOOTING IF IT DOESN'T LOAD
+. {restart-ide}
+. Follow the steps in <<login-ide>>.
 
 [[update-pack]]
 === Update Anypoint Extension Pack 
@@ -116,6 +117,7 @@ Do not use the beta version of Anypoint Code Builder to develop APIs, integratio
 ====
 --
 
+[[login-cloud]]
 === Open the Cloud IDE from Anypoint Platform
 
 To launch the cloud IDE:
@@ -137,6 +139,7 @@ After provisioning of your cloud IDE is complete, the IDE opens. The provisionin
 Your cloud IDE environment is associated with your user account. The cloud environment also has a unique URL that only you can access and that is _not_ embedded within the Anypoint Platform UI. You can reopen your cloud IDE directly from that URL or relaunch it indirectly from Anypoint Code Builder in Anypoint Platform.
 . Click the MuleSoft icon in the activity bar to see and use Anypoint Code Builder features.
 
+[[login-ide]]
 == Log in to Anypoint Platform from the IDE
 
 Some Anypoint Code Builder features require you to log in directly from the IDE to Anypoint Platform. The IDE prompts you when login is necessary and guides you through the login process. However, it is a good practice to log in from the IDE after opening MuleSoft features in the IDE. 
@@ -184,11 +187,6 @@ After logging you in, Anypoint Platform displays a *You can close this page now*
 
 In the desktop IDE, you can change your Anypoint Platform control plane to the US or EU Cloud. Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:start-acb.adoc#cloud-hosts[US and UE Cloud Hosts]. 
 
-. To use Anypoint Platform in the EU Cloud from your IDE, set the environment variable for your system:
-
-* <<add-env-variable-windows>>
-* <<add-env-variable-mac>>
-
 . If an API specification is open in the Explorer view of the IDE, close the project to avoid a synchronization error when you switch clouds. 
 
 * Desktop IDE: Select *File* > *Close Folder* 
@@ -202,6 +200,12 @@ image::acb-activity-bar-select-cloud.png["Selecting the EU Cloud from the Deskto
 * From the activity bar, click the *Manage* (gear) icon, select *Settings*, and search for `mule` in the *Settings* tab.
 . Scroll to *Mule: Control Plane*.
 . Select the US or EU Cloud.
+. If you set the EU Cloud control plane, set an environment variable for your operating system:
+
+* <<add-env-variable-windows>>
+* <<add-env-variable-mac>>
+. {restart-ide}
+. Follow the steps in <<login-ide>>.
 
 [[add-env-variable-windows]]
 === Add the Environment Variable on Windows
@@ -217,12 +221,17 @@ If you use the desktop IDE on Windows and your IDE uses Anypoint Platform featur
 .. For *Variable Name*, type `ANYPOINT_ENV.`
 .. For *Variable Value*, type `prod-eu`.
 . Click *OK*.
-. Verify that the path is updated:
-.. Click on path and verify that it says `ANYPOINT_ENV=prod-eu`.
-//Duke, This step I'm not sure about. Click on what path?
-. Set the desktop IDE to EU in Anypoint Code Builder.
-
-If you are setting up your desktop IDE, resume the procedure in <<change-clouds]>>.
+. Check the environment variable in the Environment Variables window.
++
+Alternatively, run this command from the Windows terminal:
++
+----
+> echo %ANYPOINT_ENV% 
+----
++
+The terminal returns `prod-eu`. 
+. {restart-ide}
+. Follow the steps in <<login-ide>>.
 
 [[add-env-variable-mac]]
 === Add the Environment Variable on Mac 
@@ -234,7 +243,6 @@ If you use the desktop IDE on Mac and your IDE uses Anypoint Platform features i
 . Add the environment variable `export ANYPOINT_ENV=prod-eu` and press Escape to exit insert mode.
 . Type `:wq` and press Enter to save and exit the file.
 . Type `source ~/.zshrc` if you are using zsh or `source ~/.bash_profile` if you are using bash, to apply the changes.
-
-If you are setting up your desktop IDE, resume the procedure in <<change-clouds]>>.
- 
+. {restart-ide}
+. Follow the steps in <<login-ide>>.
 	
