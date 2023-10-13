@@ -2,9 +2,9 @@
 
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-The Generative Flow feature transforms your natural language prompt, which describes your business logic, into a flow that contains the connectors and processors, in the order needed, to accomplish the specified task. 
+The Generative Flow feature transforms your natural language prompt, which describes your business logic, into a flow that contains the connector operations and processors, in the order needed, to accomplish the specified task. 
 
-For example, if you want to create a flow that reads contacts from Salesforce in JSON format, you can enter a prompt describing that task. The prompt is then transformed into a series of connectors and processors that are needed to execute that task, in this case: Listener, Query, Transformer, and Logger. A flow is generated, which you can then further customize to suit your needs. 
+For example, if you want to create a flow that reads contacts from Salesforce in JSON format, you can enter a prompt describing that task. The prompt is then transformed into a series of connector operations and processors that are needed to execute that task, in this case: Listener, Query, Transformer, and Logger. A flow is generated, which you can then further customize to suit your needs. 
 
 [[before-you-begin]]
 == Before You Begin
@@ -68,7 +68,7 @@ image::int-gen-flow-starting-cards.png[Starting cards on new project canvas]
 [[craft-ai-prompt]]
 == Craft Your Prompt
 
-Before you create a flow, define what you want achieve with the flow, for example, optimizing a business process. Craft your prompt using natural language, and keep in mind that the more concise and specific you make your prompt, the more effective Einstein is when generating your flow. 
+Before you create a flow, define what you want to achieve with the flow, for example, optimizing a business process. Craft your prompt using natural language, and keep in mind that the more concise and specific you make your prompt, the more effective Einstein is when generating your flow. 
 
 Here are some best practices for writing prompts:
 
@@ -95,7 +95,7 @@ For examples of prompts and generated flows, see xref:int-gen-flow-examples-ai.a
 [NOTE]
 ====
 * Each prompt is discrete, meaning that it doesn't build upon previous prompts. 
-* The generated response to your prompt will always be unique, depending on the wording you use and which LLM libraries are used. 
+* The generated response to your prompt will likely be unique, depending on the wording you use and which LLM is used. 
 ====
 
 [[view-prompt-history]]
@@ -139,17 +139,17 @@ image::int-generated-case-notification-email.png[]
 +
 . Optionally, click the thumbs up or thumbs down icon that appears after the generated code. 
 +
-Rating the flow that's created for you helps Einstein learn so that over time, the generated flows improve.
-. Inspect the generated code, and if you are satisfied, click the insert code icon to insert the code in to your flow. 
+Rating the flow that's created for you helps improve the quality of generative flows.
+. Inspect the generated code, and if you are satisfied, click the insert code icon to insert the code into your flow. 
 +
-If you aren't satisfied with the generated flow, reword your prompt and send it again. 
+If you aren't satisfied with the generated flow, try rewording your prompt and sending it again. 
 
 [[customize-gen-flow]]
 == Complete Your Flow
 
-Generative Flow builds the initial flow for you so that all you need to do is fill in the information that's specific to your configuration. 
+After Einstein builds the flow for you, you might need to fill in infromation that is specific to your configuration. 
 
-. After you inspect the code for your generated flow, click the Insert icon. 
+. After you inspect the code for your generated flow, you can either choose to copy it into your clipboard or insert it with a single click using the Insert action. 
 +
 After the code is inserted, the initial flow is built and the visual representation of the flow is displayed in the flow canvas next to the XML code tab. 
 +
