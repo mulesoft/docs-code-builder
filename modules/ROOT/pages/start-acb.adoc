@@ -10,8 +10,6 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studio Code. Both the desktop and cloud IDEs for Anypoint Code Builder share these extensions. The cloud IDE provides built-in extensions to the code-server implementation of Visual Studio Code for the web.
 
-//TODO: ADD GRAPHIC TO SHOW MULESOFT ICON IN THE ACTIVITY BAR AND THE MAIN PAGE
-
 * <<set-up-desktop>>: For the desktop IDE, you must load the extension pack to your local Visual Studio Code IDE. 
 * <<set-up-web>>: For the cloud IDE, you must log in to Anypoint Platform and acquire the permission to use Anypoint Code Builder. 
 
@@ -25,7 +23,12 @@ The desktop-based IDE extensions in Anypoint Extension Pack are available from t
 
 === Before You Begin Desktop IDE Setup
 
-Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, some Anypoint Extension Pack extensions depend on this requirement.  
+Before installing the desktop extensions to VS Code, set up git and have an Anypoint Platform account:
+
+* Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, some Anypoint Extension Pack extensions depend on this requirement.  
+
+//Requirements for Anypoint Platform account and account config
+include::partial$acb-reusable-steps.adoc[tags="platform-account"]
 
 For information about OS and system compatibility, see xref:acb-release-notes.adoc[].
 
@@ -95,9 +98,8 @@ Launch the cloud IDE from Anypoint Platform. Your Anypoint Platform user account
 
 Meet prerequisites before attempting to launch the cloud IDE: 
 
-* Anypoint Platform requires a user account. You can use an existing account or create one. Unexpired trial accounts are allowed. 
-
-* An administrator with an Anypoint Platform organization account must provide you with access to Anypoint Code Builder. See xref:configure-permissions.adoc[Configure Permissions]. 
+//Requirements for Anypoint Platform account and account config
+include::partial$acb-reusable-steps.adoc[tags="platform-account"]
 
 * Review important open beta information:
 +
@@ -145,9 +147,8 @@ Your cloud IDE environment is associated with your user account. The cloud envir
 
 Some Anypoint Code Builder features require you to log in directly from the IDE to Anypoint Platform. The IDE prompts you when login is necessary and guides you through the login process. However, it is a good practice to log in from the IDE after opening MuleSoft features in the IDE. 
 
-* Anypoint Platform requires a user account. You can use an existing account or create one from Anypoint Platform in the US or EU Cloud (see xref:anypoint-code-builder/index.adoc#us-eu-clouds[US and EU Cloud Hosts]. Unexpired trial accounts are allowed.
-
-* An administrator with an Anypoint Platform organization account must provide you with access to Anypoint Code Builder. See xref:start-configure-permissions.adoc[].
+//Requirements for Anypoint Platform account and account config
+include::partial$acb-reusable-steps.adoc[tags="platform-account"]
 
 From the IDE,you can log in from the status bar or through a command:
 
