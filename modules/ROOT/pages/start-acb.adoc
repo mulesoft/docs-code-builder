@@ -79,7 +79,7 @@ image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder i
 
 . Check that the IDE loads the <<acb-menu, Anypoint Code Builder menu>> with *Quick Actions* and *Documentation* links.
 
-. If you are a customer on the EU control plane with an Anypoint Platform account running in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud*, and add a system variable to point to the EU environment. 
+. If you are a customer on the EU control plane with an Anypoint Platform account running in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud*. 
 +
 For guidance, see <<change-clouds>>.
 . Follow the steps in <<login-ide>>.
@@ -217,49 +217,5 @@ image::acb-activity-bar-select-cloud.png["Selecting the EU Cloud from the Deskto
 * From the activity bar, click the *Manage* (gear) icon, select *Settings*, and search for `mule` in the *Settings* tab.
 . Scroll to *Mule: Control Plane*.
 . Select the US or EU Cloud.
-. If you set the EU Cloud control plane, set an environment variable for your operating system:
-
-* <<add-env-variable-windows>>
-* <<add-env-variable-mac>>
 . {restart-ide}
 . Follow the steps in <<login-ide>>.
-
-[[add-env-variable-windows]]
-=== Add the Environment Variable on Windows
-
-If you use the desktop IDE on Windows and your IDE uses Anypoint Platform features in the EU Cloud, ensure that you have access to all of the Anypoint Code Builder features by adding a system environment variable:
-
-. Open *Settings* and:
-.. Type `env` in the search box.
-.. Select the *Edit the system environment variables* option.
-.. Click *Yes*.
-. In *System Properties*, select the *Advanced* tab and click *Environment Variable*.
-. In the *Environment Variables* window, click *New*.
-.. For *Variable Name*, type `ANYPOINT_ENV.`
-.. For *Variable Value*, type `prod-eu`.
-. Click *OK*.
-. Check the environment variable in the Environment Variables window.
-+
-Alternatively, run this command from the Windows terminal:
-+
-----
-> echo %ANYPOINT_ENV% 
-----
-+
-The terminal returns `prod-eu`. 
-. {restart-ide}
-. Follow the steps in <<login-ide>>.
-
-[[add-env-variable-mac]]
-=== Add the Environment Variable on Mac 
-
-If you use the desktop IDE on Mac and your IDE uses Anypoint Platform features in the EU Cloud, ensure that you have access to all of the Anypoint Code Builder features by adding a system environment variable:
-
-. Open a Terminal window, and enter `vi ~/.zshrc` if you are using zsh shell or `vi ~/.bash_profile` if you are using bash.
-. Press `i` to enter insert mode.
-. Add the environment variable `export ANYPOINT_ENV=prod-eu` and press Escape to exit insert mode.
-. Type `:wq` and press Enter to save and exit the file.
-. Type `source ~/.zshrc` if you are using zsh or `source ~/.bash_profile` if you are using bash, to apply the changes.
-. {restart-ide}
-. Follow the steps in <<login-ide>>.
-	
