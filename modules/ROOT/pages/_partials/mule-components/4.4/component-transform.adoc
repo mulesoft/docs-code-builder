@@ -18,8 +18,7 @@ Convert input data to a new output structure or format.
 
 //
 //tag::component-long-description[]
-TODO:
-TODO
+DataWeave is the programming language for all expressions and data transformations in your integrations and implementations. The language offers function libraries and mechanisms for creating customizations, including your own functions, libraries, and data types. To learn the basics of DataWeave and experiment with DataWeave scripts, see https://dataweave.mulesoft.com/[DataWeave Tutorial and Playground^].
 
 //end::component-long-description[]
 //
@@ -102,9 +101,8 @@ Snippet XML in Anypoint Code Builder serves as a customizable template for the c
 
 [%header, cols="1,3"]
 |===
-| <ee:message/> Attributes | Description
+| Attributes | Description
 
-| `TODO` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 | `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 
 |===
@@ -118,9 +116,9 @@ Snippet XML in Anypoint Code Builder serves as a customizable template for the c
 //tag::component-xml-descendant1[]
 [%header, cols="1,3"]
 |===
-| <ee:set-payload/> Attributes | Description
+| Attributes | Description
 
-| `TODO` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 | `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 
 |===
@@ -153,9 +151,9 @@ The following example sets the payload using an inline DataWeave script.
     <ee:message>
         <ee:set-payload>
           <![CDATA[%dw 2.0
-            output application/json
+            output application/xml
             ---
-            {
+            example: {
                 message @(id: "DSF-829"): "Hello World!",
                 date: |2017-03-21|,
                 items: 
@@ -170,10 +168,19 @@ The following example sets the payload using an inline DataWeave script.
 </ee:transform>
 ----
 
-//OPTIONAL: SHOW OUTPUT IF HELPFUL
-//The example produces the following output: 
+The DataWeave script within `<ee:set-payload/>` returns this XML output:
 
-//OUTPUT_HERE 
+[source,output]
+----
+<example>
+  <message id="DSF-829">Hello World!</message>
+  <date>2017-03-21</date>
+  <items>
+    <item1>728</item1>
+    <item2>14422</item2>
+  </items>
+</example>
+----
 
 //end::component-xml-ex1[]
 //
@@ -230,7 +237,7 @@ The following example creates transformations for the payload, an attribute, and
         output application/json
         ---
         {
-            reasonPhrase: attributes.reasonPhrase
+            requestPath: attributes.requestPath
         }]]>
         </ee:set-attributes>
     </ee:message>
@@ -246,6 +253,130 @@ The following example creates transformations for the payload, an attribute, and
     </ee:variables>
 </ee:transform>
 ----
+
+Assume this payload:
+
+[source,payload]
+----
+[
+  {
+    "id": 1,
+    "name": "Leanne Graham",
+    "username": "Bret",
+    "email": "Sincere@april.biz",
+    "address": {
+      "street": "Kulas Light",
+      "suite": "Apt. 556",
+      "city": "Gwenborough",
+      "zipcode": "92998-3874",
+      "geo": {
+        "lat": "-37.3159",
+        "lng": "81.1496"
+      }
+    },
+    "phone": "1-770-736-8031 x56442",
+    "website": "hildegard.org",
+    "company": {
+      "name": "Romaguera-Crona",
+      "catchPhrase": "Multi-layered client-server neural-net",
+      "bs": "harness real-time e-markets"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Ervin Howell",
+    "username": "Antonette",
+    "email": "Shanna@melissa.tv",
+    "address": {
+      "street": "Victor Plains",
+      "suite": "Suite 879",
+      "city": "Wisokyburgh",
+      "zipcode": "90566-7771",
+      "geo": {
+        "lat": "-43.9509",
+        "lng": "-34.4618"
+      }
+    },
+    "phone": "010-692-6593 x09125",
+    "website": "anastasia.net",
+    "company": {
+      "name": "Deckow-Crist",
+      "catchPhrase": "Proactive didactic contingency",
+      "bs": "synergize scalable supply-chains"
+    }
+  }
+]
+----
+
+The script within `<ee:set-payload>` returns this JSON output:
+
+[source, json]
+----
+[
+  {
+    "id": 1,
+    "username": "Bret",
+    "address": {
+      "street": "Kulas Light"
+    },
+    "website": "hildegard.org"
+  },
+  {
+    "id": 2,
+    "username": "Antonette",
+    "address": {
+      "street": "Victor Plains"
+    },
+    "website": "anastasia.net"
+  }
+]
+----
+
+The script within `<ee:set-attributes/>` returns the request path in the HTTP header. For example, assume this metadata in the HTTP header:
+
+[source, http header]
+----
+{
+   Request path=/hellomule
+   Raw request path=/hellomule
+   Method=GET
+   Listener path=/hellomule
+   Local Address=/127.0.0.1:8081
+   Query String=
+   Relative Path=/hellomule
+   Masked Request Path=null
+   Remote Address=/127.0.0.1:61856
+   Request Uri=/hellomule
+   Raw request Uri=/hellomule
+   Scheme=http
+   Version=HTTP/1.1
+   Headers=[
+      host=localhost:8081
+      connection=keep-alive
+      cache-control=max-age=0
+      sec-ch-ua="Google Chrome";v="117", "Not;A=Brand";v="8", "Chromium";v="117"
+      sec-ch-ua-mobile=?0
+      sec-ch-ua-platform="macOS"
+      upgrade-insecure-requests=1
+      user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36
+      accept=text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+      sec-fetch-site=none
+      sec-fetch-mode=navigate
+      sec-fetch-user=?1
+      sec-fetch-dest=document
+      accept-encoding=gzip, deflate, br
+      accept-language=en-US,en;q=0.9
+   ]
+   Query Parameters=[]
+   URI Parameters=[]
+}
+----
+
+The 
+
+ 
+
+
 //end::component-xml-ex3[]
 
 //OPTIONAL: SHOW OUTPUT IF HELPFUL
@@ -263,17 +394,7 @@ The following example creates transformations for the payload, an attribute, and
 
 // tag::metadata[]
 
-The Transform component accepts input and output metadata for the message payload, a variable or an attribute. You can provide format-specific resources and settings for xref:dataweave::dataweave-formats.adoc[supported mime types (formats)]:
-
-* CSV example or RAML definition
-* Copybook file or schema
-* Excel column name and type definitions (including String, Number, Boolean, Date, and DateTime) for one more sheets
-* Fixed Width column name, type (String, Integer, Decimal, Boolean, Date, and DateTime), width, and format settings
-* Flat File schema
-* JSON example or schema
-* Object class or RAML definition
-* Simple Type (String, Number, Integer, Boolean, Date, or DateTime)
-* XML example or schema
+The Transform component accepts input and output metadata for the Mule message payload, variable, or attribute. You can provide format-specific resources and settings for xref:dataweave::dataweave-formats.adoc[supported MIME types (formats)].
 // end::metadata[]
 
 [[error-handling]]
