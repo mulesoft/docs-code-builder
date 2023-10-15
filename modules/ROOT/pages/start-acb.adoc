@@ -1,6 +1,7 @@
 = Getting Started with Anypoint Code Builder
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: setup.adoc, connect-eu-cloud.adoc, load-acb-web-ide.adoc, log-in-anypoint-platform.adoc
+:restart-ide: Restart the IDE to load all your changes. 
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -9,13 +10,11 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studio Code. Both the desktop and cloud IDEs for Anypoint Code Builder share these extensions. The cloud IDE provides built-in extensions to the code-server implementation of Visual Studio Code for the web.
 
-//TODO: ADD GRAPHIC TO SHOW MULESOFT ICON IN THE ACTIVITY BAR AND THE MAIN PAGE
-
 * <<set-up-desktop>>: For the desktop IDE, you must load the extension pack to your local Visual Studio Code IDE. 
 * <<set-up-web>>: For the cloud IDE, you must log in to Anypoint Platform and acquire the permission to use Anypoint Code Builder. 
 
 [[set-up-desktop]]
-== Desktop IDE Setup
+== Set Up the Desktop IDE
 
 The desktop-based IDE extensions in Anypoint Extension Pack are available from the Visual Studio Marketplace.
 
@@ -24,7 +23,12 @@ The desktop-based IDE extensions in Anypoint Extension Pack are available from t
 
 === Before You Begin Desktop IDE Setup
 
-Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, some Anypoint Extension Pack extensions depend on this requirement.  
+Before installing the desktop extensions to VS Code, set up git and have an Anypoint Platform account with the required permissions:
+
+* Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, some Anypoint Extension Pack extensions depend on this requirement.  
+
+//Requirements for Anypoint Platform account and account config
+include::partial$acb-reusable-steps.adoc[tags="platform-account"]
 
 For information about OS and system compatibility, see xref:acb-release-notes.adoc[].
 
@@ -65,6 +69,8 @@ Anypoint Extension Pack contains these extensions:
 * Anypoint Code Builder - Integration Extension
 * Anypoint Code Builder - Mule Runtime Extension
 * Anypoint Code Builder - Platform Extension
++
+For versioning information about extensions in Anypoint Extension Pack, see the https://marketplace.visualstudio.com/items/salesforce.mule-dx-extension-pack/changelog[Change Log^].
 
 . Click the MuleSoft icon in the activity bar to access and use Anypoint Code Builder features.
 +
@@ -73,11 +79,10 @@ image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder i
 
 . Check that the IDE loads the <<acb-menu, Anypoint Code Builder menu>> with *Quick Actions* and *Documentation* links.
 
-. If you work in the EU region and your Anypoint Platform account resides in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud*. 
+. If you are a customer on the EU control plane with an Anypoint Platform account running in the EU Cloud, change the *Mule: Control Plane* setting to *EU Cloud*, and add a system variable to point to the EU environment. 
 +
-For guidance, see <<change-clouds>>. 
-
-//TODO: TROUBLESHOOTING IF IT DOESN'T LOAD
+For guidance, see <<change-clouds>>.
+. Follow the steps in <<login-ide>>.
 
 [[update-pack]]
 === Update Anypoint Extension Pack 
@@ -89,13 +94,12 @@ If Anypoint Extension Pack is installed on your desktop IDE, update to the lates
 
 Launch the cloud IDE from Anypoint Platform. Your Anypoint Platform user account and business organization are hosted in the US or EU cloud and are not shared across the hosts.
 
-=== Before You Begin 
+=== Before You Begin with the Cloud IDE
 
 Meet prerequisites before attempting to launch the cloud IDE: 
 
-* Anypoint Platform requires a user account. You can use an existing account or create one. Unexpired trial accounts are allowed. 
-
-* An administrator with an Anypoint Platform organization account must provide you with access to Anypoint Code Builder. See xref:configure-permissions.adoc[Configure Permissions]. 
+//Requirements for Anypoint Platform account and account config
+include::partial$acb-reusable-steps.adoc[tags="platform-account"]
 
 * Review important open beta information:
 +
@@ -116,6 +120,7 @@ Do not use the beta version of Anypoint Code Builder to develop APIs, integratio
 ====
 --
 
+[[login-cloud]]
 === Open the Cloud IDE from Anypoint Platform
 
 To launch the cloud IDE:
@@ -137,11 +142,23 @@ After provisioning of your cloud IDE is complete, the IDE opens. The provisionin
 Your cloud IDE environment is associated with your user account. The cloud environment also has a unique URL that only you can access and that is _not_ embedded within the Anypoint Platform UI. You can reopen your cloud IDE directly from that URL or relaunch it indirectly from Anypoint Code Builder in Anypoint Platform.
 . Click the MuleSoft icon in the activity bar to see and use Anypoint Code Builder features.
 
+[[login-ide]]
 == Log in to Anypoint Platform from the IDE
 
 Some Anypoint Code Builder features require you to log in directly from the IDE to Anypoint Platform. The IDE prompts you when login is necessary and guides you through the login process. However, it is a good practice to log in from the IDE after opening MuleSoft features in the IDE. 
 
-The status bar in the IDE shows your login status:
+//Requirements for Anypoint Platform account and account config
+include::partial$acb-reusable-steps.adoc[tags="platform-account"]
+
+From the IDE, you can log in from the status bar or through a command:
+
+* <<login-status-bar>>
+* <<login-command>>
+
+[[login-status-bar]]
+=== Log in from the IDE through the Status Bar
+
+The status bar in the desktop and cloud IDEs shows your login status:
 
 * *Not logged in to Anypoint Platform* indicates that you must log in to perform tasks that require a connection to Anypoint Platform. 
 +
@@ -152,7 +169,10 @@ You can log in by clicking this notification and following the prompts to log in
 +
 You can log out by clicking your user name and following the prompts.
 
-You can also use the Command Palette to log in to Anypoint Platform. 
+[[login-command]]
+=== Log in from the IDE through the Command Palette
+
+You can use the Command Palette to log in to Anypoint Platform. 
 
 To log in from the IDE from the Command Palette:
 
@@ -182,10 +202,10 @@ After logging you in, Anypoint Platform displays a *You can close this page now*
 [[change-clouds]]
 == Set the Desktop IDE to the EU or US Cloud
 
-In the desktop IDE, you can change your Anypoint Platform control plane to the US or EU Cloud. Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:start-acb.adoc#cloud-hosts[US and UE Cloud Hosts]. 
+In the desktop IDE, you can change your Anypoint Platform control plane to the US or EU Cloud. US Cloud is the default. Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:index.adoc#us-eu-clouds[US and UE Cloud Hosts]. 
 
-. If an API specification is open in the Explorer, close the project to avoid a synchronization error when you switch clouds. 
-+
+. If an API specification is open in the Explorer view of the IDE, close the project to avoid a synchronization error when you switch clouds. 
+
 * Desktop IDE: Select *File* > *Close Folder* 
 * Cloud IDE: Select the image:icon-menu.png["cloud IDE menu",18,18] (menu) icon > *File* > *Close Folder*
 
@@ -195,6 +215,51 @@ image::acb-activity-bar-select-cloud.png["Selecting the EU Cloud from the Deskto
 
 * From the Anypoint Code Builder panel, click the *Open ACB Settings* (gear) icon.
 * From the activity bar, click the *Manage* (gear) icon, select *Settings*, and search for `mule` in the *Settings* tab.
-
 . Scroll to *Mule: Control Plane*.
 . Select the US or EU Cloud.
+. If you set the EU Cloud control plane, set an environment variable for your operating system:
+
+* <<add-env-variable-windows>>
+* <<add-env-variable-mac>>
+. {restart-ide}
+. Follow the steps in <<login-ide>>.
+
+[[add-env-variable-windows]]
+=== Add the Environment Variable on Windows
+
+If you use the desktop IDE on Windows and your IDE uses Anypoint Platform features in the EU Cloud, ensure that you have access to all of the Anypoint Code Builder features by adding a system environment variable:
+
+. Open *Settings* and:
+.. Type `env` in the search box.
+.. Select the *Edit the system environment variables* option.
+.. Click *Yes*.
+. In *System Properties*, select the *Advanced* tab and click *Environment Variable*.
+. In the *Environment Variables* window, click *New*.
+.. For *Variable Name*, type `ANYPOINT_ENV.`
+.. For *Variable Value*, type `prod-eu`.
+. Click *OK*.
+. Check the environment variable in the Environment Variables window.
++
+Alternatively, run this command from the Windows terminal:
++
+----
+> echo %ANYPOINT_ENV% 
+----
++
+The terminal returns `prod-eu`. 
+. {restart-ide}
+. Follow the steps in <<login-ide>>.
+
+[[add-env-variable-mac]]
+=== Add the Environment Variable on Mac 
+
+If you use the desktop IDE on Mac and your IDE uses Anypoint Platform features in the EU Cloud, ensure that you have access to all of the Anypoint Code Builder features by adding a system environment variable:
+
+. Open a Terminal window, and enter `vi ~/.zshrc` if you are using zsh shell or `vi ~/.bash_profile` if you are using bash.
+. Press `i` to enter insert mode.
+. Add the environment variable `export ANYPOINT_ENV=prod-eu` and press Escape to exit insert mode.
+. Type `:wq` and press Enter to save and exit the file.
+. Type `source ~/.zshrc` if you are using zsh or `source ~/.bash_profile` if you are using bash, to apply the changes.
+. {restart-ide}
+. Follow the steps in <<login-ide>>.
+	
