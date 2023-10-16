@@ -4,9 +4,9 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-When your integration or implementation builds successfully within the Anypoint Code Builder IDE, the application deploys to your local development environment, whether you are using the desktop or cloud-based host for your applications.
+When your integration or implementation builds successfully within the Anypoint Code Builder IDE, the application deploys to your local development environment, whether you are using the desktop or cloud IDE.
 
-It is common to configure the HTTP Listener from  xref:http-connector::index.adoc[Anypoint Connector for HTTP] (HTTP Connector) to trigger the execution of a flow in a deployed application. You can trigger the flow locally from the built-in terminal in Anypoint Code Builder or from a VS Code extension like Thunder Cloud.
+It is common to configure the HTTP Listener from  xref:http-connector::index.adoc[Anypoint Connector for HTTP] (HTTP Connector) to trigger the execution of a flow in a deployed application. You can trigger the flow locally from the built-in terminal in Anypoint Code Builder or from a VS Code extension like Thunder Client.
 
 [[before-you-begin]]
 == Before You Begin
@@ -21,7 +21,7 @@ To create a project, see xref:int-create-integrations.adoc[] or xref:imp-impleme
 
 For integrations and implementations that you build and deploy within your IDE during the development process, the URL to use for triggering an HTTP Listener differs depending on whether the listener is within the configuration XML for a scaffolded interface that is generated from an API specification or within a configuration XML file that does not implement a scaffolded interface.
 
-Typically, for apps that use an HTTP Listener you configure the host to `0.0.0.0` and the port to `8081`. If port `8081` is in use by another application, you can use a similar port, such as `8082`.
+Typically, for apps that use an HTTP Listener, you configure the host to `0.0.0.0` and the port to `8081`. If port `8081` is in use by another application, you can use a similar port, such as `8082`.
 
 [[trigger-url-no-interface]]
 * Trigger a flow within a configuration XML that _does not_ contain a scaffolded interface by using a URL similar to this one from your IDE's terminal: 
@@ -51,7 +51,9 @@ The port and host are defined in the `<http:listener-connection/>` element, and 
 http://localhost:8081/api/my-endpoint
 ----
 +
-For this case, the endpoint is defined within the `name` attribute of the `<flow/>` element of the interface. For example, assume that a flow in a scaffolded interface references a flow (`getFlights`):
+Notice `/api/end-point` in the example. For this case, the endpoint is defined within the `name` attribute of a `<flow/>` element in the interface, and `api` is defined in an HTTP Listener in the interface. 
++
+For example, assume that a flow in a scaffolded interface references a flow (`getFlights`):
 +
 [source,xml]
 ----
@@ -71,13 +73,13 @@ Also assume that the `getFlights` flow resides in an XML configuration file for 
 </flow>
 ----
 +
-The URL to trigger this flow uses `flights` as the endpoint, not the value of the `path` in the HTTP Listener in the interface:
+The URL to trigger this flow uses `flights` as the endpoint:
 +
 ----
 http://localhost:8081/api/flights
 ----
 +
-It is also important to notice that the URL adds `api/` to make the request through the `<http:listener/>` in the interface. Generally, a listener is located above the router, as in this example:
+The URL adds `/api` before the `/flights` endpoint to make the request through the `<http:listener/>` in the interface. Generally, a listener is located above the router, as in this example:
 +
 [source,xml]
 ----
@@ -109,7 +111,7 @@ It is also important to notice that the URL adds `api/` to make the request thro
 
 Use the terminal in Anypoint Code Builder to trigger a flow through an HTTP Listener in an integration or implementation project that is deployed locally, within your IDE. This procedure is for Mule apps within the desktop or cloud IDE. 
 
-TIP: The examples in this procedure show how to trigger the flow with a `curl` command from the IDE's terminal. You can also use Thunder Cloud, a third-party extension for VS Code, to trigger a flow with the same URLs. For security reasons, external REST clients, such as Advanced REST Client and Postman, are not allowed to send requests to projects in the cloud IDE.
+TIP: The examples in this procedure show how to trigger the flow with a `curl` command from the IDE's terminal. You can also use Thunder Client, a third-party extension for VS Code, to trigger a flow with the same URLs. For security reasons, external REST clients, such as Advanced REST Client and Postman, are not allowed to send requests to projects deployed in the cloud IDE.
 
 Before attempting to trigger a flow, review <<trigger-urls>>, and verify that you meet the prerequisites in <<before-you-begin>>.
 
@@ -133,7 +135,7 @@ $ curl localhost:8081/mypath
 Use `localhost` instead of `0.0.0.0`. Get <<trigger-url-no-interface, more information>> about triggering the endpoint.
 +
 If successful, the command returns a response.
-* To trigger a flow from an HTTP listener that resides in a scaffolded interface, use `curl` with a URL similar to this one:
+* To trigger a flow from an HTTP Listener that resides in a scaffolded interface, use `curl` with a URL similar to this one:
 +
 ----
 $ curl http://localhost:8081/api/mypath2
