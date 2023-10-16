@@ -1,0 +1,256 @@
+//
+//tag::component-title[]
+
+= Choice (<choice/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Route messages dynamically through a flow according to a set of DataWeave expressions that evaluate message content.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+Each expression is associated with a different routing option. The effect is to add conditional processing to a flow, similar to an `if`/`then`/`else` code block in most programming languages.
+
+Only one of the routes in the Choice router executes, meaning that the first expression that evaluates to `true` triggers that route's execution and the others are not checked. If none of the expressions are `true`, then the default route executes.
+
+To configure the Choice router, specify one or more conditions to evaluate, and the message processors that execute when any condition evaluates to `true`. Additionally, configure a default route that executes when none of the defined conditions are `true`.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml,linenums]
+----
+<choice doc:name="Choice" doc:id="qwolaa" tracking:enable-default-events="true" >
+  <when expression=${expressionToEvaluate}> <1>
+    <!-- Message processors --> <2>
+  </when>
+  <otherwise>
+    <!-- Message processors --> <3>
+  </otherwise>
+</choice>
+----
+
+<1> The `expression` attribute has the condition to evaluate.
+<2> Add any number of message processors to execute if `expression` evaluates to `true`.
+<3> Add any number of message processors to execute if none of the conditions evaluates to `true`.
+
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+<choice doc:name="Choice" doc:id="wlkmqq" >
+  <when expression='#[$1]' doc:name="When" >
+  </when>
+  <otherwise doc:name="Otherwise" >
+  </otherwise>
+</choice>
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<choice/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `tracking:enable-default-events` 
+| When set to `true`, activates the Business Events feature.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-attributes-child1[]
+
+=== Child XML Element and Attributes
+
+[%header, cols="1,3"]
+|===
+| <when/> Attributes | Description
+
+| `expression` | Expression in DataWeave language to evaluate input. If the expression evaluates to true, this routing option executes.
+
+|===
+//end::component-xml-attributes-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+//tag::adding-routes[]
+== Adding Routes to the Choice Router
+
+By default, the Choice router has one route option that executes when the configured DataWeave expression evaluates to `true`, and a default route that executes when none of the expressions in the existing routes are `true`. Add more routes when you need to evaluate more than one condition and then execute different operations depending on which condition is met.
+
+To add a new route:
+
+. Add a `<when>` element inside the `<choice>` element.
+. Configure the `expression` attribute to define the condition to execute this route. 
+//end::adding-routes[]
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following example configures an HTTP listener that receives a `language` query parameter and a Choice router that evaluates the parameter and executes the correspoding route depending on the value.
+
+[source,xml]
+----
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+  xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+  xmlns:spring="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+  <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" >
+    <http:listener-connection host="0.0.0.0" port="8081" />
+  </http:listener-config>
+  <flow name="content-based-routingFlow" >
+    <http:listener config-ref="HTTP_Listener_config" path="/" doc:name="Listener" />
+    <set-variable variableName="language" value="#[attributes.queryParams.language]" doc:name="Set Variable" />
+    <!-- START OF CHOICE BLOCK-->
+    <choice doc:name="Choice" >
+      <when expression="#[vars.language == 'Spanish']" >
+        <set-payload value="Hola!" doc:name="Reply in Spanish" />
+      </when>
+      <when expression="#[vars.language == 'French']" >
+        <set-payload value="Bonjour!" doc:name="Reply in French" />
+      </when>
+      <otherwise>
+        <flow-ref name="reply-in-default-languageSub_Flow" doc:name="reply-in-default-languageSub_Flow" />
+      </otherwise>
+    </choice>
+    <!-- END OF CHOICE BLOCK-->
+    <logger level="INFO" doc:name="Log the reply" message='#["The reply $(payload) means hello in $(vars.language)" ]'/>
+  </flow>
+  <sub-flow name="reply-in-default-languageSub_Flow" >
+    <logger level="INFO" doc:name="Logger" message="No language specified. Using English as a default. "/>
+    <set-variable variableName="language" value="English" doc:name="Set Language to English" />
+    <set-payload value="Hello!" doc:name="Reply in English" />
+  </sub-flow>
+</mule>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::about-flows.adoc[Flows and Subflows]
+* xref:dataweave::dataweave-cookbook-extract-data.adoc[Extract Data]
+* xref:dataweave::dataweave-language-introduction.adoc[DataWeave Scripts]
+* xref:mule-runtime::business-events.adoc[Business Events]
+
+//end::see-also[]

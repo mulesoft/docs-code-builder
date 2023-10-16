@@ -1,0 +1,85 @@
+= Project Loading Errors
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Errors sometimes occur when you open or start a project in Anypoint Code Builder. 
+
+
+== Loading Error in the Application UI
+
+A *Loading...* error in the canvas UI often occurs under these conditions:
+
+* When importing a project due to a missing dependency 
++
+To check for a missing dependency:
+
+//step open output panel
+include::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
+. Select "Mule DX Server" from the drop-down menu.
+. Search for an error caused by the missing dependency, similar to this one:
++
+----
+Caused by: org.eclipse.aether.transfer.ArtifactNotFoundException: 
+Failure to find org.mule.examples:accelerator-common-config-module:jar:mule-plugin:1.1.0 
+in https://repo.maven.apache.org/maven2/ was cached in the local repository, 
+resolution will not be reattempted until the update interval of central has 
+elapsed or updates are forced
+----
+. If you find a missing dependency, log in to Anypoint Platform.
++
+The canvas UI loads after all dependencies load.
+
+* When a browser extension is interfering with the UI loading process  
++
+image::troubleshoot-loading-error.png["Loading error in the UI"]
++
+To address this issue, try:
++
+* Disabling browser extensions and reloading the application 
+* Using another browser that is not using extensions
+
+== UI Canvas Renders Without Configured Flows or Subflows
+
+If the UI for an application that is already configured with a flow or subflow treats your application as a new project, prompting you with the question *How do you want to start building your project?* and *Build a flow* and *Build a sub flow* creation options, make sure that your application is open from its _root_ directory or from a multi-root workspace. 
+
+image::acb-start-flow-subflow-ui.png["Start Screen Building a Mule Application"]
+
+Visual Studio Code treats an open directory as a workspace. For the project to load into a workspace, the root directory of the project must be the top-level directory in the Explorer view, or the project must belong to a https://code.visualstudio.com/docs/editor/multi-root-workspaces[multi-root workspace^].
+
+//step to open command palette:
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide this command:
+[source,command]
+----
+File: Open Folder...
+----
+. Navigate to the _root_ directory for your project. 
++
+The root is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
+
+See also, xref:int-import-mule-project.adoc[].
+
+[[mule-dx]]
+== Mule DX API Component Was Not Installed
+
+The error indicates that some Anypoint Code Builder dependencies have not finished loading. This issue typically occurs when you click *Design an API* and is often accompanied by the notification *Extracting Mule runtime: This operation may take a while...*. The extraction process can take several minutes, particularly after you install or update Anypoint Extension Pack on the desktop IDE.
+
+. Wait for the error *Mule DX API Component was not installed* to disappear. 
+. Retry your action.
+
+To monitor the progress of backend processes:
+
+//step to open output panel:
+include::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
+. Select *Mule DX Server* from the drop-down menu in the panel. 
+
+== Dependency Resolution Error
+
+The error `There was an issue solving the dependencies for the asset` occurs when a dependency is missing. Usually, the appears after you import or open an integration or implementation project that is missing one or more dependencies for a connector operation. 
+
+To address this issue and avoid other errors, try logging in to Anypoint Platform from the IDE, and wait for the project to finish loading before attempting to resolve any missing dependencies that remain.
+

@@ -1,0 +1,55 @@
+= Implementation Errors
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+You might encounter problems when implementing an API.
+
+[[imp-scaffold-fails]]
+== Something Failed While Scaffolding an API
+
+include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
+
+If you attempt to scaffold an API that references these types of fragments, you see a message like the following:
+
+*Something failed while scaffolding API*
+
+The scaffold fails and the flows and other elements aren't created.
+
+If you use the iterative approach to scaffold the API (using xref:imp-implement-local-apis.adoc#scaffold-spec-into-project[multi-root workspaces]),
+the implementation project folder structure is not created.
+
+To work around this issue, before scaffolding the API:
+
+. Add the fragment directly to a folder in your API spec project, such as `fragments`:
++
+image::troubleshoot-imp-scaff.png["Fragment folder in the Explorer view"]
+. Change the path to the fragment from Exchange to the local folder, for example:
++
+[tabs]
+====
+Reference Local OAS Fragment::
++
+[source,YAML,linenums]
+--
+$ref: fragments/frag-defs.yaml#/components/examples/flightsList
+--
+
+Reference OAS Fragment on Exchange::
++
+[source,YAML,linenums]
+--
+$ref: exchange_modules/e91cab06-650b-4634-9c6f-5bc4f4fc4d17/frag-defs/1.0.0/frag-defs.yaml#/components/examples/flightsList
+--
+====
+. Re-scaffold the API.
+
+
+See xref:des-create-api-fragments.adoc#create-add-fragment-directly[Create and Add a Fragment Directly in Your Spec].
+
+
+
+== See Also
+
+* xref:imp-implement-apis.adoc[]
+* xref:imp-implement-local-apis.adoc#[]
