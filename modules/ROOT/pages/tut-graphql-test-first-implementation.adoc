@@ -26,12 +26,14 @@ To locally deploy your Mule Application, run a debug session in Anypoint Code Bu
 
 . In Anypoint Code Builder, open the *Books Implementation* project.
 . Select *Run and Debug* in the Activity Bar, then press the *Start Debugging* icon.
+//open terminal
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
 . In the IDE's terminal, use the `curl` command, and create a `POST` request to the local address, adding the `/graphql` path: `+http://localhost:8081/graphql+`:
 +
 [source,curl]
 --
 curl --request POST \
---location 'http://localhost:8081/graphql' \
+--location 'http://0.0.0.0:8081/graphql' \
 --header 'Content-Type: application/json' \
 --data '{
     "query": "query bookById($id: ID) {bookById(id: $id){ id name pageCount author{ id firstName lastName}}}",
@@ -41,7 +43,7 @@ curl --request POST \
 }'
 --
 +
-See xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow] for guidance with triggering a localhost URL from the IDE's terminal.
+For more information about using the `curl` command in the terminal, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
 . Send the `curl` request.
 +
 Anypoint Code Builder returns an empty field for the book:
