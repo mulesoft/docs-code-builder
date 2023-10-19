@@ -33,7 +33,7 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-termin
 [source,curl]
 --
 curl --request POST \
---location 'http://0.0.0.0:8081/graphql' \
+--location 'http://localhost:8081/graphql' \
 --header 'Content-Type: application/json' \
 --data '{
     "query": "query bookById($id: ID) {bookById(id: $id){ id name pageCount author{ id firstName lastName}}}",
