@@ -139,22 +139,14 @@ image::packaged-and-running-terminals.png[]
 
 After starting your debugging session:
 
-. Make a GET request to the listener in the _interface_ (`interface.xml`) instead of the implementation.
-
-* From the desktop IDE, for example:
-+
-[source,URI]
-----
-> curl http://0.0.0.0:8081/flights
-----
-* From the cloud IDE, for example:
+. In the IDE's terminal, use a `curl` command to make a `GET` request to the listener in the _interface_ (`interface.xml`) instead of the implementation:
 +
 [source,URI]
 ----
 > curl http://0.0.0.0:8081/api/flights
 ----
 +
-See xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow] for guidance with the URL.
+For help with using the IDE's terminal, xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
 . In your American Flights project, notice that the execution of the app stops at your first breakpoint.
 +
 image::debug-stop-at-flow-ref.png[]
