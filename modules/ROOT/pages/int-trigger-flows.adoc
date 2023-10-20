@@ -51,7 +51,7 @@ The port and host are defined in the `<http:listener-connection/>` element, and 
 http://localhost:8081/api/my-endpoint
 ----
 +
-Notice `/api/end-point` in the example. For this case, the endpoint is defined within the `name` attribute of a `<flow/>` element in the interface, and `api` is defined in an HTTP Listener in the interface. 
+Notice `/api/endpoint` in the example. For this case, the endpoint is defined within the `name` attribute of a `<flow/>` element in the interface, and `api` is defined in an HTTP Listener in the interface. 
 +
 For example, assume that a flow in a scaffolded interface references a flow (`getFlights`):
 +
@@ -141,4 +141,4 @@ If successful, the command returns a response.
 $ curl http://localhost:8081/api/mypath2
 ----
 +
-Use `localhost` instead of `0.0.0.0`, and add `api` to the URL. Get <<trigger-url-interface, more information>> about triggering the endpoint.
+Use `localhost` instead of `0.0.0.0`, and add the listener `path` for before the router (such as `api` for most scaffolded interfaces) and the endpoint (such as `mypath2`) to the URL. Get <<trigger-url-interface, more information>> about triggering the endpoint.

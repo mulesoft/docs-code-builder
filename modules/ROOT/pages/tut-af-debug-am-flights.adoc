@@ -138,12 +138,16 @@ image::packaged-and-running-terminals.png[]
 
 After starting your debugging session:
 
-. Make a GET request to the listener in the _interface_ (`interface.xml`) instead of the implementation:
-
-* From the desktop IDE: `+http://localhost:8081/api/flight+`
-* From the cloud IDE: `+https://<web-IDE-instance>/proxy/8081/api/flight+`
+//open terminal
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
+. In the IDE's terminal, use a `curl` command to make a `GET` request to the listener in the _interface_ (`interface.xml`) instead of the implementation:
 +
-Notice the `_/api/flight_` in the URI for the listener in the interface. For more guidance with URIs, see xref:int-trigger-flows.adoc[].
+[source,URI]
+----
+> curl http://localhost:8081/api/flights
+----
++
+Notice the `_/api/flight_` in the URI for the listener in the interface.  For more information about this step, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
 . In your American Flights project, notice that the execution of the app stops at your first breakpoint.
 +
 image::debug-stop-at-flow-ref.png[]
