@@ -1,106 +1,67 @@
 = Deploying Mule Apps to CloudHub
+:page-deployment-options: cloud-ide, desktop-ide
+:page-aliases: deploy-a-mule-application-to-cloudhub.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
 
-[NOTE]
---
-Anypoint Code Builder can only deploy applications to CloudHub 1.0
---
+NOTE: Anypoint Code Builder can deploy applications only to CloudHub 1.0.
+
+To deploy to another supported environment, create a deployable JAR file.
+For information, see xref:int-export-mule-project.adoc#deployable[Export to a Deployable JAR File].
+
 
 == Before You Begin
 
-* xref:setup.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
-* Install a REST client such as Postman or AdvancedRestClient
+* Install a REST client, such as Postman or AdvancedRestClient.
 
-== Deploy an Application to CloudHub
+== Deploy an App to CloudHub
 
-To deploy to CloudHub you must configure a `deploy.json` file in your `src/main/resources` directory. If your project does not have a `deploy.json` file, Anypoint Code Builder prompts you to create one the first time you deploy your application:
+When you deploy an application to CloudHub, Anypoint Code Builder configures a default `deploy.json` file in your `src/main/resources` directory.
+If you need to configure properties at deployment time, for example, 
+to xref:int-create-secure-configs.adoc[create secure properties], Anypoint Code Builder prompts you to modify `deploy.json` during deployment the deployment process.
 
-. Open Anypoint Code Builder.
+To deploy your app to CloudHub:
+
+// Open IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
+. Open the configuration XML file for the Mule app to deploy.
+. Click the image:icon-deploy.png["",20,20] (*Deploy to CloudHub*) icon.
++
+Alternatively, open the Command Palette and select `MuleSoft: Deploy to CloudHub`.
+// +
 // Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Enter `deploy` and select the following command:
+// include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. If prompted, click *Allow* to allow sign in using Anypoint Platform and select the business group.
 +
-[source,command]
---
-MuleSoft: Deploy to CloudHub
---
+If the project doesn't already have a `deploy.json` file, Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review, for example:
 +
-image::deploy-to-cloudhub.png[]
-. Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review:
+image::int-deploy-json-desktop.png["Review deploy.json file"]
 +
-[source,json]
---
-{
-  "runtime": "4.4.0",
-  "workerSize": 0.1,
-  "applicationName": "american-ws-anypoint-code-builder", //<1>
-  "workers": 1,
-  "autoStart": true
-}
---
-[calloutlist]
-.. The `applicationName` property defines part of the URL that you use to access your application on CloudHub. +
-The name must be unique across all applications deployed to CloudHub.
-. After reviewing the deployment configuration, select *Deploy* to deploy the application to CloudHub.
+The `applicationName` property defines part of the URL that you use to access your application on CloudHub.
 +
-image::deploy-config-created.png[Deployment configuration file created pop-up message]
-. Select your preferred environment.
-+
-image::select-deployment-environment.png[]
+This name must be unique across all applications deployed to CloudHub.
+. After reviewing the deployment configuration, click *Deploy* to deploy the application to CloudHub.
+. At the prompt, select the environment to deploy to.
 +
 Anypoint Code Builder packages the application and deploys it to CloudHub.
-. After deployment completes, select *Open in Runtime Manager*.
-. Select your application from the list applications.
-. Note the domain name for your application: +american-ws-anypoint-code-builder.eu-s1.cloudhub.io+.
-. Open your preferred REST client and make a `GET` request to +http://american-ws-anypoint-code-builder.eu-s1.cloudhub.io/api/flights+.
-
-
-
-////
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Enter `deploy` and select the following command:
+The Output panel opens with *Mule Maven Output* selected:
 +
-[source,command]
---
-MuleSoft: Deploy to CloudHub
---
+image::int-deploy-output.png["Output panel with Mule Maven Output selected"]
+. After deployment completes, click *Open in Runtime Manager*.
++
+Your app opens in Runtime Manager in Anypoint Platform.
++
+The domain name of the application varies, but it follows a similar structure such as: `app-with-40-schedulers.us-w1.cloudhub.io`.
+. Open your preferred REST client and make a `GET` request to the domain name as 
+displayed in Runtime Manager, for example, `+http://app-with-100-schedulers.us-w1.cloudhub.io/api/flights+`.
 
-// +
-// TODO: cc: I don't think we need this screenshot.
-// image::deploy-to-cloudhub.png[]
-. Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review:
-+
-[source,json]
---
-{
-  "runtime": "4.4.0",
-  "workerSize": 0.1,
-  "applicationName": "mock-dw-library", //<1>
-  "workers": 1,
-  "autoStart": true
-}
---
-[calloutlist]
-.. The `applicationName` property defines the part of the URL that you use to access your application on CloudHub. +
-The name must be unique across all applications deployed to CloudHub.
-. After reviewing the deployment configuration, select *Deploy* to deploy the application to CloudHub.
-// +
-// TODO: cc: I don't think we need this screenshot.
-// image::deploy-config-created.png[Deployment configuration file created pop-up message]
-. Select your preferred environment.
-+
-// TODO: cc: I don't think we need this screenshot.
-// image::select-deployment-environment.png[]
-// +
-Anypoint Code Builder packages the application and deploys it to CloudHub.
-. After deployment completes, select *Open in Runtime Manager*.
-. Select your application from the application list. +
-The domain name of the application varies, but it follows a similar structure such as: `+mock-dw-library.eu-s1.cloudhub.io+`.
-. Open your preferred REST client and make a `GET` request to the domain name as displayed in *Runtime Manager*.
-. Your application now returns a random city every time you reach the endpoint.
-////
+
+== See Also
+
+* xref:cloudhub::deploying-to-cloudhub.adoc[]
+* xref:runtime-manager::index.adoc[]
+* xref:int-export-mule-project.adoc#deployable[Export to a Deployable JAR File]

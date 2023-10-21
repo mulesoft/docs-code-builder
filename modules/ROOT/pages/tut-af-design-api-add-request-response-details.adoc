@@ -1,10 +1,11 @@
 = Adding Examples to the API Spec
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: add-request-response-details.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Add API fragments from Exchange for a data type and examples to the American Flights API specification. Then create your own examples for the specification, and add a custom message for a response. 
 
@@ -38,11 +39,11 @@ Training: American Flight Data Type
 . Select the asset from the *Assets From Exchange* menu.
 . Select the latest version of the asset, such as *v1.0.1*.
 +
-When the process is complete, check for the `AmericanFlightDataType.raml` asset in your project's `exchange_modules/` directory. For example: 
+The IDE adds the fragment as a dependency. When the process is complete, check for the `AmericanFlightDataType.raml` asset *Project Dependencies* area of the Explorer. For example: 
 +
-----
-exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml
-----
+image:tut-design-frag-in-proj-dependencies.png["Fragments from Exchange in Project Dependencies"]
++
+The dependency is also listed in the `exchange.json` file for the project, in your project directory from the Explorer. 
 . From the Command Palette, add another fragment:
 +
 [source,command]
@@ -57,11 +58,7 @@ Training: American Flights Example
 ----
 . Select the latest version of the *American Flights Example* asset.
 +
-When the process is complete, check for the `AmericanFlightsExample.raml` asset in your project's `exchange_modules/` directory. For example: 
-+
-----
-exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-example/1.0.1/AmericanFlightsExample.raml
-----
+The IDE adds the fragment as a dependency to *Project Dependencies* and  `exchange.json`. 
 . Proceed to <<include-fragments>>.
 
 [[include-fragments]]
@@ -179,14 +176,17 @@ types:
 
   /{ID}:
     get:
-      body: //<1>
-        application/json:
-          type: AmericanFlight
-          examples: //<2>
-            output: !include examples/AmericanFlightExample.raml 
+      responses: //<1>
+        200: 
+          body: //<2>
+            application/json:
+              type: AmericanFlight
+              examples: //<3>
+                output: !include examples/AmericanFlightExample.raml
 --
 +
 [calloutlist]
+.. Adds a response with a `200` code
 .. Specifies the JSON format and type (`AmericanFlight`) of the *get* request body
 .. Adds your example from the `/examples` directory as the content for the body of the request
 . Proceed to <<post-example>>.
@@ -194,8 +194,6 @@ types:
 [[post-example]]
 == Configure an Example for the Post Method
 
-// hn: do we need to reiterate which file we're working in now that there are two?
-// duke: adding `post` request here:
 Define an example for the `post` request.
 
 . Specify that a request to the `/flights:post` method requires an object of the `AmericanFlight` type:
@@ -229,11 +227,13 @@ types:
 
   /{ID}:
     get:
-      body:
-        application/json:
-          type: AmericanFlight
-          examples:
-            output: !include examples/AmericanFlightExample.raml
+      responses:
+        200: 
+          body: 
+            application/json:
+              type: AmericanFlight
+              examples:
+                output: !include examples/AmericanFlightExample.raml
 --
 [calloutlist]
 .. Specifies a JSON-formatted body for the `post` method
@@ -297,13 +297,15 @@ types:
             example:
               message: Flight added (but not really)
 
-  /{ID}: 
+  /{ID}:
     get:
-      body: 
-        application/json:
-          type: AmericanFlight
-          examples: //<5>
-            output: !include examples/AmericanFlightExample.raml
+      responses:
+        200: 
+          body: 
+            application/json:
+              type: AmericanFlight
+              examples:
+                output: !include examples/AmericanFlightExample.raml
 ----
 [calloutlist]
 .. Select a destination.
