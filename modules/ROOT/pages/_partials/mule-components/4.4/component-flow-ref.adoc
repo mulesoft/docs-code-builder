@@ -1,0 +1,237 @@
+//
+//tag::component-title[]
+
+= Flow Reference (<flow-ref/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Routes the Mule event to another flow or subflow, executes all processors in the referenced flow, and then routes the event back within the same Mule application.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+This process enables you to treat the entire referenced flow like a single component in your current flow.
+
+Flow Reference breaks the Mule application into discrete and reusable units. For example, a flow that lists files on a regular basis might reference another flow that processes the output of the List operation. Instead of appending all the processing steps to the flow that lists the files, you can append a Flow Reference that points to the processing flow.
+
+[WARNING]
+Use actual flow names to define the *Flow name* (`name`) attribute. Using dynamic values (DataWeave expressions, variables) to specify the referenced flow negatively affects performance. Also, MUnit tests and application analysis tools cannot work on dynamic references.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<flow-ref name="anotherflow" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<flow-ref/>` Attributes 
+| Description
+
+| `name` 
+| The name of the flow that this component references.
+
+| `target` 
+| Name of the variable in which you want to store message data. Names can only include numbers, characters, and underscores.
+
+| `targetValue`
+| Value of the data to store in the target variable. The field accepts any value that a variable accepts: any supported data type, DataWeave expressions, the keywords `payload`, `attributes`, and `message`, but not the keyword `vars`. Defaults to the message payload (`payload`).
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following example configures an HTTP listener, updates the payload, sets a variable, and references another flow by adding the target variable `flowReferenceVar,` which stores the result of the secondary flow called by the Flow Reference component. This variable is then used in the main flow by logging `vars.flowReferenceVar`:
+
+[source, xml, linenums]
+----
+<!-- Main flow -->
+<flow name="mainFlow" >
+  <http:listener doc:name="Listener" config-ref="HTTP_Listener_config" path="test"/>
+  <set-payload value="Original payload" doc:name="Set Payload"  />
+  <set-variable value="1" doc:name="Set myVar=1" variableName="myVar"/>
+  <!-- Flow Reference component with target variable flowReferenceVar -->
+  <flow-ref doc:name="secondaryFlow" name="secondaryFlow" target="flowReferenceVar"/>
+  <logger level="INFO" doc:name="Log payload" message='#["Payload = " ++ payload]'/>
+  <logger level="INFO" doc:name="Log myVar" message='#["myVar = " ++ vars.myVar]'/>
+  <logger level="INFO" doc:name="Log flowReferenceVar" message='#["flowReferenceVar = " ++ vars.flowReferenceVar]'/>
+</flow>
+<!-- Secondary flow that is referenced from Main flow-->
+<flow name="secondaryFlow" doc:id="044ece19-aa71-4fc9-ad34-8df655dd59a8" >
+  <set-payload value="Modified payload" doc:name="Update Payload" />
+  <set-variable value="2" doc:name="Update myVar=2" variableName="myVar"/>
+</flow>
+----
+
+The following log represents the output of the example application after its execution:
+
+----
+INFO  LoggerMessageProcessor: Payload = Original payload
+INFO  LoggerMessageProcessor: myVar =  1
+INFO  LoggerMessageProcessor: flowReferenceVar =  Modified payload
+----
+
+If you remove `target="flowReferenceVar"` from the Flow Reference component, the application returns the following output:
+
+----
+INFO  LoggerMessageProcessor: Payload = Modified payload
+INFO  LoggerMessageProcessor: myVar = 2
+INFO  LoggerMessageProcessor: flowReferenceVar = null
+----
+
+The logs are shortened to improve readability.
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+//tag::considerations-target-variable[]
+
+== Considerations when Using a Target Variable
+
+Setting the `target` variable in a Flow Reference component causes the original message to remain unchanged. This means that any modification to the payload or to the variables that occur in the referenced flow revert after the referenced flow finishes executing its processors, returning the payload and variables to their original values.
+
+Alternatively, if you do not define a `target` variable, any modification that occurs to the payload or to the variables in the referenced flow persist after the referenced flow finishes its execution, changing the original value of the payload or variables.
+
+//end::considerations-target-variable[]
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+When an error occurs inside a flow that is referenced by a Flow Reference component, the execution of the referenced flow stops and the process transfers to the referenced flow's error handler. If the referenced flow does not have a configured error handler, the error is propagated to the flow that contains the Flow Reference call so this flow's configured Error Handler component processes the error.
+
+Target variables are not set when an error occurs because the execution of the flow stops and does not end successfully.
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::about-mule-event.adoc[Mule Events]
+* xref:mule-runtime::target-variables.adoc[Enrich Data with Target Variables]
+* xref:mule-runtime::transaction-management.adoc#tx_scopes_routers[How Transactions Affect Scopes and Routers]
+
+//end::see-also[]

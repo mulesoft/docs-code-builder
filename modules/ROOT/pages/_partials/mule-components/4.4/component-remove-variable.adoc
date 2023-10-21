@@ -1,0 +1,234 @@
+//
+//tag::component-title[]
+
+= Remove Variable (<remove-variable/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Removes a Mule variable from a Mule event. 
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+EXTENDED_DESCRIPTION_HERE_IF_NEEDED
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<remove-variable 
+  doc:name="Remove Variable"
+  variableName="myMuleVar" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<remove-variable/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `variableName` 
+| Name of the variable to remove.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following example shows how to remove a Mule variable from the flow:
+
+[source,xml]
+----
+<flow name="remove-variable-ex" >
+  <scheduler doc:name="Scheduler" > <!--1-->
+    <scheduling-strategy >
+      <fixed-frequency frequency="10" timeUnit="SECONDS"/>
+    </scheduling-strategy>
+  </scheduler>
+  <set-variable value='"value of my Mule variable"' doc:name="Set Variable"
+                variableName="myMuleVar"/> <!--2-->
+  <logger level="INFO" doc:name="Logger"
+          message="#[vars.myMuleVar]"
+          category="PRINT VALUE OF VARIABLE"/> <!--3-->
+  <remove-variable doc:name="Remove Variable"
+                   variableName="myMuleVar"/> <!--4-->
+  <logger level="INFO" doc:name="Logger"
+           category="ATTEMPT TO PRINT VALUE OF REMOVED VARIABLE"
+           message="#[vars.myMuleVar]"/> <!--5-->
+  <remove-variable doc:name="Remove Variable"
+                   variableName="banana"/> <!--6-->
+</flow>
+----
+
+[calloutlist]
+.. The Scheduler component triggers the flow.
+.. Set Variable creates a Mule variable (`myMuleVar`).
+.. The first Logger in the flow prints the value of the variable (`"value of my Mule variable"`).
+.. Remove Variable provides a string with the name of the variable (`variableName="myMuleVar"`) to remove the variable from the Mule event.
+.. The second Logger prints `null` because the Mule variable no longer exists.
+.. The second Remove Variable logs a `WARN` message because it attempts to remove a Mule variable (`banana`) that does not exist in the Mule event.
+
+The following example shows the logs for an execution of this flow:
+
+[source,logs]
+----
+INFO  2022-12-15 08:33:20,151 ...event: 2f65e920-7c96-11ed-97ec-147ddaaf4f97] 
+PRINT VALUE OF VARIABLE: "value of my Mule variable"
+
+INFO  2022-12-15 08:33:20,155 ...event: 2f65e920-7c96-11ed-97ec-147ddaaf4f97]
+ATTEMPT TO PRINT VALUE OF REMOVED VARIABLE: null
+
+WARN  2022-12-15 08:33:20,156 ...event: 2f65e920-7c96-11ed-97ec-147ddaaf4f97]
+...RemoveFlowVariableProcessor: There is no variable named 'banana'. 
+Check the 'variableName' parameter in the 'remove-variable' component at 
+remove-variable-ex/processors/4
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::about-mule-variables.adoc[Variables in Mule Events]
+* xref:mule-runtime::target-variables.adoc[Enrich Data with Target Variables]
+
+//end::see-also[]

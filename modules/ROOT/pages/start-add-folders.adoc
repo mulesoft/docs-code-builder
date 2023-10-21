@@ -1,14 +1,14 @@
 = Adding Folders to Your Home Directory
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: work-on-home-directory.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 When you create a project, Anypoint Code Builder stores it in your home directory by default. You can create other folders for your projects in the IDE.
 
-[IMPORTANT]
 include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 
 == Create Project Folders in the Cloud IDE
@@ -34,7 +34,7 @@ image::trust-home-directory.png[]
 +
 image::new-folder-home-directory.png[]
 . Name your new directory and press Enter.
-. Close your home directory by selecting the menu icon > *File* > *Close Folder*.
+. Close your home directory by selecting the image:icon-menu.png["cloud IDE menu",18,18] (menu) icon > *File* > *Close Folder*.
 +
 image::close-working-directory.png[]
 
@@ -44,7 +44,9 @@ image::close-working-directory.png[]
 
 To create a local folder for your projects from the desktop IDE:
 
-. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command to open a local directory on your computer:
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select the following command:
 +
 [source,command]
 ----
@@ -59,8 +61,9 @@ image::file-open-folder-command.png[]
 Use the terminal in the IDE to create folders.
 
 . Ensure that no projects are open.
-. Open the Terminal window by first typing Ctrl and then a backtick (`).
-. Provide the following command:
+//open terminal:
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
+. Provide this command to create a folder:
 +
 [source]
 --
