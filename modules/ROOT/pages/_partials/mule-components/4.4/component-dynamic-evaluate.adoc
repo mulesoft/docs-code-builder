@@ -1,0 +1,233 @@
+//
+//tag::component-title[]
+
+= Dynamic Evaluate (<ee:dynamic-evaluate/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Evaluates an expression to select a DataWeave script, and then executes the new script to generate a result.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+//TODO: Uncomment after Transform component doc is ready
+//This behavior enables you to dynamically select the script, instead of hardcoding it into the xref:acb-component-transform.adoc[Transform Message component].
+
+The script can use any of the usual xref:dataweave::dataweave-variables-context.adoc[predefined variables], such as `message`, `payload`,`vars`, or `attributes`, but you can also add custom ones by providing a set of key-value pairs.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<ee:dynamic-evaluate 
+  expression="" 
+  doc:name="Dynamic evaluate" 
+  doc:id="ojfqoz">
+  <ee:parameters>#[]</ee:parameters>
+</ee:dynamic-evaluate> 
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<ee:dynamic-evaluate/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `expression` 
+| Expression that selects a DataWeave script that Mule executes. For example, `expression="#[vars.generateOrderScript]"`.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-attributes-child1[]
+
+[%header, cols="1,3"]
+|===
+| <ee:parameters/> Attributes | Description
+
+| None | Specify key-value pairs to set as parameters that the DataWeave script can evaluate. For example, `<ee:parameters>#[{name: attributes.queryParams.userName}]</ee:parameters>`.
+
+|===
+//end::component-xml-attributes-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Example
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following example selects a script from a database through a `userId` query parameter and stores that script in a `userScript` variable. Dynamic Evaluate (`<ee:dynamic-evaluate/>`) accesses the `userScript` variable to invoke the script by using the provided parameter `name`, which contains the value of `attributes.queryParams.userName`.
+
+[source,xml,linenums]
+----
+<flow name="dynamic-evaluate-example-flow">
+  <http:listener config-ref="HTTP_Listener_Configuration" path="/"/>
+  <!-- This SQL query uses queryParams.userId to dynamically select a DataWeave script stored in a Database,
+  and then assign this script to target variable userScript-->
+  <db:select config-ref="dbConfig" target="userScript">
+    <db:sql>#["SELECT script FROM SCRIPTS WHERE ID = $(attributes.queryParams.userId)"]</db:sql>
+  </db:select>
+  <!-- The dynamic evaluate component executes the script stored in vars.userScript-->
+  <ee:dynamic-evaluate expression="#[vars.userScript]">
+    <!-- This line sets a parameter called 'name', so the expression in the Dynamic Evaluate component can use it -->
+    <ee:parameters>#[{name: attributes.queryParams.userName}]</ee:parameters>
+  </ee:dynamic-evaluate>
+</flow>
+----
+
+Assume that the scripts `lsalander` and`mblomkvist` are stored in this example's database:
+
+.Example: lsalander script
+----
+output application/json
+---
+{
+  message: "Order " ++ attributes.queryParams.orderId ++ " has been received from " ++ name,
+  items: payload.items
+}
+----
+
+.Example: mblomkvist script
+----
+output application/x-www-form-urlencoded
+---
+{
+  message: "Order " ++ attributes.queryParams.orderId ++ " has been received from " ++ name,
+  items: payload.items
+}
+----
+
+=== Example Application Behavior
+
+When Mule application <<example1, example>> receives `lsalander` as the `queryParams.userId` in the request, Mule executes the `lsalander` script, which results in a JSON response. If the application receives `mblomkvist` as the `queryParams.userId` value, Mule executes a different script that generates a `x-www-form-urlencoded` response.
+
+The example demonstrates how the response type can be parameterized based on the user, but the entire response can be parameterized to suit user needs.
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:dataweave::index.adoc[]
+
+//end::see-also[]

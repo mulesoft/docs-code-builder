@@ -1,0 +1,205 @@
+//
+//tag::component-title[]
+
+= Custom Business Event (<tracking:custom-event/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Add metadata and Key Performance Indicators (KPIs) to your flow.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+For your KPIs, use names that are easy to search for in the Anypoint Runtime Manager interface, and use a representative value, which can be any Mule expression:
+
+[%header,cols="2*a"]
+|===
+|Name |Expression / Value
+|`employee-id` |`#[payload['ID']]`
+|`employee-email` |`#[payload['Email']]`
+|`employee-git-id` |`#[payload['GITHUB_ID']]`
+|`price` |`700`
+|`price-after-discount` |`#[vars.price]`
+|`order-id` | `#[payload.order.header.orderID]`
+|===
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<tracking:custom-event 
+    event-name="" 
+    doc:name="Custom event" 
+    doc:id="akfkag" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<tracking:custom-event/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `event-name` 
+| Name for the event to track.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-attributes-child1[]
+
+[%header, cols="1,3"]
+|===
+| <tracking:meta-data/> Attributes | Description
+
+| `key` | Name of the KPI.
+| `value` | Value of the KPI.
+
+|===
+//end::component-xml-attributes-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Example
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following example configures a tracking event and a KPI. 
+
+[source,xml]
+----
+<tracking:custom-event doc:name="Custom Business Event" event-name="New order">
+	<tracking:meta-data key="order-id" value="#[payload.order.header.orderID]" />
+</tracking:custom-event>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::business-events.adoc[Business Events]
+
+//end::see-also[]
