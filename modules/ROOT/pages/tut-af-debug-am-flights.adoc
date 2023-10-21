@@ -111,7 +111,7 @@ image::run-and-debug.png[]
 +
 image::add-breakpoint.png[]
 +
-Alternatively, use `F9` to add a breakpoint to the line.
+Alternatively, use F9 to add a breakpoint to the line.
 . Open the implementation file (`implementation.xml`) for your American Flights project, and add breakpoints to the `<db:select/>` and `<set-variable/>` components.
 +
 . Notice that all the breakpoints are now listed in the *Breakpoints* panel:
@@ -140,7 +140,7 @@ After starting your debugging session:
 
 //open terminal
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
-. In the IDE's terminal, use a `curl` command to make a `GET` request to the listener in the _interface_ (`interface.xml`) instead of the implementation:
+. In the IDE's terminal, use a `curl` command to make a GET request to the listener in the _interface_ (`interface.xml`) instead of the implementation:
 +
 [source,URI]
 ----
@@ -167,7 +167,7 @@ image::debugger-stop-set-variable.png[]
 == Add a Watch Expression
 
 . From the *Run and Debug* sidebar, open the *Watch* panel.
-. Select the `plus` icon in the panel, and add the expression `payload.^mediaType`.
+. Click the *+* icon in the panel, and add the expression `payload.^mediaType`.
 +
 image::debug-add-expression.png[]
 . Click the *Step Over* button until your execution moves to the Transform Message component (`<ee:transform/>`).
@@ -175,7 +175,7 @@ image::debug-add-expression.png[]
 +
 image:tut-debug-mediatype-java.png[]
 . Continue clicking the *Step Over* button until you reach the Logger component (`<logger>`).
-. Notice that your payload transforms to `application/json`.
+. Notice that your payload transforms to `application/json`:
 +
 image::tut-debug-mediatype-json.png[]
 . Click the *Continue* button in the debug toolbar, and notice that the app returns the response from the database to your REST client or browser.
@@ -339,8 +339,8 @@ image::tut-debug-mediatype-json.png[]
 
 To stop your debugging session: 
 
-. Select the *Stop* button on your debug toolbar.
+. Select the *Stop* button on your debug toolbar:
 +
 image::debugger-stop.png[]
-. Proceed to xref:tut-af-deploy-am-flights.adoc[]
+. Proceed to xref:tut-af-deploy-am-flights.adoc[].
 

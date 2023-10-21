@@ -21,10 +21,11 @@ See xref:tut-contacts-sync-api-configure-queries.adoc[] for more information.
 == Add a Scatter-Gather to Store Data in Parallel
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. Select the `plus` icon after the *Set Return Message* Set Variable component:
+. Click the image:icon-plus.png["",15,15] (*Add component*) icon after the *Set Return Message* Set Variable component:
+
 +
 image::add-scatter-gather-canvas.png[]
-. Type `_scatter_` and select `Scatter Gather`:
+. Type `scatter` and select *Scatter Gather*:
 +
 image::scatter-gather-operation-canvas.png[]
 . Add the following logic within the Scatter-Gather component:
@@ -42,12 +43,12 @@ image::scatter-gather-operation-canvas.png[]
 </scatter-gather>
 --
 
-== Update Salesforce Record
+== Update a Salesforce Record
 
 You can start by implementing the steps to update a record in Salesforce if it is needed. For this purpose, you must define:
 
-* A logic to decide if the update is needed.
-* The operations required to update the record using the Salesforce connector.
+* Logic to decide if the update is needed
+* Operations required to update the record using the Salesforce connector
 
 Earlier in this walkthrough, you stored the phone number retrieved from the record in a variable named `phonenumberSFVar`. You can now compare that variable to the value received in your POST request query parameter, stored in another variable named `phonenumberVar`.
 
@@ -71,6 +72,7 @@ To compare the phone number in your POST request, and the number retrieved from 
 . Populate the `otherwise` element with:
 +
 * A Transform Message component to upsert the phone number using the variables `IdVar` and `phonenumberVar`.
+// This list isn't parallel.
 * Log the successful update and assign the value *Phone number in Salesforce successfully updated* to the `ReturnMessageSF` variable:
 +
 [source,XML]
@@ -92,12 +94,12 @@ To compare the phone number in your POST request, and the number retrieved from 
 <logger doc:name="Logger" message='#["Phone number in Salesforce successfully updated"]' />
 --
 
-== Update Database Record
+== Update a Database Record
 
 To implement the steps to update a record in your target MySQL database if needed, you must define:
 
-* A logic to decide if the update is needed.
-* The operations required to update the record using the Database connector.
+* Logic to decide if the update is needed
+* Operations required to update the record using the Database connector
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
 . Add a `db:select` processor under the *DB Update* `route` processor to select all the fields from the *Contacts* table and filter by the contact’s first and last name:
@@ -120,7 +122,7 @@ lastname: vars.lastnameVar
 --
 +
 image::db-update-scatter-gather-sync-api.png[]
-. Add the logic to detect whether the contact already exists in the database using a Choice router.
+. Add the logic to detect whether the contact already exists in the database using a Choice router:
 +
 [source,XML]
 --
@@ -160,8 +162,9 @@ image::second-choice-router-db-update.png[]
     <set-variable value="#[payload.phoneNumber[0] as String]" doc:name="Set phone in DB" doc:id="tkqxdt" variableName="phonenumberDBVar"/>
 </otherwise>
 --
-. Add another Choice router to check if the old and the new phone numbers are the same. If the numbers are the same, log and update the `ReturnMessageDB` accordingly, otherwise update the phone number in the database and then log and update the `ReturnVariableDB`. +
-Add the following code sample under your *Set Phone in DB* `set-variable` component:
+. Add another Choice router to check if the old and the new phone numbers are the same. If the numbers are the same, log and update the `ReturnMessageDB` accordingly, otherwise update the phone number in the database and then log and update the `ReturnVariableDB`.
++
+Add the following code sample under your *Set phone in DB* `set-variable` component:
 +
 [source,XML]
 --
