@@ -1,11 +1,12 @@
 = Integrating American Flights Processes
 //ACB UI links to ui-tut-integrate.adoc (DO NOT REMOVE)
+:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: ui-tut-integrate.adoc, create-basic-integration.adoc, develop-integration.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Start by creating a basic integration for the American Flights example. This integration is a Mule application that provides some of the logic for processing requests from the American Flights API.
 
@@ -48,7 +49,7 @@ You see two different views:
 [calloutlist]
 .. The canvas UI provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
-. Select *Flow* from the canvas to create an empty flow.
+. Select *Build a Flow* from the canvas to create an empty flow.
 . In the configuration XML, replace the name of your flow with `getFlights`.
 +
 [%header,cols="1a,1a"]
@@ -72,7 +73,7 @@ You see two different views:
 ----
 |===
 . Add the HTTP Listener component to your configuration XML:
-.. In the UI canvas, after your *Flow* component, select the `plus` icon:
+.. In the canvas UI, after your *Flow* component, select the `plus` icon:
 +
 image::main-tutorial-add-first-http-listener.png["Plus icon highlighted in the flow"]
 .. Search for and select *Listener* from the *HTTP* results:
@@ -120,12 +121,12 @@ In the menu, the snippet is a partially configured Mule component that is repres
 [calloutlist]
 .. In `<http:listener-config/>` and its child element `<http:listener-connection/>`, set the attributes to values provided in the example. The `doc:id` is randomly generated and does not require a change.
 .. In `<http:listener/>`, set the attributes to the values provided in the example. 
-. Notice the graphical representation of the HTTP Listener element in the UI canvas.
+. Notice the graphical representation of the HTTP Listener element in the canvas UI.
 +
 When you select any processor in the canvas, Anypoint Code Builder highlights its location within the configuration XML.
 +
 image::http-highlight-flow.png["HTTP Listener highlighted in the flow and in the XML code"]
-. From the UI canvas, add a Set Payload component below your HTTP Listener operation, and configure its attributes in the configuration XML:
+. From the canvas UI, add a Set Payload component below your HTTP Listener operation, and configure its attributes in the configuration XML:
 +
 [source,xml]
 ----
@@ -170,7 +171,7 @@ Note that using *Run* > *Start without Debugging* produces an error.
 . Monitor the build process from the terminal:
 
 * In the desktop IDE, select *View* > *Terminal*.
-* In the cloud IDE, click the File menu icon before selecting *View* > *Terminal*
+* In the cloud IDE, click the image:icon-menu.png["cloud IDE menu",18,18] (menu) icon before selecting *View* > *Terminal*
 +
 [source, terminal]
 ----
@@ -185,19 +186,16 @@ Note that using *Run* > *Start without Debugging* produces an error.
 [[test]]
 == Test Your Application
 
-Use your REST client or a browser to trigger the flow.
+Use the IDE's terminal to trigger the flow.
 
-. Submit a request: 
-
-* For the desktop IDE, submit this URI:
+. Submit a `curl` command from the terminal with the URL to the `/flights` endpoint to trigger the flow: 
 +
 [source,URI]
 ----
-http://0.0.0.0:8081/flights
+> curl http://0.0.0.0:8081/flights
 ----
-* For the cloud IDE, submit a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. 
 +
-See xref:ping-locally-deployed-app.adoc[] for guidance with the URI.
+For guidance, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a Flow].
 . In your REST client or browser, check for the response *Flight info*.
 +
 If you do not receive this response or if you receive a connection error, review your XML configuration, make sure your application is deployed, and recheck your HTTP Listener connection.

@@ -1,10 +1,11 @@
 = Defining and Securing Properties for a Mule Application
+:page-deployment-options: cloud-ide, desktop-ide
 
 // no corresponding Tutorial topic
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
-include::partial$acb-ide-logos.adoc[tags="both-ides"]
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Create properties that enable you to:
 
@@ -15,7 +16,7 @@ Create properties that enable you to:
 
 == Before You Begin
 
-* xref:setup.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
 
 [[get-familiar]]
@@ -62,7 +63,7 @@ For step-by-step instructions on encrypting properties in a Mule application, se
 [[properties]]
 === Configuration Properties Files
 
-Connectors and components in the Mule configuration XML accept variables for sensitive and non-sensitive data. The variables are defined in a `.yaml` or Spring-formatted `.properties` file that you create and store in the `src/main/resources` directory of the project for your Mule application. For example:
+Connectors and components in the Mule configuration XML accept variables for sensitive and non-sensitive data. The variables are defined in a `.yaml` or Spring-formatted `.properties` file that you create and store in the `src/main/resources` directory of the project for your Mule application, for example:
 
 [%header,cols="1a,1a"]
 |===
@@ -89,7 +90,7 @@ ftp:
 ----
 |===
 
-You can create separate properties files for your unencrypted and encrypted properties. For example, in a YAML file: 
+You can create separate properties files for your unencrypted and encrypted properties, for example, in a YAML file: 
 
 [%header,cols="1a,1a"]
 |===
@@ -204,7 +205,7 @@ image::acb-project-directory.png[alt="Project Directory for a Mule Application W
 
 . Create a properties file with _unencrypted_ properties:
 .. Open the `src/main/resources` directory of your project. 
-.. Create a YAML file with a name like `dev.secure.yaml` or `local.secure.yaml` that configures properties as key-value pairs. For example:
+.. Create a YAML file with a name like `dev.secure.yaml` or `local.secure.yaml` that configures properties as key-value pairs, for example:
 +
 [source,yaml]
 ----
@@ -269,7 +270,6 @@ For reference, the examples shown in the steps in this procedure are based on th
     http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
     http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 	http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
-  <global-property name="env" value="dev" />
   
   <secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="utlnst" file="${env}.secure.yaml" key="${encryption.key}" >
     <secure-properties:encrypt algorithm="Blowfish" />
@@ -432,7 +432,7 @@ If you want to use the variable `$\{env}` in your filename configuration, see <<
 +
 This name serves as the key for the encryption value (password) used to encrypt your secure properties with the Secure Properties Tool.
 * `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
-. In the connector or component XML, add the key of an encrypted property as the value of an XML attribute. For example:
+. In the connector or component XML, add the key of an encrypted property as the value of an XML attribute, for example:
 +
 [source,xml]
 ----
@@ -458,7 +458,7 @@ from properties provider environment properties provider
 . Provide a local key-value pair for your encryption key name and its value through the UI:
 
 .. Navigate to *Manage* (gear icon) > *Settings*, and find *Runtime: Default Arguments* on the *Settings* page. 
-.. In the *Runtime: Default Arguments* field, append the key-value pair for your encryption key to the _end_ of the configuration. For example:
+.. In the *Runtime: Default Arguments* field, append the key-value pair for your encryption key to the _end_ of the configuration, for example:
 +
 [source,key-configuration]
 ----
@@ -508,7 +508,7 @@ Before you begin:
 
 To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub: 
 
-. In the `mule-artifact.json` file for your application, provide the _name_ of the encryption key (`encryption.key` by default) that you provided in the global `<secure-properties:config/>` snippet within your configuration XML. For example:
+. In the `mule-artifact.json` file for your application, provide the _name_ of the encryption key (`encryption.key` by default) that you provided in the global `<secure-properties:config/>` snippet within your configuration XML, for example:
 +
 ----
 {
@@ -525,9 +525,9 @@ The _name_ (not the _value_) of your encryption key goes into a comma-separated 
 MuleSoft: Deploy to CloudHub
 ----
 +
-Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
+Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open, for example:
 +
-image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
+image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub rocket icon"]
 . When prompted, enter _the same value_ you used to encrypt your secure properties.
 +
 If you do not enter the same value, the application is able to upload to CloudHub, but the deployment fails because the encryption key value does not work.
@@ -633,10 +633,10 @@ _Do not_ configure `launch.json` with sensitive property values. See <<test-depl
 MuleSoft: Deploy to CloudHub
 ----
 +
-Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
+Alternatively, click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open, for example:
 +
-image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub "rocket" icon with deploy.json open"]
-. _Before opting to deploy_, edit `deploy.json` to specify the correct prefix to your properties file. For example:
+image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub rocket icon with deploy.json open"]
+. _Before opting to deploy_, edit `deploy.json` to specify the correct prefix to your properties file, for example:
 +
 [source,deploy.json]
 ----
