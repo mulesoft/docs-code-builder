@@ -1,0 +1,255 @@
+//
+//tag::component-title[]
+
+= First Successful (<first-successful/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Iterates through a list of configured processing routes until one of the routes executes successfully.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+If any processing route fails execution (throws an error), the router executes the next configured route.
+
+If none of the configured routes execute successfully, the First Successful router throws an error.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<first-successful 
+  doc:name="First successful" 
+  doc:id="vyaedo" >
+  <!-- First Route --> 
+  <route>
+    <!-- Processors --> 
+  </route>
+  <!-- Second Route --> 
+  <route>
+    <!-- Processors --> 
+  </route>
+</first-successful>
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<ROOT_ELEMENT/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `attribute_here` 
+| DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+| `attribute_here` 
+| DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Example
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+The following example shows a First Successful router configured with four processing routes:
+
+[source,xml]
+----
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:sockets="http://www.mulesoft.org/schema/mule/sockets"
+  xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+  xmlns:db="http://www.mulesoft.org/schema/mule/db"  xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+                            http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+                            http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+                            http://www.mulesoft.org/schema/mule/sockets http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd
+                            http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+  <http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="b026579b-5a59-444f-8f91-ff209bed8342" >
+    <http:request-connection >
+      <http:client-socket-properties >
+        <sockets:tcp-client-socket-properties connectionTimeout="500" clientTimeout="500" />
+      </http:client-socket-properties>
+    </http:request-connection>
+  </http:request-config>
+  <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4631e4fd-571f-41c8-831d-d908b1763ef2" >
+    <http:listener-connection host="localhost" port="8081" />
+  </http:listener-config>
+  <flow name="testFlow" doc:id="79cd7fcd-d355-418b-898b-5d7e3a1cbcab" >
+    <scheduler doc:name="Scheduler" doc:id="6dc5dcc7-ce33-4d18-9de9-2c665f713508" >
+      <scheduling-strategy >
+        <fixed-frequency />
+      </scheduling-strategy>
+    </scheduler>
+    <first-successful doc:name="First Successful" doc:id="6ae009e7-ebe5-47cf-b860-db6d51a31251" >
+      <route> <!--1-->
+        <file:read doc:name="Read non existent file" doc:id="199cdb01-cb43-404e-acfd-211fe5a9167e" path="nonExistentFile"/>
+        <set-variable value="1" doc:name="Set successfulRoute var to route 1" doc:id="c740b39e-a1c4-41d6-8a28-0766ca815ec6" variableName="successfulRoute"/>
+      </route>
+      <route> <!--2-->
+        <set-payload value="#[vars.nonExistentVar!]" doc:name="Set Payload with non existent variable" doc:id="0cc9ac4d-5622-4e10-971c-99073cb58df0" />
+        <set-variable value="2" doc:name="Set successfulRoute var to route 2" doc:id="88f15c26-d242-4b11-af49-492c35625b84" variableName="successfulRoute" />
+      </route>
+      <route> <!--3-->
+        <set-variable value="3" doc:name="Set successfulRoute var to route 3" doc:id="446afb25-0181-45e5-b04a-68ecb98b57b7" variableName="successfulRoute" />
+      </route>
+      <route > <!--4-->
+        <logger level="INFO" doc:name="Logger" doc:id="b94b905a-3a68-4c88-b753-464bc3d0cfeb" message="This route is never going to be executed"/>
+      </route>
+    </first-successful>
+    <logger level="ERROR" doc:name="Logger" doc:id="9ffe328d-2595-4f28-81e8-ae731fc6cb89" message="#['Successful route was $(vars.successfulRoute)']"/>
+  </flow>
+</mule>
+----
+
+[calloutlist]
+.. The first route executes and fails because it tries to read a file that does not exist.
+.. The second route fails because it tries to access a variable that does not exist.
+.. The third route executes successfully and sets variable `successfulRoute` with value `3`.
+.. The fourth route is not executed because the First Successful router stops executing routes after one of them completes successfully.
+
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
+
+[source,xml]
+----
+< EXAMPLE_XML_HERE />
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::mule-error-concept.adoc[Mule Errors]
+* xref:mule-runtime::error-handling.adoc[Error Handlers]
+
+//end::see-also[]
