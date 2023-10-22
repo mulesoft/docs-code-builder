@@ -1,0 +1,221 @@
+//
+//tag::component-title[]
+
+= Invalidate Cache (<ee:invalidate-cache/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Invalidate the complete cache in the referenced caching strategy. 
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+Invalidate cache entries when you want the Cache Scope to recalculate the value for those cache entries. Alternatively, you can configure the caching strategy to invalidate entries automatically based on time by setting the `entryTtl` parameter in the defined custom object store. 
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<ee:invalidate-cache 
+  cachingStrategy-ref="" 
+  doc:name="Invalidate cache" 
+  doc:id="kacopu" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<ee:invalidate-cache/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `cachingStrategy-ref` 
+| The caching strategy that contains the cache to invalidate.
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+The following examples show how to manually invalidate a cache and how to set automatic invalidation for a caching strategy.
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+=== Example: Invalidating a Cache
+
+The following example invalidates the complete cache in the referenced caching strategy.
+
+[source,xml]
+----
+<!-- Caching strategy configuration -->
+<ee:object-store-caching-strategy name="myCachingStrategy" />
+
+<flow name="cacheFlow">
+  <ee:cache cachingStrategy-ref="myCachingStrategy">
+      <!-- Processing logic inside the Cache Scope -->
+  </ee:cache>
+</flow>
+
+<flow name="invalidateCompleteCacheFlow">
+  <!-- Invalidate Cache component configuration -->
+  <ee:invalidate-cache cachingStrategy-ref="myCachingStrategy" />
+</flow>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+=== Example: Setting Automatic Invalidation for a Caching Strategy
+
+The following example configures a caching strategy with a custom object store that automatically invalidate cache entries.
+
+[source,xml]
+----
+<!-- Object Store configuration-->
+<os:config name="ObjectStore_Config"/>
+<!-- Caching Strategy configuration-->
+<ee:object-store-caching-strategy name="Caching_Strategy">
+  <!-- Object Store defined for the caching strategy -->
+  <os:private-object-store
+    alias="CachingStrategy_ObjectStore"
+    maxEntries="100"
+    entryTtl="10"
+    expirationInterval="5"
+    config-ref="ObjectStore_Config"/>
+</ee:object-store-caching-strategy>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+* xref:mule-runtime::mule-object-stores.adoc#object-store-config[Object Store Configuration]
+* xref:acb-component-invalidate-key.adoc[Invalidate Key]
+
+//end::see-also[]

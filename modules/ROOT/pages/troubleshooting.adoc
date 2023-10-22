@@ -9,12 +9,11 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Troubleshoot errors and warnings you receive when using Anypoint Code Builder:
 
-* xref:troubleshoot-loading-errors.adoc[]
-* xref:troubleshoot-mule-runtime-errors.adoc[]
 * xref:troubleshoot-authentication-errors.adoc[]
-* xref:troubleshoot-implementation-errors.adoc[]
 * xref:troubleshoot-deploy-errors.adoc[]
-* <<exchange-missing, Exchange Search Missing>>
+* xref:troubleshoot-implementation-errors.adoc[]
+* xref:troubleshoot-mule-runtime-errors.adoc[]
+* xref:troubleshoot-loading-errors.adoc[]
 +
 For other issues and workarounds, see xref:acb-release-notes.adoc#known-issues[Known Issues] in the Anypoint Code Builder Release Notes.
 
@@ -59,6 +58,7 @@ image::web-ide-management-central-page.png["Cloud IDE management page"]
 . *Version and IDE Details*: 
 +
 Shows the version of your Anypoint Code Builder cloud IDE instance. You can hover over *View IDE Details* to view some internal details about your cloud IDE instance:
+
 * *Image*: The ID of the image of your cloud IDE instance.
 * *URL*: The URL to directly access your cloud IDE instance. +
 This URL is necessary to ping your locally deployed Mule application when debugging.
@@ -70,8 +70,3 @@ This URL is necessary to ping your locally deployed Mule application when debugg
 --
 Deletion is permanent and cannot be undone. The process removes all the projects hosted on the IDE instance.
 --
-
-[[exchange-missing]]
-== Exchange Search Does Not Appear for EU Cloud Users on the Desktop IDE
-
-If you are signed in to your Anypoint Platform account on the EU Cloud and the Exchange search function doesn't appear in the UI, verify that you completed the xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud] procedure and added the required environment variable.
