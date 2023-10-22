@@ -1,6 +1,6 @@
 = Working with Code Snippets
 :page-deployment-options: cloud-ide, desktop-ide
-:page-aliases: work-with-code-snippets.adoc
+:page-aliases: work-with-code-snippets.adoc, create-xml-snippets.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
@@ -11,9 +11,9 @@ _Code snippets_ are code patterns that you insert from the IDE into the configur
 Using code snippets for reusable code patterns helps you work more efficiently and reduces the potential for configuration errors.
 
 Use snippets to provide configurations for any element supported by the Mule DSL, such as commonly used connector operations, message processing patterns supported by Core components, or multi-element configurations in the configuration XML.
-You can configure snippets for connector operations, Core processors, and other processors in the XML configuration file for your Mule applications.  
+You can configure snippets for connector operations, Core processors, and other processors in the XML configuration file for your Mule applications. See <<adding-snippets>>
 
-In addition to providing built-in snippets, Anypoint Code Builder enables you to configure your own user snippets in JSON format.
+In addition to providing built-in snippets, Anypoint Code Builder enables you to configure your own user snippets in JSON format. See <<creating-user-snippets>>.
 
 Anypoint Code Builder converts the snippets to XML when you add them to the configuration XML of your Mule application.
 
@@ -50,10 +50,10 @@ To configure the basic Logger XML, you must provide the attributes and values.
 == Before You Begin
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
-* <<create-integration-project, Create a new integration project>>.
-// Creating the snippet depends on knowing the component or connector XML. We'll prob need to explain more post-GA.
+* xref:int-create-integrations.adoc[Create an integration project].
 
-== Adding Snippets
+[[adding-snippets]]
+== Adding Snippets to a Mule Application
 
 Add snippets from either the canvas or the configuration XML:
 
@@ -63,6 +63,12 @@ Add snippets from either the canvas or the configuration XML:
 For example, for a global configuration that must reside at the same level as the `<flow/>` or `<sub-flow/>`, and not within either element, use auto-complete.
 From the auto-complete menu, snippets are identified by their name and a two-dimensional box icon. 
 
+Add built-in or user snippets to your integration or implementation:
+
+* <<add-builtin-snippet>>
+* <<add-user-snippet>>
+
+[[add-builtin-snippet]]
 === Add a Built-In Snippet to a Flow or Subflow
 
 To add a built-in snippet:
@@ -78,7 +84,10 @@ The IDE inserts XML for the snippet within the `<flow/>` or `<sub-flow/>` elemen
 You can also use the auto-complete feature to insert built-in snippets directly into the XML configuration file.
 See <<autocomplete>>. 
 
+[[add-user-snippet]]
 === Add a User Snippet to a Flow or Subflow
+
+Add user snippets that you create to your integration or implementation. To create snippets, see <<creating-user-snippets>>.
 
 To add a user snippet to a flow or subflow:
 
@@ -98,6 +107,10 @@ The IDE inserts XML for the snippet within the `<flow/>` or `<sub-flow/>` elemen
 
 Create user snippets from either the canvas or from the Command Palette.
 
+* <<create-snippet-canvas>>
+* <<create-snippet-file>>
+
+[[create-snippet-canvas]]
 === Create User Snippets from the Canvas
 
 Create reusable user snippets for your Mule applications. 
@@ -177,7 +190,8 @@ The value of `doc:id` is randomly generated because of the `$RANDOM_HEX` value i
 
 You can also use the auto-complete feature to insert user snippets directly into the XML configuration file.
 
-=== Configure User Snippets in the IDE
+[[create-snippet-file]]
+=== Create User Snippets in a Configuration File
 
 To configure user snippets:
 
@@ -326,9 +340,9 @@ Compare the built-in Choice snippet configuration to the basic XML configuration
 
 --
 +
-<1> XML for the built-in Choice snippet is `flow:choice` in the auto-complete list. The icon for snippets in this menu is a one-dimensional square. 
+<1> XML for the built-in Choice snippet is `flow:choice` in the auto-complete list. The icon for snippets in this menu is a one-dimensional box. 
 <2> XML for the minimally configured Choice component, which is also available by navigating to *Core Processors* > *Flow Control* > *Choice* from the canvas UI.
-The icon for this XML is a three-dimensional square. 
+The icon for this XML is a three-dimensional box. 
 
 * For a user snippet, search for and select the name of the user snippet (as configured in `mule-xml.json`), for example:
 +
