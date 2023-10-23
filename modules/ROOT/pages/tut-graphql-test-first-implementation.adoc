@@ -1,11 +1,10 @@
 = Test Your GraphQL Implementation
 :page-deployment-options: cloud-ide, desktop-ide
 :imagesdir: ../assets/images
+:page-pagination:
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 With a scaffolded project, run your application locally and test the endpoints of your Mule application.
 
@@ -25,7 +24,7 @@ See xref:tut-graphql-implement-api.adoc[].
 To locally deploy your Mule Application, run a debug session in Anypoint Code Builder:
 
 . In Anypoint Code Builder, open the *Books Implementation* project.
-. Select *Run and Debug* in the Activity Bar, then press the *Start Debugging* icon.
+. Select *Run and Debug* in the Activity Bar, then click the *Start Debugging (F5)* icon.
 //open terminal
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
 . In the IDE's terminal, use the `curl` command, and create a `POST` request to the local address, adding the `/graphql` path: `+http://localhost:8081/graphql+`:
@@ -56,10 +55,9 @@ Anypoint Code Builder returns an empty field for the book:
     }
 }
 --
-====
-
++
 Other queries you can try for your endpoint are:
-
++
 * Query `books`:
 +
 [source,GraphQL]
@@ -77,7 +75,7 @@ query books {
 	}
 }
 --
-* Query `bestSellers`
+* Query `bestSellers`:
 +
 [source,GraphQL]
 --
@@ -101,10 +99,7 @@ query bestsellers {
 	}
 }
 --
++
+All these requests return an empty result.
 
-All these requests will return an empty result.
-
-== Next Step
-
-* xref:tut-graphql-configure-flow-responses.adoc[]. +
-Populate each flow with a custom response for each query.
+. Proceed to xref:tut-graphql-configure-flow-responses.adoc[] to populate each flow with a custom response for each query.

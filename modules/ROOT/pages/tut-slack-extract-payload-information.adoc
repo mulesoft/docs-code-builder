@@ -1,11 +1,10 @@
 = Extract Payload Information to Variables
 :page-deployment-options: cloud-ide, desktop-ide
 :imagesdir: ../assets/images
+:page-pagination:
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 This section of the walkthrough teaches you how to extract information from the payload into different variables to refer to those values later in the flow.
 
@@ -20,7 +19,7 @@ Complete these procedures:
 == Extract Values From the Payload
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file.
-. Select the `plus` icon after the *On New Case* Salesforce component:
+. Click the image:icon-plus.png["",15,15] (*Add component*) icon after the *On New Case* Salesforce component:
 +
 image::add-transform-from-canvas-slack.png[]
 . Type `Transform` and select *Transform*:
@@ -54,10 +53,10 @@ image::drag-transform-message-slack-case-canvas.png[]
 
 Add a Set Payload component to concatenate the value of your variables in the resulting payload of your application:
 
-. Select the `plus` icon after the Transform Message component:
+. Click the image:icon-plus.png["",15,15] (*Add component*) icon after the Transform Message component:
 +
 image::add-set-payload-slack-case-canvas.png[]
-. Type `_set_` and select *Set Payload*:
+. Type `set` and select *Set Payload*:
 +
 image::drag-set-payload-slack-case-canvas.png[]
 . Configure the Set Payload component with the following code:
@@ -67,8 +66,5 @@ image::drag-set-payload-slack-case-canvas.png[]
 <set-payload doc:name="Set Case Info" value='#["Case Number: " ++ (payload.CaseNumber default "") ++  ", Origin: " ++ (payload.Origin default "") ++ ", Case Type: " ++ (payload.Type default "") ++ ", Priority: " ++ (payload.Priority default "") ++ ", Status: " ++ (payload.Status default "")]'/>
 --
 
-== Next Step
-
-* xref:tut-slack-add-condition-to-your-flow.adoc[].
-+
-Create a condition to send an Email if the case is escalated, otherwise inform about the case in a Slack channel.
+. Proceed to xref:tut-slack-add-condition-to-your-flow.adoc[] to 
+create a condition to send an email if the case is escalated or otherwise inform about the case in a Slack channel.
