@@ -22,7 +22,7 @@ Add fragments to the project directory so that you can include them in your spec
 
 To add the fragments: 
 
-. In Anypoint Code Builder, open your American Flights API specification, `american-flights-api.raml`.
+. In Anypoint Code Builder, open your American Flights API specification, `american-flights-api`.
 . Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
 [source,command]
@@ -39,7 +39,7 @@ Training: American Flight Data Type
 . Select the asset from the *Assets From Exchange* menu.
 . Select the latest version of the asset, such as *v1.0.1*.
 +
-The IDE adds the fragment as a dependency. When the process is complete, check for the `AmericanFlightDataType.raml` asset *Project Dependencies* area of the Explorer. For example: 
+The IDE adds the fragment as a dependency. When the process is complete, check for the `AmericanFlightDataType` asset *Project Dependencies* area of the Explorer. For example: 
 +
 image:tut-design-frag-in-proj-dependencies.png["Fragments from Exchange in Project Dependencies"]
 +
@@ -64,20 +64,66 @@ The IDE adds the fragment as a dependency to *Project Dependencies* and  `exchan
 [[include-fragments]]
 == Include the Fragments in the Specification
 
-Use `!include` directives to add the fragments to the specification:
+. Depending on the API spec language, select the directive to add the fragment to your specification.
++
+--
+** OAS specs: Use the `$ref` directive.
+** RAML specs: Use the `!include` directive.
+--
 
-* The `AmericanFlight` data type is defined in `AmericanFlightDataType.raml`. 
-* The `AmericanFlightsExample.raml` example is for a `200` response to the `get` request.
+* The `AmericanFlight` data type is defined in `AmericanFlightDataType`. 
+* The `AmericanFlightsExample` example is for a `200` response to the `get` request.
 
 To include the fragments: 
 
-. Open *american-flight-api.raml* from the project directory in Explorer.
+. Open *american-flight-api* from the project directory in Explorer.
 . Replace the existing content with this:
-+
+
+[tabs]
+====
+OAS Example::
+[source,YAML]
+--
+  openapi: 3.0.0
+   info:
+   title: American Flights API
+
+
+
+
+  /flights:
+    get:
+      parameters:
+        - in: query
+          name: destination
+          required: false
+            type: //<1>
+$ref: 'exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.json'
+            enum:
+              - SFO
+              - LAX
+              - CLE
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json: //<2>
+              schema:
+                type: AmericanFlight[]
+              Examples: //<3>
+                  $ref: '#/components/examples/AmericanFlightsExample'
+
+	post:
+
+'/{ID}':
+ get:
+
+--
+RAML Example::
 [source,RAML]
 --
-#%RAML 1.0
-title: American Flights API
+  #%RAML 1.0
+  title: American Flights API
 
 types: //<1>
   AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml 
@@ -103,21 +149,24 @@ types: //<1>
 
   /{ID}:
     get:
+
 --
+====
+
 [calloutlist]
-.. Uses `!include` to add the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type
+.. Uses `!include` for RAML files or `$ref` for OAS 3.0 files to add the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type
 +
-Note that you can use built-in functionality to insert the `!include` directive and file path from the specification file. For example:
+Note that you can use built-in functionality to insert the `!include` or `$ref` directives and file path from the specification file. For example:
 +
 [loweralpha]
-... After typing `AmericanFlight:&nbsp;`(with a space at the end), click Ctrl+Spacebar, start typing `!include`, and select `!include` from the drop-down menu in the RAML file. For example:
+... After typing `AmericanFlight:&nbsp;`(with a space at the end), click Ctrl+Spacebar, start typing `!include` or `$ref`, and select it from the drop-down menu in the RAML file. For example:
 +
 image::tut-api-include-directive.png["Include directive in RAML drop-down menu"]
-... Follow the same process to add the example, selecting `exchange_modules` directory and progressing step-by-step to `AmericanFlightsDataType.raml`. For example:
+... Follow the same process to add the example, selecting `exchange_modules` directory and progressing step-by-step to `AmericanFlightsDataType`. For example:
 +
 image::tut-api-include-path.png["Included path in RAML drop-down menu"]
 .. Sets the format of the body of the response to JSON (`application/json`) and configures the type of the response as an array of `AmericanFlight` objects (`AmericanFlight[]`)
-.. Adds the `AmericanFlightsExample.raml` example
+.. Adds the `AmericanFlightsExample` example
 . Proceed to <<post-response-example>>.
 
 [[post-response-example]]
@@ -128,12 +177,36 @@ Create an example for the post response, and include it in the specification.
 . In the Explorer, right-click on an empty space, and create a folder named `examples`.
 +
 image::add-new-folder.png[alt="New Folder option highlighted in the context menu"]
-. Right-click your `examples` folder, and create a new file named `AmericanFlightExample.raml`.
+. Right-click your `examples` folder, and create a new file named `AmericanFlightExample`.
 +
 image::create-american-fligh-example-file.png[alt="AmericanFlightExample.raml file highlighted"]
 . In the open file, add this example:
 +
-[source,raml]
+[tabs]
+====
+OAS Example::
+[source,YAML]
+--
+openapi: 3.0.0
+info:
+  title: NamedExamples
+examples:
+                output:
+                  value:
+                    ID: 1
+                    code: ER38sd
+                    price: 400
+                    departureDate: '2017/07/26'
+                    origin: CLE
+                    destination: SFO
+                    emptySeats: 0
+                    plane:
+                      type: 'Boeing 737'
+                      totalSeats: 150
+--
+
+RAML Example::
+[source,RAML]
 --
 #%RAML 1.0 NamedExample
 value:
@@ -148,9 +221,59 @@ value:
       type: Boeing 737
       totalSeats: 150
 --
-. Return to your `american-flights-api.raml` file, and create a set of elements under `/{ID}/get` for responses:
+====  
+. Return to your `american-flights-api` file, and create a set of elements under `/{ID}/get` for responses:
 +
-[source,raml]
+[tabs]
+====
+
+OAS Example::
+[source,YAML]
+--
+ openapi: 3.0.0
+   info:
+   title: American Flights API
+
+
+
+
+  /flights:
+    get:
+      parameters:
+        - in: query
+          name: destination
+          required: false
+            type: 
+$ref: 'exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.json'
+            enum:
+              - SFO
+              - LAX
+              - CLE
+      responses://<1>
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: AmericanFlight[]
+
+	post:
+
+'/{ID}':
+ get:
+	responses: //<1>
+	'200':
+          description: OK
+          body: //<2>
+            application/json:
+              schema:
+                type: AmericanFlight[]
+			examples: //<3>
+		output: $ref:'#/components/examples/AmericanFlightExample'
+--
+
+RAML Exmple::
+[source,RAML]
 --
 #%RAML 1.0
 title: American Flights API
@@ -176,14 +299,15 @@ types:
 
   /{ID}:
     get:
-      responses: //<1>
+      responses: 
         200: 
-          body: //<2>
+          body: 
             application/json:
               type: AmericanFlight
               examples: //<3>
                 output: !include examples/AmericanFlightExample.raml
 --
+====
 +
 [calloutlist]
 .. Adds a response with a `200` code
@@ -198,7 +322,56 @@ Define an example for the `post` request.
 
 . Specify that a request to the `/flights:post` method requires an object of the `AmericanFlight` type:
 +
-[source,raml,linenums]
+[tabs]
+====
+OAS Exmple::
+[source,YAML]
+--
+ openapi: 3.0.0
+   info:
+   title: American Flights API
+
+
+  /flights:
+    get:
+      parameters:
+        - in: query
+          name: destination
+          required: false
+            type: 
+$ref: 'exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.json'
+            enum:
+              - SFO
+              - LAX
+              - CLE
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: AmericanFlight[]
+
+	post:
+    body: //<1>
+      application/json:
+        type: AmericanFlight //<2>
+
+'/{ID}':
+ get:
+	responses: //<1>
+	'200':
+          description: OK
+          body: //<2>
+            application/json:
+              schema:
+                type: AmericanFlight[]
+			examples:
+		output: $ref:'#/components/examples/AmericanFlightExample'
+--
+
+RAML Exmple::
+[source,RAML]
 --
 #%RAML 1.0
 title: American Flights API
@@ -220,10 +393,13 @@ types:
         body:
           application/json:
             type: AmericanFlight[]
-  post:
-    body: //<1>
-      application/json:
-        type: AmericanFlight //<2>
+    post:
+    requestBody://<1>
+      content:
+        application/json:
+          schema: 
+          type: AmericanFlight//<2>
+
 
   /{ID}:
     get:
@@ -235,12 +411,37 @@ types:
               examples:
                 output: !include examples/AmericanFlightExample.raml
 --
+====
+
 [calloutlist]
 .. Specifies a JSON-formatted body for the `post` method
 .. Configures `AmericanFlight` as the type for the `post` method
-. Under your `/examples` folder, create a file named `AmericanFlightNoIDExample.raml`, and copy this example to the file:
+. Under your `/examples` folder, create a file named `AmericanFlightNoIDExample`, and copy this example to the file:
 +
-[source,raml]
+[tabs]
+====
+OAS Example::
+[source,YAML]
+--
+openapi: 3.0.0
+info:
+  title: NamedExamples
+examples:
+                output:
+                  value:
+                    code: ER38sd
+                    price: 400
+                    departureDate: '2017/07/26'
+                    origin: CLE
+                    destination: SFO
+                    emptySeats: 0
+                    plane:
+                      type: 'Boeing 737'
+                      totalSeats: 150
+--
+
+RAML Example::
+[source,RAML]
 --
 #%RAML 1.0 NamedExample
 value:
@@ -254,13 +455,86 @@ value:
       type: Boeing 737
       totalSeats: 150
 --
+====  
 +
 To simulate a new flight record, this example does not provide an `ID` parameter.
-. In the `american-flights-api.raml` file, add the example as a response to the `post` method, and include a custom message.
+. In the `american-flights-api` file, add the example as a response to the `post` method, and include a custom message.
 +
 .Notice the `!include` directive at number 5:
+[tabs]
+====
+
+OAS Example::
+[source,YAML]
+--
+ openapi: 3.0.0
+   info:
+   title: American Flights API
+
+
+
+
+  /flights:
+    get:
+      parameters:
+        - in: query //<1>
+          name: destination
+          required: false
+            type: 
+$ref: 'exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.json'
+            enum:
+              - SFO
+              - LAX
+              - CLE
+      responses://<2>
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+ type: AmericanFlight[]
+			examples: //<3>
+		output: $ref:'#/components/examples/AmericanFlightExample'
+
+
+	post:
+  requestBody:
+   	 content:
+      application/json:
+        schema:
+type: AmericanFlight[]
+			examples: //<3>
+		output: $ref:'#/components/examples/AmericanFlighNOIDExample'
+		responses:
+		'201':
+          content:
+            application/json: //<4>
+              schema:
+		examples:
+			message: Flight added (but not really)
+
+
+
+'/{ID}':
+ get:
+	responses: 
+	'200':
+          description: OK
+          body: 
+            application/json:
+              schema:
+                type: AmericanFlight[]
+			examples: //<5>
+		output: $ref:'#/components/examples/AmericanFlightExample'
+
+
+
+
+--
+
+RAML Example::
 [source,RAML]
-----
+--
 #%RAML 1.0
 title: American Flights API
 
@@ -304,14 +578,14 @@ types:
           body: 
             application/json:
               type: AmericanFlight
-              examples:
+              examples://<5>
                 output: !include examples/AmericanFlightExample.raml
-----
+--
 [calloutlist]
 .. Select a destination.
 .. Return an array of `AmericanFlight` objects for that destination.
-.. Post an `AmericanFlight` object from an `examples/AmericanFlightNoIDExample.raml`.
+.. Post an `AmericanFlight` object from an `examples/AmericanFlightNoIDExample`
 .. Provide a custom message for a response in JSON format to the `post` method
-.. Add your example from `examples/AmericanFlightExample.raml` as a response to the nested `get` request
+.. Add your example from `examples/AmericanFlightExample` as a response to the nested `get` request
 //next step:
 . Proceed to xref:test-api-specification.adoc[] to test the API endpoints.
