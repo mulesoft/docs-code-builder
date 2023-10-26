@@ -340,7 +340,7 @@ The following example triggers a flow that requests user data and configures `<e
 
 * `<ee:set-payload/>` selects the `id` value from the user objects in the payload array.
 * `<ee:set-attributes/>` uses `attributes.statusCode` to select the status code value from the HTTP request metadata. 
-* `<ee:variables/>` creates new Mule variables. The first `<ee:set-variable/>` sets `myVar2` to the value of `myVar` (`vars.myVar`). The second creates a variable named `myVar3` to the string `'myvariable3'`.
+* `<ee:variables/>` creates new Mule variables. The first `<ee:set-variable/>` sets `myVar2` to the value of the `myVar` variable (`vars.myVar`). The second creates a variable named `myVar3` to the string `'myvariable3'`.
 
 . `LOGGER-PAYLOAD-2` prints the transformed value of `payload`, which is now an array of user `id` values (`[1,2,3,4,5,6,7,8,9,10]`).
 . `LOGGER-ATTRIBUTES-2` prints the value of `attributes.statusCode` from the HTTP request metadata within an object constructed within the DataWeave script in `<ee:set-attributes/>`. The result is the JSON object `{ "status-code": 200 }`.
