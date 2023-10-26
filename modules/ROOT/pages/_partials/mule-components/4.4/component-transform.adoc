@@ -208,7 +208,7 @@ The DataWeave script within `<ee:set-payload/>` returns this XML output as the m
 [[example2]]
 === Example: Calling an External DataWeave Script
 
-This example calls an external DataWeave script within a xref:dataweave::dataweave-language-introduction.adoc#dwl_file[DWL file] to set the payload. 
+The following example calls an external DataWeave script within a xref:dataweave::dataweave-language-introduction.adoc#dwl_file[DWL file] to set the payload. 
 
 [[example-dwl]]
 [source,xml]
@@ -249,7 +249,7 @@ If you trigger a flow that contains the <<example-dwl, Transform example>>, the 
 
 === Example: Payload, Attribute, and Variable Transformation
 
-For demonstration purposes, this example triggers a flow that sets a payload and variables and then uses `<ee:transform/>` to select the value of the payload object, attributes returned as HTTP metadata from the listener, and the entire content of the Mule variable. The loggers in the example help track the values within the Mule event in the flow.
+The following example triggers a flow that requests user data and configures `<ee:transform/>` to transform the user data payload, select an attribute that provides the status code of the HTTP request, and set the value of Mule variables. The loggers in the example help track the values within the Mule event in the flow.
 
 [source,xml]
 ----
