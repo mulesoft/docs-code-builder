@@ -1,11 +1,10 @@
 = Integrate Salesforce Data into Slack and Email Notifications
 :page-deployment-options: cloud-ide, desktop-ide
 :imagesdir: ../assets/images
+:page-pagination: next
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Create an integration that notifies you through email or Slack when a new case is created in Salesforce.
 
@@ -19,11 +18,12 @@ The integration that you build contains a flow with the following logic:
 
 Before you begin, ensure you:
 
-* Set up your MuleSoft environment. +
+* Set up your MuleSoft environment.
++
 See xref:setup.adoc[] for more information.
 * Set up a Salesforce demo environment.
-** Sign up for a developer organization https://developer.salesforce.com/signup[here^].
-** Create a developer security token https://help.salesforce.com/s/articleView?id=sf.user_security_token.htm&type=5[here^].
+** https://developer.salesforce.com/signup[Sign up for a developer organization^].
+**  https://help.salesforce.com/s/articleView?id=sf.user_security_token.htm&type=5[Create a developer security token^].
 * Have a personal or business Gmail account.
 * Have a personal or business Slack account.
 
@@ -32,40 +32,41 @@ See xref:setup.adoc[] for more information.
 . Navigate to https://slack.com/[Slack^] and log in using your organization credentials.
 +
 If your work organization restricts users from creating new workspaces, log in using your personal email account.
-. Create a new Workspace called *Integration Test*.
-. Skip the step to invite new users and type a brief description of your Workspace. For example _This is a test Workspace_.
-. Navigate to https://api.slack.com/apps[Your Apps^] and select *Create an App*.
+. Create a new Workspace called "Integration Test".
+. Skip the step to invite new users and type a brief description of your Workspace. For example "This is a test Workspace".
+. Navigate to https://api.slack.com/apps[Your Apps^] and click *Create an App*.
 +
 image::slack-create-app.png[]
 . Select *From scratch*.
-. Name your app _OAuth for Anypoint Code Builder_, and select your *Integration Test* workspace.
-. Select *Generate*.
+. Name your app "OAuth for Anypoint Code Builder", and select your *Integration Test* workspace.
+. Click *Generate*.
 +
 image::generate-token.png[]
-. Select *Create App*.
+. Click *Create App*.
 +
 image::slack-create-app-workspace.png[]
-. Select *Install App*.
+. Click *Install App*.
 +
 image::slack-install-app.png[]
-. Select *Permission scope*.
+. Click *Permission scope*.
 +
 image::slack-install-permission-scope.png[]
-. Scroll down to the *Scopes* section, under *Bot Token Scopes* select *Add an OAuth Scope*, and select *chat:write.public*.
+. Scroll down to the *Scopes* section and, under *Bot Token Scopes*, select *Add an OAuth Scope*, and select *chat:write.public*.
 +
 image::slack-bot-permissions-chat-write.png[]
 . Select *Add scopes* when prompted to add other necessary scopes for `chat:write.public`.
 . Scroll up to the *OAuth Tokens for Your Workspace* and select *Install to Workspace*.
-. Select *Allow*.
+. Click *Allow*.
 +
 image::slack-allow-install-app-workspace.png[]
-. Under *Bot User OAuth Token*, select *Copy* and save it on a safe location. +
-You will need this token to connect to your Slack workspace from Anypoint Code Builder.
+. Under *Bot User OAuth Token*, click *Copy* and save it on a safe location.
++
+You use this token to connect to your Slack workspace from Anypoint Code Builder.
 +
 image::slack-copy-oauth-token.png[]
 +
-. Create a new public channel called `this-is-a-test` in your *Integration Test* workspace.
-. Add the _OAuth for Anypoint Code Builder_ app to the `this-is-a-test` channel.
+. Create a new public channel called "this-is-a-test" in your *Integration Test* workspace.
+. Add the OAuth for Anypoint Code Builder app to the `this-is-a-test` channel.
 
 === Set up an App Password for Your Email
 
@@ -86,7 +87,7 @@ IMPORTANT: The Gmail account must have 2-factor authentication enabled to config
 // TODO: cc: web-specific UI screenshot
 // image::develop-integration-option-mat.png[]
 
-. In Anypoint Code Builder, open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and type _MuleSoft: Develop an Integration_.
+. In Anypoint Code Builder, open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Shift+p (Windows), and type `MuleSoft: Develop an Integration`.
 +
 . Select the command.
 +
@@ -98,14 +99,10 @@ image::integration-create-ui.png[]
 .. Under *Project Name* type: _New Case Salesforce_.
 .. Under *Project Location* select *Browse*, and then select your home directory.
 +
-. Select *Create Project*.
+. Click *Create Project*.
 . Anypoint Code Builder creates the base files for your integration.
 //+
 // TODO: cc: web-specific UI screenshot
 //image::finished-project-creation.png[]
 
-== Next Step
-
-* xref:tut-slack-create-config-files-sfdc.adoc[]. 
-+
-Create configuration files for connectors.
+. Proceed to xref:tut-slack-create-config-files-sfdc.adoc[] to create configuration files for connectors.

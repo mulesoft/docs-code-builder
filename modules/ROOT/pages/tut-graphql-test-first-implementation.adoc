@@ -1,11 +1,10 @@
 = Test Your GraphQL Implementation
 :page-deployment-options: cloud-ide, desktop-ide
 :imagesdir: ../assets/images
+:page-pagination:
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 With a scaffolded project, run your application locally and test the endpoints of your Mule application.
 
@@ -24,119 +23,11 @@ See xref:tut-graphql-implement-api.adoc[].
 
 To locally deploy your Mule Application, run a debug session in Anypoint Code Builder:
 
-.Cloud IDE
-[%collapsible]
-====
-
 . In Anypoint Code Builder, open the *Books Implementation* project.
-. Select *Run and Debug* in the Activity Bar, then press the *Start Debugging* icon.
-+
-// TODO: cc: desktop IDE UI differs
-// image::start-debugging.png[]
-
-. Launch your browser Developer Tools (`F12`).
-. Navigate to your *Application* tab, under *Storage* expanded the *Cookies* section, and select the URL of your cloud IDE instance.
-+
-image::application-storage-cookies.png[]
-. Copy the cookie name and value. For example:
-+
-[source]
---
-proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx
---
-+
-[NOTE]
---
-The `proxysession` cookie name varies depending on the user.
---
-. In Anypoint Code Builder, navigate to *View* > *Appearance* > *Panel*.
-+
-Alternatively, press Ctrl+j (Windows) or Cmd+j (Mac).
-. Navigate to the *Ports* tab.
-. Copy the local address for port `8081`:
-+
-image::ports-panel-local-address-8081.png[]
-+
-[NOTE]
---
-The URL to ping varies depending on the webIDE instance ID. It follows the format `+https://<web-IDE-instance>/proxy/<port-you-configured-on-your-listener>/+`. In this case, because you are pinging the 8081 port, your URL is `+https://<web-IDE-instance>/proxy/8081/+`.
-See xref:int-trigger-flows.adoc[] for more information.
---
-. Using `curl`, create a `POST` request to the local address, adding the `/graphql` path: `+https://<web-IDE-instance>/proxy/8081/graphql+`, and the `proxysession` cookie:
-+
-[source,curl]
---
-curl --request POST \
---location 'https://<web-IDE-instance>/proxy/8081/graphql' \
---header 'Cookie: <proxysession-cookie-name>=<cookie-value>' \
---header 'Content-Type: application/json' \
---data '{
-    "query": "query bookById($id: ID) {bookById(id: $id){ id name pageCount author{ id firstName lastName}}}",
-    "variables": {
-        "id": 1
-    }
-}'
---
-+
-// . Add a new *Cookie* header to the request with the `proxysession` value:
-// +
-// [source,curl]
-// --
-// --header 'Cookie: proxysession5f5648c7115f4e2e8f3f9396355ac4e8-0=xxxxxxxxxxxxxx \
-// --
-// +
-// TODO: cc: Screenshot no longer valid because we're now using curl instead of Postman
-// image::send-request-with-cookies.png[]
-The `curl` request contains the following GraphQL query:
-+
-[source,GraphQL]
---
-query bookById($id: ID){
-	bookById(id: $id) {
-		id
-		name
-		pageCount
-		author{
-			id
-			firstName
-			lastName
-		}
-	}
-}
---
-+
-Because you are querying a value by a specific ID (`$id: ID`), you must provide a GraphQL variable with the ID you want to query:
-+
-[source,GraphQL]
---
-{
-	"id": 1
-}
---
-+
-// TODO: cc: Screenshot no longer valid because we're now using curl instead of Postman
-// image::graphql-query-book-by-id.png[]
-. Send the `curl` request.
-+
-Anypoint Code Builder returns an empty field for the book:
-+
-[source,GraphQL]
---
-{
-    "data": {
-        "bookById": null
-    }
-}
---
-====
-
-.Desktop IDE
-[%collapsible]
-====
-
-. In Anypoint Code Builder, open the *Books Implementation* project.
-. Select *Run and Debug* in the Activity Bar, then press the *Start Debugging* icon.
-. Using `curl`, create a `POST` request to the local address, adding the `/graphql` path: `+http://localhost:8081/graphql+`:
+. Select *Run and Debug* in the Activity Bar, then click the *Start Debugging (F5)* icon.
+//open terminal
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
+. In the IDE's terminal, use the `curl` command, and create a `POST` request to the local address, adding the `/graphql` path: `+http://localhost:8081/graphql+`:
 +
 [source,curl]
 --
@@ -150,7 +41,8 @@ curl --request POST \
     }
 }'
 --
-
++
+For more information about using the `curl` command in the terminal, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
 . Send the `curl` request.
 +
 Anypoint Code Builder returns an empty field for the book:
@@ -163,10 +55,9 @@ Anypoint Code Builder returns an empty field for the book:
     }
 }
 --
-====
-
++
 Other queries you can try for your endpoint are:
-
++
 * Query `books`:
 +
 [source,GraphQL]
@@ -184,7 +75,7 @@ query books {
 	}
 }
 --
-* Query `bestSellers`
+* Query `bestSellers`:
 +
 [source,GraphQL]
 --
@@ -208,10 +99,7 @@ query bestsellers {
 	}
 }
 --
++
+All these requests return an empty result.
 
-All these requests will return an empty result.
-
-== Next Step
-
-* xref:tut-graphql-configure-flow-responses.adoc[]. +
-Populate each flow with a custom response for each query.
+. Proceed to xref:tut-graphql-configure-flow-responses.adoc[] to populate each flow with a custom response for each query.

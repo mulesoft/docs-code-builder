@@ -8,8 +8,6 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-// Combine with breakpoints, debug sessions
-
 Debug your Mule application using the embedded debugger in Anypoint Code Builder. 
 
 
@@ -19,12 +17,9 @@ The process for debugging a Mule app is:
 +
 Breakpoints are markers that you add on line numbers in a configuration XML file for a Mule application that you are developing.
 . <<run-debug-mode, Run the application in debug mode>>.
-// .. Use the *Run and Debug* icon in the activity bar to open *Run and Debug* menu. 
-// .. Click *Start Debugging (F5)* icon to start the debugger.
 . Start execution of a flow in your Mule application.
 +
 For example, trigger an HTTP Listener or configure a Scheduler component.
-// need example of how to do this
 . When the execution stops at a breakpoint, use the <<debug-toolbar, debug toolbar>> to navigate, inspect, and fix issues.
 . After addressing an issue at a breakpoint, redeploy (<<hot-deploy, hot deploy>>) the running instance of your application.
 . Execute your flow again, and continue debugging until you address all issues.
@@ -48,7 +43,7 @@ See <<debug-toolbar>>.
 . *Variables* panel: Provides Mule event and parameter data.
 +
 The Mule event includes message payload and attribute details, as well as Mule variable data. The parameters include component data, such as the component name.
-. *Run and Debug* (MuleSoft) icon: Opens the *Run and Debug* panel, where you can click *Start Debugging* and find debugging information.
+. *Run and Debug* (MuleSoft) icon: Opens the *Run and Debug* panel, where you can click *Start Debugging (F5)* and find debugging information.
 +
 Keyboard shortcut: Cmd+Shift+d (Mac) or Ctrl+Shift+d (Windows) 
 . *Watch* panel: Helps you evaluate variables and expressions.
@@ -86,18 +81,8 @@ image::int-breakpoints-panel.png["Breakpoints panel"]
 After setting up your debug conditions, run a debug session and evaluate your Mule application at each breakpoint:
 
 // Pointer to Run and Debug
-include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
-. Click the image:icon-start-debug.png["",15,15] (*Start Debugging (F5)*) icon for *Debug Mule Application*.
-+
---
-image::run-debugger.png["Run the debugger"]
-
-Alternatively, if the *Start Debugging (F5)* icon is not present:
-
-.. Click *Run and Debug*. 
-.. If a *Select debugger* dropdown menu appears, select *Mule Xml Debugger* to initiate the debugging session.
-+
-image::run-debug-imported-folder.png["Run and Debug button and Mule XML Debugger menu item"]
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
 
 NOTE: Selecting *Run* > *Start without Debugging* produces an error.
 
@@ -107,17 +92,8 @@ A terminal opens so you can view the status.
 image::deb-terminal-running.png["Debugging status in a terminal window"]
 
 The terminal displays a message and the status bar turns red to indicate that the application is running.
---
-. Use buttons on the <<debug-toolbar, debug toolbar>> to control debugging of Mule applications.
 
-////
-.Open the Terminal
-[%collapsible]
-====
-* In the desktop IDE, select *View* > *Terminal*.
-* In the cloud IDE, select *File* > *View* > *Terminal*
-====
-////
+Use buttons on the <<debug-toolbar, debug toolbar>> to control debugging of Mule applications.
 
 [[debug-toolbar]]
 == Debug Toolbar
@@ -213,48 +189,3 @@ image::deb-hot-deploy.png["Hot-deploy (lightning) icon in a running Mule applica
 To stop your debug session, in the *Run and Debug* panel, click the image:icon-stop.png["",15,15] (*Stop*) icon. 
 
 The status bar no longer indicates that the application is running.
-
-////
-
-[[test]]
-== Test Your Application
-
-Use your REST client or a browser to trigger the flow.
-
-. Submit a request, for example:
-+
-** For the desktop IDE, submit a URI.
-+
-[source,URI]
-----
-http://0.0.0.0:8081/flights
-----
-** For the cloud IDE, submit a `GET` request to `+https://<web-IDE-instance>/proxy/8081/flights+`. 
-+
-See xref:int-trigger-flows.adoc[] for guidance with the URI.
-. In your REST client or browser, check for the response *Flight info*.
-+
-If you don't receive this response or if you receive a connection error:
-+
-.. Review your XML configuration.
-.. Make sure your application is deployed.
-.. Recheck your HTTP Listener connection.
-
-
-== Test Your Mule Application
-
-. Make a `GET` request to `+https://<web-IDE-instance>/proxy/8081/api/flights+`. +
-See xref:int-trigger-flows.adoc[] for more information about how to send requests to your application.
-. In Anypoint Code Builder, notice that the application execution stopped at your first breakpoint.
-+
-image::debug-stop-at-flow-ref.png["Stop at first breakpoint"]
-. Click *Step Over* on your debug toolbar to move the execution to your next breakpoint.
-+
-In the Debug sidebar, the *Variables* panel shows details about the Mule event at that particular part of the flow.
-+
-image::debugger-stop-db-select.png["Variables panel with details about the Mule event]
-. Select the *Step Over* button on your debug toolbar to move the execution to your next breakpoint.
-. In the Debug sidebar on the *Variables* panel, expand the *Mule Message* and the *Payload* variables and note that you can inspect the database response as an array.
-+
-image::debugger-stop-set-variable.png["Inspect the database response as an array"]
-////
