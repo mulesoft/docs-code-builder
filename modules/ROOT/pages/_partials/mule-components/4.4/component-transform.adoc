@@ -326,9 +326,11 @@ The following example triggers a flow that requests user data and configures `<e
 [calloutlist]
 . `<http:listener/>` configures an HTTP Listener operation that triggers the flow from requests to localhost port `8081` at the endpoint `/mytrigger`. 
 . `<http:request/>` configures and HTTP Request operation for a JSON data sample.
-. `<set-variables/>` sets  Mule variable `myVar` to the string value `"myVar Value"`. 
+. `<set-variable/>` sets  Mule variable `myVar` to the string value `"myVar Value"`. 
 . `LOGGER-PAYLOAD-1` prints the value of `payload[0]`, which is the first index of an array of user objects found at https://jsonplaceholder.typicode.com/users[https://jsonplaceholder.typicode.com/users^].
-. `LOGGER-ATTRIBUTES-1` prints the HTTP metadata returned from the HTTP request, including the status code (`attributes.statusCode`), reason phrase (`attributes.reasonPhrase`), and headers (`attributes.headers`).
+. `LOGGER-ATTRIBUTES-1` is set to the predefined Mule variable `attributes` to print the HTTP metadata returned from the HTTP request, including the status code, reason phrase, and headers. 
++
+For more information about `attributes` and other Mule variables, see xref:dataweave::dataweave-variables-context.adoc[].
 . `LOGGER-VARIABLES-1` is set to `vars` to print an object that describes the Mule variable in the Mule event:
 +
 ----
@@ -339,12 +341,14 @@ The following example triggers a flow that requests user data and configures `<e
 . `<ee:transform/>` provides DataWeave scripts that select and transform payload, attribute, and variable data in the Mule event.
 
 * `<ee:set-payload/>` selects the `id` value from the user objects in the payload array.
-* `<ee:set-attributes/>` uses `attributes.statusCode` to select the status code value from the HTTP request metadata. 
+* `<ee:set-attributes/>` uses `attributes.statusCode` to select the status code value from the HTTP request metadata.
++
+All the metadata is selectable. For example, you can select the reason phrase with `attributes.reasonPhrase` and the headers with `attributes.headers`. For more information, see xref:dataweave::dataweave-selectors.adoc[].
 * `<ee:variables/>` creates new Mule variables. The first `<ee:set-variable/>` sets `myVar2` to the value of the `myVar` variable (`vars.myVar`). The second creates a variable named `myVar3` to the string `'myvariable3'`.
 
 . `LOGGER-PAYLOAD-2` prints the transformed value of `payload`, which is now an array of user `id` values (`[1,2,3,4,5,6,7,8,9,10]`).
-. `LOGGER-ATTRIBUTES-2` prints the value of `attributes.statusCode` from the HTTP request metadata within an object constructed within the DataWeave script in `<ee:set-attributes/>`. The result is the JSON object `{ "status-code": 200 }`.
-. `LOGGER-VARIABLES-2` prints the value of Mule variable `vars.myVar2`, which is now the string `"myVar Value"`.
+. `LOGGER-ATTRIBUTES-2` prints the transformed value of `attributes`, which is now the JSON object `{ "status-code": 200 }`.
+. `LOGGER-VARIABLES-2` prints the value of Mule variable `vars.myVar2`, which is the string `"myVar Value"`.
 . `LOGGER-VARIABLES-3` prints the value of Mule variable `vars.myVar3.myNewVar`, which is the string `"myvariable3"`.
 --
 
