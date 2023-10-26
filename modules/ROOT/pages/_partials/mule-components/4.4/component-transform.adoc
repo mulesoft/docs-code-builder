@@ -288,7 +288,7 @@ The following example triggers a flow that requests user data and configures `<e
             output application/json
             ---
             {
-                requestPath: attributes.statusCode
+                'status-code' : attributes.statusCode
             }]]>
           </ee:set-attributes>
       </ee:message>
@@ -343,7 +343,7 @@ The following example triggers a flow that requests user data and configures `<e
 * `<ee:variables/>` creates new Mule variables. The first `<ee:set-variable/>` sets `myVar2` to the value of `myVar` (`vars.myVar`). The second creates a variable named `myVar3` to the string `'myvariable3'`.
 
 . `LOGGER-PAYLOAD-2` prints the transformed value of `payload`, which is now an array of user `id` values (`[1,2,3,4,5,6,7,8,9,10]`).
-. `LOGGER-ATTRIBUTES-2` prints the value of `attributes.statusCode` from the HTTP request metadata within an object constructed within the DataWeave script in `<ee:set-attributes/>`. The result is the JSON object `{ "requestPath": 200 }`.
+. `LOGGER-ATTRIBUTES-2` prints the value of `attributes.statusCode` from the HTTP request metadata within an object constructed within the DataWeave script in `<ee:set-attributes/>`. The result is the JSON object `{ "status-code": 200 }`.
 . `LOGGER-VARIABLES-2` prints the value of Mule variable `vars.myVar2`, which is now the string `"myVar Value"`.
 . `LOGGER-VARIABLES-3` prints the value of Mule variable `vars.myVar3.myNewVar`, which is the string `"myvariable3"`.
 --
@@ -430,7 +430,7 @@ INFO  2023-10-24 16:59:43,512 ... [processor: myFlow/processors/6;
 INFO  2023-10-24 16:59:43,519 [processor: myFlow/processors/7; 
   event: 6699ea20-72c9-11ee-b3b5-147ddaaf4f97] 
   LOGGER-ATTRIBUTES-2: {
-    "requestPath": 200
+    "status-code": 200
   }
 INFO  2023-10-24 16:59:43,528 ... [processor: myFlow/processors/8; 
   event: 6699ea20-72c9-11ee-b3b5-147ddaaf4f97] 
