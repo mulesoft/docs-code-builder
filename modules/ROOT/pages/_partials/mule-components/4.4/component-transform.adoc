@@ -8,17 +8,15 @@
 
 //
 //tag::component-short-description[]
-//     Short description of the form "Do something..." 
-//     Example: "Configure log messages anywhere in a flow."
 
-Convert input data to a new output structure or format.
+Write a DataWeave script within this component to set or transform the Mule message payload, attributes, or variables to the required output format and data structure. 
 
 //end::component-short-description[]
 //
 
 //
 //tag::component-long-description[]
-DataWeave is the programming language for all expressions and data transformations in your integrations and implementations. The language offers function libraries and mechanisms for creating customizations, including your own functions, libraries, and data types. To learn the basics of DataWeave and experiment with DataWeave scripts, see https://dataweave.mulesoft.com/[DataWeave Tutorial and Playground^].
+DataWeave is the programming language for all expressions and data transformations in your integrations and implementations. The language offers function libraries and mechanisms for creating customizations, including your own functions, libraries, and data types. To learn the basics of DataWeave and experiment with DataWeave scripts, see https://dataweave.mulesoft.com/[DataWeave Tutorial and Playground^], and find DataWeave functions and guidance with the language in the xref:dataweave::index.adoc[DataWeave documentation].
 
 //end::component-long-description[]
 //
@@ -42,23 +40,22 @@ This component supports the following XML structure:
 ----
 <ee:transform doc:name="Transform" doc:id="xnpgke" >
     <ee:message >
-        <ee:set-payload ><![CDATA[%dw 2.0
-output application/java
+        <ee:set-payload ><![CDATA[%dw 2.0 
+output application/java //<1>
 ---
-{
-}]]></ee:set-payload>
+//DataWeave script <2>
+]]></ee:set-payload>
         </ee:message>
     </ee:transform>
 ----
 
-A single Transform component element (`<ee:transform/>`) can specify content for all parts of the xref:mule-runtime::about-mule-event.adoc[Mule event]:
-
-* Mule message: `<ee:message/>` can contain `<ee:set-payload/>` and `<ee:set-attributes/>`.
+--
+[calloutlist]
+. The `output` directive of a DataWeave script that configures the `application/java` format
+. Location for the body of the DataWeave script
 +
-See Mule documentation on xref:mule-runtime::about-mule-message.adoc[].
-* Mule variables: `<ee:variables/>` can contain one or more `<ee:set-variable/>` elements.
-+
-See Mule documentation on xref:mule-runtime::about-mule-variables.adoc[].
+You can provide format-specific resources and settings for xref:dataweave::dataweave-formats.adoc[supported MIME types (formats)].
+--
 
 //end::component-xml[]
 //
@@ -104,13 +101,28 @@ Snippet XML in Anypoint Code Builder serves as a customizable template for the c
 //  Provide intro text, as needed.
 //tag::component-xml-child1[]
 
-[%header, cols="1,3"]
-|===
-| Attributes | Description
+Write a xref:dataweave::dataweave-language-introduction.adoc[DataWeave script] within a Transform component (`<ee:transform/>`) to create or transform content for any parts of the xref:mule-runtime::about-mule-event.adoc[Mule event]:
 
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
+* The `<ee:message/>` element within `<ee:transform/>` accepts child elements for creating or transforming a Mule message payload and attributes: 
++
+[%header, %autowidth]
 |===
+| `<ee:message/>` Elements | Description
+
+| `<ee:set-payload/>` | Sets or transforms the xref:mule-runtime::about-mule-message.adoc#message-payload[Mule message payload]. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-payload/>` element is allowed. 
+| `<ee:set-attributes/>` | Sets or transforms one or more Mule message attributes. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-attributes/>` element is allowed. 
+|===
+
+* The `<ee:variables/>` element within `<ee:transform/>` accepts child elements for creating or transforming a Mule variables: 
++
+[%header, cols="2,3"]
+|===
+| `<ee:variables/>` Elements 
+| Description
+
+| `<ee:set-variable/>` | Sets or transforms a xref:mule-runtime::about-mule-variables.adoc[Mule variable]. This child element of `<ee:variables/>` accepts a DataWeave script. One or more `<ee:set-variable/>` elements are allowed.
+|===
+
 //end::component-xml-child1[]
 //
 //
@@ -142,8 +154,8 @@ The following examples show how to configure an inline transformations, call Dat
 //
 //
 //tag::component-xml-ex1[]
-[[example1]]
 
+[[example1]]
 === Example: Inline DataWeave Transformation
 
 The following example sets the payload using an inline DataWeave script.
@@ -151,7 +163,7 @@ The following example sets the payload using an inline DataWeave script.
 [source,xml]
 ----
 <ee:transform 
-  doc:id="747f74d4-cb66-4f8e-8222-24784e6863ae"
+  doc:id="747f74"
   doc:name="Transform" >
     <ee:message>
         <ee:set-payload>
@@ -173,9 +185,10 @@ The following example sets the payload using an inline DataWeave script.
 </ee:transform>
 ----
 
-The DataWeave script within `<ee:set-payload/>` returns this XML output:
+The DataWeave script within `<ee:set-payload/>` returns this XML output as the message's payload:
 
-[source,output]
+[[payload-ex1]]
+[source,xml]
 ----
 <example>
   <message id="DSF-829">Hello World!</message>
@@ -191,21 +204,43 @@ The DataWeave script within `<ee:set-payload/>` returns this XML output:
 //
 //
 //tag::component-xml-ex2[]
-[[example2]]
 
+[[example2]]
 === Example: Calling an External DataWeave Script
 
-The following example calls an external DataWeave script to set the payload. 
+This example calls an external DataWeave script within a xref:dataweave::dataweave-language-introduction.adoc#dwl_file[DWL file] to set the payload. 
 
+[[example-dwl]]
 [source,xml]
 ----
-<ee:transform doc:id="747f74d4-cb66-4f8e-8222-24784e6863ae"
+<ee:transform doc:id="747f74d"
   doc:name="Transform" doc:mode="immediate">
     <ee:message>
       <ee:set-payload resource="transform.dwl" />
     </ee:message>
 </ee:transform>
 ----
+
+Add your DWL file to the `src/main/resources` directory of your Mule project folder. For example, you can create a file named `transform.dwl` in that folder, and provide the same DataWeave script shown in <<example1>>:
+
+[source,dataweave]
+----
+%dw 2.0
+output application/xml
+---
+example: {
+    message @(id: "DSF-829"): "Hello World!",
+    date: |2017-03-21|,
+    items: 
+    {
+        item1: 728,
+        item2: "14422"
+    }
+}
+----
+
+If you trigger a flow that contains the <<example-dwl, Transform example>>, the script returns the same payload returned by <<example1>>.
+  
 //end::component-xml-ex2[]
 
 //tag::component-xml-ex3[]
@@ -214,57 +249,112 @@ The following example calls an external DataWeave script to set the payload.
 
 === Example: Payload, Attribute, and Variable Transformation
 
-The following example creates transformations for the payload, an attribute, and a variable.
+For demonstration purposes, this example triggers a flow that sets a payload and variables and then uses `<ee:transform/>` to select the value of the payload object, attributes returned as HTTP metadata from the listener, and the entire content of the Mule variable. The loggers in the example help track the values within the Mule event in the flow.
 
 [source,xml]
 ----
-<ee:transform 
-  doc:id="747f74d4-cb66-4f8e-8222-24784e6863ae"
-  doc:name="Transform" >
-    <ee:message>
-        <ee:set-payload>
-        <![CDATA[%dw 2.0
-        output application/json
-        ---
-        (payload map (value0, index0) -> 
-        {
-            id: value0.id,
-            username: value0.username,
-            address: 
-            {
-                street: value0.address.street
-            },
-            website: value0.website
-        })]]>
-        </ee:set-payload>
-        <ee:set-attributes>
-        <![CDATA[%dw 2.0
-        output application/json
-        ---
-        {
-            requestPath: attributes.requestPath
-        }]]>
-        </ee:set-attributes>
-    </ee:message>
-    <ee:variables>
-        <ee:set-variable variableName="myVar">
+<http:listener-config name="HTTP_Listener_config" >
+  <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" >
+  <http:request-connection port="443" />
+</http:request-config>
+
+<flow name="myFlow" >
+  <http:listener path="/mytrigger" config-ref="HTTP_Listener_config"
+    doc:name="Listener" doc:id="kiohjs" /> <!--1-->
+  <http:request method="GET" doc:name="Request" 
+     config-ref="HTTP_Request_configuration" 
+     url="https://jsonplaceholder.typicode.com/users"/> <!--2-->
+  <set-variable variableName="myVar" value="myVar Value" 
+    doc:name="Set variable" doc:id="tgwhvc" /> <!--3-->
+  <logger level="INFO" message="#[payload[0]]" doc:name="Logger Payload" 
+    doc:id="9dbeda-430b1f" category="LOGGER-PAYLOAD-1"/> <!--4-->
+  <logger level="INFO" message="#[attributes]" doc:name="Logger Attributes" 
+    doc:id="9dbeda-430b1g" category="LOGGER-ATTRIBUTES-1"/> <!--5-->
+  <logger level="INFO" message="#[vars]" doc:name="Logger Variables" 
+    doc:id="9dbeda-430b1h" category="LOGGER-VARIABLES-1"/> <!--6-->
+  <ee:transform doc:name="Transform" doc:id="qtxpfa" > <!--7-->
+      <ee:message>
+          <ee:set-payload>
+            <![CDATA[%dw 2.0
+                output application/json
+                ---
+                payload.id
+            ]]>
+          </ee:set-payload>
+          <ee:set-attributes>
             <![CDATA[%dw 2.0
             output application/json
             ---
             {
-                a: payload[0].phone
+                requestPath: attributes.statusCode
             }]]>
-        </ee:set-variable>
-    </ee:variables>
-</ee:transform>
-----
+          </ee:set-attributes>
+      </ee:message>
+      <ee:variables>
+          <ee:set-variable variableName="myVar2">
+              <![CDATA[%dw 2.0
+                  output application/json
+                  ---
+                  vars.myVar
+              ]]>
+          </ee:set-variable>
+          <ee:set-variable variableName="myVar3">
+              <![CDATA[%dw 2.0
+              output application/json
+              ---
+              {
+                  'myNewVar' : 'myvariable3'
+              }]]>
+          </ee:set-variable>
+      </ee:variables>
+  </ee:transform>
+  <logger level="INFO" message="#[payload]" doc:name="Logger Payload 2" 
+          doc:id="9dbeda-430b1c" category="LOGGER-PAYLOAD-2"/> <!--8-->
+  <logger level="INFO" message="#[attributes]" doc:name="Logger Attributes 2" 
+          doc:id="9dbeda-430b1d" category="LOGGER-ATTRIBUTES-2"/> <!--9-->
+  <logger level="INFO" message="#[vars.myVar2]" doc:name="Logger Variables 2" 
+          doc:id="9dbeda-430b1e" category="LOGGER-VARIABLES-2"/> <!--10-->
+  <logger level="INFO" message="#[vars.myVar3.myNewVar]" 
+          doc:name="Logger Variables 3" 
+          doc:id="9dbeda-430b1g" category="LOGGER-VARIABLES-3"/> <!--11-->
+</flow>
+---- 
 
-Assume this payload:
-
-[source,payload]
+--
+[calloutlist]
+. `<http:listener/>` configures an HTTP Listener operation that triggers the flow from requests to localhost port `8081` at the endpoint `/mytrigger`. 
+. `<http:request/>` configures and HTTP Request operation for a JSON data sample.
+. `<set-variables/>` sets  Mule variable `myVar` to the string value `"myVar Value"`. 
+. `LOGGER-PAYLOAD-1` prints the value of `payload[0]`, which is the first index of an array of user objects found at https://jsonplaceholder.typicode.com/users[https://jsonplaceholder.typicode.com/users^].
+. `LOGGER-ATTRIBUTES-1` prints the HTTP metadata returned from the HTTP request, including the status code (`attributes.statusCode`), reason phrase (`attributes.reasonPhrase`), and headers (`attributes.headers`).
+. `LOGGER-VARIABLES-1` is set to `vars` to print an object that describes the Mule variable in the Mule event:
++
 ----
-[
-  {
+{myVar=TypedValue[value: 'my VarValue', 
+  dataType: 'SimpleDataType{type=java.lang.String, 
+  mimeType='*/*; charset=UTF-8'}']}
+----
+. `<ee:transform/>` provides DataWeave scripts that select and transform payload, attribute, and variable data in the Mule event.
+
+* `<ee:set-payload/>` selects the `id` value from the user objects in the payload array.
+* `<ee:set-attributes/>` uses `attributes.statusCode` to select the status code value from the HTTP request metadata. 
+* `<ee:variables/>` creates new Mule variables. The first `<ee:set-variable/>` sets `myVar2` to the value of `myVar` (`vars.myVar`). The second creates a variable named `myVar3` to the string `'myvariable3'`.
+
+. `LOGGER-PAYLOAD-2` prints the transformed value of `payload`, which is now an array of user `id` values (`[1,2,3,4,5,6,7,8,9,10]`).
+. `LOGGER-ATTRIBUTES-2` prints the value of `attributes.statusCode` from the HTTP request metadata within an object constructed within the DataWeave script in `<ee:set-attributes/>`. The result is the JSON object `{ "requestPath": 200 }`.
+. `LOGGER-VARIABLES-2` prints the value of Mule variable `vars.myVar2`, which is now the string `"myVar Value"`.
+. `LOGGER-VARIABLES-3` prints the value of Mule variable `vars.myVar3.myNewVar`, which is the string `"myvariable3"`.
+--
+
+In the logs, the output looks something like this (edited for readability):
+
+[[source, logs]]
+----
+INFO  2023-10-24 16:59:43,279 ... 
+  [processor: myFlow/processors/2; event: 6699ea20-72c9-11ee-b3b5-147ddaaf4f97] 
+  LOGGER-PAYLOAD-1: {
     "id": 1,
     "name": "Leanne Graham",
     "username": "Bret",
@@ -286,101 +376,69 @@ Assume this payload:
       "catchPhrase": "Multi-layered client-server neural-net",
       "bs": "harness real-time e-markets"
     }
-  },
-  {
-    "id": 2,
-    "name": "Ervin Howell",
-    "username": "Antonette",
-    "email": "Shanna@melissa.tv",
-    "address": {
-      "street": "Victor Plains",
-      "suite": "Suite 879",
-      "city": "Wisokyburgh",
-      "zipcode": "90566-7771",
-      "geo": {
-        "lat": "-43.9509",
-        "lng": "-34.4618"
-      }
-    },
-    "phone": "010-692-6593 x09125",
-    "website": "anastasia.net",
-    "company": {
-      "name": "Deckow-Crist",
-      "catchPhrase": "Proactive didactic contingency",
-      "bs": "synergize scalable supply-chains"
+  }
+INFO  2023-10-24 16:59:43,333 ... 
+  [processor: myFlow/processors/3; event: 6699ea20-72c9-11ee-b3b5-147ddaaf4f97] 
+  LOGGER-ATTRIBUTES-1: org.mule.extension.http.api.HttpResponseAttributes
+    {
+       Status Code=200
+       Reason Phrase=OK
+       Headers=[
+          date=Wed, 25 Oct 2023 20:00:48 GMT
+          content-type=application/json; charset=utf-8
+          transfer-encoding=chunked
+          connection=keep-alive
+          x-powered-by=Express
+          x-ratelimit-limit=1000
+          x-ratelimit-remaining=999
+          x-ratelimit-reset=1698156189
+          vary=Origin, Accept-Encoding
+          access-control-allow-credentials=true
+          cache-control=max-age=43200
+          pragma=no-cache
+          expires=-1
+          x-content-type-options=nosniff
+          etag=W/"160d-1eMSsxeJRfnVLRBmYJSbCiJZ1qQ"
+          via=1.1 vegur
+          cf-cache-status=HIT
+          age=21484
+          report-to={"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=abcdefg1234..."}],"group":"cf-nel","max_age":604800}
+          nel={"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+          server=cloudflare
+          cf-ray=81bd0c408c729685-SJC
+          alt-svc=h3=":443"; ma=86400
+       ]
     }
+INFO  2023-10-24 16:59:43,347 ... [processor: myFlow/processors/4; 
+  event: 6699ea20-72c9-11ee-b3b5-147ddaaf4f97] 
+  LOGGER-VARIABLES-1: {myVar=TypedValue[value: 'myVar Value', 
+    dataType: 'SimpleDataType{type=java.lang.String, mimeType='*/*; charset=UTF-8'}']}
+INFO  2023-10-24 16:59:43,512 ... [processor: myFlow/processors/6; 
+  event: 6699ea20-72c9-11ee-b3b5-147ddaaf4f97] 
+  LOGGER-PAYLOAD-2: [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ]
+INFO  2023-10-24 16:59:43,519 [processor: myFlow/processors/7; 
+  event: 6699ea20-72c9-11ee-b3b5-147ddaaf4f97] 
+  LOGGER-ATTRIBUTES-2: {
+    "requestPath": 200
   }
-]
+INFO  2023-10-24 16:59:43,528 ... [processor: myFlow/processors/8; 
+  event: 6699ea20-72c9-11ee-b3b5-147ddaaf4f97] 
+  LOGGER-VARIABLES-2: "myVar Value"
+INFO  2023-10-24 16:59:43,576 ... [processor: myFlow/processors/9; 
+  event: 6699ea20-72c9-11ee-b3b5-147ddaaf4f97] 
+  LOGGER-VARIABLES-3: "myvariable3"
 ----
-
-The script within `<ee:set-payload>` returns this JSON output:
-
-[source, json]
-----
-[
-  {
-    "id": 1,
-    "username": "Bret",
-    "address": {
-      "street": "Kulas Light"
-    },
-    "website": "hildegard.org"
-  },
-  {
-    "id": 2,
-    "username": "Antonette",
-    "address": {
-      "street": "Victor Plains"
-    },
-    "website": "anastasia.net"
-  }
-]
-----
-
-The script within `<ee:set-attributes/>` returns the request path in the HTTP header. For example, assume this metadata in the HTTP header:
-
-[source, http header]
-----
-{
-   Request path=/hellomule
-   Raw request path=/hellomule
-   Method=GET
-   Listener path=/hellomule
-   Local Address=/127.0.0.1:8081
-   Query String=
-   Relative Path=/hellomule
-   Masked Request Path=null
-   Remote Address=/127.0.0.1:61856
-   Request Uri=/hellomule
-   Raw request Uri=/hellomule
-   Scheme=http
-   Version=HTTP/1.1
-   Headers=[
-      host=localhost:8081
-      connection=keep-alive
-      cache-control=max-age=0
-      sec-ch-ua="Google Chrome";v="117", "Not;A=Brand";v="8", "Chromium";v="117"
-      sec-ch-ua-mobile=?0
-      sec-ch-ua-platform="macOS"
-      upgrade-insecure-requests=1
-      user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36
-      accept=text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-      sec-fetch-site=none
-      sec-fetch-mode=navigate
-      sec-fetch-user=?1
-      sec-fetch-dest=document
-      accept-encoding=gzip, deflate, br
-      accept-language=en-US,en;q=0.9
-   ]
-   Query Parameters=[]
-   URI Parameters=[]
-}
-----
-
-The 
-
- 
-
 
 //end::component-xml-ex3[]
 
@@ -398,8 +456,7 @@ The
 //tag::component-error-handling[]
 
 // tag::metadata[]
-
-The Transform component accepts input and output metadata for the Mule message payload, variable, or attribute. You can provide format-specific resources and settings for xref:dataweave::dataweave-formats.adoc[supported MIME types (formats)].
+//
 // end::metadata[]
 
 [[error-handling]]
