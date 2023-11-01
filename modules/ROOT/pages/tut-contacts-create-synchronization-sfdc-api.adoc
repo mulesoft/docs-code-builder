@@ -9,11 +9,12 @@ Create an API specification that synchronizes your contacts database with Salesf
 
 The synchronization API that you build contains a flow with the following logic:
 
-* Fetch a contact from Salesforce.
-* If the contact in Salesforce has a phone number, retrieve its first and last name.
-* Define if the contact exists in the database by matching its first and last name with the contact fetched from Salesforce.
-* If the contact in the database matches the contact on Salesforce, update the phone number in the Database and return a response indicating success.
-* Otherwise, create a response indicating that the contact doesn’t exist.
+. Fetch a contact from Salesforce.
+. If the contact in Salesforce has a phone number, retrieve its first and last name.
+. Define if the contact exists in the database by matching its first and last name with the contact fetched from Salesforce.
+. If the contact in the database matches the contact on Salesforce, update the phone number in the Database and return a response indicating success.
++
+Otherwise, create a response indicating that the contact doesn’t exist.
 
 == Before You Begin
 
@@ -32,7 +33,7 @@ See xref:setup.adoc[] for more information.
 . In the cloud IDE instance, navigate to your Anypoint Code Builder view:
 +
 image::anypoint-code-builder-view.png[]
-. Select *Design an API*:
+. Click *Design an API*:
 +
 image::design-api-1.png[]
 +
@@ -116,7 +117,7 @@ image::contact-sync-push-changes.png[]
 
 To write the logic behind this API, you must publish it to Exchange:
 
-. In Anypoint Code Builder, open the `american-flights-api.raml` file.
+. In Anypoint Code Builder, open the `contact-sync.raml` file.
 . Open the Command Palette by pressing Ctrl+Shift+P (Windows) or Cmd+Shift+P (Mac), and provide the following command:
 +
 [source,command]
@@ -127,11 +128,7 @@ MuleSoft: Publish API Specification to Exchange
 image::publish-to-exchange.png[]
 . Type a project name: *Contact Sync*
 . Confirm the asset version: *1.0.0*
-+
-image::set-asset-version.png[]
 . Confirm the API version: *v1*
-+
-image::set-api-version.png[]
 +
 The status bar shows the progress:
 +
@@ -140,9 +137,9 @@ image::publishing-to-exchange-dialog.png[]
 +
 image::scaffold-option-yes.png[]
 +
-. Select a name for the project: *contact-sync*
+. Enter a name for the project: *contact-sync*
 +
-. Select a directory where you want to create the project:
+. Select the directory in which to create the project:
 +
 image::select-project-location.png[]
 +

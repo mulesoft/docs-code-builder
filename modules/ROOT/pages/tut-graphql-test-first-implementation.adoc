@@ -14,9 +14,11 @@ Note that because the GraphQL schema does not allow examples, Anypoint Code Buil
 
 Complete these procedures: 
 
-* Set up your MuleSoft environment. +
+* Set up your MuleSoft environment.
++
 See xref:setup.adoc[] for more information.
-* Implement the Books API GraphQL Schema. +
+* Implement the Books API GraphQL Schema.
++
 See xref:tut-graphql-implement-api.adoc[].
 
 == Run Your Application
@@ -24,7 +26,7 @@ See xref:tut-graphql-implement-api.adoc[].
 To locally deploy your Mule Application, run a debug session in Anypoint Code Builder:
 
 . In Anypoint Code Builder, open the *Books Implementation* project.
-. Select *Run and Debug* in the Activity Bar, then click the *Start Debugging (F5)* icon.
+. Click *Run and Debug* in the Activity Bar, then click the *Start Debugging (F5)* icon.
 //open terminal
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
 . In the IDE's terminal, use the `curl` command, and create a `POST` request to the local address, adding the `/graphql` path: `+http://localhost:8081/graphql+`:
@@ -100,6 +102,6 @@ query bestsellers {
 }
 --
 +
-All these requests return an empty result.
+These requests return an empty result.
 
 . Proceed to xref:tut-graphql-configure-flow-responses.adoc[] to populate each flow with a custom response for each query.
