@@ -27,7 +27,7 @@ image::add-choice-router-slack-escalation-canvas.png[]
 . Type `choice` and select *Choice* under *Flow Control*:
 +
 image::drag-choice-router-slack-integration-canvas.png[]
-. Add both `when` and `otherwise` elements:
+. Add both `<when/>` and `<otherwise/>` elements:
 +
 image::sync-api-choice-when.png[]
 +
@@ -44,7 +44,7 @@ image::sync-api-choice-when.png[]
 </choice>
 --
 +
-For better readability of your Mule flow, update the name of the `choice`, `when`, and `otherwise` elements:
+For better readability of your Mule flow, update the name of the `<choice/>`, `<when/>`, and `<otherwise/>` elements:
 +
 [source,XML]
 --
@@ -73,9 +73,9 @@ For better readability of your Mule flow, update the name of the `choice`, `when
 
 == Add an Email Connector
 
-To configure the `when` element, you must first configure operations from the Anypoint Connector for Email (Email Connector):
+To configure the `<when/>` element, you must first configure operations from the Anypoint Connector for Email (Email Connector):
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</salesforce:sfdc-config>` element.
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `<salesforce:sfdc-config/>` element.
 . Type `smtp` and select *email:smtp-config*.
 //+
 //TODO: cc: screenshot doesn't match actual desktop UI
@@ -110,7 +110,7 @@ image::send-email-slack-integration-canvas.png[]
 </email:body>
 </email:send>
 --
-. To be able to test the application, temporarily add a `logger` element inside your `otherwise` element:
+. To be able to test the application, temporarily add a `<logger/>` element inside your `<otherwise/>` element:
 +
 [source,XML]
 --

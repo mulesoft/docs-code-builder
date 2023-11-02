@@ -73,7 +73,7 @@ image::add-salesforce-query-canvas.png[]
 . Type `query` and select the *query* operation:
 +
 image::add-query-operations-salesforce-canvas.png[]
-. Update your `config-ref` element in `salesforce:query` to point to your existing Salesforce connector configuration: *Salesforce-Config*.
+. Update your `<config-ref/>` element in `salesforce:query` to point to your existing Salesforce connector configuration: *Salesforce-Config*.
 +
 Additionally, update the name of the component to `Query SFDC for Contact`:
 +
@@ -83,7 +83,7 @@ Additionally, update the name of the component to `Query SFDC for Contact`:
     <salesforce:salesforce-query/>
 </salesforce:query>
 --
-. Inside the empty `salesforce:salesforce-query` element, add the query to look for the Salesforce record:
+. Inside the empty `<salesforce:salesforce-query/>` element, add the query to look for the Salesforce record:
 +
 [source,XML]
 --
@@ -126,7 +126,7 @@ image::choice-operation-canvas.png[]
 </choice>
 --
 +
-For better readability of your Mule flow, update the name of the `choice`, `when`, and `otherwise` elements:
+For better readability of your Mule flow, update the name of the `<choice/>`, `<when/>`, and `<otherwise/>` elements:
 +
 [source,XML]
 --
@@ -145,13 +145,13 @@ As a condition for the first branch, check the results of the Salesforce query o
 
 Create an expression that captures this condition:
 
-. On your `<when>` element, add the following expressions:
+. On your `<when/>` element, add the following expressions:
 +
 [source,XML]
 --
 <when expression="#[payload.Phone[0] != null]" doc:name="contact exists">
 --
-. Complete the `otherwise` element with a Logger component and a Set Variable component that returns the failure message:
+. Complete the `<otherwise/>` element with a Logger component and a Set Variable component that returns the failure message:
 +
 [source,XML]
 --
@@ -174,7 +174,7 @@ Create an expression that captures this condition:
 --
 +
 With the condition for whether the contact exists and the error message configured for when it doesn't, you can now add logic to store the existing phone number retrieved from Salesforce.
-. Add a new line after the `<when>` element and add the following components:
+. Add a new line after the `<when/>` element and add the following components:
 +
 [source,XML]
 --
@@ -193,7 +193,7 @@ With the condition for whether the contact exists and the error message configur
 == Test Your API
 
 . Open a REST client.
-. Set up a breakpoint by clicking the red icon for the `<choice>` element:
+. Set up a breakpoint by clicking the red icon for the `<choice/>` element:
 +
 image::add-breakpoint-sync-api.png[]
 . Run the application by pressing F5.

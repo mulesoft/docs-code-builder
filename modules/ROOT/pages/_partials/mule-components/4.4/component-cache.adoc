@@ -84,7 +84,7 @@ Consider a scenario in which two message processors attempt to retrieve a value 
 
 In some scenarios this outcome is valid, but this outcome is an issue if the application requires cache coherence. Synchronizing the caching strategy ensures coherence. A synchronized cache is locked when it undergoes modifications by a message processor. In this scenario, a locked cache forces the second message processor to wait until the first message processor has calculated the value, and then it retrieves the value from the cache.
 
-You can disable cache synchronization by defining the `synchronized` property in the `<ee:object-store-caching-strategy>` element and setting it to `false`.
+You can disable cache synchronization by defining the `synchronized` property in the `<ee:object-store-caching-strategy/>` element and setting it to `false`.
 
 [IMPORTANT]
 Synchronization affects performance, and the impact is most severe in cluster mode.
