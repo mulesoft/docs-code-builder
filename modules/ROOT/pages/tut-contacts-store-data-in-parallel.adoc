@@ -6,15 +6,16 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-Now that you retrieved the contact record from Salesforce, you can add logic to determine if the record needs to be updated. If it does, you must update the stored information with the new values. To do so, you can use the Scatter-Gather processor to execute requests in parallel to both your Salesforce organization and your MySQL database.
+Now that you retrieved the contact record from Salesforce, you can add logic to determine if the record needs to be updated. If it does, you must update the stored information with the new values. To do so, use the Scatter-Gather processor to execute requests in parallel to both your Salesforce organization and your MySQL database.
 
 == Before You Begin
 
 Complete these procedures:
 
-* xref:tut-contacts-create-synchronization-sfdc-api.adoc[]
-* xref:tut-contacts-create-config-files.adoc[]
-* Configure a query to your Salesforce environment. +
+* xref:tut-contacts-create-synchronization-sfdc-api.adoc[].
+* xref:tut-contacts-create-config-files.adoc[].
+* Configure a query to your Salesforce environment.
++
 See xref:tut-contacts-sync-api-configure-queries.adoc[] for more information.
 * Install a REST client like Postman or AdvancedRestClient.
 
@@ -55,7 +56,7 @@ Earlier in this walkthrough, you stored the phone number retrieved from the reco
 To compare the phone number in your POST request, and the number retrieved from Salesforce, add a Choice router with a DataWeave expression to check if the existing and new phone numbers in Salesforce are the same. If they are the same, log a message saying *Phone number in Salesforce already up to date*, and add a Set Variable component to set the value *Phone number in Salesforce already up to date* to variable `ReturnMessageSF`:
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. Add a choice router right after your *SF Update* route:
+. Add a choice router after your *SF Update* route:
 +
 [source,XML]
 --
@@ -102,7 +103,7 @@ To implement the steps to update a record in your target MySQL database if neede
 * Operations required to update the record using the Database connector
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. Add a `db:select` processor under the *DB Update* `route` processor to select all the fields from the *Contacts* table and filter by the contact’s first and last name:
+. Add a `db:select` processor under the *DB Update* `route` processor to select all the fields from the *Contacts* table and filter by the contact's first and last name:
 +
 [source,XML]
 --

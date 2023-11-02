@@ -141,7 +141,7 @@ For better readability of your Mule flow, update the name of the `<choice/>`, `<
 --
 
 
-As a condition for the first branch, check the results of the Salesforce query operation. If there are any results, the `Salesforce:Query` processor returns an array of *Contact* objects. In this case, the flow returns a failure message if the contact doesn’t have a phone number.
+As a condition for the first branch, check the results of the Salesforce query operation. If there are any results, the `Salesforce:Query` processor returns an array of *Contact* objects. In this case, the flow returns a failure message if the contact doesn't have a phone number.
 
 Create an expression that captures this condition:
 
@@ -184,10 +184,10 @@ With the condition for whether the contact exists and the error message configur
 <set-variable variableName="ReturnMessage" value="Contact exists in Salesforce" doc:name="Set Return Message" /> //<4>
 --
 [calloutlist]
-.. A Set Variable component to assign the value of the contact’s phone to a temporary variable named `phonenumberSFVar`.
-.. A second Set Variable component to store the ID to a temporary variable named `IdVar`.
-.. A Logger to print the value of the phone found in the record.
-.. A Set Variable to assign a temporary value to the `ReturnMessage` variable.
+.. A Set Variable component to assign the value of the contact's phone to a temporary variable named `phonenumberSFVar`
+.. A second Set Variable component to store the ID to a temporary variable named `IdVar`
+.. A Logger component to print the value of the phone found in the record
+.. A Set Variable component to assign a temporary value to the `ReturnMessage` variable
 
 
 == Test Your API
@@ -198,7 +198,9 @@ With the condition for whether the contact exists and the error message configur
 image::add-breakpoint-sync-api.png[]
 . Run the application by pressing F5.
 . Open your preferred REST client.
-. Make a `POST` request to `+0.0.0.0:8081/api/updatePhone?phoneNumber=555555&firstName=Anna&lastName=Woods+`.
+. Make a `POST` request to:
++
+`+0.0.0.0:8081/api/updatePhone?phoneNumber=555555&firstName=Anna&lastName=Woods+`
 +
 Note that the application stops before the Choice router component and that the query parameters are converted into variables:
 +

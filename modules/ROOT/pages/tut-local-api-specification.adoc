@@ -63,8 +63,7 @@ This process creates a project that contains your API specification within your 
 . Open your API specification file, `retrieve-users-api.raml`. 
 . To track the progress of internal processing, open the *Output* panel to the *Mule DX Server*.
 +
-To open the panel:
-
+--
 .Show me how
 [%collapsible]
 ====
@@ -73,6 +72,7 @@ To open the panel:
 +
 For more guidance, see xref:configure-default-output-panel.adoc[].
 ====
+--
 . In the editor for your API specification, add this example to `retrieve-users-api.raml`:
 +
 [source,raml,linenums]
@@ -120,11 +120,11 @@ Scaffold your local API specification into a local implementation project. The s
 
 Local projects reside in the Anypoint Code Builder IDE, whether the projects are in your desktop IDE or in the cloud IDE associated with your user account in Anypoint Platform. 
 
-Scaffold your local API specification:
+To scaffold your local API specification:
 
 . With `retrieve-users-api.raml` open in your IDE, prepare to scaffold the specification into a Mule project:
- 
-. Click the image:icon-implement-api.png["",15,15] (*Implement this local API*) icon in the activity bar:
++
+.. Click the image:icon-implement-api.png["",15,15] (*Implement this local API*) icon in the activity bar:
 +
 [[icon-implement-this-api]]
 image::tut-local-spec-implement.png["UI with the X-shaped icon for the command Implement this Local API"]
@@ -146,7 +146,7 @@ IMPORTANT: At the prompt to save a file with the extension `.code-workspace` for
 +
 The UI displays a message: *Implementing local API implementation, please wait.* 
 +
-As you monitor output, wait for the field with placeholder text `_Mule project name_` to appear in the UI. For example:
+As you monitor output, wait for the field with placeholder text `_Mule project name_` to appear in the UI, for example:
 +
 image::tut-api-create-project.png["Provide name of scaffolded implementation project"]
 . Start the scaffolding process by entering a name for your Mule implementation project, such as `retrieve-users-implementation`:
@@ -356,7 +356,7 @@ After implementing your API specification, save the specification to Design Cent
 . In the *Source Control* view, stage your changes by mousing over the *Changes* heading to display the *+* (plus) icon and then clicking the icon:
 +
 image::tut-api-stage-changes.png["Stage API changes"]
-. Type a commit message that summarizes the changes. For example: `Retrieve Users Projects`
+. Type a commit message that summarizes the changes, for example, `Retrieve Users Projects`.
 +
 This step avoids the need to specify a commit message through a separate file that pops up in the IDE.
 . Click *Commit* for the staged changes, and wait for the commit process to complete. 
@@ -404,10 +404,10 @@ Team members in your business group can import your API specification from Excha
 [source,command]
 MuleSoft: Implement an API Specification
 .. In the *Implement an API Specification* tab that opens: 
-
-* Provide a new name for the implementation.
-* Select or create a new project location.
-* Find your API specification on Anypoint Exchange, and click *Add* to insert the API name into the field. 
++
+*** Provide a new name for the implementation.
+*** Select or create a new project location.
+*** Find your API specification on Anypoint Exchange, and click *Add* to insert the API name into the field. 
 .. Click *Create Project* to start scaffolding the specification into a new implementation.  
 . Implement the scaffolded specification in your IDE.
 
@@ -461,6 +461,6 @@ File: Open Workspace from File...
 ----
 . Navigate to and double-click the `.code-workspace` file for projects in the workspace.
 +
-The projects open in the Explorer view, and the heading for the multi-root-workspace appends a *(WORKSPACE)* identifier. For example:
+The projects open in the Explorer view, and the heading for the multi-root-workspace appends a *(WORKSPACE)* identifier, for example:
 +
 image::tut-api-multiroot-workspace.png["A multi-root workspace in the Explorer"]
