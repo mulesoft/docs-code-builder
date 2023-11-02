@@ -1,12 +1,9 @@
-= Create a Reusable Configuration File
+= Connecting to Salesforce and Your Database
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: create-config-files.adoc
 :page-pagination:
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
-
-
-A configuration file is a `.yaml` or `.properties` file that can reference different configurations and specify different values for your connector properties. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
 
 To start configuring your Salesforce and Database connectors in your synchronization API, create a configuration file.
 
@@ -14,7 +11,9 @@ To start configuring your Salesforce and Database connectors in your synchroniza
 
 Complete xref:tut-contacts-create-synchronization-sfdc-api.adoc[].
 
-== Create a Configuration File
+== Create a Configuration Properties File
+
+A configuration properties file is a `.yaml` or `.properties` file that can reference different configurations and specify different values for your connector properties. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
 
 To create a configuration file:
 
@@ -87,7 +86,7 @@ Configure a Database Connector to connect to your database to retrieve and updat
 Because the Database connector can connect to a wide variety of JDBC databases you must include a dependency for the particular driver you need. In this case, use a `MySQL` driver:
 
 . In the Project Explorer, select the `pom.xml` file.
-. Add a new dependency using the code in the following sample:
+. In the `<dependencies/>` element, add a new dependency using the code in the following sample:
 +
 [source,xml,linenums]
 --
@@ -99,7 +98,7 @@ Because the Database connector can connect to a wide variety of JDBC databases y
 --
 +
 image::add-mysql-driver-dependency.png[]
-. Replace the existing element called `<configuration/>` within the `mule-maven-plugin` with the following shared library:
+. Replace the existing `<configuration/>` element within `mule-maven-plugin` with the following shared library:
 +
 [source,xml,linenums]
 --
@@ -108,7 +107,7 @@ image::add-mysql-driver-dependency.png[]
     <artifactId>mule-maven-plugin</artifactId>
     <version>${mule.maven.plugin.version}</version>
     <extensions>true</extensions>
-    <configuration> //<1>
+    <configuration>
      <sharedLibraries>
        <sharedLibrary>
          <groupId>mysql</groupId>
@@ -118,10 +117,6 @@ image::add-mysql-driver-dependency.png[]
     </configuration>
 </plugin>
 --
-[calloutlist]
-.. Add a shared library configuration:
-+
-image::add-shared-library.png[]
 
 === Add a Database Connector
 
