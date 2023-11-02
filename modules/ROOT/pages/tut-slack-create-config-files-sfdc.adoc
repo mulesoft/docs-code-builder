@@ -6,7 +6,7 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-A configuration file is a `.yaml` file that can reference different configurations and specify different values for your connector properties. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
+A configuration file is a YAML file that can reference different configurations and specify different values for your connector properties. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
 
 To start configuring your Slack and Salesforce connectors in your escalation API, create a configuration file.
 
@@ -16,7 +16,7 @@ Complete xref:tut-slack-create-escalation-api.adoc[].
 
 == Create a Configuration File
 
-. In your Explorer view, right-click under *src* > *main* > *mule* > *Resources* and select *New File*:
+. In your Explorer view, right-click *src* > *main* > *mule* > *resources* and select *New File*:
 +
 image::contact-sync-integration-new-file.png[]
 . Name the file `config.yaml`.
@@ -69,7 +69,7 @@ image::basic-auth-sfdc-connector.png[]
 --
 When you move your cursor over the `${salesforce.username}` and `${salesforce.password}` elements, Anypoint Code Builder shows the values from the configuration file.
 --
-. Verify your connection to Salesforce by clicking *Test Connection* for the `<salesforce:sfdc-config>` item:
+. Verify your connection to Salesforce by clicking *Test Connection* for the `<salesforce:sfdc-config/>` element:
 +
 image::sync-api-sfdc-test-connection.png[]
 +
@@ -103,9 +103,9 @@ If you get an error, verify the error message to troubleshoot further.
 //image::salesforce-on-new-object-canvas.png[]
 . In the code editor, set the following values of the `<salesforce:new-object-listener/>` element:
 // TODO: can we make this what they actually type?
-objectType:: *Case*
-config-ref:: *Salesforce-Config*
-name:: *On New Case*
+* `objectType`: *Case*
+* `config-ref`: *Salesforce-Config*
+* `name`: *On New Case*
 . In the `<salesforce:new-object-listener/>` element, replace `<scheduling-strategy/>` with the following snippet:
 +
 [source,XML]
@@ -135,7 +135,7 @@ A `logger` component is added to the `flow` snippet in the code editor.
 . Add a breakpoint to this line by clicking the red dot at the line number:
 +
 image::logger-breakpoint-sfdc.png[]
-. Navigate to *Run* > *Start Debugging (F5)*.
+. Select *Run* > *Start Debugging (F5)*.
 . After your application deploys successfully, log in to your Salesforce account.
 . From *App Launcher*, select *Service*:
 +
@@ -146,6 +146,7 @@ image::salesfroce-create-new-case.png[]
 . Ensure that the *Status* of the new case is *New*.
 . Create a new case and save it.
 . In Anypoint Code Builder, your application stops at the logger. Inspect the payload in *Variables*:
+// the screenshot isn't pointing to Variables.
 +
 image::slack-app-debugger-logger-breakpoint.png[]
 +

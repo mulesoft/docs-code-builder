@@ -51,7 +51,7 @@ You can start by implementing the steps to update a record in Salesforce if it i
 * Logic to decide if the update is needed
 * Operations required to update the record using the Salesforce connector
 
-Earlier in this walkthrough, you stored the phone number retrieved from the record in a variable named `phonenumberSFVar`. You can now compare that variable to the value received in your POST request query parameter, stored in another variable named `phonenumberVar`.
+Earlier in this tutorial, you stored the phone number retrieved from the record in a variable named `phonenumberSFVar`. You can now compare that variable to the value received in your POST request query parameter, stored in another variable named `phonenumberVar`.
 
 To compare the phone number in your POST request, and the number retrieved from Salesforce, add a Choice router with a DataWeave expression to check if the existing and new phone numbers in Salesforce are the same. If they are the same, log a message saying *Phone number in Salesforce already up to date*, and add a Set Variable component to set the value *Phone number in Salesforce already up to date* to variable `ReturnMessageSF`:
 
