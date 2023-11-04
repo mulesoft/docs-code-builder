@@ -12,14 +12,14 @@ With your email and Salesforce integration complete, you can now configure your 
 
 Complete these procedures:
 
-. xref:tut-slack-create-escalation-api.adoc[]
-. xref:tut-slack-create-config-files-sfdc.adoc[] and configure your Salesforce integration
-. xref:tut-slack-extract-payload-information.adoc[]
-. xref:tut-slack-add-condition-to-your-flow.adoc[]
+. xref:tut-slack-create-escalation-api.adoc[].
+. xref:tut-slack-create-config-files-sfdc.adoc[] and configure your Salesforce integration.
+. xref:tut-slack-extract-payload-information.adoc[].
+. xref:tut-slack-add-condition-to-your-flow.adoc[].
 
 == Add a Slack Action
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file and delete the *Temporary Logger* component in the *Not Escalated* route of the Choice router:
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file and delete  *Temporary Logger* from the *Not Escalated* route of the Choice router:
 +
 image::delete-temporary-logger-slack.png[]
 +
@@ -34,6 +34,7 @@ image::add-slack-action-example-canvas.png[]
 +
 image::add-slack-connector-canvas-exchange.png[]
 . Select the *Chat: Post Message* operation from the Slack section:
+// TO DO: create a better version of this!
 +
 image::select-post-message-operation.png[]
 . Configure the Slack operation using the following code sample:
@@ -45,18 +46,18 @@ image::select-post-message-operation.png[]
 </slack:post-message>
 --
 [calloutlist]
-.. Set the `channel` field to the channel name that you set earlier in the walkthrough.
+.. Set the `channel` field to the channel name that you set earlier in the tutorial.
 
 
 
 == Configure the Slack Connection
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</email:smtp-config>` element.
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `<email:smtp-config/>` element.
 . Type `slack:` and select *slack:config*.
 //+
 //TODO: cc: the connector name in the following screenshot does not match the desktop experience
 //image::add-slack-config.png[]
-. Add the following configuration to your `<slack:config>` element:
+. Add the following configuration to your `<slack:config/>` element:
 +
 [source,XML]
 --
@@ -70,12 +71,12 @@ image::select-post-message-operation.png[]
 == Test Your Mule Application
 
 . To expedite the test, remove the breakpoint next to your Logger component.
-. Navigate to *Run* > *Start Debugging (F5)*.
+. Select *Run* > *Start Debugging (F5)*.
 . After your application deploys successfully, log in to your Salesforce account.
 . From *App Launcher*, select *Service*:
 +
 image::salesforce-select-service.png[]
-. Select *Cases* > *New Case*.
+. Select *Cases* > *New Case*:
 +
 image::salesfroce-create-new-case.png[]
 . Ensure that the *Status* of the new case is *New*.

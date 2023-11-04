@@ -1,12 +1,9 @@
-= Create a Reusable Configuration File
+= Connecting to Salesforce and Your Database
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: create-config-files.adoc
 :page-pagination:
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
-
-
-A configuration file is a `.yaml` or `.properties` file that can reference different configurations and specify different values for your connector properties. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
 
 To start configuring your Salesforce and Database connectors in your synchronization API, create a configuration file.
 
@@ -14,16 +11,16 @@ To start configuring your Salesforce and Database connectors in your synchroniza
 
 Complete xref:tut-contacts-create-synchronization-sfdc-api.adoc[].
 
-== Create a Configuration File
+== Create a Configuration Properties File
+
+A configuration properties file is a `.yaml` or `.properties` file that can reference different configurations and specify different values for your connector properties. Configuration files enable you to define specific properties depending on the environment to which you are deploying your application.
 
 To create a configuration file:
 
-. In your Explorer view, right-click under *src* > *main* > *mule* > *Resources* and select *New File*:
+. In your Explorer view, right-click the *resources* folder (`src/main/resources`) select *New File*:
 +
 image::contact-sync-integration-new-file.png[]
-. Name the file `config.yaml`:
-+
-image::create-config-yaml-file.png[]
+. Name the file `config.yaml`.
 . Populate the file with your Salesforce and MySQL database configurations:
 +
 [source,YAML]
@@ -40,7 +37,7 @@ mysql:
     password: ""
 --
 . Navigate to your `contact-sync.xml` file and open it for editing.
-. Add a new line before the `<http:listener-config>` element, type `configuration`, and select `mule:configurationProperties`:
+. Add a new line before the `<http:listener-config/>` element, type `configuration`, and select `mule:configurationProperties`:
 +
 image::select-mule-config-properties-contacts-sync.png[]
 . Scroll through the attributes and set the value of `file` to `config.yaml`:
@@ -54,14 +51,14 @@ image::select-mule-config-properties-contacts-sync.png[]
 
 Use your configuration file to add the necessary fields for the Salesforce Connector to connect to your Salesforce environment:
 
-. Create a new line after the `<configuration-properties>` element, type `salesforce`, and select *Salesforce:sfdc-config*:
+. Create a new line after the `<configuration-properties/>` element, type `salesforce`, and select *Salesforce:sfdc-config*:
 +
 image::sync-api-select-sfdc-config.png[]
 . Set the *name* field to `Salesforce-Config`.
 . Create a new line, type `basic`, and select *Salesforce:Basic*:
 +
 image::basic-auth-sfdc-connector.png[]
-. Configure the `username` and `password` elements to use the values on your configuration file:
+. Configure the `username` and `password` properties to use the values in your configuration file:
 +
 [source,XML]
 --
@@ -70,7 +67,7 @@ image::basic-auth-sfdc-connector.png[]
 +
 [NOTE]
 --
-When you move your cursor over the `${salesforce.username}` and `${salesforce.password}` elements, Anypoint Code Builder shows the values from the configuration file.
+When you move your cursor over the `${salesforce.username}` and `${salesforce.password}` variables, Anypoint Code Builder shows the values from the configuration file.
 --
 . Verify your connection to Salesforce by clicking *Test Connection* before the `<salesforce:sfdc-config>` item:
 +
@@ -89,7 +86,7 @@ Configure a Database Connector to connect to your database to retrieve and updat
 Because the Database connector can connect to a wide variety of JDBC databases you must include a dependency for the particular driver you need. In this case, use a `MySQL` driver:
 
 . In the Project Explorer, select the `pom.xml` file.
-. Add a new dependency using the code in the following sample:
+. In the `<dependencies/>` element, add a new dependency using the code in the following sample:
 +
 [source,xml,linenums]
 --
@@ -101,7 +98,7 @@ Because the Database connector can connect to a wide variety of JDBC databases y
 --
 +
 image::add-mysql-driver-dependency.png[]
-. Replace the existing element called `<configuration/>` within the `mule-maven-plugin` with the following shared library:
+. Replace the existing `<configuration/>` element within `mule-maven-plugin` with the following shared library:
 +
 [source,xml,linenums]
 --
@@ -110,7 +107,7 @@ image::add-mysql-driver-dependency.png[]
     <artifactId>mule-maven-plugin</artifactId>
     <version>${mule.maven.plugin.version}</version>
     <extensions>true</extensions>
-    <configuration> //<1>
+    <configuration>
      <sharedLibraries>
        <sharedLibrary>
          <groupId>mysql</groupId>
@@ -120,10 +117,6 @@ image::add-mysql-driver-dependency.png[]
     </configuration>
 </plugin>
 --
-[calloutlist]
-.. Add a shared library configuration:
-+
-image::add-shared-library.png[]
 
 === Add a Database Connector
 
@@ -133,14 +126,8 @@ image::add-shared-library.png[]
 ----
 MuleSoft: Import Asset from Exchange
 ----
-+
-image::import-asset-exchange-implementation.png[]
 . Type the type of asset you want to import: `Connector`
-+
-image::import-from-exchange-connector-type.png[]
 . Type the connector you want to import: `Database`
-+
-image::choose-asset-name.png[]
 . Select *Database Connector - Mule 4*:
 +
 image::select-database-connector.png[]

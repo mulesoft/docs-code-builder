@@ -6,28 +6,28 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-In this section of the walkthrough you learn how to add a condition to your flow to send an email to the regional leader if the Salesforce case is escalated, otherwise your Mule application sends a message to Slack.
+In this section of the tutorial, you learn how to add a condition to your flow to send an email to the regional leader if the Salesforce case is escalated, otherwise your Mule application sends a message to Slack.
 
 == Before You Begin
 
 Complete these procedures:
 
-. xref:tut-slack-create-escalation-api.adoc[]
-. xref:tut-slack-create-config-files-sfdc.adoc[] and configure your Salesforce integration
-. xref:tut-slack-extract-payload-information.adoc[]
+. xref:tut-slack-create-escalation-api.adoc[].
+. xref:tut-slack-create-config-files-sfdc.adoc[] and configure your Salesforce integration.
+. xref:tut-slack-extract-payload-information.adoc[].
 
 == Define the Behavior for When the Case Is Escalated
 
 Use a Choice router to define behaviors based on specific conditions. In this case, choose to send an email if the case is escalated.
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file.
-. Click the image:icon-plus.png["",15,15] (*Add component*) icon after the Logger component:
+. Click the image:icon-plus.png["",15,15] (*Add component*) icon for the Logger component:
 +
 image::add-choice-router-slack-escalation-canvas.png[]
 . Type `choice` and select *Choice* under *Flow Control*:
 +
 image::drag-choice-router-slack-integration-canvas.png[]
-. Add both `when` and `otherwise` elements:
+. Add the `<when/>` and `<otherwise/>` elements:
 +
 image::sync-api-choice-when.png[]
 +
@@ -44,7 +44,7 @@ image::sync-api-choice-when.png[]
 </choice>
 --
 +
-For better readability of your Mule flow, update the name of the `choice`, `when`, and `otherwise` elements:
+For better readability of your Mule flow, update the name of the `<choice/>`, `<when/>`, and `<otherwise/>` elements:
 +
 [source,XML]
 --
@@ -57,7 +57,7 @@ For better readability of your Mule flow, update the name of the `choice`, `when
   </otherwise>
 </choice>
 --
-. Define the `when`` branch to execute if the variable `casestatus` equals `Escalated`:
+. Define the `when` branch to execute if the variable `casestatus` equals `Escalated`:
 +
 [source,XML]
 --
@@ -73,10 +73,10 @@ For better readability of your Mule flow, update the name of the `choice`, `when
 
 == Add an Email Connector
 
-To configure the `when` element, you must first configure operations from the Anypoint Connector for Email (Email Connector):
+To configure the `<when/>` element, you must first configure operations from the Anypoint Connector for Email (Email Connector):
 
-. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `</salesforce:sfdc-config>` element.
-. Type `smtp` and select *email:smtp-config*.
+. In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `<salesforce:sfdc-config/>` element.
+. Type `smtp` and select *email:smtp-config*:
 //+
 //TODO: cc: screenshot doesn't match actual desktop UI
 //image::add-smtp-config.png[]
@@ -110,7 +110,7 @@ image::send-email-slack-integration-canvas.png[]
 </email:body>
 </email:send>
 --
-. To be able to test the application, temporarily add a `logger` element inside your `otherwise` element:
+. To be able to test the application, temporarily add a `<logger/>` element inside your `<otherwise/>` element:
 +
 [source,XML]
 --
@@ -140,7 +140,7 @@ image::send-email-slack-integration-canvas.png[]
 == Test Your Mule Application
 
 . To expedite the test, remove the breakpoint for your Logger component.
-. Navigate to *Run* > *Start Debugging (F5)*.
+. Select *Run* > *Start Debugging (F5)*.
 . After your application deploys successfully, log in to your Salesforce account.
 . From *App Launcher*, select *Service*:
 +

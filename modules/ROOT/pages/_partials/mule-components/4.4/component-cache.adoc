@@ -45,7 +45,7 @@ In general, the caching process follows this sequence:
 
 . A message enters the Cache scope.
 . The Cache scope determines whether the message payload is nonrepeatable.
-. The Cache scope generates a key to identify the message’s payload.
+. The Cache scope generates a key to identify the message's payload.
 +
 By default, Mule uses an SHA256KeyGenerator and a SHA256 digest to generate a unique key for the message payload. However, you can set up your own key through a custom caching strategy.
 +
@@ -84,7 +84,7 @@ Consider a scenario in which two message processors attempt to retrieve a value 
 
 In some scenarios this outcome is valid, but this outcome is an issue if the application requires cache coherence. Synchronizing the caching strategy ensures coherence. A synchronized cache is locked when it undergoes modifications by a message processor. In this scenario, a locked cache forces the second message processor to wait until the first message processor has calculated the value, and then it retrieves the value from the cache.
 
-You can disable cache synchronization by defining the `synchronized` property in the `<ee:object-store-caching-strategy>` element and setting it to `false`.
+You can disable cache synchronization by defining the `synchronized` property in the `<ee:object-store-caching-strategy/>` element and setting it to `false`.
 
 [IMPORTANT]
 Synchronization affects performance, and the impact is most severe in cluster mode.
@@ -174,7 +174,7 @@ SNIPPET_XML_HERE
 | Automatically generated identifier for the component.
 
 | `keyGenerationExpression`
-| Optional. A DataWeave expression to generate the key. For example, `keyGenerationExpression="#[vars.requestId]"`.
+| Optional. A DataWeave expression to generate the key, for example, `keyGenerationExpression="#[vars.requestId]"`.
 
 | `synchronized`
 | Indicates whether Mule syncs access to a cache. Accepted values are `true` or `false`. Defaults to `true`.
