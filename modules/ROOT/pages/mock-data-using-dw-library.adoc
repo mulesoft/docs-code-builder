@@ -7,7 +7,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-The following walkthrough shows you how to develop an integration, import the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^] from Exchange, and use  the custom library to return a random value from the library.
+The following tutorial shows you how to develop an integration, import the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/data-weave-mock-data-generators-library/minor/1.0/[Mock Data Generators Library^] from Exchange, and use  the custom library to return a random value from the library.
 
 == Before You Begin
 
@@ -18,7 +18,7 @@ See xref:setup.adoc[Setup] for more information.
 
 == Create a Mule Application
 
-. In Anypoint Code Builder, open the Command Palette by pressing Ctrl+shift+p (Mac) or Cmd+shift+p (Windows), and type _MuleSoft: Develop an Integration_.
+. In Anypoint Code Builder, open the Command Palette by pressing Ctrl+shift+p (Mac) or Cmd+shift+p (Windows), and type `MuleSoft: Develop an Integration`.
 +
 . Select the command.
 +
@@ -29,9 +29,9 @@ See xref:setup.adoc[Setup] for more information.
 image::integration-create-ui.png[]
 +
 [calloutlist]
-.. For *Project Name*, type `_mock-dw-library_`.
-.. For *Project Location*, select *Browse*, and then select your home directory.
-. Select *Create Project*.
+.. For *Project Name*, type `mock-dw-library`.
+.. For *Project Location*, click *Browse*, and then select your home directory.
+. Click *Create Project*.
 
 == Create a Flow
 
@@ -155,5 +155,5 @@ Anypoint Code Builder packages the application and deploys it to CloudHub.
 . After deployment completes, select *Open in Runtime Manager*.
 . Select your application from the application list. +
 The domain name of the application varies, but it follows a similar structure such as: `+mock-dw-library.eu-s1.cloudhub.io+`.
-. Open your preferred REST client and make a `GET` request to the domain name as displayed in *Runtime Manager*.
+. Open your preferred REST client and make a GET request to the domain name as displayed in *Runtime Manager*.
 . Your application now returns a random city every time you reach the endpoint.

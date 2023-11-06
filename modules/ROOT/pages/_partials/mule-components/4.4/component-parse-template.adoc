@@ -1,0 +1,416 @@
+//
+//tag::component-title[]
+
+= Parse Template (<parse-template/>)
+
+//end::component-title[]
+//
+
+//
+//tag::component-short-description[]
+//     Short description of the form "Do something..." 
+//     Example: "Configure log messages anywhere in a flow."
+
+Process a template and obtain a result.
+
+//end::component-short-description[]
+//
+
+//
+//tag::component-long-description[]
+
+A template includes text with embedded DataWeave expressions that Mule evaluates and replaces with their result.
+
+Configure a template through an external file reference, or embed the template in the component configuration.
+
+//end::component-long-description[]
+//
+
+
+//SECTION: COMPONENT XML
+//
+//tag::component-xml-title[]
+
+[[component-xml]]
+== Component XML
+
+This component supports the following XML structure:
+
+//end::component-xml-title[]
+//
+//
+//tag::component-xml[]
+
+[source,xml]
+----
+<parse-template 
+  doc:name="Parse template" 
+  doc:id="fppwuw" 
+  location="template.html" />
+----
+
+//end::component-xml[]
+//
+//tag::component-snippet-xml[]
+
+[[snippet]]
+
+=== Snippet XML
+
+Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+
+[source,xml]
+----
+SNIPPET_XML_HERE
+----
+
+//end::component-snippet-xml[]
+//
+//
+//
+//
+//TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
+//tag::component-xml-attributes-root[]
+
+[%header,cols="1,3a"]
+|===
+| `<parse-template/>` Attributes 
+| Description
+
+| `doc:name` 
+| Editable name for the component.
+
+| `doc:id` 
+| Automatically generated identifier for the component.
+
+| `location` 
+| Location of the template file. Mule inserts values extracted from the message properties or variables into this file.
+
+| `content`
+| String representing the template where embedded expressions are evaluated and replaced by their results.
+
+| `target`
+| Name of the variable where the result of the expression defined in `targetValue` is stored after Parse Template executes. For more information, see xref:mule-runtime::target-variables.adoc[].
+
+| `targetValue`
+| Value of the data to store in the target variable. The field accepts any value that a variable accepts: any supported data type, DataWeave expressions, the keywords `payload`, `attributes`, and `message`, but not the keyword `vars`. Defaults to the message payload (`payload`).
+
+|===
+//end::component-xml-attributes-root[]
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//tag::component-xml-child1[]
+
+[%header, cols="1,3"]
+|===
+| <CHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-child1[]
+//
+//
+//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
+//  Repeat as needed, adding the next number to the tag value. 
+//  Provide intro text, as needed.
+//TAG
+//tag::component-xml-descendant1[]
+[%header, cols="1,3"]
+|===
+| <GRANDCHILD_ELEMENT/> Attributes | Description
+
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+|===
+//end::component-xml-descendant1[]
+//
+
+
+//SECTION: EXAMPLES
+//
+//tag::component-examples-title[]
+
+== Examples
+
+The following examples use Parse Template to load data dynamically into HTML.
+
+//end::component-examples-title[]
+//
+//
+//tag::component-xml-ex1[]
+[[example1]]
+
+=== Example: Processing Results of a Database Query Dynamically 
+
+The following example uses Parse Template in a Mule application that loads employee data from a database into an HTML template. The flow returns the template-built output to the caller.
+
+[source,xml]
+----
+include::mule-runtime::example$parse-template-reference.xml[]
+----
+
+[[template]]
+==== Template Content
+
+The template selects fields containing name, department, job title, start date, and employee type values from the input payload.
+
+[source,html,linenums]
+----
+include::mule-runtime::example$responseHtml.template[]
+----
+
+==== Input to Parse Template
+
+Assume that you start the flow with a URI that contains a query parameter that identifies the ID of an employee, such as `+http://localhost:8081/getEmployee?id=1234+`, and that the Select operation returns the following input to Parse Template:
+
+[source,html,linenums]
+----
+{
+  "first_name": "Melba",
+  "last_name": "Roy Mouton",
+  "department": "Computers",
+  "job_title": "Assistant Chief of Research Programs",
+  "start_date": "01/01/2021",
+  "employee_type": "mathematician"
+}
+----
+
+==== Output of the Template
+
+The <<template, example>> returns template-built output. The output is HTML with the selected employee data.
+
+[source,xml,linenums]
+----
+<html>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Department</th>
+          <th>Job Title</th>
+          <th>Start Date</th>
+          <th>Employee Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"Melba"</td>
+          <td>"Roy Mouton"</td>
+          <td>"Computers"</td>
+          <td>"Assistant Chief of Research Programs"</td>
+          <td>"01/01/2021"</td>
+          <td>"mathematician"</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex1[]
+//
+//
+//tag::component-xml-ex2[]
+[[example2]]
+
+=== Dynamically Generating Data in HTML Rows
+
+The following example uses Parse Template on employee records that are represented as an array of objects.
+
+[source,xml]
+----
+include::mule-runtime::example$parse-template-reference2.xml[]
+----
+
+[[template2]]
+==== Template Content
+
+The following template uses a DataWeave script to iterate over the input array and construct an HTML row for each object in the array:
+
+[source,html,linenums]
+----
+include::mule-runtime::example$responseHtmlMap.template[]
+----
+
+==== Input to Parse Template
+
+Assume that Parse Template component receives the following payload from Set Payload:
+
+[source,html,linenums]
+----
+{
+	Employee: [
+
+			{
+				"first_name" : "Melba",
+				"last_name" : "Roy Mouton",
+				"department" : "Computers",
+				"job_title" : "Assistant Chief of Research Programs",
+				"start_date" : "01/01/2021",
+				"employee_type" : "mathematician"
+
+			},
+			{
+				"first_name" : "Annie",
+				"last_name" : "Easley",
+				"department" : "Software Development",
+				"job_title" : "Technical Lead",
+				"start_date" : "06/02/2020",
+				"employee_type" : "Rocket Scientist"
+
+			}
+
+	]
+}
+----
+
+==== Output of the Template
+
+The <<template2, example>> returns template-built output. The output is HTML with the dynamically produced rows and data from the objects in the array.
+
+[source,xml,linenums]
+----
+<html>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Department</th>
+          <th>Job Title</th>
+          <th>Start Date</th>
+          <th>Employee Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span>Melba</span></td>
+          <td><span>Roy Mouton</span></td>
+          <td><span>Computers</span></td>
+          <td><span>Assistant Chief of Research Programs</span></td>
+          <td><span>01/01/2021</span></td>
+          <td><span>mathematician</span></td>
+        </tr>
+        <tr>
+          <td><span>Annie</span></td>
+          <td><span>Easley</span></td>
+          <td><span>Software Development</span></td>
+          <td><span>Technical Lead</span></td>
+          <td><span>06/02/2020</span></td>
+          <td><span>Rocket Scientist</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+----
+
+//OPTIONAL: SHOW OUTPUT IF HELPFUL
+//The example produces the following output: 
+
+//OUTPUT_HERE 
+
+//end::component-xml-ex2[]
+//
+
+
+//SECTION: ERROR HANDLING if needed
+//
+//tag::component-error-handling[]
+
+[[error-handling]]
+== Error Handling
+
+ERROR_HANDLING_DETAILS_HERE
+
+//end::component-error-handling[]
+//
+
+// tag::special-characters[]
+== Special Characters
+
+Parse Template supports the use of expressions within a template and the use of literals within these expressions. The template recognizes certain special characters, such as the sequence `\#[` and quotations marks. You can escape such characters to treat them as regular characters.
+
+* `#[an-expression]`:
++
+Within a template, use the characters `+#[]+` to designate an expression. For example, a template can contain expressions within HTML elements, such as `<td>#[upper("mulesoft")]</td>`, which resolves to `<td>MULESOFT</td>`. Empty expressions (`+#[]+`) return an error, but empty strings, such as `+#['']+` or `+#[""]+` are valid expressions.
+
+* Sub-expressions:
++
+To resolve a sub-expression that is surrounded by quotation marks, surround the sub-expression with another `+#[]+`. For example, the four elements in the template snippet below contain the same sub-expression (`upper("world")`), either inside or outside of quotation marks. The first two return the same results. The last two do not process `upper("world")` because the sub-expression is inside the quotation marks but not surrounded by another `+#[]+`.
++
+.Parse Template Snippet:
+[source,XML,linenums]
+----
+<td>#['hello #[upper("world")]']</td>
+<td>#['hello ' ++ upper("world")]</td>
+<td>#['hello upper("world")']</td>
+<td>#['hello ++ upper("world")']</td>
+----
++
+.Output Values:
+[source,XML,linenums]
+----
+<td>hello WORLD</td>
+<td>hello WORLD</td>
+<td>hello upper("world")</td>
+<td>hello ++ upper("world")</td>
+----
+
+* Escape character (`\`):
++
+Parse Template uses the character sequence `+#[+` to identify where an expression begins. To avoid this behavior and treat that sequence as literal characters, escape it with `\`, for example, `<td>\#[</td>` returns `<td>#[</td>`.
++
+In addition, expressions can contain strings with special characters that you want to treat as regular characters. To escape any special characters within a string that is embedded inside an expression, append `\` to the character. Examples of special characters include the sequence `\#[`, quotations marks (`'` or `"`), apostrophes (`'`), and `$`. It is not necessary to escape `\#` or `[` unless they are adjacent to one another in the string, with the `\#` preceding the `[`.
++
+.Parse Template Snippet:
+[source,XML,linenums]
+----
+<td>\#[</td>
+<td>#['abcd\#[-1234' ++ now() as String ++ '.log']</td>
+<td>'abc'def'</td>
+<td>#['abc\'def']</td>
+<td>"xyz"xyz"</td>
+<td>#["xyz\"xyz"]</td>
+<td>#["abc\$DEF\#ghi\[JKL]"]</td>
+----
++
+.Output Values:
+[source,XML,linenums]
+----
+<td>#[</td>
+<td>abcd#[-12342020-07-06T17:20:10.683-07:00.log</td>
+<td>'abc'def'</td>
+<td>abc'def</td>
+<td>"xyz"xyz"</td>
+<td>xyz"xyz</td>
+<td>abc$DEF#ghi[JKL]</td>
+----
++
+For more information, see xref:dataweave::dataweave-language-introduction.adoc#escape-special-characters[Escape Special Characters].
+// end::special-characters[]
+
+//SECTION: SEE ALSO
+//
+//tag::see-also[]
+
+[[see-also]]
+== See Also
+
+//* xref:variable-transformer-reference.adoc[Set Variable Transformer]
+
+//end::see-also[]

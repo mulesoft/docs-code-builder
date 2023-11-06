@@ -1,11 +1,10 @@
 = Adding Examples to the API Spec
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: add-request-response-details.adoc
+:page-pagination:
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Add API fragments from Exchange for a data type and examples to the American Flights API specification. Then create your own examples for the specification, and add a custom message for a response. 
 
@@ -39,7 +38,7 @@ Training: American Flight Data Type
 . Select the asset from the *Assets From Exchange* menu.
 . Select the latest version of the asset, such as *v1.0.1*.
 +
-The IDE adds the fragment as a dependency. When the process is complete, check for the `AmericanFlightDataType.raml` asset *Project Dependencies* area of the Explorer. For example: 
+The IDE adds the fragment as a dependency. When the process is complete, check for the `AmericanFlightDataType.raml` asset *Project Dependencies* area of the Explorer, for example: 
 +
 image:tut-design-frag-in-proj-dependencies.png["Fragments from Exchange in Project Dependencies"]
 +
@@ -107,13 +106,13 @@ types: //<1>
 [calloutlist]
 .. Uses `!include` to add the `AmericanFlight` object from `AmericanFlightDataType.raml` as a data type
 +
-Note that you can use built-in functionality to insert the `!include` directive and file path from the specification file. For example:
+Note that you can use built-in functionality to insert the `!include` directive and file path from the specification file, for example:
 +
 [loweralpha]
-... After typing `AmericanFlight:&nbsp;`(with a space at the end), click Ctrl+Spacebar, start typing `!include`, and select `!include` from the drop-down menu in the RAML file. For example:
+... After typing `AmericanFlight:&nbsp;` (with a space at the end), click Ctrl+Spacebar, start typing `!include`, and select `!include` from the drop-down menu in the RAML file, for example:
 +
 image::tut-api-include-directive.png["Include directive in RAML drop-down menu"]
-... Follow the same process to add the example, selecting `exchange_modules` directory and progressing step-by-step to `AmericanFlightsDataType.raml`. For example:
+... Follow the same process to add the example, selecting `exchange_modules` directory and progressing step-by-step to `AmericanFlightsDataType.raml`, for example:
 +
 image::tut-api-include-path.png["Included path in RAML drop-down menu"]
 .. Sets the format of the body of the response to JSON (`application/json`) and configures the type of the response as an array of `AmericanFlight` objects (`AmericanFlight[]`)
@@ -194,7 +193,7 @@ types:
 [[post-example]]
 == Configure an Example for the Post Method
 
-Define an example for the `post` request.
+Define an example for the `post` request:
 
 . Specify that a request to the `/flights:post` method requires an object of the `AmericanFlight` type:
 +

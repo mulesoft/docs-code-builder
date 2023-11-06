@@ -1,18 +1,17 @@
 = Configure Queries to Your Services
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: sync-api-configure-queries.adoc
+:page-pagination:
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 == Before You Begin
 
 Complete these procedures:
 
-* xref:tut-contacts-create-synchronization-sfdc-api.adoc[]
-* xref:tut-contacts-create-config-files.adoc[]
+* xref:tut-contacts-create-synchronization-sfdc-api.adoc[].
+* xref:tut-contacts-create-config-files.adoc[].
 * Install a REST client like Postman or AdvancedRestClient.
 
 == Configure Logic to Find a Salesforce Record
@@ -26,10 +25,10 @@ To retrieve the information from Salesforce, use the following query:
 SELECT phone, ID from Contact WHERE FirstName=':firstname' AND LastName=':lastname'
 --
 
-The previous query uses two query parameters: `firstname` and `lastname`. To assign values to each parameter you must create two variables: `firstnameVar` and `lastnameVar`:
+The previous query uses two query parameters: `firstname` and `lastname`. To assign values to each parameter you must create two variables, `firstnameVar` and `lastnameVar`:
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. Use the *Flow List* element to navigate to the `post:\updatePhone:contact-sync-config` flow.
+. Use the *Flow List* element to navigate to the `post:\updatePhone:contact-sync-config` flow:
 +
 image::sync-api-outline-select-flow.png[]
 . Remove the existing Transform Message component:
@@ -38,7 +37,7 @@ image::sync-api-remove-transform-message.png[]
 . Replace it with a Transform Message component using the *transform with output JSON* option:
 +
 image::sync-api-transform-output-json.png[]
-. Replace it with the following code sample:
+. Replace the Transform Message component with the following code sample:
 +
 [source,XML]
 --
@@ -57,26 +56,26 @@ image::sync-api-transform-output-json.png[]
 </ee:transform>
 --
 +
-This Transform Message processor enables you to perform several DataWeave mappings in parallel. You need 3 mappings for this transformation:
+This Transform Message processor enables you to perform several DataWeave mappings in parallel. You need three mappings for this transformation:
 +
-* The first name of the incoming payload, mapped to the `firstnameVar` variable.
-* The last name of the incoming payload, mapped to the `lastnameVar` variable.
-* The phone number of the incoming payload, mapped to the `phonenumberVar` variable.
+* First name of the incoming payload, mapped to the `firstnameVar` variable
+* Last name of the incoming payload, mapped to the `lastnameVar` variable
+* Phone number of the incoming payload, mapped to the `phonenumberVar` variable
 
 == Send a Query to Salesforce
 
 Use the Salesforce Connector to retrieve the record from Salesforce, if the record exists.
 
 . In Anypoint Code Builder, open the `contact-sync.xml` file.
-. Select the `plus` icon after the Transform Message component:
+. Click the image:icon-plus.png["",15,15] (*Add component*) icon after the Transform Message component:
 +
 image::add-salesforce-query-canvas.png[]
-. Type `_query_` and select the *query* operation:
+. Type `query` and select the *query* operation:
 +
 image::add-query-operations-salesforce-canvas.png[]
-. Update your `salesforce:query` *config-ref* element to point to your existing Salesforce connector configuration: *Salesforce-Config*.
+. Configure your `config-ref` attribute in `<salesforce:query/>` to point to your existing Salesforce connector configuration, named `Salesforce-Config`.
 +
-Additionally, update the name of the component to _Query SFDC for Contact_:
+Additionally, update the name of the component to `Query SFDC for Contact`:
 +
 [source,XML]
 --
@@ -84,7 +83,7 @@ Additionally, update the name of the component to _Query SFDC for Contact_:
     <salesforce:salesforce-query/>
 </salesforce:query>
 --
-. Inside the empty `salesforce:salesforce-query` element, add the query to look for the Salesforce record:
+. Inside the empty `<salesforce:salesforce-query/>` element, add the query to look for the Salesforce record:
 +
 [source,XML]
 --
@@ -107,10 +106,10 @@ Additionally, update the name of the component to _Query SFDC for Contact_:
 
 Use a Choice Router to define behaviors based on specific conditions. In this case, you can use the Choice router to define behaviors based on whether the record has a phone number in your Salesforce environment. If it does, then to the application's logic, the contact exists.
 
-. Select the `plus` icon after the *Query* operation:
+. Click the image:icon-plus.png["",15,15] (*Add component*) icon after the *Query* operation:
 +
 image::add-choice-component-canvas.png[]
-. Type _choice_ and select *mule:choice*:
+. Type `choice` and select *mule:choice*:
 +
 image::choice-operation-canvas.png[]
 +
@@ -127,7 +126,7 @@ image::choice-operation-canvas.png[]
 </choice>
 --
 +
-For better readability of your Mule flow, update the name of the `choice`, `when`, and `otherwise` elements:
+For better readability of your Mule flow, update the name of the `<choice/>`, `<when/>`, and `<otherwise/>` elements:
 +
 [source,XML]
 --
@@ -142,17 +141,17 @@ For better readability of your Mule flow, update the name of the `choice`, `when
 --
 
 
-As a condition for the first branch, check the results of the Salesforce query operation. If there are any results, the `Salesforce:Query` processor returns an array of *Contact* objects. In this case, the flow returns a failure message if the contact doesn’t have a phone number.
+As a condition for the first branch, check the results of the Salesforce query operation. If there are any results, the `Salesforce:Query` processor returns an array of *Contact* objects. In this case, the flow returns a failure message if the contact doesn't have a phone number.
 
 Create an expression that captures this condition:
 
-. On your `<when>` element, add the following expressions:
+. On your `<when/>` element, add the following expressions:
 +
 [source,XML]
 --
 <when expression="#[payload.Phone[0] != null]" doc:name="contact exists">
 --
-. Complete the `otherwise` element with a Logger component and a Set Variable component that returns the failure message:
+. Complete the `<otherwise/>` element with a Logger component and a Set Variable component that returns the failure message:
 +
 [source,XML]
 --
@@ -160,8 +159,8 @@ Create an expression that captures this condition:
 <set-variable variableName="ReturnMessage" value="Failure: Contact does not exist in Salesforce" doc:name="Set Return Variable"/>
 --
 
-Review your XML code:
-
+. Review your XML code:
++
 [source,XML]
 --
 <choice doc:name="If Contact exists in SFDC">
@@ -173,10 +172,9 @@ Review your XML code:
     </otherwise>
 </choice>
 --
-
++
 With the condition for whether the contact exists and the error message configured for when it doesn't, you can now add logic to store the existing phone number retrieved from Salesforce.
-
-. Add a new line after the `<when>` element and add the following components:
+. Add a new line after the `<when/>` element and add the following components:
 +
 [source,XML]
 --
@@ -186,30 +184,31 @@ With the condition for whether the contact exists and the error message configur
 <set-variable variableName="ReturnMessage" value="Contact exists in Salesforce" doc:name="Set Return Message" /> //<4>
 --
 [calloutlist]
-.. A Set Variable component to assign the value of the contact’s phone to a temporary variable named `phonenumberSFVar`.
-.. A second Set Variable component to store the ID to a temporary variable named `IdVar`.
-.. A Logger to print the value of the phone found in the record.
-.. A Set Variable to assign a temporary value to the `ReturnMessage` variable.
+.. A Set Variable component to assign the value of the contact's phone to a temporary variable named `phonenumberSFVar`
+.. A second Set Variable component to store the ID to a temporary variable named `IdVar`
+.. A Logger component to print the value of the phone found in the record
+.. A Set Variable component to assign a temporary value to the `ReturnMessage` variable
 
 
 == Test Your API
 
-. Open a REST client
-. Set up a breakpoint by clicking the red icon right next to the `<choice>` element.
+. Open a REST client.
+. Set up a breakpoint by clicking the red icon for the `<choice/>` element:
 +
 image::add-breakpoint-sync-api.png[]
-. Run the application by pressing `F5`.
+. Run the application by pressing F5.
 . Open your preferred REST client.
-. Make a `POST` request to `+0.0.0.0:8081/api/updatePhone?phoneNumber=555555&firstName=Anna&lastName=Woods+`.
-. Note that the application stops right before the Choice router component and that the query parameters are converted into variables:
+. Make a `POST` request to:
++
+----
+0.0.0.0:8081/api/updatePhone?phoneNumber=555555&firstName=Anna&lastName=Woods
+----
++
+Note that the application stops before the Choice router component and that the query parameters are converted into variables:
 +
 image::query-params-to-vars-api-sync.png[]
 . Move the execution forward until Anypoint Code Builder returns a `returnMessage` variable with the message `Failure: Contact does not exist in Salesforce`.
 +
 image::set-variable-for-no-contact-api-sync.png[]
 
-
-== Next Step
-
-* xref:tut-contacts-store-data-in-parallel.adoc[]. +
-Configure your application to update your MySQL database and Salesforce record if the contact does not exist, or to update the phone number if it's different than the one stored.
+. Proceed to xref:tut-contacts-store-data-in-parallel.adoc[] to configure your application to update your MySQL database and Salesforce record if the contact does not exist, or to update the phone number if it's different from the one stored.

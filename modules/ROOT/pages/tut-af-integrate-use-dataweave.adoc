@@ -1,11 +1,10 @@
 = Transforming Flight Data with DataWeave
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: use-dataweave.adoc
+:page-pagination:
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Use DataWeave to transform and match flight data to your API specification.
 
@@ -24,8 +23,8 @@ Define user snippets in the `mule-xml.json` file. For information about user sni
 
 . In Anypoint Code Builder, navigate to *Configure User Snippets*:
 
-* In the desktop IDE, navigate to *Code* > *Settings* > *Configure User Snippets*.
-* In the cloud IDE, navigate from the File menu to *Preferences* > *Configure User Snippets*.
+* In the desktop IDE, select *Code* > *Settings* > *Configure User Snippets*.
+* In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *Preferences* > *Configure User Snippets*.
 * In either IDE, open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
 +
 [source,command]
@@ -144,9 +143,9 @@ The user snippets provide starting configurations for several Mule components, i
 == Return the Payload as JSON
 
 . In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
-. From the canvas UI, insert the user snippet `Transform Message` below the Database Select operation:
+. From the canvas UI, insert the user snippet `Transform Message` below the Database Select operation.
 +
-Below the Listener, click the *+* icon, and navigate to *Snippets* > *User Snippets* > *Transform Message*.
+After the Listener, click the image:icon-plus.png["",15,15] (*Add component*) icon and navigate to *Snippets* > *User Snippets* > *Transform Message*.
 +
 If the *User Snippets* panel is empty at first, wait a moment, and try again. Alternatively, navigate to the `muledx:transform-message` snippet from the configuration XML.
 +
@@ -187,13 +186,13 @@ image::transform-with-output-json.png["Transform component highlighted"]
   </ee:message>
 </ee:transform>
 --
-. Deploy your app within the IDE by executing to *Run* > *Start Debugging* (`F5`).
+. Deploy your app within the IDE by selecting *Run* > *Start Debugging (F5)*.
 +
 For guidance, see xref:tut-af-integrate-am-flights.adoc#run[Run Your App in Debug Mode].
 . After the app deploys successfully, use a REST Client or browser to trigger a response.
 +
 For guidance, see xref:tut-af-integrate-am-flights.adoc#test[Test Your App].
-. View the response data from the MySQL database. For example:
+. View the response data from the MySQL database, for example:
 +
 [source,JSON]
 ----
@@ -386,7 +385,7 @@ Transform the JSON output to the structure required by your API specification.
 
 Your *American Flights API* in Anypoint Exchange uses a different structure for its flight data than your request to the database returns. 
 
-To find the required JSON structure, search for the JSON example under the `GET` method for your `/flights` endpoint. For guidance, see xref:publish-api-spec-to-exchange.adoc#locate-your-api-in-exchange[Locate Your API in Exchange] or open the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-api/minor/2.0/console/method/%2373/[public version of the API on Exchange^].
+To find the required JSON structure, search for the JSON example under the GET method for your `/flights` endpoint. For guidance, see xref:publish-api-spec-to-exchange.adoc#locate-your-api-in-exchange[Locate Your API in Exchange] or open the https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-api/minor/2.0/console/method/%2373/[public version of the API on Exchange^].
 
 [%header,%autowidth.spread,cols="1a,1a"]
 |===
@@ -513,14 +512,14 @@ Use DataWeave to transform the response:
 [[run-test]]
 == Run and Test Your App
 
-. Deploy your app within the IDE by executing to *Run* > *Start Debugging* (`F5`).
+. Deploy your app within the IDE by executing to *Run* > *Start Debugging (F5)*.
 +
 For guidance, see xref:tut-af-integrate-am-flights.adoc#run[Run Your App in Debug Mode].
 . After the app deploys successfully, use a REST Client or browser to trigger flow.
 +
 For guidance, see xref:tut-af-integrate-am-flights.adoc#test[Test Your App].
 +
-Notice that the transformed data structure conforms to the API requirements. For example:
+Notice that the transformed data structure conforms to the API requirements, for example:
 +
 [source,JSON]
 ----

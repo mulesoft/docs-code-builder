@@ -1,10 +1,9 @@
 = Deploying the American Flights App
 :page-deployment-options: cloud-ide, desktop-ide
+:page-pagination: prev
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Deploy the American Flights application to CloudHub. After deploying to CloudHub, manage your application through Anypoint Runtime Manager.
 
@@ -24,7 +23,7 @@ Complete these procedures:
 == Deploy an Application to CloudHub
 
 . Open your project in Anypoint Code Builder.
-. Click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open. For example:
+. Click the *Deploy to CloudHub* (rocket) icon when your configuration XML file is open, for example:
 +
 image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub "rocket" icon]
 +
@@ -39,7 +38,7 @@ image::deploy-to-cloudhub.png["MuleSoft: Deploy to CloudHub command highlighted"
 . If prompted, sign in to Anypoint Platform.
 . When prompted, click *Deploy*.
 +
-Anypoint Code Builder creates and opens a deployment file (`deploy.json`) for your review. For example:
+Anypoint Code Builder creates and opens a deployment file (`deploy.json`) for your review, for example:
 +
 [source,json]
 --
@@ -59,7 +58,7 @@ The name must be unique across all applications deployed to your business group 
 . After reviewing the deployment configuration, select *Deploy* to deploy the application to CloudHub.
 +
 image::deploy-config-created.png["Deployment configuration file created pop-up message"]
-. Select the *Sandbox* environment.
+. Select the *Sandbox* environment:
 +
 image::select-deployment-environment.png["Design and Sandbox environment options highlighted"]
 +
@@ -70,4 +69,4 @@ Anypoint Code Builder packages and deploys the application to CloudHub.
 . Select your application from the list applications. 
 . Check the domain name for your application and, optionally, test the application. 
 +
-For example, the name of the American Flights example on the EU cloud is similar to `+american-ws-anypoint-code-builder.eu-s1.cloudhub.io+`. To start the example, open your REST client or browser, and make a `GET` request to the URI. For example: `+http://american-ws-anypoint-code-builder.eu-s1.cloudhub.io/api/flights+`
+For example, the name of the American Flights example on the EU cloud is similar to `+american-ws-anypoint-code-builder.eu-s1.cloudhub.io+`. To start the example, open your REST client or browser, and make a GET request to the URI, for example: `+http://american-ws-anypoint-code-builder.eu-s1.cloudhub.io/api/flights+`
