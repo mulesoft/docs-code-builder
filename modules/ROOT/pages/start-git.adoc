@@ -3,7 +3,9 @@
 
 Learn to use GitHub and Git for your Anypoint Code Builder source code. Although many version control software (VCS) options are available, GitHub and the Git command line interface (CLI) are among the most widely used VCS tools. 
 
-MuleSoft recommends that you use version control software (VCS) to store and share the source code you work on in Anypoint Code Builder. VCS enables you to restore earlier versions of your files and to recover source code if your Anypoint Code Builder environment is lost due to xref:troubleshooting.adoc#manage-cloud[deletion] of the cloud IDE or for other reasons.
+MuleSoft recommends that you use version control software (VCS) to store and share the source code you work on in Anypoint Code Builder. VCS provides a change history of each file and a branching methodology to maintain project quality, full traceability, and the ability to restore earlier versions of your files and recover source code if your Anypoint Code Builder environment is lost, for example, if you xref:troubleshooting.adoc#manage-cloud[delete] your cloud IDE.
+
+To learn more about branching strategies and working effectively with multiple team members then check out the GitHub documentation.
 
 == Before You Begin
 
@@ -11,39 +13,40 @@ Ensure that these prerequisites are in place:
 
 * A GitHub account
 +
-If you do not have an account create one from the https://github.com/join[Join GitHub^] page.
+If you do not have an account create one from the https://github.com/join[Join GitHub^] page on the GitHub site.
 
 * A Git installation on your computer 
 +
 If Git is not installed on your computer, follow the https://github.com/git-guides/install-git[Git installation instructions^] for your machine.
 
-* Access to Anypoint Code Builder from the desktop or clout IDE
+* Access to Anypoint Code Builder from the desktop or cloud IDE
 +
 For setup and installation information, see xref:start-acb.adoc[], and be sure to meet all prerequisites. 
 
-* An integration project in Anypoint Code Builder
+* A project in Anypoint Code Builder
 +
-For guidance, see xref:int-create-integrations.adoc[].
+For example, to create an integration project, see xref:int-create-integrations.adoc[].
 
 [[create-repo]]
-== Create a Git Repository for Your Anypoint Code Builder Work
+== Create a Git Repository for Your Project
 
-You can use an existing repository or create a new one. If you already have a Git repository that you can use for your Anypoint Code Builder projects, proceed to <<store-source>>. 
+Use an existing repository or create a new one. If you already have a Git repository that you can use for your project, proceed to <<config-git>>. 
 
-To create a repository for your Anypoint Code Builder source code:
+Generally, having one repository per project is useful for separate management of your projects, for example, for your project versioning needs or other project-specific requirements.
+
+To create a repository for your project:
 
 . Complete the form in the GitHub page https://github.com/new[Create a new repo^]:
 
 * Determine a name for your repository, such as *acb-project-repo* or the name of your project.
-//+
-//TODO: DO WE RECOMMEND ONE REPO PER PROJECT?
 * Create a *Private* repository so that others cannot view source files in your repository.
-//TODO: WHY NOT CLICK IT "Clear the checkbox..."
-* Don't click *Add a README file*. 
 . Click *Create repository*.
+. Proceed to <<config-git>>.
 
 [[config-git]]
 == Configure Your GitHub Properties
+
+Check for and configure your username and email properties so that you can add, update, and retrieve your project files from your remote repository in GitHub. 
 
 //open ACB terminal:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
@@ -55,7 +58,7 @@ git config --list
 ----
 
 * If your GitHub `user.name` and `user.email` are listed, proceed to <<commit-source>>.
-* If your GitHub `user.name` and `user.email` are not listed or if no data returns, set the properties:
+* If your GitHub `user.name` and `user.email` are not listed or if no data returns, configure the properties:
 
 .. Run this command to set your `user.name`, replacing `YourNameHere` with your GitHub username:
 +
@@ -70,22 +73,16 @@ git config –-global user.name "YourNameHere"
 git config –-global user.email "your@email.com"
 ----
 +
-If two-factor authentication is enabled on your GitHub account and are prompted for a password, enter your personal access token instead of your GitHub login password. For more information, see GitHub documentation https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/accessing-github-using-two-factor-authentication[Access GitHub with 2FA^].
-. Proceed to <<commit-source>>
+If two-factor authentication is enabled on your GitHub account and you are prompted for a password, enter your personal access token instead of your GitHub login password. For more information, see GitHub documentation https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/accessing-github-using-two-factor-authentication[Access GitHub with 2FA^].
+. Proceed to <<commit-source>>.
 
 [[commit-source]]
-== Commit Your Source Code Changes to Your Repository 
+== Commit Source Code Changes to Your Repository 
 
-After confirming that your GitHub properties are in place in <<config-git>>, commit your project files to your repository. 
+From the Anypoint Code Build terminal, commit your project files to your repository. 
 
 //open ACB terminal:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
-. From the Anypoint Code Builder terminal, create a placeholder `README.md` file with this command, replacing `acb-project-repo` with the name of your repository:
-+
-[source,command]
-----
-echo "# acb-project-repo" >> README.md
-----
 . Initialize your GitHub repository within Anypoint Code Builder with this command:
 +
 [source,command]
@@ -131,7 +128,6 @@ After completing <<commit-source>>, find your project files in your new reposito
 
 . Log in to https://github.com/[GitHub^]. 
 . In GitHub, navigate to your new project repository.
-. Verify that the `README.md` file you created is in the root directory of the repository.
 . Navigate to `src/main/mule` to view the configuration XML file (or files) for your project.
 . Proceed to <<start-project-from-git>>
 
