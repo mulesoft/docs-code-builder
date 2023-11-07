@@ -2,18 +2,20 @@
 
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-The Generative Flow feature transforms your natural language prompt, which describes your business logic, into a flow that contains the connector operations and processors, in the order needed, to accomplish the specified task. 
+The Einstein generative flow feature in Anypoint Code Builder transforms your natural language prompt, which describes your business logic, into a flow that contains the connector operations and processors, in the correct order, to accomplish the specified task. 
 
-For example, if you want to create a flow that reads contacts from Salesforce in JSON format, you can enter a prompt describing that task. The prompt is then transformed into a series of connector operations and processors that are needed to execute that task, in this case: Listener, Query, Transformer, and Logger. A flow is generated, which you can then further customize to suit your needs. 
+For example, if you want to create a flow that reads contacts from Salesforce in JSON format, you can enter a prompt describing that task. The prompt is then transformed into a series of the connector operations and processors needed to execute that task, in this case: Listener, Query, Transformer, and Logger. 
+
+A flow is generated, which you can then further configure to suit your specific needs. 
 
 [[before-you-begin]]
 == Before You Begin
 
-Before you start creating your integration using Generative Flows:
+Before you start creating your integration using Einstein:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * Ensure that you have the xref:start-configure-permissions.adoc#permissions[required ACB permissions].
-* Ensure that you have the following permissions to use the Generative Flow feature:
+* Ensure that you have the following permissions to use the Anypoint Code Builder Einstein feature:
 ** Anypoint Code Builder Developer
 ** Mule Developer Generative AI User
 
@@ -34,7 +36,7 @@ image::int-einstein-icon-in-toolbar.png[Arrow pointing to Einstein icon in the t
 [[create-integration-project]]
 == Create a New Integration Project
 
-To create a new integration project:
+To create a new integration development project:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
@@ -62,15 +64,15 @@ The flow builder canvas appears with the following starting cards:
 image::int-gen-flow-starting-cards.png[Starting cards on new project canvas]
 [callout list]
 
-. Click *Open Einstein* in the *Start with AI* card to use the generative flow feature.
-. Click *Build a flow* in the *Start From Scratch* card to begin building your flow from scratch.
+. To use the Einstein feature to generate a flow, click *Open Einstein* in the *Start with AI* card.
+. To start building your flow from scratch, click *Build a flow* in the *Start From Scratch* card.
 
 [[craft-ai-prompt]]
 == Craft Your Prompt
 
 Before you create a flow, define what you want to achieve with the flow, for example, optimizing a business process. Craft your prompt using natural language, and keep in mind that the more concise and specific you make your prompt, the more effective Einstein is when generating your flow. 
 
-Here are some best practices for writing prompts:
+These are some best practices for writing prompts:
 
 * Be clear and precise:
 + 
@@ -80,13 +82,13 @@ Use clear and specific language to describe the use case for the flow to build.
 Mention the triggering events that initiate the flow, for example, sending an email when a new case is created. 
 * Emphasize key components:
 +
-Highlight the key MuleSoft components and connector operations to include in the flow, for example, HTTP Connector *Listener* and Email Connector *Send*.
+Highlight the key MuleSoft components and connector operations to include in the flow, for example, HTTP Connector *Listener* and Email Connector *Send* operations.
 * Specify data objects:
 +
 Clearly mention the data objects to include in the flow, such as "Salesforce Account object" or any other relevant data source.
-* Proofread and revise:
+* Proofread your prompt:
 +
-Before submitting the prompt, proofread your prompt to ensure that it is clear and comprehensive.
+Proofread your prompt to ensure that it is clear and comprehensive before you send it. Revise your prompt if necessary.
 
 After the initial flow is generated for you, you can then customize the code for your specific needs.
 
@@ -95,7 +97,7 @@ For examples of prompts and generated flows, see xref:int-gen-flow-examples-ai.a
 [NOTE]
 ====
 * Each prompt is discrete, meaning that it doesn't build upon previous prompts. 
-* Due to the sensitivity of LLMs, the same prompt might produce different responses, and sometimes, a similar prompt can produce very different responses. 
+* Due to the sensitivity of LLMs and depending on which LLM is used, the same prompt might produce different responses; and sometimes, a similar prompt can produce very different responses. 
 ====
 
 [[view-prompt-history]]
@@ -133,7 +135,7 @@ Optionally, click on one of the supplied example prompts to get started.
 +
 While your flow is generated, you see the message `Einstein is thinking` in the prompt box.
 +
-When your flow is ready, the code and a description of the components of the flow appear in the *Einstein* panel. 
+When your flow is ready, the code and a description of the components in the flow appear in the *Einstein* panel. 
 +
 image::int-generated-case-notification-email.png[]
 +
@@ -162,5 +164,5 @@ Anypoint Code Builder highlights the location of the error within the configurat
 
 == See Also
 
-* xref:int-create-integrations.adoc[]
+* xref:int-ai--create-integrations.adoc[]
 * xref:acb-components.adoc[]
