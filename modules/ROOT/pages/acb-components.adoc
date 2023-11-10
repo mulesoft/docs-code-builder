@@ -12,16 +12,17 @@ In Anypoint Code Builder, use components to build your integrations and implemen
 
 Built-in connectors are available from the canvas UI and configuration XML for integrations and implementation project. These connectors include:
 
-* xref:db-connector::index.adoc[Anypoint Connector for Database] (Database Connector) 
-* xref:email-connector::index.adoc[Anypoint Connector for Email] (Email Connector)
-* xref:file-connector::index.adoc[Anypoint Connector for File] (File Connector)
-* xref:http-connector::index.adoc[Anypoint Connector for HTTP] (HTTP Connector)
-* xref:salesforce-connector::index.adoc[Anypoint Connector for Salesforce] (Salesforce Connector) 
-* xref:sockets-connector::index.adoc[Anypoint Connector for Sockets] (Sockets Connector) 
-* xref:workday-connector::index.adoc[Anypoint Connector for Workday] (Workday Connector) 
+* xref:db-connector::index.adoc[Anypoint Connector for Database] (Database `<db:/>` Connector) 
+* xref:email-connector::index.adoc[Anypoint Connector for Email] (Email `<email:/>` Connector)
+* xref:file-connector::index.adoc[Anypoint Connector for File] (File `<file:/>` Connector)
+* xref:http-connector::index.adoc[Anypoint Connector for HTTP] (HTTP `<http:/>` Connector)
+* xref:salesforce-connector::index.adoc[Anypoint Connector for Salesforce] (Salesforce `<salesforce:/>` Connector) 
+* xref:sockets-connector::index.adoc[Anypoint Connector for Sockets] (Sockets `<sockets:/>` Connector) 
+* xref:workday-connector::index.adoc[Anypoint Connector for Workday] (Workday `<workday:/>` Connector) 
+
+Connector XML tags include a namespace followed by an operation, following the syntax `namespace:operation`), such as `<salesforce:create/>`, `<db:insert/>`, `<http:listener/>`, and `<http:request/>`. The namespaces in these cases are `salesforce`, `db`, `http`, and the operations are `create`, `insert`, `listener`, and `request`.
 
 Many other connectors are available through https://www.mulesoft.com/exchange/[Anypoint Exchange (US)^] or https://eu1.anypoint.mulesoft.com/exchange/[Exchange (EU)^] from your Anypoint Code Builder IDE.
-
 
 
 [[core-processors]]
