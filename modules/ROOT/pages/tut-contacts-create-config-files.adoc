@@ -17,7 +17,7 @@ A configuration properties file is a `.yaml` or `.properties` file that can refe
 
 To create a configuration file:
 
-. In your Explorer view, right-click the *resources* folder (`src/main/resources`) select *New File*:
+. In your Explorer view, right-click the *resources* folder (`src/main/resources`) and select *New File*:
 +
 image::contact-sync-integration-new-file.png[]
 . Name the file `config.yaml`.
@@ -120,18 +120,21 @@ image::add-mysql-driver-dependency.png[]
 
 === Add a Database Connector
 
-. In Anypoint Code Builder, open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide the following command:
+. Navigate to Anypoint Code Builder.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide the following command:
 +
 [source,command]
 ----
 MuleSoft: Import Asset from Exchange
 ----
-. Type the type of asset you want to import: `Connector`
-. Type the connector you want to import: `Database`
+. Type the type of asset you want to import: `Connector`.
+. Type the connector you want to import: `Database`.
 . Select *Database Connector - Mule 4*:
 +
 image::select-database-connector.png[]
-. Select the version of the connector you want to import: *Database Connector - Mule 4 - 1.13.5*
+. Select the version of the connector you want to import, *Database Connector - Mule 4 - 1.13.5*:
 +
 image::select-db-version.png[]
 . Anypoint Code Builder displays a message indicating that the dependency was successfully added.
