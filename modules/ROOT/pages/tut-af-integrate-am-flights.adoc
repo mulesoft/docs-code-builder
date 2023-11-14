@@ -31,13 +31,13 @@ image::develop-integration-option-mat.png["Develop an Integration link highlight
 .. Under *Project Name*, type `american-ws-anypoint-code-builder`.
 .. Under *Project Location*, select *Browse*, and then select your home directory.
 +
-. Select *Create Project*.
+. Click *Create Project*.
 . Proceed to <<configure>>.
 
 [[configure]]
 == Configure an HTTP Listener Operation and Set a Payload
 
-The listener is for triggering the flow, and Set Payload provides some test data for the integration.
+The listener is for triggering the flow, and Set Payload provides some test data for the integration:
 
 . In Project Explorer, select the `american-ws-anypoint-code-builder.xml` file.
 +
@@ -49,7 +49,7 @@ You see two different views:
 .. The canvas UI provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
 . Select *Build a Flow* from the canvas to create an empty flow.
-. In the configuration XML, replace the name of your flow with `getFlights`.
+. In the configuration XML, replace the name of your flow with `getFlights`:
 +
 [%header,cols="1a,1a"]
 |===
@@ -90,7 +90,7 @@ The configuration XML file adds the XML for the HTTP Listener into the `<flow/>`
 ----
 . In the configuration XML, before the `<flow/>` element, add the `<http:listener-config/>` component: 
 .. In the configuration XML, press Ctrl+Spacebar (Mac) or Cmd+Spacebar(Windows) to open the XML configuration menu.
-.. Type `http`, and select the built-in `<http:listener-config/>` snippet.
+.. Type `http`, and select the built-in `<http:listener-config/>` snippet:
 +
 image::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu"]
 +
@@ -159,18 +159,17 @@ A common code `500` error is `port 8081: Address already in use`. For port confl
 [[run]]
 == Run Your Application in Debug Mode
 
-. Open the *Run and Debug* panel by pressing Ctrl+Shift+d (Windows) or Cmd+Shift+d (Mac).
-. From the *Run and Debug* panel, click the triangle icon (*Start Debugging (F5)*) to select *Debug Mule Application*.
+// Pointer to Run and Debug
+include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
+. Click the image:icon-start-debug.png["",15,15] (*Start Debugging (F5)*) icon for *Debug Mule Application*:
 +
 image::run-debugger.png["Run the debugger."]
 +
 Anypoint Code Builder uses Maven to build and deploy your application to its embedded Mule runtime engine.
 +
 Note that using *Run* > *Start without Debugging* produces an error.
-. Monitor the build process from the terminal:
-
-* In the desktop IDE, select *View* > *Terminal*.
-* In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon before selecting *View* > *Terminal*
+//open terminal
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
 +
 [source, terminal]
 ----
