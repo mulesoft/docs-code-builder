@@ -22,7 +22,7 @@ Before you begin, ensure that you:
 
 * Set up your MuleSoft environment.
 +
-See xref:setup.adoc[] for more information.
+See xref:start-acb.adoc[] for more information.
 * Set up a Salesforce demo environment.
 ** https://developer.salesforce.com/signup[Sign up for a developer organization^].
 ** https://help.salesforce.com/s/articleView?id=sf.user_security_token.htm&type=5[Create a developer security token^].
@@ -36,7 +36,6 @@ image::anypoint-code-builder-view.png[]
 . Click *Design an API*:
 +
 image::design-api-1.png[]
-+
 . Configure the API using the following values:
 +
 image::design-api-ui-raml.png[]
@@ -118,7 +117,9 @@ image::contact-sync-push-changes.png[]
 To write the logic behind this API, you must publish it to Exchange:
 
 . In Anypoint Code Builder, open the `contact-sync.raml` file.
-. Open the Command Palette by pressing Ctrl+Shift+P (Windows) or Cmd+Shift+P (Mac), and provide the following command:
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide the following command:
 +
 [source,command]
 ----
@@ -126,9 +127,9 @@ MuleSoft: Publish API Specification to Exchange
 ----
 +
 image::publish-to-exchange.png[]
-. Type a project name: *Contact Sync*
-. Confirm the asset version: *1.0.0*
-. Confirm the API version: *v1*
+. Type a project name: *Contact Sync*.
+. Confirm the asset version: *1.0.0*.
+. Confirm the API version: *v1*.
 +
 The status bar shows the progress:
 +
@@ -137,8 +138,7 @@ image::publishing-to-exchange-dialog.png[]
 +
 image::scaffold-option-yes.png[]
 +
-. Enter a name for the project: *contact-sync*
-+
+. Enter a name for the project: *contact-sync*.
 . Select the directory in which to create the project:
 +
 image::select-project-location.png[]

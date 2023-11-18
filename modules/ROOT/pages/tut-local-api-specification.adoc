@@ -6,7 +6,7 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-Scaffold an API specification into an implementation project within your IDE, and synchronize changes to the specification with the interface without first publishing to Anypoint Exchange. For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the interface to add a flow for that endpoint to the interface's configuration XML file.
+Scaffold an API specification into an implementation project within your IDE, and sync changes to the specification with the interface without first publishing to Anypoint Exchange. For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the interface to add a flow for that endpoint to the interface's configuration XML file.
 
 The interface XML is automatically created in a Mule project during the scaffolding process. You define an API in a specification file within an API Design project.
 
@@ -17,7 +17,7 @@ NOTE: The procedures are currently written for the desktop IDE only.
 == Before You Begin
 
 Set up your MuleSoft environment. 
-See xref:setup.adoc[] for more information.
+See xref:start-acb.adoc[] for more information.
 
 [[create]]
 == Create an API Specification
@@ -129,7 +129,7 @@ To scaffold your local API specification:
 [[icon-implement-this-api]]
 image::tut-local-spec-implement.png["UI with the X-shaped icon for the command Implement this Local API"]
 +
-Alternatively, open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
+Alternatively, open the Command Palette by pressing Cmd+Shift+p (Mac) or Ctrl+Shift+p (Windows), and provide this command:
 +
 [source,command]
 ----
@@ -292,7 +292,7 @@ version: 1.0.development
 --
 . Re-scaffold the API specification to update your Mule project:
 
-.. Open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
+.. Open the Command Palette by pressing Cmd+Shift+p (Mac) or Ctrl+Shift+p (Windows), and provide this command:
 +
 [source,command]
 ----
@@ -346,10 +346,8 @@ company: {
 
 After implementing your API specification, save the specification to Design Center:
 
-. In Anypoint Code Builder, open the *Source Control* view of the IDE:
-
-* In the desktop IDE, select *View* > *Source Control*.
-* In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *View* > *Source Control*.
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
 //TODO: bug? doesn't seem to work despite UI: 
 //* In either IDE, press ^+Shift+g (Mac) or ^+Shift+g (Windows).
 . Locate the API specification project for `retrieve-users-api.raml`.
@@ -379,18 +377,18 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 ----
 MuleSoft: Publish API Specification to Exchange
 ----
-. Type a project name: *Retrieve Users API*
+. Type a project name: *Retrieve Users API*.
 +
 image::tut-api-publish.png["Publish Retrieve Users API"]
 
-. Confirm the artifact ID: *Retrieve-Users-API*
-. Confirm the asset version: *1.0.0*
-. Confirm the API version: *v1*
+. Confirm the artifact ID: *Retrieve-Users-API*.
+. Confirm the asset version: *1.0.0*.
+. Confirm the API version: *v1*.
 +
 The status bar provides progress-related messages before the IDE updates your Mule project POM file to point to `v1.0.0` of your API specification: 
 
 ** *Publishing API Specification to Exchange* 
-** Project *has been successfully published to Exchange*
+** _Project_ *has been successfully published to Exchange*
 
 The specification is now available on https://anypoint.mulesoft.com/exchange/?show=org&sort=last[Anypoint Exchange^] for team members in your business group to scaffold into their projects and implement. See <<scaffold-from-exchange>>.
 
@@ -407,7 +405,7 @@ Team members in your business group can import your API specification from Excha
 .Show me how
 [%collapsible]
 ====
-* Use the keyboard shortcuts
+* Use the keyboard shortcuts:
 ** Mac: Cmd+Shift+p
 ** Windows: Ctrl+Shift+p
 * In the desktop IDE, select *View* > *Command Palette*. 
@@ -419,6 +417,7 @@ Team members in your business group can import your API specification from Excha
 [source,command]
 MuleSoft: Implement an API Specification
 .. In the *Implement an API Specification* tab that opens: 
+// Global: should we use a table for these forms?
 +
 *** Provide a new name for the implementation.
 *** Select or create a new project location.
@@ -449,7 +448,7 @@ To remove your project from a multi-root workspace:
 .Show me how
 [%collapsible]
 ====
-* Use the keyboard shortcuts
+* Use the keyboard shortcuts:
 ** Mac: Cmd+Shift+p
 ** Windows: Ctrl+Shift+p
 * In the desktop IDE, select *View* > *Command Palette*. 
@@ -466,7 +465,7 @@ File: Open Folder
 .. In the Explorer, click the filename for the specification, `retrieve-users-api.raml`.
 . Wait for the <<icon-implement-this-api, X-shaped icon>> for the `MuleSoft: Implement this API` command to appear in the UI. 
 +
-To monitor the status of this process, open the *Output* panel with Ctrl+Shift+u (Windows) or Cmd+Shift+u (Mac) and select *MS DX Server* from its drop-down menu. 
+To monitor the status of this process, open the *Output* panel with Cmd+Shift+u (Mac) or Ctrl+Shift+u (Windows) and select *MS DX Server* from its drop-down menu. 
 . Proceed to <<scaffold>> to start the implementation process.
 ////
 

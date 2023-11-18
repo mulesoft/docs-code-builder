@@ -21,16 +21,8 @@ Complete these procedures:
 
 Define user snippets in the `mule-xml.json` file. For information about user snippets, see xref:work-with-code-snippets.adoc[].
 
-. In Anypoint Code Builder, navigate to *Configure User Snippets*:
-
-* In the desktop IDE, select *Code* > *Settings* > *Configure User Snippets*.
-* In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *Preferences* > *Configure User Snippets*.
-* In either IDE, open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
-+
-[source,command]
-----
-Snippets: Configure User Snippets
-----
+// Pointer to Configure User Snippets
+include::partial$acb-reusable-steps.adoc[tags="configure-user-snippets"]
 . In the *Select Snippets File or Create Snippets* field that opens, enter:
 +
 [source,command]
@@ -147,7 +139,7 @@ The user snippets provide starting configurations for several Mule components, i
 +
 After the Listener, click the image:icon-plus.png["",15,15] (*Add component*) icon and navigate to *Snippets* > *User Snippets* > *Transform Message*.
 +
-If the *User Snippets* panel is empty at first, wait a moment, and try again. Alternatively, navigate to the `muledx:transform-message` snippet from the configuration XML.
+If the *User Snippets* panel is empty at first, wait a moment, and try again. Alternatively, navigate to the `muledx:transform-message` snippet from the configuration XML:
 +
 //TODO: image seems out of date; where's the plus icon?
 image::transform-with-output-json.png["Transform component highlighted"]
@@ -460,7 +452,7 @@ Use DataWeave to transform the response:
   </ee:message>
 </ee:transform>
 --
-. Review your configuration XML.
+. Review your configuration XML:
 +
 [source,xml]
 ----

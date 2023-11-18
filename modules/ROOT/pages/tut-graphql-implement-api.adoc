@@ -13,7 +13,7 @@ This tutorial guides you through creating a Mule application from scratch, imple
 Complete these procedures:
 
 * Set up your MuleSoft environment. 
-See xref:setup.adoc[] for more information.
+See xref:start-acb.adoc[] for more information.
 * Download the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
 
 == Publish the GraphQL API to Exchange
@@ -30,7 +30,7 @@ include::partial$acb-reusable-steps.adoc[tags="exchange-urls"]
 . Click *Publish new asset*.
 . For *Name*, type `books-api`.
 . For *Asset types*, select *GraphQL API*.
-. For *Method*, select *Upload a GraphQL API Schema*.
+. For *Method*, select *Upload a GraphQL API Schema*:
 +
 image::upload-graphql-api-exchange-method-select.png[]
 +
@@ -40,9 +40,10 @@ image::upload-graphql-api-exchange-method-select.png[]
 
 == Implement the GraphQL API
 
-// . Navigate to Anypoint Code Builder.
-// . In the Anypoint Code Builder central page, select *Launch webIDE*.
-. In Anypoint Code Builder, open the Command Palette by pressing Ctrl+Shift+p (Windows) or Cmd+Shift+p (Mac), and provide this command:
+. Navigate to Anypoint Code Builder.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide this command:
 +
 [source,command]
 ----
@@ -60,6 +61,7 @@ MuleSoft: Implement an API Specification
 //TODO: cc: I wonder if we need this screenshot?
 // image::implement-api-option-mat.png[]
 . Configure your project using the following values:
+// Use the table format?
 +
 image::implement-api-configure-in-task.png[]
 +
