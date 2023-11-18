@@ -29,7 +29,7 @@ For access to Einstein, see start-configure-permissions.adoc[].
 
 //TODO: VERIFY
 
-Set the Maven group ID value to use when creating a Mule integration or implementation project. This setting populates the `pom.xml` file for each Mule project. The default is `com.mycompany`, for example, `<groupId>com.mycompany</groupId>` in the `pom.xml`. You can change the setting within your project, as needed.
+Set the Maven group ID value for the IDE to use when you create a Mule integration or implementation project. This setting populates the `pom.xml` file for each Mule project. The default is `com.mycompany`, for example, `<groupId>com.mycompany</groupId>` in the `pom.xml`. You can change the setting within your project, as needed.
 
 For information about Maven group IDs, see https://maven.apache.org/guides/introduction/introduction-to-the-pom.html[Introduction to the POM^] in the Apache Maven Project documentation. 
 
@@ -70,7 +70,13 @@ Common uses are to append an encryption key value (such as `-M-Dencryption.key=m
 Set the metaspace size when installing Mule Runtime engine (Mule) for the first time. The default is *1g*. 
 
 //TODO: What does 1g mean? 
+////
 //TODO: what is metaspace? When would someone change this? 
+Are we talking about this?
+Metaspace, formerly known as PermGen (Permanent Generation), is a non-heap memory area that stores class metadata, constant pool information, and method bytecode. It was introduced in Java 8 as a replacement for PermGen, which was removed due to memory management issues.
+Source is medium.com: https://medium.com/@AlexanderObregon/introduction-to-javas-memory-model-heap-stack-and-metaspace-ceaeb565921c#:~:text=Metaspace%2C%20formerly%20known%20as%20PermGen,due%20to%20memory%20management%20issues
+////
+//TODO: would cloud IDE users ever need to set this? 
 
 [[setting-mule-home]]
 == Mule › Runtime: Mule Home
@@ -81,6 +87,20 @@ Set your local Mule Runtime engine (Mule) installation directory. This setting d
 //TODO: what is this for and when would you want to change it? 
 //TODO: looks like there are 3 standalone Mule installations on my laptop. check cloud IDE. 
 //TODO: do projects update to use the latest runtime installation?
+
+[[setting-runtime-dir]]
+== Mule › Runtime: Mule Runtimes Directory
+
+Set the default download directory for different versions of Mule Runtime engine (Mule).
+
+For example, the default directory in the desktop IDE on a Mac is similar to `/Users/me/muleRuntimes`. In the cloud IDE, the default is similar to `/home/me/muleRuntimes`. 
+
+//TODO: can they change the directory in the cloud IDE?
+////
+POTENTIAL STORY
+Mule › Runtime: Mule Runtimes Directory :  We have guidance on the use of the terms related to Mule here. “Mule runtimes” (plural) isn’t allowed. Could we use something like Mule › Runtime: Mule Runtime Engine Instance Directory, Mule Runtime Instance Directory, or even Mule Runtime Engine Directory, instead? Do we need to make it plural?
+See https://confluence.internal.salesforce.com/display/MTDT/Term+Presentation+Reference
+////
 
 [[setting-region]]
 == Mule: Control Plane
@@ -103,7 +123,7 @@ Enable or disable telemetry services in the US cloud. When telemetry services ar
 //TODO: What's the default? on or off?
 
 [[setting-logging]]
-==  Mule > Logging Level
+==  Mule > Logging: Level
 
 Set the verbosity of logs that appear in the logs. Verbosity options are progressive:
 
