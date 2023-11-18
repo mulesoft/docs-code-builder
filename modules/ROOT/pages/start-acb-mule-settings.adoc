@@ -1,0 +1,98 @@
+= Configuring MuleSoft Settings in the IDE
+:page-deployment-options: cloud-ide, desktop-ide
+:page-aliases: configure-mulesoft-environment.adoc, configure-default-output-panel.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Anypoint Code Builder provides configurable MuleSoft settings that apply across your projects. In many cases, the default settings are suitable. However, if you use the EU cloud, it is important to change the default US cloud setting. Some settings are configurable in the desktop IDE only.
+
+To open the settings: 
+
+//shared steps for opening Mule settings
+include::partial$acb-reusable-steps.adoc[tags="open-mule-settings"]
+
+[[setting-einstein]]
+==  Mule > Application: Einstein
+
+//TODO: LINK TO GEN AI DOCS
+If an organization administrator enables you to use Einstein for generative AI, you can disable or enable (default) the feature in your IDE. When you disable Einstein, the UI no longer displays generative AI features in the IDE.
+
+[[setting-group-id]]
+== Mule › Application: Group ID
+
+Set the group ID to use when creating a Mule project. 
+
+//TODO: What is the group ID for? Where do you see it in a Mule project?
+
+[[setting-lsp]]
+== Mule › Lsp › Trace: Server
+
+Trace the communication between VS Code and the `muleLanguageServerProtocol` service. This setting defaults to *off*. 
+
+//TODO: what is muleLanguageServerProtocol and when would you want to use this
+
+[[setting-mule-args]]
+== Mule › Runtime: Default Arguments
+
+Set default command-line arguments to use when starting Mule Runtime engine (Mule). Mule starts when you run a Mule application in an integration or implementation project. 
+
+Common uses are setting an encryption key value to use when running a local deployment (such as `-M-Dencryption.key=my-key`) or a variable for Mule to use when selecting a configuration properties file (`-M-Denv=dev`). For more information about these uses, see xref:int-create-secure-configs.adoc[]. 
+
+[[setting-metaspace]]
+== Mule › Runtime: Default Metaspace Size
+
+Set the metaspace size when installing Mule Runtime engine (Mule) for the first time. The default is *1g*. 
+
+//TODO: What does 1g mean? 
+//TODO: what is metaspace? When would someone change this? 
+
+[[setting-mule-home]]
+== Mule › Runtime: Mule Home
+
+Set your local Mule Runtime engine (Mule) installation directory. This setting defaults //TODO: to the most current installation directory? 
+
+//TODO: what is this for and when would you want to change it?
+
+//TODO: looks like there are 3 standalone Mule installations on my laptop. check cloud IDE. 
+
+[[setting-region]]
+== Mule: Control Plane
+
+Select a control plane for your desktop IDE:
+
+* *US Cloud* (default)
+* *EU Cloud*
+
+In the cloud IDE, this setting is not configurable because it is set automatically based on the region where your Anypoint Platform account resides. 
+
+For more information, see xref:index.adoc#us-eu-clouds[US and EU Cloud Hosts].
+
+[[setting-telemetry]]
+==  Mule > Telemetry
+
+Enable or disable telemetry services in the US cloud. When telemetry services are enabled, the IDE sends anonymous usage data to the MuleSoft team. The data helps the team identify important usage trends.
+
+//TODO: CAN YOU SET IN CLOUD?
+//TODO: What's the default? 
+
+[[setting-logging]]
+==  Mule > Logging Level
+
+Set the verbosity of logs that appear in the logs. Verbosity options are progressive:
+
+//TODO: WHICH LOGS? MS DX Server? Other? Where do you find the logs? I see logs in the Mule runtime folder (see Mule home above). Are Mule logs affected by this setting or just the UI or what?
+
+* Off: No issues 
+* Fatal: Fatal issues only
+* Error: Fatal and Error issues 
+* Warn (default): Fatal, Error, and Warn issues  
+* Info: Fatal, Error, Warn, and Info issues 
+* Debug: Fatal, Error, Warn, Info, and Debug issues
+* Trace: Fatal, Error, Warn, Info, Debug, and Trace issues
+
+
+
+
