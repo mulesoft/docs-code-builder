@@ -11,13 +11,16 @@ Configure your GraphQL implementation to return a specific response for each flo
 
 Complete these procedures:
 
-* Set up your MuleSoft environment. 
-See xref:setup.adoc[] for more information.
+* Set up your MuleSoft environment.
++
+See xref:start-acb.adoc[] for more information.
 // * Download the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
 * Implement the Books API GraphQL schema. 
++
 See xref:tut-graphql-implement-api.adoc[].
 // * Install a REST client like Postman or AdvancedRestClient.
 * Test the Books API GraphQL schema. 
++
 See xref:tut-graphql-test-first-implementation.adoc[]
 
 == Add Logic to Your Flows
@@ -25,7 +28,7 @@ See xref:tut-graphql-test-first-implementation.adoc[]
 . Launch Anypoint Code Builder.
 . Open the *Books Implementation* project.
 . Open the `flows.xml` file.
-. In your *Query.bookById* flow, add a new line after the `<graphql-router:data-fetcher>` element.
+. In your *Query.bookById* flow, add a new line after the `<graphql-router:data-fetcher/>` element.
 . Start typing `set` and select *Set-Payload* from the list of possible components. The *Query.bookById* flow now resembles the following:
 +
 [source,XML]
@@ -42,7 +45,7 @@ See xref:tut-graphql-test-first-implementation.adoc[]
 --
 <set-payload value='{"id": 1, "name": "My Book", "pageCount": 28, "author": "author-1"}' mimeType="application/json" />
 --
-. Select *Run and Debug* in the Activity Bar, then click *Start Debugging (F5)*.
+. Click *Run and Debug* in the Activity Bar, then click *Start Debugging (F5)*.
 . Using `curl`, create a `POST` request to the local address and send a `bookById` query.
 +
 See xref:tut-graphql-test-first-implementation.adoc[Test Your GraphQL Implementation] for examples.

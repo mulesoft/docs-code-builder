@@ -391,7 +391,7 @@ The POM file includes dependencies for the components in the configuration XML.
 
 To use an encrypted value in a Mule application: 
 
-. Before the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Cmd+Space (Mac) or Ctrl+Space (Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet.
+. Before the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Cmd+Space (Mac) or Ctrl+Space (Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet:
 +
 image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties Snippet"]
 +
@@ -472,11 +472,11 @@ For example, for a file `dev.secure.yaml` that contains properties for the devel
 +
 [source,env-configuration]
 ----
--M-Dmule.env=dev
+-M-Denv=dev
 ----
 . Deploy the application locally within the IDE by pressing Cmd+shift+p (Mac) or Ctrl+shift+p (Windows), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
 +
-A successful deployment produces the following message in the *OUTPUT* tab of the output panel. For information about the output panel, see xref:configure-default-output-panel.adoc[].
+A successful deployment produces the following message in the *OUTPUT* tab of the output panel: 
 +
 ----
 **********************************************************************
@@ -485,6 +485,8 @@ A successful deployment produces the following message in the *OUTPUT* tab of th
 * default                                       * DEPLOYED           *
 **********************************************************************
 ----
++
+For information about the output panel, see xref:configure-default-output-panel.adoc[].
 +
 If the application does not deploy successfully, check the console for the error and troubleshoot. 
 . If you intend to deploy your application to CloudHub, proceed to <<deploy-to-cloudhub>>.

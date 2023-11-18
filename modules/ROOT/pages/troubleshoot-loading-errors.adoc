@@ -14,7 +14,8 @@ Errors sometimes occur when you open or start a project in Anypoint Code Builder
 A *Loading...* error in the canvas UI often occurs under these conditions:
 
 * When importing a project due to a missing dependency 
-+
+
+
 To check for a missing dependency:
 
 //step open output panel
@@ -32,13 +33,13 @@ elapsed or updates are forced
 . If you find a missing dependency, log in to Anypoint Platform.
 +
 The canvas UI loads after all dependencies load.
-
-* When a browser extension is interfering with the UI loading process  
++
+When a browser extension is interfering with the UI loading process, you see:
 +
 image::troubleshoot-loading-error.png["Loading error in the UI"]
-+
+
 To address this issue, try:
-+
+
 * Disabling browser extensions and reloading the application 
 * Using another browser that is not using extensions
 
@@ -53,15 +54,16 @@ Visual Studio Code treats an open directory as a workspace. For the project to l
 //step to open command palette:
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Provide this command:
++
 [source,command]
 ----
 File: Open Folder...
 ----
 . Navigate to the _root_ directory for your project. 
 +
-The root is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project’s parent or ancestor directory or to one of its child or descendant directories.
+The root is the top-level folder that Anypoint Code Builder generates when it creates a project. Do not navigate to the project's parent or ancestor directory or to one of its child or descendant directories.
 
-See also, xref:int-import-mule-project.adoc[].
+See also xref:int-import-mule-project.adoc[].
 
 [[mule-dx]]
 == Mule DX API Component Was Not Installed

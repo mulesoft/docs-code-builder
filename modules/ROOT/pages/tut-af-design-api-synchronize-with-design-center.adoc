@@ -26,11 +26,10 @@ image::changes-and-staged-changes.png["Changes and Staged Changes highlighted in
 
 To review changes to your API project:
 
-. In Anypoint Code Builder, open the *Source Control* menu by pressing Ctrl+Shift+g (Mac) or Cmd+Shift+g (Windows).
-+
-Alternatively, click the *Source Control* icon in the activity bar.
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
 . Open your `exchange.json` file.
-. Review the working tree and notice the shading for deletions (red) and additions (green).
+. Review the working tree and notice the shading for deletions (red) and additions (green):
 +
 // removed (hn) TODO duke: hamburger menu present; maybe ok if fairly inobtrusive
 image::explore-changes-api-specification.png["exchange.json file highlighted to show the source control changes"]
@@ -53,8 +52,9 @@ image::stage-american-flights-api.png["Source control number and plus icon of am
 
 To stage individual changes through the UI:
 
-. In Anypoint Code Builder, select your Source Control view.
-. Select the plus icon beside your RAML specification file, such as `american-flight-api.raml`.
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
+. Select the plus icon for your RAML specification file, such as `american-flight-api.raml`.
 +
 The file moves to *Staged Changes* section.
 . Review the changes in the Source Control section.
@@ -65,8 +65,9 @@ The file moves to *Staged Changes* section.
 
 Stage multiple files at the same time:
 
-. Select your Source Control view for your API project.
-. Click the plus icon in the *Changes* header to stage your remaining changes.
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
+. Click the plus icon in the *Changes* header to stage your remaining changes:
 +
 image::stage-all-changes.png["Plus icon highlighted to stage all changes"]
 . Proceed to <<commit>>.
@@ -78,8 +79,9 @@ The UI uses the `git commit` command to save the changes you staged to your loca
 
 To commit staged changes:
 
-. In Anypoint Code Builder, select your Source Control view.
-. In the message field, summarize your changes, and click *Commit*.
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
+. In the message field, summarize your changes, and click *Commit*:
 +
 image::add-commit-message.png["Message box highlighted"]
 . Your Source Control view now displays no changes to commit.
@@ -92,9 +94,10 @@ Use the `git push` command from the UI to upload your local content to Design Ce
 
 To push your changes:
 
-. Open the Source Control view.
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
 . In the *Source Control* header, click the More actions menu (ellipsis).
-. Select *Push*.
+. Select *Push*:
 +
 // removed (hn) TODO duke: hamburger in screenshot; does Sync Changes appear?
 // hn: Sync Changes appears in both web and desktop
@@ -102,7 +105,7 @@ image::push-changes.png["Push command highlighted in the source control section"
 +
 Your changes are now published in Design Center.
 +
-If the UI prompts you to `periodically run 'git fetch'`, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API.
+If the UI prompts you to `periodically run 'git fetch'`, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API:
 +
 image::fetch-periodically-check.png["Periodically run git fetch message highlighted"]
 . Proceed to xref:tut-af-design-api-publish-api-spec-to-exchange.adoc[] so that your team can find and implement the specification.

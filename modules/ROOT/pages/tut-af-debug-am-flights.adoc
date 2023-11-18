@@ -107,7 +107,7 @@ Add breakpoints to your American Flights project:
 . Select the *Run and Debug* icon in the activity bar:
 +
 image::run-and-debug.png[]
-. In implementation (`interface.xml`), add a breakpoint to the line that contains the `<flow-ref/>` component.
+. In implementation (`interface.xml`), add a breakpoint to the line that contains the `<flow-ref/>` component:
 +
 image::add-breakpoint.png[]
 +
@@ -124,7 +124,7 @@ Run a debugging session, and inspect the message and variables at different poin
 [[debug]]
 == Start a Debugging Session
 
-. From the *Run and Debug* menu, click *Debug Mule Application*.
+. From the *Run and Debug* menu, click *Debug Mule Application*:
 +
 image::start-debugging.png[]
 +
@@ -140,7 +140,7 @@ After starting your debugging session:
 
 //open terminal
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
-. In the IDE's terminal, use a `curl` command to make a GET request to the listener in the _interface_ (`interface.xml`) instead of the implementation:
+. In the terminal, use a `curl` command to make a GET request to the listener in the _interface_ (`interface.xml`) instead of the implementation:
 +
 [source,URI]
 ----
@@ -148,17 +148,17 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-termin
 ----
 +
 Notice the `_/api/flight_` in the URI for the listener in the interface.  For more information about this step, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
-. In your American Flights project, notice that the execution of the app stops at your first breakpoint.
+. In your American Flights project, notice that the execution of the app stops at your first breakpoint:
 +
 image::debug-stop-at-flow-ref.png[]
 +
 The breakpoint is located in you interface file (`interface.xml`).
 . In your debug toolbar, click the *Step Over* button to continue execution to the next breakpoint, at the `<db:select/>` element in `implementation.xml`.
-. In the *Run and Debug* sidebar, notice that the *Variables* panel provides information about the Mule event at the breakpoint.
+. In the *Run and Debug* sidebar, notice that the *Variables* panel provides information about the Mule event at the breakpoint:
 +
 image::debugger-stop-db-select.png[]
 . Click the *Step Over* button on your debug toolbar to continue execution to your next breakpoint, at the `<set-variable/>` element.
-. In the *Variables* panel, navigate to *Mule Message* > *Payload*, and notice that the database response is an array of flight data.
+. In the *Variables* panel, navigate to *Mule Message* > *Payload*, and notice that the database response is an array of flight data:
 +
 image::debugger-stop-set-variable.png[]
 . Proceed to <<watch>>.
@@ -167,11 +167,11 @@ image::debugger-stop-set-variable.png[]
 == Add a Watch Expression
 
 . From the *Run and Debug* sidebar, open the *Watch* panel.
-. Click the *+* icon in the panel, and add the expression `payload.^mediaType`.
+. Click the *+* icon in the panel, and add the expression `payload.^mediaType`:
 +
 image::debug-add-expression.png[]
 . Click the *Step Over* button until your execution moves to the Transform Message component (`<ee:transform/>`).
-. Notice that the payload is `application/java`.
+. Notice that the payload is `application/java`:
 +
 image:tut-debug-mediatype-java.png[]
 . Continue clicking the *Step Over* button until you reach the Logger component (`<logger>`).
