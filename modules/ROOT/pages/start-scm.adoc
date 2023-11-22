@@ -3,11 +3,30 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-Learn to use GitHub and Git to manage your Anypoint Code Builder source code. Although you can choose to use another source control management (SCM) system, GitHub and the Git command line interface (CLI) are widely used in the industry and supported out-of-the-box by VS Code. For more information, see https://code.visualstudio.com/docs/sourcecontrol/overview[Using Git source control in VS Code^] in the VS Code documentation.
-
 MuleSoft recommends that you use source control management (SCM) to store and share your work in Anypoint Code Builder. A useful SCM provides change history of each file and a branching methodology to maintain project quality, full traceability, and the ability to restore earlier versions of your files and to recover source code if your Anypoint Code Builder environment is lost or deleted. To learn more about branching strategies and working effectively with multiple team members, see the https://git-scm.com/book[Git documentation^].
 
-== Before You Begin
+== Set Up the Anypoint SCM in Anypoint Code Builder
+
+For API spec and fragment design projects, you can use the Anypoint SCM to store and synchronize your changes with Anypoint Design Center. 
+
+[NOTE]
+--
+Starting in version TODO of the cloud IDE and TODO of the desktop IDE, continued use of the Anypoint SCM to store and sync design projects from Anypoint Code Builder with the Anypoint SCM in Design Center through the Anypoint SCM requires configuration through VS Code. The configuration is no longer set up by default for these projects. This decoupling enables you to use any SCM for your design projects and prevents the need to 
+--
+
+== Set Up Git and GitHub in Anypoint Code Builder
+
+Learn to use GitHub and Git to manage your Anypoint Code Builder source code. Although you can choose to use another source control management (SCM) system, GitHub and the Git command line interface (CLI) are widely used in the industry and supported out-of-the-box by VS Code. For more information, see https://code.visualstudio.com/docs/sourcecontrol/overview[Using Git source control in VS Code^] in the VS Code documentation.
+
+* <<prereqs>>
+* <<create-repo>>
+* <<config-git>>
+* <<commit-source>>
+* <<open-git>>
+* <<start-project-from-git>>
+
+[[prereqs]]
+=== Before You Begin
 
 Ensure that these prerequisites are in place:
 
@@ -28,7 +47,7 @@ For setup and installation information, see xref:start-acb.adoc[], and be sure t
 For example, to create an integration project, see xref:int-create-integrations.adoc[].
 
 [[create-repo]]
-== Create a Git Repository for Your Project
+=== Create a Git Repository for Your Project
 
 Use an existing repository or create a new one. If you already have a Git repository that you can use for your project, proceed to <<config-git>>. 
 
