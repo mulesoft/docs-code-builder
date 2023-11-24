@@ -107,8 +107,22 @@ Choice (`<choice/>`) has the following attributes:
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES or ELEMENTS
 //tag::component-xml-attributes-child1[]
+
+Choice (`<choice/>`) has the following child elements: 
+
+[%header,cols="1,3a"]
+|===
+| Child Element 
+| Description 
+
+| `<when/>`
+| Specifies a condition to meet before running embedded components to process the Mule event. One or more `<when/>` elements are allowed.
+
+| `<otherwise/>`
+| Runs if no conditions set within any `<when/>` element is met.
+|===
 
 The child element `<when/>` has the following attribute:
 
@@ -123,6 +137,7 @@ The child element `<when/>` has the following attribute:
 | Expression in DataWeave language to evaluate input. If the expression evaluates to true, this routing option executes.
 
 |===
+
 //end::component-xml-attributes-child1[]
 //
 

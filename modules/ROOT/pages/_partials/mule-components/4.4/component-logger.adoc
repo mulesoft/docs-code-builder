@@ -54,20 +54,27 @@ This component supports the following XML structure:
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header, cols="1,3a"]
+Logger (`<logger/>`) has the following attributes: 
+
+[%header,cols="1,1,3a"]
 |===
-| `<logger/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| TODO
 | `level` 
 | Options are `DEBUG`, `ERROR`, `INFO` (default), `TRACE`, `WARN`. In the console, the logger message begins with the `level.
 
+| TODO
 | `doc:name` 
 | Editable name for the component.
 
+| TODO
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| TODO
 | `message` 
 | A string in double or single quotation marks, a DataWeave expression, a Mule variable, or a concatenated combination of supported values that serve as the message.
 When this field is empty, the Logger produces the following message:
@@ -80,43 +87,13 @@ When this field is empty, the Logger produces the following message:
   attributesMediaType=*/*
 }
 ----
+| TODO
 | `category` 
 | Optional string that describes the logger in a way that helps you distinguish it from other loggers in your flow. In the console, the logger replaces the generic processor name with your category.
 |===
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//tag::xml-attributes-child1[]
-[%header, cols="1,3"]
-|===
-| <CHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::xml-attributes-child1[]
-//
-//
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::xml-attributes-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::xml-attributes-descendant1[]
-//
-
 
 //SECTION: EXAMPLES
 //

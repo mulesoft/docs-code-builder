@@ -17,6 +17,8 @@ Process a Mule event through two or more routes, and combine the results into a 
 
 //
 //tag::component-long-description[]
+Scatter Gather sends a request to multiple targets concurrently. This component collects the responses from all routes and aggregates them into a single message.
+
 Each route runs on a separate thread to sequentially execute one or more processors (either a connector operation or Mule component). By default, each route runs in parallel. After each route completes successfully, the component combines the resulting Mule events into a new Mule event object that travels to the next processor in the flow.
 
 Repeatable streams are a Mule feature that enables a component to reread a stream. Non-repeatable streams can be read only once before they are lost. By default, Mule components return a repeatable stream unless their streaming strategy is configured to be non-repeatable.
@@ -63,32 +65,37 @@ This component supports the following XML structure:
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-The `<scatter-gather/>` element sends a request to multiple targets concurrently. This component collects the responses from all routes and aggregates them into a single message.
+Scatter Gather (`<scatter-gather/>`) has the following attributes: 
 
-The `<route/>` child element contains one or more connector operations or Mule components for processing the event. 
-
-[%header,cols="1,3a"]
+[%header,cols="1,1,3a"]
 |===
-| `<scatter-gather/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| TODO
 | `doc:name` 
 | Editable name for the component.
 
+| TODO
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| TODO
 | `timeout` 
 | Sets the timeout for responses from sent messages, in milliseconds. A value of `0` or less than `0` prevents a timeout. Defaults to `0`. 
 
+| TODO
 | `maxConcurrency` 
 | Sets the maximum number of routes to run concurrently.
 
 By default, all routes run in parallel. Setting this value to `1` makes the component process the routes sequentially.
 
+| TODO
 | `target` 
 | The name of the xref:4.4@mule-runtime::target-variables.adoc[target variable].
 
+| TODO
 | `targetValue` | Value of the data to store in the target variable.
 The default value is `#[payload]`. This field accepts any value that a Mule variable accepts:
 
@@ -102,35 +109,21 @@ The default value is `#[payload]`. This field accepts any value that a Mule vari
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//tag::xml-attributes-child1[]
-[%header, cols="1,3"]
-|===
-| <CHILD_ELEMENT/> Attributes | Description
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES or ELEMENTS
+//tag::component-xml-attributes-child1[]
 
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+`<route/>` is a child element of Scatter Gather. 
 
+[%header,cols="1,3a"]
 |===
-//end::xml-attributes-child1[]
+| Child Element 
+| Description 
+
+|`<route/>`
+| Accepts one or more components as child elements for processing the Mule event. Multiple `<route/>` configurations are allowed.
+|===
+//end::component-xml-attributes-child1[]
 //
-//
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::xml-attributes-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::xml-attributes-descendant1[]
 //
 
 

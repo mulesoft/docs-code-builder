@@ -72,33 +72,43 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+Parallel For Each (`<parallel-foreach/>`) has the following attributes: 
+
+[%header,cols="1,1,3a"]
 |===
-| `<parallel-foreach/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| TODO
 | `doc:name` 
 | Editable name for the component.
 
+| TODO
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| TODO
 | `collection` 
 | An expression that returns a collection. Defaults to `#[payload]`.
 
+| TODO
 | `timeout` 
 | Specifies the timeout in milliseconds for each parallel route.
 
+| TODO
 | `maxConcurrency`
 | Specifies the maximum level of parallelism for the router to use.
 +
 By default, all routes run in parallel.
 
+| TODO
 | `target`
 | Specifies a variable to use for storing the processed payload. By default, the output is saved in the flow's payload.
 +
 By default, Parallel For Each saves the output in the flow's payload.
 
+| TODO
 | `targetValue`
 | Specifies an expression to evaluate against the operation's output value. Parallel For Each stores the outcome of this expression in the `target` variable. 
 +
@@ -108,37 +118,6 @@ By default, this is the same as the operation's output value.
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//tag::component-xml-child1[]
-[%header, cols="1,3"]
-|===
-| <CHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-child1[]
-//
-//
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::component-xml-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-descendant1[]
-//
-
 
 //SECTION: EXAMPLES
 //

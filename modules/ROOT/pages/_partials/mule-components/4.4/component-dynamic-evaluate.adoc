@@ -74,17 +74,23 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+Dynamic Evaluate (`<ee:dynamic-evaluate/>`) has the following attributes:
+
+[%header,cols="1,1,3a"]
 |===
-| `<ee:dynamic-evaluate/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| TODO
 | `doc:name` 
 | Editable name for the component.
 
+| TODO
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| TODO
 | `expression` 
 | Expression that selects a DataWeave script that Mule executes, for example, `expression="#[vars.generateOrderScript]"`.
 
@@ -92,37 +98,23 @@ SNIPPET_JSON_HERE
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES or ELEMENTS
 //tag::component-xml-attributes-child1[]
 
-[%header, cols="1,3"]
-|===
-| <ee:parameters/> Attributes | Description
+`<ee:parameters/>` is a child element of Dynamic Evaluate.
 
-| None | Specify key-value pairs to set as parameters that the DataWeave script can evaluate, for example, `<ee:parameters>#[{name: attributes.queryParams.userName}]</ee:parameters>`.
+[%header,cols="1,3a"]
+|===
+| Child Element 
+| Description 
+
+|`<ee:parameters/>`
+| Key-value pairs that serve as parameters that the DataWeave script can evaluate, for example, `<ee:parameters>#[{name: attributes.queryParams.userName}]</ee:parameters>`.
 
 |===
 //end::component-xml-attributes-child1[]
 //
 //
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::component-xml-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-descendant1[]
-//
-
 
 //SECTION: EXAMPLES
 //

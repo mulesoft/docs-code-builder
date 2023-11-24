@@ -72,26 +72,35 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+Parse Template (`<parse-template/>`) has the following attributes: 
+
+[%header,cols="1,1,3a"]
 |===
-| `<parse-template/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| TODO
 | `doc:name` 
 | Editable name for the component.
 
+| TODO
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| TODO
 | `location` 
 | Location of the template file. Mule inserts values extracted from the message properties or variables into this file.
 
+| TODO
 | `content`
 | String representing the template where embedded expressions are evaluated and replaced by their results.
 
+| TODO
 | `target`
 | Name of the variable where the result of the expression defined in `targetValue` is stored after Parse Template executes. For more information, see xref:4.4@mule-runtime::target-variables.adoc[].
 
+| TODO
 | `targetValue`
 | Value of the data to store in the target variable. The field accepts any value that a variable accepts: any supported data type, DataWeave expressions, the keywords `payload`, `attributes`, and `message`, but not the keyword `vars`. Defaults to the message payload (`payload`).
 
@@ -99,38 +108,6 @@ SNIPPET_JSON_HERE
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//tag::component-xml-child1[]
-
-[%header, cols="1,3"]
-|===
-| <CHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-child1[]
-//
-//
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::component-xml-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-descendant1[]
-//
-
 
 //SECTION: EXAMPLES
 //
