@@ -70,16 +70,13 @@ Common uses are to append an encryption key value (such as `-M-Dencryption.key=m
 [[setting-metaspace]]
 == Mule › Runtime: Default Metaspace Size
 
-Set the metaspace size when installing Mule Runtime engine (Mule) for the first time. The default is *1g*. 
+Metaspace is an area for non-heap memory used to store class metadata, constant pool information, and method bytecode.
 
-//TODO: What does 1g mean? 
-////
-//TODO: what is metaspace? When would someone change this? 
-Are we talking about this?
-Metaspace, formerly known as PermGen (Permanent Generation), is a non-heap memory area that stores class metadata, constant pool information, and method bytecode. It was introduced in Java 8 as a replacement for PermGen, which was removed due to memory management issues.
-Source is medium.com: https://medium.com/@AlexanderObregon/introduction-to-javas-memory-model-heap-stack-and-metaspace-ceaeb565921c#:~:text=Metaspace%2C%20formerly%20known%20as%20PermGen,due%20to%20memory%20management%20issues
-////
-//TODO: would cloud IDE users ever need to set this? 
+Typically, the default of *1g* (1 GB) is sufficient. However, you can change the metaspace size when installing Mule Runtime engine (Mule). 
+//TODO: WHEN INSTALLING MULE FOR THE FIRST TIME ONLY, OR WHAT ABOUT WHEN UPDATING?
+
+If you are using the cloud IDE, be aware of the memory available to the container before changing this value.
+//TODO: HOW WOULD THEY KNOW 
 
 [[setting-mule-home]]
 == Mule › Runtime: Mule Home
