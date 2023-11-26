@@ -84,12 +84,11 @@ Source is medium.com: https://medium.com/@AlexanderObregon/introduction-to-javas
 [[setting-mule-home]]
 == Mule › Runtime: Mule Home
 
-Set your local Mule Runtime engine (Mule) installation directory. This setting defaults //TODO: to the most current installation directory? 
+When you update Anypoint Extension Pack version, the IDE extracts the latest supported Mule version to this directory. Typically, there is no need to change the default directory. 
 
-//TODO: do we have any recommendations (i.e., using the latest release)?
-//TODO: what is this for and when would you want to change it? 
-//TODO: looks like there are 3 standalone Mule installations on my laptop. check cloud IDE. 
-//TODO: do projects update to use the latest runtime installation?
+In Windows, on the desktop IDE, avoid issues with long paths by using the default path or, if you need to change the path, install to a directory that is close to the root directory. 
+
+Note that IDE uses the latest installed version of Mule. Selecting another version from the directory does not change the version that runs your apps.
 
 [[setting-runtime-dir]]
 == Mule › Runtime: Mule Runtimes Directory
@@ -128,9 +127,7 @@ Enable or disable telemetry services in the US cloud. When telemetry services ar
 [[setting-logging]]
 ==  Mule > Logging: Level
 
-Set the verbosity of logs that appear in the logs. Verbosity options are progressive:
-
-//TODO: WHICH LOGS? MS DX Server? Other? Where do you find the logs? Scope of logs (Mule projects or what)? I see logs in the Mule runtime folder (see Mule home above). Are Mule logs affected by this setting or just the UI or what?
+Set the verbosity of logs that appear in the Anypoint Code Builder extension and Mule DX Server logs. Verbosity options are progressive:
 
 * Off: No issues 
 * Fatal: Fatal issues only
