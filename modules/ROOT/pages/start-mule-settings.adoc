@@ -6,11 +6,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-//TODO: MuleSoft settings or Mule (project or runtime) settings only? 
-
-Anypoint Code Builder provides configurable MuleSoft settings that apply across your projects. Many of the default settings are usually suitable. However, if you use the EU cloud, it is important to change the default US cloud setting. Some settings are configurable in the desktop IDE only.
-
-//TODO: is this for Mule projects only or potentially for any ACB project, including design/api spec project?
+Anypoint Code Builder provides configurable settings that apply at the IDE level, across all your Anypoint Code Builder projects. Many of the default settings are suitable for most users. However, if you use the EU cloud, it is important to change the default US cloud setting. Some settings are configurable in the desktop IDE only.
 
 To open the settings: 
 
@@ -39,33 +35,21 @@ For information about Maven group IDs, see https://maven.apache.org/guides/intro
 [[setting-lsp]]
 == Mule › Lsp › Trace: Server
 
-Trace the communication between VS Code and the `muleLanguageServerProtocol` service. 
+You can enable and control the verbosity of `LogTrace` notifications to VS Code from the `muleLanguageServerProtocol` service. 
 
 Available settings: 
 
-* *off*: Default setting
-* *messages*: //TODO: DESCRIPTION
-* *verbose*: //TODO: DESCRIPTION
-
-//TODO: what is muleLanguageServerProtocol and when would you want to use the settings? Do they interact with any other settings?
+* *off* (default)
+* *messages*
+* *verbose* 
 
 [[setting-mule-args]]
 == Mule › Runtime: Default Arguments
 
 Set default command-line arguments to use when starting Mule Runtime engine (Mule). Mule starts when you run a Mule application in an integration or implementation project. 
 
-//TODO: Are there any we don't want people to touch
+Common uses of this setting are to append an encryption key value (such as `-M-Dencryption.key=my-key`) that is used when running a local deployment that incorporates secure configuration properties, or for a variable (such as `-M-Denv=dev`) that Mule uses when selecting a configuration properties file by its file name. For more information about these uses, see xref:int-create-secure-configs.adoc[]. 
 
-////
-//TODO: TBD IF WE WANT TO PROVIDE THESE 
-Default settings:
-
-----
--M-Dmule.forceConsoleLog -M-Dmule.testingMode -M-XX:-UseBiasedLocking -M-Dfile.encoding=UTF-8 -M-XX:+UseG1GC -M-XX:+UseStringDeduplication -M-Dcom.ning.http.client.AsyncHttpClientConfig.useProxyProperties=true -M-Dmule.debugger.test.port=8000 -M-Dmule.debug.enable=true console0
-----
-//// 
-
-Common uses are to append an encryption key value (such as `-M-Dencryption.key=my-key`) that is used when running a local deployment that incorporates secure configuration properties, or for a variable (such as `-M-Denv=dev`) that Mule uses when selecting a configuration properties file by its file name. For more information about these uses, see xref:int-create-secure-configs.adoc[]. 
 
 [[setting-metaspace]]
 == Mule › Runtime: Default Metaspace Size
@@ -81,25 +65,19 @@ If you are using the cloud IDE, be aware of the memory available to the containe
 [[setting-mule-home]]
 == Mule › Runtime: Mule Home
 
-When you update Anypoint Extension Pack version, the IDE extracts the latest supported Mule version to this directory. Typically, there is no need to change the default directory. 
+When you install or update Anypoint Extension Pack version, the IDE extracts the latest supported Mule version to this directory. Typically, there is no need to change the default directory. 
 
-In Windows, on the desktop IDE, avoid issues with long paths by using the default path or, if you need to change the path, install to a directory that is close to the root directory. 
 
-Note that IDE uses the latest installed version of Mule. Selecting another version from the directory does not change the version that runs your apps.
+
 
 [[setting-runtime-dir]]
 == Mule › Runtime: Mule Runtimes Directory
 
-Set the default download directory for different versions of Mule Runtime engine (Mule).
+Mule runtime engine (Mule) is part of the Anypoint Extension Pack.  You can use this setting to change the directory into which the installation or update process downloads Mule.
 
-For example, the default directory in the desktop IDE on a Mac is similar to `/Users/me/muleRuntimes`. In the cloud IDE, the default is similar to `/home/me/muleRuntimes`. 
+For example, the default directory in the desktop IDE on a Mac is similar to `/Users/me/muleRuntimes`. In the cloud IDE, the default is similar to `/home/me/muleRuntimes`.
 
-//TODO: can they change the directory in the cloud IDE?
-////
-POTENTIAL STORY
-Mule › Runtime: Mule Runtimes Directory :  We have guidance on the use of the terms related to Mule here. “Mule runtimes” (plural) isn’t allowed. Could we use something like Mule › Runtime: Mule Runtime Engine Instance Directory, Mule Runtime Instance Directory, or even Mule Runtime Engine Directory, instead? Do we need to make it plural?
-See https://confluence.internal.salesforce.com/display/MTDT/Term+Presentation+Reference
-////
+In Windows, on the desktop IDE, avoid potential issues with long paths by using the default path or another directory that is close to the root directory. 
 
 [[setting-region]]
 == Mule: Control Plane
@@ -116,10 +94,7 @@ For more information, see xref:index.adoc#us-eu-clouds[US and EU Cloud Hosts].
 [[setting-telemetry]]
 ==  Mule > Telemetry
 
-Enable or disable telemetry services in the US cloud. When telemetry services are enabled, the IDE sends anonymous usage data to the MuleSoft team. The data helps the team identify important usage trends.
-
-//TODO: CAN YOU SET IN CLOUD?
-//TODO: What's the default? on or off?
+You can enable or disable telemetry services in the US cloud. By default, this setting is disabled and not used for the EU cloud. When telemetry services are enabled, the IDE sends anonymous usage data to the MuleSoft team. The data helps identify important usage trends.
 
 [[setting-logging]]
 ==  Mule > Logging: Level
