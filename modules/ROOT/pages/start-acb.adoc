@@ -112,7 +112,7 @@ During the open beta, your cloud IDE instance might get deleted, causing you to 
 .Click for more information:
 [%collapsible]
 ====
-To save your work, you must either deploy your Mule projects to CloudHub, commit them to source control, or publish your API specifications to Design Center.
+To save your work, you must either deploy your Mule projects to CloudHub, or commit them to a source control management (SCM) system.
 
 If you are using an Anypoint Platform trial account that loses access to Anypoint Code Builder after your trial expires, the cloud IDE instances are deleted.
 
@@ -204,7 +204,8 @@ After logging you in, Anypoint Platform displays a *You can close this page now*
 
 In the desktop IDE, you can change your Anypoint Platform control plane to the US or EU cloud. US cloud is the default. Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:index.adoc#us-eu-clouds[US and UE Cloud Hosts]. 
 
-. If an API specification is open in the Explorer view of the IDE, close the project to avoid a synchronization error when you switch clouds. 
+//TODO (FEB): COULD THIS ISSUE STILL OCCUR IF THEY ARE CONFIGURED TO SYNC WITH DC?
+. If an API specification is open in the Explorer view of the IDE, close the project to avoid a potential synchronization error when you switch clouds. 
 
 * In the desktop IDE, click *File* > *Close Folder*.
 * In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *File* > *Close Folder*.
