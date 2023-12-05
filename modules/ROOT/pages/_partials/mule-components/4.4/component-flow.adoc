@@ -81,11 +81,11 @@ Flow (`<flow/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| TODO
+| Name
 | `name` 
 | Editable name for the flow.
 
-| TODO
+| Initial state
 | `initialState` 
 | Indicates whether the flow is active when you start the application. Accepted values are `started` and `stopped`. You can trigger flows in state `started` from an internal or external Mule event source within the flow (such as an HTTP listener or Scheduler), by a Flow Reference from another flow or subflow, or through a call to the xref:2.4@dataweave::dataweave-runtime-functions.adoc#functions_runtime[lookup] DataWeave function. 
 
@@ -93,7 +93,7 @@ If you set the initial state to `stopped`, use xref:runtime-manager::flow-manage
 
 Defaults to `started`.
 
-| TODO
+| Max concurrency
 | `maxConcurrency` 
 | Sets the maximum number of concurrent messages that the flow can process. If not set, the container thread pool determines the maximum number of threads the flow can use to optimize the performance when processing messages. While the flow is processing the maximum number of concurrent messages, it cannot receive additional requests.
 
