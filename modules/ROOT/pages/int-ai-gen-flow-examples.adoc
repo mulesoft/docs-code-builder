@@ -4,7 +4,7 @@ Use these example prompts to help you get started with the generative flow featu
 
 == New Case Notification
 
-Say your company receives numerous customer inquiries and support requests daily. You want to implement email notifications whenever a new case is created in Salesforce so you can respond quickly to customers and ensure timely case resolution to increase customer satisfaction.
+Your company receives numerous customer inquiries and support requests daily. You want to implement email notifications whenever a new case is created in Salesforce so you can respond quickly to customers and ensure timely case resolution to increase customer satisfaction.
 
 To generate a flow for this task, enter a prompt like: `Generate a flow that sends an email when a case is created in Salesforce`.
 
@@ -39,20 +39,19 @@ payload map {
             <email:to-address value="user3@domain.com" />
             <email:to-address value="user2@domain.com" />
         </email:to-addresses>
-        <email:body contentType="text/html" > <4>
+        <email:body contentType="text/html" > <!--4-->
             <email:content ><![CDATA["<h1>New Case Created:</h1>"]]></email:content>
         </email:body>
     </email:send>
 </flow>
 ----
-
-<1> This flow starts with a Salesforce Connector `on-new-object-listener` so that when a new case is created, the flow is triggered. 
-
-<3> The payload for the new case is set in variables using a DataWeave script within the Transform component. 
-<4> The email is sent using the Email Connector *Send* operation with the configured SMTP settings.
+[calloutlist]
+.. This flow starts with a Salesforce Connector `on-new-object-listener` so that when a new case is created, the flow is triggered. 
+.. The payload for the new case is set in variables using a DataWeave script within the Transform component. 
+.. The email is sent using the Email Connector *Send* operation with the configured SMTP settings.
 +
 The subject of the email is set to `"New Case Created: "` followed by the case subject.
-<5> The body of the email is set to HTML format and includes the case ID, subject, and description.
+.. The body of the email is set to HTML format and includes the case ID, subject, and description.
 
 === Complete the Flow
 
