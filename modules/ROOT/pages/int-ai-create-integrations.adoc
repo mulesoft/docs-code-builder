@@ -4,9 +4,9 @@ include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 The Einstein generative flow feature in Anypoint Code Builder transforms your natural language prompt, which describes your business logic, into a flow that contains the connector operations and processors, in the correct order, to accomplish the specified task. 
 
-For example, if you want to create a flow that reads contacts from Salesforce in JSON format, you can enter a prompt describing that task. The prompt is then transformed into a series of the connector operations and processors needed to execute that task, in this case: Listener, Query, Transformer, and Logger. 
+For example, if you want to create a flow that reads contacts from Salesforce in JSON format, enter a prompt describing that task. The prompt is then transformed into a series of the connector operations and processors needed to execute that task, in this case: Listener, Query, Transformer, and Logger. 
 
-A flow is generated, which you can then further configure to suit your specific needs. 
+Einstein generates a flow, which you can then further configure to suit your specific needs. 
 
 [[before-you-begin]]
 == Before You Begin
@@ -25,12 +25,12 @@ Before you start creating your integration using Einstein:
 
 There are two ways to open Einstein:
 
-* When you create a new integration project, click the *Start with AI* card in the flow canvas. 
+* When you create a new integration project, click the *Start with AI* card in the flow canvas:
 +
 image::int-start-with-ai-card.png[Start with AI or Open Einstein card]
 
 * Click the Einstein icon in the toolbar. 
-//Check padding on image
++
 image::int-einstein-icon-in-toolbar.png[Arrow pointing to Einstein icon in the toolbar]
 
 [[create-integration-project]]
@@ -44,7 +44,7 @@ include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 +
 image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
 
-. Complete the *Develop an Integration* form.
+. Complete the *Develop an Integration* form:
 +
 [%header,cols="20a,60a"] 
 |===
@@ -88,16 +88,16 @@ Highlight the key MuleSoft components and connector operations to include in the
 Clearly mention the data objects to include in the flow, such as "Salesforce Account object" or any other relevant data source.
 * Proofread your prompt:
 +
-Proofread your prompt to ensure that it is clear and comprehensive before you send it. Revise your prompt if necessary.
+Review your prompt to ensure that it is clear and comprehensive before you send it. Revise your prompt if necessary.
 
-After the initial flow is generated for you, you can then customize the code for your specific needs.
+After Einstein generates the initial flow, you can then customize the code for your specific needs.
 
-For examples of prompts and generated flows, see xref:int-gen-flow-examples-ai.adoc[]
+For examples of prompts and generated flows, see xref:int-gen-flow-examples-ai.adoc[].
 
 [NOTE]
 ====
 * Each prompt is discrete, meaning that it doesn't build upon previous prompts. 
-* Due to the sensitivity of LLMs and depending on which LLM is used, the same prompt might produce different responses; and sometimes, a similar prompt can produce very different responses. 
+* Due to the sensitivity of LLMs and depending on which LLM is used, the same prompt might produce different responses. Sometimes, a similar prompt can produce very different responses. 
 ====
 
 [[view-prompt-history]]
@@ -107,11 +107,10 @@ The prompt history for a project shows the previous 50 prompts for that project.
 
 To see the prompt history:
 
-. Click the open prompt history icon: 
+. Click the open prompt history icon.
 +
-//Need to add this icon
 A list of the last 50 queries is displayed. 
-. Click on a prompt in the list to see the details of the generated flow. 
+. Click a prompt in the list to see the details of the generated flow. 
 +
 You can insert the code that was generated into your flow, or you can copy the code snippet and use or modify it elsewhere. 
 
@@ -123,20 +122,20 @@ Use the Generative Flow feature to add a flow to your integration project.
 
 . In the *Start with AI* card, click *Open Einstein*.
 +
-Optionally, click on either of the example prompts on the *Start with AI* card to get an idea of how this feature works.
+Optionally, click either example prompt on the *Start with AI* card to see how this feature works.
 . If this is the first time you are using this feature, agree to the terms, and continue. 
 +
-The *Einstein* panel opens.
+The *Einstein* panel opens:
 +
 image::acb-einstein-panel.png["Einstein panel with welcome message, two example prompts, and empty prompt field"]
 +
 . Enter the prompt to create the initial flow for your task and click the send icon image:icon-send-prompt.png["",15,15].
 +
-Optionally, click on one of the supplied example prompts to get started.
+Optionally, click an example prompt to get started.
 +
-While your flow is generated, you see the message `Einstein is thinking` in the prompt box.
+While your flow is generating, you see the message `Einstein is thinking` in the prompt box.
 +
-When your flow is ready, the code and a description of the components in the flow appear in the *Einstein* panel. 
+When your flow is ready, the code and a description of the components in the flow appear in the *Einstein* panel:
 +
 image::int-generated-case-notification-email.png[]
 +
@@ -144,16 +143,15 @@ image::int-generated-case-notification-email.png[]
 +
 Rating the flow that's created for you helps improve the quality of generative flows.
 . Inspect the generated code, and if you are satisfied, click the insert code icon to insert the code into your flow. 
-//Add icon
 +
 If you aren't satisfied with the generated flow, try rewording your prompt and sending it again. 
 
 [[customize-gen-flow]]
 == Complete Your Flow
 
-After Einstein builds the flow for you, you might need to fill in infromation that is specific to your configuration. 
+After Einstein builds the flow, you might need to fill in information specific to your configuration. 
 
-. After you inspect the code for your generated flow, you can either choose to copy it into your clipboard or insert it with a single click using the *Insert* action. 
+. After you inspect the code for your generated flow, you can either copy it into your clipboard or insert it with a single click using the *Insert* action. 
 +
 After the code is inserted, the initial flow is built and the visual representation of the flow is displayed in the flow canvas next to the XML code tab. 
 +

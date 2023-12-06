@@ -4,11 +4,11 @@ Use these example prompts to help you get started with the generative flow featu
 
 == New Case Notification
 
-Say your company receives numerous customer inquiries and support requests on a daily basis. You want to implement email notifications whenever a new case is created in Salesforce so you can respond quickly to customers and ensure timely case resolution to increase customer satisfaction.
+Say your company receives numerous customer inquiries and support requests daily. You want to implement email notifications whenever a new case is created in Salesforce so you can respond quickly to customers and ensure timely case resolution to increase customer satisfaction.
 
 To generate a flow for this task, enter a prompt like: `Generate a flow that sends an email when a case is created in Salesforce`.
 
-This generates XML code for the new flow, similar to this:  
+This prompt generates XML code for the new flow, similar to this:  
 
 [source, xml]
 ----
@@ -48,8 +48,8 @@ payload map {
 
 <1> This flow starts with a Salesforce Connector `on-new-object-listener` so that when a new case is created, the flow is triggered. 
 
-<3> The payload for the new case is set in variables using a DataWeave script within the `transform` component. 
-<4> The email is sent using the Email Connector Send operation with the configured SMTP settings.
+<3> The payload for the new case is set in variables using a DataWeave script within the Transform component. 
+<4> The email is sent using the Email Connector *Send* operation with the configured SMTP settings.
 +
 The subject of the email is set to `"New Case Created: "` followed by the case subject.
 <5> The body of the email is set to HTML format and includes the case ID, subject, and description.
@@ -61,7 +61,7 @@ After reviewing and inserting the generated flow into your project:
 . Type the target email address to use in your use case, for example:
 + 
 `<email:to-address value="\demo@gmail.com" />`
-. Add the target email, `${email.username}` to your xref:int-create-secure-configs#properties.adoc[configuration properties file]. 
+. Add the target email, `${email.username}` to your xref:int-create-secure-configs.adoc#properties[configuration properties file]. 
 . Optionally, enter a value for the scheduling strategy in the `fixed-frequency` attribute. The scheduler initiates the flow to poll for new cases according to the value you set, for example:
 +
 [source, xml]
@@ -134,7 +134,7 @@ Provide a streamlined process for Salesforce System Administrators by using an A
 
 To generate a flow for this task, enter a prompt like: `Create a flow that listens for an API call and updates the phone number of a Salesforce Account object`.
 
-This generates XML code for the new flow, similar to this:  
+This prompt generates XML code for the new flow, similar to this:  
 
 [source, xml]
 ----
@@ -159,7 +159,7 @@ output application/java
 
 <1> The flow starts with an HTTP Listener that listens for an API call on the `/updatePhoneNumber` path.
 <2> In the Transform component, the payload is set using the `<ee:transform>` operation to specify the account ID and phone number to update.
-<3> The Salesforce Connector Update operation is used to update the Account object in Salesforce. 
+<3> The Salesforce Connector *Update* operation is used to update the Account object in Salesforce. 
 +
 The `type` attribute is set to `"Account"` to specify the object type to update.
 <4> The payload is passed as the records to update in Salesforce.
@@ -213,7 +213,7 @@ This flow enables real-time updates between Salesforce and your database to ensu
 
 To generate a flow for this task, enter a prompt like: `Create a flow that syncs the phone field of account objects between a Salesforce org and a database`.
 
-This generates XML code for the new flow, similar to this: 
+This prompt generates XML code for the new flow, similar to this: 
 
 [source, xml]
 ----
@@ -257,7 +257,7 @@ output application/java
 <3> The phone number is extracted from the payload and stored in a variable named `"phone"`.
 <4> The Database Connector Select operation retrieves the account record from the database based on the account ID.
 <5> A DataWeave transformation is used to create the updated data for the Salesforce Account object.
-<6> The Salesforce Connector Update operation udpates the Salesforce account.
+<6> The Salesforce Connector *Update* operation updates the Salesforce account.
 <7> The account information is also updated in the database using a Database Connector Update operation.
 <8> The payload is set to `"Phone field synced successfully"` to indicate a successful sync.
 
@@ -359,7 +359,7 @@ This generates XML code for the new flow, similar to this:
 ----
 
 <1> The flow starts with a Database Connector Listener component that listens for new records in the database `"record"` table.
-<2> The scheduling strategy is set to trigger the flow at a fixed frequency of every 1 second.
+<2> The scheduling strategy is set to trigger the flow at a fixed frequency of every one second.
 <3> The payload of the listener is stored in a variable named `"record"` using the Set Variable operation.
 <4> An email is sent from the address `"\sender@example.com"` using the Email Send component.
 <5> The email is sent to the address `"\recipient@example.com"`.
