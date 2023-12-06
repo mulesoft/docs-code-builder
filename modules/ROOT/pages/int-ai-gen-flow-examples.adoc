@@ -2,7 +2,7 @@
 
 Use these example prompts to help you get started with the generative flow feature and understand how to create prompts for your own use cases.  
 
-== New Case Notification
+== Implement a New Case Notification
 
 Your company receives numerous customer inquiries and support requests daily. You want to implement email notifications whenever a new case is created in Salesforce so you can respond quickly to customers and ensure timely case resolution to increase customer satisfaction.
 
@@ -46,11 +46,11 @@ payload map {
 </flow>
 ----
 [calloutlist]
-.. This flow starts with a Salesforce Connector `on-new-object-listener` so that when a new case is created, the flow is triggered. 
+.. This flow starts with a Salesforce Connector `on-new-object-listener` trigger so that when a new case is created, the flow is triggered. 
 .. The payload for the new case is set in variables using a DataWeave script within the Transform component. 
 .. The email is sent using the Email Connector *Send* operation with the configured SMTP settings.
 +
-The subject of the email is set to `"New Case Created: "` followed by the case subject.
+The subject of the email is set to `New Case Created: ` followed by the case subject.
 .. The body of the email is set to HTML format and includes the case ID, subject, and description.
 
 === Complete the Flow
@@ -61,7 +61,7 @@ After reviewing and inserting the generated flow into your project:
 + 
 `<email:to-address value="\demo@gmail.com" />`
 . Add the target email, `${email.username}` to your xref:int-create-secure-configs.adoc#properties[configuration properties file]. 
-. Optionally, enter a value for the scheduling strategy in the `fixed-frequency` attribute. The scheduler initiates the flow to poll for new cases according to the value you set, for example:
+. Optionally, enter a value for the scheduling strategy in the `fixed-frequency` attribute. The *Scheduler* initiates the flow to poll for new cases according to the value you set, for example:
 +
 [source, xml]
 ----
@@ -157,10 +157,10 @@ output application/java
 ----
 
 <1> The flow starts with an HTTP Listener that listens for an API call on the `/updatePhoneNumber` path.
-<2> In the Transform component, the payload is set using the `<ee:transform>` operation to specify the account ID and phone number to update.
+<2> In the *Transform* component, the payload is set using the *<ee:transform>* operation to specify the account ID and phone number to update.
 <3> The Salesforce Connector *Update* operation is used to update the Account object in Salesforce. 
 +
-The `type` attribute is set to `"Account"` to specify the object type to update.
+The `type` attribute is set to `Account` to specify the object type to update.
 <4> The payload is passed as the records to update in Salesforce.
 
 === Complete the Flow 
@@ -208,7 +208,7 @@ The following is an example of the completed flow:
 
 == Synchronize Account Objects
 
-This flow enables real-time updates between Salesforce and your database to ensure the data is always current and accurate across both Salesforce and your database. As soon as a change is made in the phone field in Salesforce, it is immediately updated in the database and vice versa.
+This flow enables real-time updates between Salesforce and your database to ensure the data is always current and accurate across both Salesforce and your database. As soon as the phone field changes in Salesforce, it updates immediately in the database and vice versa.
 
 To generate a flow for this task, enter a prompt like: `Create a flow that syncs the phone field of account objects between a Salesforce org and a database`.
 
@@ -251,14 +251,14 @@ output application/java
 </flow>
 ----
 
-<1> The HTTP Listener operation is configured to listen for a POST request on the `/syncAccountPhone` path.
-<2> The account ID is extracted from the payload and stored in a variable named `"accountId"`.
-<3> The phone number is extracted from the payload and stored in a variable named `"phone"`.
-<4> The Database Connector Select operation retrieves the account record from the database based on the account ID.
-<5> A DataWeave transformation is used to create the updated data for the Salesforce Account object.
-<6> The Salesforce Connector *Update* operation updates the Salesforce account.
-<7> The account information is also updated in the database using a Database Connector Update operation.
-<8> The payload is set to `"Phone field synced successfully"` to indicate a successful sync.
+<1> Configure the HTTP *Listener* operation to listen for a POST request on the `/syncAccountPhone` path.
+<2> Extract the account ID from the payload and store it in a variable named `accountId`.
+<3> Extract the phone number from the payload and store it in a variable named `phone`.
+<4> The Database Connector *Select* operation retrieves the account record from the database based on the account ID.
+<5> Use a DataWeave *Transform* operation to create the updated data for the Salesforce Account object.
+<6> Use the Salesforce Connector *Update* operation to update the Salesforce account.
+<7> The account information is also updated in the database using a Database Connector *Update* operation.
+<8> The payload is set to `Phone field synced successfully` to indicate a successful sync.
 
 === Complete the Flow
 
@@ -329,7 +329,7 @@ The following is an example of a completed flow:
 ----
 
 
-== New Record Notification
+== Automate New Record Notification
 
 Automate email notifications to users when a new database record is updated to minimize manual intervention, which improves efficiency and reduces the chances of errors or delays. 
 
@@ -357,11 +357,11 @@ This generates XML code for the new flow, similar to this:
 </flow>
 ----
 
-<1> The flow starts with a Database Connector Listener component that listens for new records in the database `"record"` table.
+<1> The flow starts with a Database Connector *Listener* component that listens for new records in the database `record` table.
 <2> The scheduling strategy is set to trigger the flow at a fixed frequency of every one second.
-<3> The payload of the listener is stored in a variable named `"record"` using the Set Variable operation.
-<4> An email is sent from the address `"\sender@example.com"` using the Email Send component.
-<5> The email is sent to the address `"\recipient@example.com"`.
+<3> The payload of the listener is stored in a variable named `record` using the *Set Variable* operation.
+<4> An email is sent from the address `\sender@example.com` using the *Email Send* component.
+<5> The email is sent to the address `\recipient@example.com`.
 
 === Complete the Flow
 
@@ -369,7 +369,7 @@ After reviewing and inserting the generated flow into your project:
 
 . Update the sender email address, recipient email addresses, and email body for your specific use case.
 . Update the database table name so that it corresponds to the database table on which the flow listens for new records.
-. Update the `watermarkColumn` in the database listener to whichever database column is used to indicate new records. 
+. Update the `watermarkColumn` in the Database *Listener* to whichever database column is used to indicate new records. 
 +
 The values that are taken from this column are used to filter the contents of the next poll, so that only rows with a greater watermark value are processed.
 . To run this flow, use built-in snippets to add configurations for your database and email inbox.
