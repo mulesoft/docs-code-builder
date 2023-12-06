@@ -48,7 +48,7 @@ payload map {
 
 <1> This flow starts with a Salesforce Connector `on-new-object-listener` so that when a new case is created, the flow is triggered. 
 
-<3> The payload for the new case is set in variables using a DataWeave script within the `transform` component. 
+<3> The payload for the new case is set in variables using a DataWeave script within the Transform component. 
 <4> The email is sent using the Email Connector Send operation with the configured SMTP settings.
 +
 The subject of the email is set to `"New Case Created: "` followed by the case subject.
