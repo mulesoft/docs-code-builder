@@ -6,10 +6,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
  
-Syncing updates with your source control management system (SCM) is a best practice to ensure that you are able to retain and track your changes to your API design projects. 
-
-//TODO: ADD LINK TO HOW TO ON SCM SETUP:
-//If your SCM is not configured in VS Code, see xref:TODO.adoc[]. 
+Syncing updates with your source control management system (SCM) is a best practice to ensure that you are able to retain and track your changes to your API design projects. Using an SCM is optional but strongly recommended for projects that you intend to use in a production environment or that you want to store, version, collaborate on, or share with members of your team.
 
 The process for syncing your changes is:
 
@@ -18,8 +15,10 @@ The process for syncing your changes is:
 
 == Before You Begin
 
-Before syncing with Design Center:
+Before syncing with your SCM:
 
+* //TODO: ADD LINK TO HOW TO ON SCM SETUP:
+//If your SCM is not configured in VS Code, see xref:TODO.adoc[]. 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create and test your API specification].
 
@@ -57,9 +56,9 @@ The UI uses the `git add` command to add changes from your working directory to 
 If you staged all files, the *Source Control* panel now displays no changes to commit.
 +
 The UI uses the `git commit` command to save the changes you staged to your local repository.
-. Push your changes to Design Center by clicking *Sync Changes* in the *Source Control* panel.
+. Push your changes by clicking *Sync Changes* in the *Source Control* panel.
 +
-*Sync Changes* also pulls any changes from Design Center.
+*Sync Changes* also pulls any changes from your SCM.
 +
 To push changes without pulling changes:
 +
@@ -68,11 +67,11 @@ To push changes without pulling changes:
 +
 image::push-changes.png["Push command highlighted in the source control section"]
 +
-The UI uses the `git push` command to upload your local content to Design Center.
-
-Your changes are now published in Design Center.
-
-If the UI prompts you, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API:
-
+The UI uses the `git push` command to upload your local content to Git.
++
+//TODO: IS THIS RELEVANT?
+If the UI prompts you, indicate whether to check for updates of your API and prompt you to update your local version of the API:
++
+//TODO: IS THIS RELEVANT?
 image::fetch-periodically-check.png["Periodically run git fetch message highlighted"]
 

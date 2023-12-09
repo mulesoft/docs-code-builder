@@ -4,25 +4,26 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Use Anypoint Code Builder to create and test API specifications before publishing to Exchange or implementing:
+Use Anypoint Code Builder to create and test API specs before publishing to Anypoint Exchange:
 
 . <<design-new-api-spec, Create a new API specification project>>.
 . <<open-output-panel, Track progress in the output panel>>.
 . <<review-spec-console, Review your spec in the API console>>.
 . <<test-spec, Test your spec using the mocking service>>.
 
-Use the <<example-oas-api-spec,`oas-example`>> API spec to explore the functionality of Anypoint Code Builder. 
+Use the <<example-oas-api-spec,`oas-example`>> API specification to explore the functionality of Anypoint Code Builder. 
 
 
 == Before You Begin
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
-* Understand the basics of designing API specifications. 
+* Understand the basics of designing API specs. 
 +
 See the xref:tutorials.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 +
-API specifications belong to a business group.
+//TODO: VERIFY
+When you publish your API fragment to Exchange from Anypoint Code Builder, the IDE requests the name of the business group.
 
 [[design-new-api-spec]]
 == Create a New API Specification Project
@@ -57,11 +58,6 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 | *API Specification Language* | See xref:des-designing-api-specs.adoc#supported-spec-languages[Supported OAS and RAML Versions].
 
 Select *OAS 3.0 (YAML)* to use the <<example-oas-api-spec,example>> in this procedure.
-| *Business Group* | Business Group in Anypoint Platform for your API specification.
-
-See xref:access-management::business-groups.adoc[].
-
-You cannot change the selected business group after creating the API specification.
 |===
 . Click *Create Project*.
 +
