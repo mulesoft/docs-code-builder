@@ -6,7 +6,7 @@ In addition to visual configuration, you can use XML-based configuration files t
 
 == Overview of the Component Configuration UI
 
-The configuration UI enables you to edit the properties of a component that is currently selected in your canvas. For example, adding and selecting the *Mule -Logger* component invokes the following configuration UI:
+The configuration UI enables you to edit the properties of a component that is currently selected in your canvas. For example, adding and selecting the *Logger* component invokes the following configuration UI:
 
 // TODO: this is a placeholder image until we figure out which component we want to show
 image::configure-logger-properties.png["Canvas showing visual representation of Logger component propertes"]
@@ -14,12 +14,12 @@ image::configure-logger-properties.png["Canvas showing visual representation of 
 [calloutlist]
 .. Tabs for accessing component properties:
 +
-* *General* - Basic configuration fields for the component
-* *Input/Output* - Metadata entering (*Input*) and exiting (*Output*) the component
-* *Notes* - Custom component information added for future reference
-.. Editable text field that represents the value of the property
-.. Button that toggles syntax for defining expressions with the DataWeave language
-.. Button that toggles syntax for specifying externally defined configuration properties
+* *General* - Basic configuration fields for the component.
+* *Input/Output* - Metadata entering (*Input*) and exiting (*Output*) the component.
+* *Notes* - Custom component information added for future reference.
+.. Editable text field that represents the value of the property.
+.. Button that toggles syntax for defining expressions with the DataWeave language.
+.. Button that toggles syntax for specifying externally defined configuration properties.
 
 [NOTE]
 ====
@@ -40,9 +40,8 @@ The configuration UI doesn't support configuring components outside of Flow and 
 Before getting started, ensure that you:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
-* xref:int-create-integrations.adoc[Create an integration project].
 
-== Add a Message String to the Logger Component
+== Add a String to the Logger Component
 
 The Logger component enables you log debug information at various stages of the integration flow. To configure a message that the component prints when the component executes, you can use the configuration UI, selecting the Logger within the flow and customizing its settings.
 
@@ -62,7 +61,10 @@ image::int-empty-canvas.png["Canvas showing visual representation of Mule flow a
 // TODO: screenshot showing the Logger component in the search results list
 +
 The Logger component configuration UI displays with the following fields:
-// TODO: screenshot of empty Logger component UI
+* *Message* - Optional property that describes the message to log.
+* *Level* - Optional property that describes the log level.
+* *Category* - Optional property that describes the logger in a way that helps you distinguish it from other loggers in your flow.
+
 . Add a string in the *Message* field, for example:
 +
 [source,text]
@@ -78,3 +80,5 @@ The following snippet is added in the XML editor:
 --
 <logger doc:name="Logger" message="get:\flights:american-flights-api-config"/>
 --
+
+== Add a DataWeave Expression to the Logger Component
