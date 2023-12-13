@@ -40,6 +40,7 @@ The configuration UI doesn't support configuring components outside of Flow and 
 Before getting started, ensure that you:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:int-create-integrations.adoc[Create an integration project].
 
 == Add a String to the Logger Component
 
@@ -47,18 +48,14 @@ The Logger component enables you log debug information at various stages of the 
 
 To open the component configuration UI and set a string as a Logger message:
 
-. In the Explorer view, select the XML file for your project, such as `my-project-name.xml`.
+. On the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon where you want to add the component.
 +
-image::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
-+
-[calloutlist]
-.. The canvas provides space for a visual representation of your Mule flows or subflows.
-.. The configuration XML editor displays the configuration file for your Mule application.
+image::main-tutorial-add-first-http-listener.png["Mule application canvas"]
+
 . Select *Flow* from the canvas to create an empty flow.
 . Add a component to your project from the canvas, for example, add the Logger component.
 .. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the Add Component panel, search for and select Logger.
-// TODO: screenshot showing the Logger component in the search results list
 +
 The Logger component configuration UI displays with the following fields:
 * *Message* - Optional property that describes the message to log.
@@ -82,3 +79,39 @@ The following snippet is added in the XML editor:
 --
 
 == Add a DataWeave Expression to the Logger Component
+
+To open the component configuration UI and set a DataWeave expression as a Logger message:
+
+. On the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon where you want to add the component.
++
+image::main-tutorial-add-first-http-listener.png["Mule application canvas"]
+
+. Select *Flow* from the canvas to create an empty flow.
+. Add a component to your project from the canvas, for example, add the Logger component.
+.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
+.. In the Add Component panel, search for and select Logger.
++
+The Logger component configuration UI displays with the following fields:
+* *Message* - Optional property that describes the message to log.
+* *Level* - Optional property that describes the log level.
+* *Category* - Optional property that describes the logger in a way that helps you distinguish it from other loggers in your flow.
+
+. Add a DataWeave expression in the *Message* field, for example:
++
+[source,text]
+--
+payload.id ++ " is the ID of this payload.
+--
+. Click the DataWeave expression button for the *Message* field.
+// TODO: screenshot of the DataWeave expression in the Message field
++
+This example uses DataWeave to concatenate a field in the message payload to the a string. Notice the `#[]` indicates that the message contains an expression or variable.
++
+The following snippet is added in the XML editor:
++
+[source,xml]
+--
+<logger
+  doc:name="Logger"
+  message="#[payload.id ++ " is the ID of this payload."]"/>
+--
