@@ -60,6 +60,7 @@ The listener is for triggering the flow, and Set Payload provides some test data
 
 . In the Explorer view, select the XML file for your project, such as `my-project-name.xml`:
 +
+//TODO: UPDATE THIS OUT-OF-DATE IMAGE
 image::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
 +
 [calloutlist]
@@ -241,15 +242,13 @@ Before publishing, run your application in debug mode.
 [[create-new-config]]
 == Create a New Configuration XML File
 
-Anypoint Code Builder creates the initial Mule configuration XML file in `src/main/mule`
-within the Mule project.
-This file contains global configurations and flow structures.
+Anypoint Code Builder creates the initial Mule configuration XML file in `src/main/mule` within the Mule project.
 
-You can create additional configuration files, for example to store global configurations.
+You can create additional configuration files, for example, for an implementation file for a scaffolded interface or for global configurations that you can reference from an XML file. 
 
-To create a new XML configuration file:
+To create a new configuration XML file:
 
-. In the Explorer view, right-click the *mule* folder (`src/main/mule`) and select *New File*.
+. In the Explorer view, right-click the *mule* folder (`src/main/mule`) and select *New Mule Configuration File...* to launch a configuration field for the new file.
 +
 Alternatively, use the menu.
 +
@@ -258,28 +257,29 @@ Alternatively, use the menu.
 ====
 Select the `mule` folder, and then:
 
-** In the desktop IDE, select *File* > *New File*.
-** In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *File* > *New File*.
+** In the desktop IDE, select *File* > *New Mule Configuration File...*.
+** In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *File* > *New Mule Configuration File...*.
 ====
-. Enter a name for the new file with the `.xml` extension.
-. In the Editor view for the new file, press Ctrl+Space to display available options.
-. Select *Empty mule configuration*:
+. In the *New Mule Configuration File...* field that opens, provide a name for the new file without an extension.
 +
-image::int-new-mule-config.png[New mule configuration option in auto-correct]
+The name must be unique within the project. Permitted special characters are `_` (underscore), `.`, `@`, `(`, and `)`.
 +
-This command adds the following code to the file:
+The process automatically appends an `xml` extension to the file name an opens the new configuration XML file and its canvas UI within the IDE.
++
+The new configuration XML file contains the `<mule/>` element with default namespaces:
 +
 [source,xml]
 --
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-    xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-    
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+  
 </mule>
 --
++
+The file's canvas UI provides the same options for building your project file that  appear when you create an integration project. 
 
 
 == See Also
