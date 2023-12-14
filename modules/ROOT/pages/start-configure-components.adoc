@@ -77,7 +77,7 @@ The Logger component configuration UI displays with the following fields:
 get:\flights:american-flights-api-config
 --
 +
-image::configure-logger-message-property.png["Canvas showing visual representation of Logger message component property field populated"]
+image::configure-logger-message-property.png["Canvas showing visual representation of Logger message component property field populated with a string"]
 +
 The following snippet is added in the XML editor:
 +
@@ -113,7 +113,8 @@ The Logger component configuration UI displays with the following fields:
 payload.id ++ " is the ID of this payload."
 --
 . Click the DataWeave expression button for the *Message* field.
-// TODO: screenshot of the DataWeave expression in the Message field
++
+image::configure-logger-message-expression.png["Canvas showing visual representation of Logger message component property field populated with an expression"]
 +
 This example uses DataWeave to concatenate a field in the message payload to the a string. Notice the message's surrounding `#[]` indicates that the message contains an expression.
 +
@@ -123,7 +124,7 @@ The following snippet is added in the XML editor:
 --
 <logger
   doc:name="Logger"
-  message="#[payload.id ++ " is the ID of this payload."]"/>
+  message='#[payload.id ++ " is the ID of this payload."]'/>
 --
 
 == Add a Mule Variable to the Logger Component
