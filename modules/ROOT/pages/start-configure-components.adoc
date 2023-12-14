@@ -15,6 +15,7 @@ image::configure-logger-properties.png["Canvas showing visual representation of 
 .. Tabs for accessing component properties:
 +
 * *General* - Basic configuration fields for the component.
+* *Advanced* - Additional configuration fields for the component.
 * *Input/Output* - Metadata entering (*Input*) and exiting (*Output*) the component.
 * *Notes* - Custom component information added for future reference.
 .. Editable text field that represents the value of the property.
@@ -30,6 +31,13 @@ Certain component fields can only be configurable via the XML editor.
 ====
 The configuration UI doesn't support configuring components outside of Flow and Subflow components, such as connections and other global configurations.
 ====
+
+=== Accessing the Configuration UI
+
+Anypoint Code Builder enables two ways to access the configuration UI:
+
+* Selecting a component in the canvas.
+* Highlighting a component's XML in the XML editor then selecting *Show Component in Canvas* from the context menu.
 
 == Overview of Component Configuration in the XML editor
 
@@ -80,6 +88,8 @@ The following snippet is added in the XML editor:
 
 == Add a DataWeave Expression to the Logger Component
 
+DataWeave is an expression language that enables you to build a simple solution for a common use case for integration developers: read and parse data from one format, transform the data, and write it out as a different format. The following example describes how to add a dynamic payload ID to the *Message* property of the *Logger* component.
+
 To open the component configuration UI and set a DataWeave expression as a Logger message:
 
 . On the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon where you want to add the component.
@@ -105,7 +115,7 @@ payload.id ++ " is the ID of this payload."
 . Click the DataWeave expression button for the *Message* field.
 // TODO: screenshot of the DataWeave expression in the Message field
 +
-This example uses DataWeave to concatenate a field in the message payload to the a string. Notice the `#[]` indicates that the message contains an expression or variable.
+This example uses DataWeave to concatenate a field in the message payload to the a string. Notice the message's surrounding `#[]` indicates that the message contains an expression.
 +
 The following snippet is added in the XML editor:
 +
@@ -115,3 +125,5 @@ The following snippet is added in the XML editor:
   doc:name="Logger"
   message="#[payload.id ++ " is the ID of this payload."]"/>
 --
+
+== Add a Mule Variable to the Logger Component
