@@ -12,9 +12,11 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 Create a basic integration, add connectors and other components to your Mule application
 to process your business logic, and configure attributes:
 
-. <<create-integration-project, Create a new integration project>>.
+. <<create-integration-project, Create an integration project>>.
++
+Create the integration from scratch, or start from a template or example that you import from Anypoint Exchange.
 . <<add-components, Add components to your project>>.
-. <<import-connectors, Import connectors from Exchange>>.
+. <<import-connectors-from-exchange, Import connectors from Exchange>>.
 . <<configure-attributes, Configure attributes for a component>>.
 . <<check-connection, Test an HTTP Listener connection>>.
 . <<create-new-config, Create a new XML configuration file>>.
@@ -25,7 +27,7 @@ to process your business logic, and configure attributes:
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 
 [[create-integration-project]]
-== Create a New Integration Project
+== Create an Integration Project
 
 To create a new integration project:
 
@@ -44,19 +46,31 @@ image::develop-integration-option-mat.png["Develop an Integration link highlight
 
 This name is used as the title and name of the integration project file.
 For example, if the project name is "OAS Integration," the project file name is `oas-integration`.
+//TODO: VERIFY "Project Location", not "Default Location"
 | *Project Location* | Your home directory or another directory you create. Click *Browse* to select a different directory for the integration.
 
 See xref:start-add-folders.adoc[].
 
 include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 |===
+. Create a project from scratch, or start with existing project content from Anypoint Exchange:
+
+* *Empty Project*
++
+Start an integration project from scratch.
+* *Template or Example Project*
++
+Import an existing integration template or example from Anypoint Exchange.
+. If you opt to import from Exchange, search for the template or example, mouse over the asset that you want to add, and click *Add Asset*. 
+//+
+//TODO: ADD SCREENSHOT(s). 
 . Click *Create Project*.
 
 
 [[add-components]]
 == Add a Component to Your Project
 
-The listener is for triggering the flow, and Set Payload provides some test data for the integration.
+Use the canvas UI to add components to your project. This example triggers a flow with an HTTP listener from Anypoint Connector for HTTP (HTTP Connector) and adds a Set Payload and Logger component. When you add connector operations from the canvas UI, Anypoint Code Builder also adds a dependency for the connector to the `pom.xml` and a namespace for the connector to the configuration XML.
 
 . In the Explorer view, select the XML file for your project, such as `my-project-name.xml`:
 +
