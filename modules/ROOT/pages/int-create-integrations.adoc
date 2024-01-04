@@ -57,24 +57,25 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 
 * *Empty Project*
 +
-Start an integration project from scratch.
+Start an integration project from scratch, without any preconfigured components.
 * *Template or Example Project*
 +
 Import an existing integration template or example from Anypoint Exchange.
 +
 image::int-create-integration.png["Create integration project from an Exchange asset."]
 . If you opt to import from Exchange, search for the template or example, mouse over the asset that you want to add, and click *Add Asset*. 
-//+
-//TODO: ADD SCREENSHOT(s). 
 . Click *Create Project*.
-
++
+When you create an integration project from scratch or if your project from Exchange does not contain a flow structure (Flow, Subflow, or Error handling component), the canvas UI provides the option to create one. Otherwise, the canvas UI generates a graphical representation of the imported asset's components that you can use to start your configuration.
 
 [[add-components]]
 == Add a Component to Your Project
 
-Use the canvas UI to add components to your project. This example triggers a flow with an HTTP listener from Anypoint Connector for HTTP (HTTP Connector) and adds a Set Payload and Logger component. When you add connector operations from the canvas UI, Anypoint Code Builder also adds a dependency for the connector to the `pom.xml` and a namespace for the connector to the configuration XML.
+Add components to your project from the canvas UI. 
 
-. In the Explorer view, select the XML file for your project, such as `my-project-name.xml`:
+This example assumes that you are starting from an empty integration project to which you add a Flow component with an HTTP listener from Anypoint Connector for HTTP (HTTP Connector), Set Payload, and a Logger component. When you add the listener, Anypoint Code Builder adds a dependency for the HTTP Connector to the project's `pom.xml` and a namespace for the connector to the configuration XML.
+
+. In the Explorer view, select the XML file for your project, such as `my-project-name.xml`. 
 +
 image::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
 +
