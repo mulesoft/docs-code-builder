@@ -1,6 +1,8 @@
 = Component Reference
 :page-deployment-options: cloud-ide, desktop-ide
 
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
 
 In Anypoint Code Builder, use components to build your integrations and implementations:
 
@@ -10,7 +12,10 @@ In Anypoint Code Builder, use components to build your integrations and implemen
 [[builtin-connectors]]
 == Built-In Connectors
 
-Built-in connectors are available from the canvas UI and configuration XML for integrations and implementation project. These connectors include:
+include::reuse::partial$connectors/connectors-mule-apps.adoc[] 
+In Anypoint Code Builder, both integrations and implementations are Mule applications. 
+
+Built-in Anypoint connectors are available from the canvas UI and configuration XML for integration and implementation projects. These connectors include:
 
 * xref:db-connector::index.adoc[Anypoint Connector for Database (<db:/>)] (Database Connector)
 * xref:email-connector::index.adoc[Anypoint Connector for Email (<email:/>)] (Email Connector)
@@ -18,7 +23,7 @@ Built-in connectors are available from the canvas UI and configuration XML for i
 * xref:http-connector::index.adoc[Anypoint Connector for HTTP (<http:/>)] (HTTP Connector)
 * xref:salesforce-connector::index.adoc[Anypoint Connector for Salesforce (<salesforce:/>)] (Salesforce Connector)
 * xref:sockets-connector::index.adoc[Anypoint Connector for Sockets (<sockets:/>)] (Sockets Connector)
-* xref:workday-connector::index.adoc[a Connector for Workday (<workday:/>)] (Workday Connector)
+* xref:workday-connector::index.adoc[Anypoint Connector for Workday (<workday:/>)] (Workday Connector)
 
 Connector XML tags start with a namespace followed by an operation, following the syntax `namespace:operation`, such as `<db:select/>` for a Select operation in Anypoint Connector for Database (Database Connector).
 
@@ -26,6 +31,8 @@ Many other connectors are available from your Anypoint Code Builder IDE through 
 
 * US cloud (non-EU host): https://anypoint.mulesoft.com/exchange/[Exchange (US)^]
 * EU cloud (EU host): https://eu1.anypoint.mulesoft.com/exchange/[Exchange (EU)^]
+
+To find information about more connectors, see xref:connectors::introduction/introduction-to-anypoint-connectors.adoc[], and find documentation on all xref:connectors::index.adoc[Anypoint connectors and modules].
 
 [[core-processors]]
 == Core Processors
