@@ -12,9 +12,11 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 Create a basic integration, add connectors and other components to your Mule application
 to process your business logic, and configure attributes:
 
-. <<create-integration-project, Create a new integration project>>.
+. <<create-integration-project, Create an integration project>>.
++
+Create the integration from scratch, or start from a project template or integration example that you import from Anypoint Exchange. For information about templates and examples in Exchange, see xref:exchange::asset-types.adoc[].
 . <<add-components, Add components to your project>>.
-. <<import-connectors, Import connectors from Exchange>>.
+. <<import-connectors-from-exchange, Import connectors from Exchange>>.
 . <<configure-attributes, Configure attributes for a component>>.
 . <<check-connection, Test an HTTP Listener connection>>.
 . <<create-new-config, Create a new XML configuration file>>.
@@ -25,9 +27,9 @@ to process your business logic, and configure attributes:
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 
 [[create-integration-project]]
-== Create a New Integration Project
+== Create an Integration Project
 
-To create a new integration project:
+To create an integration project:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
@@ -50,23 +52,77 @@ See xref:start-add-folders.adoc[].
 
 include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 |===
-. Click *Create Project*.
+. Create a project from scratch, or start with an asset from Anypoint Exchange.
++
+[tabs]
+====
+*Start with an Empty Project*::
++
+--
+Click *Empty Project* to start an integration project from scratch, without any preconfigured components.
 
+image::int-create-integration-scratch.png["Create integration project from scratch.", width=70%] 
+--
+*Start with a Project Template or Example*::
++
+--
+To import an existing integration template or example from Anypoint Exchange:
+
+.. Click *Template or Example Project* to import an existing integration template or example from Anypoint Exchange. 
++
+image::int-create-integration.png["Create integration project from an Exchange asset."]
+.. If you intend to import a private asset associated with your business organization, xref:start-acb.adoc#login-ide[log in to Anypoint Platform from the IDE] to list the template or example in the search results.
++
+Searches for public assets do not require login.
+.. From the IDE, search for a template or for an example. 
++
+Partial searches are accepted.
+.. Mouse over the asset that you want to add.
+.. Click *Add Asset*. 
+--
+====
+. Click *Create Project*. 
+
+When you create an integration project from scratch or if your project from Exchange does not contain a flow structure (Flow, Subflow, or Error handling component), the canvas UI provides the option to create one. Otherwise, the canvas UI generates a graphical representation of the imported asset's components that you can use to start your configuration.
 
 [[add-components]]
 == Add a Component to Your Project
 
-The listener is for triggering the flow, and Set Payload provides some test data for the integration.
+Add components to your project from the canvas UI. 
 
-. In the Explorer view, select the XML file for your project, such as `my-project-name.xml`:
+This example assumes that you are starting from an empty integration project to which you add a Flow component with an HTTP listener from Anypoint Connector for HTTP (HTTP Connector), Set Payload, and a Logger component. When you add the listener, Anypoint Code Builder adds a dependency for the HTTP Connector to the project's `pom.xml` and a namespace for the connector to the configuration XML.
+
+. In the Explorer view, select the XML file for your project, such as `my-project-name.xml`. 
 +
 image::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
 +
 [calloutlist]
 .. The canvas provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
-. Select *Flow* from the canvas to create an empty flow.
-. In the configuration XML, replace the name of the flow `name1` with your flow name, for example, `getFlights`.
+. Select *Build a Flow* from the canvas to create an empty flow within a Mule integration application.
+. Change the default name of the flow from the canvas UI or from the configuration XML.
++
+[tabs]
+====
+From the canvas UI::
++
+--
+Click *Flow name1* to open the configuration UI for the flow, change the flow name, and click the check mark to set the new name. 
+
+image::int-flow-name-ui.png["Change name of flow through canvas UI."]
+--
+From the configuration XML::
++
+--
+Replace the default name of the flow (`name1`) with your flow name, such as `getFlights`. For example:
+
+[source,xml]
+----
+<flow name="getFlights" >
+    
+</flow>
+--
+====
 . Add a component to your project from the canvas, for example, add the HTTP Listener component:
 .. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* panel, search for and select *Listener* from the *HTTP* results:
@@ -78,7 +134,7 @@ The configuration XML file now includes the XML for the HTTP Listener into the `
 [source,XML]
 ----
 <flow name="getFlights" >
-  <http:listener path="" config-ref="" doc:name="Listener" doc:id="ojzfry" />
+  <http:listener path="path" config-ref="config-ref" doc:name="Listener" doc:id="rrjiqa" />
 
 </flow>
 ----
@@ -87,7 +143,7 @@ For example, add the `<http:listener-config/>` component from a snippet.
 +
 For more information about snippets, see xref:int-work-with-code-snippets.adoc[].
 +
-.. In the configuration XML, place your cursor before the `<flow/>` element and type `http`.
+.. In the configuration XML, place your cursor before the opening `<flow>` tag, and type `http`.
 +
 Ensure that the cursor is not inside the `<flow/>` element.
 +
@@ -109,21 +165,29 @@ For example, add a Set Payload component to your HTTP Listener operation:
 +
 .. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* panel, search for and select *Set payload* from the *Transformer* results.
+.. In the canvas, click *Set payload* to open its configuration UI, and add a value between the square brackets that appear (`#[]`):
 
+* To add a string, type a value such as `my value`. For example:
++
+image::int-set-payload-config-string.png["Adding string to Set Payload"]
+
+* To add a DataWeave expression or a Mule variable as a value, such as `payload`, click *fx* above the field, and provide the value, for example:
++
+image::int-set-payload-config-fx.png["Adding expression to Set Payload"]
 
 Your configuration XML file now looks similar to the following:
 
 [source,xml]
 --
-  <http:listener-config name="HTTP_Listener_config" >
-    <http:listener-connection host="0.0.0.0" port="8081" />
-  </http:listener-config>
+<http:listener-config name="HTTP_Listener_config" >
+  <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
 
-  <flow name="getFlights" >
-    <http:listener path="" config-ref="" doc:name="Listener" doc:id="uvapcx" />
-    <set-payload value="" doc:name="Set payload" doc:id="hnxirg" />
+<flow name="getFlights" >
+  <http:listener path="path" config-ref="config-ref" doc:name="Listener" doc:id="rrjiqa" />
+  <set-payload value="my value" doc:name="Set payload" doc:id="gecykt" />
     
-  </flow>
+</flow>
 --
 
 Notice that the Listener component in the canvas now shows an error:
@@ -131,14 +195,13 @@ Notice that the Listener component in the canvas now shows an error:
 image::int-canvas-error.png["Listener error in the canvas"]
 
 To determine where the error is, select the processor in the canvas.
-Anypoint Code Builder highlights its location within the configuration XML, for example:
+Anypoint Code Builder highlights its location within the configuration XML, and you can mouse over the issue for more information. For example:
 
-image::int-error-highlight.png["HTTP Listener highlighted in the flow and in the XML code"]
+image::int-select-listener-config.png["Selecting configuration reference from configuration UI"]
 
-To fix the error, configure the attributes.
+To fix the error, configure the attributes properly. For example, to correct the mismatched `config-ref` value for the HTTP listener, select the reference name from the drop-down menu in the component's configuration UI, or type the correct attribute value directly within the XML. 
 
 For more information about debugging, see xref:debugging-mule-apps.adoc[].
-
 
 [[import-connectors-from-exchange]]
 == Import a Connector from Exchange
