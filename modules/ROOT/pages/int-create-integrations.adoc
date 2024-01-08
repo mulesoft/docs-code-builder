@@ -100,20 +100,29 @@ image::int-empty-canvas.png["Canvas showing visual representation of Mule flow a
 .. The canvas provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
 . Select *Build a Flow* from the canvas to create an empty flow within a Mule integration application.
-. Change the default name of the flow by using one of these procedures:
+. Change the default name of the flow from the canvas UI or from the configuration XML.
++
+[tabs]
+====
+From the canvas UI::
++
+--
+Click *Flow name1* to open the configuration UI for the flow, change the flow name, and click the check mark to set the new name. 
 
-* In the canvas UI, click *Flow name1* to open the configuration UI for the flow, change the flow name, and click the check mark to set the new name. 
-+
 image::int-flow-name-ui.png["Change name of flow through canvas UI."]
-* In the configuration XML, replace the default name of the flow (`name1`) with your flow name, such as `getFlights`.
+--
+From the configuration XML::
 +
+--
+Replace the default name of the flow (`name1`) with your flow name, such as `getFlights`. For example:
+
 [source,xml]
 ----
 <flow name="getFlights" >
     
 </flow>
-----
-
+--
+====
 . Add a component to your project from the canvas, for example, add the HTTP Listener component:
 .. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* panel, search for and select *Listener* from the *HTTP* results:
