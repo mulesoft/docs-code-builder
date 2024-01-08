@@ -14,7 +14,7 @@ to process your business logic, and configure attributes:
 
 . <<create-integration-project, Create an integration project>>.
 +
-Create the integration from scratch, or start from a template or example that you import from Anypoint Exchange. For information about templates and examples in Exchange, see xref:exchange::asset-types.adoc[].
+Create the integration from scratch, or start from a project template or integration example that you import from Anypoint Exchange. For information about templates and examples in Exchange, see xref:exchange::asset-types.adoc[].
 . <<add-components, Add components to your project>>.
 . <<import-connectors-from-exchange, Import connectors from Exchange>>.
 . <<configure-attributes, Configure attributes for a component>>.
@@ -52,30 +52,34 @@ See xref:start-add-folders.adoc[].
 
 include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 |===
-. Create a project from scratch, or start with an asset from Anypoint Exchange:
+. Create a project from scratch, or start with an asset from Anypoint Exchange.
++
+[tabs]
+====
+*Start with an Empty Project*::
++
+--
+Click *Empty Project* to start an integration project from scratch, without any preconfigured components.
 
-* *Empty Project*
+image::int-create-integration-scratch.png["Create integration project from scratch.", width=70%] 
+--
+*Start with a Template or Example*::
 +
-Start an integration project from scratch, without any preconfigured components.
-+
-image::int-create-integration-scratch.png["Create integration project from scratch.", width=70%]
+--
+To import an existing integration template or example from Anypoint Exchange:
 
-* *Template or Example Project*
-+
-Import an existing integration template or example from Anypoint Exchange. 
+.. Click *Template or Example Project* to import an existing integration template or example from Anypoint Exchange. 
 +
 image::int-create-integration.png["Create integration project from an Exchange asset."]
-+
-If you start with an asset from Exchange:
-
-.. xref:start-acb.adoc#login-ide[Log in to Anypoint Platform from the IDE] so that you can find assets.
 .. From the IDE, search for a template or for an example. 
 +
 Partial searches are accepted.
 .. Mouse over the asset that you want to add.
 .. Click *Add Asset*. 
-. Click *Create Project*.
-+
+--
+====
+. Click *Create Project*. 
+
 When you create an integration project from scratch or if your project from Exchange does not contain a flow structure (Flow, Subflow, or Error handling component), the canvas UI provides the option to create one. Otherwise, the canvas UI generates a graphical representation of the imported asset's components that you can use to start your configuration.
 
 [[add-components]]
