@@ -6,7 +6,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Use Anypoint Code Builder to create and test API specs before publishing to Anypoint Exchange:
 
-. <<design-new-api-spec, Create a new API specification project>>.
+. <<design-new-api-spec, Create a new API specification project>> or <<import-spec, import an API specification from Design Center>>.
 . <<open-output-panel, Track progress in the output panel>>.
 . <<review-spec-console, Review your spec in the API console>>.
 . <<test-spec, Test your spec using the mocking service>>.
@@ -22,13 +22,12 @@ Use the <<example-oas-api-spec,`oas-example`>> API specification to explore the 
 See the xref:tutorials.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 +
-//TODO: VERIFY
 When you publish your API fragment to Exchange from Anypoint Code Builder, the IDE requests the name of the business group.
 
 [[design-new-api-spec]]
 == Create a New API Specification Project
 
-To create a new API specification project:
+To create an API specification project in Anypoint Code Builder:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
@@ -70,7 +69,32 @@ image::des-oas-create.png[New OAS 3.0 (YAML) API project]
 +
 As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context. 
 
+[[import-spec]]
+== Import an API Specification from Design Center
 
+Import an API specification from Design Center, and optionally, keep your project in sync with Design Center by using the Anypoint source control management (SCM) system. Alternatively, use Git or another SCM that is compatible with VS Code.
+
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select the following command:
++
+[source,command]
+----
+MuleSoft: Import API Specification from Design Center
+----
+. If prompted, log into Anypoint Platform through the IDE.
+. Select your business group. 
+. Search for the API specification in the *APIs from Design Center* field.
+. Navigate to or create a folder for the specification, and click *Select target folder*.
+. If you receive the request *Do you want to save the changes you made to exchange.json? Your changes will be lost if you don't save them.*, click *Save*. 
++
+If you click *Don't Save*, the IDE will ask you if you want to save the file when you close the project folder. You can save at that time.
+. Edit or continue designing your specification, as needed.
++
+As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context. 
+. Optionally, sync your changes with Design Center by using the Anypoint SCM.
++
+This feature is available only for API projects that you import from Design Center. You can also store your work in another SCM. For SCM options, see xref:start-scm.adoc[].
 
 [[open-output-panel]]
 == Track Progress in the Output Panel
