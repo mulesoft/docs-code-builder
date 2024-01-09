@@ -3,10 +3,7 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//TODO (FEB): CHECK WORDING; THINK ABOUT WHERE THIS INFO IS BELONGS
-To delete an API spec or fragment that you are synchronizing within the Design Center SCM, you must delete the folder
-from Anypoint Code Builder and delete the project from Design Center.
-
+To delete a design project for your API spec or fragment from Anypoint Code Builder, delete the entire project folder from Anypoint Code Builder. If you imported the API spec from Design Center or if your project was created with versions of Anypoint Code Builder (prior to February 2024) that required storage of the spec in the Anypoint SCM, also delete the spec from Design Center.
 
 == Before You Begin
 
@@ -25,8 +22,9 @@ To delete an API project (API spec or API spec fragment) from Anypoint Code Buil
 [[delete-api-project]]
 == Delete an API Project from Design Center
 
-//TODO: VERIFY
-If you are using the Anypoint SCM to store a specification that you imported from Design Center and want to reuse a project name, you must first delete the project from Design Center. For more information about these API projects, see start-scm.adoc[].
+Design project names must be unique. If your design project is stored in the Anypoint SCM, it also exists in Design Center. To create a new design project with the same name in Anypoint Code Builder, you must delete the existing project not only from Anypoint Code Builder but also from Design Center. If you want the project to remain in the Anypoint SCM, do not delete it from Design Center.
+
+This process applies only to API design projects imported to Anypoint Code Builder from Design Center, which automatically sync with the Anypoint SCM, and design projects created in Anypoint Code Builder before the February 2024 release. For more information about the Anypoint SCM, see start-scm.adoc[].
 
 To delete an API project (API spec or API spec fragment) from Design Center:
 
