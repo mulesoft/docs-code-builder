@@ -125,22 +125,26 @@ In the menu, the snippet is a partially configured Mule component that is repres
 </http:listener-config>
 ----
 In `<http:listener-config/>` and its child element `<http:listener-connection/>`, set the attributes to values provided in the example. The `doc:id` is randomly generated and does not require a change.
-. Configure the attributes for the HTTP Listener operation `<http:listener/>`:
+. Configure the attributes for the HTTP Listener operation:
 +
 [tabs]
 ====
 From the canvas UI::
 +
-Click the *Listener* component to open its configuration UI.
+Click the *Listener* operation to open the configuration UI.
 +
-image::tut-int-listener-component-ui.png["Change name of flow through canvas UI."]
+In the configuration UI, set the HTTP Listener attributes to the following values:
++
+image::tut-int-listener-component-ui.png["Configure the Listener operation through the configuration UI."]
 +
 [calloutlist]
-.. Change the component name to `HTTP /flights`.
+.. Change the operation name to `HTTP /flights`.
 .. Select `inbound-request` from the configuration reference dropdown menu.
-.. Specify `flights` for the *Path* field.
+.. Set the *Path* attribute to `flights`.
 
 From the configuration XML::
++
+In `<http:listener/>`, set the attributes to the values provided in the example.
 +
 [source,xml]
 ----
@@ -148,12 +152,24 @@ From the configuration XML::
     <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
 </flow>
 ----
-+
-In `<http:listener/>`, set the attributes to the values provided in the example.
 ====
-
-
-. From the canvas UI, add a Set Payload component below your HTTP Listener operation, and configure its attributes in the configuration XML:
+. From the canvas UI, add a Set Payload component below your HTTP Listener operation.
+. Configure the Set Payload component attributes:
++
+[tabs]
+====
+From the canvas UI::
++
+Click the Set Payload component to open the configuration UI.
++
+In the configuration UI, set the attributes to the following values:
++
+image::tut-int-set-payload-component-ui.png["Configure the Set Payload component through the configuration UI."]
++
+[calloutlist]
+.. Change the component name to `Set Response`.
+.. Set the *Value* attribute to `Flight info`.
+From the configuration XML::
 +
 [source,xml]
 ----
@@ -172,6 +188,7 @@ In `<http:listener/>`, set the attributes to the values provided in the example.
 [calloutlist]
 . Set the `value` attribute to `Flight info` and the `doc:name` to `Set Response`.
 --
+====
 [[check-connection]]
 . Above `<http:listener-config/>` in the configuration XML, click *Test Connection* to check the HTTP Listener connection. 
 +
