@@ -1,31 +1,216 @@
-= Synchronizing API Specs and Fragments with Your SCM
+= Set Up Source Control in Anypoint Code Builder
 :page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
- 
+MuleSoft recommends that you use source control management (SCM) to store and share projects that you create with Anypoint Code Builder. A useful SCM provides change history of each file and a branching methodology to maintain project quality, full traceability, the ability to restore earlier versions of your files, and a way to recover source code if your Anypoint Code Builder environment is lost or removed. To learn more about branching strategies and working effectively with multiple team members, see the https://git-scm.com/book[Git documentation^].
+
+This example shows how to use GitHub and Git to manage your Anypoint Code Builder source code. Although you can choose to use another source control management (SCM) system, GitHub and the Git command line interface (CLI) are widely used in the industry and supported out-of-the-box by VS Code. For more information, see https://code.visualstudio.com/docs/sourcecontrol/overview[Using Git source control in VS Code^] in the VS Code documentation. 
+//TODO: DEPENDS ON FILE NAME CHANGE MERGE BEFORE UNCOMMENTING
+//For additional source control options available only to API specifications that you import from Design Center, see xref:des-sync-scm.adoc[].
+
+* <<prereqs>>
+* <<create-repo>>
+* <<config-git>>
+* <<commit-source>>
+* <<open-github>>
+* <<start-project-from-git>>
+
+
+[[prereqs]]
+=== Before You Begin
+
+Ensure that these prerequisites are in place:
+
+* A GitHub account
++
+If you do not have an account create one from the https://github.com/join[Join GitHub^] page on the GitHub site.
+
+* A Git installation on your computer 
++
+If Git is not installed on your computer, follow the https://github.com/git-guides/install-git[Git installation instructions^] for your machine.
+
+* Access to Anypoint Code Builder from the desktop or cloud IDE
++
+For setup and installation information, see xref:start-acb.adoc[], and be sure to meet all prerequisites. 
+
+* A project in Anypoint Code Builder
++
+For example, to create an integration project, see xref:int-create-integrations.adoc[].
+
+[[create-repo]]
+=== Create a Git Repository for Your Project
+
+Start with an existing repository or create a new one. If you already have a Git repository that you can use for your project, proceed to <<config-git>>. 
+
+Generally, one repository per project is useful for separate management of your projects, for example, to support your versioning needs or other project-specific requirements.
+
+To create a repository for your project:
+
+. Complete the form in the GitHub page https://github.com/new[Create a new repo^]:
+
+* Determine a name for your repository, such as *acb-project-repo* or the name of your project.
+* Create a *Private* repository so that others cannot view source files in your repository.
+. Click *Create repository*.
+. Proceed to <<config-git>>.
+
+[[config-git]]
+== Configure Your GitHub Properties
+
+Check for and configure your username and email properties so that you can add, update, and retrieve your project files from your remote repository in GitHub. 
+
+//open ACB terminal:
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
+. From the Anypoint Code Builder terminal, check for any existing GitHub configuration by running this command:
++
+[source,command]
+----
+git config --list
+----
+
+* If your GitHub `user.name` and `user.email` are listed, proceed to <<commit-source>>.
+* If your GitHub `user.name` and `user.email` are not listed or if no data returns, configure the properties:
+
+.. Run this command to set your `user.name`, replacing `YourUserName` with your GitHub username:
++
+[source,command]
+----
+git config –-global user.name "YourUserName"
+----
+.. Run this command to set your `user.email`, replacing `your@email.com` with your GitHub email address:
++
+[source,command]
+----
+git config –-global user.email "your@email.com"
+----
++
+If two-factor authentication is enabled on your GitHub account and you are prompted for a password, enter your personal access token instead of your GitHub login password. For more information, see GitHub documentation https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/accessing-github-using-two-factor-authentication[Access GitHub with 2FA^].
+. Proceed to <<commit-source>>.
+
+[[commit-source]]
+== Commit Source Code Changes to Your Repository 
+
+From the Anypoint Code Build terminal, commit your project files to your repository. 
+
+//open ACB terminal:
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
+. In the terminal echo "# my-new-acb-repo" >> README.md
+. Initialize your GitHub repository within Anypoint Code Builder with this command:
++
+[source,command]
+----
+git init
+----
+. Track all files in the current directory by entering this command:  
++
+[source,command]
+----
+git add .
+----
+. Commit the added files to your local Git repository with this command:
++
+[source,command]
+----
+git commit -m “first commit”
+----
+. Switch branches to the main branch.
++
+[source,command]
+----
+git branch -M main
+----
+. Link your local repository to your remote repository, replacing `_yourusername_` with your Git username and `_yourrepository_` with your repository's name:
++
+[source,command]
+----
+git remote add origin https://github.com/_yourusername_/_yourrepository_.git
+----
+. Push your project files to your repository.
++
+[source,command]
+----
+git push -u origin main
+----
+. Proceed to <<open-github>>
+
+[[open-github]]
+== Find Your Project Files in GitHub
+
+After completing <<commit-source>>, find your project files in your new repository.
+
+. Log in to https://github.com/[GitHub^]. 
+. In GitHub, navigate to your new project repository.
+. Navigate to `src/main/mule` to view the configuration XML file (or files) for your project.
+. Proceed to <<start-project-from-git>>
+
+[[start-project-from-git]]
+== Clone Your Git Repository into an Folder
+
+After adding a project to your Git repository on GitHub, you can clone it into your desktop or cloud IDE. Cloning is helpful for retrieving a backup of a deleted project or for sharing your project in another Anypoint Code Builder IDE. For example, you can work on the same project in the desktop and cloud IDE if your project is stored in a Git repository. 
+
+
+
+//open ACB terminal:
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
+. Navigate to your home directory for Anypoint Code Builder. 
+. Clone your GitHub repository into your new directory:
++
+[source,command]
+----
+git clone https://github.com/_yourusername_/_yourrepo_.git
+----
+. Open the folder AnypointCodeBuilderGitHubDemo. Open the command palette and select File: Open Folder..
+
+
+
+5. Select the directory that contains the new AnypointCodeBuilderGitHubDemo folder we just created.
+
+
+
+6. Verify that your source code is available for you to continue to develop your MuleSoft integration
+
+==================================
+
+= Synchronizing API Specs and Fragments with Design Center
+:page-deployment-options: cloud-ide, desktop-ide
+
+// tut-af-design-api-synchronize-with-design-center
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
 Syncing updates with your source control management system (SCM) is a best practice to ensure that you are able to retain and track your changes to your API design projects. Using an SCM is optional but strongly recommended for projects that you intend to use in a production environment or that you want to store, version, collaborate on, or share with members of your team.
+
+////
+//Before you can publish your API to Exchange, you must sync it with Anypoint Design Center. 
+//Use the built-in integrated source control management (SCM) in Anypoint Code Builder to upload your API specification to Design Center.
+//
+// The process for syncing with Design Center is:
+//
+//. Review changes to files in your API project since the last sync with the main branch in Design Center.
+//. Stage changes from one or more files to the built-in SCM.
+//. Commit changes to your local repository.
+//. Push changes to Design Center.
+////
 
 The process for syncing your changes is:
 
 . Review changes to files in your API project since the last sync your SCM.
 . Commit and push changes to your SCM.
 
+
 == Before You Begin
 
-Before syncing with your SCM:
+//Before syncing with your SCM:
+Before syncing with Design Center:
 
 * //TODO: ADD LINK TO HOW TO ON SCM SETUP:
 //If your SCM is not configured in VS Code, see xref:TODO.adoc[]. 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create and test your API specification].
 
-
 //TODO: SEE WHAT CAN BE SALVAGED FROM sync-changes SECTION
 [[sync-changes]]
-== Sync Changes with Your Source Control Management System 
+== Sync Changes to Design Center 
 
 . Open your API spec or fragment in Anypoint Code Builder.
 // Pointer to Source Control Panel
@@ -56,9 +241,11 @@ The UI uses the `git add` command to add changes from your working directory to 
 If you staged all files, the *Source Control* panel now displays no changes to commit.
 +
 The UI uses the `git commit` command to save the changes you staged to your local repository.
-. Push your changes by clicking *Sync Changes* in the *Source Control* panel.
+//TODO: ...to the Anypoint SCM
+. Push your changes to Design Center by clicking *Sync Changes* in the *Source Control* panel.
 +
-*Sync Changes* also pulls any changes from your SCM.
+//TODO: ...from the Anypoint SCM
+*Sync Changes* also pulls any changes from Design Center.
 +
 To push changes without pulling changes:
 +
@@ -67,11 +254,12 @@ To push changes without pulling changes:
 +
 image::push-changes.png["Push command highlighted in the source control section"]
 +
-The UI uses the `git push` command to upload your local content to Git.
-+
+The UI uses the `git push` command to upload your local content to Design Center.
+
+Your changes are now published in Design Center.
+
 //TODO: IS THIS RELEVANT?
-If the UI prompts you, indicate whether to check for updates of your API and prompt you to update your local version of the API:
+If the UI prompts you, indicate whether to check for updates of your API in Design Center and prompt you to update your local version of the API:
 +
 //TODO: IS THIS RELEVANT?
 image::fetch-periodically-check.png["Periodically run git fetch message highlighted"]
-
