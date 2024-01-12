@@ -3,11 +3,20 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-MuleSoft recommends that you use source control management (SCM) to store and share projects that you create with Anypoint Code Builder. A useful SCM provides change history of each file and a branching methodology to maintain project quality, full traceability, the ability to restore earlier versions of your files, and a way to recover source code if your Anypoint Code Builder environment is lost or removed. 
+Use source control management (SCM) to store and share your design, integration, and implementation projects. A useful SCM provides change history of each file and a branching methodology to maintain project quality, full traceability, the ability to restore earlier versions of your files, and a way to recover source code if your Anypoint Code Builder environment is lost or removed. 
 
 GitHub and the Git command line interface (CLI) are widely used in the industry and supported  by VS Code out-of-the-box, with minimal configuration. The procedures on this page show how to set up and use GitHub for source control. VS Code extensions for other SCM systems are also available for you to set up and use. For information, see https://code.visualstudio.com/docs/sourcecontrol/overview#_scm-providers[SCM Providers^]. 
 
 For more information, see https://code.visualstudio.com/docs/sourcecontrol/overview[Using Git source control in VS Code^] in the VS Code documentation.  For detailed information about Git, see the https://git-scm.com/book[Git documentation^].
+
+[[anypoint-scm]]
+=== Anypoint SCM for API Design Projects
+
+include::partial$acb-api-design.adoc[tags="api-dc-scm-scope"]
+
+The process for using the Anypoint SCM to store and sync design project changes in Anypoint Code Builder with the project in Design Center is identical to synchronizing other changes (see <<commit-source>>). If you prefer to use your own remote repository on GitHub to store your API project, without synchronizing with the project in Design Center, see <<add-remote>>. VS Code supports multiple remote configurations.
+
+As of the February 2024 release, design projects that you create from Anypoint Code Builder with *Design an API* (see xref:des-create-api-specs.adoc#design-new-api-spec[Create a New API Specification Project]) or with the command `MuleSoft: Design an API` no longer spawn a corresponding design project in Design Center or use the Anypoint SCM to store changes and keep the two projects in sync. Configuring an SCM for these design projects is the same as for integration and implementation projects. For guidance, see <<create-repo>> or <<add-remote>>.
 
 [[prereqs]]
 == Before You Begin
@@ -30,12 +39,14 @@ For setup and installation information, see xref:start-acb.adoc[], and be sure t
 +
 For example, to create an integration project, see xref:int-create-integrations.adoc[].
 
+* A GitHub user name and email configuration. See <<config-git>>.
 
 [[config-git]]
 == Configure Your GitHub Properties
 
 Check for and configure your username and email properties so that you can add, update, and retrieve your project files from a remote repository in GitHub. 
 
+. Meet the prerequisites in <<prereqs>>.
 //open ACB terminal:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
 . From the Anypoint Code Builder terminal, check for any existing GitHub configuration by running this command:
@@ -73,6 +84,7 @@ If two-factor authentication is enabled on your GitHub account and you are promp
 
 If you do not have a repository for your project in GitHub, use VS Code to generate and publish your project files to the repository. If you already have a repository in GitHub that you intend to use for your project files, see <<add-remote>> to add the remote repository from VS Code. For other related processes, see the VS Code documentation at https://code.visualstudio.com/docs/sourcecontrol/intro-to-git[Introduction to Git in VS Code].
 
+. Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
@@ -102,6 +114,7 @@ Alternatively, open GitHub from your browser and locate your new repository.
 
 To publish your project files for the first time from the IDE to an existing repository on GitHub, you must initialize your source files and connect from VS Code to the remote repository. This procedure assumes that the project files are ready to stage and publish to a repository in GitHub. 
 
+. Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
@@ -119,7 +132,7 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 ----
 Git: Add Remote...
 ----
-. Select *Git: Add Remote...* from the popup menu.
+.. Select *Git: Add Remote...* from the popup menu.
 +
 image::start-scm-repo-add-remote.png["Adding a remote repository from GitHub"]
 .. Provide the URL to your git repository, for example:
@@ -148,17 +161,74 @@ image::start-scm-repo-publish-branch.png["Publish branch files in a repo on GitH
 image::start-scm-repo-github.png["Project files in a repo on GitHub"]
 
 [[commit-source]]
-== Commit Source Code Changes to Your Repository 
+== Sync Project File Changes with Your Repository 
 
 After your project in VS Code is connected and published to a remote repository in GitHub, you can commit your push additional changes to the repository. If you do not have a repository for your project yet, see <<config-git>>. If you haven't added your repository to your project yet, see <<add-remote>>.
 
+Use the VS Code UI or its built-in terminal to sync your changes:
+
+* <<sync-from-ui>>
+* <<sync-from-terminal>>
+
+[[sync-from-ui]]
+=== Sync Changes from the Source Control Panel 
+
+To sync changes to your files from your project's Source Control panel in VS Code:
 
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
-include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
-. In the Source Control panel, 
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
+. In the Source Control panel:
+.. Stage your changes.
++
+You can stage files individually or as a group.
+.. Provide a commit message.
+.. Click *Commit* to commit the changes to your local branch on the IDE.
+.. Click *Sync Changes* to push your changes to your remote repository on GitHub.
 
+[[sync-from-terminal]]
+=== Sync Changes from the Command Terminal
+
+To sync changes to your files from your project's command terminal in VS Code:
+
+//step: open the project folder
+include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
+//open ACB terminal:
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
+. At the prompt, run Git commands to add new files to your repository and to stage, commit, and push changes to your remote repository on GitHub.
++
+The following example uses `git status` to check the status of changes, `git commit` to commit all changed files and add a commit message, and `git push` to merge the changes into the files on the remote repository.
++
+----
+$ git status
+On branch main
+Your branch is up to date with '011124-test-api-remote/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   011124-test-api.raml
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git commit -am 'my commit message'
+[main bccc296] another commit
+ 1 file changed, 1 deletion(-)
+ 
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 944 bytes | 944.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/me/my-repo.git
+   e4156cc..bccc296  main -> main
+----
+
+For common Git commands, see https://docs.github.com/en/get-started/using-git/about-git[About Git^] in the GitHub documentation, or find all commands in the https://git-scm.com/docs[Git command reference^].
 
 [[start-project-from-git]]
 == Clone the Repository for a Project
@@ -174,65 +244,6 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-termin
 ----
 git clone https://github.com/_yourusername_/_yourrepo_.git
 ----
-. Open the folder AnypointCodeBuilderGitHubDemo. Open the command palette and select File: Open Folder..
-
-
-
-5. Select the directory that contains the new AnypointCodeBuilderGitHubDemo folder we just created.
-
-
-
-6. Verify that your source code is available for you to continue to develop your MuleSoft integration
-
-[[sync-changes-design-center]]
-== Sync API Project Changes to Design Center 
-
-// note on limited scope of this section:
-include::partial$acb-api-design.adoc[tags="api-dc-scm-scope"]
-
-. Open your API spec or fragment in Anypoint Code Builder.
-// Pointer to Source Control Panel
-include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
-. Review changes by clicking files in the Source Control panel:
-+
-.. Open a file, for example <<example-oas-api-spec,`oas-example.yaml`>>.
-.. Review the working tree and notice the shading for deletions (red) and additions (green):
-+
-image::des-source-control-changes.png["oas-example.yaml file highlighted to show the source control changes"]
-. Stage changes by clicking the plus icon in the *Source Control* panel:
-+
---
-** To stage a single file, click the plus icon for that file.
-** To stage all changed files, click the plus icon on the *Changes* line.
---
-+
-The files move to *Staged Changes* section.
-+
-The UI uses the `git add` command to add changes from your working directory to the staging area.
-. Commit staged changes:
-+
---
-.. In the *Message field*, summarize your changes.
-.. Click *Commit*.
---
-+
-If you staged all files, the *Source Control* panel now displays no changes to commit.
-+
-The UI uses the `git commit` command to save the changes you staged to your local repository.
-//TODO: ...to the Anypoint SCM
-. Push your changes to Design Center by clicking *Sync Changes* in the *Source Control* panel.
-+
-//TODO: ...from the Anypoint SCM
-*Sync Changes* also pulls any changes from Design Center.
-+
-To push changes without pulling changes:
-+
-.. In the *Source Control* header, click the *More actions* menu (ellipsis).
-.. Select *Push*.
-+
-image::push-changes.png["Push command highlighted in the source control section"]
-+
-The UI uses the `git push` command to upload your local content to Design Center.
-
+. Open the project folder in the IDE.
 
 
