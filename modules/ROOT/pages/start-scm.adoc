@@ -42,7 +42,7 @@ For example, to create an integration project, see xref:int-create-integrations.
 * A GitHub user name and email configuration. See <<config-git>>.
 
 [[config-git]]
-== Configure Your GitHub Properties
+=== Configure Your GitHub Properties
 
 Check for and configure your username and email properties so that you can add, update, and retrieve your project files from a remote repository in GitHub. 
 
@@ -102,7 +102,9 @@ The default repository name matches the project name.
 . Select a repository type (private or public).
 +
 To protect data in your repository, select a private repository (*Publish to GitHub private repository*). This process commits and pushes your project files to your new repository.
-
+. Select the files to publish to the repository.
++
+You can select all or a subset of the files.
 . To view your project files in a GitHub repository, click *Open on GitHub* in the popup. 
 +
 image::start-scm-repo-open-in-github.png["Opening repository in GitHub"]
@@ -246,4 +248,21 @@ git clone https://github.com/_yourusername_/_yourrepo_.git
 ----
 . Open the project folder in the IDE.
 
+== Remove a Remote Repository from Your Project
 
+To remove a remote repository from your project workspace:
+
+//step: open the project folder
+include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
+. In the Source Control panel:
+.. Provide the following Git command to add the remote repository on GitHub:
++
+[source, command]
+----
+Git: Remove Remote...
+----
+.. In the popup, select the remote repository that you want to remove.
++
+In the IDE, your local Git repository remains because it was initialized before syncing with the remote.  
