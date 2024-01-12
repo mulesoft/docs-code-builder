@@ -1,13 +1,13 @@
-= Set Up Source Control in Anypoint Code Builder
+= Controlling Source Files
 :page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-MuleSoft recommends that you use source control management (SCM) to store and share projects that you create with Anypoint Code Builder. A useful SCM provides change history of each file and a branching methodology to maintain project quality, full traceability, the ability to restore earlier versions of your files, and a way to recover source code if your Anypoint Code Builder environment is lost or removed. To learn more about branching strategies and working effectively with multiple team members, see the https://git-scm.com/book[Git documentation^].
+MuleSoft recommends that you use source control management (SCM) to store and share projects that you create with Anypoint Code Builder. A useful SCM provides change history of each file and a branching methodology to maintain project quality, full traceability, the ability to restore earlier versions of your files, and a way to recover source code if your Anypoint Code Builder environment is lost or removed. 
 
-This example shows how to use GitHub and Git to manage your Anypoint Code Builder source code. Although you can choose to use another source control management (SCM) system, GitHub and the Git command line interface (CLI) are widely used in the industry and supported out-of-the-box by VS Code. For more information, see https://code.visualstudio.com/docs/sourcecontrol/overview[Using Git source control in VS Code^] in the VS Code documentation. 
-//TODO: DEPENDS ON FILE NAME CHANGE MERGE BEFORE UNCOMMENTING
-//For additional source control options available only to API specifications that you import from Design Center, see xref:des-sync-scm.adoc[].
+GitHub and the Git command line interface (CLI) are widely used in the industry and supported  by VS Code out-of-the-box, with minimal configuration. The procedures on this page show how to set up and use GitHub for source control. For more information, see https://code.visualstudio.com/docs/sourcecontrol/overview[Using Git source control in VS Code^] in the VS Code documentation. To learn more about Git branching strategies and how to work effectively with multiple team members, see the https://git-scm.com/book[Git documentation^]. 
+
+VS Code extensions for other SCM systems are also available. For information, see https://code.visualstudio.com/docs/sourcecontrol/overview#_scm-providers[SCM Providers^]. 
 
 * <<prereqs>>
 * <<create-repo>>
@@ -18,7 +18,7 @@ This example shows how to use GitHub and Git to manage your Anypoint Code Builde
 
 
 [[prereqs]]
-=== Before You Begin
+== Before You Begin
 
 Ensure that these prerequisites are in place:
 
@@ -38,21 +38,6 @@ For setup and installation information, see xref:start-acb.adoc[], and be sure t
 +
 For example, to create an integration project, see xref:int-create-integrations.adoc[].
 
-[[create-repo]]
-=== Create a Git Repository for Your Project
-
-Start with an existing repository or create a new one. If you already have a Git repository that you can use for your project, proceed to <<config-git>>. 
-
-Generally, one repository per project is useful for separate management of your projects, for example, to support your versioning needs or other project-specific requirements.
-
-To create a repository for your project:
-
-. Complete the form in the GitHub page https://github.com/new[Create a new repo^]:
-
-* Determine a name for your repository, such as *acb-project-repo* or the name of your project.
-* Create a *Private* repository so that others cannot view source files in your repository.
-. Click *Create repository*.
-. Proceed to <<config-git>>.
 
 [[config-git]]
 == Configure Your GitHub Properties
@@ -85,7 +70,87 @@ git config –-global user.email "your@email.com"
 ----
 +
 If two-factor authentication is enabled on your GitHub account and you are prompted for a password, enter your personal access token instead of your GitHub login password. For more information, see GitHub documentation https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/accessing-github-using-two-factor-authentication[Access GitHub with 2FA^].
-. Proceed to <<commit-source>>.
+
+After configuring your properties, you can publish your project files to a repository in GitHub from VS Code. For common scenarios, see <<create-repo>> and <<add-remote>>.
+
+[[create-repo]]
+== Create a Git Repository for Your Project
+
+If you do not have a repository for your project in GitHub, use VS Code to generate and publish your project files to the repository. If you already have a repository in GitHub that you want to use for your project files, see <<add-remote>> to add the remote repository.
+
+For related processes, see the VS Code documentation at https://code.visualstudio.com/docs/sourcecontrol/intro-to-git[Introduction to Git in VS Code].
+
+//step: open the project folder
+include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
+. Click *Publish to GitHub*.
++
+image::start-scm-repo.png["Source control to initialize repository or publish to GitHub from VS Code"]
++
+When no repository is associated with your project, VS Code provides options for initializing a repository (*Initialize Repository*) or directly publishing your project to a new repository in GitHub (*Publish to GitHub*). For other setup processes, see the VS Code documentation at https://code.visualstudio.com/docs/sourcecontrol/intro-to-git[Introduction to Git in VS Code].
+. Provide a name for your repository in the field that opens, or use the default name that appears.
++
+image::start-scm-repo-name.png["Name of new repository"]
++
+The default repository name matches the project name.
+. Select a repository type (private or public).
++
+To protect data in your repository, select a private repository (*Publish to GitHub private repository*). This process commits and pushes your project files to your new repository.
+
+. To view your project files in a GitHub repository, click *Open on GitHub* in the popup. 
++
+Alternatively, open GitHub from your browser and locate your new repository.
+
+[[add-remote]]
+== Publish to an Existing Repository on GitHub
+
+To publish your project files for the first time from the IDE to an existing repository on GitHub, you must first initialize your source files and connect from VS Code to the remote repository. 
+
+This example assumes that the project files are ready to stage and publish to a repository in GitHub named my-acb-project-repo.
+
+//step: open the project folder
+include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
+. Click *Initialize Repository*.
++
+When no repository is associated with your project, VS Code provides options for initializing a repository (*Initialize Repository*) or directly publishing your project to a new repository in GitHub (*Publish to GitHub*). 
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide the following command:
++
+[source, command]
+----
+Git: Add Remote...
+----
+. Select *Add remote from URL*.
++
+image::start-scm-repo-add-remote.png["Adding a remote repository from GitHub"]
+. Provide the URL to your git repository, for example:
++
+image::start-scm-repo-add-remote-uri.png["Adding a remote repository URL from GitHub"]
+. Provide a name for your remote, for example:
++
+image::start-scm-repo-name-remote.png["Naming the remote repository"]
++
+This name is used for the repository in VS Code and can match or differ from  the name in GitHub.
+. From the Source Control panel, stage, commit, and publish your files to the repository in GitHub:
+
+.. Stage your files by mousing over the *Changes* area (located after the *Commit* button) and clicking the *+* icon. 
++
+image::start-scm-repo-stage-changes.png["Adding commit message for staged changes"]
++
+The files move to the *Staged Changes* area. 
+.. Provide your first commit message for the files before clicking *Commit*.
++
+image::start-scm-repo-commit-staged.png["Commit message for staged changes"]   
+.. Click *Publish Branch*.
++
+image::start-scm-repo-publish-branch.png["Publish branch files in a repo on GitHub"]
+. Open your repository in GitHub to review the published files, for example:
++
+image::start-scm-repo-github.png["Project files in a repo on GitHub"]
 
 [[commit-source]]
 == Commit Source Code Changes to Your Repository 
@@ -169,6 +234,19 @@ git clone https://github.com/_yourusername_/_yourrepo_.git
 
 6. Verify that your source code is available for you to continue to develop your MuleSoft integration
 
+
+== Initialize a Git Repository
+
+== Add a Remote Git Repository for Your Project
+
+In VS Code, add a remote Git repository for storing your design, integration, or integration project files. 
+
+Before you begin, you must have a GitHub account and repository for your project. See <<prereqs>>.
+
+. Open your project folder in VS Code.
+. Open the Source Control panel.
+. Within *SOURCE CONTROL* panel (not *SOURCE CONTROL REPOSITORIES*),  
+
 ==================================
 
 = Synchronizing API Specs and Fragments with Design Center
@@ -180,23 +258,10 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Syncing updates with your source control management system (SCM) is a best practice to ensure that you are able to retain and track your changes to your API design projects. Using an SCM is optional but strongly recommended for projects that you intend to use in a production environment or that you want to store, version, collaborate on, or share with members of your team.
 
-////
-//Before you can publish your API to Exchange, you must sync it with Anypoint Design Center. 
-//Use the built-in integrated source control management (SCM) in Anypoint Code Builder to upload your API specification to Design Center.
-//
-// The process for syncing with Design Center is:
-//
-//. Review changes to files in your API project since the last sync with the main branch in Design Center.
-//. Stage changes from one or more files to the built-in SCM.
-//. Commit changes to your local repository.
-//. Push changes to Design Center.
-////
-
 The process for syncing your changes is:
 
 . Review changes to files in your API project since the last sync your SCM.
 . Commit and push changes to your SCM.
-
 
 == Before You Begin
 
@@ -265,3 +330,16 @@ If the UI prompts you, indicate whether to check for updates of your API in Desi
 +
 //TODO: IS THIS RELEVANT?
 image::fetch-periodically-check.png["Periodically run git fetch message highlighted"]
+
+
+/////////
+//Before you can publish your API to Exchange, you must sync it with Anypoint Design Center. 
+//Use the built-in integrated source control management (SCM) in Anypoint Code Builder to upload your API specification to Design Center.
+//
+// The process for syncing with Design Center is:
+//
+//. Review changes to files in your API project since the last sync with the main branch in Design Center.
+//. Stage changes from one or more files to the built-in SCM.
+//. Commit changes to your local repository.
+//. Push changes to Design Center.
+/////////
