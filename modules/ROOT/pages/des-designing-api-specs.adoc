@@ -49,3 +49,24 @@ See the RAML 1.0 specification for descriptions of these types:
 ** Example
 --
 * JSON Schema
+
+
+[[anypoint-scm]]
+== Source Control for API Design Projects
+
+// Shared intro to SCM
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="scm-intro-best-practice"]
+// Shared link to SCM procedures
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="scm-doc-link"]
+
+Source control options for an API design project depend on whether and when you created the project or whether you imported the project from Design Center. 
+
+* As of the February 2024 release, design projects that you create from scratch in Anypoint Code Builder with *Design an API* (see xref:anypoint-code-builder::des-create-api-specs.adoc#design-new-api-spec[Create a New API Specification Project]) or with the command `MuleSoft: Design an API` no longer spawn a corresponding design project in Design Center or use the Anypoint SCM to store and synchronize changes. Configuring an SCM for these design projects is now the same process that you follow for integration and implementation projects. 
+
+* {empty} 
++
+include::partial$acb-api-design.adoc[tags="api-dc-scm-scope"] 
++
+The process for storing and syncing design project changes in Anypoint Code Builder with the corresponding project in Design Center through the Anypoint SCM is described in xref:anypoint-code-builder::start-scm.adoc#commit-source[Sync Project File Changes with Your Repository]. 
++
+If you prefer to use your own remote repository on GitHub to store your API project, without synchronizing with the project in Design Center, see xref:anypoint-code-builder::start-scm.adoc#add-extra-remote[Add an Extra Remote Repository]. VS Code supports multiple remote repository configurations for a project. So you can retain the connection to the Anypoint SCM, or you can xref:anypoint-code-builder::start-scm.adoc#remove-remote[remove the remote].
