@@ -16,8 +16,9 @@ NOTE: The procedures are currently written for the desktop IDE only.
 
 == Before You Begin
 
-Set up your MuleSoft environment. 
-See xref:start-acb.adoc[] for more information.
+* Set up your MuleSoft environment. See xref:start-acb.adoc[] for more information.
+// Prereq bullet on familiarity with biz groups
+include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
 
 [[create]]
 == Create an API Specification
@@ -50,9 +51,6 @@ In the *File* menu that opens in the desktop IDE, create a folder such as `works
 +
 When you are done, the full path in the *Project Location* field is similar to `/Users/me/workspace-retrieve-users`. Starting from the directory with your new folder prevents potential issues related to multi-root workspaces.
 .. In *API Specification Language*, select *RAML 1.0*.
-.. In *Business Group*, select the business group for your API specification. You can't change business groups after you create your API specification.
-+
-See xref:access-management::business-groups.adoc[Business Groups] for more information. 
 --
 When complete, *Design an API* is similar to this example:
 +
@@ -354,6 +352,10 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 ----
 MuleSoft: Publish API Specification to Exchange
 ----
+. If prompted, click *Allow*, and follow the prompts to sign in to Anypoint Platform.
+. In *Select a Business Group*, find and select your business group for the project. 
++
+For more information, see <<prereqs>>.
 . Type a project name: *Retrieve Users API*.
 +
 image::tut-api-publish.png["Publish Retrieve Users API"]

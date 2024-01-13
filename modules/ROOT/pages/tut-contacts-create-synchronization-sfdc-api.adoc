@@ -16,6 +16,7 @@ The synchronization API that you build contains a flow with the following logic:
 +
 Otherwise, create a response indicating that the contact doesn't exist.
 
+[[prereqs]]
 == Before You Begin
 
 Before you begin, ensure that you:
@@ -27,6 +28,8 @@ See xref:start-acb.adoc[] for more information.
 ** https://developer.salesforce.com/signup[Sign up for a developer organization^].
 ** https://help.salesforce.com/s/articleView?id=sf.user_security_token.htm&type=5[Create a developer security token^].
 *  https://aws.amazon.com/getting-started/hands-on/create-mysql-db/[Create a MySQL Database instance^] using AWS free tier.
+// Prereq bullet on familiarity with biz groups
+include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
 
 == Create the API Specification
 
@@ -38,13 +41,13 @@ image::anypoint-code-builder-view.png[]
 image::design-api-1.png[]
 . Configure the API using the following values:
 +
+//TODO: CHECK IMAGE
 image::design-api-ui-raml.png[]
 +
 [calloutlist]
 .. Under *Project name*, type `Contact Sync`.
 .. Under *Project Location*, click *Browse*, and then select your home directory.
 .. Under *API Specification Language*, select *RAML 1.0*.
-.. Under *Business Group*, select the business group in which to create your API specification.
 +
 . Click *Create Project*.
 +
@@ -127,6 +130,10 @@ MuleSoft: Publish API Specification to Exchange
 ----
 +
 image::publish-to-exchange.png[]
+. If prompted, click *Allow*, and follow the prompts to sign in to Anypoint Platform.
+. In *Select a Business Group*, find and select your business group for the project. 
++
+For more information, see <<prereqs>>.
 . Type a project name: *Contact Sync*.
 . Confirm the asset version: *1.0.0*.
 . Confirm the API version: *v1*.
