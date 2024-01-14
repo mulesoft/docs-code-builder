@@ -68,13 +68,22 @@ If two-factor authentication is enabled on your GitHub account and you are promp
 
 * If your GitHub `user.name` and `user.email` are listed, you are ready to use Git to control your project files from VS Code. For guidance with common source control tasks in VS Code, see: 
 
+** <<set-up-repo>>
+** <<sync-changes>>
+
+[[set-up-repo]]
+== Set Up a Repository with VS Code
+
+To set up or connect to a remote repository from the IDE, you can use any of the following procedures:
+
 ** <<create-repo>>
 ** <<add-remote>>
-** <<sync-changes>>
 ** <<add-extra-remote>> 
 
+If your project is already connected from VS Code to a repository in an SCM, such as the Anypoint SCM, no additional setup is required. You can  sync your changes with that repository. See <<sync-changes>> for guidance with a remote repository in GitHub.
+
 [[create-repo]]
-== Generate and Publish to a Repository in GitHub
+=== Generate and Publish to a Repository in GitHub
 
 If you do not have a repository for your project, you can use VS Code to generate and publish your project files to a repository in GitHub. If you already have an empty repository in GitHub that you intend to use for your project files, see <<add-remote>> to add the remote repository from VS Code. 
 
@@ -105,8 +114,10 @@ image::start-scm-repo-open-in-github.png["Opening repository in GitHub"]
 +
 Alternatively, open GitHub from your browser and locate your new repository.
 
+To sync subsequent changes to your repository, see <<sync-changes>>.
+
 [[add-remote]]
-== Initialize and Sync Project Files with an Existing Repository
+=== Initialize and Sync Project Files with an Existing Repository
 
 If you have an empty repository in GitHub to use for your project files, you can initialize your source files and connect to the repository from VS Code. This procedure assumes that the project files are ready to stage and publish to the repository and that you are not connected to another remote repository. 
 
@@ -165,10 +176,70 @@ To protect data in your repository, select the private version of your repositor
 +
 image::start-scm-repo-github.png["Project files in a repo on GitHub"]
 
-[[sync-changes]]
-== Sync Project File Changes with Your Repository 
+To sync subsequent changes to your repository, see <<sync-changes>>.
 
-After your project is connected and published to a remote repository in GitHub, you can use the IDE to sync your changes to files with that repository. If you do not have a repository for your project yet, see <<create-repo>>. If you haven't added your repository to your project yet, see <<add-remote>>.
+[[add-extra-remote]]
+=== Add an Extra Remote Repository
+
+VS Code supports connections to more than one remote repository from your project workspace. This feature is helpful, for example, if you want to use your own repository for an API specification project that you imported from Design Center instead of using the Anypoint SCM or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repository in the Anypoint SCM. For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
+
+This example assumes that you have an empty repository in GitHub. If you do not, you can create one from the GitHub. For guidance, see https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories[Quickstart for repositories^] in the GitHub documentation.  
+
+. Meet the prerequisites in <<prereqs>>.
+//step: open the project folder
+include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
+// Pointer to Source Control Panel
+include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
+. In the Source Control Panel, notice that there is a repository in the *Source Control Repositories* area of the panel, for example:
++
+image::start-scm-oas-anypoint.png["Project source control using the Anypoint SCM"]
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Configure a connection from the project in VS Code to your repository in GitHub:
+.. Provide the following command to add the remote repository on GitHub:
++
+[source, command]
+----
+Git: Add Remote...
+----
+.. Select *Add Remote from GitHub* from the popup menu.
++
+image::start-scm-oas-add-remote.png["Adding an extra remote repository from GitHub"]
+.. Provide the URL to your git repository, for example:
++
+----
+https://github.com/me/my-extra-repo.git
+----
+.. Provide a name for the remote in VS Code, for example:
++
+----
+my-extra-repo
+----
++
+This name for the repository in VS Code can match or differ from the repository name in GitHub.
+. Publish your project to your extra remote repository:
+.. In the command palette, provide the following command:
++
+[source, command]
+----
+Git: Push to...
+----
+.. Select *Git: Push to...* from the popup menu.
++
+image::start-scm-oas-push-to.png["Selecting 'Push to... from VS Code'"]
+.. Select the extra remote repository that you added, for example:
++
+image::start-scm-oas-publish-to-private-repo.png["Selecting the extra remote repository"]
+. Check for your project source files in your repository on GitHub, for example:
++
+image::start-scm-oas-in-github.png["Viewing project files in the extra remote repository"]
+
+To sync subsequent changes to your repository, see <<sync-changes>>.
+
+[[sync-changes]]
+== Sync Project Changes with Your Repository 
+
+After your project is connected and published to a remote repository in GitHub, you can use the IDE to sync your changes to files with that repository. If your repository is not set up yet, see <<set-up-repo>>.
 
 Use the VS Code UI or its built-in terminal to sync your changes:
 
@@ -250,62 +321,6 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-termin
 git clone https://github.com/_yourusername_/_yourrepo_.git
 ----
 . Open the project folder in the IDE.
-
-[[add-extra-remote]]
-== Add an Extra Remote Repository
-
-VS Code supports connections to more than one remote repository from your project workspace. This feature is helpful, for example, if you want to use your own repository for an API specification project that you imported from Design Center instead of using the Anypoint SCM or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repository in the Anypoint SCM. For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
-
-This example assumes that you have an empty repository in GitHub. If you do not, you can create one from the GitHub. For guidance, see https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories[Quickstart for repositories^] in the GitHub documentation.  
-
-. Meet the prerequisites in <<prereqs>>.
-//step: open the project folder
-include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
-// Pointer to Source Control Panel
-include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
-. In the Source Control Panel, notice that there is a repository in the *Source Control Repositories* area of the panel, for example:
-+
-image::start-scm-oas-anypoint.png["Project source control using the Anypoint SCM"]
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Configure a connection from the project in VS Code to your repository in GitHub:
-.. Provide the following command to add the remote repository on GitHub:
-+
-[source, command]
-----
-Git: Add Remote...
-----
-.. Select *Add Remote from GitHub* from the popup menu.
-+
-image::start-scm-oas-add-remote.png["Adding an extra remote repository from GitHub"]
-.. Provide the URL to your git repository, for example:
-+
-----
-https://github.com/me/my-extra-repo.git
-----
-.. Provide a name for the remote in VS Code, for example:
-+
-----
-my-extra-repo
-----
-+
-This name for the repository in VS Code can match or differ from the repository name in GitHub.
-. Publish your project to your extra remote repository:
-.. In the command palette, provide the following command:
-+
-[source, command]
-----
-Git: Push to...
-----
-.. Select *Git: Push to...* from the popup menu.
-+
-image::start-scm-oas-push-to.png["Selecting 'Push to... from VS Code'"]
-.. Select the extra remote repository that you added, for example:
-+
-image::start-scm-oas-publish-to-private-repo.png["Selecting the extra remote repository"]
-. Check for your project source files in your repository on GitHub, for example:
-+
-image::start-scm-oas-in-github.png["Viewing project files in the extra remote repository"]
 
 [[remove-remote]]
 == Remove a Remote Repository from Your Project
