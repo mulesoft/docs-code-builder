@@ -1,4 +1,4 @@
-= Controlling Source Files
+sync your= Controlling Source Files
 :page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
@@ -32,7 +32,7 @@ For setup and installation information, see xref:start-acb.adoc[], and be sure t
 +
 For example, to create an integration project, see xref:int-create-integrations.adoc[].
 
-* A GitHub user name and email configuration. See <<config-git>>.
+* A GitHub user name and email configuration (see <<config-git>>)
 
 [[config-git]]
 === Configure Your Git Username and Password
@@ -66,16 +66,17 @@ git config –-global user.email "your@email.com"
 +
 If two-factor authentication is enabled on your GitHub account and you are prompted for a password, enter your personal access token instead of your GitHub login password. For more information, see GitHub documentation https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/accessing-github-using-two-factor-authentication[Access GitHub with 2FA^].
 
-* If your GitHub `user.name` and `user.email` are listed, you are ready to use Git to control your project files from VS Code:
+* If your GitHub `user.name` and `user.email` are listed, you are ready to use Git to control your project files from VS Code. For guidance with common source control tasks in VS Code, see: 
 
-** <<create-repo, Use VS Code to create a repository for your project files in GitHub>>.
-** <<add-remote, Connect your project to a existing repository in GitHub>>.
-** <<push-changes, Push changes in your project to a connected repository in GitHub>>.
+** <<create-repo>>
+** <<add-remote>>
+** <<sync-changes>>
+** <<add-extra-remote>> 
 
 [[create-repo]]
-== Create a Repository for Your Project
+== Generate and Publish to a Repository in GitHub
 
-If you do not have a repository for your project in GitHub, use VS Code to generate and publish your project files to the repository. If you already have an empty repository in GitHub that you intend to use for your project files, see <<add-remote>> to add the remote repository from VS Code. 
+If you do not have a repository for your project, you can use VS Code to generate and publish your project files to a repository in GitHub. If you already have an empty repository in GitHub that you intend to use for your project files, see <<add-remote>> to add the remote repository from VS Code. 
 
 . Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
@@ -105,11 +106,11 @@ image::start-scm-repo-open-in-github.png["Opening repository in GitHub"]
 Alternatively, open GitHub from your browser and locate your new repository.
 
 [[add-remote]]
-== Publish to an Existing Repository
+== Initialize and Sync Project Files with an Existing Repository
 
-To publish your project files for the first time from VS Code to an existing repository on GitHub, you must initialize your source files and connect from VS Code to the remote repository. This procedure assumes that the project files are ready to stage and publish to a repository in GitHub. 
+If you have an empty repository in GitHub to use for your project files, you can initialize your source files and connect to the repository from VS Code. This procedure assumes that the project files are ready to stage and publish to the repository and that you are not connected to another remote repository. 
 
-If your project is already connected to a repository in an SCM, such as the Anypoint SCM, and you want to publish your changes to a different repository, see <<add-extra-remote>>.
+If your project is already connected to a repository in an SCM, such as the Anypoint SCM, you can <<sync-changes, sync your changes with that repository>>, or you can publish your changes to a different repository by <<add-extra-remote, adding another remote>>.
 
 . Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
@@ -164,10 +165,10 @@ To protect data in your repository, select the private version of your repositor
 +
 image::start-scm-repo-github.png["Project files in a repo on GitHub"]
 
-[[commit-source]]
+[[sync-changes]]
 == Sync Project File Changes with Your Repository 
 
-After your project in VS Code is connected and published to a remote repository in GitHub, you can commit your push additional changes to the repository. If you do not have a repository for your project yet, see <<config-git>>. If you haven't added your repository to your project yet, see <<add-remote>>.
+After your project is connected and published to a remote repository in GitHub, you can use the IDE to sync your changes to files with that repository. If you do not have a repository for your project yet, see <<create-repo>>. If you haven't added your repository to your project yet, see <<add-remote>>.
 
 Use the VS Code UI or its built-in terminal to sync your changes:
 
