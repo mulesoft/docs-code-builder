@@ -114,7 +114,8 @@ image::start-scm-repo-open-in-github.png["Opening repository in GitHub"]
 +
 Alternatively, open GitHub from your browser and locate your new repository.
 
-To sync subsequent changes to your repository, see <<sync-changes>>.
+// Link to add-remote
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[add-remote]]
 === Initialize and Sync Project Files with an Existing Repository
@@ -176,7 +177,8 @@ To protect data in your repository, select the private version of your repositor
 +
 image::start-scm-repo-github.png["Project files in a repo on GitHub"]
 
-To sync subsequent changes to your repository, see <<sync-changes>>.
+// Link to add-remote
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[add-extra-remote]]
 === Add an Extra Remote Repository
@@ -234,7 +236,8 @@ image::start-scm-oas-publish-to-private-repo.png["Selecting the extra remote rep
 +
 image::start-scm-oas-in-github.png["Viewing project files in the extra remote repository"]
 
-To sync subsequent changes to your repository, see <<sync-changes>>.
+// Link to add-remote
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[sync-changes]]
 == Sync Project Changes with Your Repository 
@@ -309,7 +312,7 @@ For common Git commands, see https://docs.github.com/en/get-started/using-git/ab
 [[start-project-from-git]]
 == Clone a Project Repository
 
-After adding a project to a repository on GitHub, you can clone it into your desktop or cloud IDE. Cloning is helpful for retrieving a backup of a deleted project or for sharing your project in another Anypoint Code Builder IDE. For example, you can work on the same project in the desktop and cloud IDE if your project is stored in a Git repository. 
+After adding a project to a repository on GitHub, you can clone it into your desktop or cloud IDE. Cloning is helpful for sharing your project with another IDE or for retrieving a backup of a deleted project. For example, you can work on the same project in the desktop and cloud IDE if your project is stored in a  repository to which you and your team have access.
 
 //open ACB terminal:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
@@ -320,6 +323,8 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-termin
 ----
 git clone https://github.com/_yourusername_/_yourrepo_.git
 ----
++
+Replace the URL in the example with the URL to your repository in GitHub.
 . Open the project folder in the IDE.
 
 [[remove-remote]]
