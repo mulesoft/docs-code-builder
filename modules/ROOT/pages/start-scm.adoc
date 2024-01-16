@@ -1,5 +1,8 @@
 = Controlling Source Files
 :page-deployment-options: cloud-ide, desktop-ide
+:no-repo-yet: If you do not have a repository for your project, you can use VS Code to generate and publish your project files to a repository in GitHub.
+:repo-in-github: If you have an empty repository in GitHub to use for your project files, you can initialize your source files and connect to the repository from VS Code.
+:extra-repo: If your project is already configured to sync with a remote repository, you can configure VS Code to publish your project files to a different repository. This feature is helpful, for example, if you want to use your own repository for an API spec project that you imported from Design Center or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repository in the Anypoint SCM.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
@@ -74,18 +77,29 @@ If two-factor authentication is enabled on your GitHub account and you are promp
 [[set-up-repo]]
 == Set Up a Repository with VS Code
 
+If your project is already set up to sync from VS Code with a repository in an SCM that you want to use, no additional setup is required. You can sync your changes without further setup. For an example, see <<sync-changes>>.
+
 To set up or connect to a remote repository from the IDE, you can use any of the following procedures:
 
 ** <<create-repo>>
++
+//shared info about this procedure:
+{no-repo-yet}
 ** <<add-remote>>
-** <<add-extra-repo>> 
-
-If your project is already connected from VS Code to a repository in an SCM, such as the Anypoint SCM, no additional setup is required. You can  sync your changes with that repository. See <<sync-changes>> for guidance with a remote repository in GitHub.
++
+//shared info about this procedure:
+{repo-in-github}
+** <<add-extra-repo>>
++
+//shared info about this procedure:
+{extra-repo} 
 
 [[create-repo]]
 === Generate and Publish to a Repository in GitHub
 
-If you do not have a repository for your project, you can use VS Code to generate and publish your project files to a repository in GitHub. If you already have an empty repository in GitHub that you intend to use for your project files, see <<add-remote>> to add the remote repository from VS Code. 
+//shared info about this procedure:
+{no-repo-yet} 
+If you already have an empty repository in GitHub that you intend to use for your project files, see <<add-remote>> to add the remote repository from VS Code. 
 
 . Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
@@ -120,7 +134,9 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-c
 [[add-remote]]
 === Initialize and Sync Project Files with an Existing Repository
 
-If you have an empty repository in GitHub to use for your project files, you can initialize your source files and connect to the repository from VS Code. This procedure assumes that the project files are ready to stage and publish to the repository and that no other repository is present in the Source Control panel for your project. 
+//shared info about this procedure:
+{repo-in-github}
+This procedure assumes that the project files are ready to stage and publish to the repository and that no other repository is present in the Source Control panel for your project. 
 
 If another repository, such as the Anypoint SCM, is present in the Source Control panel for your project, you can <<sync-changes, sync your changes with that repository>>, or you can <<add-extra-repo, publish your changes to a different repository>>.
 
@@ -183,7 +199,9 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-c
 [[add-extra-repo]]
 === Publish Project Files to Another Repository
 
-If your project is already configured to sync with a remote repository, you can configure VS Code to publish your project files to a different repository. This feature is helpful, for example, if you want to use your own repository for an API spec project that you imported from Design Center or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repository in the Anypoint SCM. For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
+//shared info about this procedure:
+{extra-repo} 
+For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
 
 This example assumes that you have an empty repository in GitHub. If you do not, you can create one from GitHub. For guidance, see https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories[Quickstart for repositories^] in the GitHub documentation.  
 
