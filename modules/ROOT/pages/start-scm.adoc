@@ -1,8 +1,8 @@
 = Controlling Source Files
 :page-deployment-options: cloud-ide, desktop-ide
-:no-repo-yet: If you do not have a repository for your project, you can use VS Code to generate and publish your project files to a repository in GitHub.
-:repo-in-github: If you have an empty repository in GitHub to use for your project files, you can initialize your source files and connect to the repository from VS Code.
-:extra-repo: If your project is already configured to sync with a remote repository, you can configure VS Code to publish your project files to a different repository. This feature is helpful, for example, if you want to use your own repository for an API spec project that you imported from Design Center or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repository in the Anypoint SCM.
+:no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can use VS Code to generate and publish your project files to a repo in GitHub.
+:repo-in-github: If you have an empty repo in GitHub to use for your project files, you can initialize your source files and connect to the repo from VS Code.
+:extra-repo: If your project is already configured to sync with a remote repo, you can configure VS Code to publish your project files to a different repo. This feature is helpful, for example, if you want to use your own repo for an API spec project that you imported from Design Center or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repo in the Anypoint SCM.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
@@ -36,7 +36,7 @@ For setup and installation information, see xref:start-acb.adoc[], and be sure t
 [[config-git]]
 === Configure Your Git Username and Password
 
-Check for and configure your username and email properties so that you can add, update, and retrieve your project files from a remote Git repository in GitHub. 
+Check for and configure your username and email properties so that you can add, update, and retrieve your project files from a remote Git repository (repo) in GitHub. 
 
 . Meet the prerequisites in <<prereqs>>.
 //open ACB terminal:
@@ -73,9 +73,9 @@ If two-factor authentication is enabled on your GitHub account and you are promp
 [[set-up-repo]]
 == Set Up a Repository with VS Code
 
-If your project is already set up to sync from VS Code with a repository in an SCM that you want to use, no additional setup is required. You can sync your changes without further setup. For an example, see <<sync-changes>>.
+Set up or clone a repository for your design, integration, or implementation project. If your project is already set up to sync from VS Code with a repo in an SCM that you want to use, no additional setup is required. You can sync your changes without further setup. For an example, see <<sync-changes>>.
 
-To set up or connect to a remote repository from the IDE, you can use any of the following procedures:
+To set up or clone a remote GitHub repo from VS Code, you can use any of the following procedures:
 
 ** <<create-repo>>
 +
@@ -91,14 +91,14 @@ To set up or connect to a remote repository from the IDE, you can use any of the
 {extra-repo} 
 ** <<clone-repo>>
 +
-If your design, implementation, or integration project is already stored in a repository on GitHub, you can clone it into the cloud or desktop IDE. 
+If your design, implementation, or integration project is already stored in a repo on GitHub, you can clone it into the cloud or desktop IDE. 
 
 [[create-repo]]
-=== Generate and Publish to a Repository in GitHub
+=== Generate and Publish to a repo in GitHub
 
 //shared info about this procedure:
 {no-repo-yet} 
-If you already have an empty repository in GitHub that you intend to use for your project files, see <<add-remote>> to add the remote repository from VS Code. 
+If you already have an empty repo in GitHub that you intend to use for your project files, see <<add-remote>> to add the remote repo from VS Code. 
 
 . Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
@@ -107,51 +107,51 @@ include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open
 include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
 . In the Source Control panel, click *Publish to GitHub*.
 +
-image::start-scm-repo.png["Publish repository to GitHub from VS Code"]
+image::start-scm-repo.png["Publish repo to GitHub from VS Code"]
 +
-When no repository is associated with your project, VS Code provides options for initializing a repository (*Initialize Repository*) or directly publishing your project to a new repository in GitHub (*Publish to GitHub*).
-. Provide a name for your repository in the field that opens, or use the default name that appears.
+When no repo is associated with your project, VS Code provides options for initializing a repo (*Initialize repo*) or directly publishing your project to a new repo in GitHub (*Publish to GitHub*).
+. Provide a name for your repo in the field that opens, or use the default name that appears.
 +
-image::start-scm-repo-name.png["Name of new repository"]
+image::start-scm-repo-name.png["Name of new repo"]
 +
-The default repository name matches the project name.
-. Select a repository type (private or public).
+The default repo name matches the project name.
+. Select a repo type (private or public).
 +
-To protect data in your repository, select a private repository (*Publish to GitHub private repository*). This process commits and pushes your project files to your new repository.
-. Select the files to publish to the repository.
+To protect data in your repo, select a private repo (*Publish to GitHub private repo*). This process commits and pushes your project files to your new repo.
+. Select the files to publish to the repo.
 +
 You can select all or a subset of the files.
-. To view your project files in a GitHub repository, click *Open on GitHub* in the popup. 
+. To view your project files in a GitHub repo, click *Open on GitHub* in the popup. 
 +
-image::start-scm-repo-open-in-github.png["Opening repository in GitHub"]
+image::start-scm-repo-open-in-github.png["Opening repo in GitHub"]
 +
-Alternatively, open GitHub from your browser and locate your new repository.
+Alternatively, open GitHub from your browser and locate your new repo.
 
 // Link to sync-changes
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[add-remote]]
-=== Initialize and Sync Project Files with an Existing Repository
+=== Initialize and Sync Project Files with an Existing repo
 
 //shared info about this procedure:
 {repo-in-github}
-This procedure assumes that the project files are ready to stage and publish to the repository and that no other repository is present in the Source Control panel for your project. 
+This procedure assumes that the project files are ready to stage and publish to the repo and that no other repo is present in the Source Control panel for your project. 
 
-If another repository, such as the Anypoint SCM, is present in the Source Control panel for your project, you can <<sync-changes, sync your changes with that repository>>, or you can <<add-extra-repo, publish your changes to a different repository>>.
+If another repo, such as the Anypoint SCM, is present in the Source Control panel for your project, you can <<sync-changes, sync your changes with that repo>>, or you can <<add-extra-repo, publish your changes to a different repo>>.
 
 . Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
 include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
-. In the Source Control panel, click *Initialize Repository*.
+. In the Source Control panel, click *Initialize repo*.
 +
-When no repository is associated with your project, VS Code provides options for initializing a repository (*Initialize Repository*) or directly publishing your project to a new repository in GitHub (*Publish to GitHub*).
+When no repo is associated with your project, VS Code provides options for initializing a repo (*Initialize repo*) or directly publishing your project to a new repo in GitHub (*Publish to GitHub*).
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Configure a connection from the project in VS Code to your repository in GitHub:
+. Configure a connection from the project in VS Code to your repo in GitHub:
 
-.. Provide the following command to add the remote repository on GitHub:
+.. Provide the following command to add the remote repo on GitHub:
 +
 [source, command]
 ----
@@ -159,18 +159,18 @@ Git: Add Remote...
 ----
 .. Select *Add Remote from GitHub* from the popup menu.
 +
-image::start-scm-oas-add-remote.png["Adding an remote repository from GitHub"]
-.. Provide the URL to your git repository, for example:
+image::start-scm-oas-add-remote.png["Adding an remote repo from GitHub"]
+.. Provide the URL to your git repo, for example:
 +
-image::start-scm-repo-add-remote-uri.png["Adding a remote repository URL from GitHub"]
+image::start-scm-repo-add-remote-uri.png["Adding a remote repo URL from GitHub"]
 .. Provide a name for the remote in VS Code, for example:
 +
 ----
 my-acb-project-repo
 ----
 +
-This name for the repository in VS Code can match or differ from the repository name in GitHub.
-. From the Source Control panel, stage, commit, and publish your files to the repository in GitHub:
+This name for the repo in VS Code can match or differ from the repo name in GitHub.
+. From the Source Control panel, stage, commit, and publish your files to the repo in GitHub:
 
 .. Stage your files by mousing over the *Changes* area (located after the *Commit* button) and clicking the image:icon-scm-add-changes.png["",15,15] (plus) icon.
 +
@@ -178,17 +178,17 @@ image::start-scm-repo-stage-changes.png["Adding commit message for staged change
 +
 Alternatively, you can stage a single file by clicking the plus icon for that file.
 +
-Staged files move from the *Changes* area in the Source Control panel to the *Staged Changes* area. The UI uses the `git add` command to add changes from your working directory to the staging area in your local Git repository for the IDE.
+Staged files move from the *Changes* area in the Source Control panel to the *Staged Changes* area. The UI uses the `git add` command to add changes from your working directory to the staging area in your local Git repo for the IDE.
 .. Provide your first commit message for the files before clicking *Commit*.
 +
 image::start-scm-repo-commit-staged.png["Commit message for staged changes"]   
 .. Click *Publish Branch*.
 +
 image::start-scm-repo-publish-branch.png["Publish branch files in a repo on GitHub"]
-.. Select a repository type (private or public).
+.. Select a repo type (private or public).
 +
-To protect data in your repository, select the private version of your repository (*Publish to GitHub private repository*). This process commits and pushes your project files to your new repository.
-. Open your repository in GitHub to review the published files, for example:
+To protect data in your repo, select the private version of your repo (*Publish to GitHub private repo*). This process commits and pushes your project files to your new repo.
+. Open your repo in GitHub to review the published files, for example:
 +
 image::start-scm-repo-github.png["Project files in a repo on GitHub"]
 
@@ -196,26 +196,26 @@ image::start-scm-repo-github.png["Project files in a repo on GitHub"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[add-extra-repo]]
-=== Publish Project Files to Another Repository
+=== Publish Project Files to Another repo
 
 //shared info about this procedure:
 {extra-repo} 
 For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
 
-This example assumes that you have an empty repository in GitHub. If you do not, you can create one from GitHub. For guidance, see https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories[Quickstart for repositories^] in the GitHub documentation.  
+This example assumes that you have an empty repo in GitHub. If you do not, you can create one from GitHub. For guidance, see https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories[Quickstart for repositories^] in the GitHub documentation.  
 
 . Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
 include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
-. In the Source Control Panel, notice that there is a repository in the *Source Control Repositories* area of the panel, for example:
+. In the Source Control Panel, notice that there is a repo in the *Source Control Repositories* area of the panel, for example:
 +
 image::start-scm-oas-anypoint.png["Project source control using the Anypoint SCM"]
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Configure a connection from the project in VS Code to your repository in GitHub:
-.. Provide the following command to add the remote repository on GitHub:
+. Configure a connection from the project in VS Code to your repo in GitHub:
+.. Provide the following command to add the remote repo on GitHub:
 +
 [source, command]
 ----
@@ -223,8 +223,8 @@ Git: Add Remote...
 ----
 .. Select *Add Remote from GitHub* from the popup menu.
 +
-image::start-scm-oas-add-remote.png["Adding an extra remote repository from GitHub"]
-.. Provide the URL to your git repository, for example:
+image::start-scm-oas-add-remote.png["Adding an extra remote repo from GitHub"]
+.. Provide the URL to your git repo, for example:
 +
 ----
 https://github.com/me/my-extra-repo.git
@@ -235,8 +235,8 @@ https://github.com/me/my-extra-repo.git
 my-extra-repo
 ----
 +
-This name for the repository in VS Code can match or differ from the repository name in GitHub.
-. Publish your project to your extra remote repository:
+This name for the repo in VS Code can match or differ from the repo name in GitHub.
+. Publish your project to your extra remote repo:
 .. In the command palette, provide the following command:
 +
 [source, command]
@@ -246,19 +246,19 @@ Git: Push to...
 .. Select *Git: Push to...* from the popup menu.
 +
 image::start-scm-oas-push-to.png["Selecting 'Push to... from VS Code'"]
-.. Select the extra remote repository that you added, for example:
+.. Select the extra remote repo that you added, for example:
 +
-image::start-scm-oas-publish-to-private-repo.png["Selecting the extra remote repository"]
-. Check for your project source files in your repository on GitHub, for example:
+image::start-scm-oas-publish-to-private-repo.png["Selecting the extra remote repo"]
+. Check for your project source files in your repo on GitHub, for example:
 +
-image::start-scm-oas-in-github.png["Viewing project files in the extra remote repository"]
+image::start-scm-oas-in-github.png["Viewing project files in the extra remote repo"]
 
-You can now clone this project repository in your IDE to easily modify and sync your changes from the VS Code UI. See <<clone-repo>>. 
+You can now clone this project repo in your IDE to easily modify and sync your changes from the VS Code UI. See <<clone-repo>>. 
 
 [[sync-changes]]
-== Sync Project Changes with Your Repository 
+== Sync Project Changes with Your repo 
 
-After your project is connected and published to a remote repository in GitHub, you can use the IDE to sync your changes with that repository. If your repository is not set up yet, see <<set-up-repo>>.
+After your project is connected and published to a remote repo in GitHub, you can use the IDE to sync your changes with that repo. If your repo is not set up yet, see <<set-up-repo>>.
 
 Use the VS Code UI or its built-in terminal to sync your changes:
 
@@ -280,7 +280,7 @@ include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
 You can stage files individually or as a group.
 .. Provide a commit message.
 .. Click *Commit* to commit the changes to your local branch on the IDE.
-.. Click *Sync Changes* to push your changes to your remote repository on GitHub.
+.. Click *Sync Changes* to push your changes to your remote repo on GitHub.
 
 [[sync-from-terminal]]
 === Sync Changes from the Command Terminal
@@ -291,9 +291,9 @@ To sync changes to your files from your project's command terminal in VS Code:
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 //open ACB terminal:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
-. At the prompt, run Git commands to add new files to your repository and to stage, commit, and push changes to your remote repository on GitHub.
+. At the prompt, run Git commands to add new files to your repo and to stage, commit, and push changes to your remote repo on GitHub.
 +
-The following example uses `git status` to check the status of changes, `git commit` to commit all changed files and add a commit message, and `git push` to merge the changes into the files on the remote repository.
+The following example uses `git status` to check the status of changes, `git commit` to commit all changed files and add a commit message, and `git push` to merge the changes into the files on the remote repo.
 +
 ----
 $ git status
@@ -326,55 +326,55 @@ To https://github.com/me/my-repo.git
 For common Git commands, see https://docs.github.com/en/get-started/using-git/about-git[About Git^] in the GitHub documentation, or find all commands in the https://git-scm.com/docs[Git command reference^].
 
 [[clone-repo]]
-== Clone a Project Repository
+== Clone a Project repo
 
-If your design, implementation, or integration project is already stored in a repository on GitHub (see an example in <<add-extra-repo>>), you and your team can clone it into Anypoint Code Builder desktop or cloud IDEs. Cloning is helpful for sharing your project with another IDE, for enabling your to sync changes to the source from the IDE, and for retrieving a backup of a deleted project. For example, you can work on the same project in the desktop and cloud IDE if your project is stored in a  repository to which you and your team have access.
+If your design, implementation, or integration project is already stored in a repo on GitHub (see an example in <<add-extra-repo>>), you and your team can clone it into Anypoint Code Builder desktop or cloud IDEs. Cloning is helpful for sharing your project with another IDE, for enabling your to sync changes to the source from the IDE, and for retrieving a backup of a deleted project. For example, you can work on the same project in the desktop and cloud IDE if your project is stored in a  repo to which you and your team have access.
 
 //open ACB terminal:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
 . Navigate to your home directory for Anypoint Code Builder.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Clone the repository into the Source Control panel for your project:
-.. Provide the following command to add the remote repository on GitHub:
+. Clone the repo into the Source Control panel for your project:
+.. Provide the following command to add the remote repo on GitHub:
 +
 [source, command]
 ----
 Git: Clone
 ----
-.. Provide the URL to your repository in GitHub, for example:
+.. Provide the URL to your repo in GitHub, for example:
 +
 [source,command]
 ----
 https://github.com/_owner_/_yourrepo_.git
 ----
 +
-Replace the URL in the example with the URL to your repository in GitHub. The owner and repository URL are unique to your GitHub site.
-.. Navigate to a directory for your new repository, and click *Select as Repository Destination*.
+Replace the URL in the example with the URL to your repo in GitHub. The owner and repo URL are unique to your GitHub site.
+.. Navigate to a directory for your new repo, and click *Select as repo Destination*.
 .. When prompted, click *Open* to open the project.
 
 // Link to sync-changes
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[remove-remote]]
-== Remove a Remote Repository from Your Project
+== Remove a Remote repo from Your Project
 
-To remove a remote repository from your project workspace:
+To remove a remote repo from your project workspace:
 
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
 include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
 . In the Source Control panel:
-.. Provide the following Git command to add the remote repository on GitHub:
+.. Provide the following Git command to add the remote repo on GitHub:
 +
 [source, command]
 ----
 Git: Remove Remote...
 ----
-.. In the popup, select the remote repository that you want to remove.
+.. In the popup, select the remote repo that you want to remove.
 +
-In the IDE, your local Git repository remains because it was initialized before syncing with the remote.  
+In the IDE, your local Git repo remains because it was initialized before syncing with the remote.  
 
 == See Also
 
