@@ -116,7 +116,7 @@ image::add-http-config-snippet.png["http:listener-config highlighted in the conf
 ----
 +
 In the menu, the snippet is a partially configured Mule component that is represented by a _two-dimensional_ box icon. Three-dimensional box icons are reserved for basic component XML that is not preconfigured. For information about code snippets, see xref:int-work-with-code-snippets.adoc[].
-. In the configuration XML, configure the attributes for the HTTP Listener operation `<http:listener-config/>`:
+. In the configuration XML, configure the attributes for the HTTP Listener configuration `<http:listener-config/>`:
 +
 [source,xml]
 ----
@@ -125,15 +125,13 @@ In the menu, the snippet is a partially configured Mule component that is repres
 </http:listener-config>
 ----
 In `<http:listener-config/>` and its child element `<http:listener-connection/>`, set the attributes to values provided in the example. The `doc:id` is randomly generated and does not require a change.
-. Configure the attributes for the HTTP Listener operation:
+. Configure the attributes for the HTTP Listener configuration:
 +
 [tabs]
 ====
 From the canvas UI::
 +
-Click the *Listener* operation to open the configuration UI.
-+
-In the configuration UI, set the HTTP Listener attributes to the following values:
+Click the *Listener* operation to open the configuration UI, and set the HTTP Listener attributes to the following values:
 +
 image::tut-int-listener-component-ui.png["Configure the Listener operation through the configuration UI."]
 +
@@ -160,9 +158,7 @@ In `<http:listener/>`, set the attributes to the values provided in the example.
 ====
 From the canvas UI::
 +
-Click the Set Payload component to open the configuration UI.
-+
-In the configuration UI, set the attributes to the following values:
+Click the Set Payload component to open the configuration UI, and set the attributes to the following values:
 +
 image::tut-int-set-payload-component-ui.png["Configure the Set Payload component through the configuration UI."]
 +
@@ -170,6 +166,8 @@ image::tut-int-set-payload-component-ui.png["Configure the Set Payload component
 .. Change the component name to `Set Response`.
 .. Set the *Value* attribute to `Flight info`.
 From the configuration XML::
++
+In `<set-payload/>`, set the attributes to the values provided in the example.
 +
 [source,xml]
 ----
