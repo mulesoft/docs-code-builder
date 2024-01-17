@@ -109,7 +109,7 @@ include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
 +
 image::start-scm-repo.png["Publish repo to GitHub from VS Code"]
 +
-When no repo is associated with your project, VS Code provides options for initializing a repo (*Initialize repo*) or directly publishing your project to a new repo in GitHub (*Publish to GitHub*).
+When no repo is associated with your project, VS Code provides options for initializing a _local_ repo (*Initialize Repository*) on your IDE or directly publishing your project to a new remote repo in GitHub (*Publish to GitHub*).
 . Provide a name for your repo in the field that opens, or use the default name that appears.
 +
 image::start-scm-repo-name.png["Name of new repo"]
@@ -131,7 +131,7 @@ Alternatively, open GitHub from your browser and locate your new repo.
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[add-remote]]
-=== Initialize and Sync Project Files with an Existing Repository
+=== Sync Project Files with an Existing Repository
 
 //shared info about this procedure:
 {repo-in-github}
@@ -144,13 +144,25 @@ If another repo, such as the Anypoint SCM, is present in the Source Control pane
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
 include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
-. In the Source Control panel, click *Initialize repo*.
+. From the Source Control panel for your project, initialize and commit your project files to a local repository in the IDE for your project:
+.. In the Source Control panel, click *Initialize Repository* to generated a local repository in your IDE.
 +
-When no repo is associated with your project, VS Code provides options for initializing a repo (*Initialize repo*) or directly publishing your project to a new repo in GitHub (*Publish to GitHub*).
+When no repo is associated with your project, VS Code provides options for initializing a _local_ repo (*Initialize Repository*) on your IDE or directly publishing your project to a new remote repo in GitHub (*Publish to GitHub*).
+.. Stage your files to your local repository by mousing over the *Changes* area (located after the *Commit* button) and clicking the image:icon-scm-add-changes.png["",15,15] (plus) icon.
++
+image::start-scm-repo-stage-changes.png["Adding commit message for staged changes"]
++
+Alternatively, you can stage a single file by clicking the plus icon for that file.
++
+Staged files move from the *Changes* area in the Source Control panel to the *Staged Changes* area. The UI uses the `git add` command to add changes from your working directory to the staging area in your local Git repo for the IDE.
+.. Provide your first commit message for the files before clicking *Commit*.
++
+image::start-scm-repo-commit-staged.png["Commit message for staged changes"]
++
+After committing, _do not click_ the button for publishing to a branch. Instead, you will use the command line to add a connection from your project to your remote repository on GitHub.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Configure a connection from the project in VS Code to your repo in GitHub:
-
+. Configure a connection from the project in VS Code to your empty remote repo in GitHub:
 .. Provide the following command to add the remote repo on GitHub:
 +
 [source, command]
@@ -171,17 +183,7 @@ my-acb-project-repo
 +
 This name for the repo in VS Code can match or differ from the repo name in GitHub.
 . From the Source Control panel, stage, commit, and publish your files to the repo in GitHub:
-
-.. Stage your files by mousing over the *Changes* area (located after the *Commit* button) and clicking the image:icon-scm-add-changes.png["",15,15] (plus) icon.
-+
-image::start-scm-repo-stage-changes.png["Adding commit message for staged changes"]
-+
-Alternatively, you can stage a single file by clicking the plus icon for that file.
-+
-Staged files move from the *Changes* area in the Source Control panel to the *Staged Changes* area. The UI uses the `git add` command to add changes from your working directory to the staging area in your local Git repo for the IDE.
-.. Provide your first commit message for the files before clicking *Commit*.
-+
-image::start-scm-repo-commit-staged.png["Commit message for staged changes"]   
+ 
 .. Click *Publish Branch*.
 +
 image::start-scm-repo-publish-branch.png["Publish branch files in a repo on GitHub"]
