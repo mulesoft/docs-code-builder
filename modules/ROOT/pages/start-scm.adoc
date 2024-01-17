@@ -1,6 +1,7 @@
 = Controlling Source Files
 :page-deployment-options: cloud-ide, desktop-ide
 :no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can use VS Code to generate and publish your project files to a repo in GitHub.
+:init-local: Initializing your project files into a local repository in the IDE is a prerequisite to publishing files to a remote repository.
 :repo-in-github: If you have an empty repo in GitHub to use for your project files, you can initialize your source files and publish the files to the repo from VS Code.
 :extra-repo: If your project is already configured to sync with a remote repo, you can configure VS Code to publish your project files to a different repo. This feature is helpful, for example, if you want to use your own repo for an API spec project that you imported from Design Center or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repo in the Anypoint SCM.
 
@@ -77,19 +78,21 @@ Set up a repository for your design, integration, or implementation project from
 
 To set up a remote GitHub repo from VS Code for your projects, the following scenarios are common:
 
-** <<create-repo>>
+* <<create-repo>>
 +
 //shared info about this procedure:
 {no-repo-yet}
-** <<add-remote>>
+* <<initialize-repo>>
++
+// shared info about initialization
+{init-local}
+* <<publish-to-empty>>
 +
 //shared info about this procedure:
 {repo-in-github}
-** <<add-extra-repo>>
-+
 //shared info about this procedure:
 {extra-repo} 
-** <<clone-repo>>
+* <<clone-repo>>
 +
 If a design, implementation, or integration project is already stored in a repo on GitHub, you can clone it into the cloud or desktop IDE. 
 
@@ -130,14 +133,11 @@ Alternatively, open GitHub from your browser and locate your new repo.
 // Link to sync-changes
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
-[[add-remote]]
-=== Initialize and Sync Project Files with an Empty Repository in GitHub
+[[initialize-repo]]
+== Initialize and Publish Project Files to a Local Repository
 
-//shared info about this procedure:
-{repo-in-github}
-This procedure assumes that the project files are ready to stage and publish to the repo and that no other repo is present in the Source Control panel for your project. 
-
-If another repo, such as the Anypoint SCM, is present in the Source Control panel for your project, you can <<sync-changes, sync your changes with that repo>>, or you can <<add-extra-repo, publish your changes to a different repo>>.
+// shared info about initialization
+{init-local}
 
 . Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
@@ -160,6 +160,23 @@ Staged files move from the *Changes* area in the Source Control panel to the *St
 image::start-scm-repo-commit-staged.png["Commit message for staged changes"]
 +
 After committing, _do not click_ the button for publishing to a branch yet. Instead, you will use the command line to add a connection from your project to your remote repo on GitHub before publishing to a branch in that repo.
+
+To publish your files to a remote repository, you can:
+
+* <<publish-to-empty>>
+* <<add-extra-repo<>>
+
+[[publish-to-empty]]
+=== Publish Project Files into an Empty Repository in GitHub
+
+//shared info about this procedure:
+{repo-in-github}
+This procedure assumes that the project files are ready to stage and publish to the repo and that no other repo is present in the Source Control panel for your project. 
+
+If another repo, such as the Anypoint SCM, is present in the Source Control panel for your project, you can <<sync-changes, sync your changes with that repo>>, or you can <<add-extra-repo, publish your changes to a different repo>>.
+
+. Meet the prerequisites in <<prereqs>>.
+. If you have not yet initialized a local repository for your project in the IDE, see <<initialize-repo>>.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Configure a connection from the project in VS Code to your empty remote repo in GitHub:
@@ -193,7 +210,7 @@ image::start-scm-repo-github.png["Project files in a repo on GitHub"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[add-extra-repo]]
-=== Publish Project Files to Another Repository
+=== Publish Project Files to a Different Repository
 
 //shared info about this procedure:
 {extra-repo} 
