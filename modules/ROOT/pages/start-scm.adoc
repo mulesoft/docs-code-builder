@@ -3,7 +3,8 @@
 :no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can use VS Code to generate and publish your project files to a repo in GitHub.
 :init-local: Initializing your project files into a local repository in the IDE is a prerequisite to publishing files to a remote repository.
 :repo-in-github: If you have an empty repo in GitHub to use for your project files, you can initialize your source files and publish the files to the repo from VS Code.
-:extra-repo: If your project is already configured to sync with a remote repo, you can configure VS Code to publish your project files to a different repo. This feature is helpful, for example, if you want to use your own repo for an API spec project that you imported from Design Center or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repo in the Anypoint SCM.
+:extra-repo: If your project is already configured to sync with a remote repo, you can configure VS Code to publish your project files to a different repo. 
+:extra-repo-continued: This feature is helpful, for example, if you want to use your own repo for an API spec project that you imported from Design Center or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repo in the Anypoint SCM.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
@@ -91,7 +92,9 @@ To set up a remote GitHub repo from VS Code for your projects, the following sce
 //shared info about this procedure:
 {repo-in-github}
 //shared info about this procedure:
-{extra-repo} 
+{extra-repo}
+//shared description:
+{extra-repo-continued}
 * <<clone-repo>>
 +
 If a design, implementation, or integration project is already stored in a repo on GitHub, you can clone it into the cloud or desktop IDE. 
@@ -164,7 +167,13 @@ After committing, _do not click_ the button for publishing to a branch yet. Inst
 To publish your files to a remote repository, you can:
 
 * <<publish-to-empty>>
++
+//shared description:
+{repo-in-github}
 * <<add-extra-repo>>
++
+//shared description:
+{extra-repo}
 
 [[publish-to-empty]]
 === Publish Project Files into an Empty Repository in GitHub
@@ -213,7 +222,11 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-c
 === Publish Project Files to a Different Repository
 
 //shared info about this procedure:
-{extra-repo} 
+{extra-repo}
+//shared info about this procedure:
+{extra-repo}
+//shared description:
+{extra-repo-continued} 
 For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
 
 This example assumes that you have an empty repo in GitHub. If you do not, you can create one from GitHub. For guidance, see https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories[Quickstart for repositories^] in the GitHub documentation.  
