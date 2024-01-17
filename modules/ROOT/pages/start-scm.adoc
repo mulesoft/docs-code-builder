@@ -2,7 +2,7 @@
 :page-deployment-options: cloud-ide, desktop-ide
 :no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can use VS Code to generate and publish your project files to a repo in GitHub.
 :init-local: Initializing your project files into a local repository in the IDE is a prerequisite to publishing files to a remote repository.
-:repo-in-github: If you have an empty repo in GitHub to use for your project files, you can initialize your source files and publish the files to the repo from VS Code.
+:repo-in-github: If you have an empty repo in GitHub, you can publish your project files to the repo from VS Code.
 :extra-repo: If your project is already configured to sync with a remote repo, you can configure VS Code to publish your project files to a different repo. 
 :extra-repo-continued: This feature is helpful, for example, if you want to use your own repo for an API spec project that you imported from Design Center or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repo in the Anypoint SCM.
 
@@ -223,11 +223,11 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-c
 
 //shared info about this procedure:
 {extra-repo}
-//shared info about this procedure:
-{extra-repo}
 //shared description:
 {extra-repo-continued} 
 For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
+
+If you are unsure whether your project is already connected to a remote repository, see <<check-for-remote>>.
 
 This example assumes that you have an empty repo in GitHub. If you do not, you can create one from GitHub. For guidance, see https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories[Quickstart for repositories^] in the GitHub documentation.  
 
@@ -236,7 +236,7 @@ This example assumes that you have an empty repo in GitHub. If you do not, you c
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
 include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
-. In the Source Control Panel, notice that there is a repo in the *Source Control Repositories* area of the panel, for example:
+.. In the Source Control Panel, notice that there is a repo in the *Source Control Repositories* area of the panel, for example:
 +
 image::start-scm-oas-anypoint.png["Project source control using the Anypoint SCM"]
 // Pointer to Command Palette
@@ -382,6 +382,35 @@ Replace the URL in the example with the URL to your repo in GitHub. The owner an
 
 // Link to sync-changes
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
+
+== Get the URL of a Project's Remote Repository in GitHub
+
+To get for the remote repository's URL:
+
+. In the Source Control Panel, check for a local repo in the *Source Control Repositories* area of the panel, for example:
++
+image::start-scm-oas-anypoint.png["Project source control using the Anypoint SCM"]
+//open ACB terminal:
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
+. Provide the following command:
++
+[source, command]
+----
+git ls-remote --get-url origin
+----
+
+* If the project is connected to a remote repository in GitHub, the command returns a URL, for example:
++
+----
+$ git ls-remote --get-url origin
+https://github.com/me/my-project-repo.git
+----
+* If no remote repository in GitHub is connected to the project, the command returns the local branch name, such as `origin`, for example:
++
+----
+$ git ls-remote --get-url origin
+origin
+----
 
 [[remove-remote]]
 == Remove a Remote Repository from Your Project
