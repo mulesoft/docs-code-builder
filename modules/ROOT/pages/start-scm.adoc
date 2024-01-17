@@ -104,7 +104,7 @@ If a design, implementation, or integration project is already stored in a repo 
 
 //shared info about this procedure:
 {no-repo-yet} 
-If you already have an empty repo in GitHub that you intend to use for a project in Anypoint Code Builder, see <<add-remote>> to add the remote repo from VS Code. 
+If you already have an empty repo in GitHub that you intend to use for a project in Anypoint Code Builder, see <<publish-to-empty>> to add and publish to the repo from VS Code. 
 
 . Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
@@ -151,16 +151,10 @@ include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
 .. In the Source Control panel, click *Initialize Repository* to generated a local repository in your IDE.
 +
 When no repo is associated with your project, VS Code provides options for initializing a _local_ repo (*Initialize Repository*) on your IDE or directly publishing your project to a new remote repo in GitHub (*Publish to GitHub*).
-.. Stage your files to your local repository by mousing over the *Changes* area (located after the *Commit* button) and clicking the image:icon-scm-add-changes.png["",15,15] (plus) icon.
-+
-image::start-scm-repo-stage-changes.png["Adding commit message for staged changes"]
-+
-Alternatively, you can stage a single file by clicking the plus icon for that file.
-+
-Staged files move from the *Changes* area in the Source Control panel to the *Staged Changes* area. The UI uses the `git add` command to add changes from your working directory to the staging area in your local Git repo for the IDE.
-.. Provide your first commit message for the files before clicking *Commit*.
-+
-image::start-scm-repo-commit-staged.png["Commit message for staged changes"]
+// Shared substep to stage files
+include::partial$acb-reusable-steps.adoc[tags="scm-stage-files-substep"]
+// Shared substeps to commit files
+include::partial$acb-reusable-steps.adoc[tags="scm-commit-message-substep"]
 +
 After committing, _do not click_ the button for publishing to a branch yet. Instead, you will use the command line to add a connection from your project to your remote repo on GitHub before publishing to a branch in that repo.
 
@@ -302,11 +296,10 @@ include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open
 // Pointer to Source Control Panel
 include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
 . In the Source Control panel:
-.. Stage your changes.
-+
-You can stage files individually or as a group.
-.. Provide a commit message.
-.. Click *Commit* to commit the changes to your local branch on the IDE.
+// Shared substep to stage files
+include::partial$acb-reusable-steps.adoc[tags="scm-stage-files-substep"]
+// Shared substeps to commit files
+include::partial$acb-reusable-steps.adoc[tags="scm-commit-message-substep"]
 .. Click *Sync Changes* to push your changes to your remote repo on GitHub.
 
 [[sync-from-terminal]]
