@@ -131,7 +131,7 @@ Alternatively, open GitHub from your browser and locate your new repo.
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[add-remote]]
-=== Sync Project Files with an Existing Repository
+=== Initialize and Sync Project Files with an Empty Repository in GitHub
 
 //shared info about this procedure:
 {repo-in-github}
@@ -159,7 +159,7 @@ Staged files move from the *Changes* area in the Source Control panel to the *St
 +
 image::start-scm-repo-commit-staged.png["Commit message for staged changes"]
 +
-After committing, _do not click_ the button for publishing to a branch. Instead, you will use the command line to add a connection from your project to your remote repository on GitHub.
+After committing, _do not click_ the button for publishing to a branch yet. Instead, you will use the command line to add a connection from your project to your remote repo on GitHub before publishing to a branch in that repo.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Configure a connection from the project in VS Code to your empty remote repo in GitHub:
@@ -181,7 +181,7 @@ image::start-scm-repo-add-remote-uri.png["Adding a remote repo URL from GitHub"]
 my-acb-project-repo
 ----
 +
-This name for the repo in VS Code can match or differ from the repo name in GitHub.
+The name for the repo in VS Code can match or differ from the repo name in GitHub.
 . From the Source Control panel, stage, commit, and publish your files to the repo in GitHub:
  
 .. Click *Publish Branch*.
