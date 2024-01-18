@@ -18,9 +18,12 @@ Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studi
 
 The desktop-based IDE extensions in Anypoint Extension Pack are available from the Visual Studio Marketplace.
 
+* <<prereqs>>
 * <<install-pack>>
 * <<update-pack>>
+* <<uninstall-pack>> 
 
+[[prereqs]]
 === Before You Begin Desktop IDE Setup
 
 Before installing the desktop extensions to VS Code, set up git and have an Anypoint Platform account with the required permissions:
@@ -89,6 +92,26 @@ For guidance, see <<change-clouds>>.
 
 If Anypoint Extension Pack is installed on your desktop IDE, update to the latest version of the extension pack by following VS Code instructions in https://code.visualstudio.com/docs/editor/extension-marketplace#_update-an-extension-manually[Update an extension manually^].
 
+[[uninstall-pack]]
+=== Uninstall Anypoint Extension Pack
+
+Typically, it is unnecessary to uninstall the extension pack or individual Anypoint Code Builder extensions from VS Code. For example, you can update to a new version without uninstalling first. 
+
+If you decide to uninstall Anypoint Extension Pack, follow the same procedure that you use for other VS Code extensions. Uninstalling the extension pack also uninstalls the individual Anypoint Code Builder extensions that are bundled within the extension pack, such as the DataWeave and APIkit extensions. 
+
+To uninstall:
+
+. Open VS Code. 
+. From the activity bar, open the Extensions panel.
+. Find and select Anypoint Extension Pack.
+. In the Anypoint Extension Pack tab that opens, click *Uninstall*. 
+. To remove the Anypoint Code Builder extensions from the Extensions panel, click *Reload* on one of the extensions. 
+
+For additional guidance, see the VS Code documentation, https://code.visualstudio.com/docs/editor/extension-marketplace#_manage-extensions[Manage extensions^].
+
+You can reinstall at any time.
+
+
 [[set-up-web]]
 == Launch the Cloud IDE 
 
@@ -112,7 +135,7 @@ During the open beta, your cloud IDE instance might get deleted, causing you to 
 .Click for more information:
 [%collapsible]
 ====
-To save your work, you must either deploy your Mule projects to CloudHub, commit them to source control, or publish your API specifications to Design Center.
+To save your work, commit your project files to a source control management (SCM) system. See xref:start-scm.adoc[].
 
 If you are using an Anypoint Platform trial account that loses access to Anypoint Code Builder after your trial expires, the cloud IDE instances are deleted.
 
@@ -202,10 +225,23 @@ After logging you in, Anypoint Platform displays a *You can close this page now*
 [[change-clouds]]
 == Set the Desktop IDE to the EU or US Cloud
 
-In the desktop IDE, you can change your Anypoint Platform control plane to the US or EU cloud. US cloud is the default. Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:index.adoc#us-eu-clouds[US and UE Cloud Hosts]. 
+In the desktop IDE, you can change your Anypoint Platform control plane to the US or EU cloud. US cloud is the default. Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:index.adoc#us-eu-clouds[US and EU Cloud Hosts]. 
+
 
 //shared steps for opening Mule settings
 include::partial$acb-reusable-steps.adoc[tags="open-mule-settings"]
+
+. If an API specification is open in the Explorer view of the IDE, close the project to avoid a potential synchronization error when you switch clouds. 
+
+* In the desktop IDE, click *File* > *Close Folder*.
+* In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *File* > *Close Folder*.
+
+. Open the Settings tab from the activity bar in the desktop IDE:
++
+image::acb-activity-bar-select-cloud.png["Selecting the EU cloud from the desktop IDE"]
+
+* From the Anypoint Code Builder panel, click the *Open ACB Settings* (gear) icon.
+* From the activity bar, click the *Manage* (gear) icon, select *Settings*, and search for `mule` in the *Settings* tab.
 . Scroll to *Mule: Control Plane*.
 . Select *US Cloud* or *EU Cloud*.
 . {restart-ide}
