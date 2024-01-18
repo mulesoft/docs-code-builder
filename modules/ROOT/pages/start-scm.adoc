@@ -379,9 +379,9 @@ For cloned integration or implementation projects, you can navigate to `src`-> `
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-changes"]
 
 [[check-remote]]
-== Get the URL of a Project's Remote Repository in GitHub
+== Check for a Remote Repository
 
-To get the remote repository's URL:
+To determine whether a remote GitHub repository for your project is configured in the IDE: 
 
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
@@ -390,29 +390,26 @@ include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
 . In the Source Control Panel, check for a local repo in the *Source Control Repositories* area of the panel, for example:
 +
 image::start-scm-oas-anypoint.png["Project source control using the Anypoint SCM"]
-+
-If no local repository is initialized, no remote is connected. 
 //open ACB terminal:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
 . Provide the following command:
 +
 [source, command]
 ----
-git ls-remote --get-url origin
+git remote -v
 ----
 
-* If the project is connected to a remote repository in GitHub, the command returns a URL, for example:
+* If the project has one or more remote repository configurations, the command returns the URL for each remote, along with `push` and `fetch` information, for example:
 +
 ----
-$ git ls-remote --get-url origin
-https://github.com/me/my-project-repo.git
+$ git remote -v
+origin  https://github.com/me/my-project-repo.git (fetch)
+origin  https://github.com/me/my-project-repo.git (push)
 ----
-* If no remote repository in GitHub is connected to the project, the command returns `origin`, for example:
-+
-----
-$ git ls-remote --get-url origin
-origin
-----
+* If no results return, a remote repository is not configured for the project.
+* If the error `fatal: not a git repository (or any of the parent directories): .git` returns, a local repository is not initialized for the project.
+
+For information about `git remote` command options, see https://git-scm.com/docs/git-remote[git-remote reference^] in the GitHub documentation.
 
 [[remove-remote]]
 == Remove a Remote Repository from Your Project
