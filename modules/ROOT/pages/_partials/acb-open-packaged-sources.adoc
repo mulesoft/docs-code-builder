@@ -50,7 +50,7 @@ This step prevents the import process from adding the project as a subfolder of 
 //
 // tag::load-sharable-jar[]
 //variable used in multiple places on this page:
-. Select the following command:
+. Provide the following command:
 +
 [source,command]
 ----
@@ -112,7 +112,7 @@ Libraries load to the `target/repositories` directory within the project folder.
 // * From the desktop IDE, select *View* > *Command Palette*. 
 // * From the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *View* > *Command Palette*.
 ====
-.. Select the following command:
+.. Provide this command:
 +
 [source,command]
 ----
@@ -132,7 +132,7 @@ After removing, drag and copy the project folder to the IDE without adding it to
 //
 // tag::open-workspace-root[]
 [[open-directory]]
-. If your Mule project folder is closed, open a workspace for the project at the project's _root_ directory:
+. If your Mule project folder is closed, open the project at its _root_ directory:
 +
 .. Open the Command Palette.
 +
@@ -146,21 +146,35 @@ After removing, drag and copy the project folder to the IDE without adding it to
 * In the desktop IDE, select *View* > *Command Palette*. 
 * In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *View* > *Command Palette*.
 ====
-.. Select the following command:
+.. Provide this command:
 +
 [source,command]
 ----
 File: Open Folder...
 ----
-.. Navigate to and select the _root_ folder for your project. 
+.. Navigate to and select the _root_ folder for your project, for example: 
 +
+[tabs]
+====
+Integration or Implementation Example::
++
+--
+Example of a root folder and subdirectories of an integration or implementation project in Anypoint Code Builder: 
+
+image::int-open-root.png["Project folder for an integration or implementation project"]
+
 VS Code treats the root as a workspace, which enables the IDE to load the canvas UI properly.
+--
+Design Project Example::
 +
-The root is the top-level folder that Anypoint Code Builder generates when you create a project. Do not navigate to the project's parent or ancestor directory or to one of its child or descendant directories.
+--
+Example of the root directory for an API design project in Anypoint Code Builder: 
+
+image::int-open-root-design.png["Project folder for a design project"]
+--
+====
 +
-The project opens at the root, for example:
-+
-image::int-open-root.png[Project root folder]
+The root of a project is the top-level folder that Anypoint Code Builder generates when you create a project. Do not navigate to the project root's parent or ancestor directory or to one of its child or descendant directories.
 // end::open-workspace-root[]
 //
 
@@ -178,7 +192,7 @@ image::int-open-root.png[Project root folder]
 // ** From the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *View* > *Command Palette*.
 ** Click the image:icon-menu.png["",18,18] (menu) icon, and select *View* > *Command Palette*.
 ====
-. Select the following command:
+. Provide this command:
 +
 [source,command]
 --

@@ -21,7 +21,7 @@ Group together a sequence of Core components and operations (provided by connect
 
 Within a Mule application, a flow is a block of executable components, including any connector operations, that Mule runtime executes sequentially on a Mule event. A flow can also contain an event source, which triggers the creation of the event and the execution of the flow. You can create more than one flow in your Mule app. 
 
-For a more in-depth discussion of uses, capabilities, and limits of flows and subflows, see xref:mule-runtime::about-flows.adoc[Flows and Subflows].
+For a more in-depth discussion of uses, capabilities, and limits of flows and subflows, see xref:4.4@mule-runtime::about-flows.adoc[Flows and Subflows].
 
 Flows always function synchronously. To achieve asynchronous patterns, such as Fire-and-Forget, use the xref:acb-component-async.adoc[Async Scope].
 
@@ -82,7 +82,7 @@ SNIPPET_XML_HERE
 | Editable name for the flow.
 
 | `initialState` 
-| Indicates whether the flow is active when you start the application. Accepted values are `started` and `stopped`. You can trigger flows in state `started` from an internal or external Mule event source within the flow (such as an HTTP listener or Scheduler), by a Flow Reference from another flow or subflow, or through a call to the xref:dataweave::dataweave-runtime-functions.adoc#functions_runtime[lookup] DataWeave function. 
+| Indicates whether the flow is active when you start the application. Accepted values are `started` and `stopped`. You can trigger flows in state `started` from an internal or external Mule event source within the flow (such as an HTTP listener or Scheduler), by a Flow Reference from another flow or subflow, or through a call to the xref:2.4@dataweave::dataweave-runtime-functions.adoc#functions_runtime[lookup] DataWeave function. 
 
 If you set the initial state to `stopped`, use xref:runtime-manager::flow-management.adoc[Runtime Manager] to activate the flow or reset the Flow configuration to `Started`. The console output for this state is: `Flow flow_component_ex has not been started (initial state = 'stopped')`
 
@@ -93,7 +93,7 @@ Defaults to `started`.
 
 Set `maxConcurrency` to `1` to cause the flow to process requests one at a time.
 
-See xref:mule-runtime::execution-engine.adoc#backpressure[Back-pressure] for details about the behavior of Mule runtime after it reaches the maximum concurrency value.
+See xref:4.4@mule-runtime::execution-engine.adoc#backpressure[Back-pressure] for details about the behavior of Mule runtime after it reaches the maximum concurrency value.
 
 | `tracking:enable-default-event`
 | When set to `true`, enables business events for Mule apps that you deploy to CloudHub. 
@@ -315,6 +315,6 @@ ERROR 2018-07-30 23:58:45,293 [[MuleRuntime].cpuLight.06:
 == See Also
 
 * xref:acb-component-subflow.adoc[Subflow]
-* xref:mule-runtime::tuning-backpressure-maxconcurrency.adoc[Back-Pressure and MaxConcurrency]
+* xref:4.4@mule-runtime::tuning-backpressure-maxconcurrency.adoc[Back-Pressure and MaxConcurrency]
 
 //end::see-also[]

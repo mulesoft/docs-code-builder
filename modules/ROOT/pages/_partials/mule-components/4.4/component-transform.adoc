@@ -16,7 +16,7 @@ Write a DataWeave script within this component to set or transform the Mule mess
 
 //
 //tag::component-long-description[]
-DataWeave is the programming language for all expressions and data transformations in your integrations and implementations. The language offers function libraries and mechanisms for creating customizations, including your own functions, libraries, and data types. To learn the basics of DataWeave and experiment with DataWeave scripts, see https://dataweave.mulesoft.com/[DataWeave Tutorial and Playground^], and find DataWeave functions and guidance with the language in the xref:dataweave::index.adoc[DataWeave documentation].
+DataWeave is the programming language for all expressions and data transformations in your integrations and implementations. The language offers function libraries and mechanisms for creating customizations, including your own functions, libraries, and data types. To learn the basics of DataWeave and experiment with DataWeave scripts, see https://dataweave.mulesoft.com/[DataWeave Tutorial and Playground^], and find DataWeave functions and guidance with the language in the xref:2.4@dataweave::index.adoc[DataWeave documentation].
 
 //end::component-long-description[]
 //
@@ -53,7 +53,7 @@ output application/java //<1>
 [calloutlist]
 . The `output` directive of a DataWeave script that configures the `application/java` format
 +
-See xref:dataweave::dataweave-formats.adoc[].
+See xref:2.4@dataweave::dataweave-formats.adoc[].
 . Location for the body of the DataWeave script
 --
 
@@ -91,7 +91,7 @@ Snippet XML in Anypoint Code Builder serves as a customizable template for the c
 | Automatically generated identifier for the component.
 
 | `mode` 
-| Specifies the DataWeave script execution mode. Accepted values: `immediate` or `deferred`. See xref:dataweave::dataweave-memory-management.adoc[DataWeave Memory Management] for additional information.
+| Specifies the DataWeave script execution mode. Accepted values: `immediate` or `deferred`. See xref:2.4@dataweave::dataweave-memory-management.adoc[DataWeave Memory Management] for additional information.
 |===
 //end::component-xml-attributes-root[]
 //
@@ -101,7 +101,7 @@ Snippet XML in Anypoint Code Builder serves as a customizable template for the c
 //  Provide intro text, as needed.
 //tag::component-xml-child1[]
 
-Write a xref:dataweave::dataweave-language-introduction.adoc[DataWeave script] within a Transform component (`<ee:transform/>`) to create or transform content for any parts of the xref:mule-runtime::about-mule-event.adoc[Mule event]:
+Write a xref:2.4@dataweave::dataweave-language-introduction.adoc[DataWeave script] within a Transform component (`<ee:transform/>`) to create or transform content for any parts of the xref:4.4@mule-runtime::about-mule-event.adoc[Mule event]:
 
 * The `<ee:message/>` element within `<ee:transform/>` accepts child elements for creating or transforming a Mule message payload and attributes: 
 +
@@ -109,7 +109,7 @@ Write a xref:dataweave::dataweave-language-introduction.adoc[DataWeave script] w
 |===
 | `<ee:message/>` Elements | Description
 
-| `<ee:set-payload/>` | Sets or transforms the xref:mule-runtime::about-mule-message.adoc#message-payload[Mule message payload]. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-payload/>` element is allowed. 
+| `<ee:set-payload/>` | Sets or transforms the xref:4.4@mule-runtime::about-mule-message.adoc#message-payload[Mule message payload]. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-payload/>` element is allowed. 
 | `<ee:set-attributes/>` | Sets or transforms one or more Mule message attributes. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-attributes/>` element is allowed. 
 |===
 
@@ -120,7 +120,7 @@ Write a xref:dataweave::dataweave-language-introduction.adoc[DataWeave script] w
 | `<ee:variables/>` Elements 
 | Description
 
-| `<ee:set-variable/>` | Sets or transforms a xref:mule-runtime::about-mule-variables.adoc[Mule variable]. This child element of `<ee:variables/>` accepts a DataWeave script. One or more `<ee:set-variable/>` elements are allowed.
+| `<ee:set-variable/>` | Sets or transforms a xref:4.4@mule-runtime::about-mule-variables.adoc[Mule variable]. This child element of `<ee:variables/>` accepts a DataWeave script. One or more `<ee:set-variable/>` elements are allowed.
 |===
 
 //end::component-xml-child1[]
@@ -208,7 +208,7 @@ The DataWeave script within `<ee:set-payload/>` returns this XML output as the m
 [[example2]]
 === Example: Calling an External DataWeave Script
 
-The following example calls an external DataWeave script within a xref:dataweave::dataweave-language-introduction.adoc#dwl_file[DWL file] to set the payload. 
+The following example calls an external DataWeave script within a xref:2.4@dataweave::dataweave-language-introduction.adoc#dwl_file[DWL file] to set the payload. 
 
 [[example-dwl]]
 [source,xml]
@@ -330,7 +330,7 @@ The following example triggers a flow that requests user data and configures `<e
 . `LOGGER-PAYLOAD-1` prints the value of `payload[0]`, which is the first index of an array of user objects found at https://jsonplaceholder.typicode.com/users[https://jsonplaceholder.typicode.com/users^].
 . `LOGGER-ATTRIBUTES-1` is set to the predefined Mule variable `attributes` to print the HTTP metadata returned from the HTTP request, including the status code, reason phrase, and headers. 
 +
-For more information about `attributes` and other Mule variables, see xref:dataweave::dataweave-variables-context.adoc[].
+For more information about `attributes` and other Mule variables, see xref:2.4@dataweave::dataweave-variables-context.adoc[].
 . `LOGGER-VARIABLES-1` is set to `vars` to print an object that describes the Mule variable in the Mule event:
 +
 ----
@@ -343,7 +343,7 @@ For more information about `attributes` and other Mule variables, see xref:dataw
 * `<ee:set-payload/>` selects the `id` value from the user objects in the payload array.
 * `<ee:set-attributes/>` uses `attributes.statusCode` to select the status code value from the HTTP request metadata.
 +
-All the metadata is selectable. For example, you can select the reason phrase with `attributes.reasonPhrase` and the headers with `attributes.headers`. For more information, see xref:dataweave::dataweave-selectors.adoc[].
+All the metadata is selectable. For example, you can select the reason phrase with `attributes.reasonPhrase` and the headers with `attributes.headers`. For more information, see xref:2.4@dataweave::dataweave-selectors.adoc[].
 * `<ee:variables/>` creates new Mule variables. The first `<ee:set-variable/>` sets `myVar2` to the value of the `myVar` variable (`vars.myVar`). The second creates a variable named `myVar3` to the string `'myvariable3'`.
 
 . `LOGGER-PAYLOAD-2` prints the transformed value of `payload`, which is now an array of user `id` values (`[1,2,3,4,5,6,7,8,9,10]`).
@@ -479,7 +479,7 @@ ERROR_HANDLING_DETAILS_HERE
 [[see-also]]
 == See Also
 
-* xref:dataweave::dataweave.adoc[DataWeave Language]
-* xref:dataweave::dataweave-selectors.adoc[DataWeave Selectors]
+* xref:2.4@dataweave::dataweave.adoc[DataWeave Language]
+* xref:2.4@dataweave::dataweave-selectors.adoc[DataWeave Selectors]
 
 //end::see-also[]
