@@ -1,7 +1,7 @@
 = Controlling Source Files
 :page-deployment-options: cloud-ide, desktop-ide
 :no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can use VS Code to generate and publish your project files to a repo in GitHub.
-:init-local: Initializing and committing your project files into a local repository in the IDE is a prerequisite to publishing and syncing files into a remote repository in GitHub.
+:init-local: Initializing and committing your project files into a local repoin the IDE is a prerequisite to publishing and syncing files into a remote repoin GitHub.
 :repo-in-github: If you have an empty repo in GitHub, you can publish your project files to the repo from VS Code.
 :extra-repo: If your project is already configured to sync with a remote repo, you can configure VS Code to publish your project files to a different repo. 
 :extra-repo-continued: This feature is helpful, for example, if you want to use your own repo for an API spec project that you imported from Design Center or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repo in the Anypoint SCM.
@@ -38,7 +38,7 @@ For setup and installation information, see xref:start-acb.adoc[], and be sure t
 [[config-git]]
 === Configure Your Git Username and Password
 
-Check for and configure your username and email properties so that you can add, update, and retrieve your project files from a remote Git repository (repo) in GitHub. 
+Check for and configure your username and email properties so that you can add, update, and retrieve your project files from a remote Git repo(repo) in GitHub. 
 
 . Meet the prerequisites in <<prereqs>>.
 //open ACB terminal:
@@ -75,7 +75,7 @@ If two-factor authentication is enabled on your GitHub account and you are promp
 [[set-up-repo]]
 == Set Up a Repository with VS Code
 
-Set up a repository for your design, integration, or implementation project from VS Code. If your project is already set up to sync from VS Code with a repo in an SCM that you want to use, no additional setup is required. You can sync your changes without further setup. For an example, see <<sync-changes>>.
+Set up a repofor your design, integration, or implementation project from VS Code. If your project is already set up to sync from VS Code with a repo in an SCM that you want to use, no additional setup is required. You can sync your changes without further setup. For an example, see <<sync-changes>>.
 
 To set up a remote GitHub repo from VS Code for your projects, the following scenarios are common:
 
@@ -147,8 +147,8 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-c
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
 include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
-. From the Source Control panel for your project, initialize and commit your project files to a local repository in the IDE for your project:
-.. In the Source Control panel, click *Initialize Repository* to generate a local repository for your project.
+. From the Source Control panel for your project, initialize and commit your project files to a local repoin the IDE for your project:
+.. In the Source Control panel, click *Initialize Repository* to generate a local repofor your project.
 +
 When no repo is associated with your project, VS Code provides options for initializing a _local_ repo (*Initialize Repository*) for your project or directly publishing your project to a new remote repo in GitHub (*Publish to GitHub*).
 // Shared substep to stage files
@@ -179,7 +179,7 @@ This procedure assumes that the project files are ready to stage and publish to 
 If another repo, such as the Anypoint SCM, is present in the Source Control panel for your project, you can <<sync-changes, sync your changes with that repo>>, or you can <<add-extra-repo, publish your changes to a different repo>>.
 
 . Meet the prerequisites in <<prereqs>>.
-. If you have not yet initialized a local repository for your project in the IDE, see <<initialize-repo>>.
+. If you have not yet initialized a local repo for your project in the IDE, see <<initialize-repo>>.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Configure a connection from the project in VS Code to your empty remote repo in GitHub:
@@ -221,7 +221,7 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-c
 {extra-repo-continued} 
 For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
 
-If you are unsure whether your project is already connected to a remote repository, see <<check-remote>>.
+If you are unsure whether your project is already connected to a remote repo, see <<check-remote>>.
 
 This example assumes that you have an empty repo in GitHub. If you do not, you can create one from GitHub. For guidance, see https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories[Quickstart for repositories^] in the GitHub documentation.  
 
@@ -381,7 +381,7 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-c
 [[check-remote]]
 == Check for a Remote Repository URL
 
-To determine whether a remote GitHub repository for your project is configured in the IDE, check for a URL to the repository: 
+To determine whether a remote GitHub repo for your project is configured in the IDE, check for a URL to the repo: 
 
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
@@ -399,15 +399,15 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-termin
 git remote -v
 ----
 
-* If the project has one or more remote repository configurations, the command returns the URL for each remote, along with `push` and `fetch` information, for example:
+* If the project has one or more remote repoconfigurations, the command returns the URL for each remote, along with `push` and `fetch` information, for example:
 +
 ----
 $ git remote -v
 origin  https://github.com/me/my-project-repo.git (fetch)
 origin  https://github.com/me/my-project-repo.git (push)
 ----
-* If no results return, a remote repository is not configured for the project.
-* If the error `fatal: not a git repository (or any of the parent directories): .git` returns, a local repository is not initialized for the project.
+* If no results return, a remote repois not configured for the project.
+* If the error `fatal: not a git repo(or any of the parent directories): .git` returns, a local repois not initialized for the project.
 
 For information about `git remote` command options, see https://git-scm.com/docs/git-remote[git-remote reference^] in the GitHub documentation.
 
