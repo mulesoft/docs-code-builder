@@ -10,19 +10,19 @@ Add an API spec fragment from Exchange to the project directory so that you can 
 //not available
 * `MuleSoft: API Console`
 +
-Opens the API Console for a design project. See xref:des-create-api-specs.adoc[].
+Open the API Console for a design project. See xref:des-create-api-specs.adoc[].
 
 * `MuleSoft: Deploy to CloudHub`
 +
-Deploys an integration or implementation to CloudHub. See xref:int-deploy-mule-apps.adoc#deploy-an-app-to-cloudhub[Deploy an App to CloudHub].
+Deploy an integration or implementation to CloudHub. See xref:int-deploy-mule-apps.adoc#deploy-an-app-to-cloudhub[Deploy an App to CloudHub].
 
 * `MuleSoft: Design an API`
 +
-Opens a form for starting an API design project. You can also start an API design project from the UI. See xref:des-create-api-specs.adoc[].
+Open a form for starting an API design project. You can also start an API design project from the UI. See xref:des-create-api-specs.adoc[].
 
 * `MuleSoft: Develop an Integration`
 +
-Opens a form for starting an integration project. You can also start an integration project from the UI. See xref:int-create-integrations.adoc[].
+Open a form for starting an integration project. You can also start an integration project from the UI. See xref:int-create-integrations.adoc[].
 
 * `MuleSoft: Export Mule Application Sources`
 +
@@ -51,35 +51,35 @@ Scaffold an API spec project located within the IDE into an implementation proje
 +
 Import a JAR file for a Mule project and load the unpacked project into a workspace in the IDE. A Mule project is an integration or implementation project. See xref:int-import-mule-project.adoc#desktop-project-package[Import a Sharable Project JAR File into the Desktop IDE] or xref:int-import-mule-project.adoc#web-project-package[Import a Sharable Project JAR File into the Cloud IDE].
 
+//TODO: "runnable Mule application" ok? 
 * `MuleSoft: Import a Project`
 +
-//TODO: NEED TO FIGURE OUT WORDING FOR THE MULE APP IMPORT -- PROCESS IS ALSO CONFUSING
 Import either a design, integration, or implementation project. Import API specifications or fragments from Anypoint Exchange, or JAR file for a runnable Mule application (integration or implementation) in your IDE directory. See xref:int-import-mule-project.adoc[].
 
 * `MuleSoft: Import API Specification from Design Center`
 +
-TODO See xref:des-create-api-specs.adoc[].
+Import an API spec associated with one of your business groups from Design Center. See xref:des-create-api-specs.adoc#import-spec[Import an API Specification from Design Center].
 
 * `MuleSoft: Import Asset from Exchange`
 +
-TODO See examples in xref:int-create-integrations.adoc[], xref:imp-implement-apis.adoc[], and xref:int-import-dw-libraries.adoc[].
-
+Import a connector, REST or GraphQL library, or DataWeave library from Anypoint Exchange. See examples in xref:int-create-integrations.adoc#import-connectors-from-exchange[Import a Connector from Exchange], xref:imp-implement-apis.adoc#import-spec-into-project[Import an API Spec into an Existing Implementation Project], and xref:int-import-dw-libraries.adoc[].
 
 // "Login" is a noun. "Log in" is a verb.
 // recommended change-> Log In to Anypoint Platform
 * `MuleSoft: Login to Anypoint Platform`
 +
-TODO See xref:start-acb.adoc[].
+Log in to Anypoint Platform from the IDE. See xref:start-acb.adoc#login-ide[Log in from the IDE through the Command Palette].
 
 * `MuleSoft: New Mule Configuration File`
 +
-TODO See xref:int-create-integrations.adoc[].
+Add a configuration XML file to your integration or implementation project. See xref:int-create-integrations.adoc#create-new-config[Create an Additional Configuration XML File].
 
+//TODO: See PR: https://github.com/mulesoft/docs-code-builder/pull/256/files
 // "ACB" is not used, could be a legal naming issue
 // recommended change-> Open Anypoint Code Builder Settings
 * `MuleSoft: Open ACB Settings`
 +
-TODO: See PR: https://github.com/mulesoft/docs-code-builder/pull/256/files
+Open the *Settings* page for Anypoint Code Builder settings, which include settings for the Anypoint Platform host (EU or US). For an example that uses the command, see xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud].
 
 //
 //NOT YET:
@@ -93,12 +93,12 @@ TODO: See PR: https://github.com/mulesoft/docs-code-builder/pull/256/files
 
 * `MuleSoft: Publish API Specification to Exchange`
 +
-TODO See xref:des-publish-api-spec-to-exchange.adoc[].
+Publish an API spec or fragment from the IDE to Anypoint Exchange. See xref:des-publish-api-spec-to-exchange.adoc##publish-spec[Publish an API spec to Exchange].
 
 // recommended change-> "this local" -> "This Local"
 * `MuleSoft: Re-scaffold this local API`
 +
-TODO See xref:imp-implement-local-apis.adoc[].
+After scaffolding an API design project from the IDE into an interface within an implementation project and making subsequent changes to the _design_ project, use this command from the design project to re-scaffold your changes into your interface. See xref:imp-implement-local-apis.adoc#rescaffold-api-spec[Re-Scaffold the API Spec].
 
 //
 // not clear what this one does
@@ -107,41 +107,58 @@ TODO See xref:imp-implement-local-apis.adoc[].
 // not clear what this one does
 //* `MuleSoft: Refresh Projects`
 //
+//
+// ISSUE: can't get it to work:
+//* `MuleSoft: Save and Hot-deploy to Local Runtime`
+//+
+//TODO: See xref:int-debug-mule-apps.adoc[].
+//
 
-* `MuleSoft: Save and Hot-deploy to Local Runtime`
-+
-TODO: See xref:int-debug-mule-apps.adoc[].
-
-// not in the docs but looks like something we've opened in another way
-// Always capitalize a product name. 
+// TODO: Is this for all types of assets, and is it limited to public assets? 
 // recommended change-> Search in Anypoint Exchange
 * `MuleSoft: Search in exchange`
 +
+Search for an asset by its name in Anypoint Exchange.
 
-// recommended change-> Set Mule Runtime Location
-* `MuleSoft: Set Mule Runtime location`
-+
-Opens the `muleRuntimes` directory. 
+//
+// ISSUE: the command doesn't set location (e.g., let you select a runtime to use)
+//   and can return error "Mule Runtime executable could not be found. 
+//   Please select a valid Mule Runtime folder"
+// recommended change-> Set Mule Runtime Location 
+//* `MuleSoft: Set Mule Runtime location`
+//+
+//Opens the `muleRuntimes` directory. 
+//
+//
+//ISSUE: throws error
+//* `MuleSoft: Show Component in Canvas UI`
+//
+//
+//ISSUE: doesn't show up in the IDE
+//* `MuleSoft: Show Mule Graphical Mode`
+//
 
-//throws error
-* `MuleSoft: Show Component in Canvas UI`
-+
-
-//doesn't show up in the IDE
-* `MuleSoft: Show Mule Graphical Mode`
-+
-
-//IN IDE
-// recommended change-> Show Project Dependencies
+//recommended change-> Show Project Dependencies
 * `MuleSoft: Show Project dependencies`
 +
-Opens the *Project Dependencies* area of the Explorer view. 
+Open the *Project Dependencies* area of the Explorer view for a project. All types of projects can have dependencies. Integration and implementation projects list Java packages in the area. API specification projects list any API fragment dependencies in the area, for example: 
++
+images::des-api-frag-dependencies.png["Example of API fragments listed in the Project Dependencies area"] 
++
 The command `Explorer: Focus on Project Dependencies View` also opens this area. 
 
 * `MuleSoft: Show Welcome`
 +
-Opens the *Welcome* tab for Anypoint Code Builder. See an example of the tab in xref:start-discover-ui.adoc[].
+Open the *Welcome* tab for Anypoint Code Builder. See an example of the tab in xref:start-discover-ui.adoc[].
+
+== Other Commands
+
+Other helpful commands include the following:
+
+* `File: Open Folder`
++
+Open a project folder from the Command Palette. For examples that use this command, see xref:start-add-folders.adoc[].
 
 * `View: Show Anypoint Code Builder`
 +
-Opens the Anypoint Code Builder panel from the IDE. The panel provides links to *Quick Actions*, *Documentation*, and other items. See an example of the panel in xref:start-discover-ui.adoc[].
+Open the Anypoint Code Builder panel from the IDE. The panel provides links to *Quick Actions*, *Documentation*, and other items. See an example of the panel in xref:start-discover-ui.adoc[].
