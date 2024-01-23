@@ -1,13 +1,11 @@
 = Implementing OAS, RAML, and GraphQL APIs
 :page-deployment-options: cloud-ide, desktop-ide
-// :page-aliases: imp-implement-rest-oas-specs.adoc, imp-implement-graphql-specs.adoc
-
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
 After you create your API spec, use Anypoint Code Builder to scaffold your API 
-into an implementation project (Mule app).
+into a Mule project for your implementation or integration.
 
 [IMPORTANT]
 include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
@@ -17,36 +15,31 @@ autogenerate a basic interface in your implementation project.
 This interface includes flows for each endpoint, a built-in XML-based router, and error handlers,
 which you then implement within a Mule application.
 
-
-// * Interface: receives all incoming requests to your application.
-// * Scaffolded flows in the interface: validate and route requests.
-// * Implementation: provides the backend logic for calls to the interface.
-
 The process you use to implement your API depends on whether you already
-created an integration project or published the spec to Exchange:
+created an integration or implementation project, or published the spec to Exchange:
 
 * To scaffold an API using a spec from Exchange into:
 
-** A new integration project, see <<scaffold-new-integration>>.
-** An existing integration project, see <<import-spec-into-project>>.
+** A new project, see <<scaffold-new-integration>>.
+** An existing project, see <<import-spec-into-project>>.
 
-* To scaffold an API into an integration project without publishing 
-the spec to Exchange, see 
-xref:imp-implement-local-apis.adoc[].
+* To update your project with the latest changes to a spec in Exchange, see <<re-scaffold-spec>>.
+
+* To scaffold and re-scaffold an API into a project without publishing 
+the spec to Exchange, see xref:imp-implement-local-apis.adoc[].
 
 == Before You Begin
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create and test your API specification].
-* xref:des-publish-api-spec-to-exchange.adoc[Publish your API specification to Exchange].
+* xref:des-publish-api-spec-to-exchange.adoc[Publish your API spec to Exchange].
 * Optionally, xref:int-create-integrations.adoc[create your integration project (Mule app)].
 
 
 [[scaffold-new-integration]]
-== Scaffold an API and Create an Integration Project
+== Scaffold an API into a New Project
 
-If you have not already created an integration project, use Anypoint Code Builder to
-scaffold the API in a new Mule project:
+If you have not already created an implementation project, use Anypoint Code Builder to scaffold the API in a new Mule project:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
@@ -74,7 +67,7 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 | *Show filters* |See xref:filter-search-results.adoc[] for more information.
 |===
 
-. Search for an API specification on Exchange:
+. Search for an API spec on Exchange:
 +
 .. Start typing the name of an API specification.
 .. Press Enter to display a list of possible results.
@@ -102,9 +95,9 @@ When you create the project, Anypoint Code Builder:
 </dependency>
 --
 +
-** Scaffolds your API into the new integration project and opens the configuration XML file.
+** Scaffolds your API into the new implementation project and opens the configuration XML file.
 +
-The configuration XML file includes the interface for your integration project,
+The configuration XML file includes the interface for your implementation project,
 with flows for each endpoint in the spec, error handlers, and a built-in router, for example:
 +
 image:imp-api-scaffolded.png["OAS Example Integration in Anypoint Code Builder"]
@@ -124,28 +117,15 @@ You can now implement the interface within the Mule app.
 
 
 [[import-spec-into-project]]
-== Import an API Spec into an Existing Implementation Project
+== Import an API Spec into a Project
 
-If you have already xref:int-create-integrations.adoc[created an integration project],
-you can scaffold your API by importing the spec from Exchange.
-In this case, Anypoint Code Builder creates a separate configuration XML file for the interface in your integration project.
+If you have xref:int-create-integrations.adoc[created an integration project], you can scaffold an interface into the project by importing an API spec from Exchange. In this case, Anypoint Code Builder creates a separate configuration XML file for the interface in your integration project.
 
 . In Anypoint Code Builder, open your integration project in the Explorer view, for example, `my-project-name`.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Enter `import` and select the following command:
-+
-[source,command]
---
-MuleSoft: Import Asset from Exchange
---
-. Depending on the language of your API spec:
-+
-* *Rest API* for OAS or RAML
-* *GraphQL API*
-. If prompted, click *Allow* to allow sign in using Anypoint Platform and select the business group.
-. Type the name of your API spec and press Enter, for example, `OAS Example`.
-. Wait for the IDE to load a list of matches to the name:
+// Pointer to Import Asset from Exchange command
+include::partial$acb-reusable-steps.adoc[tags="import-asset-exchange"]
 +
 image::imp-assets-from-exchange.png["Assets from Exchange dropdown"]
 . Select the API spec to import.
@@ -154,7 +134,7 @@ image::imp-assets-from-exchange.png["Assets from Exchange dropdown"]
 +
 When you scaffold the API dependency, Anypoint Code Builder:
 +
-** Adds the API specification as a dependency in your project's `pom.xml` file:
+** Adds the API spec as a dependency in your project's `pom.xml` file:
 +
 [source,XML]
 --
@@ -188,11 +168,44 @@ See the xref:tut-graphql-implement-api.adoc[] tutorial for an example GraphQL AP
 
 You can now implement the interface within the Mule app.
 
+[[re-scaffold-spec]]
+== Re-scaffold an API Specification into a Project 
 
+Re-scaffolding enables you to update a project in the IDE with the latest changes and version of an API spec in Anypoint Exchange. Re-scaffolding updates the configuration XML and `pom.xml` in your project. To re-scaffold a spec defined in a local API design project that is not published to Exchange, see xref:imp-implement-local-apis.adoc[], instead.
 
-// add relevant stuff from tut-implement-am-flights-api
-// Then, add the logic to implement an endpoint in the API.
+This procedure assumes that an updated version of the spec is available from Exchange, for example, a 2.0.0 version:
 
+image::imp-assets-from-exchange-multiversion.png["Selecting a new version of an API spec from Exchange"]
+
+. In Anypoint Code Builder, open your implementation project in the Explorer view, for example, `my-implementation-project`.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+// Pointer to Import Asset from Exchange command
+include::partial$acb-reusable-steps.adoc[tags="import-api-exchange"]
++
+image::imp-assets-from-exchange-multiversion.png["Assets from Exchange dropdown"]
+. At the prompt, select the version of the API spec, such as `v2.0.0`.
+. When prompted to scaffold the API dependency, select *Yes*.
++
+When you scaffold the API dependency, Anypoint Code Builder:
+
+** Adds the API spec as a dependency in your project's `pom.xml` file:
++
+[source,XML]
+--
+<dependency>
+    <groupId>e91cab06-650b-4634-9c6f-5bc4f4fc4d17</groupId>
+    <artifactId>phoneSync1005</artifactId>
+    <version>2.0.0</version>
+    <classifier>oas</classifier>
+    <type>zip</type>
+</dependency>
+--
+** Updates the configuration XML file that contains the interface for your implementation project with the changes to the imported specification.
+. Check for the changes to your implementation project.
++
+For example, if the updated specification adds a new endpoint, the configuration XML for the implementation project has a new flow for the endpoint. 
+. If the specification introduced a new version number, open the `pom.xml`, and search for the new version of the dependency for the `artifactID` of the re-scaffolded specification.
 
 == Tour the Interface File
 
