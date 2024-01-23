@@ -35,7 +35,7 @@ To create a new integration project:
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 . From *Quick Actions*, click *Develop an Integration*:
 +
-image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
+image:anypoint-code-builder::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
 . Complete the *Develop an Integration* form.
 +
 [%header,cols="20a,60a"] 
@@ -62,26 +62,26 @@ The Listener is for triggering the flow, and Set Payload provides some test data
 
 . In the Explorer view, open the XML file for your project, such as `my-project-name.xml`:
 +
-image::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
+image:anypoint-code-builder::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
 +
 [calloutlist]
 .. The canvas provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
 . Select *Build a Flow* from the start card to create an empty flow.
 +
-image::build-flow.png["Canvas with starting card with the options to start from scratch, build a flow, or build a subflow"]
+image:anypoint-code-builder::build-flow.png["Canvas with starting card with the options to start from scratch, build a flow, or build a subflow"]
 +
 . Change the name of the flow: 
 .. Click *Flow*. 
 .. Click the edit icon to change the name. 
 +
-image::change-flow-name.png["Arrow pointing to the flow name edit pencil icon"]
+image:anypoint-code-builder::change-flow-name.png["Arrow pointing to the flow name edit pencil icon"]
 +
 .. Enter the name, and click the checkmark. 
 .. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* panel, search for and select *Listener* from the *HTTP* results:
 +
-image::main-tutorial-add-first-listener.png["Listener component highlighted in the Add Component section"]
+image:anypoint-code-builder::main-tutorial-add-first-listener.png["Listener component highlighted in the Add Component section"]
 +
 The configuration XML file now includes the XML for the HTTP Listener into the `<flow/>` element, for example:
 +
@@ -103,7 +103,7 @@ Ensure that the cursor is not inside the `<flow/>` element.
 +
 .. Type `http`, and select the `http:listener-config` snippet:
 +
-image::add-http-config-snippet.png["http:listener-config snippet highlighted in the configuration XML menu"]
+image:anypoint-code-builder::add-http-config-snippet.png["http:listener-config snippet highlighted in the configuration XML menu"]
 +
 The snippet adds the following code:
 +
@@ -138,12 +138,12 @@ Your configuration XML file now looks similar to the following:
 
 Notice that the Listener component in the canvas now shows an error:
 
-image::int-canvas-error.png["Listener error in the canvas"]
+image:anypoint-code-builder::int-canvas-error.png["Listener error in the canvas"]
 
 To determine where the error is, select the processor in the canvas.
 Anypoint Code Builder highlights its location within the configuration XML, for example:
 
-image::int-error-highlight.png["HTTP Listener highlighted in the flow and in the XML code"]
+image:anypoint-code-builder::int-error-highlight.png["HTTP Listener highlighted in the flow and in the XML code"]
 
 To fix the error, configure the attributes.
 
@@ -160,17 +160,17 @@ you can download many other connectors from Anypoint Exchange.
 To import a connector from Exchange and add it to your configuration:
 
 . In the Explorer view, open the configuration XML file for your project, such as `my-project-name.xml`.
-. Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the UI canvas if it doesn't open automatically.
+. Click the image:anypoint-code-builder::icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the UI canvas if it doesn't open automatically.
 . Add the connector the same way you added other components from the canvas:
-.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
+.. In the canvas, click the image:anypoint-code-builder::icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* panel, click *Connectors*.
 .. Click the connector name and then click the operation to add, such as *Publish*:
 +
-image::int-add-connector-operation.png["Add Publish operation from the Anypoint MQ Connector"]
+image:anypoint-code-builder::int-add-connector-operation.png["Add Publish operation from the Anypoint MQ Connector"]
 +
 If the connector is not available locally, click the image:icon-search-exchange.png["",15,15] (*Search in Exchange*) toggle:
 +
-image::int-connector-search-exchange.png["Search in Exchange toggle"]
+image:anypoint-code-builder::int-connector-search-exchange.png["Search in Exchange toggle"]
 +
 --
 [calloutlist]
@@ -184,7 +184,7 @@ image::int-connector-search-exchange.png["Search in Exchange toggle"]
 To import a connector from Exchange to use later in your project:
 
 . In the Explorer view, open the configuration XML file for your project, such as `my-project-name.xml`.
-. Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the canvas UI if it doesn't open automatically.
+. Click the image:anypoint-code-builder::icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the canvas UI if it doesn't open automatically.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Select the following command:
