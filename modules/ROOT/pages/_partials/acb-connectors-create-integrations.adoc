@@ -44,7 +44,7 @@ image::develop-integration-option-mat.png["Develop an Integration link highlight
 | *Project Name* | Unique name for your project.
 
 This name is used as the title and name of the integration project file.
-For example, if the project name is "OAS Integration," the project file name is `oas-integration`.
+For example, if the project name is "Salesforce Integration," the project file name is `salesforce-integration`.
 | *Project Location* | Your home directory or another directory you create. Click *Browse* to select a different directory for the integration.
 
 See xref:start-add-folders.adoc[].
@@ -57,18 +57,26 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 [[add-components]]
 == Add a Component to Your Project
 
-The listener is for triggering the flow, and Set Payload provides some test data for the integration.
+The Listener is for triggering the flow, and Set Payload provides some test data for the integration.
 
-. In the Explorer view, select the XML file for your project, such as `my-project-name.xml`:
+. In the Explorer view, open the XML file for your project, such as `my-project-name.xml`:
 +
 image::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
 +
 [calloutlist]
 .. The canvas provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
-. Select *Flow* from the canvas to create an empty flow.
-. In the configuration XML, replace the name of the flow `name1` with your flow name, for example, `getFlights`.
-. Add a component to your project from the canvas, for example, add the HTTP Listener component:
+. Select *Build a Flow* from the start card to create an empty flow.
++
+image::build-flow.png["Canvas with starting card with the options to start from scratch, build a flow, or build a subflow"]
++
+. Change the name of the flow: 
+.. Click *Flow*. 
+.. Click the edit icon to change the name. 
++
+image::change-flow-name.png["Arrow pointing to the flow name edit pencil icon"]
++
+.. Enter the name, and click the checkmark. 
 .. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* panel, search for and select *Listener* from the *HTTP* results:
 +
