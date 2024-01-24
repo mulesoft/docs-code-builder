@@ -1,6 +1,6 @@
 = Controlling Source Files
 :page-deployment-options: cloud-ide, desktop-ide
-:no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can use the IDE to generate a repo in GitHub and publish your project files to that remote repo.
+:no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can use the IDE to generate a repo in GitHub and publish your project files to that remote repo. The process also implicitly initializes a local repo in the IDE.
 :init-local: Initializing and committing your project files into a local repo in the IDE is a prerequisite to publishing and syncing files into a remote repo in GitHub.
 :repo-in-github: If you have an empty repo in GitHub, you can publish your project files to the repo from the IDE.
 :extra-repo: If your project is already configured to sync with a remote repo, you can configure the IDE to publish your project files to a different repo. 
@@ -126,9 +126,11 @@ The default repo name matches the project name.
 . Select a repo type (private or public).
 +
 To protect data in your repo, select a private repo (*Publish to GitHub private repo*). This process commits and pushes your project files to your new repo.
-. Select the files to publish to the repo.
+. If prompted, select the files to publish to the repo.
 +
-You can select all or a subset of the files.
+You can select all or a subset of the files of a design project, for example:
++
+image::start-scm-select-files.png["Selecting files to add to the new repo"]
 . To view your project files in a GitHub repo, click *Open on GitHub* in the popup. 
 +
 image::start-scm-repo-open-in-github.png["Opening repo in GitHub"]
@@ -150,7 +152,9 @@ include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open
 // Pointer to Source Control Panel
 include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
 . From the Source Control panel for your project, initialize and commit your project files to a local repo in the IDE for your project:
-.. In the Source Control panel, click *Initialize Repository* to generate a local repofor your project.
+.. In the Source Control panel, click *Initialize Repository* to generate a local repo for your project.
++
+image::start-scm-repo-initialize.png["Initializing a local repo for a project"]
 +
 When no repo is associated with your project, the IDE provides options for initializing a _local_ repo (*Initialize Repository*) for your project or directly publishing your project to a new remote repo in GitHub (*Publish to GitHub*).
 // Shared substep to stage files
