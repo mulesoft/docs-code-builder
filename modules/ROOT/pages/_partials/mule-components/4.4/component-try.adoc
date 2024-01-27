@@ -8,8 +8,6 @@
 
 //
 //tag::component-short-description[]
-//     Short description of the form "Do something..." 
-//     Example: "Configure log messages anywhere in a flow."
 
 Handle errors that might occur during the execution of components inside the scope.
 
@@ -74,7 +72,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Try scope (<try/>) has the following attributes:
+Try scope (<try/>) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -82,7 +80,7 @@ Try scope (<try/>) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Try* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -90,7 +88,7 @@ Try scope (<try/>) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Transactional action
+| *Transactional action*
 | `transactionalAction` 
 | Defines how to handle a transaction. Accepted values are:
 
@@ -107,6 +105,7 @@ A new transaction is started every time the scope is executed.
 Relevant only when execution order might vary (for example, due to asynchronous actions occurring outside the flow).
 If current flow processing has already started a transaction, the scope joins it. If not, the scope initiates a new transaction.
 
+| *Transaction type*
 | `transactionType`
 | Specifies the type of transaction. Accepted values are: 
 

@@ -74,7 +74,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Dynamic Evaluate (`<ee:dynamic-evaluate/>`) has the following attributes:
+Dynamic Evaluate (`<ee:dynamic-evaluate/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -82,7 +82,7 @@ Dynamic Evaluate (`<ee:dynamic-evaluate/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Dynamic evaluate* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -90,9 +90,26 @@ Dynamic Evaluate (`<ee:dynamic-evaluate/>`) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Expression
+| *Expression*
 | `expression` 
 | Expression that selects a DataWeave script that Mule executes, for example, `expression="#[vars.generateOrderScript]"`.
+
+| *Additional Bindings*
+| `parameters`
+//TODO: NO DESCRIPTION AVAILABLE
+| N/A
+
+| *Target Variable*
+| `target`
+| 
+include::partial$acb-component-info.adoc[tag=target-variable]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
+
+| *Target Value*
+| `targetValue`
+| 
+include::partial$acb-component-info.adoc[tag=target-variable-value]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
 
 |===
 //end::component-xml-attributes-root[]

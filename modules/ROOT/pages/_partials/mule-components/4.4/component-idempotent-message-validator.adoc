@@ -74,7 +74,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Idempotent Message Validator (`<idempotent-message-validator/>`) has the following attributes:
+Idempotent Message Validator (`<idempotent-message-validator/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -82,7 +82,7 @@ Idempotent Message Validator (`<idempotent-message-validator/>`) has the followi
 | Attribute XML 
 | Description
 
-| Display Name
+| *Idempotent message validator* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -90,10 +90,19 @@ Idempotent Message Validator (`<idempotent-message-validator/>`) has the followi
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Id expression
+| *Id expression*
 | `idExpression` 
 | The expression Mule uses to generate the ID. You can use a DataWeave function to calculate the ID, or you can extract the ID from any existing value of the Mule message.
 
+| *Store prefix*
+| `storePrefix` 
+//TODO: IS THERE ANY DOC ON THIS?
+| N/A
+
+| *Object store*
+| `objectStore` 
+//TODO: IS THERE ANY DOC ON THIS?
+| N/A
 |===
 //end::component-xml-attributes-root[]
 //

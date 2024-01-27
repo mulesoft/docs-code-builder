@@ -70,7 +70,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Invalidate Key (`<ee:invalidate-key/>`) has the following attributes: 
+Invalidate Key (`<ee:invalidate-key/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -78,7 +78,7 @@ Invalidate Key (`<ee:invalidate-key/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Invalidate key* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -86,13 +86,18 @@ Invalidate Key (`<ee:invalidate-key/>`) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Cachingstrategy ref
+| (Use the drop-down menu)
 | `cachingStrategy-ref` 
 | Reference to the caching strategy that contains the cache key to invalidate.
 
-| Key generation expression
+| *Key generation expression*
 | `keyGenerationExpression` 
 | Optional. A DataWeave expression to generate the key to invalidate. Use the same expression configured in the caching strategy that generated the key.
+
+| *Keygenerator ref*
+| `keyGenerator-ref` 
+//TODO: DO WE HAVE ANY DOC FOR THIS?
+| N/A
 
 |===
 //end::component-xml-attributes-root[]

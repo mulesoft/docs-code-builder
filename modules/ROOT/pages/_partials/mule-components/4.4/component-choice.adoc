@@ -83,7 +83,7 @@ Snippet JSON in Anypoint Code Builder serves as a customizable template for the 
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Choice (`<choice/>`) has the following attributes:
+Choice (`<choice/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -91,7 +91,7 @@ Choice (`<choice/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Choice* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -99,9 +99,10 @@ Choice (`<choice/>`) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| N/A
-| `tracking:enable-default-events` 
-| When set to `true`, activates the Business Events feature.
+//TODO: NOT YET SUPPORTED IN ACB, IT SEEMS, AS OF 012623
+//| N/A
+//| `tracking:enable-default-events` 
+//| When set to `true`, activates the Business Events feature.
 
 |===
 //end::component-xml-attributes-root[]
@@ -132,9 +133,9 @@ The child element `<when/>` has the following attribute:
 | Attribute XML 
 | Description
 
-| Expression
+| *Expression*
 | `expression` 
-| Expression in DataWeave language to evaluate input. If the expression evaluates to true, this routing option executes.
+| DataWeave expression used to evaluate input. If the expression evaluates to `true`, this routing option executes.
 
 |===
 

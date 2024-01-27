@@ -81,7 +81,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Custom Business Event (`<tracking:custom-event/>`) has the following attributes:
+Custom Business Event (`<tracking:custom-event/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -89,7 +89,7 @@ Custom Business Event (`<tracking:custom-event/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Custom event* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -97,9 +97,31 @@ Custom Business Event (`<tracking:custom-event/>`) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Event name
+| *Event name*
 | `event-name` 
 | Name for the event to track.
+
+//TODO: NO DESCRIPTION AVAILABLE: Mule team contacted
+| *Inherits*
+| `inherits` 
+| N/A
+
+//TODO: NO DESCRIPTION AVAILABLE: Mule team contacted
+| *Meta data*
+| `metaData` 
+| N/A
+
+| *Target Variable*
+| `target`
+| 
+include::partial$acb-component-info.adoc[tag=target-variable]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
+
+| *Target Value*
+| `targetValue`
+| 
+include::partial$acb-component-info.adoc[tag=target-variable-value]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
 
 |===
 //end::component-xml-attributes-root[]
@@ -108,7 +130,7 @@ Custom Business Event (`<tracking:custom-event/>`) has the following attributes:
 //TABLE (IF NEEDED): CHILD XML ATTRIBUTES
 //tag::component-xml-attributes-child1[]
 
-The child element `<tracking:meta-data/>` has the following attributes:
+The child element `<tracking:meta-data/>` provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===

@@ -78,7 +78,7 @@ SNIPPET_JSON_HERE
 //tag::component-xml-attributes-root[]
 
 
-Scheduler (`<scheduler/>`) has the following attributes: 
+Scheduler (`<scheduler/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -86,7 +86,7 @@ Scheduler (`<scheduler/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Scheduler* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -94,7 +94,7 @@ Scheduler (`<scheduler/>`) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Disallow concurrent execution
+| *Disallow concurrent execution*
 |`disallowConcurrentExecution`
 | When this attribute is set to `true`, the Scheduler skips its scheduled execution if a previous execution is still running. Once the flow finishes, the Scheduler executes at the next configured interval. The default value is `false`.
 
@@ -105,6 +105,22 @@ Scheduler (`<scheduler/>`) has the following attributes:
 //
 //
 //tag::component-xml-attributes-child1[]
+
+`<scheduling-strategy/>` is a child element of Scheduler. 
+
+[%header,cols="1,3a"]
+|===
+| Child Element 
+| Description 
+
+|`<scheduling-strategy/>`
+| Accepts a <<fixed-frequency-attributes, `<fixed-frequency/>`>> or <<cron-attributes, `<cron/>`>> configuration. 
+|===
+//end::component-xml-attributes-child1[]
+//
+
+//
+//tag::component-xml-attributes-descendant1[]
 
 [[fixed-frequency-attributes]]
 === Fixed Frequency Attributes
@@ -132,11 +148,11 @@ Scheduler accepts a fixed frequency (`<fixed-frequency/>`) element that accepts 
 |===
 
 See the <<example1, fixed frequency examples>>. 
-//end::component-xml-attributes-child1[]
+//end::component-xml-attributes-descendant1[]
 //
+
 //
-//
-//tag::component-xml-attributes-child2[]
+//tag::component-xml-attributes-descendant2[]
 
 [[cron-attributes]]
 === Cron Attributes
@@ -161,7 +177,7 @@ For more complex scheduling, configure a cron expression in the `<cron/>` elemen
 
 See the <<example2, cron examples>>. 
 
-//end::component-xml-attributes-child2[]
+//end::component-xml-attributes-descendant2[]
 //
 //
 

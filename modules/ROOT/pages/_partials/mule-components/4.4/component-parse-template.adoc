@@ -72,7 +72,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Parse Template (`<parse-template/>`) has the following attributes: 
+Parse Template (`<parse-template/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -80,7 +80,7 @@ Parse Template (`<parse-template/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Parse template* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -88,21 +88,38 @@ Parse Template (`<parse-template/>`) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Location
-| `location` 
-| Location of the template file. Mule inserts values extracted from the message properties or variables into this file.
-
-| Content
+| *Content*
 | `content`
 | String representing the template where embedded expressions are evaluated and replaced by their results.
 
-| Target Variable
-| `target`
-| Name of the variable where the result of the expression defined in `targetValue` is stored after Parse Template executes. For more information, see xref:4.4@mule-runtime::target-variables.adoc[].
+| *Location*
+| `location` 
+| Location of the template file. Mule inserts values extracted from the message properties or variables into this file.
 
-| Target Value
+| *Output encoding*
+| `outputEncoding`
+//shared description:
+include::partial$acb-component-info.adoc[tag=output-encoding-description]
+
+| *Output mime type*
+| `outputMimeType`
+//shared description:
+include::partial$acb-component-info.adoc[tag=output-mime-type-description]
+
+//entire Properties row in this table
+include::partial$acb-component-info.adoc[tag=mimetype-reader-properties]
+
+| *Target Variable*
+| `target`
+| 
+include::partial$acb-component-info.adoc[tag=target-variable]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
+
+| *Target Value*
 | `targetValue`
-| Value of the data to store in the target variable. The field accepts any value that a variable accepts: any supported data type, DataWeave expressions, the keywords `payload`, `attributes`, and `message`, but not the keyword `vars`. Defaults to the message payload (`payload`).
+| 
+include::partial$acb-component-info.adoc[tag=target-variable-value]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
 
 |===
 //end::component-xml-attributes-root[]

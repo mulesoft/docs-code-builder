@@ -65,7 +65,7 @@ This component supports the following XML structure:
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Scatter Gather (`<scatter-gather/>`) has the following attributes: 
+Scatter Gather (`<scatter-gather/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -73,7 +73,7 @@ Scatter Gather (`<scatter-gather/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Scatter gather* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -81,28 +81,34 @@ Scatter Gather (`<scatter-gather/>`) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Timeout
+| *Timeout*
 | `timeout` 
 | Sets the timeout for responses from sent messages, in milliseconds. A value of `0` or less than `0` prevents a timeout. Defaults to `0`. 
 
-| Max concurrency
+| *Max concurrency*
 | `maxConcurrency` 
 | Sets the maximum number of routes to run concurrently.
 
 By default, all routes run in parallel. Setting this value to `1` makes the component process the routes sequentially.
 
-| Target
-| `target` 
-| The name of the xref:4.4@mule-runtime::target-variables.adoc[target variable].
+//TODO: IS THERE DOC FOR THIS
+| *Aggregation*
+| N/A
+| N/A
 
-| Target Value
-| `targetValue` | Value of the data to store in the target variable.
-The default value is `#[payload]`. This field accepts any value that a Mule variable accepts:
+| *Target Variable*
+| `target`
+| 
+include::partial$acb-component-info.adoc[tag=target-variable]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
 
-* Any supported data type
-* DataWeave expressions
-* The keywords `payload`, `attributes`, and `message`, but _not_ the keyword `vars`
+| *Target Value*
+| `targetValue`
+| 
+include::partial$acb-component-info.adoc[tag=target-variable-value]
+The default value is `#[payload]`. 
 
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
 |===
 
 

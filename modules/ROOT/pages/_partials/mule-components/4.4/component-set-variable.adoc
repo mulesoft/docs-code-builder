@@ -68,7 +68,7 @@ TODO IF/WHEN AVAILABLE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Set Variable (`<set-variable/>`) has the following attributes: 
+Set Variable (`<set-variable/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -76,7 +76,7 @@ Set Variable (`<set-variable/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Set variable* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -84,21 +84,24 @@ Set Variable (`<set-variable/>`) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Variable name
+| *Variable name*
 | `variableName` 
 | Name of the variable, which can be a string or a DataWeave expression. Variable names are must include only numbers, characters, and underscores. This attribute is required.
 
-| Value
+| *Value*
 | `value` 
 | Value for the variable, which can be a string or a DataWeave expression. For an example that uses an expression, see xref:2.4@dataweave::dataweave-cookbook-writer-prop-mule.adoc[]. This attribute is required.
 
-| Mime type
-| `mimeType`
-| Sets the variable MIME type, such as `text/plain` or `application/json`.
+//entire output encoding row in this table
+include::partial$acb-component-info.adoc[tag=output-encoding]
+include::partial$acb-component-info.adoc[tag=output-encoding-description]
 
-| Encoding
-| `encoding`
-| Sets the variable encoding, such as `ISO 10646/Unicode(UTF-8)`.
+//entire output MIME type row in this table
+include::partial$acb-component-info.adoc[tag=output-mime-type]
+include::partial$acb-component-info.adoc[tag=output-mime-type-description]
+
+//entire Properties row in this table
+include::partial$acb-component-info.adoc[tag=mimetype-reader-properties]
 
 |===
 //end::component-xml-attributes-root[]

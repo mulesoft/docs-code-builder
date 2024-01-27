@@ -79,7 +79,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Until Successful (<until-successful/>) has the following attributes:
+Until Successful (<until-successful/>) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -87,7 +87,7 @@ Until Successful (<until-successful/>) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Until successful* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -95,11 +95,11 @@ Until Successful (<until-successful/>) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Max retries
+| *Max retries*
 | `maxRetries` 
 | Maximum number of retries allowed. This attribute can be either a number or an expression that resolves to a number. Error messages look like this: `Message: 'until-successful' retries exhausted`. The Mule error type is `MULE:RETRY_EXHAUSTED`.
 
-| Millis between retries
+| *Millis between retries*
 | `millisBetweenRetries` 
 | Specifies, in milliseconds, the minimum interval between two retries. The length of the interval is affected by a previous execution but typically does not exceed twice the minimum. This attribute can be a number or an expression that resolves to a number. Defaults to `60000` milliseconds (one minute). 
 

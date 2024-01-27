@@ -81,7 +81,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Round Robin (`<round-robin/>`) has the following attributes: 
+Round Robin (`<round-robin/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -89,7 +89,7 @@ Round Robin (`<round-robin/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Round robin* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -105,7 +105,24 @@ Round Robin (`<round-robin/>`) has the following attributes:
 //end::component-xml-attributes-root[]
 //
 //
+//
+//
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES or ELEMENTS
+//tag::component-xml-attributes-child1[]
 
+`<route/>` is a child element of Round Robin. 
+
+[%header,cols="1,3a"]
+|===
+| Child Element 
+| Description 
+
+|`<route/>`
+| Accepts one or more components as child elements for processing the Mule event. Multiple `<route/>` configurations are allowed.
+|===
+//end::component-xml-attributes-child1[]
+//
+//
 
 //SECTION: EXAMPLES
 //

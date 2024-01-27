@@ -79,7 +79,7 @@ Snippet JSON in Anypoint Code Builder serves as a customizable template for the 
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Transform (`<ee:transform/>`) has the following attributes: 
+Transform (`<ee:transform/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -87,7 +87,7 @@ Transform (`<ee:transform/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Transform* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -111,25 +111,30 @@ Write a xref:2.4@dataweave::dataweave-language-introduction.adoc[DataWeave scrip
 
 * `<ee:message/>` accepts child elements for creating or transforming a Mule message payload and attributes: 
 +
-[%header, cols="1a,3"]
+[%header, cols="1,1,3a"]
 |===
-| Element 
+| Element Name
+| Element XML
 | Description
 
+| *Set payload*
 | `<ee:set-payload/>` 
 | Sets or transforms the xref:4.4@mule-runtime::about-mule-message.adoc#message-payload[Mule message payload]. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-payload/>` element is allowed. 
 
+| *Set attribute*
 | `<ee:set-attributes/>` 
 | Sets or transforms one or more Mule message attributes. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-attributes/>` element is allowed. 
 |===
 
 * `<ee:variables/>` accepts child elements for creating or transforming a Mule variables: 
 +
-[%header, cols="1a,3"]
+[%header, cols="1,1,3a"]
 |===
-| Element 
+| Element Name
+| Element XML
 | Description
 
+| *Set Variables*
 | `<ee:set-variable/>` 
 | Sets or transforms a xref:4.4@mule-runtime::about-mule-variables.adoc[Mule variable]. This child element of `<ee:variables/>` accepts a DataWeave script. One or more `<ee:set-variable/>` elements are allowed.
 |===

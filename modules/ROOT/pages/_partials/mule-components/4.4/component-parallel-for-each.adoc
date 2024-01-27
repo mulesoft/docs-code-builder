@@ -72,7 +72,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Parallel For Each (`<parallel-foreach/>`) has the following attributes: 
+Parallel For Each (`<parallel-foreach/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -80,7 +80,7 @@ Parallel For Each (`<parallel-foreach/>`) has the following attributes:
 | Attribute XML 
 | Description
 
-| Display Name
+| *Parallel foreach* (default)
 | `doc:name` 
 | Editable name for the component.
 
@@ -88,31 +88,31 @@ Parallel For Each (`<parallel-foreach/>`) has the following attributes:
 | `doc:id` 
 | Automatically generated identifier for the component.
 
-| Collection
+| *Collection*
 | `collection` 
 | An expression that returns a collection. Defaults to `#[payload]`.
 
-| Timeout
+| *Timeout*
 | `timeout` 
 | Specifies the timeout in milliseconds for each parallel route.
 
-| Max concurrency
+| *Max concurrency*
 | `maxConcurrency`
 | Specifies the maximum level of parallelism for the router to use.
 +
 By default, all routes run in parallel.
 
-| Target
+| *Target Variable*
 | `target`
-| Specifies a variable to use for storing the processed payload. By default, the output is saved in the flow's payload.
-+
-By default, Parallel For Each saves the output in the flow's payload.
+| 
+include::partial$acb-component-info.adoc[tag=target-variable]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
 
-| Target Value
+| *Target Value*
 | `targetValue`
-| Specifies an expression to evaluate against the operation's output value. Parallel For Each stores the outcome of this expression in the `target` variable. 
-+
-By default, this is the same as the operation's output value.
+| 
+include::partial$acb-component-info.adoc[tag=target-variable-value]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
 
 |===
 //end::component-xml-attributes-root[]

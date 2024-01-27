@@ -73,7 +73,7 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-Async (`<async/>`) has the following attributes:
+Async (`<async/>`) provides attributes in the configuration UI and XML:
 
 [%header,cols="1,1,3a"]
 |===
@@ -81,11 +81,11 @@ Async (`<async/>`) has the following attributes:
 | Attribute XML
 | Description
 
-| Name
+| *Async* (default)
 | `name` 
 | Editable name for the component.
 
-| Max concurrency
+| *Max concurrency*
 | `maxConcurrency` 
 a| Sets the maximum number of concurrent messages that the scope can process. By default, the container thread pool determines the maximum number of threads to use to optimize the performance when processing messages. When the scope is processing the maximum number of concurrent messages, it cannot receive additional requests.
 {sp} +

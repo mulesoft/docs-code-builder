@@ -72,19 +72,33 @@ SNIPPET_JSON_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+Flow Reference (<flow-ref/>) provides attributes in the configuration UI and XML:
+
+[%header,cols="1,1,3a"]
 |===
+| Attribute Name
 | `<flow-ref/>` Attributes 
 | Description
 
+| *Name*
 | `name` 
 | The name of the flow that this component references.
 
-| `target` 
-| Name of the variable in which you want to store message data. Names can only include numbers, characters, and underscores.
+| N/A
+| `doc:id` 
+| Automatically generated identifier for the component.
 
+| *Target Variable*
+| `target`
+| 
+include::partial$acb-component-info.adoc[tag=target-variable]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
+
+| *Target Value*
 | `targetValue`
-| Value of the data to store in the target variable. The field accepts any value that a variable accepts: any supported data type, DataWeave expressions, the keywords `payload`, `attributes`, and `message`, but not the keyword `vars`. Defaults to the message payload (`payload`).
+| 
+include::partial$acb-component-info.adoc[tag=target-variable-value]
+include::partial$acb-component-info.adoc[tag=xref-target-variables]
 
 |===
 //end::component-xml-attributes-root[]
