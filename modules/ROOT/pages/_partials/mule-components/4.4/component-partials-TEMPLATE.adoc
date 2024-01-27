@@ -46,20 +46,20 @@ XML_HERE
 
 //end::component-xml[]
 //
-//tag::component-snippet-xml[]
+//tag::component-snippet-json[]
 
 [[snippet]]
 
-=== Snippet XML
+=== Snippet JSON
 
-Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+Snippet JSON in Anypoint Code Builder serves as a customizable template for the component. 
 
 [source,xml]
 ----
-SNIPPET_XML_HERE
+SNIPPET_JSON_HERE
 ----
 
-//end::component-snippet-xml[]
+//end::component-snippet-json[]
 //
 //
 //
@@ -67,38 +67,63 @@ SNIPPET_XML_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+//TODO: ADD ACTUAL NAME AND ELEMENT NAME
+COMPONENT_NAME_HERE (`<element-name-here/>`) provides attributes in the configuration UI and XML:
+
+[%header,cols="1,1,3a"]
 |===
-| `<ROOT_ELEMENT/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| TODO
 | `doc:name` 
 | Editable name for the component.
 
+| UI_FIELD_NAME
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| UI_FIELD_NAME
 | `attribute_here` 
 | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 
+| UI_FIELD_NAME
 | `attribute_here` 
 | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 
 |===
+
+//TODO: PROB NEED AN INCLUDE TAG FOR THIS
+//IF THERE IS A GLOBAL CONFIG FOR THIS ELEMENT, ADD HERE WITH A TABLE
+// The global configuration element  (`<element-name-here/>`) provides attributes in the configuration UI and XML:
+
+// TABLE_HERE
+
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES or ELEMENTS
 //  Repeat as needed, adding the next number to the tag value. 
 //  Provide intro text, as needed.
 //tag::component-xml-child1[]
 
-[%header, cols="1,3"]
-|===
-| <CHILD_ELEMENT/> Attributes | Description
+//TODO: ADD ACTUAL ELEMENT NAME
+The child element `<element-name-here/>` has the following attribute:
 
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+[%header,cols="1,1,3a"]
+|===
+| Attribute Name
+| Attribute XML 
+| Description
+
+| UI_FIELD_NAME
+| `attribute_here` 
+| DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+| UI_FIELD_NAME
+| `attribute_here` 
+| DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 
 |===
 //end::component-xml-child1[]
@@ -109,17 +134,51 @@ SNIPPET_XML_HERE
 //  Provide intro text, as needed.
 //TAG
 //tag::component-xml-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
 
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+//TODO: ADD ACTUAL ELEMENT NAME
+The element `<element-name-here/>` is a child of `<element-parent-name-here/>`.
+This element has the following attribute:
+
+[%header,cols="1,1,3a"]
+|===
+| Attribute Name
+| Attribute XML 
+| Description
+
+| UI_FIELD_NAME
+| `attribute_here` 
+| DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
+
+| UI_FIELD_NAME
+| `attribute_here` 
+| DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
 
 |===
 //end::component-xml-descendant1[]
 //
 
+//
+//TABLE: GLOBAL CONFIG ATTRIBUTES 
+//tag::component-xml-global-config[]
+The global configuration element `<object-store-caching-strategy/>` provides attributes in the configuration UI and XML:
+
+[%header,cols="1,1,3a"]
+|===
+| Attribute Name
+| Attribute XML
+| Description
+
+| UI_FIELD_NAME_HERE
+| `attribute-name-here`
+| DESCRIPTION_HERE
+
+| UI_FIELD_NAME_HERE
+| `attribute-name-here`
+| DESCRIPTION_HERE
+|===
+
+//end::component-xml-global-config[][]
+//
 
 //SECTION: EXAMPLES
 //

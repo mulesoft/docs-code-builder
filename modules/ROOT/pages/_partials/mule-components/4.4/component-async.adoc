@@ -52,20 +52,20 @@ This component supports the following XML structure:
 
 //end::component-xml[]
 //
-//tag::component-snippet-xml[]
+//tag::component-snippet-json[]
 
 [[snippet]]
 
-=== Snippet XML
+=== Snippet JSON
 
-Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+Snippet JSON in Anypoint Code Builder serves as a customizable template for the component. 
 
 [source,xml]
 ----
-SNIPPET_XML_HERE
+SNIPPET_JSON_HERE
 ----
 
-//end::component-snippet-xml[]
+//end::component-snippet-json[]
 //
 //
 //
@@ -73,14 +73,19 @@ SNIPPET_XML_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+Async (`<async/>`) provides attributes in the configuration UI and XML:
+
+[%header,cols="1,1,3a"]
 |===
-| `<async/>` Attributes 
+| Attribute Name
+| Attribute XML
 | Description
 
+| *Async* (default)
 | `name` 
 | Editable name for the component.
 
+| *Max concurrency*
 | `maxConcurrency` 
 a| Sets the maximum number of concurrent messages that the scope can process. By default, the container thread pool determines the maximum number of threads to use to optimize the performance when processing messages. When the scope is processing the maximum number of concurrent messages, it cannot receive additional requests.
 {sp} +
@@ -92,38 +97,6 @@ See xref:4.4@mule-runtime::execution-engine.adoc#backpressure[Back-Pressure Mana
 
 |===
 //end::component-xml-attributes-root[]
-//
-//
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//tag::component-xml-child1[]
-
-[%header, cols="1,3"]
-|===
-| <CHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-child1[]
-//
-//
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::component-xml-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-descendant1[]
 //
 
 // tag::async-vs-subflow[]
