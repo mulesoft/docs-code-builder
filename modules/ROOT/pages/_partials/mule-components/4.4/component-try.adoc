@@ -82,11 +82,23 @@ Try scope (`<try/>`) attributes are configurable through the UI and XML.
 
 | *Try* (default)
 | `doc:name` 
-| Editable name for the component.
+| Editable name for the component to display in the canvas UI.
 
 | N/A
 | `doc:id` 
 | Automatically generated identifier for the component.
+
+| *Transaction type*
+| `transactionType`
+| Specifies the type of transaction. Accepted values are: 
+
+* `LOCAL`
++
+Default. A single or local transaction. 
+
+* `XA` 
++
+A transaction that groups operations from multiple resources and follows the Extended Architecture (XA) standard.
 
 | *Transactional action*
 | `transactionalAction` 
@@ -104,18 +116,6 @@ A new transaction is started every time the scope is executed.
 +
 Relevant only when execution order might vary (for example, due to asynchronous actions occurring outside the flow).
 If current flow processing has already started a transaction, the scope joins it. If not, the scope initiates a new transaction.
-
-| *Transaction type*
-| `transactionType`
-| Specifies the type of transaction. Accepted values are: 
-
-* `LOCAL`
-+
-Default. A single or local transaction. 
-
-* `XA` 
-+
-A transaction that groups operations from multiple resources and follows the Extended Architecture (XA) standard.
 
 |===
 //end::component-xml-attributes-root[]

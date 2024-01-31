@@ -92,7 +92,7 @@ Error Handler (`<error-handler/>`) attributes are configurable through the UI an
 
 | *Error handler* (default)
 | `doc:name` 
-| Editable name for the component.
+| Editable name for the component to display in the canvas UI.
 
 | N/A
 | `doc:id` 
@@ -121,13 +121,13 @@ The `<on-error-continue/>` and `<on-error-propagate/>` child elements share the 
 | `type` 
 | A comma-separated list of Mule error types that defines the errors this on-error strategy handles.
 
-| *Enable notifications*
-| `enableNotifications` 
-| Specifies if this strategy triggers a notification of type `ExceptionNotification` when an error occurs. Defaults to `true`.
-
 | *Log exception*
 | `logException` 
 | Specifies whether to log the error at level `ERROR` before this strategy handles it. Defaults to `true`.
+
+| *Enable notifications*
+| `enableNotifications` 
+| Specifies if this strategy triggers a notification of type `ExceptionNotification` when an error occurs. Defaults to `true`.
 |===
 //end::component-xml-attributes-child1[]
 //
