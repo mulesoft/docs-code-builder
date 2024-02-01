@@ -109,7 +109,7 @@ image::int-empty-canvas.png["Canvas showing visual representation of Mule flow a
 From the canvas UI::
 +
 --
-Click *Flow name1* to open the configuration UI for the flow, change the flow name, and click the check mark to set the new name. 
+Click *Flow name1* to open the configuration panel for the Flow component, change the flow name, and click the check mark to set the new name. 
 
 image::int-flow-name-ui.png["Change name of flow through canvas UI."]
 --
@@ -167,7 +167,7 @@ For example, add a Set Payload component to your HTTP Listener operation:
 +
 .. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* panel, search for and select *Set payload* from the *Transformer* results.
-.. In the canvas, click *Set payload* to open its configuration UI, and add a string value, DataWeave expression, Mule variable, or configuration property.
+.. In the canvas, click *Set payload* to open its configuration panel, and add a string value, DataWeave expression, Mule variable, or configuration property.
 * To add a string, type a value such as `my value`. For example:
 +
 image::int-set-payload-config-string.png["Adding string to Set Payload"]
@@ -204,9 +204,9 @@ image::int-canvas-error.png["Listener error in the canvas"]
 To determine where the error is, select the processor in the canvas.
 Anypoint Code Builder highlights its location within the configuration XML, and you can mouse over the issue for more information. For example:
 
-image::int-select-listener-config.png["Selecting configuration reference from configuration UI"]
+image::int-select-listener-config.png["Selecting configuration reference from configuration panel"]
 
-To fix the error, configure the attributes properly. For example, to correct the mismatched `config-ref` value for the HTTP listener, select the reference name from the drop-down menu in the component's configuration UI, or type the correct attribute value directly within the XML. 
+To fix the error, configure the attributes properly. For example, to correct the mismatched `config-ref` value for the HTTP listener, select the reference name from the drop-down menu in the component's configuration panel, or type the correct attribute value directly within the XML. 
 
 For more information about debugging, see xref:debugging-mule-apps.adoc[]. 
 
@@ -342,7 +342,7 @@ The file's canvas UI provides the same options for building your project file th
 [[open-component-from-xml]]
 == Open a Component in the Canvas from the XML Editor
 
-From the configuration XML, open a component and its configuration UI in the canvas. This feature is helpful, for example, if you want to configure a component from the UI, if a component is in another flow than the flow currently displayed in the canvas, or if the canvas is not open.  
+From the configuration XML, open a component and its configuration panel in the canvas. This feature is helpful, for example, if you want to configure a component from the UI, if a component is in another flow than the flow currently displayed in the canvas, or if the canvas is not open.  
  
 . From the configuration XML, place your cursor within the component's XML.
 . Right-click and select *Show Component in Canvas UI*. 
