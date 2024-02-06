@@ -1,0 +1,63 @@
+= Troubleshooting Missing or Disabled Features
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Some Anypoint Code Builder features can be disabled or hidden based on settings in the IDE. 
+
+[[missing-mulesoft-icon]]
+== MuleSoft Icon Missing from the Activity Bar
+
+If the MuleSoft icon (see xref:start-discover-ui.adoc[]) is missing from the Activity Bar, check for and address common causes.
+
+* <<enable-icon>>
+* <<check-trusted>>
+* <<modify-trust-settings>>
+
+[[enable-icon]]
+=== Enable Anypoint Code Builder in the Activity Bar
+
+The Activity Bar allows you to enable or disable icons.
+
+. In the IDE, right-click the Activity Bar.
+. Check for *Anypoint Code Builder*:
+
+* If *Anypoint Code Builder* is disabled, click *Anypoint Code Builder* to add the icon to the Activity Bar.
+* If *Anypoint Code Builder* is enabled, check your trust settings. See <<check-trusted>>.
+* If *Anypoint Code Builder* is not present, see xref:troubleshooting.adoc#check-extension-pack[Check for Anypoint Extension Pack Installation].
+
+[[check-trusted]]
+=== Check for Restricted Mode
+
+If your project or workspace is in restricted mode, the MuleSoft icon does not appear in the Activity Bar. 
+
+To determine whether your project or workspace is trusted or in restricted mode:
+
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide the following command to launch the *Workspace Trust* tab:
++
+[source,command]
+----
+Workspace: Manage Workspace Trust
+----
++
+If the *Workspace Trust* tab says *You are in Restricted Mode*, you can click *Trust* or *Trust Parent*. 
++
+image:acb-restricted-mode.png["VS Code indicating that a project or workspace is in restricted mode"]
+. After trusting, check for the MuleSoft icon in the Activity Bar. 
+
+For more information about trust settings in the IDE, see https://code.visualstudio.com/docs/editor/workspace-trust#trusting-a-workspace[Trusting a workspace^] in the VS Code documentation. 
+
+[[modify-trust-settings]]
+=== Modify Trust Settings
+
+To modify your trust settings in the IDE:
+
+. Provide the following command to launch the *Workspace Trust* tab:
++
+[source,command]
+----
+Workspace: Configure Workspace Trust Settings
+----
+. Review and adjust the workspace settings, as needed.
