@@ -70,10 +70,13 @@ image::add-mysql-driver-dependency.png["pom.xml with new dependency highlighted"
 == Add a Database Connector Configuration
 
 . In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
-. In the configuration XML, add the global `<db:config/>` snippet:
-.. Above the `<flow/>` element, insert the snippet XML by pressing Ctrl+Spacebar (Mac) or Cmd+Spacebar (Windows), typing `mysql` to search for the snippet, and selecting the snippet `db:mysql-config`.
+. In the configuration XML, add the global `<db:config/>` snippet.
+.. Place your cursor before the opening <flow> tag.
+.. Press Ctrl+Spacebar (Mac) or Cmd+Spacebar (Windows).
+.. Type `mysql` to search for the snippet.
+.. Select the snippet `db:mysql-config`.
 +
-.Snippet XML above the <flow/> element:
+.Snippet XML before the opening <flow> tag:
 [source,xml]
 ----
 <db:config name="Mysql_Database_Config" >
@@ -127,6 +130,23 @@ image::add-mysql-driver-dependency.png["pom.xml with new dependency highlighted"
 Either search for *Select* or navigate to the operation from *Connectors* > *Database* > *Select*.
 . Provide this configuration for the snippet:
 +
+[tabs]
+====
+From the canvas UI::
++
+Click the *Select* operation to open its configuration panel, and set the Select attributes to the following values:
++
+image::tut-int-db-connector-ui.png["Configure the Select connector through its configuration panel."]
++
+[calloutlist]
+.. Change the connector name to `Query Flights`.
+.. Select `Database_Config` from the connector configuration dropdown menu.
+.. Set the *Query* attribute to `Select * FROM american`.
+
+From the configuration XML::
++
+In `<db:select/>`, set the attributes to the values provided in the example.
++
 [source,XML]
 --
 <db:select doc:name="Query Flights" config-ref="Database_Config" >
@@ -137,6 +157,8 @@ Either search for *Select* or navigate to the operation from *Connectors* > *Dat
 --
 +
 Notice that the `config-ref` attribute references the database connection configuration in `<db:config/>` by its `name`.
+====
+
 . Review the complete configuration XML:
 +
 [source,XML]

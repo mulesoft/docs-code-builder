@@ -48,18 +48,30 @@ You see two different views:
 [calloutlist]
 .. The canvas UI provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
-. Select *Build a Flow* from the canvas to create an empty flow.
-. In the configuration XML, replace the name of your flow with `getFlights`:
+. Select *Build a Flow* from the canvas to create an empty flow within a Mule integration application.
+. Change the default name of the flow from the canvas UI or from the configuration XML.
++
+[tabs]
+====
+From the canvas UI::
++
+Click *Flow name1* to open the configuration panel for the Flow component, change the flow name to `getFlights`, and click the check mark to set the new name.
++
+image::int-flow-name-ui.png["Change name of flow through canvas UI."]
+
+From the configuration XML::
++
+Replace the default name of the flow (`name1`) with `getFlights`.
 +
 [%header,cols="1a,1a"]
 |===
 | Automatically Generated Flow Element | Renamed Flow Element
 
-| 
+|
 [source, XML]
 ----
 <flow name="name1" >
-  
+
 </flow>
 ----
 
@@ -67,10 +79,12 @@ You see two different views:
 [source, XML]
 ----
 <flow name="getFlights" >
-  
+
 </flow>
 ----
 |===
+====
+
 . Add the HTTP Listener component to your configuration XML:
 .. In the canvas UI, after your *Flow* component, click the image:icon-plus.png["",15,15] (*Add component*) icon:
 +
@@ -88,9 +102,8 @@ The configuration XML file adds the XML for the HTTP Listener into the `<flow/>`
   
 </flow>
 ----
-. In the configuration XML, before the `<flow/>` element, add the `<http:listener-config/>` component: 
-.. In the configuration XML, press Ctrl+Spacebar (Mac) or Cmd+Spacebar(Windows) to open the XML configuration menu.
-.. Type `http`, and select the built-in `<http:listener-config/>` snippet:
+. In the configuration XML, place your cursor before the opening <flow> tag, and type `http`.
+. Select the built-in `<http:listener-config/>` snippet:
 +
 image::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu"]
 +
@@ -103,29 +116,58 @@ image::add-http-config-snippet.png["http:listener-config highlighted in the conf
 ----
 +
 In the menu, the snippet is a partially configured Mule component that is represented by a _two-dimensional_ box icon. Three-dimensional box icons are reserved for basic component XML that is not preconfigured. For information about code snippets, see xref:int-work-with-code-snippets.adoc[].
-. Configure the attributes for the HTTP Listener operation `<http:listener/>` and `<http:listener-config/>`:
+. In the configuration XML, configure the attributes for the HTTP Listener configuration `<http:listener-config/>`:
 +
 [source,xml]
 ----
-<!--1-->
-<http:listener-config name="inbound-request" doc:name="Listener Config" doc:id="b5c62f-a84a3a"> 
-  <http:listener-connection host="0.0.0.0" port="8081"/> 
+<http:listener-config name="inbound-request" doc:name="Listener Config" doc:id="b5c62f-a84a3a">
+  <http:listener-connection host="0.0.0.0" port="8081"/>
 </http:listener-config>
+----
+In `<http:listener-config/>` and its child element `<http:listener-connection/>`, set the attributes to values provided in the example. The `doc:id` is randomly generated and does not require a change.
+. Configure the attributes for the HTTP Listener configuration:
++
+[tabs]
+====
+From the canvas UI::
++
+Click the *Listener* operation to open its configuration panel, and set the HTTP Listener attributes to the following values:
++
+image::tut-int-listener-component-ui.png["Configure the Listener operation through its configuration panel."]
++
+[calloutlist]
+.. Change the operation name to `HTTP /flights`.
+.. Select `inbound-request` from the configuration reference dropdown menu.
+.. Set the *Path* attribute to `flights`.
 
-<!--2-->
+From the configuration XML::
++
+In `<http:listener/>`, set the attributes to the values provided in the example.
++
+[source,xml]
+----
 <flow name="getFlights">
     <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" />
 </flow>
 ----
+====
+. From the canvas UI, add a Set Payload component below your HTTP Listener operation.
+. Configure the Set Payload component attributes:
++
+[tabs]
+====
+From the canvas UI::
++
+Click the Set Payload component to open its configuration panel, and set the attributes to the following values:
++
+image::tut-int-set-payload-component-ui.png["Configure the Set Payload component through its configuration panel."]
++
 [calloutlist]
-.. In `<http:listener-config/>` and its child element `<http:listener-connection/>`, set the attributes to values provided in the example. The `doc:id` is randomly generated and does not require a change.
-.. In `<http:listener/>`, set the attributes to the values provided in the example. 
-. Notice the graphical representation of the HTTP Listener element in the canvas UI.
+.. Change the component name to `Set Response`.
+.. Set the *Value* attribute to `Flight info`.
+From the configuration XML::
 +
-When you select any processor in the canvas, Anypoint Code Builder highlights its location within the configuration XML:
-+
-image::http-highlight-flow.png["HTTP Listener highlighted in the flow and in the XML code"]
-. From the canvas UI, add a Set Payload component below your HTTP Listener operation, and configure its attributes in the configuration XML:
+In `<set-payload/>`, set the attributes to the values provided in the example.
 +
 [source,xml]
 ----
@@ -144,6 +186,7 @@ image::http-highlight-flow.png["HTTP Listener highlighted in the flow and in the
 [calloutlist]
 . Set the `value` attribute to `Flight info` and the `doc:name` to `Set Response`.
 --
+====
 [[check-connection]]
 . Above `<http:listener-config/>` in the configuration XML, click *Test Connection* to check the HTTP Listener connection. 
 +

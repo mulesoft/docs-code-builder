@@ -60,6 +60,15 @@ From the configuration XML, above the HTTP Listener configuration (`<http:listen
 // end::open-output-panel[]
 //
 //
+// tag::open-source-control-commands[]
+
+* Mac: Ctrl+Shift+g
+* Windows: Cmd+Shift+g
+
+// end::open-source-control-commands[]
+//
+//
+//
 // tag::open-source-control[]
 // Pointer to Source Control Panel
 . Open the Source Control panel.
@@ -69,10 +78,24 @@ From the configuration XML, above the HTTP Listener configuration (`<http:listen
 ====
 Click the image:icon-source-control.png["",15,15] (*Source Control*) icon in the activity bar or use the keyboard shortcuts:
 
-* Mac: Ctrl+Shift+g
-* Windows: Cmd+Shift+g
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag=open-source-control-commands]
+
 ====
 // end::open-source-control[]
+//
+//
+// tag::open-source-control-no-edits[]
+. Open the Source Control panel.
++
+.Show me how
+[%collapsible]
+====
+Click the image:icon-source-control-no-edits.png["",15,15] (*Source Control*) icon in the activity bar or use the keyboard shortcuts:
+
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag=open-source-control-commands]
+
+====
+// end::open-source-control-no-edits[]
 
 // tag::open-auto-complete[]
 // Pointer to Auto Complete menu
@@ -252,4 +275,68 @@ Anypoint Code Builder does not support scaffolding API specs that reference OAS 
 
 * An administrator with an Anypoint Platform organization account must provide you with the necessary permissions. See xref:start-configure-permissions.adoc[].
 // end::platform-account[]
+//
+
+//
+// tag::scm-intro-best-practice[]
+Use source control management (SCM) to store and share your design, integration, and implementation projects. 
+// end::scm-intro-best-practice[]
+//
+// tag::scm-doc-link[]
+For source control options, see xref:anypoint-code-builder::start-scm.adoc[].
+// end::scm-doc-link[]
+//
+
+//
+// tag::prereq-business-groups[]
+
+* Have some familiarity with xref:access-management::business-groups.adoc[business groups].
++
+When you publish your API spec to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. See xref:access-management::business-groups.adoc[].
+// end::prereq-business-groups[]
+//
+
+//
+// tag::scm-sync-changes[]
+
+To sync changes to project files with your repo, see <<sync-changes>>.
+
+// end::scm-sync-changes[]
+//
+
+//
+// tag::scm-stage-files-substep[]
+.. Stage your files to your local repository by hovering over the *Changes* area (located after the *Commit* button) and clicking the image:anypoint-code-builder::icon-scm-add-changes.png["",15,15] (plus) icon.
++
+image::anypoint-code-builder::start-scm-repo-stage-changes.png["Adding commit message for staged changes"]
++
+Alternatively, you can stage a single file by clicking the plus icon for that file.
++
+Staged files move from the *Changes* area in the Source Control panel to the *Staged Changes* area. The UI uses the `git add` command to add changes from your working directory to the staging area in your local Git repo.
+// end::scm-stage-files-substep[]
+//
+// tag::scm-commit-message-substep[]
+.. Provide your a commit message for the files, and then click *Commit*, for example:
++
+image::anypoint-code-builder::start-scm-repo-commit-staged.png["Commit message for staged changes"]
+// end::scm-commit-message-substep[]
+//
+
+
+//
+// tag::import-api-exchange[]
+. Provide the following command:
++
+[source,command]
+--
+MuleSoft: Import Asset from Exchange
+--
+. Depending on the language of your API spec, select one of these options:
++
+* *Rest API* for OAS or RAML
+* *GraphQL API*
+. If prompted, click *Allow* to allow sign in using Anypoint Platform and select the business group.
+. Type the name of the API spec, and press Enter.
+. Wait for the IDE to load a list of matches to the name.
+// end::import-api-exchange[]
 //

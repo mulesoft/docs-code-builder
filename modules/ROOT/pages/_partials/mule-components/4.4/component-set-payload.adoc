@@ -50,20 +50,20 @@ This component supports the following XML structure:
 
 //end::component-xml[]
 //
-//tag::component-snippet-xml[]
+//tag::component-snippet-json[]
 
 [[snippet]]
 
-=== Snippet XML
+=== Snippet JSON
 
-Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+Snippet JSON in Anypoint Code Builder serves as a customizable template for the component. 
 
 [source,xml]
 ----
-SNIPPET_XML_HERE
+SNIPPET_JSON_HERE
 ----
 
-//end::component-snippet-xml[]
+//end::component-snippet-json[]
 //
 //
 //
@@ -71,28 +71,40 @@ SNIPPET_XML_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+Set Payload (`<set-payload/>`) attributes are configurable through the UI and XML.
+
+[%header,cols="1,1,3a"]
 |===
-| `<set-payload/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| *Set payload* (default)
 | `doc:name` 
-| Editable name for the component.
+| Editable name for the component to display in the canvas UI.
 
+| N/A
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| *Value*
 | `value` 
-| Accepts a literal string or DataWeave expression that defines how to set the payload, for example, `"some string"` or `#[now()]`. This attribute is required. 
+| A literal string or DataWeave expression that defines how to set the payload, for example, `"some string"` or `#[now()]`. This attribute is required. 
 
+| N/A
 | `resource`
-|  Points to a `.dwl` file containing a DataWeave transformation script. These values are resolved statically (not dynamically). For example, using `<ee:set-payload resource="myscript-${env}.dwl"/>` generates an error.
+|  A `.dwl` file containing a DataWeave transformation script. These values are resolved statically (not dynamically). For example, using `<ee:set-payload resource="myscript-${env}.dwl"/>` generates an error. For more information, see xref:dataweave::dataweave-language-introduction.adoc#dwl_file[dwl File].
 
-| `mimeType` 
-| The MIME type of the value assigned to the payload, for example, `text/plain` or `application/json`.
+//entire output encoding row in this table
+include::partial$acb-component-info.adoc[tag=output-encoding]
+include::partial$acb-component-info.adoc[tag=output-encoding-description]
 
-| `encoding`
-| The encoding of the value assigned to the payload, for example, `UTF-8`.
+//entire output MIME type row in this table
+include::partial$acb-component-info.adoc[tag=output-mime-type]
+include::partial$acb-component-info.adoc[tag=output-mime-type-description]
+
+//entire Parameters row in this table
+include::partial$acb-component-info.adoc[tag=mimetype-reader-properties]
 
 |===
 
@@ -104,38 +116,6 @@ The `mimeType` and `encoding` attributes do not affect a DataWeave expression us
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//tag::component-xml-child1[]
-
-[%header, cols="1,3"]
-|===
-| <CHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-child1[]
-//
-//
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::component-xml-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-descendant1[]
-//
-
 
 //SECTION: EXAMPLES
 //
