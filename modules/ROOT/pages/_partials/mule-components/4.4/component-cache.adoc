@@ -156,7 +156,7 @@ Cache (`<cache/>`) attributes are configurable through the UI and XML:
 
 | *Cache* (default)
 | `doc:name` 
-| Editable name for the component to display in the canvas UI.
+| Editable name for the component to display in the canvas.
 
 | N/A
 | `doc:id` 
@@ -168,8 +168,7 @@ Cache (`<cache/>`) attributes are configurable through the UI and XML:
 
 | *Filter expression*
 | `filterExpression`
-//TODO: DO WE HAVE ANY DOC FOR THIS?
-| N/A
+| DataWeave expression for excluding specific payloads from the Cache scope flow.
 
 |===
 
@@ -189,7 +188,7 @@ The global configuration element `<object-store-caching-strategy/>` provides the
 
 | N/A
 | `doc:name` 
-| Editable name for the component to display in the canvas UI.
+| Editable name for the component to display in the canvas.
 
 | N/A
 | `doc:id` 
@@ -205,7 +204,7 @@ The global configuration element `<object-store-caching-strategy/>` provides the
 
 |===
 
-//end::component-xml-global-config[][]
+//end::component-xml-global-config[]
 //
 
 //SECTION: EXAMPLES
@@ -298,9 +297,28 @@ The following XML example shows the configuration of a caching strategy that syn
 //end::component-xml-ex2[]
 //
 
-
-//SECTION: ERROR HANDLING if needed
 //
+//tag::component-xml-ex3[]
+//
+//end::component-xml-ex3[]
+//
+//
+//tag::component-xml-ex3-acb[]
+// 
+//end::component-xml-ex3-acb[]
+//
+//tag::component-xml-ex3-studio[]
+
+=== Example to Download from Anypoint Exchange
+
+To learn more about the Cache component, download and open the project example https://anypoint.mulesoft.com/exchange/org.mule.examples/cache-scope-with-salesforce-contacts/[Cache Scope with Salesforce Contacts] from Anypoint Exchange. This example caches data that is fetched from Salesforce. The next request for the data returns results from the cache instead of returning data from Salesforce.
+
+To download a project example from Anypoint Exchange, see xref:studio::import-project-exchange.adoc#import-an-exchange-example-into-studio[Import an Exchange Example into Studio].
+//end::component-xml-ex3-studio[]
+//
+
+//
+//SECTION: ERROR HANDLING if needed
 //tag::component-error-handling[]
 
 [[error-handling]]
