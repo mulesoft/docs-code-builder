@@ -1,0 +1,111 @@
+= Configuring MuleSoft Settings in the IDE
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//LOGO (web, desktop, or both)
+// include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+Anypoint Code Builder provides configurable settings that apply at the IDE level, across all your Anypoint Code Builder projects. Many of the default settings are suitable for most users. However, if you use the EU cloud, it is important to change the default US cloud setting. Some settings are configurable in the desktop IDE only.
+
+To open the settings: 
+
+//shared steps for opening Mule settings
+include::partial$acb-reusable-steps.adoc[tags="open-mule-settings"]
+
+For information about specific Mule settings, see the sections that follow.
+
+////
+HIDING EINSTEIN SECTION: NOT FOR FEB RELEASE
+[[setting-einstein]]
+==  Mule > Application: Einstein
+
+If an organization administrator set permissions for you to access and use Einstein AI features, you can disable or enable (default) the feature in your IDE. When you disable Einstein, the UI no longer displays AI features.
+
+For access to Einstein, see start-configure-permissions.adoc[].
+////
+
+[[setting-group-id]]
+== Mule › Application: Group ID
+
+Set the Maven group ID value for the IDE to use when you create a Mule integration or implementation project. This setting populates the `pom.xml` file for each Mule project. The default is `com.mycompany`, for example, `<groupId>com.mycompany</groupId>` in the `pom.xml`. You can change the setting within your project, as needed.
+
+For information about Maven group IDs, see https://maven.apache.org/guides/introduction/introduction-to-the-pom.html[Introduction to the POM^] in the Apache Maven Project documentation. 
+
+[[setting-lsp]]
+== Mule › Lsp › Trace: Server
+
+You can enable and control the verbosity of `LogTrace` notifications to VS Code from the `muleLanguageServerProtocol` service. 
+
+Available settings: 
+
+* *off* (default)
+* *messages*
+* *verbose* 
+
+[[setting-mule-args]]
+== Mule › Runtime: Default Arguments
+
+Set default command-line arguments to use when starting Mule Runtime engine (Mule). Mule starts when you run a Mule application in an integration or implementation project. 
+
+Common uses of this setting are to append an encryption key value (such as `-M-Dencryption.key=my-key`) that is used when running a local deployment that incorporates secure configuration properties, or for a variable (such as `-M-Denv=dev`) that Mule uses when selecting a configuration properties file by its file name. For more information about these uses, see xref:int-create-secure-configs.adoc[]. 
+
+
+[[setting-metaspace]]
+== Mule › Runtime: Default Metaspace Size
+
+Metaspace is an area for non-heap memory used to store class metadata, constant pool information, and method bytecode.
+
+Typically, the default of *1g* (1 GB) is sufficient. However, you can change the metaspace size when installing Mule Runtime engine (Mule). 
+//TODO: WHEN INSTALLING MULE FOR THE FIRST TIME ONLY, OR WHAT ABOUT WHEN UPDATING?
+
+If you are using the cloud IDE, be aware of the memory available to the container before changing this value.
+//TODO: HOW WOULD THEY KNOW 
+
+[[setting-mule-home]]
+== Mule › Runtime: Mule Home
+
+When you install or update Anypoint Extension Pack version, the IDE extracts the latest supported Mule version to this directory. Typically, there is no need to change the default directory. 
+
+
+
+
+[[setting-runtime-dir]]
+== Mule › Runtime: Mule Runtimes Directory
+
+Mule runtime engine (Mule) is part of the Anypoint Extension Pack.  You can use this setting to change the directory into which the installation or update process downloads Mule.
+
+For example, the default directory in the desktop IDE on a Mac is similar to `/Users/me/muleRuntimes`. In the cloud IDE, the default is similar to `/home/me/muleRuntimes`.
+
+In Windows, on the desktop IDE, avoid potential issues with long paths by using the default path or another directory that is close to the root directory. 
+
+[[setting-region]]
+== Mule: Control Plane
+
+Select a control plane for your desktop IDE:
+
+* *US Cloud* (default)
+* *EU Cloud*
+
+In the cloud IDE, this setting is not configurable because it is set automatically based on the region where your Anypoint Platform account resides. 
+
+For more information, see xref:index.adoc#us-eu-clouds[US and EU Cloud Hosts].
+
+[[setting-telemetry]]
+==  Mule > Telemetry
+
+You can enable or disable telemetry services in the US cloud. By default, this setting is disabled and not used for the EU cloud. When telemetry services are enabled, the IDE sends anonymous usage data to the MuleSoft team. The data helps identify important usage trends.
+
+[[setting-logging]]
+==  Mule > Logging: Level
+
+Set the verbosity of logs that appear in the Anypoint Code Builder extension and Mule DX Server logs. Verbosity options are progressive:
+
+* Off: No issues 
+* Fatal: Fatal issues only
+* Error: Fatal and Error issues 
+* Warn (default): Fatal, Error, and Warn issues  
+* Info: Fatal, Error, Warn, and Info issues 
+* Debug: Fatal, Error, Warn, Info, and Debug issues
+* Trace: Fatal, Error, Warn, Info, Debug, and Trace issues
+

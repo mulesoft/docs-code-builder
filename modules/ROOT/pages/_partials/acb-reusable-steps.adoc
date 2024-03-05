@@ -278,6 +278,21 @@ Anypoint Code Builder does not support scaffolding API specs that reference OAS 
 //
 
 //
+// tag::open-mule-settings[]
+. If an API specification is open in the Explorer panel of the IDE, close the project to avoid a synchronization error when you switch clouds. 
+
+* In the desktop IDE, click *File* > *Close Folder*.
+* In the cloud IDE, click the image:anypoint-code-builder::icon-menu.png["",18,18] (menu) icon, and select *File* > *Close Folder*.
+
+. Open the Settings tab from the activity bar in the desktop IDE:
++
+image:anypoint-code-builder::acb-activity-bar-select-cloud.png["Selecting the EU cloud from the desktop IDE"]
+
+* From the Anypoint Code Builder panel, click the *Open ACB Settings* (gear) icon.
+* From the activity bar, click the *Manage* (gear) icon, select *Settings*, and search for `mule` in the *Settings* tab.
+// end::open-mule-settings[]
+
+//
 // tag::scm-intro-best-practice[]
 Use source control management (SCM) to store and share your design, integration, and implementation projects. 
 // end::scm-intro-best-practice[]
@@ -321,7 +336,6 @@ Staged files move from the *Changes* area in the Source Control panel to the *St
 image::anypoint-code-builder::start-scm-repo-commit-staged.png["Commit message for staged changes"]
 // end::scm-commit-message-substep[]
 //
-
 
 //
 // tag::import-api-exchange[]
