@@ -1,0 +1,162 @@
+= Testing Projects with MUnit
+:page-aliases: 
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+//QUESTION: suites and tests for all?
+Create, modify, run, and import MUnit suites and tests for your integrations and implementations in Anypoint Code Builder. MUnit suites contain a set of MUnit tests. 
+
+//according to video 
+//https://drive.google.com/file/d/10_yvFWutcG3i3509Z29SPf0RlSb1m71Q/view
+//version: MUnit 3.2.0
+
+//QUESTION: do they have to set up the pom.xml manually? 
+// pom.xml
+
+//
+//TBD: TAILORED INTRO FOR ACB NEEDED? From MUnit doc.
+//MUnit is a Mule application testing framework that allows you to easily build 
+//automated tests for your integrations and APIs. It provides a full suite of 
+//integration and unit test capabilities, and is fully integrated with Maven and //Surefire for integration with your continuous deployment environment.
+//See https://docs.mulesoft.com/munit/latest/
+//
+
+Provided in the Anypoint Extension Pack, Anypoint Code Builder - MUnit Extension  supports this functionality. 
+
+For more information about MUnit, see xref:munit::index.adoc[].
+
+//W-14352787: dev work
+== Create an MUnit Test
+
+Use auto-complete from the test suite to create a test.
+
+//TODO: CAN YOU CREATE A SUITE THIS WAY, TOO? 
+
+
+//TODO: WHERE'S THE XML FOR CREATING A TEST OR TEST SUITE?
+
+//W-14352734: dev work
+== View the XML for MUnit Tests and Suites
+
+Find MUnit suites and tests in Anypoint Code Builder:
+
+* MUnit suite files in your project are located in the Explorer within `src/test/munit`.
++
+TODO: image::TODO.png["TODO]
+
+* MUnit suite and test files are located in the Testing panel. 
++
+TODO: image::TODO.png["TODO]
+
+* 
+
+//W-14352842: dev work
+== Run an MUnit Test or Test Suite
+
+Run tests using any of these options:
+
+* <<run-test-panel>>
+* <<run-test-explorer>>
+* <<run-test-debugger>>
+
+[[run-test-panel]]
+=== Run Tests from the Testing Panel
+
+Run all tests, all tests in a suite, or a single test from the Testing panel. The Testing panel lists all MUnit tests in the project.
+
+To run all tests:
+
+. Open the Testing panel from the activity bar.
+. Run tests:
+
+* To run all tests in all suites, click the Run button for all tests. 
++
+TODO: image::TODO.png["TODO]
+* To run all tests in a single suite, click the suite's Run button:
++
+TODO: image::TODO.png["TODO]
+* To run a single test, use either of these options: 
+
+** Click the test's Run button in the Testing panel:
++
+TODO: image::TODO.png["TODO]
+** Click the test's Run button in the test configuration XML:
++
+TODO: image::TODO.png["TODO]
+
+** Click the test's 
+
+. Review the results in the .
++
+TODO: include or link to section on review and fix iss
+. Fix any errors identified by the tests.
+. Rerun any tests that identified errors. 
+
+
+[[run-test-explorer]]
+=== Run All Tests in a Suite from the Explorer
+
+Run all tests from an MUnit suite file. 
+
+. From your project, open the Explorer.
+. Navigate to the MUnit XML file for the test suite.
+. Right-click the MUnit XML file for the test suite, and click *Run MUnit Test*. 
+. Review the results.
+. Fix any errors.
+. Rerun tests with errors. 
+ 
+ [[run-test-debugger]]
+ == Run Tests with Breakpoints
+
+The MUnit configuration XML and project configuration XML accept breakpoints. 
+
+. From your project, open the Run and Debug panel.
++
+TODO: SHOW ME HOW
+. Add breakpoints to the XML. 
+.
+. Navigate to the XML file for the test suite.
+. Right-click the XML file for the test suite, can click  *Run MUnit Test*. 
+. Review the results.
+. Fix any errors.
+. Rerun tests with errors. 
+
+ 
+ == Run Tests with a Launch Configuration
+ 
+. From your project, open the Run and Debug panel.
++
+TODO: SHOW ME HOW
+// TODO: IS THIS NEEDED?
+//. From the *Run and Debug* menu, select *MUnit Debug Tests*. 
+//+
+//TODO: SHOW ME HOW
+. Click the Gear icon to open the `launch.json` file.
+. In `launch.json`, open the auto-complete menu, and *Munit Debug Launch* 
+// TODO: THERE'S ALSO *Munit Run Launch*. Need to think about that for doc. 
+* *Munit Run Launch* TODO: DESCRIBE
+
+. In the Run and Debug panel, select *Munit Debug Tests* 
+//TODO: VERIFY THAT THIS IS ALWAYS WHAT TO SELECT 
+// There's also a the normal *Debug Mule Application*, 
+// but not clear that is for MUnit. 
+  
+ 
+//W-14352870: dev work
+== View Results of a Test or Test Suite
+
+//
+// From Epic: View the test results of the execution
+////
+As a user, I need to see test execution results in the UI:
+Test result: Test Passed (if 0 failures) or Test Failed
+Test failures: num
+Test errors: num
+This should be displayed under Run and Debug tab > MUnit
+As a user, I need to see these results in multiple areas of the Console section:
+Problems tab
+Debug Console
+Output section
+Terminal
+////
