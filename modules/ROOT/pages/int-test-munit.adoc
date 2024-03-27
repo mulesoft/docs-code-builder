@@ -9,7 +9,7 @@ Create, modify, run, and import MUnit suites and tests for your integrations and
 
 //according to video 
 //https://drive.google.com/file/d/10_yvFWutcG3i3509Z29SPf0RlSb1m71Q/view
-//version: MUnit 3.2.0
+//version: MUnit 3.2.0 and higher
 
 //QUESTION: do they have to set up the pom.xml manually? 
 // pom.xml
@@ -22,7 +22,7 @@ Create, modify, run, and import MUnit suites and tests for your integrations and
 //See https://docs.mulesoft.com/munit/latest/
 //
 
-Provided in the Anypoint Extension Pack, Anypoint Code Builder - MUnit Extension  supports this functionality. 
+Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, supports this functionality. 
 
 For more information about MUnit, see xref:munit::index.adoc[].
 
@@ -57,8 +57,11 @@ TODO: image::TODO.png["TODO]
 Run tests using any of these options:
 
 * <<run-test-panel>>
+* <<run-test-xml>>
 * <<run-test-explorer>>
 * <<run-test-debugger>>
+
+While tests run, the Terminal tab in the output panel displays the progress of the each test's execution, and the Testing 
 
 [[run-test-panel]]
 === Run Tests from the Testing Panel
@@ -93,6 +96,9 @@ TODO: include or link to section on review and fix iss
 . Fix any errors identified by the tests.
 . Rerun any tests that identified errors. 
 
+
+[[run-test-panel]]
+=== Run Tests from the MUnit Configuration XML File
 
 [[run-test-explorer]]
 === Run All Tests in a Suite from the Explorer
@@ -145,6 +151,34 @@ TODO: SHOW ME HOW
  
 //W-14352870: dev work
 == View Results of a Test or Test Suite
+
+View test results and address issues before re-running your tests. 
+
+//TODO: VERIFY TERM "output panel" since there is an Output tab, so term seems partial
+While tests run, the Terminal tab in the output panel displays the progress of the each test's execution. 
+
+After running, the Test Results tab in the output panel provides the following information:
+
+* Status of the tests that run:
+** ERROR
+** FAILURE
+** IGNORED
+** SUCCESS
+
+* Summary
+//TODO: VERIFY ALL
+** `Total number of tests to execute`: The number of tests in any suites that you selected to run. For example, if you run a single suite with 7 tests, the total is 7. If you run 3 suites with 4 tests each, the number is 12.
+** `Total number of tests to execute`: The number of tests that completed their execution. Tests that fail to finish running are omitted from this total. For example, if a test throws an uncaught exception, then the execution terminates before the test completes. 
+** For tests that complete execution, results include the following totals:
+*** `Total number of tests passed`: 
++
+No further action is required.
+*** `Total number of tests failed with errors`: 
++
+To address the underlying errors, fix your XML, and rerun these tests.
+*** `Total number of tests skipped`: You can opt to skip tests manually. 
+//+
+//See TODO:
 
 //
 // From Epic: View the test results of the execution
