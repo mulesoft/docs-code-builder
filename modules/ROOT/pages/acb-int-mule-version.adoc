@@ -1,0 +1,154 @@
+= Set Mule Runtime and JDK Versions
+
+Set default versions for all of your implementation and integration projects, or change the version to use for a specific project:
+
+* Update to a more current version.
+* Switch to a supported version, for example, for a project that you import into Anypoint Code Builder that uses an unsupported version.
+* Add a version of Mule runtime (Mule) or the JDK that is missing from your project.
+* Select versions of Mule and the JDK that are compatible with each other.
+
+For more information about Mule and the JDK, see 
+
+[[set-default]]
+== Set the Default Mule and JDK Versions
+
+Set defaults from the *Settings* tab in Anypoint Code Builder. Default versions apply automatically to new projects that you create in Anypoint Code Builder. 
+
+. Open the *Settings* tab.
++
+TODO: Show me how
++
+TODO
+. Search for *Mule > Application: Default Mule Runtime & JDK*.
+. Set default versions:
++
+TODO: DETAILS
+
+TODO: CONVERT TO INCLUDE
+
+//See work with Ari in GUS https://gus.lightning.force.com/lightning/r/ADM_Work__c/a07EE00001nC8VDYA0/view
+
+Settings page: 
+
+
+*Edit defaults through command palette*
+
+//Table in UI 
+
+Type a value for the Mule runtime or JDK version. The UI will validate the version you enter. 
+
+You can also go to `settings.json` file to enter whatever you want for these values. 
+
+
+
+
+////
+Notes on use cases:
+
+* Created in another version or imported from Studio
+* Has now incompatible runtime version
+* Supported but not installed runtime
+* Happy Path: no notification
+
+an imported or older Mule project folder or JAR file
+
+////
+
+In canvas:
+Mule runtime or JDK is missing:
+Set a Mule runtime and JDK for your project
+*Set Now*
+
+Notification to set the version also pops up: 
+"The project's Mule runtime and JDK version are not set.""
+*Set versions* button or *Dismiss* the notification.
+
+TODO: You can also see in the `pom.xml` that they are missing from the `<properties/>` element.
+When present, they look like this:
+----
+<properties>
+  ...
+  <mule.runtime.version>VERSIONHERE</mule.runtime.version>
+  <mule.jdk.version>VERSIONHERE</mule.jdk.version>
+</version>
+----
+older example: 4.4.0-20231211 Mule version and 11.0.19_7 JDK
+
+== TODO: scenario 1: missing Runtime/JDK
+
+TODO: convert to real steps: When you click *Set Versions* only (see next scenario for *Set Now*)
+. Click *Set Versions* buttons.
+. In the *Get Runtime* field that opens, select the Mule version for the project.
+. In the *Get JDK* field, select a JDK for the runtime.
+. If prompted, log in to Anypoint Platform.
++
+Required for downloading the runtime and JDK when they are not present.
+
+
+== TODO: Scenario 2: Runtime set but not compatible
+
+Maybe this is about setting the versions from *Project Properties*. 
+
+Notification: The project's Mule runtime version is no longer supported
+Button: *Change Version*
+
+Same message in canvas:
+Mule runtime or JDK is missing
+Set a Mule runtime and JDK for your project
+Button: *Set Now*
+
+*Set Now* redirects to *Project Properties*, where you can select the Mule and JDK versions to use.
+That page contains *Mule > Application: Default Mule Runtime & JDK*
+
+You can set it from the properties page, where you type the runtime and JDK version into fields that get validated.
+
+There also seems to be a way to set it in a config file (name TODO)
+
+You can also *Edit defaults through command palette*
+
+TODO: see 
+
+== TODO: Scenario 3: Runtime set but not installed
+
+You see the settings in the POM. 
+
+Notification: 
+Mule runtime 4.VERSION_HERE in the project is missing from your machine. 
+
+TODO: CAN WE CHANGE THIS MESSAGE?
+
+Button: *Download* or *Change version*
+
+Download triggers the download process, which can take a few minutes to complete. It will download the version that's set in the project's POM.
+
+== Scenario: Only the JDK is missing
+
+Same canvas.
+
+Notification:
+The project's JDK versionis not set. 
+Button: *Set version* or *Dismiss*
+
+If only one JDK is valid for the Mule runtime version, then the supported JDK downloads when you click *Set version* (TODO: CASE DIFFERENCE version/Version).
+
+
+== From 3/28 Meeting
+
+*Mule runtime or JDK is missing*
+Click *Set Now* or *Change Version* open project properties page.
+(TODO: seems like the value selection fields no longer open in the IDE -- wish it would)
+
+versions in the properties page come from the POM file
+
+Click *Apply* to download the JDK if it's not available. 
+You get notifications about *Downloading JDK XX* and 
+JDK installed. There's a notification if the version isn't downloaded, e.g., (11 (downloads upon clicking Apply))
+
+In properties page, click tab *Mule runtime & JDK*
+(unrelated note: there will also be a tab for *Connector* versions coming soon)
+
+Scenario 2 with an unsupported version set:
+Get the *Set Now* page, no longer supported notification
+Opens project properties. 
+
+
