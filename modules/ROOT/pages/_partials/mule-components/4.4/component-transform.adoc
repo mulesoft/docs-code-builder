@@ -59,19 +59,19 @@ See xref:2.4@dataweave::dataweave-formats.adoc[].
 
 //end::component-xml[]
 //
-//tag::component-snippet-xml[]
+//tag::component-snippet-json[]
 
 [[snippet]]
 
-=== Snippet XML
+=== Snippet JSON
 
-Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+Snippet JSON in Anypoint Code Builder serves as a customizable template for the component. 
 
 [source,xml]
 ----
 ----
 
-//end::component-snippet-xml[]
+//end::component-snippet-json[]
 //
 //
 //
@@ -79,69 +79,69 @@ Snippet XML in Anypoint Code Builder serves as a customizable template for the c
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+Transform (`<ee:transform/>`) attributes are configurable through the UI and XML.
+
+[%header,cols="1,1,3a"]
 |===
-| `<transform/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| *Transform* (default)
 | `doc:name` 
-| Editable name for the component.
+| Editable name for the component to display in the canvas.
 
+| N/A
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| N/A
 | `mode` 
 | Specifies the DataWeave script execution mode. Accepted values: `immediate` or `deferred`. See xref:2.4@dataweave::dataweave-memory-management.adoc[DataWeave Memory Management] for additional information.
 |===
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES or ELEMENTS
 //tag::component-xml-child1[]
 
 Write a xref:2.4@dataweave::dataweave-language-introduction.adoc[DataWeave script] within a Transform component (`<ee:transform/>`) to create or transform content for any parts of the xref:4.4@mule-runtime::about-mule-event.adoc[Mule event]:
 
-* The `<ee:message/>` element within `<ee:transform/>` accepts child elements for creating or transforming a Mule message payload and attributes: 
-+
-[%header, %autowidth]
-|===
-| `<ee:message/>` Elements | Description
+`<ee:message/>` and `<ee:variables/>` are child elements of Transform (`<ee:transform/>`):
 
-| `<ee:set-payload/>` | Sets or transforms the xref:4.4@mule-runtime::about-mule-message.adoc#message-payload[Mule message payload]. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-payload/>` element is allowed. 
-| `<ee:set-attributes/>` | Sets or transforms one or more Mule message attributes. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-attributes/>` element is allowed. 
-|===
-
-* The `<ee:variables/>` element within `<ee:transform/>` accepts child elements for creating or transforming a Mule variables: 
+* `<ee:message/>` accepts child elements for creating or transforming a Mule message payload and attributes: 
 +
-[%header, cols="2,3"]
+[%header, cols="1,1,3a"]
 |===
-| `<ee:variables/>` Elements 
+| Element Name
+| Element XML
 | Description
 
-| `<ee:set-variable/>` | Sets or transforms a xref:4.4@mule-runtime::about-mule-variables.adoc[Mule variable]. This child element of `<ee:variables/>` accepts a DataWeave script. One or more `<ee:set-variable/>` elements are allowed.
+| *Set payload*
+| `<ee:set-payload/>` 
+| Sets or transforms the xref:4.4@mule-runtime::about-mule-message.adoc#message-payload[Mule message payload]. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-payload/>` element is allowed. 
+
+| *Set attribute*
+| `<ee:set-attributes/>` 
+| Sets or transforms one or more Mule message attributes. This child element of `<ee:message/>` accepts a DataWeave script. One `<ee:set-attributes/>` element is allowed. 
+|===
+
+* `<ee:variables/>` accepts child elements for creating or transforming a Mule variables: 
++
+[%header, cols="1,1,3a"]
+|===
+| Element Name
+| Element XML
+| Description
+
+| *Set Variables*
+| `<ee:set-variable/>` 
+| Sets or transforms a xref:4.4@mule-runtime::about-mule-variables.adoc[Mule variable]. This child element of `<ee:variables/>` accepts a DataWeave script. One or more `<ee:set-variable/>` elements are allowed.
 |===
 
 //end::component-xml-child1[]
 //
 //
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::component-xml-descendant1[]
-[%header, cols="1,3"]
-|===
-| Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-descendant1[]
-//
-
 
 //SECTION: EXAMPLES
 //
@@ -479,6 +479,8 @@ ERROR_HANDLING_DETAILS_HERE
 [[see-also]]
 == See Also
 
+* xref:anypoint-code-builder::acb-component-set-payload.adoc[]
+* xref:anypoint-code-builder::acb-component-set-variable.adoc[]
 * xref:2.4@dataweave::dataweave.adoc[DataWeave Language]
 * xref:2.4@dataweave::dataweave-selectors.adoc[DataWeave Selectors]
 

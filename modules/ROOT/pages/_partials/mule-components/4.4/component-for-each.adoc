@@ -60,29 +60,37 @@ This component supports the following XML structure:
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+For Each (`<foreach/>`) attributes are configurable through the UI and XML.
+
+[%header,cols="1,1,3a"]
 |===
-| `<foreach/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| *Foreach* (default)
 | `doc:name` 
-| Editable name for the component.
+| Editable name for the component to display in the canvas.
 
+| N/A
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| *Collection*
 | `collection`
 | A DataWeave expression that returns a Java collection, object, array, map, or DOM nodes. For Each automatically splits the collection into elements, such as the highest-level objects in a JSON array of objects. Each element becomes the `payload` on which a processor within For Each acts. For Each accepts collections of any supported content type, such as `application/json`, `application/java`, or `application/xml`. Defaults to `payload`.
 
-| `counterVariableName` 
-| Name of the variable that assigns a number to each iteration over a given element. The sequence starts with `1` and proceeds sequentially. Using the default name of this property (`counter`), you can access this number with `vars.counter`. For Each consumes this variable, so it is not available and returns `null` when used outside of the scope. Defaults to `counter`.
-
+| *Batch size*
 | `batchSize`
 | Number that the scope uses to partition the collected elements from the input into sub-collections of a specified size. For example, if input to For Each is an array of 199 elements and you set the batch size to 50, the scope produces three arrays of 50 elements each and one array of 49 elements. Defaults to `1`.
 
+| *Root message variable name*
 | `rootMessageVariableName` 
 | Configurable name of the variable that stores the complete, un-split Mule message from the original input to For Each. The message contains the payload and any attributes but does not contain any variables (`vars`), which are part of the Mule event that contains the Mule message. Within For Each, you can gain access to the value of the payload of the message with `vars.rootMessage.payload` and to attributes of the message with `vars.rootMessage.attributes`. For Each consumes this variable, so you can access it only from within the scope. Outside For Each, the variable returns `null`. Defaults to `rootMessage`.
 
+| *Counter variable name*
+| `counterVariableName` 
+| Name of the variable that assigns a number to each iteration over a given element. The sequence starts with `1` and proceeds sequentially. Using the default name of this property (`counter`), you can access this number with `vars.counter`. For Each consumes this variable, so it is not available and returns `null` when used outside of the scope. Defaults to `counter`.
 |===
 //end::component-xml-attributes-root[]
 //

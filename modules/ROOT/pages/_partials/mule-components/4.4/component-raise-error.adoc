@@ -52,20 +52,20 @@ This component supports the following XML structure:
 
 //end::component-xml[]
 //
-//tag::component-snippet-xml[]
+//tag::component-snippet-json[]
 
 [[snippet]]
 
-=== Snippet XML
+=== Snippet JSON
 
-Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+Snippet JSON in Anypoint Code Builder serves as a customizable template for the component. 
 
 [source,xml]
 ----
-SNIPPET_XML_HERE
+SNIPPET_JSON_HERE
 ----
 
-//end::component-snippet-xml[]
+//end::component-snippet-json[]
 //
 //
 //
@@ -73,57 +73,33 @@ SNIPPET_XML_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+Raise Error (`<raise-error/>`) attributes are configurable through the UI and XML.
+
+[%header,cols="1,1,3a"]
 |===
-| `<raise-error/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| *Raise error* (default)
 | `doc:name` 
-| Editable name for the component.
+| Editable name for the component to display in the canvas.
 
+| N/A
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| *Type*
 | `type` 
 | The type of error.
 
+| *Description*
 | `description` 
 | The error description.
 
 |===
 //end::component-xml-attributes-root[]
 //
-//
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//tag::component-xml-child1[]
-
-[%header, cols="1,3"]
-|===
-| <CHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-child1[]
-//
-//
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::component-xml-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-descendant1[]
 //
 
 
@@ -147,7 +123,7 @@ The following examples show how to raise a custom error when a user provides an 
 
 === Example: Raising an Error After an Invalid User Input 
 
-The following example of a driving lessons platform checks that the user is over 16 years old. The flow raises a custom `PRECONDITIONS:INCORRECT_AGE` error when the user enters an age lower than 16 years.
+The following example of a driving lessons platform checks that the user is over 16 years old. The flow raises a custom `PRECONDITIONS:INCORRECT_AGE` error when the user enters an age less than 16 years.
 
 [source,xml]
 ----
@@ -176,7 +152,7 @@ The following example of a driving lessons platform checks that the user is over
 ----
 [calloutlist]
 .. The Choice router components adds conditional processing to the flow.
-.. If the age parameter sent in the request is lower than 16 (`+http://localhost:8081/test?age=15+`), the Raise Error component raises the error type `PRECONDITIONS:INCORRECT_AGE` with the description `Minimum age of 16 required to drive`.
+.. If the age parameter sent in the request is less than 16 (`+http://localhost:8081/test?age=15+`), the Raise Error component raises the error type `PRECONDITIONS:INCORRECT_AGE` with the description `Minimum age of 16 required to drive`.
 .. If the age parameter is greater than 16 in the request (`+http://localhost:8081/test?age=17+`), a Logger component returns the default message `User age above 16 years. Allowed to drive`.
 .. An On-Error Continue component matches the type of the error `PRECONDITIONS:INCORRECT_AGE` and executes the Logger component inside its scope. The Logger component logs the error message `Minimum age of 16 required to drive`.
 .. If no age parameter is passed in the request (`+http://localhost:8081/test+`) the choice component automatically raises a `MULE:EXPRESSION` error when trying to evaluate the expression `#[message.attributes.queryParams.age &lt; 16]`. No age parameter was provided in the request, so its value is null. 

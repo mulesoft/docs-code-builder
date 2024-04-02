@@ -55,7 +55,7 @@ You see two different views:
 ====
 From the canvas UI::
 +
-Click *Flow name1* to open the configuration UI for the flow, change the flow name to `getFlights`, and click the check mark to set the new name.
+Click *Flow name1* to open the configuration panel for the Flow component, change the flow name to `getFlights`, and click the check mark to set the new name.
 +
 image::int-flow-name-ui.png["Change name of flow through canvas UI."]
 
@@ -131,9 +131,9 @@ In `<http:listener-config/>` and its child element `<http:listener-connection/>`
 ====
 From the canvas UI::
 +
-Click the *Listener* operation to open the configuration UI, and set the HTTP Listener attributes to the following values:
+Click the *Listener* operation to open its configuration panel, and set the HTTP Listener attributes to the following values:
 +
-image::tut-int-listener-component-ui.png["Configure the Listener operation through the configuration UI."]
+image::tut-int-listener-component-ui.png["Configure the Listener operation through its configuration panel."]
 +
 [calloutlist]
 .. Change the operation name to `HTTP /flights`.
@@ -151,16 +151,16 @@ In `<http:listener/>`, set the attributes to the values provided in the example.
 </flow>
 ----
 ====
-. From the canvas UI, add a Set Payload component below your HTTP Listener operation.
+. From the canvas UI, add a Set Payload component after your HTTP Listener operation.
 . Configure the Set Payload component attributes:
 +
 [tabs]
 ====
 From the canvas UI::
 +
-Click the Set Payload component to open the configuration UI, and set the attributes to the following values:
+Click the Set Payload component to open its configuration panel, and set the attributes to the following values:
 +
-image::tut-int-set-payload-component-ui.png["Configure the Set Payload component through the configuration UI."]
+image::tut-int-set-payload-component-ui.png["Configure the Set Payload component through its configuration panel."]
 +
 [calloutlist]
 .. Change the component name to `Set Response`.
@@ -188,7 +188,7 @@ In `<set-payload/>`, set the attributes to the values provided in the example.
 --
 ====
 [[check-connection]]
-. Above `<http:listener-config/>` in the configuration XML, click *Test Connection* to check the HTTP Listener connection. 
+. Before `<http:listener-config/>` in the configuration XML, click *Test Connection* to check the HTTP Listener connection. 
 +
 The UI provides status:
 

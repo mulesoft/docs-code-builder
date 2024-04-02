@@ -79,7 +79,7 @@ The URL to trigger this flow uses `flights` as the endpoint:
 http://localhost:8081/api/flights
 ----
 +
-The URL adds `/api` before the `/flights` endpoint to make the request through the `<http:listener/>` in the interface. Generally, a listener is located above the router, as in this example:
+The URL adds `/api` before the `/flights` endpoint to make the request through the `<http:listener/>` in the interface. Generally, a listener is located before the router, as in this example:
 +
 [source,xml]
 ----
@@ -103,7 +103,7 @@ The URL adds `/api` before the `/flights` endpoint to make the request through t
 ----
 [calloutlist]
 .. Within the listener (`<http:listener/>`), the attribute `path="/api/*"` is set automatically during the scaffolding process. 
-.. The router (`<apikit:router/>`) is located below the listener in the scaffolded interface within the configuration XML. 
+.. The router (`<apikit:router/>`) is located after the listener in the scaffolded interface within the configuration XML. 
 
 
 [[trigger-flow]]

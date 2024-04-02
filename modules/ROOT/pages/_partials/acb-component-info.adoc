@@ -1,0 +1,45 @@
+//Shared descriptions in component docs:
+//
+// tag::target-variable[]
+Name of the variable in which you want to store message data. Names can only include numbers, characters, and underscores. For example, hyphens are not allowed in the name.
+// end::target-variable[]
+//
+//
+// tag::target-variable-value[]
+Value of the data to store in the target variable. By default, the value is the message payload (payload). The field accepts any value that a variable accepts: any supported data type, DataWeave expressions, the keywords `payload`, `attributes`, and `message`, but not the keyword `vars`.
+// end::target-variable-value[]
+//
+//
+// tag::xref-target-variables[]
+See xref:mule-runtime::target-variables.adoc[] in the Mule documentation.
+// end::xref-target-variables[]
+//
+
+//
+// tag::output-encoding[]
+| *Encoding*
+| `encoding`
+// end::output-encoding[]
+//
+//
+// tag::output-encoding-description[]
+| Encoding of the payload that this component outputs.
+// end::output-encoding-description[]
+//
+//
+// tag::output-mime-type[]
+| *Mime type*
+| `mimeType`
+// end::output-mime-type[]
+//
+//
+// tag::output-mime-type-description[]
+| MIME type of the payload that this component outputs. For more information, see xref:dataweave::dataweave-formats.adoc#reader_writer_properties[Using Reader and Writer Properties].
+// end::output-mime-type-description[]
+//
+// tag::mimetype-reader-properties[]
+| *Parameters*
+| N/A
+| Appends a key-value pair for a reader property to the value of the `outputMimeType` attribute. Multiple key-value pairs are allowed. Reader properties are specific to the MIME type. For example, see the xref:dataweave::dataweave-formats-json.adoc#properties[JSON reader properties] for `application/json`. To find other reader properties, navigate to a supported format from the xref:dataweave::dataweave-formats.adoc[DataWeave format documentation], and see xref:dataweave::dataweave-formats.adoc#reader_writer_properties[Using Reader and Writer Properties]. 
+// end::mimetype-reader-properties[]
+//

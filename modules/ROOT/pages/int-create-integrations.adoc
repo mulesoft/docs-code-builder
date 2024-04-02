@@ -109,7 +109,7 @@ image::int-empty-canvas.png["Canvas showing visual representation of Mule flow a
 From the canvas UI::
 +
 --
-Click *Flow name1* to open the configuration UI for the flow, change the flow name, and click the check mark to set the new name. 
+Click *Flow name1* to open the configuration panel for the Flow component, change the flow name, and click the check mark to set the new name. 
 
 image::int-flow-name-ui.png["Change name of flow through canvas UI."]
 --
@@ -167,15 +167,20 @@ For example, add a Set Payload component to your HTTP Listener operation:
 +
 .. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* panel, search for and select *Set payload* from the *Transformer* results.
-.. In the canvas, click *Set payload* to open its configuration UI, and add a value between the square brackets that appear (`#[]`):
-
+.. In the canvas, click *Set payload* to open its configuration panel, and add a string value, DataWeave expression, Mule variable, or configuration property.
 * To add a string, type a value such as `my value`. For example:
 +
 image::int-set-payload-config-string.png["Adding string to Set Payload"]
 
-* To add a DataWeave expression or a Mule variable as a value, such as `payload`, click *fx* above the field, and provide the value, for example:
+* To add a DataWeave expression or a Mule variable as a value, such as `payload`, click *fx* (located before the field), and provide the value, for example:
 +
 image::int-set-payload-config-fx.png["Adding expression to Set Payload"]
+
+* To add a configuration property as a value, type a value such as `${secure::mysensitiveprop}`. For example:
++
+image::int-set-payload-config-property.png["Adding configuration property to Set Payload"]
++
+For more information about configuration properties, see xref:int-create-secure-configs.adoc[].
 
 Your configuration XML file now looks similar to the following:
 
@@ -199,11 +204,11 @@ image::int-canvas-error.png["Listener error in the canvas"]
 To determine where the error is, select the processor in the canvas.
 Anypoint Code Builder highlights its location within the configuration XML, and you can mouse over the issue for more information. For example:
 
-image::int-select-listener-config.png["Selecting configuration reference from configuration UI"]
+image::int-select-listener-config.png["Selecting configuration reference from configuration panel"]
 
-To fix the error, configure the attributes properly. For example, to correct the mismatched `config-ref` value for the HTTP listener, select the reference name from the drop-down menu in the component's configuration UI, or type the correct attribute value directly within the XML. 
+To fix the error, configure the attributes properly. For example, to correct the mismatched `config-ref` value for the HTTP listener, select the reference name from the drop-down menu in the component's configuration panel, or type the correct attribute value directly within the XML. 
 
-For more information about debugging, see xref:debugging-mule-apps.adoc[].
+For more information about debugging, see xref:debugging-mule-apps.adoc[]. 
 
 [[import-connectors-from-exchange]]
 == Import a Connector from Exchange
@@ -249,9 +254,9 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 MuleSoft: Import Asset from Exchange
 ----
 . Select *Connector*.
-. Search for the connector name to import, such as "MQ", for example:
+. Search for the connector name to import, such as "MQ," for example:
 +
-image::int-import-connect-exchange.png["Import MQ Connector from Exchange]
+image::int-import-connect-exchange.png["Import Anypoint MQ Connector from Exchange]
 . Select the connector.
 . At the prompt, select the version of the connector to import, such as `v4.0.3`.
 +
@@ -334,8 +339,21 @@ The process automatically appends an `xml` extension to the file name and opens 
 +
 The file's canvas UI provides the same options for building your project file that appear when you create an integration project. For an example and to get started with your configuration, see <<add-components, Add a Component to Your Project>>.
 
+[[open-component-from-xml]]
+== Open a Component in the Canvas from the XML Editor
+
+From the configuration XML, open a component and its configuration panel in the canvas. This feature is helpful, for example, if you want to configure a component from the UI, if a component is in another flow than the flow currently displayed in the canvas, or if the canvas is not open.  
+ 
+. From the configuration XML, place your cursor within the component's XML.
+. Right-click and select *Show Component in Canvas UI*. 
++
+This action displays the component in the canvas and opens its configuration panel, for example:
++
+image::acb-open-component-ui-from-xml.png["Opening a component in the canvas from the XML"]
+
 
 == See Also
 
+* xref:acb-reference.adoc[]
 * xref:int-work-with-code-snippets.adoc[]
 * xref:debugging-mule-apps.adoc[]
