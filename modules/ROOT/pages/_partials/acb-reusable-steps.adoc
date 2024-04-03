@@ -340,3 +340,32 @@ MuleSoft: Import Asset from Exchange
 . Wait for the IDE to load a list of matches to the name.
 // end::import-api-exchange[]
 //
+
+//
+// tag::scaffold-spec-substeps[]
++
+.Show me how
+[%collapsible]
+====
+.. In the field that opens, provide a name for your implementation project.
+.. Navigate to a directory for your project, and click .
+.. Select a Mule runtime (Mule) version for your project.
+.. Select a supported JDK for Mule.
+.. After the scaffolding process completes, view the scaffolded interface for your project from the `src/main/mule` directory in the Explorer.
++
+If the scaffold fails, see xref:troubleshoot-implementation-errors.adoc[].
++
+You can also open your new project's `pom.xml` from the Explorer to check the Mule and JDK versions, for example:
++
+----
+<properties>
+  ...
+  <mule.runtime.version>VERSIONHERE</mule.runtime.version>
+  <mule.jdk.version>VERSIONHERE</mule.jdk.version>
+</properties>
+----
++
+The `pom.xml` is located at the root level of the project directory. 
+====
+// end::scaffold-spec-substeps[]
+//
