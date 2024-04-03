@@ -79,9 +79,13 @@ MuleSoft: Implement this Local API
 . At the prompt, click *OK*:
 +
 image::imp-local-workspace-prompt.png["Prompt: *We'll create a workspace to keep your API specification and Mule project in sync.*"]
++
+//TODO: VERIFY THE FOLLOWING: 
+After the workspace is created, Anypoint Code Builder builds and packages the API specification, and publishes it to a local Maven repository as a snapshot.
 . Navigate to a directory for your new project, and click *Save*.
 +
 Anypoint Code Builder starts creating a multi-root workspace with your API specification and Mule project. 
++
 In the multi-root workspace, you can work with both your API specification and Mule project folders at the same time.
 +
 [IMPORTANT]
@@ -89,13 +93,12 @@ In the multi-root workspace, you can work with both your API specification and M
 Do not accept the default location.
 
 Save your `.code-workspace` file in a directory outside of your project folder, _not_ within your API spec folder.
-
-After the workspace is created, Anypoint Code Builder builds and packages the API specification, and publishes it to a local Maven repository as a snapshot.
 --
-. When prompted, provide a name for your Mule project.
-. Navigate to a folder for your Mule project, and click *Select target folder*.  
-. When prompted, select a Mule runtime version for the project.
-. When prompted, select a JDK version for the project.
+. When prompted, provide project configuration details: 
+.. Provide a name for your Mule project.
+.. Navigate to a folder for your Mule project, and click *Select target folder*.  
+.. Select a Mule runtime version for the project.
+.. Select a JDK version for the project.
 +
 Anypoint Code Builder scaffolds your local API specification into a new Mule project and displays a message when complete:
 +
@@ -110,7 +113,6 @@ image::imp-local-api-workspace.png["API spec and implementation project in Explo
 .. API spec
 .. Implementation project
 --
-+
 . In the Explorer view, open the configuration XML file for your interface.
 . Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the canvas UI if it doesn't open automatically.
 +

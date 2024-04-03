@@ -357,15 +357,37 @@ If the scaffold fails, see xref:troubleshoot-implementation-errors.adoc[].
 +
 You can also open your new project's `pom.xml` from the Explorer to check the Mule and JDK versions, for example:
 +
-----
-<properties>
-  ...
-  <mule.runtime.version>VERSIONHERE</mule.runtime.version>
-  <mule.jdk.version>VERSIONHERE</mule.jdk.version>
-</properties>
-----
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag=pom-mule-jdk-ex]
 +
 The `pom.xml` is located at the root level of the project directory. 
 ====
 // end::scaffold-spec-substeps[]
+//
+
+//
+// tag::pom-mule-jdk-ex[]
+[source,XML]
+--
+<properties>
+  ...
+  <mule.runtime.version>4.4.0-20231211</mule.runtime.version>
+  <mule.jdk.version>11.0.19_7</mule.jdk.version>
+</properties>
+--
+// end::pom-mule-jdk-ex[]
+//
+
+//
+// tag::pom-api-dependency-ex[]
+[source,XML]
+--
+<dependency>
+    <groupId>e91cab06-650b-4634-9c6f-5bc4f4fc4d17</groupId>
+    <artifactId>OAS-Example</artifactId>
+    <version>1.0.1</version>
+    <classifier>oas</classifier>
+    <type>zip</type>
+</dependency>
+--
+// end::pom-api-dependency-ex[]
 //
