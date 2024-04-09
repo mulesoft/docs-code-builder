@@ -16,12 +16,10 @@ Complete xref:tut-graphql-implement-api.adoc[].
 To deploy your Mule Application locally, within the IDE, run a debug session in Anypoint Code Builder:
 
 . In Anypoint Code Builder, open the *Books Implementation* project.
-. After the application builds and deploys successfully in the IDE, click the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar, then click the *Start Debugging (F5)* icon.
+. Click the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar, then click the *Start Debugging (F5)* icon.
 //open terminal
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
 . In the terminal, open a new command prompt by clicking the plus (*+*) icon.
-+
-Alternatively, click the up arrow (*^*), and select a shell to use, such as *bash*. 
 . Run the following `curl` command from the shell's prompt to trigger the *bookById* flow:
 +
 [source,curl]
@@ -46,22 +44,22 @@ Anypoint Code Builder returns the following output in the terminal (manually ref
 +
 [source,GraphQL]
 --
-{ "data": { 
-            "bookById": { 
+{ "data": {
+            "bookById": {
                           "id":"#myID",
-                          "name":"Goodbye",
-                          "pageCount":0,
+                          "name":"This is some example data",
+                          "pageCount":100,
                           "author": {
-                                      "id":"some-id",
-                                      "firstName":"Goodbye",
-                                      "lastName":"This is some example data"
+                                      "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                      "firstName":"This is some example data",
+                                      "lastName":"Hello World!"
                                     }
                         }
           }
 }
 --
 +
-Mock data in the output comes from strings in the Set Payload component that is part of the  *Query.bookById* flow (`<flow name="Query.bookById"/>`):
+The mock data in the output comes from strings in the Set Payload component that is part of the  *Query.bookById* flow (`<flow name="Query.bookById"/>`):
 +
 [source, xml]
 ----
@@ -87,40 +85,18 @@ curl --location 'http://localhost:8081/graphql' \
 This command returns the following result (manually reformatted to enhance readability):
 +
 ----
-{ "data": { 
-            "books": [
-                       {
-                         "id":"#myID",
-                         "name":"Hello World!",
-                         "pageCount":1,
-                         "author": {
-                                     "id":"#myID",
-                                     "firstName":"This is some example data",
-                                     "lastName":"This is some example data"
-                                   }
-                       },
-                       {
+{ "data": {
+            "books": [{
                          "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
-                         "name":"Goodbye",
-                         "pageCount":0,
-                         "author": {
-                                     "id":"#myID",
-                                     "firstName":"This is some example data",
-                                     "lastName":"This is some example data"
-                                   }
-                       },
-                       { 
-                         "id":"#myID",
-                         "name":"This is some example data",
-                         "pageCount":100,
-                         "author": {
-                                     "id":"#myID",
-                                     "firstName":"This is some example data",
-                                     "lastName":"This is some example data"
-                                   }
-                       }
-                     ]
-          }
+                          "name":"This is some example data",
+                          "pageCount":1,
+                          "author": {
+                                       "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                       "firstName":"This is some example data",
+                                       "lastName":"Hello World!"
+                                    }
+                     }]
+           }
 }
 ----
 +
@@ -154,44 +130,50 @@ curl --location 'http://localhost:8081/graphql' \
 This command returns the following result (manually reformatted to enhance readability):
 +
 ----
-{ "data": {
-            "bestsellers": {
-                             "books":   [
-                                          { 
+{ "data" : {
+             "bestsellers": { 
+                              "books": [{ 
+                                          "id":"#myID",
+                                          "name":"This is some example data",
+                                          "pageCount":1,
+                                          "author": { 
+                                                      "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                                      "firstName":"This is some example data",
+                                                      "lastName":"Hello World!"
+                                                    }
+                                        },
+                                        {
+                                          "id":"some-id",
+                                          "name":"Goodbye",
+                                          "pageCount":100,
+                                          "author": { 
+                                                      "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                                      "firstName":"This is some example data",
+                                                      "lastName":"Hello World!"
+                                                    }
+                                        },
+                                        {
+                                          "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                          "name":"Hello World!",
+                                          "pageCount":-10,
+                                          "author": { 
+                                                      "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                                      "firstName":"This is some example data",
+                                                      "lastName":"Hello World!"
+                                                    }
+                                        }],
+                              "authors": [{
                                             "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
-                                            "name":"Goodbye",
-                                            "pageCount":-1,
-                                            "author": {
-                                                        "id":"#myID",
-                                                        "firstName":"This is some example data",
-                                                        "lastName":"This is some example data"
-                                                       }
+                                            "firstName":"Hello World!",
+                                            "lastName":"Hello World!"
                                           },
                                           { 
-                                            "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
-                                            "name":"Goodbye",
-                                            "pageCount":1,
-                                            "author": {
-                                                        "id":"#myID",
-                                                        "firstName":"This is some example data",
-                                                        "lastName":"This is some example data"
-                                                      }
-                                          }
-                                        ],
-                             "authors": [
-                                          { 
-                                             "id":"#myID",
-                                             "firstName":"Goodbye",
-                                             "lastName":"Goodbye"
-                                          },
-                                          {
-                                             "id":"#myID",
-                                             "firstName":"Hello World!",
-                                             "lastName":"This is some example data"
-                                          }
-                                        ]
-                           }
-          }
+                                            "id":"#myID",
+                                            "firstName":"Goodbye",
+                                            "lastName":"Goodbye"
+                                          }]
+                            }
+           }
 }
 ----
 +

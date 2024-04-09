@@ -20,7 +20,7 @@ See xref:start-acb.adoc[] for more information.
 
 To implement a GraphQL API, the API must first be manually published to Exchange:
 
-. Navigate to Anypoint Exchange.
+. Navigate to Anypoint Exchange, and sign in.
 +
 --
 // Pointer to Exchange URLs
@@ -114,6 +114,7 @@ type Bestsellers {
 --
 |===
 +
-Anypoint Code Builder also creates a separate `<graphql-router:data-fetcher>` trigger for each of your Mule flows. See xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
+Each flow contains configurations for the elements `<graphqlrouter:data-fetcher/>`, `<set-payload/>`, and ` <graphqlrouter:serialize/>`.
+The `<graphql-router:data-fetcher>` element serves as a trigger for a flow. See xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
 
 . Proceed to xref:tut-graphql-test-first-implementation.adoc[] to run your application in Anypoint Code Builder and post GraphQL queries to your endpoint.
