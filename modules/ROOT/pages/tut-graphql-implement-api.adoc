@@ -15,6 +15,39 @@ Complete these procedures:
 * Set up your MuleSoft environment. 
 See xref:start-acb.adoc[] for more information.
 * Download the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
++
+.Alternatively, create a file named `books-api.graphql` with the following content:
++
+[source, graphql]
+--
+schema {
+  query: Query
+}
+
+type Query {
+  bookById(id: ID): Book
+  books: [Book]
+  bestsellers: Bestsellers
+}
+
+type Book {
+  id: ID!
+  name: String
+  pageCount: Int
+  author: Author
+}
+
+type Author {
+  id: ID!
+  firstName: String
+  lastName: String
+}
+
+type Bestsellers {
+  books: [Book]
+  authors: [Author]
+}
+--
 
 == Publish the GraphQL API to Exchange
 
@@ -115,6 +148,6 @@ type Bestsellers {
 |===
 +
 Each flow contains configurations for the elements `<graphqlrouter:data-fetcher/>`, `<set-payload/>`, and ` <graphqlrouter:serialize/>`.
-The `<graphql-router:data-fetcher>` element serves as a trigger for a flow. See xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
+The `<graphql-router:data-fetcher>` element serves as a trigger for af flow. See xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
 
 . Proceed to xref:tut-graphql-test-first-implementation.adoc[] to run your application in Anypoint Code Builder and post GraphQL queries to your endpoint.
