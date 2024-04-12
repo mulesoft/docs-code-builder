@@ -41,10 +41,10 @@ Use the expression builder features:
 . Create an integration project.
 +
 For guidance, see xref:int-create-integrations.adoc#create-integration-project[Create an Integration Project].
-. From the canvas, add a component, such as Set Payload, that contains a field that accepts a DataWeave expression.
+. From the canvas, add a Set Payload component.
 +
-See <<xml-example, the configuration XML example>>. 
-. Click an *fx* field to open the DataWeave expression builder.
+Set Payload is convenient for demonstrating the expression builder functionality in this procedure. The expression builder is available to other component that provide an *fx* field to use for DataWeave expressions. 
+. Click within the *Value* field (an *fx* field) of Set Payload to open the DataWeave expression builder.
 . Notice the *Data*, *Functions*, and *Preview* tabs in the expression builder.
 +
 TODO: ADD IMAGE
@@ -54,7 +54,8 @@ Notice the list of DataWeave modules, which includes Core and all other DataWeav
 +
 TODO: ADD IMAGE
 +
-If you want to use a function in the Core module, you can also *fx* field by TODO_TODO_DOING_WHAT.  
+//TODO: VERIFY
+If you want to use a function in the Core module only, you can press Ctrl+Space (Mac) or Cmd+Space (Windows) in an empty *fx* field. If a value is already in the field, the list contains other context-specific data, such as a `default` setting or fields in the payload, for example. 
 . In the *Functions* tab, navigate to *Core* -> *++* (for concatenation).
 .. Notice that you can hover over the function to get a short description of the function. 
 +
@@ -68,44 +69,80 @@ TODO: ADD IMAGE
 --
 `"hello" ++ " world"`
 --
-. In the expression builder, click *Preview* to view the output of the expression, `"hello world"`.
+. In the expression builder, click *Preview* to view the output of the expression: `"hello world"`
 +
 TODO: ADD IMAGE
 . In the expression builder, click the *Data* field. 
 +
 TODO: SHOW WHAT IT SHOWS
-. Replace the *Value* `"hello" ++ " world"` with the following complex DataWeave object:
+. Replace the *Value* `"hello" ++ " world"` with the following complex JSON object:
 +
+[source,json]
 --
-{ city : { 
-           name : 'San Francisco',
-           address : [{
-                         'streetNumber': 10, 
-                         'streetName': 'Fremont Ave'
+{ "city" : { 
+           "name" : "San Francisco",
+           "address" : [{
+                         "streetNumber": 10, 
+                         "streetName": "Fremont Ave"
                       }, 
                       {
-                         'streetNumber': 7, 
-                         'streetName': 'Decoto Way'
+                         "streetNumber": 7, 
+                         "streetName": "Decoto Way"
                      }]
          }, 
-         'cityURL': 'sf.org', 
-         phonenumber : [
+         "cityURL": "sf.org", 
+         "phonenumber" : [
                          [432-332-1112, 333-443-1325], 
                          [333-443-4421, 333-443-2211]
                        ], 
-                       population: 100300, 
-                       'popularSchools': ['St Charles', 'JFK School']
+                       "population": 100300, 
+                       "popularSchools": ["St Charles", "JFK School"]
 }
 --
 . Click the *Data* field to see the structure of is object and the preconfigured values. 
++
+TODO: ADD IMAGE
 . In the canvas, add a Set Variable component with the value `payload`.
 +
 TODO: ADD IMAGE
-.. In the expression builder for the *Value* field of Set Variable, click the *Data* tab to view payload data from Set Payload. 
-.. In the *Value* field, use a DataWeave selector to get the city name (San Francisco) from the payload object. 
+.. Click the *Value* field of Set Variable to open the expression builder.
+.. Click the *Data* tab of the *Value* field to display the structure of the payload.
 +
-TODO: ADD IMAGE USING DOT SELECTOR TO GET THE VALUE. 
+Notice that the structure matches the structure of set by Set Payload, so you do not need to run the app to see the propagation of the payload structure to Set Variable. 
+.. In the *Value* field of Set Variable, add a dot (`.`) after `payload` and click TODO_TO_SEE_FIELD_IN_DROPDOWN.
++
+TODO: ADD IMAGE
+.. From the field menu, select *address* to form `payload.address`.
+.. Click the *Preview* field for this value to view the the output.
++
+--
+
+--
+
+use a single-value DataWeave selector to return `address` data by adding a `.` after
++
+--
+payload.address
+--
+.
+
+ city name (San Francisco) from the payload object. 
++
+TODO: ADD IMAGE USING DOT SELECTOR TO GET THE VALUE.
++
+The expression in the *Value* field is `payload.city.name`. 
+.. Click the *Preview* field to display the output of your selection.
++
+--
+-- 
+.. Change the expression in the *Value* field to `payload.city.address`.
 .. Click the *Preview* field to display the output of your selection. 
++
+--
+-- 
+ 
+.. In the *Value* field of Set Variable, use a single-value DataWeave selector to return the city name (San Francisco) from the payload object. 
+
 
 
 [[sample-data]]
