@@ -5,20 +5,46 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 When Anypoint Code Builder cannot process a value, the IDE provides a visual indicator that there is an issue with the value. Issues include:
 
-* `Unable to find sample input`, for example, for a Mule variable, such as `payload` or `attributes`. In this case, the IDE places a wavy blue line under the value in the configuration XML file. 
-+
+* <<sample-input, Unable to find sample input>>
+* <<resolve-reference, Unable to resolve reference>>
+* <<expects-y, Expects _x_ but got _y_`>>
+* <<invalid-input, Invalid input>>
+
+[[sample-input]]
+== Unable to Find Sample Input
+
+The DataWeave error `Unable to find sample input` applies to a Mule variable, such as `payload` or `attributes`. In this case, the IDE places a wavy blue line under the value in the configuration XML file. 
+
+image::dw-issue-sample-data.png[]
+
 If your application is not running, the IDE cannot provide any information about Mule variables unless you provide sample data. 
-Use xref:int-configure-dw-expressions.adoc#quick-fix-data[Quick Fix*] to provide sample data in the format and data structure that you expect to be present when the application runs.
+Use xref:int-configure-dw-expressions.adoc#quick-fix-data[Quick Fix] to provide sample data in the format and data structure that you expect to be present when the application runs.
 
-* `Unable to resolve reference`, for example, for a sequence of characters like `afkdldjf` that is not recognized.
-+
-Either fix the value or use <<quick-fix-variable, *Quick Fix*>> to convert the character sequence into a DataWeave variable.
+For more information about Mule variables, see xref:dataweave::dataweave-variables-context.adoc[Predefined Mule variables].
 
-* `Expects _x_ but got _y_`, for example, `Expects 1 argument but got 0` in a case such as `round()`, which is missing an argument. Similar errors indicate that an argument is of the wrong data type or that a function is otherwise malformed and requires correction.
-+
-Read the error message to determine what part of the expression to fix.
+[[resolve-reference]]
+== Unable to Resolve Reference
 
-* `Invalid input`, for example, for characters such as `?` that are not valid.
-+
+The error `Unable to resolve reference` is typically for a sequence of characters like `afkdldjf` that is not recognized.
+
+image::dw-issue-reference-resolution.png[]
+
+Either fix the value or use xref:int-configure-dw-expressions.adoc#quick-fix-variable[Quick Fix] to convert the character sequence into a DataWeave variable. For information about DataWeave variables, see xref:dataweave::dataweave-variables.adoc[].
+
+[[expects-y]]
+== Expects _x_ but Got _y_
+
+The error similar to `Expects _x_ but got _y_` typically indicates that that something is wrong with the provided function. For example, `Expects 1 argument but got 0` occurs for `round()` because the function is missing an argument, in this case, a number to round. An example of a fix is `round(1.65)`. Similar errors indicate that an argument is of the wrong data type or that a function is otherwise malformed and requires correction.
+
+.Example
+image::dw-issue-expects-y.png[]
+
+Read the error message to determine what part of the expression to fix, and review the function description after the error message to learn more about the function. See xref:dataweave::dw-functions.adoc#dw_modules[] for additional DataWeave function documentation.
+
+[[invalid-input]]
+== Invalid Input
+
+The error `Invalid input` typically occurs when special characters, such as `?`, appear in a DataWeave expression and are not escaped.
+
 //TODO: VERIFY THAT THIS COVERS IT:
 For more information, see xref:dataweave::dataweave-language-introduction.adoc#valid-identifiers[Rules for Declaring Valid Identifiers] and xref:dataweave::dataweave-language-introduction.adoc#escape-special-characters[Escape Special Characters].
