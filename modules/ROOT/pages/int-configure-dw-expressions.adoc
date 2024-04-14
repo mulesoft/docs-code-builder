@@ -155,24 +155,36 @@ TODO_TODO
 
 Add sample data to your configurations so that you can test and preview  DataWeave expressions in your components locally, without running your application to retrieve Mule event data from an external source. 
 
-When Anypoint Code Builder does not recognize a value, the IDE provides a visual indicator that there is an issue with the value. Issues include:
+You can provide sample data for Mule variables, such as `payload` and for a valid sequence of characters. 
 
-* `Unable to find sample input`, for example, for a Mule variable, such as `payload`. 
-+
-For this issue, you can use the *Quick Fix* to provide sample data for the variable. 
-* `Unable to resolve reference`, for example, for a sequence of characters like `afkdldjf` that is not recognized.
-+
-For this issue, you can use the *Quick Fix* that provide a DataWeave script that converts the characters into a DataWeave variable.
-* `Expects _x_ but got _y_`, for example, `Expects 1 argument but got 0` in a case such as `round()`, which is missing an argument. Similar errors indicate that an argument is of the wrong data type or that a function is otherwise malformed and requires correction.
-* `Invalid input`, for example, for characters such as `?` that are not valid.
-+
-TODO: NEED REF OR RULE FOR VALID OR INVALID CHARACTERS
+[[quick-fix-data]]
+=== 
 
 Use Quick Fix to provide sample data for a Mule variable:
 
-. TODO
+. Hover over the value for which you want to provide sample data. For example:
++
+TODO: ADD IMAGE
+. Click *Quick Fix* to open the Quick Fix menu.
+. Select *Create sample data for _your-value_*, such as *Create sample data for payload*.
+. In the menu that opens, select a format for the sample data, such as JSON. 
++
+TODO: ADD IMAGE
++
+The IDE creates a file for your sample data. For example:
++
+TODO: ADD IMAGE
+. Modify the default content in the file to create your own sample data in the selected format. For example:
++
+TODO: ADD IMAGE
++
+Now hovering over the value displays the type and structure of your sample data. 
++
+TODO: ADD IMAGE 
+. 
 
-Use Quick Fix to define a DataWeave variable:
+[[quick-fix-variable]]
+=== Use Quick Fix to define a DataWeave variable:
 
 . TODO
 

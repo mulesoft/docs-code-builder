@@ -1,0 +1,24 @@
+= DataWeave Issues and Error
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+When Anypoint Code Builder cannot process a value, the IDE provides a visual indicator that there is an issue with the value. Issues include:
+
+* `Unable to find sample input`, for example, for a Mule variable, such as `payload` or `attributes`. In this case, the IDE places a wavy blue line under the value in the configuration XML file. 
++
+If your application is not running, the IDE cannot provide any information about Mule variables unless you provide sample data. 
+Use xref:int-configure-dw-expressions.adoc#quick-fix-data[Quick Fix*] to provide sample data in the format and data structure that you expect to be present when the application runs.
+
+* `Unable to resolve reference`, for example, for a sequence of characters like `afkdldjf` that is not recognized.
++
+Either fix the value or use <<quick-fix-variable, *Quick Fix*>> to convert the character sequence into a DataWeave variable.
+
+* `Expects _x_ but got _y_`, for example, `Expects 1 argument but got 0` in a case such as `round()`, which is missing an argument. Similar errors indicate that an argument is of the wrong data type or that a function is otherwise malformed and requires correction.
++
+Read the error message to determine what part of the expression to fix.
+
+* `Invalid input`, for example, for characters such as `?` that are not valid.
++
+//TODO: VERIFY THAT THIS COVERS IT:
+For more information, see xref:dataweave::dataweave-language-introduction.adoc#valid-identifiers[Rules for Declaring Valid Identifiers] and xref:dataweave::dataweave-language-introduction.adoc#escape-special-characters[Escape Special Characters].
