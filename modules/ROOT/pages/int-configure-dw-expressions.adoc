@@ -151,25 +151,26 @@ In the XML, fields that accept DataWeave expressions begin with a hash and are s
 TODO_TODO
 
 [[sample-data]]
-== Create Sample Data for your Mule Apps
+== Provide Sample Data for a DataWeave Expression
 
-Add sample data to your configurations so that you can test and preview  DataWeave expressions in your components locally, without running your application to retrieve Mule event data from an external source. 
+Add sample data for Mule variables, such as `payload` in *fx* fields so that you can test and preview DataWeave expressions in your components locally, without running your application to retrieve Mule event data from an external source.
 
-You can provide sample data for Mule variables, such as `payload` and for a valid sequence of characters. 
+You can create sample data in the following formats:
 
-[[quick-fix-data]]
-=== 
+* JSON
+* XML
+* CSV
 
-Use Quick Fix to provide sample data for a Mule variable:
+To create sample data for a Mule variable:
 
-. Hover over the value for which you want to provide sample data. For example:
+. Hover over the Mule variable for which you want to provide sample data. For example:
 +
 TODO: ADD IMAGE
 . Click *Quick Fix* to open the Quick Fix menu.
 . Select *Create sample data for _your-value_*, such as *Create sample data for payload*.
 . In the menu that opens, select a format for the sample data, such as JSON. 
 +
-TODO: ADD IMAGE
+images::dw-issue-sample-data-formats.png["Menu of Sample Data File Formats"]
 +
 The IDE creates a file for your sample data. For example:
 +
@@ -178,59 +179,23 @@ TODO: ADD IMAGE
 +
 TODO: ADD IMAGE
 +
-Now hovering over the value displays the type and structure of your sample data. 
+Hovering over the value now displays the type and structure of your sample data. 
 +
 TODO: ADD IMAGE 
-. 
+. Preview your sample data from the expression builder UI:
+.. From the canvas UI, click the component that contains your sample data. 
+.. Click the field of the component that contains the sample data to open the expression builder for that field. For example:
++
+TODO: ADD IMAGE 
+.. In the expression builder, click *Data* to display your sample data within the data structure. For example: 
++
+TODO: ADD IMAGE 
+.. In the expression builder, click *Preview* to display the sample data. 
++
+TODO: ADD IMAGE 
 
-[[quick-fix-variable]]
-=== Use Quick Fix to define a DataWeave variable:
+== See Also
 
-. TODO
-
-
-
-
-////
-[[xml-example]]
-The procedure that follows builds the following configuration XML:
-[%collapsible]
-====
-[source,xml]
---
-<?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-  xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-	http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd"> 
-  
-  <flow name="my-flow">
-    <set-payload value="#[{city : {name : 'San Francisco', address : [{'streetNumber': 10, 'streetName': 'Fremont Ave'}, {'streetNumber': 7, 'streetName': 'Decoto Way'}]}, 'cityURL': 'sf.org', phonenumber : [[432-332-1112, 333-443-1325], [333-443-4421, 333-443-2211]], population: 100300, 'popularSchools': ['St Charles', 'JFK School']}]" doc:name="Set payload" doc:id="jjpylf" /><!--1-->
-    <set-variable value='#[payload]' doc:name="Set Variable" doc:id="efdd3ab0-4072-4955-aef6-524bb962d3b0" variableName="action" mimeType="application/json" /><!--2-->
-    <set-variable value="#[payload.city.address.streetNumber]" variableName="$2" doc:name="Set variable" doc:id="fntjwh" />
-    <logger doc:name="Logger" doc:id="cxfbec" message="#[vars.action]" />
-    <ee:transform doc:name="Transform" doc:id="nlltzc"><!--3-->
-      <ee:message>
-        <ee:set-payload>
-          <![CDATA[
-              %dw 2.0
-              output application/json
-              ---
-              payload
-              ]]>
-        </ee:set-payload>
-      </ee:message>
-    </ee:transform>
-    <set-variable value="#[vars.action]" variableName="smoney" doc:name="Set variable" doc:id="vpqjyb" /><!--4-->
-  </flow>
-  
-</mule>
---
-. Set Payload component sets 
-. 
-. 
-. 
-====
-////
+* xref:int-debug-mule-apps.adoc[]
+* xref:troubleshoot-dataweave.adoc[]
 
