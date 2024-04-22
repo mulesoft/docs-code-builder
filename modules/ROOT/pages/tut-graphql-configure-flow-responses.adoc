@@ -11,63 +11,70 @@ Configure your GraphQL implementation to return a specific response for each flo
 
 Complete these procedures:
 
-* Set up your MuleSoft environment.
-+
-See xref:start-acb.adoc[] for more information.
-// * Download the xref:attachment$books-api.graphql[*Books API* GraphQL schema].
-* Implement the Books API GraphQL schema. 
-+
-See xref:tut-graphql-implement-api.adoc[].
-// * Install a REST client like Postman or AdvancedRestClient.
-* Test the Books API GraphQL schema. 
-+
-See xref:tut-graphql-test-first-implementation.adoc[]
+* xref:tut-graphql-implement-api.adoc[].
+* xref:tut-graphql-test-first-implementation.adoc[]
 
 == Add Logic to Your Flows
 
-. Launch Anypoint Code Builder.
-. Open the *Books Implementation* project.
-. Open the `flows.xml` file.
-. In your *Query.bookById* flow, add a new line after the `<graphql-router:data-fetcher/>` element.
-. Start typing `set` and select *Set-Payload* from the list of possible components. The *Query.bookById* flow now resembles the following:
-+
-[source,XML]
---
-<flow name="Query.bookById">
-  <graphql-router:data-fetcher xmlns:graphql-router="http://www.mulesoft.org/schema/mule/graphql-router" config-ref="api-router-config" objectTypeName="Query" fieldName="bookById"/>
-  <set-payload value="#[]" doc:name="Set payload" doc:id="mtehoh" />
-  <graphql-router:serialize xmlns:graphql-router="http://www.mulesoft.org/schema/mule/graphql-router" config-ref="api-router-config" objectTypeName="Query" fieldName="bookById"/>
-</flow>
---
-. Replace the `<set-payload>` component with the following JSON response:
+. In Anypoint Code Builder, open the *Books Implementation* project.
+. From the Explorer, open `flows.xml` from the project directory.
+. Within the `Query.bookById` flow, _replace_ the *Set Payload* component after the `<graphql-router:data-fetcher/>` element with the following Set Payload configuration:
 +
 [source,XML]
 --
 <set-payload value='{"id": 1, "name": "My Book", "pageCount": 28, "author": "author-1"}' mimeType="application/json" />
 --
-. Click *Run and Debug* in the Activity Bar, then click *Start Debugging (F5)*.
-. Using `curl`, create a `POST` request to the local address and send a `bookById` query.
 +
-See xref:tut-graphql-test-first-implementation.adoc[Test Your GraphQL Implementation] for examples.
-. Send the `curl` request.
+The XML for the `Query.bookById` flow now has this configuration:
 +
-Anypoint Code Builder returns your configured JSON response:
+[source,XML]
+--
+<flow name="Query.bookById">
+  <graphqlrouter:data-fetcher xmlns:graphqlrouter="http://www.mulesoft.org/schema/mule/graphql-router" config-ref="api-router-config" objectTypeName="Query" fieldName="bookById"/>
+  <set-payload value='{"id": 1, "name": "My Book", "pageCount": 28, "author": "author-1"}' mimeType="application/json" />
+  <graphqlrouter:serialize xmlns:graphqlrouter="http://www.mulesoft.org/schema/mule/graphql-router" config-ref="api-router-config" objectTypeName="Query" fieldName="bookById"/>
+</flow>
+--
+. Rebuild the application by clicking the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar, and then clicking the *Start Debugging (F5)* icon.
+//open terminal
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
++
+If the application is already running, click *Start New* to rerun the application in debug mode.
+. Run the following `curl` command from the command prompt:
++
+[source,curl]
+--
+curl --request POST \
+--location 'http://localhost:8081/graphql' \
+--header 'Content-Type: application/json' \
+--data '{
+    "query": "query bookById($id: ID) {bookById(id: $id){ id name pageCount author{ id firstName lastName}}}",
+    "variables": {
+        "id": 1
+    }
+}'
+--
++
+Anypoint Code Builder returns your JSON response in the terminal (manually reformatted to enhance readability):
 +
 [source,JSON]
 --
-{
-    "data": {
-        "bookById": {
-            "id": "1",
-            "name": "My Book",
-            "pageCount": 28,
-            "author": null
-        }
-    }
+{ "data": { 
+            "bookById": { 
+                          "id":"1",
+                          "name":"My Book",
+                          "pageCount":28,
+                          "author": { 
+                                      "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                      "firstName":"This is some example data",
+                                      "lastName":"Hello World!"
+                                    }
+                        }
+          }
 }
 --
 
-After testing the `bookById` endpoint, add custom responses to test the remaining flows:
+After testing the `bookById` endpoint, you can use Set Payload to add mock responses for testing the remaining flows. For example:
 
 [source,XML]
 --

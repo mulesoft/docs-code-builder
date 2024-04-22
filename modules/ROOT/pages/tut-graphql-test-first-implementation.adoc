@@ -1,35 +1,32 @@
-= Test Your GraphQL Implementation
+= Test Your GraphQL Project
 :page-deployment-options: cloud-ide, desktop-ide
 :imagesdir: ../assets/images
 :page-pagination:
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-
-With a scaffolded project, run your application locally and test the endpoints of your Mule application.
-
-Note that because the GraphQL schema does not allow examples, Anypoint Code Builder scaffolds an empty project, so in this first run, your responses are empty.
+Before making changes to your GraphQL project, run the application locally within the IDE to test the endpoints.
 
 == Before You Begin
 
-Complete these procedures: 
-
-* Set up your MuleSoft environment.
-+
-See xref:start-acb.adoc[] for more information.
-* Implement the Books API GraphQL Schema.
-+
-See xref:tut-graphql-implement-api.adoc[].
+Complete xref:tut-graphql-implement-api.adoc[].
 
 == Run Your Application
 
-To locally deploy your Mule Application, run a debug session in Anypoint Code Builder:
+To deploy your Mule Application locally, within the IDE, run a debug session in Anypoint Code Builder:
 
 . In Anypoint Code Builder, open the *Books Implementation* project.
 . Click the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar, then click the *Start Debugging (F5)* icon.
 //open terminal
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
-. In the IDE's terminal, use the `curl` command, and create a `POST` request to the local address, adding the `/graphql` path: `+http://localhost:8081/graphql+`:
+. In the terminal, open a new command prompt by clicking the plus (*+*) icon, for example:
++
+image:open-command-prompt.png["Opening command prompt from Terminal"]
++
+Alternatively, select a command shell, such as *bash*, by clicking the *v* menu (inverted caret), located beside the plus (*+*) icon, and selecting the shell to use.
++
+image:open-command-prompt-bash.png["Opening bash prompt from Terminal"]
+. Run the following `curl` command from the shell's prompt to trigger the *bookById* flow:
 +
 [source,curl]
 --
@@ -37,30 +34,79 @@ curl --request POST \
 --location 'http://localhost:8081/graphql' \
 --header 'Content-Type: application/json' \
 --data '{
-    "query": "query bookById($id: ID) {bookById(id: $id){ id name pageCount author{ id firstName lastName}}}",
-    "variables": {
-        "id": 1
-    }
+  "query": "query bookById($id: ID) {bookById(id: $id){ id name pageCount author{ id firstName lastName}}}",
+  "variables": {
+    "id": 1
+  }
 }'
 --
 +
-For more information about using the `curl` command in the terminal, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
-. Send the `curl` request.
+If you receive the error `curl: (7) Failed to connect to localhost port 8081 after 0 ms: Couldn't connect to server`, stop and rerun the application in debug mode. For guidance with stopping the application, see xref:int-debug-mule-apps.adoc[].
 +
-Anypoint Code Builder returns an empty field for the book:
+TIP: Tools such as Postman provide a way to build GraphQL queries. For example, 
+in Postman, you can place your query in the *Body* tab and find the code snippet for a `curl` request. The resulting command includes newline (`\\n`) and tab (`\\t`) characters that you can delete from the `curl` command's `--data` value. For more information, see https://learning.postman.com/docs/sending-requests/graphql/graphql-http/[Make an HTTP call with GraphQL] in the Postman documentation.
++
+Anypoint Code Builder returns the following output in the terminal (manually reformatted to enhance readability):
 +
 [source,GraphQL]
 --
-{
-    "data": {
-        "bookById": null
-    }
+{ "data": {
+            "bookById": {
+                          "id":"#myID",
+                          "name":"This is some example data",
+                          "pageCount":100,
+                          "author": {
+                                      "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                      "firstName":"This is some example data",
+                                      "lastName":"Hello World!"
+                                    }
+                        }
+          }
 }
 --
 +
-Other queries you can try for your endpoint are:
+The mock data in the output comes from strings in the Set Payload component that is part of the *Query.bookById* flow (`<flow name="Query.bookById"/>`):
 +
-* Query `books`:
+[source, xml]
+----
+<set-payload value="{&#xa;  &quot;id&quot;: &quot;some-id&quot;,&#xa;
+  &quot;name&quot;: &quot;This is some example data&quot;,&#xa;  
+  &quot;pageCount&quot;: -2,&#xa;  &quot;author&quot;: {&#xa;    &quot;id&quot;: 
+  &quot;urn:uuid:123e4567-e89b-12d3-a456-426655440000&quot;,&#xa;    
+  &quot;firstName&quot;: &quot;This is some example data&quot;,&#xa;    
+  &quot;lastName&quot;: &quot;This is some example data&quot;&#xa;  }&#xa;}" 
+  mimeType="application/json"/>
+----
+. Optionally, try queries for other endpoints:
+
+.. Query the `books` endpoint with the following `curl` command:
++
+[source, command]
+----
+curl --location 'http://localhost:8081/graphql' \
+--header 'Content-Type: application/json' \
+--data '{"query":"query books { books{  id  name  pageCount  author{ id firstName lastName  } }}","variables":{}}'
+----
++
+This command returns the following result (manually reformatted to enhance readability):
++
+----
+{ "data": {
+            "books": [{
+                         "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                          "name":"This is some example data",
+                          "pageCount":1,
+                          "author": {
+                                       "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                       "firstName":"This is some example data",
+                                       "lastName":"Hello World!"
+                                    }
+                     }]
+           }
+}
+----
++
+For your reference, the `books` endpoint has the following structure:
 +
 [source,GraphQL]
 --
@@ -77,10 +123,70 @@ query books {
 	}
 }
 --
-* Query `bestSellers`:
+
+.. Query `bestSellers`:
++
+[source, command]
+----
+curl --location 'http://localhost:8081/graphql' \
+--header 'Content-Type: application/json' \
+--data '{"query":"query bestsellers { bestsellers{  books{   id   name   pageCount   author{    id    firstName    lastName   }  }  authors{   id   firstName   lastName  } } }","variables":{}}'
+----
++
+This command returns the following result (manually reformatted to enhance readability):
++
+----
+{ "data" : {
+             "bestsellers": { 
+                              "books": [{ 
+                                          "id":"#myID",
+                                          "name":"This is some example data",
+                                          "pageCount":1,
+                                          "author": { 
+                                                      "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                                      "firstName":"This is some example data",
+                                                      "lastName":"Hello World!"
+                                                    }
+                                        },
+                                        {
+                                          "id":"some-id",
+                                          "name":"Goodbye",
+                                          "pageCount":100,
+                                          "author": { 
+                                                      "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                                      "firstName":"This is some example data",
+                                                      "lastName":"Hello World!"
+                                                    }
+                                        },
+                                        {
+                                          "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                          "name":"Hello World!",
+                                          "pageCount":-10,
+                                          "author": { 
+                                                      "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                                      "firstName":"This is some example data",
+                                                      "lastName":"Hello World!"
+                                                    }
+                                        }],
+                              "authors": [{
+                                            "id":"urn:uuid:123e4567-e89b-12d3-a456-426655440000",
+                                            "firstName":"Hello World!",
+                                            "lastName":"Hello World!"
+                                          },
+                                          { 
+                                            "id":"#myID",
+                                            "firstName":"Goodbye",
+                                            "lastName":"Goodbye"
+                                          }]
+                            }
+           }
+}
+----
++
+For your reference, the `bestsellers` endpoint has the following structure:
 +
 [source,GraphQL]
---
+----
 query bestsellers {
 	bestsellers{
 		books{
@@ -100,8 +206,5 @@ query bestsellers {
 		}
 	}
 }
---
-+
-These requests return an empty result.
-
+----
 . Proceed to xref:tut-graphql-configure-flow-responses.adoc[] to populate each flow with a custom response for each query.
