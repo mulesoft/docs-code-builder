@@ -4,32 +4,15 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//QUESTION: suites and tests for all?
-Create, modify, run MUnit suites and tests for your implementation and integration projects in Anypoint Code Builder. Import projects that contain MUnit test files. MUnit suites contain a set of MUnit tests for Mule applications. 
+Run, modify, and create MUnit suites and tests for your implementation and integration projects in Anypoint Code Builder. Import projects that contain MUnit test files. MUnit suites contain a set of MUnit tests for Mule applications. 
 
-NOTE:
-Unlike Anypoint Studio, MUnit tests in Anyoint Code Builder are configurable from the XML but not from the canvas. 
+MUnit is a MuleSoft unit testing framework for creating and running unit tests on a Mule application, as described in xref:munit::index.adoc[MUnit Overview]. 
 
-For more about MUnit, see xref:munit::index.adoc[]. 
+Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, supports MUnit functionality in Anypoint Code Builder. For  information about extensions, see xref:index.adoc#extension-pack[Anypoint Extension Pack].
+//TODO: IS MAVEN PACKAGED OR DO THEY NEED TO INSTALL IT? 
+//TODO: ADD MAVEN VERSION MINIMUM TO 
 
-//according to video 
-//https://drive.google.com/file/d/10_yvFWutcG3i3509Z29SPf0RlSb1m71Q/view
-//version: MUnit 3.2.0 and higher
-
-//QUESTION: do they have to set up the pom.xml manually? 
-// pom.xml
-
-//
-//TBD: TAILORED INTRO FOR ACB NEEDED? From MUnit doc.
-//MUnit is a Mule application testing framework that allows you to easily build 
-//automated tests for your integrations and APIs. It provides a full suite of 
-//integration and unit test capabilities, and is fully integrated with Maven and //Surefire for integration with your continuous deployment environment.
-//See https://docs.mulesoft.com/munit/latest/
-//
-
-Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, supports this functionality. 
-
-For more information about MUnit, see xref:munit::index.adoc[].
+NOTE::MUnit tests in Anypoint Code Builder are configurable from the XML but not from the canvas. 
 
 == Import a Project that Contains MUnit Tests
 
@@ -44,51 +27,21 @@ To export a project from Anypoint Studio before importing to Anypoint Code Build
 +
 See <<view-tests>>. 
 
-//W-14352787: dev work
-== Create MUnit Tests
-
-Use auto-complete from the MUnit XML to create MUnit tests. 
-
-[[create-test]]
-=== Create an MUnit Test
-
-. TODO
-. TODO
-
-[[create-suite]]
-=== Create an MUnit Suite
-
-. TODO
-. TODO
-
-TODO: CAN YOU CREATE A SUITE THIS WAY, TOO? 
-
-[[edit-test]]
-== Edit MUnit Tests 
-
-Modify MUnit tests from the test XML. For guidance with MUnit XML configurations, see xref:munit::munit-test-concept.adoc[] and xref:munit::event-processors.adoc[].
-
-. TODO
-. TODO
-
-//W-14352734: dev work
-[[view-tests]]
-== View the XML for MUnit Tests and Suites
-
-Find MUnit suites and tests in Anypoint Code Builder:
-
-* MUnit suite files in your project are located in the Explorer within `src/test/munit`.
-+
-TODO: image::TODO.png["TODO]
-
-* MUnit suite and test files are located in the Testing panel. 
-+
-TODO: image::TODO.png["TODO]
-
-* 
-
 //W-14352842: dev work
 == Run an MUnit Test or Test Suite
+
+Anypoint Code Builder provides a Testing panel from which you can run tests. In the Explorer, test suites are also located within the project directory `/src/test/munit`.
+
+[%header,cols="1a,1a"]
+|===
+| Test Suites in the Testing Panel
+image:anypoint-code-builder::icon-munit-testing.png["",18,18]
+| Test Suites in the Explorer
+image:anypoint-code-builder::icon-explorer.png["",18,18]
+
+|image::anypoint-code-builder::munit-tests-panel.png["MUnit tests in the Testing panel"]
+|image::anypoint-code-builder::munit-tests-explorer.png["MUnit tests in the Explorer"]
+|===
 
 Run tests using any of these options:
 
@@ -102,20 +55,38 @@ While tests run, the Terminal tab in the output panel displays the progress of t
 [[run-test-panel]]
 === Run Tests from the Testing Panel
 
-Run all tests, all tests in a suite, or a single test from the Testing panel. The Testing panel lists all MUnit tests in the project.
+Run all tests, all tests in a suite, or a single test from the Testing panel. The Testing panel lists all MUnit test suites in the project.
 
-To run all tests:
+To run tests:
 
-. Open the Testing panel from the activity bar.
-. Run tests:
-
-* To run all tests in all suites, click the Run button for all tests. 
+. Open a project that contains an MUnit test suite.
+. From the activity bar, click the image:anypoint-code-builder::icon-munit-testing.png["",18,18] (Testing) icon to open the Testing panel.
 +
-TODO: image::TODO.png["TODO]
-* To run all tests in a single suite, click the suite's Run button:
+If the icon is not present, try right-clicking within the activity bar and selecting *Testing* to display the icon. 
+. Run tests from the Testing panel at any of three levels:
 +
-TODO: image::TODO.png["TODO]
-* To run a single test, use either of these options: 
+image:anypoint-code-builder::munit-testing-panel.png["Testing panel"]
+
+[calloutlist]
+. All suites: Run all tests in all suites by clicking the *Run Tests* or *Debug Tests* icon.
+. Suite: Run all tests in a single suite by hovering over or clicking the suite, and then clicking the *Run Test* or *Debug Test* icon.
+. Test: Run a single test by hovering over or clicking a test in a test suite, and then clicking the *Run Test* or *Debug Test* icon. 
+
+[[open-test]]
+== Open Test XML
+
+Open the test suite XML from the Explorer or from the Testing panel.
+
+* From the Explorer:
+
+.. Click the image:anypoint-code-builder::icon-munit-testing.png["",18,18] (Testing) icon to open the Testing panel.
+.. Click or mouse over the suite or test name, and click the (Go to test) icon to open the file that contains the test. 
++
+If you click the test name, the file focuses on the test's XML configuration. 
+ 
+
+* From the Testing panel:
+
 
 ** Click the test's Run button in the Testing panel:
 +
@@ -147,23 +118,31 @@ Run all tests from an MUnit suite file.
 . Review the results.
 . Fix any errors.
 . Rerun tests with errors. 
+
  
-[[run-test-debugger]]
-== Run Tests with Breakpoints
+[[edit-test]]
+== Edit MUnit Tests 
 
-The MUnit configuration XML and project configuration XML accept breakpoints. 
+Modify MUnit tests from the test XML. For guidance with MUnit XML configurations, see xref:munit::munit-test-concept.adoc[] and xref:munit::event-processors.adoc[].
 
-. From your project, open the Run and Debug panel.
+. TODO
+. TODO
+
+//W-14352734: dev work
+[[view-tests]]
+== View the XML for MUnit Tests and Suites
+
+Find MUnit suites and tests in Anypoint Code Builder:
+
+* MUnit suite files in your project are located in the Explorer within `src/test/munit`.
 +
-TODO: SHOW ME HOW
-. Add breakpoints to the XML. 
-.
-. Navigate to the XML file for the test suite.
-. Right-click the XML file for the test suite, can click  *Run MUnit Test*. 
-. Review the results.
-. Fix any errors.
-. Rerun tests with errors. 
+TODO: image::TODO.png["TODO]
 
+* MUnit suite and test files are located in the Testing panel. 
++
+TODO: image::TODO.png["TODO]
+
+* 
  
 == Run Tests with a Launch Configuration
  
@@ -215,6 +194,41 @@ To address the underlying errors, fix your XML, and rerun these tests.
 *** `Total number of tests skipped`: You can opt to skip tests manually. 
 //+
 //See TODO:
+
+//W-14352787: dev work
+== Create MUnit Tests
+
+Use auto-complete from the MUnit XML to create MUnit tests. 
+
+[[create-test]]
+=== Create an MUnit Test
+
+. TODO
+. TODO
+
+[[run-test-debugger]]
+== Debugging: Run Tests with Breakpoints
+
+The MUnit configuration XML and project configuration XML accept breakpoints. 
+
+. From your project, open the Run and Debug panel.
++
+TODO: SHOW ME HOW
+. Add breakpoints to the XML. 
+.
+. Navigate to the XML file for the test suite.
+. Right-click the XML file for the test suite, can click  *Run MUnit Test*. 
+. Review the results.
+. Fix any errors.
+. Rerun tests with errors. 
+
+[[create-suite]]
+=== Create an MUnit Suite
+
+. TODO
+. TODO
+
+TODO: CAN YOU CREATE A SUITE THIS WAY, TOO? 
 
 //
 // From Epic: View the test results of the execution
