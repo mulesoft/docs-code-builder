@@ -383,12 +383,13 @@ MuleSoft: Import Asset from Exchange
 .. In the field that opens, provide a name for your implementation project.
 .. Navigate to a directory for your project, and click .
 .. Select a Mule runtime (Mule) version for your project.
-.. Select a supported JDK for Mule.
+.. Select a supported Java version for Mule.
 .. After the scaffolding process completes, view the scaffolded interface for your project from the `src/main/mule` directory in the Explorer.
 +
 If the scaffold fails, see xref:troubleshoot-implementation-errors.adoc[].
 +
-You can also open your new project's `pom.xml` from the Explorer to check the Mule and JDK versions, for example:
+//TODO: pom.xml or JSON file?
+You can also open your new project's `pom.xml` from the Explorer to check the Mule and Java versions, for example:
 +
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag=pom-mule-jdk-ex]
 +
@@ -427,7 +428,7 @@ The `pom.xml` is located at the root level of the project directory.
 
 //
 // tag::set-versions-manually[]
-//for Mule and Java/JDK versions in Settings tab:
+//for Mule and Java/Java versions in Settings tab:
 Although it is also possible to set the versions as values to *muleRuntimeVersion* and *jdkVersion* items directly in the *Settings* tab, you must know the major, minor, and patch numbers, and in some cases, the timestamp. It is easier to set them after clicking *Edit defaults through command palette*. 
 // end::set-versions-manually[]
 //

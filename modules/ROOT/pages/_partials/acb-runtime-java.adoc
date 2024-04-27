@@ -3,10 +3,10 @@
 //TBD IF WE USE THIS
 
 |===
-| Mule runtime version | JDK version 
-| Mule 4.6 | JDK 1.8.0, JDK 11, JDK 17
-| Mule 4.5 | JDK 1.8.0, JDK 11
-| Mule 4.4 | JDK 1.8.0, JDK 11
+| Mule runtime version | Java version 
+| Mule 4.6 | 1.8.0, 11, 17
+| Mule 4.5 | 1.8.0, 11
+| Mule 4.4 | 1.8.0, 11
 |===
 
 // end::runtime-java-versions-supported[]
@@ -15,29 +15,27 @@
 
 //
 // tag::runtime-java-download[]
-You can select any of the supported versions. When you create the project, the IDE automatically downloads selected Mule and JDK versions that append the message *(downloads upon project creation)* and saves the settings to the project's `mule-artifact.json` file.
+You can select any of the supported versions. When you create the project, the IDE automatically downloads selected Mule and Java versions that append the message *(downloads upon project creation)* and saves the settings to the project's `mule-artifact.json` file.
 include::anypoint-code-builder::partial$acb-runtime-java.adoc[tags="runtime-java-defaults"]
 // end::runtime-java-download[]
 //
 
 //
 // tag::runtime-java-defaults[]
-//TODO: 
-//      awaiting publication of setting PR as of 04/24: 
-//      https://github.com/mulesoft/docs-code-builder/pull/256/files
-To set default Mule runtime and JDK versions for the projects you create, see xref:ref-mule-settings.adoc[].
+To set default Mule runtime and Java versions for the projects you create, see xref:ref-mule-settings.adoc[].
 // end::runtime-java-defaults[]
 //
 
 //
 // tag::runtime-java-notification[]
-The IDE provides a notification if it is necessary to download the selected runtime or JDK version for the project. Mule runtime downloads to `${user.home}/runtimes`, and the JDK downloads to `${user.home}/jdk`.
+//TODO: CHECK LOCATION OF DOWNLOADS
+The IDE provides a notification if it is necessary to download the selected Mule runtime or Java version for the project. Mule runtime downloads to `${user.home}/runtimes`, and the selected Java version downloads to `${user.home}/jdk`.
 // end::runtime-java-notification[]
 //
 
 //
 // tag::runtime-java-missing[]
-If a Mule runtime or JDK configuration is missing, set the versions to use from the canvas. 
+If a Mule runtime or Java configuration is missing, set the versions to use from the canvas. 
 // end::runtime-java-missing[]
 //
 
@@ -45,7 +43,6 @@ If a Mule runtime or JDK configuration is missing, set the versions to use from 
 //
 // tag::runtime-java-version-selection[]
 . Select a Mule runtime version.
-//TODO: VERIFY *Get JDK* -- could change to Java
 . Select a Java version.
 // end::runtime-java-version-selection[]
 //
