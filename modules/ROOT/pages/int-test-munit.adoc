@@ -4,33 +4,11 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Run, modify, and create MUnit suites and tests for your implementation and integration projects in Anypoint Code Builder. Import projects that contain MUnit test files. MUnit suites contain a set of MUnit tests for Mule applications. 
+Run, modify, and create MUnit suites and tests for your implementation and integration projects in Anypoint Code Builder. Import projects that contain MUnit test files. 
 
 MUnit is a MuleSoft unit testing framework for creating and running unit tests on a Mule application, as described in xref:munit::index.adoc[MUnit Overview]. 
 
-Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, supports MUnit functionality in Anypoint Code Builder. For  information about extensions, see xref:index.adoc#extension-pack[Anypoint Extension Pack].
-//TODO: IS MAVEN PACKAGED OR DO THEY NEED TO INSTALL IT? 
-//TODO: ADD MAVEN VERSION MINIMUM TO 
-
-NOTE::MUnit tests in Anypoint Code Builder are configurable from the XML but not from the canvas. 
-
-== Import a Project that Contains MUnit Tests
-
-Mule projects created in Anypoint Studio and Anypoint Code Builder for your integrations or implementations can include MUnit tests. 
-
-. Import and open the project into Anypoint Code Builder. 
-+
-For guidance see, xref:int-import-mule-project.adoc[]. 
-+
-To export a project from Anypoint Studio before importing to Anypoint Code Builder, use one of the procedures in xref:studio:import-export-packages.adoc#export-project-studio[Export Projects From Studio]. 
-. Locate the tests in the project.
-+
-See <<view-tests>>. 
-
-[[run]]
-== Run MUnit Tests
-
-Anypoint Code Builder provides a Testing panel from which you can run tests. In the Explorer, test suites are also located within the project directory `/src/test/munit`.
+Anypoint Code Builder provides a Testing panel from which you can run tests. In the Explorer, test suites are also located within the project directory `/src/test/munit`. 
 
 [%header,cols="1a,1a"]
 |===
@@ -42,6 +20,59 @@ image:anypoint-code-builder::icon-explorer.png["",18,18]
 |image::anypoint-code-builder::munit-tests-panel.png["MUnit tests in the Testing panel"]
 |image::anypoint-code-builder::munit-tests-explorer.png["MUnit tests in the Explorer"]
 |===
+
+Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, supports MUnit functionality in Anypoint Code Builder. For  information about extensions, see xref:index.adoc#extension-pack[Anypoint Extension Pack].
+//TODO: IS MAVEN PACKAGED OR DO THEY NEED TO INSTALL IT? 
+//TODO: ADD MAVEN VERSION MINIMUM TO 
+
+== Import a Project that Contains MUnit Tests
+
+Mule projects created in Anypoint Studio and Anypoint Code Builder for your integrations or implementations can include MUnit tests.
+
+//TODO: IMPORT FROM EXCHANGE ALSO? 
+
+* To import and open the project into Anypoint Code Builder, see xref:int-import-mule-project.adoc[]. 
+
+* To export a project from Anypoint Studio before importing to Anypoint Code Builder, use one of the procedures in xref:studio:import-export-packages.adoc#export-project-studio[Export Projects From Studio]. 
+
+[[open-test]]
+== Open MUnit Tests
+
+Open the test suite XML from the Explorer or from the Testing panel.
+
+* From the Explorer:
+
+.. Click the image:anypoint-code-builder::icon-munit-testing.png["",18,18] (Testing) icon to open the Testing panel.
+.. Click or mouse over the suite or test name, and click the (Go to test) icon to open the file that contains the test. 
++
+If you click the test name, the file focuses on the test's XML configuration. 
+ 
+
+* From the Testing panel:
+
+
+** Click the test's Run button in the Testing panel:
++
+TODO: image::TODO.png["TODO]
+** Click the test's Run button in the test configuration XML:
++
+TODO: image::TODO.png["TODO]
+
+** Click the test's 
+
+. Review the results in the .
++
+TODO: include or link to section on review and fix iss
+. Fix any errors identified by the tests.
+. Rerun any tests that identified errors. 
+
+[[run]]
+== Run MUnit Tests
+
+
+When you run a test, a test build executes, and the Terminal displays the progress of the test. If all tests execute successfully the build succeeds. Otherwise, the build fails.
+
+Both the Test Results panel and the Terminal display the results of the test. The Test Results panel also provides time-stamped logs of the tests you run, unless you clear the logs.
 
 Run tests using any of these options:
 
@@ -72,41 +103,51 @@ image:anypoint-code-builder::munit-testing-panel.png["Testing panel"]
 . Suite: Run all tests in a single suite by hovering over or clicking the suite, and then clicking the *Run Test* or *Debug Test* icon.
 . Test: Run a single test by hovering over or clicking a test in a test suite, and then clicking the *Run Test* or *Debug Test* icon. 
 
-[[open-test]]
-== Open Test XML
-
-Open the test suite XML from the Explorer or from the Testing panel.
-
-* From the Explorer:
-
-.. Click the image:anypoint-code-builder::icon-munit-testing.png["",18,18] (Testing) icon to open the Testing panel.
-.. Click or mouse over the suite or test name, and click the (Go to test) icon to open the file that contains the test. 
-+
-If you click the test name, the file focuses on the test's XML configuration. 
- 
-
-* From the Testing panel:
-
-
-** Click the test's Run button in the Testing panel:
-+
-TODO: image::TODO.png["TODO]
-** Click the test's Run button in the test configuration XML:
-+
-TODO: image::TODO.png["TODO]
-
-** Click the test's 
-
-. Review the results in the .
-+
-TODO: include or link to section on review and fix iss
-. Fix any errors identified by the tests.
-. Rerun any tests that identified errors. 
-
-
-[[run-test-panel]]
+[[run-test-xml]]
 === Run Tests from the MUnit Configuration XML File
 
+Run tests from the test suite XML files by using one of the following options in the suite's right-click menu.
+
+image:munit-xml-test-options.png["Testing options from test suite XML"]
+
+To run tests from the test suite XML: 
+
+. In your project, open the Testing panel from the activity bar.
++
+See TODO_TODO for guidance.
+. Open your test suite XML file. 
++
+See TODO_TODO for guidance.
+//(xmls with <munit:config> under src/test/munit)
+. Run a single test or all tests:
+.. To run all tests in the test suite XML: 
+... Place your cursor anywhere in the XML file.
+... Right-click, and select one of the following options:
+
+* *Run Tests in Current File*
+* *Debug Tests in Current File*
+.. To run a single test in the test suite XML:
+... Place your cursor on a line that contains the XML for a test (`<munit:test/>`). 
++
+For example, on any line within XML similar to this example:
++
+[source,xml]
+----
+<munit:test name="test-02-suite1">
+  <munit:validation>
+    <munit-tools:assert-equals actual='#["c"]' expected='#["c"]' />
+  </munit:validation>
+</munit:test>
+---- 
+... Right-click, and select one of the following options:
+
+* *Run Test at Cursor*
+* *Debug Test at Cursor*
+
+
+////
+HIDING: 4/26/24
+NOT WORKING IN BUILD mule-dx-private-dist-1.1.4-pre.56-darwin-x64-munit
 [[run-test-explorer]]
 === Run All Tests in a Suite from the Explorer
 
@@ -118,8 +159,9 @@ Run all tests from an MUnit suite file.
 . Review the results.
 . Fix any errors.
 . Rerun tests with errors. 
-
+////
  
+
 [[edit-test]]
 == Edit MUnit Tests 
 
@@ -128,21 +170,6 @@ Modify MUnit tests from the test XML. For guidance with MUnit XML configurations
 . TODO
 . TODO
 
-//W-14352734: dev work
-[[view-tests]]
-== View the XML for MUnit Tests and Suites
-
-Find MUnit suites and tests in Anypoint Code Builder:
-
-* MUnit suite files in your project are located in the Explorer within `src/test/munit`.
-+
-TODO: image::TODO.png["TODO]
-
-* MUnit suite and test files are located in the Testing panel. 
-+
-TODO: image::TODO.png["TODO]
-
-* 
  
 == Run Tests with a Launch Configuration
  
@@ -162,6 +189,9 @@ TODO: SHOW ME HOW
 //TODO: VERIFY THAT THIS IS ALWAYS WHAT TO SELECT 
 // There's also a the normal *Debug Mule Application*, 
 // but not clear that is for MUnit. 
+
+
+
   
  
 //W-14352870: dev work
@@ -200,8 +230,19 @@ To address the underlying errors, fix your XML, and rerun these tests.
 
 Use auto-complete from the MUnit XML to create MUnit tests. 
 
+== Clear Test Results
+
+After testing, you can clear test results from the Testing panel and the logs if you no longer need them.
+
+* From the Testing panel, click TODO_ICON (Views and More Actions), and select *Clear All Results*.
+* From the Test Results panel, click TODO_ICON (Clear All Results) icon.  
+
+
 [[create-test]]
 === Create an MUnit Test
+
+MUnit tests in Anypoint Code Builder are configurable from the XML but not from the canvas. 
+
 
 . TODO
 . TODO
