@@ -17,7 +17,8 @@ MUnit is a MuleSoft unit testing framework for creating and running unit tests o
 
 Anypoint Code Builder provides a Testing panel from which you can run tests. In the Explorer, test suites are also located within the project directory `{munit-src}`. The IDE also provides a Testing Results panel that provides the status of tests and logs that identify the status of  tests that you run. 
 
-For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[]. xref:studio::index.adoc[Anypoint Studio] also supports MUnit testing features.
+//TODO TO SELF: TEST LINKS LOCALLY -- RESOURCES NOT BUILT ON REVIEW SITE
+For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[Anypoint Code Builder Release Notes]. xref:studio::index.adoc[Anypoint Studio] also supports MUnit testing features.
 
 ////
 [%header,cols="1a,1a"]
@@ -57,7 +58,7 @@ A typical workflow includes one or more of the following steps:
 
 . <<import-test, Importing a project that contains MUnit tests>> or <<create-tests, creating test or test suites in an existing project>>
 . <<open-test, Opening tests>>
-. <<run, Running tests>> or <<debug, debugging>>
+. <<run, Running tests>> or <<run-debug, debugging>>
 . <<fix-errors, Fixing errors>>
 
 //
@@ -342,12 +343,14 @@ The default configuration looks something like this:
 . Launcher for the MUnit debugger, named `Munit Run Tests`.
 
 You can also add the configuration by pressing Ctrl+Space in `launch.json` to open the auto-complete menu and selecting *MUnit Debug Launch*. For example:
-+
+
 image:munit-launch-config-autocomplete.png["Adding launch configuration for MUnit from the auto-complete menu"]
+
 . Save the configuration.
 . Run MUnit tests from the *MUnit Debug Tests* launch configuration:
 .. In the Run and Debug panel, select *MUnit Debug Tests* from the launch menu. For example:
-image:munit-launch-config-munit.png.png["Selecting *MUnit Debug Tests* from the launch menu"]
++
+image:munit-launch-config-munit.png["Selecting *MUnit Debug Tests* from the launch menu"]
 .. Click the image:icon-start-debug.png["",18,18] (launch) button. 
 . Verify that the MUnit tests run. 
 
