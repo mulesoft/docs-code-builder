@@ -1,5 +1,6 @@
 = Testing Projects with MUnit
 :page-aliases: 
+//local shared variables/attributes:
 :page-deployment-options: cloud-ide, desktop-ide
 :open-project: Open a project that contains an MUnit test suite.
 :check-for-tests: To check for test suites, see <<open-test>>.
@@ -7,7 +8,8 @@
 :open-xml-test-options: If you do not see these menu items, be sure to open the XML file from the image:anypoint-code-builder::icon-munit-go-to-test-gray.png["",18,18] or highlighted image:anypoint-code-builder::icon-munit-go-to-test.png["",18,18] (Go to test) icon (Go to test) icon in the Testing panel.
 :munit-src: /src/test/munit
 :clear-results: To clear test results, see <<clear-results>>.
-:right-click: You can also right-click to select the same options.
+:right-click: You can select the same options from the right-click menu.
+//end local/shared attributes
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -131,6 +133,7 @@ image:anypoint-code-builder::munit-testing-panel.png["Testing panel"]
 //info and link to section on debugging:
 {test-debug-options}
 +
+--
 [calloutlist]
 .. All suites: Run all tests in all suites by clicking the *Run Tests* or *Debug Tests* icon. 
 //or right-click:
@@ -139,76 +142,26 @@ image:anypoint-code-builder::munit-testing-panel.png["Testing panel"]
 //or right-click:
 {right-click}
 .. Test: Run a single test by hovering over or clicking a test in a test suite, and then clicking the *Run Test* or *Debug Test* icon.
+--
 //or right-click:
 {right-click}
-. Review test results in the Testing panel.
-. If the test results return any errors, go to <<fix-errors>>.
-
-//local variable to clear results:
-{clear-results}
-
-//
-//RUN: FROM XML
-[[run-test-xml]]
-=== Run Tests from the MUnit Configuration XML File
-
-//info and link to section on debugging:
-{test-debug-options}
-
-To run tests from the test suite XML: 
-
-. From the Testing panel, open a test suite XML file in your project.
+. Monitor the test and review test results:
 +
-For guidance with opening from the Testing panel, see <<open-test>>.
-. Run a single test or all tests in the test suite XML file:
-+
-image:munit-xml-test-options.png["Testing options from test suite XML"]
-
-//run single test option:
-** To run a single test in the test suite XML:
-.. Place your cursor on a line that contains the XML for a test (`<munit:test/>`). 
-+
-For example, on any line within XML similar to this example:
-+
-[source,xml]
-----
-<munit:test name="test-02-suite1">
-  <munit:validation>
-    <munit-tools:assert-equals actual='#["that"]' expected='#["this"]' />
-  </munit:validation>
-</munit:test>
----- 
-.. Right-click, and select one of the following options:
-
-*** *Run Test at Cursor*
-*** *Debug Test at Cursor*
-+
-{open-xml-test-options}
-//run all tests option:
-** To run all tests in the test suite XML: 
-.. Place your cursor in the XML file.
-.. Right-click, and select one of the following options:
-
-*** *Run Tests in Current File*
-*** *Debug Tests in Current File*
-+
-{open-xml-test-options}
-//next step:
-. View the status of the running test in the Testing, Terminal, and Testing Results panels:
-
+[[results-example]]
+--
 * Testing panel and XML: 
 +
-The following example displays a running test:
+The following example displays a running test.
 +
 image:anypoint-code-builder::munit-xml-test-run-panel-xml.png["Running test in the Test panel and XML"]
 +
-The panel and XML indicate the result of the test. This example displays a failing test:
+The panel and XML indicate the result of the test. The following example displays a failing test.
 +
 image:icon-munit-open-failed-test.png["Opening failed test from Test panel"]
 
 * Terminal:
 +
-The following example provides the progress of a test that runs and fails:
+The following example provides the progress of a test that runs and fails.
 +
 ----
 ================================================================================
@@ -247,38 +200,66 @@ Expected: "yes" as String {encoding: "UTF-8", mediaType: "application/java; char
 [INFO] Finished at: 2024-04-29T08:49:39-07:00
 [INFO] ------------------------------------------------------------------------
 ----
+--
+. If the test results indicate any failures, go to <<fix-errors>>.
 
 //local variable to clear results:
 {clear-results}
 
 //
-//RUN: DEBUG
-[[run-debug]]
-== Run MUnit Tests in Debug Mode
+//RUN: FROM XML
+[[run-test-xml]]
+=== Run Tests from the MUnit Configuration XML File
 
-Run your test in debug mode after adding breakpoints to the XML for your tests or Mule application. When Mule reaches the breakpoint, you can review variables in the Run and Debug panel, including test and Mule event variables. 
+//info and link to section on debugging:
+{test-debug-options}
 
-//open project (with tests) step as local variable
-. {open-project} 
-. Add breakpoints to the XML for the Mule application or test suites. 
+To run tests from the test suite XML: 
+
+. From the Testing panel, open a test suite XML file in your project.
 +
-For guidance with breakpoints and the Mule event, see xref:int-debug-mule-apps.adoc[].
-. Run your test with a debugging command using one of the following options:
-
-* From the Testing panel, click a icon-munit-run-debug.png[["",18,18]] (Debug test) icon at any level (all tests, all tests in a suite, or a single test).
+For guidance with opening from the Testing panel, see <<open-test>>.
+. Run a single test or all tests in the test suite XML file:
 +
-For more guidance, see <<run-test-panel>>.
-* From the suite XML, use the right-click menu to run the text. 
-+
-For more guidance, see <<run-test-xml>>.
+--
+image:munit-xml-test-options.png["Testing options from test suite XML"]
 
-. When the build process reaches a breakpoint, click the image:icon-run-debug.png["",18,18] (Run and Debug panel) icon from the activity bar to review variables, including the Mule event and test parameters. For example:
+//run single test option:
+* To run a single test in the test suite XML:
+.. Place your cursor on a line that contains the XML for a test (`<munit:test/>`). 
 +
-image:anypoint-code-builder::munit-debug-test-mule-event.png["Variables after debugging test with breakpoints"]
-//TODO: VERIFY STEP, ANYTHING TO ADD?
-. Examine the data, and address any issues.
+For example, on any line within XML similar to this example:
++
+[source,xml]
+----
+<munit:test name="test-02-suite1">
+  <munit:validation>
+    <munit-tools:assert-equals actual='#["that"]' expected='#["this"]' />
+  </munit:validation>
+</munit:test>
+---- 
+.. Right-click, and select one of the following options:
 
-By default, running tests fail after a timeout period. If a debugging session reaches a breakpoint in a test, the test and the build fails at timeout. See xref:munit::munit-test-concept.adoc#test-timeout-attribute[Test TimeOut Attribute]. 
+** *Run Test at Cursor*
+** *Debug Test at Cursor*
++
+{open-xml-test-options}
+//run all tests option:
+* To run all tests in the test suite XML: 
+.. Place your cursor in the XML file.
+.. Right-click, and select one of the following options:
+
+** *Run Tests in Current File*
+** *Debug Tests in Current File*
++
+{open-xml-test-options}
+--
+//next step:
+. Check the status of the running test in the Testing, Terminal, and Testing Results panels. See the <<results-example, example>>.
+
+
+//local variable to clear results:
+{clear-results}
 
 //
 //RUN: LAUNCH CONFIG
@@ -287,6 +268,7 @@ By default, running tests fail after a timeout period. If a debugging session re
 
 Run MUnit tests from the Run and Debug panel with an MUnit launch configuration. 
 
+[[launch-json-manual]]
 Create and run an MUnit launch configuration:
  
 //step to open run&debug panel:
@@ -312,7 +294,11 @@ The default configuration looks something like this:
     ]
   }
 ----
-.. In the `launch.json` file, add a comma after the first object in the array followed by the JSON object named `Munit Debug Tests`. For example:
+.. In the `launch.json` file, add a comma after the first object in the array, and append the MUnit launch configuration by pressing Ctrl+Space in `launch.json` to open the auto-complete menu and selecting *MUnit Debug Launch*. For example:
++
+image:munit-launch-config-autocomplete.png["Adding launch configuration for MUnit from the auto-complete menu"]
++
+This action adds a new JSON object named `Munit Debug Tests` to the file. For example:
 +
 [source,JSON]
 ----
@@ -339,21 +325,48 @@ The default configuration looks something like this:
     ]
   }
 ----
++
+--
 [calloutlist]
-. Launcher for the standard debugger, named `Debug Mule Application`.
-. Launcher for the MUnit debugger, named `Munit Run Tests`.
-
-You can also add the configuration by pressing Ctrl+Space in `launch.json` to open the auto-complete menu and selecting *MUnit Debug Launch*. For example:
-
-image:munit-launch-config-autocomplete.png["Adding launch configuration for MUnit from the auto-complete menu"]
-
-. Save the configuration.
+.. Launcher for the standard debugger, named `Debug Mule Application`.
+.. Launcher for the MUnit debugger, named `Munit Run Tests`.
+--
+. Save the configuration to `launch.json`.
 . Run MUnit tests from the *MUnit Debug Tests* launch configuration:
 .. In the Run and Debug panel, select *MUnit Debug Tests* from the launch menu. For example:
 +
 image:munit-launch-config-munit.png["Selecting *MUnit Debug Tests* from the launch menu"]
-.. Click the image:icon-start-debug.png["",18,18] (launch) button. 
-. Verify that the MUnit tests run. 
+.. Execute *MUnit Debug Tests* by clicking the image:icon-start-debug.png["",18,18] (launch) button in the Run an Debug panel.
+. Verify that the MUnit tests run. See the <<results-example, example>>.
+
+//
+//RUN: DEBUG
+[[run-debug]]
+== Run MUnit Tests in Debug Mode
+
+Run your test in debug mode after adding breakpoints to the XML for your tests or Mule application. When Mule reaches the breakpoint, you can review variables in the Run and Debug panel, including test and Mule event variables. 
+
+//open project (with tests) step as local variable
+. {open-project} 
+. Add breakpoints to the XML for the Mule application or test suites. 
++
+For guidance with breakpoints and the Mule event, see xref:int-debug-mule-apps.adoc[].
+. Run your test with a debugging command using one of the following options:
+
+* From the Testing panel, click a icon-munit-run-debug.png["",18,18] (Debug test) icon at any level (all tests, all tests in a suite, or a single test).
++
+For more guidance, see <<run-test-panel>>.
+* From the suite XML, use the right-click menu to run the text. 
++
+For more guidance, see <<run-test-xml>>.
+
+. When the build process reaches a breakpoint, click the image:icon-run-debug.png["",18,18] (Run and Debug panel) icon from the activity bar to review variables, including the Mule event and test parameters. For example:
++
+image:anypoint-code-builder::munit-debug-test-mule-event.png["Variables after debugging test with breakpoints"]
+//TODO: VERIFY STEP, ANYTHING TO ADD?
+. Examine the data, and address any issues.
+
+By default, running tests fail after a timeout period. If a debugging session reaches a breakpoint in a test, the test and the build fails at timeout. See xref:munit::munit-test-concept.adoc#test-timeout-attribute[Test TimeOut Attribute]. 
 
 //
 //FIX ERRORS
