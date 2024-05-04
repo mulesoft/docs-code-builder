@@ -8,6 +8,13 @@ Configure DataWeave expressions in your integrations and implementations from th
 //TODO: CONVERT TO INCLUDE FOR SHARING
 DataWeave is the programming language designed by MuleSoft for data transformation within a Mule app. DataWeave is also the expression language Mule runtime engine uses to configure components and connectors. When you create an implementation or integration in Anypoint Code Builder, you are creating a Mule app that runs on an instance of the Mule runtime engine. 
 
+//TODO_TODO BE SURE TO COVER ALL OF THESE IN SOME WAY:
+// * When a user clicks on a field that accepts DataWeave - a side car should be opened to the left of the Component Configuration Panel.
+// * Users should be able to either click on their data to insert it into the text area or begin typing to see a list of auto-complete options to choose from
+// * Hovering over a datapill should show insights
+// * Users should have the ability to minimize the sidecar by clicking on the following icon
+
+
 == Before You Begin
 
 It is important to have a basic understanding of the DataWeave language. DataWeave expressions accept the following: 
@@ -27,13 +34,28 @@ The expression builder provides the following tabs:
 
 * *Data*: Illustrates the data structure with any sample data that is available. For example:
 +
-TODO: ADD SCREENSHOT
-TODO: ADD SHORT DESCRIPTION
+image:int-dw-fx-data-tab.png["Data tab for expression field"]
 +
-//TODO: DOES THE 
-To create sample data, see <<sample-data>>.
+The strings displayed as values for the payload and attributes, such as *"0"* and *"75"*, are not used for previewing or generating output.  
++
+To create sample data from which you can preview the output of an expression, see <<sample-data>>.
 
-* *Functions*: Lists all DataWeave functions from all xref:dataweave::dw-functions.adoc#dw_modules[DataWeave modules], such as String, Array, and Core modules. You can hover over the functions to get a short description or click a function's *Details* link to open the full documentation within the expression builder panel. The documentation provides examples and descriptions of any parameters. 
+* *Functions*: Lists all DataWeave functions from all xref:dataweave::dw-functions.adoc#dw_modules[DataWeave modules], such as String, Array, and Core modules. 
++
+[%header,cols="1a,1a"]
+|===
+| DataWeave Functions
+| Function Reference
+
+| 
+Hover over a function to get a short description:
+
+image:int-dw-fx-functions-tab.png["Functions tab for expression field"]
+|
+Click *Details* to get complete documentation:
+
+image:int-dw-fx-functions-tab-details.png["Data tab for expression field"]
+|===
 
 //TODO: within the fx field in the UI, you can also do Ctrl-space to get a list of Core functions only?
 
