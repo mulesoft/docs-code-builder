@@ -14,7 +14,6 @@ DataWeave is the programming language designed by MuleSoft for data transformati
 // * Hovering over a datapill should show insights
 // * Users should have the ability to minimize the sidecar by clicking on the following icon
 
-
 == Before You Begin
 
 It is important to have a basic understanding of the DataWeave language. DataWeave expressions accept the following: 
@@ -26,19 +25,15 @@ It is important to have a basic understanding of the DataWeave language. DataWea
 For more information, see xref:dataweave::index.adoc[]. 
 
 [[expression-builder]]
-== Construct a DataWeave Expression from the Canvas UI
+== Expression Builder
 
-Use the DataWeave expression builder to ease configuration of DataWeave expressions, supply sample data for your expression, and preview the expression's output without the need to run your Mule app. 
-
-The expression builder provides the following tabs:
+When configuring component in your flows, use the DataWeave expression builder to ease configuration of DataWeave expressions in your components, to supply sample data for your expression, and to preview the expression's output without the need to run your Mule app with data from external sources. To construct an expression, see <<construct-expression>>. To provide your own sample data, see <<sample-data>>.
 
 * *Data*: Illustrates the data structure with any sample data that is available. For example:
 +
 image:int-dw-fx-data-tab.png["Data tab for expression field"]
 +
 The strings displayed as values for the payload and attributes, such as *"0"* and *"75"*, are not used for previewing or generating output.  
-+
-To create sample data from which you can preview the output of an expression, see <<sample-data>>.
 
 * *Functions*: Lists all DataWeave functions from all xref:dataweave::dw-functions.adoc#dw_modules[DataWeave modules], such as String, Array, and Core modules. 
 +
@@ -59,20 +54,37 @@ image:int-dw-fx-functions-tab-details.png["Data tab for expression field"]
 
 //TODO: within the fx field in the UI, you can also do Ctrl-space to get a list of Core functions only?
 
-* *Preview*: 
+* *Preview*: Preview auto-generated sample data, or create your own sample data.
 +
-TODO: ADD SCREENSHOT
+[%header,cols="1a,1a"]
+|===
+| Preview Auto-generated Sample Data
+| Preview Your Sample Data
 
+| 
+Outputting results from auto-generated sample data:
+
+image:int-dw-fx-preview-tab.png["Functions tab for expression field"]
+|
+Outputting results from an expression with user-created sample data:
+
+image:int-dw-fx-preview-tab-output.png["Data tab for expression field"]
+|===
++
+You can apply DataWeave selectors and functions to your sample data. To create sample data that has the structure and data types you expect, see <<sample-data>>.
+
+[[construct-expression]]
+== Construct a DataWeave Expression from the Canvas UI
 
 To construct a DataWeave expression from the canvas:
 
 . Create an integration project.
 +
 For guidance, see xref:int-create-integrations.adoc#create-integration-project[Create an Integration Project].
-. From the canvas, add a Set Payload component.
+. From the canvas, add a component that accepts a DataWeave expression.
 +
-Set Payload is convenient for demonstrating expression builder functionality. The expression builder is available to components with *fx* fields, which accept DataWeave expressions.
-. Use the expression builder to start an expression:
+Most components have at least one *fx* field that accepts expressions. The examples in this procedure use Set Variable, Set Payload, and Logger.  
+. Start an expression:
 .. Click Set Payload to display its configuration panel, and then click within its *Value* field (an *fx* field) to open the DataWeave expression builder.
 +
 Notice the *Data*, *Functions*, and *Preview* tabs in the expression builder.
@@ -171,7 +183,7 @@ The *Value* field now contains `payload.city`.
 
 Use auto-complete menus from the XML to list DataWeave functions and TODO_TODO. 
 
-In the XML, fields that accept DataWeave expressions begin with a hash and are surrounded by square brackets. For example: `#[payload]`, `#[payload.childfield.grandchildfield]`, `["hello" ++ "world"]`.
+In the XML, fields that accept DataWeave expressions begin with a hash and are surrounded by square brackets. For example: `#[payload]`, `#[payload.childfield.desendant]`, `["hello" ++ "world"]`.
 
 TODO_TODO
 
