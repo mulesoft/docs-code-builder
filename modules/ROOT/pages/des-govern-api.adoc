@@ -6,7 +6,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Run rules from API governance rulesets against your API design projects, and fix any resulting issues.
 
-Anypoint API Governance is a component of Anypoint Platform that enables you to apply governance rules to your APIs as part of the API lifecycle. For more information, see xref:api-governance::index.adoc[].
+Anypoint API Governance the part of Anypoint Platform that enables you to set up and check for conformance with rules to which your API specifications. For more information, see xref:api-governance::index.adoc[].
 
 [[prereqs]]
 == Before You Begin
@@ -37,20 +37,24 @@ You can use public rulesets, such as rulesets provided by MuleSoft, or create yo
 
 Add one or more governance rulesets from Anypoint Exchange as project dependencies to your API design project. Governance rulesets are published to Anypoint Exchange. You can also define your own with Anypoint API Governance (see xref:api-governance::create-custom-rulesets.adoc[]). 
 
-. Open your design project. 
-//+
-//TODO_SHOW_ME_HOW
-. Open the *Governance Rulesets* panel in your project. For example:
-+
+. Open your design project.
+. Open the *Governance Rulesets* panel in your project. 
+. Add a ruleset:
 
-. Hover over the panel, and click image:anypoint-code-builder::icon-gov-ruleset-add.png["",15,15] (*Add Governance Rulesets...*) .
+* If the panel does not contain any rulesets, click *Add Rulesets*.
+For example:
++
+image:anypoint-code-builder::gov-rulesets-add-panel.png["Governance Rulesets panel"]
+* If the panel contains rulesets, hover over the panel and click image:anypoint-code-builder::icon-gov-add-ruleset.png["", 15,15](*Add Governance Rulesets*) to add another ruleset. For example:
++
+image:anypoint-code-builder::gov-rulesets-add-panel-not-empty.png["Add ruleset icon"]
+
 . If prompted, sign in to Anypoint Platform.
-. Search for the ruleset in all or selected organizations.
-//+
-//TODO_EXAMPLE
-. Click *Add Rulesets*.
-//+
-//TODO_EXAMPLE might be needed bc it can hidden
+. Search for the ruleset, and click *Add Rulesets*. For example:
++
+image:anypoint-code-builder::gov-rulesets-search-add.png["All Available Rulesets"]
++
+You can also select specific organizations from the *Any organization* menu, and you can select a different version of a ruleset if more than one version is available.
 . Proceed to <<run-validations>>.
 
 [[run-validations]]
@@ -101,11 +105,3 @@ Rulesets in Exchange can have documentation, and MuleSoft provides a number of r
 == Create Custom Rulesets
 
 Your team can create rulesets for your Anypoint Platform organization and publish them to Exchange. See xref:api-governance::create-custom-rulesets.adoc[].
-
-
-
-
-
-
-
-
