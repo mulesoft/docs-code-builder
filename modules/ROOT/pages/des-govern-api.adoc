@@ -9,21 +9,69 @@ Use API governance rulesets in your projects to run API validations and fix vali
 Anypoint API Governance is a component of Anypoint Platform that enables you to apply governance rules to your APIs as part of the API lifecycle.
 For more information, see xref:api-governance::index.adoc[].
 
-//TODO_TODO: order of sections TBD
+[[prereqs]]
+== Before You Begin
 
-== Identify and Fix Validation Issues
+//TODO: TIME PERMITTING, SHARE INFO FROM RNS HERE VIA INCLUDE
+Ensure that your API specification is supported. See xref:release-notes::acb-rn-landing-page.adoc#compatibility[Compatibility] for API governance.
 
-TODO_TOPIC: Check conformance status of project 
+[[workflows-tasks]]
+== Workflows and tasks
+
+A typical workflow: 
+
+. Add one or more rulesets to a design project. 
+. Run rules in the rulesets to determine if your API specification conforms with the rules.
+. Fix any conformance issues.
+
+You can use rulesets provided by MuleSoft or create your own. See <<>>
+
 
 [[add-rulesets]]
 == Add Rulesets to a Project
 
-TODO_TOPIC: Select and add one or more rulesets from Exchange as project dependencies to the project (instead of adding one by one)
+Add one or more governance rulesets from Anypoint Exchange as project dependencies to your API design project. Governance rulesets are published to Anypoint Exchange. You can also define your own with Anypoint API Governance (see xref:api-governance::create-custom-rulesets.adoc[]). 
+
+. Open your design project. 
+//+
+//TODO_SHOW_ME_HOW
+. Open the *Governance Rulesets* panel in your project.
+. Click image:anypoint-code-builder::icon-add-ruleset.png["Add ruleset icon"].
+//+
+//TODO_SHOW_ME_HOW
+. If prompted, sign in to Anypoint Platform.
+. Search for the ruleset in all or selected organizations.
+//+
+//TODO_EXAMPLE
+. Click *Add Rulesets*.
+//+
+//TODO_EXAMPLE might be needed bc it can hidden
+. Proceed to <<run-validations>>.
 
 [[run-validations]]
-== Run Validations
+== Run Validations on Your API Specification 
 
-TODO_TOPIC: JTBDs: Run & re-run validations: Select or disable individual rulesets/rules to run & re-run (after attempted fixes) one or more validations (see PRD for more detail)
+Run governance rules to validate your API specifications. Governance rules are part of rulesets.
+
+. Open your design project. 
+//+
+//TODO_SHOW_ME_HOW
+. Open the *Governance Rulesets* panel to check for rulesets in your project.
++
+TODO_EXAMPLE
+
+* If rulesets are not present or if you intend to add more rulesets, go to <<add-rulesets>>.
+* If rulesets are present, proceed to the next step.
+. Run your rulesets from the *Governance Rulesets* panel.
++
+You can run rulesets at multiple levels:
++
+TODO_EXAMPLE
+
+* All rules in all rulesets
+* All rules in a single ruleset
+* A single rule in a ruleset
+. If any rules return a warning or error, proceed to <<troubleshoot-validations>>.
 
 [[monitor-validations]]
 == Monitor the Validation Process
@@ -36,7 +84,20 @@ TODO_TOPIC:  JTBD: Monitor progress of validation (consider entire workflow that
 [[troubleshoot-validations]]
 == Troubleshoot Rule Failures
 
-TODO_TITLE: Check topic title
-
 TODO_TOPIC: Check trace to get info on rule failures (and clues about how to fix)
 Navigate from rule validation failure to node generating failure (goal: to find and fix validation failure more quickly)
+
+[[get-info]]
+== Get Information About Rules and Rulesets 
+
+Rulesets in Exchange can have documentation, and MuleSoft provides a number of rulesets. For example, the ruleset https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/anypoint-best-practices/minor/1.6/[Anypoint Best Practices] from MuleSoft provides documentation and examples. 
+
+Your team can also create rulesets for your Anypoint Platform organization and publish them to Exchange. See xref:api-governance::create-custom-rulesets.adoc[].
+
+
+
+
+
+
+
+
