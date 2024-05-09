@@ -59,17 +59,17 @@ You can also select specific organizations from the *Any organization* menu, and
 . Proceed to <<run-rules>>.
 
 [[run-rules]]
-== Run Rules against Your API Specification 
+== Run Rules Against Your API Specification 
 
 Run governance rules to validate your API specifications. Governance rules are part of rulesets.
 
 . Open your design project.
 . Open the *Governance Rulesets* panel to check for rulesets in your project.
 
-* If rulesets are present, proceed to the next step.
+* If any rulesets are present, proceed to the next step.
 +
 image:anypoint-code-builder::gov-rulesets-add-panel-not-empty.png["Add ruleset icon",width=500]
-* If rulesets are not present or if you intend to add more rulesets, go to <<add-rulesets>>.
+* If no rulesets are present or if you intend to add more rulesets, go to <<add-rulesets>>.
 +
 image:anypoint-code-builder::gov-rulesets-add-panel.png["Governance Rulesets panel",width=500]
 . Run your rulesets from the *Governance Rulesets* panel.
@@ -90,21 +90,136 @@ You can monitor the rules as they run. For example:
 +
 image:anypoint-code-builder::gov-rulesets-running.png["Rules running in the panel",width=500]
 
-. If any rules return a warning or error, proceed to <<fix-issues>>.
+. If any rules return an error (image:anypoint-code-builder::icon-gov-rule-error.png["",15,15]) or a warning (image:anypoint-code-builder::icon-gov-rule-warning.png["",15,15]), proceed to <<fix-issues>>.
 +
 For example, this ruleset returns a warning on some rules:
 +
-image:anypoint-code-builder::gov-rulesets-warning.png["Ruleset with warnings",width=500]
+image:anypoint-code-builder::gov-rulesets-warning.png["Ruleset with warnings in API Governance panel",width=500]
 +
-The output panel Governance Rulesets also identifies any warnings or errors. For example:
+The Governance Results panel also identifies any warnings or errors. For example:
 +
-image:anypoint-code-builder::gov-rulesets-warning-output.png["Ruleset with warnings",width=700]
+image:anypoint-code-builder::gov-rulesets-warning-output.png["Ruleset with warnings in Governance Results panel",width=700]
 
 [[fix-issues]]
-== Fix Validation Issues
+== Fix Issues
 
-TODO_TOPIC: Check trace to get info on rule failures (and clues about how to fix)
-Navigate from rule validation failure to node generating failure (goal: to find and fix validation failure more quickly)
+If any of your rules return errors or warnings that you need to address, fix the specification to comply with each rules. Then re-run each rule to make sure that the fix is effective.  
+
+[[example]]
+=== Example 
+
+To illustrate the process for addressing issues, the example in this procedure starts with a partial RAML specification and some rulesets:
+
+image:anypoint-code-builder::gov-example-prefix.png["Re-running HTTPs rule",width=700]
+
+.Full Example
+[%collapsible]
+====
+* The specification has this markup:
++ 
+[source,yaml]
+--
+#%RAML 1.0
+title: my-des-with-governance
+protocols:
+  - HTTP
+--
+* The design project for the specification has these rulesets:
+
+** HTTPS Enforcement
+** Anypoint Best Practices
+====
+
+[[fix-conformance-issues]]
+=== Fix Conformance Issues
+
+To fix errors (image:anypoint-code-builder::icon-gov-rule-error.png["",15,15]) and warnings (image:anypoint-code-builder::icon-gov-rule-warning.png["",15,15]):
+
+. Run the rulesets in your project.
++
+For guidances, see <<run-rules>>.
+. Review any resulting errors and warnings in Governance Results panel. For example:
++
+image:anypoint-code-builder::gov-example-postrun-issues.png["Error and Warnings in Governance Rulesets"]
++
+The Governance Results panel lists the corresponding issues. For example:
++
+image:anypoint-code-builder::gov-example-postrun-issues-output.png["Error and Warnings in Governance Results"]
+
+* `Error: [HTTPS Enforcement] Only use https protocol scheme.`
+* `Warning: [Anypoint Best Practices] Provide the documentation for the API.`
+* `Warning: [Anypoint Best Practices] Provide the description for the API.`
+. Address errors in the specification. 
++
+For instance, fix the HTTPS Enforcement error in the <<example, example>> by changing `HTTP` to `HTTPS`:
++
+[source,yaml]
+--
+#%RAML 1.0
+title: my-des-with-governance
+protocols:
+  - HTTPS
+--
+. Re-run the failing rule to ensure that the error is fixed.
++
+For instance, after fixing the `protocols` error in the <<example, specification example>>, run *use-https-for-scheme-protocol* from the Governance Rulesets panel. For example:
++
+image:anypoint-code-builder::gov-example-run-fixed-error-https.png["Re-running HTTPs rule",width=700]
++
+Notice that the error no longer appears in Governance Rulesets. For example:
++
+image:anypoint-code-builder::gov-example-error-fixed-https.png["Fixed HTTPs rule",width=700]
++
+In addition, the Governance Results panel no longer lists the issue. 
+. Address warnings, as needed. 
++
+For instance:
+
+.. Address the warning `Provide the description for the API` by adding a `description` to the <<example, specification example>>. For example:
++
+[source,yaml]
+--
+#%RAML 1.0
+title: my-des-with-governance
+description: my description
+protocols:
+  - HTTPS
+--
++
+The description is between `title` and `protocols`.
+.. Re-run the rule *api-must-have-description*, and notice that the specification now conforms to the rule.
++
+image:gov-example-warning-fixed-description.png["Fixed description"].
++
+The ruleset continues to identify a warning because a different rule in the ruleset has a warning. 
+. Address any remaining issues that you intend to fix.
++ 
+For instance, for the warning `Provide the documentation for the API` in the <<example, example>>, add and save `documentation` markup to the specification:
++
+[source,yaml]
+--
+#%RAML 1.0
+title: my-des-with-governance
+description: my description
+documentation:
+  - title:  My Title
+    content: |
+      Welcome to my API documentation.
+  - title: Legal
+    content: |
+      This is my legal documentation. 
+protocols:
+  - HTTPS
+--
+. Re-run the corresponding rule from the Governance Rulesets panel.
++
+For example, re-run *api-must-have-documentation*, and notice that the specification now conforms to the rule. 
++
+image:gov-example-warning-fixed-all.png["Fixed documentation"].
+
+The specification has no more errors or warnings. For example:
+
+image:anypoint-code-builder::gov-example-error-fixed-all.png["Panel displaying rulesets validate",width=700]
 
 
 
