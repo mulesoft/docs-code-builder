@@ -45,15 +45,15 @@ Rulesets are hosted on Exchange. MuleSoft provides a number of public rulesets. 
 * If the panel does not contain any rulesets, click *Add Rulesets*.
 For example:
 +
-image:anypoint-code-builder::gov-rulesets-add-panel.png["Governance Rulesets panel"]
+image:anypoint-code-builder::gov-rulesets-add-panel.png["Governance Rulesets panel",width=600]
 * If the panel contains rulesets, hover over the panel and click image:anypoint-code-builder::icon-gov-ruleset-add.png["", 15,15] (*Add Governance Rulesets*) to add another ruleset. For example:
 +
-image:anypoint-code-builder::gov-rulesets-add-panel-not-empty.png["Add ruleset icon"]
+image:anypoint-code-builder::gov-rulesets-add-panel-not-empty.png["Add ruleset icon",width=600]
 
 . If prompted, sign in to Anypoint Platform.
 . Search for the ruleset, and click *Add Rulesets*. For example:
 +
-image:anypoint-code-builder::gov-rulesets-search-add.png["All Available Rulesets"]
+image:anypoint-code-builder::gov-rulesets-search-add.png["All Available Rulesets",width=600]
 +
 You can also select specific organizations from the *Any organization* menu, and you can select a different version of a ruleset if more than one version is available.
 . Proceed to <<run-rules>>.
@@ -68,32 +68,37 @@ Run governance rules to validate your API specifications. Governance rules are p
 
 * If rulesets are present, proceed to the next step.
 +
-image:anypoint-code-builder::gov-rulesets-add-panel-not-empty.png["Add ruleset icon",width=400]
+image:anypoint-code-builder::gov-rulesets-add-panel-not-empty.png["Add ruleset icon",width=500]
 * If rulesets are not present or if you intend to add more rulesets, go to <<add-rulesets>>.
 +
-image:anypoint-code-builder::gov-rulesets-add-panel.png["Governance Rulesets panel",width=400]
+image:anypoint-code-builder::gov-rulesets-add-panel.png["Governance Rulesets panel",width=500]
 . Run your rulesets from the *Governance Rulesets* panel.
 +
 You can run rulesets at multiple levels:
 
 * All rules in all rulesets
 +
-image:anypoint-code-builder::gov-rulesets-run-all.png["Governance Rulesets panel",width=400]
+image:anypoint-code-builder::gov-rulesets-run-all.png["Clicking icon to run all rulesets",width=500]
 * All rules in a single ruleset
 +
-image:anypoint-code-builder::gov-rulesets-run-ruleset.png["Governance Rulesets panel",width=400]
+image:anypoint-code-builder::gov-rulesets-run-ruleset.png["Clicking icon to run a rulesets",width=500]
 * A single rule in a ruleset
 +
-image:anypoint-code-builder::gov-rulesets-run-rule.png["Governance Rulesets panel",width=400]
-. If any rules return a warning or error, proceed to <<troubleshoot-validations>>.
+image:anypoint-code-builder::gov-rulesets-run-rule.png["Clicking icon to run a rule",width=500]
++
+You can monitor the rules as they run. For example:
++
+image:anypoint-code-builder::gov-rulesets-running.png["Rules running in the panel",width=500]
 
-[[monitor-validations]]
-== Monitor the Validation Process
-
-TODO_TOPIC:  JTBD: Monitor progress of validation (consider entire workflow that could include other JTBDs)
-* TODO_TBD: See validation progress of rulesets (what has failed or passed)
-* TODO_TBD: See time left to complete validation and get full report
-* TODO_TBD: See how much time to validate a given rule/ruleset (for potentially disabling time-consuming ones)
+. If any rules return a warning or error, proceed to <<fix-issues>>.
++
+For example, this ruleset returns a warning on some rules:
++
+image:anypoint-code-builder::gov-rulesets-warning.png["Ruleset with warnings",width=500]
++
+The output panel Governance Rulesets also identifies any warnings or errors. For example:
++
+image:anypoint-code-builder::gov-rulesets-warning-output.png["Ruleset with warnings",width=700]
 
 [[fix-issues]]
 == Fix Validation Issues
