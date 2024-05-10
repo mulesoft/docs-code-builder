@@ -4,14 +4,14 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-Check that API specifications in your design projects conform with rules in governance rulesets, and fix issues that result.
+Check API specifications in your Anypoint Code Builder API design projects for conformance with rules in governance rulesets, and fix issues in your specifications that do not conform to the rules.
 
 For information about rulesets and governance, see xref:api-governance::index.adoc#anypoint-api-governance-concepts[Anypoint API Governance Concepts].
 
 [[prereqs]]
 == Before You Begin
 
-You must have an API design project with a supported specification in Anypoint Code Builder. See xref:des-create-api-specs.adoc[]).
+You must have an API design project with a supported specification in Anypoint Code Builder. See xref:des-create-api-specs.adoc[].
 
 //TODO: TIME PERMITTING, SHARE INFO FROM RNS HERE VIA INCLUDE
 Ensure that your API specification is supported. See API governance xref:acb-release-notes.adoc#compatibility[Compatibility].
@@ -22,13 +22,13 @@ Ensure that your API specification is supported. See API governance xref:acb-rel
 
 A typical workflow consists of one or more of the following tasks: 
 
-. Add one or more rulesets to a design project. 
+. Add one or more rulesets to an API design project: 
 +
 <<add-rulesets>>
-. Run rules in the rulesets to determine if your API specification conforms with the rules.
+. Run rules in the rulesets to determine if your API specification conforms with the rules:
 +
 <<run-rules>>
-. Fix any conformance issues.
+. Fix any conformance issues in the specification:
 +
 <<fix-issues>>
 
@@ -36,12 +36,12 @@ A typical workflow consists of one or more of the following tasks:
 [[add-rulesets]]
 == Add Rulesets to a Project
 
-Add governance rulesets from Anypoint Exchange as project dependencies to your API design project. 
+Add governance rulesets to your API design project in Anypoint Code Builder. 
 
 Rulesets are hosted on Exchange. MuleSoft provides a number of public rulesets. For example, the ruleset https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/anypoint-best-practices/minor/1.6/[Anypoint Best Practices] provides documentation and examples. Your team can also create and publish rulesets for your organization to Exchange (see xref:api-governance::create-custom-rulesets.adoc[]).
 
 . Open your API design project in Anypoint Code Builder.
-. Open the *Governance Rulesets* panel in your project. 
+. From the *Explorer*, expand the *Governance Rulesets* panel in your project. 
 . Add a ruleset:
 
 * If the panel does not contain any rulesets, click *Add Rulesets*.
@@ -65,8 +65,8 @@ You can also narrow your search to specific organizations from the *Any organiza
 
 Determine whether your API specification conforms with rules in governance rulesets. 
 
-. Open your design project.
-. Open the *Governance Rulesets* panel to check for rulesets in your project.
+. Open your API design project in Anypoint Code Builder.
+. From the *Explorer*, expand the *Governance Rulesets* panel to check for rulesets in your project.
 
 * If any rulesets are present, proceed to the next step.
 +
@@ -98,14 +98,14 @@ For example, this ruleset returns a warning on some rules:
 +
 image:anypoint-code-builder::gov-rulesets-warning.png["Ruleset with warnings in API Governance panel",width=500]
 +
-The Governance Results panel also identifies any warnings or errors. For example:
+The *Governance Results* panel also identifies any warnings or errors. For example:
 +
 image:anypoint-code-builder::gov-rulesets-warning-output.png["Ruleset with warnings in Governance Results panel",width=700]
 
 [[fix-issues]]
-== Fix Issues
+== Fix Conformance Issues
 
-If any of your rules return errors or warnings that you need to address, fix the specification to comply with the rules. Then re-run the rule to ensure that the fix is effective.  
+To address rules that return errors or warnings, fix the specification to comply with the rules. Then re-run the rules to ensure that the fix is effective.
 
 [[example]]
 === Example 
@@ -126,7 +126,7 @@ title: my-des-with-governance
 protocols:
   - HTTP
 --
-* The design project for the specification has these rulesets:
+* The design project for the specification applies these rulesets:
 
 ** HTTPS Enforcement
 ** Anypoint Best Practices
@@ -140,11 +140,11 @@ To fix errors (image:anypoint-code-builder::icon-gov-rule-error.png["",15,15]) a
 . Run the rulesets in your project.
 +
 For guidances, see <<run-rules>>.
-. Review any resulting errors and warnings in Governance Results panel. For example:
+. Review any resulting errors and warnings in the *Governance Results* panel. For example:
 +
 image:anypoint-code-builder::gov-example-postrun-issues.png["Error and Warnings in Governance Rulesets"]
 +
-The Governance Results panel lists the corresponding issues. For example:
+*Governance Results* lists the corresponding issues. For example:
 +
 image:anypoint-code-builder::gov-example-postrun-issues-output.png["Error and Warnings in Governance Results"]
 
@@ -153,7 +153,7 @@ image:anypoint-code-builder::gov-example-postrun-issues-output.png["Error and Wa
 * `Warning: [Anypoint Best Practices] Provide the description for the API.`
 . Address errors in the specification. 
 +
-For instance, fix the HTTPS Enforcement error in the <<example, example>> by changing `HTTP` to `HTTPS`:
+For instance, fix the *HTTPS Enforcement* error in the <<example, specification example>> by changing `HTTP` to `HTTPS`:
 +
 [source,yaml]
 --
@@ -164,15 +164,15 @@ protocols:
 --
 . Re-run the failing rule to ensure that the error is fixed.
 +
-For instance, after fixing the `protocols` error in the <<example, specification example>>, run *use-https-for-scheme-protocol* from the Governance Rulesets panel. For example:
+For instance, after fixing the `protocols` error in the <<example, specification example>>, run *use-https-for-scheme-protocol* from the *Governance Rulesets* panel. For example:
 +
 image:anypoint-code-builder::gov-example-run-fixed-error-https.png["Re-running HTTPs rule",width=700]
 +
-Notice that the error no longer appears in Governance Rulesets. For example:
+Notice that the error no longer appears in *Governance Rulesets*. For example:
 +
 image:anypoint-code-builder::gov-example-error-fixed-https.png["Fixed HTTPs rule",width=700]
 +
-In addition, the Governance Results panel no longer lists the issue. 
+In addition, the *Governance Results* panel no longer lists the issue. 
 . Address warnings, as needed. 
 +
 For instance:
@@ -213,7 +213,7 @@ documentation:
 protocols:
   - HTTPS
 --
-. Re-run the corresponding rule from the Governance Rulesets panel.
+. Re-run the corresponding rule from the *Governance Rulesets* panel.
 +
 For example, re-run *api-must-have-documentation*, and notice that the specification now conforms to the rule. 
 +
