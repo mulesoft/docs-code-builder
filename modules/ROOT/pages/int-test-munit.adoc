@@ -17,7 +17,7 @@ Run, modify, and create MUnit tests for your implementation and integration proj
 
 MUnit is a MuleSoft unit testing framework for creating and running unit tests on a Mule application, as described in xref:munit::index.adoc[MUnit Overview]. 
 
-Anypoint Code Builder provides a Testing panel from which you can run tests. In the Explorer, test suites are also located within the project directory `{munit-src}`. The IDE also provides a Testing Results panel that provides the status of tests and logs that identify the status of tests that you run. 
+Anypoint Code Builder provides a *Testing* panel from which you can run tests. In the *Explorer*, test suites are also located within the project directory `{munit-src}`. The IDE also provides a Testing Results panel that provides the status of tests and logs that identify the status of tests that you run. 
 
 //TODO TO SELF: TEST LINKS LOCALLY -- RESOURCES NOT BUILT ON REVIEW SITE
 For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[Anypoint Code Builder Release Notes]. xref:studio::index.adoc[Anypoint Studio] also supports MUnit testing features.
@@ -27,7 +27,7 @@ For MUnit features supported by Anypoint Code Builder, see xref:acb-release-note
 |===
 | Test Suites in the Testing Panel
 image:anypoint-code-builder::icon-munit-testing.png["",18,18]
-| Test Suites in the Explorer
+| Test Suites in the *Explorer*
 image:anypoint-code-builder::icon-explorer.png["",18,18]
 
 |image::anypoint-code-builder::munit-tests-panel.png["MUnit tests in the Testing panel"]
@@ -73,9 +73,9 @@ If your project does not contain any tests, Anypoint Code Builder supports the f
 [[open-test]]
 == Open MUnit Tests
 
-Open the test suite XML from the Testing panel or the Explorer. 
+Open the test suite XML from the *Testing* panelor the *Explorer*. 
 
-* *Testing panel* - Open the Testing panel from the activity bar in the IDE:
+* *Testing panel* - Open the *Testing* panel from the activity bar in the IDE:
 //open project (with tests) step as local variable
 . {open-project} 
 . Click the image:anypoint-code-builder::icon-munit-testing.png["",18,18] (Testing) icon to open the Testing panel.
@@ -86,10 +86,10 @@ image::anypoint-code-builder::munit-tests-panel.png["MUnit tests in the Testing 
 //TODO: BUT YOU CAN'T RUN THE TEST FROM THE XML IN THIS CASE :(
 Clicking the test name also opens to the XML file. 
 
-* *Explorer* - From the Explorer, locate MUnit test suite files in the project directory:
+* *Explorer* - From the *Explorer*, locate MUnit test suite files in the project directory:
 //open project (with tests) step as local variable
 . {open-project}
-. In the activity bar, click the (image:anypoint-code-builder::icon-explorer.png["",18,18]) (Explorer) icon. 
+. In the activity bar, click the (image:anypoint-code-builder::icon-explorer.png["",18,18]) (*Explorer*) icon. 
 . Navigate to `src/main/test/munit`. For example:
 +
 image::anypoint-code-builder::munit-tests-explorer.png["MUnit tests in the Explorer"]
@@ -118,7 +118,7 @@ The IDE displays the results of the tests in the Testing panel, the *Terminal* a
 [[run-test-panel]]
 === Run Tests from the Testing Panel
 
-Run all tests, all tests in a suite, or a single test from the Testing panel. The Testing panel lists all MUnit test suites in the project.
+Run all tests, all tests in a suite, or a single test from the Testing panel. The *Testing* panel lists all MUnit test suites in the project.
 
 To run tests:
 
@@ -130,7 +130,7 @@ To run tests:
 . From the activity bar, click the image:anypoint-code-builder::icon-munit-testing.png["",18,18] (Testing) icon to open the Testing panel.
 +
 If the icon is not present, try right-clicking within the activity bar and selecting *Testing* to display the icon. 
-. Run tests from the Testing panel at any of three levels:
+. Run tests from the *Testing* panel at any of three levels:
 +
 image:anypoint-code-builder::munit-testing-panel.png["Testing panel"]
 +
@@ -153,7 +153,7 @@ image:anypoint-code-builder::munit-testing-panel.png["Testing panel"]
 +
 [[results-example]]
 --
-* Testing panel and XML: 
+* *Testing* panel and XML: 
 +
 The following example displays a running test.
 +
@@ -384,7 +384,7 @@ After <<run, running a test>>, fix any errors.
 
 . Review test errors in the XML by clicking a failing test's name from the Testing panel. 
 +
-image:anypoint-code-builder::munit-test-panel-failed-test.png["All test results displayed in Testing panel and with an error highlighted in the XML"]
+image:anypoint-code-builder::munit-test-panel-failed-test.png["All test results displayed in *Testing* panel and with an error highlighted in the XML"]
 //TODO: TO SELF - HIDING: ALREADY EMBEDDED IN IMAGE ABOVE -REMOVE?
 //image:icon-munit-open-failed-test.png["Opening failed test from Test panel"]
 +
@@ -462,9 +462,9 @@ Configure MUnit tests and test suites from the XML editor.
 [[create-suite]]
 === Create an MUnit Suite
 
-Create an MUnit test suite in your project from the Explorer. 
+Create an MUnit test suite in your project from the *Explorer*. 
 
-. Open your project to `{munit-src}` in the Explorer. 
+. Open your project to `{munit-src}` in the *Explorer*. 
 . Create a suite file in the `munit` folder:
 .. Right-click within the folder and select *New File...*. 
 .. Provide a name for your suite, such as `my-suite.xml`.
@@ -530,7 +530,7 @@ For guidance, see <<run>>.
 [[clear-results]]
 == Clear Test Results
 
-After testing, you can clear test results from the Testing panel and the logs if you no longer need them.
+After testing, you can clear test results from the *Testing* panel and the logs if you no longer need them.
 
 * From the Testing panel, click image: (Views and More Actions), and select *Clear All Results*. For example:
 +
@@ -550,11 +550,11 @@ For MUnit examples, see xref:munit::munit-cookbook.adoc[].
 HIDING: 4/26/24
 NOT WORKING IN BUILD mule-dx-private-dist-1.1.4-pre.56-darwin-x64-munit
 [[run-test-explorer]]
-=== Run All Tests in a Suite from the Explorer
+=== Run All Tests in a Suite from the *Explorer*
 
 Run all tests from an MUnit suite file. 
 
-. From your project, open the Explorer.
+. From your project, open the *Explorer*.
 . Navigate to the MUnit XML file for the test suite.
 . Right-click the MUnit XML file for the test suite, and click *Run MUnit Test*. 
 . Review the results.
