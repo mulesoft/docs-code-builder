@@ -5,7 +5,7 @@
 :open-project: Open a project that contains an MUnit test suite.
 :check-for-tests: To check for test suites, see <<open-test>>.
 :test-debug-options: Run tests with or without debugging features. If your XML contains breakpoints and you opt to debug, test execution stops at your breakpoints. For information about debugging, see <<run-debug>>.
-:open-xml-test-options: If you do not see these menu items, be sure to open the XML file from the image:anypoint-code-builder::icon-munit-go-to-test-gray.png["",18,18] or highlighted image:anypoint-code-builder::icon-munit-go-to-test.png["",18,18] (Go to test) icon (Go to test) icon in the Testing panel.
+:open-xml-test-options: If you do not see these menu items, be sure to open the XML file from image:anypoint-code-builder::icon-munit-go-to-test-gray.png["",18,18] or highlighted image:anypoint-code-builder::icon-munit-go-to-test.png["",18,18] (*Go to test*) in the *Testing* panel.
 :munit-src: /src/test/munit
 :clear-results: To clear test results, see <<clear-results>>.
 :right-click: You can select the same options from the right-click menu.
@@ -78,8 +78,8 @@ Open the test suite XML from the *Testing* panelor the *Explorer*.
 * *Testing panel* - Open the *Testing* panel from the activity bar in the IDE:
 //open project (with tests) step as local variable
 . {open-project} 
-. Click the image:anypoint-code-builder::icon-munit-testing.png["",18,18] (Testing) icon to open the Testing panel.
-. Click or mouse over the suite or test name, and click the image:anypoint-code-builder::icon-munit-go-to-test-gray.png["",18,18] or highlighted image:anypoint-code-builder::icon-munit-go-to-test.png["",18,18] (Go to test) icon to open the XML file that contains the test. For example:
+. Click image:anypoint-code-builder::icon-munit-testing.png["",18,18] (*Testing*) to open the *Testing* panel.
+. Click or mouse over the suite or test name, and click image:anypoint-code-builder::icon-munit-go-to-test-gray.png["",18,18] or highlighted image:anypoint-code-builder::icon-munit-go-to-test.png["",18,18] (*Go to test*) to open the XML file that contains the test. For example:
 +
 image::anypoint-code-builder::munit-tests-panel.png["MUnit tests in the Testing panel"] 
 +
@@ -89,7 +89,7 @@ Clicking the test name also opens to the XML file.
 * *Explorer* - From the *Explorer*, locate MUnit test suite files in the project directory:
 //open project (with tests) step as local variable
 . {open-project}
-. In the activity bar, click the (image:anypoint-code-builder::icon-explorer.png["",18,18]) (*Explorer*) icon. 
+. In the activity bar, click (image:anypoint-code-builder::icon-explorer.png["",18,18]) (*Explorer*). 
 . Navigate to `src/main/test/munit`. For example:
 +
 image::anypoint-code-builder::munit-tests-explorer.png["MUnit tests in the Explorer"]
@@ -111,14 +111,14 @@ Run MUnit tests using any of these options:
 
 When you run a test, a test build executes, and the Terminal displays the progress of the test. If all tests execute successfully the build succeeds. Otherwise, the build fails. 
 
-The IDE displays the results of the tests in the Testing panel, the *Terminal* and the Test Results panels. Time-stamped logs are also available from the Test Results panel. You can clear the results at any time.
+The IDE displays the results of the tests in the *Testing* panel, the *Terminal*, and the *Test Results* panels. Time-stamped logs are also available from the *Test Results* panel. You can clear the results at any time.
 
 //
 //RUN: FROM TEST PANEL
 [[run-test-panel]]
 === Run Tests from the Testing Panel
 
-Run all tests, all tests in a suite, or a single test from the Testing panel. The *Testing* panel lists all MUnit test suites in the project.
+Run all tests, all tests in a suite, or a single test from the *Testing* panel. The *Testing* panel lists all MUnit test suites in the project.
 
 To run tests:
 
@@ -127,7 +127,7 @@ To run tests:
 +
 //local variable to check for tests: 
 {check-for-tests}
-. From the activity bar, click the image:anypoint-code-builder::icon-munit-testing.png["",18,18] (Testing) icon to open the Testing panel.
+. From the activity bar, click image:anypoint-code-builder::icon-munit-testing.png["",18,18] (*Testing*) to open the *Testing* panel.
 +
 If the icon is not present, try right-clicking within the activity bar and selecting *Testing* to display the icon. 
 . Run tests from the *Testing* panel at any of three levels:
@@ -220,9 +220,9 @@ Expected: "yes" as String {encoding: "UTF-8", mediaType: "application/java; char
 
 To run tests from the test suite XML: 
 
-. From the Testing panel, open a test suite XML file in your project.
+. From the *Testing* panel, open a test suite XML file in your project.
 +
-For guidance with opening from the Testing panel, see <<open-test>>.
+For guidance with opening from the *Testing* panel, see <<open-test>>.
 . Run a single test or all tests in the test suite XML file:
 +
 --
@@ -278,7 +278,7 @@ Create and run an MUnit launch configuration:
 //step to open run&debug panel:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-run-debug"]
 . Add a launch configuration to `launch.json`: 
-.. Click the image:anypoint-code-builder::icon-gear.png["",18,18] (gear) icon to open the *launch.json* tab.
+.. Click image:anypoint-code-builder::icon-gear.png["",18,18] (gear icon) to open the *launch.json* tab.
 +
 The default configuration looks something like this:
 +
@@ -340,7 +340,7 @@ This action adds a new JSON object named `Munit Debug Tests` to the file. For ex
 .. In the Run and Debug panel, select *MUnit Debug Tests* from the launch menu. For example:
 +
 image:munit-launch-config-munit.png["Selecting *MUnit Debug Tests* from the launch menu"]
-.. Execute *MUnit Debug Tests* by clicking the image:icon-start-debug.png["",18,18] (launch) button in the Run an Debug panel.
+.. Execute *MUnit Debug Tests* by clicking image:icon-start-debug.png["",18,18] (launch) in the *Run an Debug* panel.
 . Verify that the MUnit tests run. See the <<results-example, example>>.
 
 //
@@ -357,7 +357,7 @@ Run your test in debug mode after adding breakpoints to the XML for your tests o
 For guidance with breakpoints and the Mule event, see xref:int-debug-mule-apps.adoc[].
 . Run your test with a debugging command using one of the following options:
 
-* From the Testing panel, click a image:anypoint-code-builder::icon-munit-run-debug.png["",18,18] (Debug test) icon at any level (all tests, all tests in a suite, or a single test).
+* From the *Testing* panel, click image:anypoint-code-builder::icon-munit-run-debug.png["",18,18] (*Debug test*) at any level (all tests, all tests in a suite, or a single test).
 +
 For more guidance, see <<run-test-panel>>.
 * From the suite XML, use the right-click menu to run the text. 
@@ -367,7 +367,7 @@ For more guidance, see <<run-test-xml>>.
 +
 For guidance, see <<run-launch-config>>.
 
-. When the build process reaches a breakpoint, click the image:icon-run-debug.png["",18,18] (Run and Debug panel) icon from the activity bar to review variables, including the Mule event variables and test parameters. For example:
+. When the build process reaches a breakpoint, click image:icon-run-debug.png["",18,18] (*Run and Debug*) from the activity bar to review variables, including the Mule event variables and test parameters. For example:
 +
 image:anypoint-code-builder::munit-debug-test-mule-event.png["Variables after debugging test with breakpoints"]
 //TODO: VERIFY STEP, ANYTHING TO ADD?
@@ -382,7 +382,7 @@ By default, running tests fail after a timeout period. If a debugging session re
 
 After <<run, running a test>>, fix any errors.
 
-. Review test errors in the XML by clicking a failing test's name from the Testing panel. 
+. Review test errors in the XML by clicking a failing test's name from the *Testing* panel. 
 +
 image:anypoint-code-builder::munit-test-panel-failed-test.png["All test results displayed in *Testing* panel and with an error highlighted in the XML"]
 //TODO: TO SELF - HIDING: ALREADY EMBEDDED IN IMAGE ABOVE -REMOVE?
@@ -406,7 +406,7 @@ The error in the XML example identifies the error `java.lang.AssertionError`.
                 class: "java.lang.String", contentLength: 2} at (root)
 ----
 +
-You can also review the test results in the Test Results panel by clicking the failing test in the test logs. For example:
+You can also review the test results in the *Test Results* panel by clicking the failing test in the test logs. For example:
 +
 image:anypoint-code-builder::munit-test-results-panel-failed.png["Error in the Test Results panel"]
 . Fix the error:
@@ -418,11 +418,11 @@ image:anypoint-code-builder::munit-test-error-xml-close.png["Closing test error 
 For example, the failing test case in the example must return `"yes"` instead of `"no"`.
 . After fixing the error, rerun the test to ensure that the fix works:
 
-* To rerun the test from the XML, click the image:anypoint-code-builder::icon-munit-failed-test.png["",18,18] (Test failure) icon for the test.
+* To rerun the test from the XML, click image:anypoint-code-builder::icon-munit-failed-test.png["",18,18] (*Test failure*) for the test.
 
-* To rerun the test from the Testing panel, click the image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (Run test) icon. 
+* To rerun the test from the *Testing* panel, click image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (*Run test*). 
 
-* To rerun the test from the Testing Results panel, open the panel, click the failing test in the test logs, and click the image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (Run test) icon from the test logs. 
+* To rerun the test from the Testing Results panel, open the panel, click the failing test in the test logs, and click image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (*Run test*) from the test logs. 
 . Make sure that the test passes. For example:
 +
 image:anypoint-code-builder::munit-tests-results-pass.png["Successful test in the Test Results panel"]
@@ -511,7 +511,7 @@ image:anypoint-code-builder::munit-tests-test-xml-autocomplete.png["Using autoco
 ----
 . Provide a name and other XML elements to create the test.
 +
-For example, on any line within XML similar to this example:
+For example, on any line within XML similar to these examples:
 +
 [source,xml]
 ----
@@ -521,6 +521,8 @@ For example, on any line within XML similar to this example:
   </munit:validation>
 </munit:test>
 ---- 
++
+To find more examples, see <<example>>.
 . Run your test from the Test panel.
 +
 For guidance, see <<run>>.
@@ -532,10 +534,10 @@ For guidance, see <<run>>.
 
 After testing, you can clear test results from the *Testing* panel and the logs if you no longer need them.
 
-* From the Testing panel, click image: (Views and More Actions), and select *Clear All Results*. For example:
+* From the *Testing* panel, click image: (Views and More Actions), and select *Clear All Results*. For example:
 +
 image:munit-clear-test-results-panel.png["Clearing test results from Testing panel"]
-* From the Test Results panel, click image:icon-munit-clear-test-results.png["",18,18] (Clear All Results) icon. For example:
+* From the *Test Results* panel, click image:icon-munit-clear-test-results.png["",18,18] (*Clear All Results*). For example:
 +
 image:munit-clear-testing-results-log.png["Clearing test results from Test Results panel"]
 
@@ -543,21 +545,22 @@ image:munit-clear-testing-results-log.png["Clearing test results from Test Resul
 [[examples]]
 == MUnit Examples
 
-For MUnit examples, see xref:munit::munit-cookbook.adoc[].
+The MUnit documenation provides a number of examples. See xref:munit::munit-cookbook.adoc[].
 
+The following MUnit test example validates if the `payload` is the string `"Example"`:
 
-//////////////////////////////////////////////
-HIDING: 4/26/24
-NOT WORKING IN BUILD mule-dx-private-dist-1.1.4-pre.56-darwin-x64-munit
-[[run-test-explorer]]
-=== Run All Tests in a Suite from the *Explorer*
+[source,xml]
+----
+<munit:test name="my-test" doc:id="e536ea1f" description="Test Example">
+  <munit:execution >
+  	<flow-ref doc:name="Reference to Main Flow" doc:id="058d41ef" name="mainFlow"/>
+  </munit:execution>
+  <munit:validation >
+  	<munit-tools:assert-equals actual="#[payload]" expected="Example" 
+                               message="The payload is expected to be 'Example'."/>
+  </munit:validation>		
+</munit:test>
+---- 
 
-Run all tests from an MUnit suite file. 
+For information about `munit:execution`, `munit:validation`, and other MUnit testing elements, see xref:munit::munit-test-concept.adoc[].
 
-. From your project, open the *Explorer*.
-. Navigate to the MUnit XML file for the test suite.
-. Right-click the MUnit XML file for the test suite, and click *Run MUnit Test*. 
-. Review the results.
-. Fix any errors.
-. Rerun tests with errors. 
-//////////////////////////////////////////////
