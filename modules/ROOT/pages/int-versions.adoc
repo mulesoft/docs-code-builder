@@ -15,9 +15,6 @@ Set Mule runtime engine (Mule), Java, and connector versions to use in your proj
 
 Select the default Mule and Java versions for new implementation and integration projects. The defaults appear in drop-down menus from which you select a version, for example, when creating a project. 
 
-* <<set-defaults-from-palette>>
-* <<set-defaults-from-settings>>
-
 Versions that are not present in the IDE append a message similar to *downloads upon project creation*. Versions that do not support a feature typically append a message, such as *AsyncAPI implementation unsupported* for Mule 4.4. 
 
 You can set a different version at the project level (see <<project-version-mule-java>>). 
@@ -61,9 +58,6 @@ include::partial$acb-runtime-java.adoc[tags="runtime-java-version-selection"]
 
 Set Mule or Java versions for a specific implementation or integration project from *Project Properties*. You can change versions at any time, but it is important to test your projects with the versions you intend to deploy. 
 
-* <<project-versions-from-properties>>
-* <<project-versions-from-palette>>
-
 Version settings are important in several scenarios:
 
 * Updating a project to use more current versions
@@ -75,7 +69,7 @@ When a Mule or Java version is unset for a project, the IDE's canvas and notific
 
 
 [[project-versions-from-properties]]
-=== Select Mule and Java Versions from the Project Properties Tab
+To select Mule and Java versions for a project:
 
 //open project local attribute:
 . {open-project}
@@ -87,35 +81,18 @@ include::partial$acb-runtime-java.adoc[tags="open-project-properties-menu"]
 +
 image::int-project-properties.png["Setting Mule and Java versions in Project Properties tab"]
 
-[[project-versions-from-palette]]
-=== Select Mule and Java Versions from the Command Palette
-
-//open project local attribute:
-. {open-project}
-//step: open command palette:
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-//step: open project properties tab from command palette
-include::partial$acb-runtime-java.adoc[tags="open-project-properties-command"]
-//TODO: VERIFY Get a Runtime EVERYWHERE
-//TODO: PROVIDE SCREENSHOTS
-//step: select versions from command palette:
-include::partial$acb-runtime-java.adoc[tags="runtime-java-version-selection"]
-
 
 [[project-versions-connectors]]
 == Select Connector Versions for a Project
 
 Set connector versions for a specific implementation or integration project from *Project Properties*. You can change versions at any time, but it is important to test your projects with the versions you intend to deploy. 
-
-* <<connector-version-from-properties>>
-* <<connector-version-from-palette>>
  
 //TODO: WILL THIS GET IMPLEMENTED?
 //TODO: RECOMMENDATIONS?
 //TODO: WHAT IF EMPTY?
 
 [[connector-version-from-properties]]
-=== Select Connector Versions from the Project Properties Tab
+To select connector versions for a project:
 
 //open project local attribute:
 . {open-project}
@@ -123,18 +100,6 @@ Set connector versions for a specific implementation or integration project from
 include::partial$acb-runtime-java.adoc[tags="open-project-properties-properties"]
 //step: open project properties tab
 include::partial$acb-runtime-java.adoc[tags="open-project-properties-menu"]
-. Click *Connectors* from the *Project Properties* side bar. 
-//TODO: P3: ADD SCREENSHOT AND EXAMPLES
-. Select connector versions. 
-
-[[connector-version-from-palette]]
-=== Select Connector Versions from the Command Palette
-
-. {open-project}
-//step: open command palette:
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-//step: open project properties tab from command palette
-include::partial$acb-runtime-java.adoc[tags="open-project-properties-command"]
 . Click *Connectors* from the *Project Properties* side bar. 
 //TODO: P3: ADD SCREENSHOT AND EXAMPLES
 . Select connector versions. 
