@@ -27,7 +27,7 @@ For more information, see xref:dataweave::index.adoc[].
 [[expression-builder]]
 == Expression Builder
 
-When configuring component in your flows, use the DataWeave expression builder to ease configuration of DataWeave expressions in your components, to supply sample data for your expression, and to preview the expression's output without the need to run your Mule app with data from external sources. To construct an expression, see <<construct-expression>>. To provide your own sample data, see <<sample-data>>.
+When configuring component in your flows, use the DataWeave expression builder to ease configuration of DataWeave expressions in your components, to supply sample data for your expression, and to preview the expression's output without the need to run your Mule app with data from external sources. To provide your own sample data, see <<sample-data>>.
 
 * *Data*: Illustrates the data structure with any sample data that is available. For example:
 +
@@ -73,119 +73,16 @@ image:int-dw-fx-preview-tab-output.png["Data tab for expression field"]
 +
 You can apply DataWeave selectors and functions to your sample data. To create sample data that has the structure and data types you expect, see <<sample-data>>.
 
-[[construct-expression]]
-== Construct a DataWeave Expression from the Canvas UI
+[[display-event]]
+== Display Mule Event Metadata
 
-To construct a DataWeave expression from the canvas:
 
-. Create an integration project.
-+
-For guidance, see xref:int-create-integrations.adoc#create-integration-project[Create an Integration Project].
-. From the canvas, add a component that accepts a DataWeave expression.
-+
-Most components have at least one *fx* field that accepts expressions. The examples in this procedure use Set Variable, Set Payload, and Logger.  
-. Start an expression:
-.. Click Set Payload to display its configuration panel, and then click within its *Value* field (an *fx* field) to open the DataWeave expression builder.
-+
-Notice the *Data*, *Functions*, and *Preview* tabs in the expression builder.
-+
-TODO: ADD IMAGE
-.. Click the *Functions* tab in the expression builder.
-+
-Notice the list of DataWeave modules, which includes Core and all other DataWeave modules. Each module contains a set of DataWeave functions. 
-+
-TODO: ADD IMAGE
-+
-//TODO: VERIFY
-If you want to use a function in the Core module only, you can press Ctrl+Space (Mac) or Cmd+Space (Windows) in an empty *fx* field. If a value is already in the field, the list contains other context-specific data, such as a `default` setting or fields in the payload, for example. 
-.. In the *Functions* tab, navigate to *Core* -> *++* (for concatenation).
-+
-Notice that you can hover over the function to get a short description of the function and that you can click *Details* to get full documentation of the function along with parameter descriptions and examples.
-+
-TODO: ADD IMAGES short description and full doc
-.. Click `++` to add the function to *Value* field. 
-. In Set Payload, use `++` to concatenate two strings. For example:
-+
-[source,DataWeave]
---
-`"hello" ++ " world"`
---
-.. In the expression builder, click *Preview* to view the output of the expression: `"hello world"`
-+
-TODO: ADD IMAGE
-.. In the expression builder, click the *Data* field. 
-+
-TODO: SHOW WHAT IT SHOWS
-. Use DataWeave selectors to construct an expression:
+[[preview]]
+== Preview Output of DataWeave Scripts and Variables
 
-.. Replace the *Value* `"hello" ++ " world"` with the following complex JSON object:
-+
-[source,json]
---
-{ "city" : { 
-           "name" : "San Francisco",
-           "address" : [{
-                         "streetNumber": 10, 
-                         "streetName": "Fremont Ave"
-                      }, 
-                      {
-                         "streetNumber": 7, 
-                         "streetName": "Decoto Way"
-                     }]
-         }, 
-         "cityURL": "sf.org", 
-         "phonenumber" : [
-                         ["432-332-1112", "333-443-1325"], 
-                         ["333-443-4421", "333-443-2211"]
-                       ], 
-                       "population": 100300, 
-                       "popularSchools": ["St Charles", "JFK School"]
-}
---
-.. In the expression builder, click the *Data* field to display the structure of the JSON object with its preconfigured values. 
-+
-TODO: ADD IMAGE
-.. In the canvas, add a Set Variable component after Set Payload.
-+
-TODO: ADD IMAGE
-//TODO:VERIFY THAT THIS IS WHAT OCCURS
-.. In the *Value* field, press Cmd+Space (Mac) or Ctrl+Space (Windows), and select `payload` from the resulting list.
-.. Click the *Data* tab in the expression builder to display the structure of the payload.
-+
-TODO: ADD IMAGE
-+
-Notice that the structure of the payload matches the structure you set in Set Payload. 
-.. In the *Value* field of Set Variable, type a dot (`.`) after `payload` (for example, `payload.`), press Cmd+Space (Mac) or Ctrl+Space (Windows), and select *city* from the list of available fields in the payload.
-+
-TODO: ADD IMAGE
-+
-The *Value* field now contains `payload.city`.
-.. Click the *Preview* field for this value to view the the output.
-+
-[source,json]
---
-{
-  "name": "San Francisco",
-  "address": [
-    {
-      "streetNumber": 10,
-      "streetName": "Fremont Ave"
-    },
-    {
-      "streetNumber": 7,
-      "streetName": "Decoto Way"
-    }
-  ]
-}
---
 
-== Construct a DataWeave Expression from the XML
 
-Use auto-complete menus from the XML to list DataWeave functions and TODO_TODO. 
 
-In the XML, fields that accept DataWeave expressions begin with a hash and are surrounded by square brackets. For example: `#[payload]`, `#[payload.childfield.desendant]`, `["hello" ++ "world"]`.
-
-TODO_TODO
 
 [[sample-data]]
 == Provide Sample Data for a DataWeave Expression

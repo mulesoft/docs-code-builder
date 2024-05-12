@@ -17,7 +17,6 @@ to process your business logic, and configure attributes:
 Create the integration from scratch, or start from a project template or integration example that you import from Anypoint Exchange. For information about templates and examples in Exchange, see xref:exchange::asset-types.adoc[].
 . <<add-components, Add components to your project>>.
 . <<import-connectors-from-exchange, Import connectors from Exchange>>.
-. <<configure-attributes, Configure attributes for a component>>.
 . <<check-connection, Test an HTTP Listener connection>>.
 . <<create-new-config, Create a new XML configuration file>>.
 
@@ -90,9 +89,14 @@ When you create an integration project from scratch or if your project from Exch
 [[add-components]]
 == Add a Component to Your Project
 
-Add components to your project from the canvas UI. 
+Add components to your project from the canvas UI. You can configure many connectors and components. 
+// Pointer to component reference:
+include::partial$acb-component-info.adoc[tags="note-component-ref"]
 
-This example assumes that you are starting from an empty integration project to which you add a Flow component with an HTTP listener from Anypoint Connector for HTTP (HTTP Connector), Set Payload, and a Logger component. When you add the listener, Anypoint Code Builder adds a dependency for the HTTP Connector to the project's `pom.xml` and a namespace for the connector to the configuration XML.
+// Note on ways to start component configs: 
+include::partial$acb-component-info.adoc[tags="note-component-add-config"]
+
+The following example illustrates basic configuration options from canvas UI and configuration XML. The example assumes you are beginning from an empty integration project.
 
 . In the Explorer view, select the XML file for your project, such as `my-project-name.xml`. 
 +
@@ -161,6 +165,24 @@ The snippet adds the following code:
   <http:listener-connection host="0.0.0.0" port="8081" />
 </http:listener-config>
 ----
+.. Notice that the Listener component in the canvas now displays an error:
++
+image::int-canvas-error.png["Listener error in the canvas"]
++
+To determine where the error is, select the processor in the canvas.
+Anypoint Code Builder highlights its location within the configuration XML, and you can mouse over the issue for more information. For example:
++
+image::int-select-listener-config.png["Selecting configuration reference from configuration panel"]
+.. To fix the error, change the value of the `name` attribute in `http:listener-config` to match the name of the `config-ref` value in your `http:listener` configuration:
++
+[source,xml]
+----
+<http:listener-config name="config-ref" >
+  <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+----
++
+The HTTP listener within your flow now references the HTTP listener configuration, a global connection configuration that resides outside of the flow. For more information about debugging, see xref:debugging-mule-apps.adoc[]. 
 . Add another component to your flow.
 +
 For example, add a Set Payload component to your HTTP Listener operation:
@@ -175,6 +197,8 @@ image::int-set-payload-config-string.png["Adding string to Set Payload"]
 * To add a DataWeave expression or a Mule variable as a value, such as `payload`, click *fx* (located before the field), and provide the value, for example:
 +
 image::int-set-payload-config-fx.png["Adding expression to Set Payload"]
++
+For more information about configuring DataWeave expressions, see xref:int-configure-dw-expressions.adoc[].
 
 * To add a configuration property as a value, type a value such as `${secure::mysensitiveprop}`. For example:
 +
@@ -186,7 +210,7 @@ Your configuration XML file now looks similar to the following:
 
 [source,xml]
 --
-<http:listener-config name="HTTP_Listener_config" >
+<http:listener-config name="config-ref" >
   <http:listener-connection host="0.0.0.0" port="8081" />
 </http:listener-config>
 
@@ -196,19 +220,6 @@ Your configuration XML file now looks similar to the following:
     
 </flow>
 --
-
-Notice that the Listener component in the canvas now shows an error:
-
-image::int-canvas-error.png["Listener error in the canvas"]
-
-To determine where the error is, select the processor in the canvas.
-Anypoint Code Builder highlights its location within the configuration XML, and you can mouse over the issue for more information. For example:
-
-image::int-select-listener-config.png["Selecting configuration reference from configuration panel"]
-
-To fix the error, configure the attributes properly. For example, to correct the mismatched `config-ref` value for the HTTP listener, select the reference name from the drop-down menu in the component's configuration panel, or type the correct attribute value directly within the XML. 
-
-For more information about debugging, see xref:debugging-mule-apps.adoc[]. 
 
 [[import-connectors-from-exchange]]
 == Import a Connector from Exchange
@@ -270,30 +281,10 @@ https://eu1.anypoint.mulesoft.com/exchange/[Exchange (EU)^]
 and
 xref:exchange::index.adoc[].
 
-
-[[configure-attributes]]
-== Configure Attributes for a Component
-
-After you add the components to the project, configure the attributes. 
-
-For example, configure these attributes for the `<http:listener-config/>`,  `<http:listener/>`, and `<set-payload/>` elements:
-
-[source,xml]
-----
-<http:listener-config name="inbound-request" doc:name="Listener Config" doc:id="b5c62f-a84a3a"> 
-  <http:listener-connection host="0.0.0.0" port="8081"/> 
-</http:listener-config>
-
-<flow name="getFlights">
-    <http:listener path="flights" config-ref="inbound-request" doc:name="HTTP /flights" doc:id="htprur" />
-    <set-payload value="Flight info" doc:name="Set Response" doc:id="e43e98-1a9a01"/>
-</flow>
-----
-
 [[check-connection]]
-== Test an HTTP Listener Connection
+== Test a Connection
 
-To test an HTTP Listener connection, click *Test Connection* in the configuration XML:
+Most connectors provide an operation that triggers the flow to start, such as the HTTP Listener operation. These operations typically have connection configurations that you can test from the configuration XML. For example, to test an HTTP Listener connection, click *Test Connection* in the configuration XML:
 
 image::http-listener-test-connection.png["HTTP Listener Test Connection link in the configuration XML"]
 
