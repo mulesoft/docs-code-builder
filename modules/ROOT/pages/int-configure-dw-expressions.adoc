@@ -1,12 +1,27 @@
 = Configuring DataWeave Expressions
+//TODO: UNCOMMENT after removing int-use-dw-to-transform-data.adoc
+//:page-aliases: int-use-dw-to-transform-data.adoc, int-address-dw-errors.adoc, int-import-dw-libraries.adoc
 
 Configure DataWeave expressions in your integrations and implementations from the expression builder UI or from the configuration XML. Mock data for your expressions so that you can preview sample output of your expressions in Anypoint Code Builder.
 
 * <<expression-builder>>
+** <<open-builder>>
+** <<tab-data>>
+** <<tab-functions>>
+** <<tab-preview>>
 * <<sample-data>>
+* <<preview-result-xml>>
+* <<import-library>>
 
-//TODO: CONVERT TO INCLUDE FOR SHARING
-DataWeave is the programming language designed by MuleSoft for data transformation within a Mule app. DataWeave is also the expression language Mule runtime engine uses to configure components and connectors. When you create an implementation or integration in Anypoint Code Builder, you are creating a Mule app that runs on an instance of the Mule runtime engine. 
+DataWeave is the programming language designed by MuleSoft for data transformation and expressions (*fx* field values) in connectors and components. When you create an implementation or integration in Anypoint Code Builder, you are creating a Mule app that runs on an instance of the Mule runtime engine. 
+
+With DataWeave, you can build a simple solution for a common use case for integration developers:
+
+. Read and parse data from one format
+. Transform the data.
+. Write it out as a different format.
+
+For example, a DataWeave script can receive a CSV file as input and transform it into an array of complex JSON objects, or receive an XML input and write the data out to a flat file format. DataWeave enables developers to focus on the transformation logic instead of thinking about the specifics of reading, parsing, and writing specific data formats in a performant way.
 
 //TODO_TODO BE SURE TO COVER ALL OF THESE IN SOME WAY:
 // * When a user clicks on a field that accepts DataWeave - a side car should be opened to the left of the Component Configuration Panel.
@@ -22,20 +37,64 @@ It is important to have a basic understanding of the DataWeave language. DataWea
 * xref:dataweave::dataweave-variables-context.adoc[Predefined Mule variables] such as `payload`, `attributes`, `vars`.
 * xref:dataweave::dataweave-selectors.adoc[DataWeave selectors] for capturing the values of fields within the payload, attribute, or variable within the xref:mule-runtime::about-mule-event.adoc[Mule event]. 
 
-For more information, see xref:dataweave::index.adoc[]. 
+For more resources, see xref:dataweave::index.adoc[]. 
 
 [[expression-builder]]
-== Expression Builder
+== Build Expressions
 
-When configuring component in your flows, use the DataWeave expression builder to ease configuration of DataWeave expressions in your components, to supply sample data for your expression, and to preview the expression's output without the need to run your Mule app with data from external sources. To provide your own sample data, see <<sample-data>>.
+Expression (*fx*) fields in connector operations and components accept DataWeave expressions and scripts. Use the DataWeave expression builder features to ease configuration of expressions in your components, to supply sample data for your expression, and to preview the expression's output without the need to run your Mule app with data from external sources. To provide your own sample data, see <<sample-data>>.
 
-* *Data*: Illustrates the data structure with any sample data that is available. For example:
+* <<open-builder>>
+* <<tab-data>>
+* <<tab-functions>>
+* <<tab-preview>>
+
+[[open-builder]]
+== Open the Expression Builder
+
+To open the DataWeave expression builder for a component:
+
+. Open a component that accepts expressions from the canvas in your implementation or integration project. 
++
+Most connector operations and components have at least one expression field. 
++
+. Click *fx* above the field to change the field from a string field to an expression field. For example:
++
+image::dw-expression-field-set-variable.png["Expression (fx) field in Set Variable"]
++
+The markup `\#[]` in the *fx* field also appears in the XML to indicate that the field is for an expression. For example:
++
+----
+<set-variable variableName="variableName" value="#[]" 
+              doc:name="Set variable" doc:id="ndpiap" />
+----
+. Click inside the field to display the expression builder for the component. For example:
++
+image::dw-fx-field-set-variable.png["Expression builder for Set Variable"]
++
+Notice the tabs for <<tab-data, *Data*>>, <<tab-functions, *Functions*>>, and <<tab-preview, *Preview*>>. 
+. Within the *fx* field, click Ctrl+Space to display a list of functions from the DataWeave Core module. For example:
++
+image::dw-fx-field-core-autocomplete.png["Expression builder for Set Variable"]
++
+To display functions from all DataWeave modules (and not just the Core module), use the *Functions* tab in the expression builder.
+
+
+[[tab-data]]
+=== Check the Data Structure
+
+The *Data* tab provides the data structure, including m after adding a component to the canvas and clicking *fx*. The following example illustrates the data structure with any sample data that is available. For example:
 +
 image:int-dw-fx-data-tab.png["Data tab for expression field"]
 +
 The strings displayed as values for the payload and attributes, such as *"0"* and *"75"*, are not used for previewing or generating output.  
 
-* *Functions*: Lists all DataWeave functions from all xref:dataweave::dw-functions.adoc#dw_modules[DataWeave modules], such as String, Array, and Core modules. 
+[[tab-functions]]
+=== List DataWeave Functions
+
+Get a list of available functions from a component's *Functions* tab, the *fx* field, or the auto-complete menu in the XML editor.  
+
+This tab lists all xref:dataweave::dw-functions.adoc#dw_modules[DataWeave modules], such as String, Array, and Core modules. 
 +
 [%header,cols="1a,1a"]
 |===
@@ -51,6 +110,14 @@ Click *Details* to get complete documentation:
 
 image:int-dw-fx-functions-tab-details.png["Data tab for expression field"]
 |===
+
+[[tab-preview]]
+=== Preview Output of DataWeave Expressions 
+
+Preview output of DataWeave expresssion from the canvas or from the XML editor. The preview feature acts on sample data that you provide for the payload, attributes, or Mule variables in your *fx* (expression) field. 
+
+* <<preview-expression-builder>>
+* <<preview-xml>>
 
 //TODO: within the fx field in the UI, you can also do Ctrl-space to get a list of Core functions only?
 
@@ -73,20 +140,16 @@ image:int-dw-fx-preview-tab-output.png["Data tab for expression field"]
 +
 You can apply DataWeave selectors and functions to your sample data. To create sample data that has the structure and data types you expect, see <<sample-data>>.
 
+[[preview-result-xml]]
+=== Preview Results from the XML Editor
 
+To preview the results from the configuration XML, place the cursor within your DataWeave code, click the *Show Code Actions* icon, and then click *Run Preview*:
 
+image::function-validation-run-preview.png["Run Preview"]
 
-[[display-event]]
-== Display Mule Event Metadata
+Anypoint Code Builder opens a new *Preview Output* tab with the result of the function:
 
-
-
-[[preview]]
-== Preview Output of DataWeave Scripts and Variables
-
-
-[[get-functions]]
-== 
+image::dataweave-function-preview-output.png["Preview Output tab]
 
 
 [[sample-data]]
@@ -132,6 +195,80 @@ TODO: ADD IMAGE
 .. In the expression builder, click *Preview* to display the sample data. 
 +
 TODO: ADD IMAGE 
+
+[[address-dw-errors]]
+== Address DataWeave Errors
+
+When your DataWeave code contains a syntactic or semantic error, Anypoint Code Builder highlights the error and offers a suggested fix.
+
+[[fix-dw-error]]
+=== Example: Fix an Undefined Function Error
+
+Anypoint Code Builder flags undefined functions automatically.
+
+For example, in this code, DataWeave flags an error with `toUpper`:
+
+image::dw-error.png["Undefined function error"]
+
+When you place your cursor on the function, DataWeave provides information about the error:
+
+image::undefined-function.png["Information about the undefined function error"]
+
+To fix this issue:
+
+. Click the error to display the popup.
+. Click *Quick Fix*, and then click *Create Function*.
++
+Anypoint Code Builder automatically adds a function definition with the `???` placeholder for you to define your function:
++
+[source,DataWeave]
+fun toUpper(param0: String) = ???
+
+. Update the function to use the `upper` function to return the provided String in uppercase characters:
++
+[source,DataWeave]
+--
+<ee:set-payload>
+    <![CDATA[
+        %dw 2.0
+        fun toUpper(param0: String) = upper(param0)
+        output application/json
+        ---
+        toUpper("hello")
+    ]]>
+</ee:set-payload>
+--
+
+[[import-library]]
+== Import a DataWeave Library
+
+Use Anypoint Code Builder to import DataWeave libraries from Exchange into your Mule application.
+
+A DataWeave library is a reusable package of DataWeave modules and mapping files, and resource files, such as JSON, XML, and CSV.
+
+You can import a DataWeave library the same way you import any other asset from Exchange:
+
+. Open your integration project in Anypoint Code Builder.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Enter `import` and select the following command:
++
+[source,command]
+--
+MuleSoft: Import Asset from Exchange
+--
+. Select *DataWeave Library*.
++
+To search for a library, type the search term and press Enter. For example, enter *DataWeave*:
++
+image::int-dw-libraries.png["Search for DataWeave libraries"]
+. Select the DataWeave library from the *Assets From Exchange* menu.
+. Select a version of the DataWeave library.
++
+The status bar shows the progress.
+
+When complete, Anypoint Code Builder shows a message that the dependency was successfully added to the project.
+
 
 == See Also
 

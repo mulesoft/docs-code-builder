@@ -10,15 +10,19 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
 Create a basic integration, add connectors and other components to your Mule application
-to process your business logic, and configure attributes:
+to process your business logic, and configure attributes.
 
-. <<create-integration-project, Create an integration project>>.
+A typical workflow includes one or more of the following tasks:
+
+. Create or import an integration project:
+
+* <<create-integration-project, Create an integration project>> 
 +
 Create the integration from scratch, or start from a project template or integration example that you import from Anypoint Exchange. For information about templates and examples in Exchange, see xref:exchange::asset-types.adoc[].
-. <<add-components, Add components to your project>>.
-. <<import-connectors-from-exchange, Import connectors from Exchange>>.
-. <<check-connection, Test an HTTP Listener connection>>.
-. <<create-new-config, Create a new XML configuration file>>.
+* xref:int-import-mule-project.adoc[Import a project].
+. xref:int-configure-components.adoc[Add components to your project].
+
+You can create multiple configuration XML files in your project. See <<create-new-config>>.
 
 [[prereqs]]
 == Before You Begin
@@ -86,219 +90,6 @@ Partial searches are accepted.
 
 When you create an integration project from scratch or if your project from Exchange does not contain a flow structure (Flow, Subflow, or Error handling component), the canvas UI provides the option to create one. Otherwise, the canvas UI generates a graphical representation of the imported asset's components that you can use to start your configuration.
 
-[[add-components]]
-== Add a Component to Your Project
-
-Add components to your project from the canvas UI. You can configure many connectors and components. 
-// Pointer to component reference:
-include::partial$acb-component-info.adoc[tags="note-component-ref"]
-
-// Note on ways to start component configs: 
-include::partial$acb-component-info.adoc[tags="note-component-add-config"]
-
-The following example illustrates basic configuration options from canvas UI and configuration XML. The example assumes you are beginning from an empty integration project.
-
-. In the Explorer view, select the XML file for your project, such as `my-project-name.xml`. 
-+
-image::int-empty-canvas.png["Canvas showing visual representation of Mule flow and the Mule configuration file"]
-+
-[calloutlist]
-.. The canvas provides space for a visual representation of your Mule flows or subflows.
-.. The configuration XML editor displays the configuration file for your Mule application.
-. Select *Build a Flow* from the canvas to create an empty flow within a Mule integration application.
-. Change the default name of the flow from the canvas UI or from the configuration XML.
-+
-[tabs]
-====
-From the canvas UI::
-+
---
-Click *Flow name1* to open the configuration panel for the Flow component, change the flow name, and click the check mark to set the new name. 
-
-image::int-flow-name-ui.png["Change name of flow through canvas UI."]
---
-From the configuration XML::
-+
---
-Replace the default name of the flow (`name1`) with your flow name, such as `getFlights`. For example:
-
-[source,xml]
-----
-<flow name="getFlights" >
-    
-</flow>
---
-====
-. Add a component to your project from the canvas, for example, add the HTTP Listener component:
-.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
-.. In the *Add Component* panel, search for and select *Listener* from the *HTTP* results:
-+
-image::main-tutorial-add-first-listener.png["Listener component highlighted in the Add Component section"]
-+
-The configuration XML file now includes the XML for the HTTP Listener into the `<flow/>` element, for example:
-+
-[source,XML]
-----
-<flow name="getFlights" >
-  <http:listener path="path" config-ref="config-ref" doc:name="Listener" doc:id="rrjiqa" />
-
-</flow>
-----
-. Add another component, this time using the XML configuration menu.
-For example, add the `<http:listener-config/>` component from a snippet.
-+
-For more information about snippets, see xref:int-work-with-code-snippets.adoc[].
-+
-.. In the configuration XML, place your cursor before the opening `<flow>` tag, and type `http`.
-+
-Ensure that the cursor is not inside the `<flow/>` element.
-+
-.. Type `http`, and select the `http:listener-config` snippet:
-+
-image::add-http-config-snippet.png["http:listener-config snippet highlighted in the configuration XML menu"]
-+
-The snippet adds the following code:
-+
-[source,xml]
-----
-<http:listener-config name="HTTP_Listener_config" >
-  <http:listener-connection host="0.0.0.0" port="8081" />
-</http:listener-config>
-----
-.. Notice that the Listener component in the canvas now displays an error:
-+
-image::int-canvas-error.png["Listener error in the canvas"]
-+
-To determine where the error is, select the processor in the canvas.
-Anypoint Code Builder highlights its location within the configuration XML, and you can mouse over the issue for more information. For example:
-+
-image::int-select-listener-config.png["Selecting configuration reference from configuration panel"]
-.. To fix the error, change the value of the `name` attribute in `http:listener-config` to match the name of the `config-ref` value in your `http:listener` configuration:
-+
-[source,xml]
-----
-<http:listener-config name="config-ref" >
-  <http:listener-connection host="0.0.0.0" port="8081" />
-</http:listener-config>
-----
-+
-The HTTP listener within your flow now references the HTTP listener configuration, a global connection configuration that resides outside of the flow. For more information about debugging, see xref:debugging-mule-apps.adoc[]. 
-. Add another component to your flow.
-+
-For example, add a Set Payload component to your HTTP Listener operation:
-+
-.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
-.. In the *Add Component* panel, search for and select *Set payload* from the *Transformer* results.
-.. In the canvas, click *Set payload* to open its configuration panel, and add a string value, DataWeave expression, Mule variable, or configuration property.
-* To add a string, type a value such as `my value`. For example:
-+
-image::int-set-payload-config-string.png["Adding string to Set Payload"]
-
-* To add a DataWeave expression or a Mule variable as a value, such as `payload`, click *fx* (located before the field), and provide the value, for example:
-+
-image::int-set-payload-config-fx.png["Adding expression to Set Payload"]
-+
-For more information about configuring DataWeave expressions, see xref:int-configure-dw-expressions.adoc[].
-
-* To add a configuration property as a value, type a value such as `${secure::mysensitiveprop}`. For example:
-+
-image::int-set-payload-config-property.png["Adding configuration property to Set Payload"]
-+
-For more information about configuration properties, see xref:int-create-secure-configs.adoc[].
-
-Your configuration XML file now looks similar to the following:
-
-[source,xml]
---
-<http:listener-config name="config-ref" >
-  <http:listener-connection host="0.0.0.0" port="8081" />
-</http:listener-config>
-
-<flow name="getFlights" >
-  <http:listener path="path" config-ref="config-ref" doc:name="Listener" doc:id="rrjiqa" />
-  <set-payload value="my value" doc:name="Set payload" doc:id="gecykt" />
-    
-</flow>
---
-
-[[import-connectors-from-exchange]]
-== Import a Connector from Exchange
-
-Anypoint Connectors provide operations for retrieving, modifying, and sending data to and from systems.
-In addition to the xref:acb-reference.adoc#builtin-connectors[built-in connectors] that Anypoint Code Builder provides,
-you can download many other connectors from Anypoint Exchange.
-
-To import a connector from Exchange and add it to your configuration:
-
-. In the Explorer view, open the configuration XML file for your project, such as `my-project-name.xml`.
-. Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the UI canvas if it doesn't open automatically.
-. Add the connector the same way you added other components from the canvas:
-.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
-.. In the *Add Component* panel, click *Connectors*.
-.. Click the connector name and then click the operation to add, such as *Publish*:
-+
-image::int-add-connector-operation.png["Add Publish operation from the Anypoint MQ Connector"]
-+
-If the connector is not available locally, click the image:icon-search-exchange.png["",15,15] (*Search in Exchange*) toggle:
-+
-image::int-connector-search-exchange.png["Search in Exchange toggle"]
-+
---
-[calloutlist]
-. Search locally
-. Search in Exchange
---
-.. Select the connector to add to your project.
-.. Select the operation from the *Add Component* panel.
-
-
-To import a connector from Exchange to use later in your project:
-
-. In the Explorer view, open the configuration XML file for your project, such as `my-project-name.xml`.
-. Click the image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) icon in the activity bar to open the canvas UI if it doesn't open automatically.
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Select the following command:
-+
-[source,command]
-----
-MuleSoft: Import Asset from Exchange
-----
-. Select *Connector*.
-. Search for the connector name to import, such as "MQ," for example:
-+
-image::int-import-connect-exchange.png["Import Anypoint MQ Connector from Exchange]
-. Select the connector.
-. At the prompt, select the version of the connector to import, such as `v4.0.3`.
-+
-Anypoint Code Builder imports the connector and makes it available in the Components list.
-
-For more information about the connectors available on Exchange, see 
-xref:connectors::index.adoc[]. 
-For more information about Exchange, see 
-https://anypoint.mulesoft.com/exchange/[Exchange (US)^] or
-https://eu1.anypoint.mulesoft.com/exchange/[Exchange (EU)^]
-and
-xref:exchange::index.adoc[].
-
-[[check-connection]]
-== Test a Connection
-
-Most connectors provide an operation that triggers the flow to start, such as the HTTP Listener operation. These operations typically have connection configurations that you can test from the configuration XML. For example, to test an HTTP Listener connection, click *Test Connection* in the configuration XML:
-
-image::http-listener-test-connection.png["HTTP Listener Test Connection link in the configuration XML"]
-
-The status bar shows the progress:
-
-* *Verifying connection inbound-request* indicates that the test is in progress.
-* *Connection is valid* indicates a successful connection. 
-* *Invalid Connection Got status code: 500 when trying to resolve a Mule Runtime operation* indicates a connection error.
-+
-A common code `500` error is `port 8081: Address already in use`. For port conflicts, configure a different port, such as `8082`, and retest the connection. 
-
-Before publishing, run your application in debug mode.
-
-
 [[create-new-config]]
 == Create an Additional Configuration XML File
 
@@ -329,18 +120,6 @@ The process automatically appends an `xml` extension to the file name and opens 
 --
 +
 The file's canvas UI provides the same options for building your project file that appear when you create an integration project. For an example and to get started with your configuration, see <<add-components, Add a Component to Your Project>>.
-
-[[open-component-from-xml]]
-== Open a Component in the Canvas from the XML Editor
-
-From the configuration XML, open a component and its configuration panel in the canvas. This feature is helpful, for example, if you want to configure a component from the UI, if a component is in another flow than the flow currently displayed in the canvas, or if the canvas is not open.  
- 
-. From the configuration XML, place your cursor within the component's XML.
-. Right-click and select *Show Component in Canvas UI*. 
-+
-This action displays the component in the canvas and opens its configuration panel, for example:
-+
-image::acb-open-component-ui-from-xml.png["Opening a component in the canvas from the XML"]
 
 
 == See Also
