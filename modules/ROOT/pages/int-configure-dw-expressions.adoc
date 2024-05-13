@@ -208,8 +208,8 @@ When your DataWeave code contains a syntactic or semantic error, Anypoint Code B
 
 Many DataWeave modules require an explicit `import` directive in the expression. Only the Core module does not require an this directive. 
 
-For example, `camelize()` function produces an error if you do not import the String module. 
-+
+For example, the function `camelize( "hello world")` produces an error `Unable to resolve the reference of 'camelize'` if you do not import the String module to which this function belongs. 
+
 [source,xml]
 ----
 <set-payload value='#[ camelize( "hello world")]' doc:name="Set payload" doc:id="vyvcds" />
@@ -219,7 +219,9 @@ The expression builder identifies the error. For example:
 
 image::int-dw-fx-error-add-import.png["Import required"]
 
-To fix this error, click to add the import directive automatically. For example:
+To fix this error:
+
+Click to add the import directive automatically. For example:
 
 image::int-dw-fx-error-fix-import.png["Import required"]
 
