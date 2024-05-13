@@ -176,13 +176,19 @@ Hovering over the value in the XML editor now displays the structure, data keys,
 image::int-dw-sample-quick-fix-example-hover-xml.png["Hovering over XML to display sample data"]
 . Preview your sample data from the expression builder UI:
 .. From the canvas UI, click the component that contains your sample data to open the expression builder for that field. 
-.. Click the field of the component that contains the sample data to open the expression builder for that field. For example: 
-.. In the expression builder, click *Data* to display your sample data within the data structure. For example: 
-+
-TODO: ADD IMAGE 
+.. Click the expression field of the component that has sample data to open the expression builder for that field. 
+//.. In the expression builder, click *Data* to display your sample data within the data structure. For example: 
+//+ NOT WORKING consistently AS OF 5/13/24 build 49
+//TODO: ADD IMAGE 
 .. Click *Preview* to display the sample data. For example:
 +
-
+image::int-dw-sample-quick-fix-example-preview.png["Previewing sample data"]
++
+You can modify the value, for example, by adding DataWeave selectors or functions. For example:
++
+image::int-dw-sample-quick-fix-example-preview-modified.png["Previewing sample data"]
++
+The example now returns an array of `id` values.
 
 [[address-dw-errors]]
 == Address DataWeave Errors
