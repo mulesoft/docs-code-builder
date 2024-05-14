@@ -30,9 +30,9 @@ The XML for the `Query.bookById` flow now has this configuration:
 [source,XML]
 --
 <flow name="Query.bookById">
-  <graphqlrouter:data-fetcher xmlns:graphqlrouter="http://www.mulesoft.org/schema/mule/graphql-router" config-ref="api-router-config" objectTypeName="Query" fieldName="bookById"/>
+  <graphql-router:data-fetcher xmlns:graphql-router="http://www.mulesoft.org/schema/mule/graphql-router" config-ref="api-router-config" objectTypeName="Query" fieldName="bookById"/>
   <set-payload value='{"id": 1, "name": "My Book", "pageCount": 28, "author": "author-1"}' mimeType="application/json" />
-  <graphqlrouter:serialize xmlns:graphqlrouter="http://www.mulesoft.org/schema/mule/graphql-router" config-ref="api-router-config" objectTypeName="Query" fieldName="bookById"/>
+  <graphql-router:serialize xmlns:graphql-router="http://www.mulesoft.org/schema/mule/graphql-router" config-ref="api-router-config" objectTypeName="Query" fieldName="bookById"/>
 </flow>
 --
 . Rebuild the application by clicking the image:icon-run-debug.png["",15,15] (*Run and Debug*) icon in the activity bar, and then clicking the *Start Debugging (F5)* icon.
