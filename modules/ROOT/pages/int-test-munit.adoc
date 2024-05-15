@@ -41,15 +41,52 @@ Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, su
 [[prereqs]]
 == Before You Begin
 
-Understand the fundamentals of MUnit. Refer to the MUnit documentation for an overview and guidance with test configurations:
+* Understand the fundamentals of MUnit. Refer to the MUnit documentation for an overview and guidance with test configurations:
 
-* xref:munit::index.adoc[MUnit Overview]
-* xref:munit::munit-test-concept.adoc[]
-* xref:munit::event-processors.adoc[]
-* xref:munit::munit-cookbook.adoc[]
+** xref:munit::index.adoc[MUnit Overview]
+** xref:munit::munit-test-concept.adoc[]
+** xref:munit::event-processors.adoc[]
+** xref:munit::munit-cookbook.adoc[]
+
+* You must have an enterprise license to configure your Maven `settings.xml`. See <<maven-settings>>.
++
+For more information, see xref:mule-runtime::maven-reference.adoc#configure-mule-repositories[MuleSoft Repositories].
+
+
+For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[]. Anypoint Studio supports testing with all MUnit features.
 
 //
-For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[]. Anypoint Studio supports testing with all MUnit features.
+//MUNIT SETTINGS
+[[maven-settings]]
+== Provide Server and Plugin Repository Settings 
+
+Configure your Maven `settings.xml` to connect to MUnit resources. For more information about `settings.xml`, see the https://maven.apache.org/settings.html[Maven documentation].
+
+. Navigate to `settings.xml`, typically in `{user.home}/.m2/`.
+. Add the following settings within the `<settings></settings>` tags, replacing the values `yourusername` and `yourpassword` with your Anypoint Platform user name and password.
++
+[source,xml]
+----
+<server>
+  <username>yourusername</username>
+  <password>yourpassword</password>
+  <id>releases-ee</id>
+</server>
+----
+. Add the following `pluginRepository` setting to the `<pluginRepositories/>` element (within the `<profile/>`):
++
+[source,xml]
+----
+    <pluginRepository>
+      <id>releases-ee</id>
+      <name>MuleSoft Releases Repository</name>
+      <url>https://repository.mulesoft.org/nexus/content/repositories/releases-ee/</url>
+    </pluginRepository>
+  </pluginRepositories>
+</profile>
+----
+
+For more information about Maven settings, see xref:mule-runtime::maven-reference.adoc#configure-mule-repositories[].
 
 //
 //MUNIT WORKFLOWS AND TASKS
