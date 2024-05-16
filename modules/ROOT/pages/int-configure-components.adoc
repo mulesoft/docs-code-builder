@@ -69,7 +69,7 @@ For example, add the HTTP Listener component:
 +
 image::main-tutorial-add-first-listener.png["Listener component highlighted in the Add Component section"]
 +
-The configuration XML file now includes the XML for the HTTP Listener into the `<flow/>` element, for example:
+The configuration XML file now includes the XML for the HTTP Listener within the `<flow/>` element, for example:
 +
 [source,XML]
 ----
@@ -79,6 +79,7 @@ The configuration XML file now includes the XML for the HTTP Listener into the `
 </flow>
 ----
 . Add another component, this time using the XML configuration menu.
++
 For example, add the `<http:listener-config/>` component from a snippet.
 +
 For more information about snippets, see xref:int-work-with-code-snippets.adoc[].
@@ -103,8 +104,9 @@ The snippet adds the following code:
 +
 image::int-canvas-error.png["Listener error in the canvas"]
 +
-To determine where the error is, select the processor in the canvas.
-Anypoint Code Builder highlights its location within the configuration XML, and you can mouse over the issue for more information. For example:
+.. To determine where the error is, select the processor in the canvas.
++
+Anypoint Code Builder highlights its location within the configuration XML, and you can mouse over the issue for more information, for example:
 +
 image::int-select-listener-config.png["Selecting configuration reference from configuration panel"]
 .. To fix the error, change the value of the `name` attribute in `http:listener-config` to match the name of the `config-ref` value in your `http:listener` configuration:
@@ -228,7 +230,7 @@ xref:exchange::index.adoc[].
 [[check-connection]]
 == Test a Connection Configuration
 
-Most connectors provide an operation that triggers the flow to start, such as the HTTP Listener operation. These operations typically have connection configurations that you can test from the configuration XML. For example, to test an HTTP Listener connection, click *Test Connection* in the configuration XML:
+Most connectors provide an operation, such as the HTTP Listener operation, that triggers the flow to start. These operations typically have connection configurations that you can test from the configuration XML. For example, to test an HTTP Listener connection, click *Test Connection* in the configuration XML:
 
 image::http-listener-test-connection.png["HTTP Listener Test Connection link in the configuration XML"]
 
