@@ -63,25 +63,22 @@ Configure your project to connect to MUnit resources. The process differs depend
 
 * <<configure-settings-license-yes>>: If you have a Mule EE license (_not a trial license_), use this procedure to set access to MUnit features. 
 +
-Configure `server` credentials and `pluginRepository` settings in the Maven file, `settings.xml`. This configuration applies across all implementation and integration projects in Anypoint Code Builder because all settings are in the Maven `settings.xml` file.
+Configure `server` credentials settings in the Maven file, `settings.xml`. This configuration applies across all implementation and integration projects in Anypoint Code Builder because all settings are in the Maven `settings.xml` file.
 
 * <<configure-settings-license-no>>: If you _don't have_ a Mule EE license or if your license is a trial license, use this procedure to set access to MUnit features. 
 +
-Configure your `mule-artifact.json` for the project and `pluginRepository` settings in the Maven file, `settings.xml`. Access applies per project because of the project-level settings in `mule-artifact.json`.
+Configure your `mule-artifact.json` for the project in the Maven file, `settings.xml`. Access applies per project because of the project-level settings in `mule-artifact.json`.
 
 [[configure-settings-license-yes]]
 === Configure Maven Settings (Licensed Access)
 
-If you have a Mule EE license (_not a trial license_), configure `server` credentials with `pluginRepository` settings in the Maven file, `settings.xml`.
+If you have a Mule EE license (_not a trial license_), configure `server` credentials  in the Maven file, `settings.xml`.
 
 See xref:mule-runtime::installing-an-enterprise-license.adoc[Install an Enterprise License], to acquire or install an Enterprise license. If you are a MuleSoft customer and do not have credentials to access the https://repository.mulesoft.org/nexus-ee/content/repositories/releases-ee/[MuleSoft Enterprise repository^], contact Support and request Nexus enterprise credentials.
 
 //navigate to settings.xml:
 . {empty}
 include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag=nav-to-maven-settings]
-//add plugin repo setting:
-. {empty}
-include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag=add-plugin-repo-settings]
 . Specify `server` settings with your Mule username and password _within_ `<servers></servers>`:
 +
 [source,xml]
@@ -96,14 +93,11 @@ include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag=add-plugin-r
 [[configure-settings-license-no]]
 === Configure Maven Settings (Unlicensed Access)
 
-If you do not have a Mule EE license or if your license is a trial license, configure your `mule-artifact.json` for the project and `pluginRepository` settings in the Maven file, `settings.xml`.
+If you do not have a Mule EE license or if your license is a trial license, configure your `mule-artifact.json` for the project.
 
 //navigate to settings.xml:
 . {empty}
 include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag=nav-to-maven-settings]
-//add plugin repo setting:
-. {empty}
-include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag=add-plugin-repo-settings]
 . In the `mule-artifact.json` file for your project, add the key-value pair `"requiredProduct" : "MULE"` to the existing configuration. For example:
 +
 [[source,json]]
