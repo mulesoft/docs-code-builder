@@ -1,4 +1,4 @@
-= Governing APIs
+= Validating API Specifications Against Governance Rulesets
 :page-deployment-options: cloud-ide, desktop-ide
 // :page-aliases: 
 
@@ -36,12 +36,14 @@ A typical workflow consists of one or more of the following tasks:
 [[add-rulesets]]
 == Add Rulesets to a Project
 
-Add governance rulesets to your API design project in Anypoint Code Builder. 
+Add governance rulesets as dependencies to your API design project in Anypoint Code Builder. 
 
 Rulesets are hosted on Exchange. MuleSoft provides a number of public rulesets that you can find from Anypoint Code Builder or review directly on https://anypoint.mulesoft.com/exchange/?type=ruleset&show=mulesoft&sort=last&view=grid[Exchange]. For example, the ruleset https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/anypoint-best-practices/minor/1.6/[Anypoint Best Practices] provides documentation and examples. Your team can also create and publish rulesets for your organization to Exchange (see xref:api-governance::create-custom-rulesets.adoc[]).
 
 . Open your API design project in Anypoint Code Builder.
 . From the *Explorer*, expand the *Governance Rulesets* panel in your project. 
++
+If the panel is not in the *Explorer*, activate the panel from the *Views and More Actions...* (*...*) menu in the *Explorer*.
 . Add a ruleset:
 
 * If the panel does not contain any rulesets, click *Add Rulesets*.
@@ -97,6 +99,8 @@ image:anypoint-code-builder::gov-rulesets-running.png["Rules running in the pane
 For example, this ruleset returns a warning on some rules:
 +
 image:anypoint-code-builder::gov-rulesets-warning.png["Ruleset with warnings in API Governance panel",width=500]
++
+Execution times displayed for a ruleset (such as 19.25s) represent the sum of time it takes to run each rule. Due to parallel execution of rules on machines with multiple cores, the execution time displayed for a ruleset is likely to be greater than the actual time to complete the execution. 
 +
 The *Governance Results* panel also identifies any warnings or errors. For example:
 +
@@ -191,7 +195,7 @@ protocols:
 The description is between `title` and `protocols`.
 .. Re-run the rule *api-must-have-description*, and notice that the specification now conforms to the rule.
 +
-image:gov-example-warning-fixed-description.png["Fixed description"].
+image:gov-example-warning-fixed-description.png["Fixed description"]
 +
 The ruleset continues to identify a warning because a different rule in the ruleset has a warning. 
 . Address any remaining issues that you intend to fix.
@@ -217,14 +221,136 @@ protocols:
 +
 For example, re-run *api-must-have-documentation*, and notice that the specification now conforms to the rule. 
 +
-image:gov-example-warning-fixed-all.png["Fixed documentation"].
+image:gov-example-warning-fixed-all.png["Fixed documentation"]
 
 The specification has no more errors or warnings. For example:
 
 image:anypoint-code-builder::gov-example-error-fixed-all.png["Panel displaying rulesets validate",width=700]
 
+[[ruleset-remove]]
+== Remove a Ruleset from a Project
+
+. In the *Governance Ruleset* panel, hover over a ruleset to display the *More actions* (*...*) menu.
+. In the *More actions* menu, click *Remove Ruleset...*. 
+
+You can also use the command *MuleSoft: Remove Governance Ruleset...* from the command palette for this purpose.
+
+[[ruleset-yaml]]
+== Open a Ruleset YAML File
+
+To examine the configuration of a ruleset's YAML file:
+
+. In the *Governance Ruleset* panel, hover over a ruleset to display its *More actions* (*...*) menu.
+. Click *Show in Files* to open the YAML file in a *ruleset.yaml* tab in the IDE.
+
+The following example shows version 1.6.1 of the HTTPS Enforcement YAML file:
+
+[source,YAML]
+----
+#%Validation Profile 1.0
+profile: HTTPS enforcement
+description: This ruleset helps ensure the use of HTTPS across URLs in API
+  definitions, both in the base server URL and in any callbacks optionally
+  defined.
+violation:
+  - use-https-for-callbacks
+  - use-https-for-scheme-protocol
+  - use-https-for-urls
+tags:
+  - security
+validations:
+  use-https-for-callbacks:
+    message: "{{apiContract.expression}} must use https as it is a callback url"
+    targetClass: apiContract.Callback
+    propertyConstraints:
+      apiContract.expression:
+        pattern: ^https://
+    examples:
+      valid: |
+        openapi: "3.0.0"
+        info:
+          title: example API
+          version: "1.0.0"
+        paths:
+          /subscribe:
+            post:
+              responses:
+                '201':
+                  description: Webhook created
+              callbacks:
+                myEvent:   
+                  'https://{$request.body#/callbackUrl}'
+      invalid: |
+        openapi: "3.0.0"
+        info:
+          title: example API
+          version: "1.0.0"
+        paths:
+          /subscribe:
+            post:
+              responses:
+                '201':
+                  description: Webhook created
+              callbacks:
+                myEvent:   
+                  'http://{$request.body#/callbackUrl}'
+  use-https-for-scheme-protocol:
+    message: Only use https protocol scheme
+    targetClass: apiContract.WebAPI
+    not:
+      propertyConstraints:
+        apiContract.scheme:
+          containsSome:
+            - HTTP
+            - http
+    examples:
+      valid: |
+        #%RAML 1.0
+        protocols:
+          - HTTPS
+      invalid: |
+        #%RAML 1.0
+        protocols:
+          - HTTP
+  use-https-for-urls:
+    message: "{{core.urlTemplate}} should use https"
+    targetClass: apiContract.Server
+    propertyConstraints:
+      core.urlTemplate:
+        pattern: ^https://
+    examples:
+      valid: |
+        openapi: "3.0.0"
+        servers:
+          - url: "https://mySecureEndpoint"
+            description: "My endpoint that uses HTTPS"
+      invalid: |
+        openapi: "3.0.0"
+        servers:
+          - url: "http://myNotSoSecureEndpoint"
+            description: "My endpoint that uses HTTP"
+----
 
 
+[[ruleset-exchange]]
+== Open a Ruleset in Exchange
+
+In Exchange, rulesets list all rules and can provide documentation with examples.
+
+To open the ruleset in Exchange:
+
+. In the *Governance Ruleset* panel, hover over a ruleset to display its *More actions* (*...*) menu.
+. Click *Open in Exchange*.
+
+
+[[ruleset-version]]
+== Change a Ruleset Version
+
+To select a different version of a ruleset:
+
+. In the *Governance Ruleset* panel, hover over a ruleset to display its *More actions* (*...*) menu.
+. Click *Change Version...*.
+. Select a different version from the *Change Version* menu that opens. 
 
 
 

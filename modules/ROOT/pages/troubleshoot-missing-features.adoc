@@ -60,3 +60,19 @@ To modify your trust settings in the IDE:
 Workspace: Configure Workspace Trust Settings
 ----
 . Review and adjust the workspace settings, as needed.
+
+== Incomplete Flow
+
+If a flow lacks a component or contains only a trigger, such as an HTTP Listener operation or the Scheduler, an error similar to the following appears in the *Problems* panel and from the configuration XML: 
+
+----
+The content of element 'flow' is not complete. One of 
+'{"http://www.mulesoft.org/schema/mule/core":abstract-message-processor, 
+"http://www.mulesoft.org/schema/mule/core":abstract-mixed-content-message-processor}' 
+is expected.(cvc-complex-type.2.4.b)
+----
+
+To address this issue, add processing components or connector operations to your flow, such as a Logger or HTTP Request operation.  
+// Pointer to component reference:
+include::partial$acb-component-info.adoc[tags="note-component-ref"]
+
