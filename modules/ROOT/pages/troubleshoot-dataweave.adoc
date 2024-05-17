@@ -13,14 +13,14 @@ When Anypoint Code Builder cannot process a value, the IDE provides a visual ind
 [[sample-input]]
 == Unable to Find Sample Input
 
-The DataWeave error `Unable to find sample input` applies to a Mule variable, such as `payload`. In this case, the IDE places a wavy blue line under the value in the configuration XML file. 
+The DataWeave error `Unable to find sample input` applies to a Mule event variable, such as `payload`. In this case, the IDE places a wavy blue line under the value in the configuration XML file. 
 
 image::dw-issue-sample-data.png["'Unable to find sample input' error"]
 
 If your application isn't running, the IDE can't provide any information about Mule variables unless you provide sample data. 
 Use xref:int-configure-dw-expressions.adoc#sample-data[Quick Fix] to provide sample data in the format and data structure that you expect to be present when the application runs.
 
-For more information about Mule variables, see xref:dataweave::dataweave-variables-context.adoc[].
+For more information about Mule event variables, see xref:dataweave::dataweave-variables-context.adoc[].
 
 [[resolve-reference]]
 == Unable to Resolve Reference
@@ -29,7 +29,7 @@ The error `Unable to resolve reference` is typically for a sequence of character
 
 image::dw-issue-reference-resolution.png["`Unable to resolve reference` error"]
 
-Either provide the intended value or use *Quick Fix* to convert the character sequence into a DataWeave variable. For more information, see xref:dataweave::dataweave-variables.adoc[].
+Either provide the intended value or use xref:int-configure-dw-expressions.adoc#sample-data[Quick Fix] to convert the character sequence into a DataWeave variable. For more information, see xref:dataweave::dataweave-variables.adoc[].
 
 [[expects-y]]
 == Expects _x_ but Got _y_
