@@ -7,13 +7,15 @@ DataWeave is the programming language designed by MuleSoft for data transformati
 
 == Before You Begin
 
-It is important to have a basic understanding of the DataWeave language. DataWeave expressions accept the following: 
+Understand the basics of the DataWeave language. 
+
+DataWeave expressions accept the following: 
 
 * xref:dataweave::dw-functions.adoc[DataWeave functions and operators] and data types that their parameters accept.
 +
 For example, the concatenation function (xref:dataweave::dw-core-functions-plusplus.adoc[++]) accepts strings, arrays, objects, and date-related data types. 
 +
-You can also get function documentation from the IDE. For example, see <<tab-functions>>.
+The IDE also provides built-in documentation for functions. For example, see <<tab-functions>>.
 * xref:dataweave::dataweave-variables-context.adoc[Predefined Mule variables] such as `payload`, `attributes`, `vars`.
 * xref:dataweave::dataweave-selectors.adoc[DataWeave selectors] for capturing the values of fields within the payload, an attribute, or a variable within the xref:mule-runtime::about-mule-event.adoc[Mule event]. 
 
@@ -124,11 +126,11 @@ Preview auto-generated sample data, or preview your own sample data. Preview the
 | Preview Your Sample Data
 
 | 
-Outputting results from auto-generated sample data:
+Output results from auto-generated sample data:
 
 image:int-dw-fx-preview-tab.png["Functions tab for expression field"]
 |
-Outputting results from an expression with user-created sample data:
+Outputs results from an expression with user-created sample data:
 
 image:int-dw-fx-preview-tab-output.png["Data tab for expression field"]
 |===
@@ -168,13 +170,13 @@ You can create sample data in the following formats:
 To create sample data for a Mule variable:
 
 . Open your project. 
-. In the XML editor, hover over the Mule variable (such as `payload` or `attributes`) to open the . For example:
+. In the XML editor, hover over the Mule variable (such as `payload` or `attributes`) to open the , for example:
 +
-image::int-dw-sample-quick-fix-hover.png["Hovering over Quick Fix in the configuration XML file"]
+image::int-dw-sample-quick-fix-hover.png["Quick Fix in the configuration XML file"]
 . Click *Quick Fix* to open the *Quick Fix* menu.
 . Select *Create sample data for _your-value_*, such as *Create sample data for payload*, for example:
 +
-image::int-dw-sample-quick-fix-create.png["Creating a Quick Fix from the configuration XML file"]
+image::int-dw-sample-quick-fix-create.png["Perform Quick Fix action from the configuration XML file"]
 . In the menu that opens, select a format, such as JSON, for the sample data. 
 +
 image::dw-issue-sample-data-formats.png["Menu of sample data file formats"]
@@ -190,7 +192,7 @@ See <<important, Important>> before adding sample data.
 +
 Hover over the value in the XML editor to display the structure, data keys, and data types of your sample data, for example:
 +
-image::int-dw-sample-quick-fix-example-hover-xml.png["Hovering over XML to display sample data"]
+image::int-dw-sample-quick-fix-example-hover-xml.png["Hover over XML to display sample data"]
 . Preview your sample data from the expression builder UI:
 .. From the canvas UI, click the component that contains your sample data to open the expression builder for that field. 
 .. Click the expression field of the component that has sample data to open the expression builder for that field. 
@@ -200,7 +202,7 @@ image::int-dw-sample-quick-fix-example-preview.png["Sample data preview in the e
 +
 You can modify the value. For example, add DataWeave selectors or functions:
 +
-image::int-dw-sample-quick-fix-example-preview-modified.png["Previewing sample data"]
+image::int-dw-sample-quick-fix-example-preview-modified.png["Preview modified sample data"]
 +
 The example now returns an array of `id` values.
 
@@ -209,6 +211,9 @@ The example now returns an array of `id` values.
 == Address DataWeave Errors
 
 When your DataWeave code contains a syntactic or semantic error, Anypoint Code Builder highlights the error and offers a suggested fix.
+
+
+You can troubleshoot the following issues:
 
 * <<fix-dw-add-import>>
 * <<fix-dw-error>>
@@ -227,11 +232,11 @@ For example, if you don't import the String module to which this function belong
 
 The expression builder identifies the error. For example:
 
-image::int-dw-fx-error-add-import.png["Import required"]
+image::int-dw-fx-error-add-import.png["'Import required' error"]
 
 To fix this issue, click to add the import directive automatically, for example:
 
-image::int-dw-fx-error-fix-import.png["Import required"]
+image::int-dw-fx-error-fix-import.png["Import required error"]
 
 The XML for the fix is similar to this example:
 
