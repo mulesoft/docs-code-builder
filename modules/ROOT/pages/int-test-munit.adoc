@@ -61,13 +61,17 @@ For MUnit features supported by Anypoint Code Builder, see xref:acb-release-note
 
 Make MUnit resources available to your project. The process differs depending on whether you have a Mule enterprise edition (EE) license.
 
-* <<configure-settings-license-yes>>: If you have a Mule EE license (_not a trial license_), use this procedure to set access to MUnit features. 
+* <<configure-settings-license-yes>>:
 +
-Configure `server` credentials settings in the Maven file, `settings.xml`. This configuration applies across all implementation and integration projects in Anypoint Code Builder because all settings are in the Maven `settings.xml` file.
+If you have a Mule EE license (_not a trial license_), configure `server` credentials settings in the Maven file, `settings.xml`. 
++
+This configuration applies across all implementation and integration projects in Anypoint Code Builder because all settings are in the Maven `settings.xml` file.
 
-* <<configure-settings-license-no>>: If you _don't have_ a Mule EE license or if your license is a trial license, use this procedure to set access to MUnit features. 
+* <<configure-settings-license-no>>:
 +
-Configure your `mule-artifact.json` for the project in the Maven file, `settings.xml`. Access applies per project because of the project-level settings in `mule-artifact.json`.
+If you _don't have_ a Mule EE license or if your license is a trial license, configure your `mule-artifact.json` for the project in the Maven file, `settings.xml`. 
++
+Access applies per project because of the project-level settings in `mule-artifact.json`.
 
 [[configure-settings-license-yes]]
 === Configure Maven Settings (Licensed Access)
