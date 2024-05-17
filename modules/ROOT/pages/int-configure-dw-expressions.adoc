@@ -218,7 +218,7 @@ When your DataWeave code contains a syntactic or semantic error, Anypoint Code B
 
 Many DataWeave modules require an explicit `import` directive in the expression. Only the Core module does not require an this directive. 
 
-For example, the function `camelize( "hello world")` produces an error `Unable to resolve the reference of 'camelize'` if you do not import the String module to which this function belongs. 
+For example, if you don't import the String module to which this function belongs, the function `camelize( "hello world")` produces an error `Unable to resolve the reference of 'camelize'`.
 
 [source,xml]
 ----
