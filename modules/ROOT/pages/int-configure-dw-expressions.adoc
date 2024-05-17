@@ -3,7 +3,7 @@
 
 Configure DataWeave expressions in your integrations and implementations from the expression builder UI or from the configuration XML. Mock data for your expressions so that you can preview sample output of your expressions in Anypoint Code Builder.
 
-DataWeave is the programming language designed by MuleSoft for data transformation and expressions in connector operations and other components that process messages (payload, attributes) and other Mule event data. When you create an implementation or integration in Anypoint Code Builder, you are creating a Mule app that runs on an instance of the Mule runtime engine. 
+DataWeave is the programming language designed by MuleSoft for data transformation and expressions in connector operations and other components that process messages (payload and attributes) and other Mule event data. When you create an implementation or integration in Anypoint Code Builder, you are creating a Mule app that runs on an instance of the Mule runtime engine. 
 
 == Before You Begin
 
@@ -16,7 +16,7 @@ DataWeave expressions accept the following:
 For example, the concatenation function (xref:dataweave::dw-core-functions-plusplus.adoc[++]) accepts strings, arrays, objects, and date-related data types. 
 +
 The IDE also provides built-in documentation for functions. For example, see <<tab-functions>>.
-* xref:dataweave::dataweave-variables-context.adoc[Predefined Mule variables] such as `payload`, `attributes`, `vars`.
+* xref:dataweave::dataweave-variables-context.adoc[Predefined Mule event variables] such as `payload`, `attributes`, `vars`.
 * xref:dataweave::dataweave-selectors.adoc[DataWeave selectors] for capturing the values of fields within the payload, an attribute, or a variable within the xref:mule-runtime::about-mule-event.adoc[Mule event]. 
 
 For more resources, see xref:dataweave::index.adoc[]. 
@@ -53,7 +53,7 @@ Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of express
 [[tab-data]]
 == Check the Data Structure
 
-The *Data* tab provides the data structure of the Mule event, including the payload, attributes, and Mule variables. The tab includes any sample data. This tab is part of the expression builder for a component's *fx* field. For example:
+To review the data structure of the Mule event, including the payload, attributes, and Mule variables, use the *Data* tab. The tab includes any sample data and is part of the expression builder for a component's *fx* field. For example:
 
 [%header,cols="1a,1a"]
 |===
@@ -151,7 +151,7 @@ image::dataweave-function-preview-output.png["Preview Output tab]
 [[sample-data]]
 == Provide Sample Data for a DataWeave Expression
 
-To test and preview DataWeave expressions in your components locally, without running your application to retrieve Mule event data from an external source., add sample data for Mule variables, such as `payload` in *fx* fields.
+To test and preview DataWeave expressions in your components locally, without running your application to retrieve Mule event data from an external source, add sample data for Mule variables, such as `payload` in *fx* fields.
 
 You can create sample data in the following formats:
 
@@ -170,7 +170,7 @@ You can create sample data in the following formats:
 To create sample data for a Mule variable:
 
 . Open your project. 
-. In the XML editor, hover over the Mule variable (such as `payload` or `attributes`) to open the , for example:
+. In the XML editor, hover over the Mule event variable (such as `payload`) to open the , for example:
 +
 image::int-dw-sample-quick-fix-hover.png["Quick Fix in the configuration XML file"]
 . Click *Quick Fix* to open the *Quick Fix* menu.
@@ -188,7 +188,7 @@ image::int-dw-sample-quick-fix-example-dir.png["Sample data files in the project
 +
 Notice that the file name is `payload.json`. Files for your sample data and for the autocreated sample data are stored in the project directory `src/test/resources`.
 + 
-See <<important, Important>> before adding sample data.
+See the <<important, Important>> note before adding sample data.
 +
 Hover over the value in the XML editor to display the structure, data keys, and data types of your sample data, for example:
 +
