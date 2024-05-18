@@ -26,12 +26,13 @@ image::acb-mulesoft-in-activity-bar.png["MuleSoft icon in the VS Code Activity B
 . From *Quick Actions*, click *Develop an Integration*:
 +
 image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
-. Configure your integration project using these values:
+. Provide integration project properties: 
 +
+image::int-create-integration-scratch.png["Create integration project from scratch.", width=70%] 
+
 .. Under *Project Name*, type `american-ws-anypoint-code-builder`.
 .. Under *Project Location*, select *Browse*, and then select your home directory.
 .. Under *Create*, select *Empty Project*. 
-//TODO: VERIFY
 .. Select *Mule runtime* and *Java* versions. 
 +
 //Info about downloads:
@@ -130,7 +131,9 @@ In the menu, the snippet is a partially configured Mule component that is repres
   <http:listener-connection host="0.0.0.0" port="8081"/>
 </http:listener-config>
 ----
-In `<http:listener-config/>` and its child element `<http:listener-connection/>`, set the attributes to values provided in the example. The `doc:id` is randomly generated and does not require a change.
+In `<http:listener-config/>` and its child element `<http:listener-connection/>`, set the attributes to values provided in the example. 
++
+Notice that the `name` attribute changes to `inbound-request`. The `doc:id` is randomly generated and does not require a change.
 . Configure the attributes for the HTTP Listener configuration:
 +
 [tabs]
