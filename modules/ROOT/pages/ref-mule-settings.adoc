@@ -1,4 +1,4 @@
-= Configuring MuleSoft Settings in the IDE
+= MuleSoft Settings
 :page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -12,6 +12,7 @@ To open the settings:
 
 //shared steps for opening Mule settings
 include::partial$acb-reusable-steps.adoc[tags="open-mule-settings"]
+include::partial$acb-reusable-steps.adoc[tags="mule-settings-nav-options"]
 
 For information about specific Mule settings, see the sections that follow.
 
@@ -62,22 +63,6 @@ Typically, the default of *1g* (1 GB) is sufficient. However, you can change the
 If you are using the cloud IDE, be aware of the memory available to the container before changing this value.
 //TODO: HOW WOULD THEY KNOW 
 
-[[setting-mule-home]]
-== Mule › Runtime: Mule Home
-
-When you install or update Anypoint Extension Pack version, the IDE extracts the latest supported Mule version to this directory. Typically, there is no need to change the default directory. 
-
-
-
-
-[[setting-runtime-dir]]
-== Mule › Runtime: Mule Runtimes Directory
-
-Mule runtime engine (Mule) is part of the Anypoint Extension Pack.  You can use this setting to change the directory into which the installation or update process downloads Mule.
-
-For example, the default directory in the desktop IDE on a Mac is similar to `/Users/me/muleRuntimes`. In the cloud IDE, the default is similar to `/home/me/muleRuntimes`.
-
-In Windows, on the desktop IDE, avoid potential issues with long paths by using the default path or another directory that is close to the root directory. 
 
 [[setting-region]]
 == Mule: Control Plane
@@ -108,4 +93,11 @@ Set the verbosity of logs that appear in the Anypoint Code Builder extension and
 * Info: Fatal, Error, Warn, and Info issues 
 * Debug: Fatal, Error, Warn, Info, and Debug issues
 * Trace: Fatal, Error, Warn, Info, Debug, and Trace issues
+
+[[setting-home-dir]]
+==  Mule: Home Directory
+
+Set a home directory for downloaded assets, which include Mule runtime (`runtime/`) and Java (`java/`) versions for your implementations and integrations, as well as the `acb_settings.xml` file in `maven/` (see xref:ref-acb-maven.adoc[]).
+
+
 

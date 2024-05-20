@@ -279,18 +279,36 @@ Anypoint Code Builder does not support scaffolding API specs that reference OAS 
 
 //
 // tag::open-mule-settings[]
+// only for desktop IDE for US/EU settings:
 . If an API specification is open in the Explorer panel of the IDE, close the project to avoid a synchronization error when you switch clouds. 
 
 * In the desktop IDE, click *File* > *Close Folder*.
 * In the cloud IDE, click the image:anypoint-code-builder::icon-menu.png["",18,18] (menu) icon, and select *File* > *Close Folder*.
 
-. Open the Settings tab from the activity bar in the desktop IDE:
+. Open the *Settings* tab in the desktop IDE:
 +
 image:anypoint-code-builder::acb-activity-bar-select-cloud.png["Selecting the EU cloud from the desktop IDE"]
-
-* From the Anypoint Code Builder panel, click the *Open ACB Settings* (gear) icon.
-* From the activity bar, click the *Manage* (gear) icon, select *Settings*, and search for `mule` in the *Settings* tab.
 // end::open-mule-settings[]
+//
+
+//
+// tag::open-settings-all[]
+. Open the *Settings* tab for the IDE:
+// end::open-settings-all[]
+//
+
+//
+// tag::mule-settings-nav-options[]
++
+.Show me how
+[%collapsible]
+====
+* From the Anypoint Code Builder panel, click the image:anypoint-code-builder::icon-settings-gear.png["",18,18] (gear) icon.
+* From the activity bar, click the image:anypoint-code-builder::icon-settings-gear.png["",18,18] (gear) icon, select *Settings*, and search for `mule` in the *Settings* tab.
+* Provide the command `MuleSoft: Open ACB Settings` in the xref:start-use-command-palette.adoc[Command Palette]. 
+====
+// end::mule-settings-nav-options[]
+//
 
 //
 // tag::scm-intro-best-practice[]
@@ -354,6 +372,66 @@ MuleSoft: Import Asset from Exchange
 . Wait for the IDE to load a list of matches to the name.
 // end::import-api-exchange[]
 //
+
+//
+// tag::scaffold-spec-substeps[]
++
+.Show me how
+[%collapsible]
+====
+.. In the field that opens, provide a name for your implementation project.
+.. Navigate to a directory for your project, and click *Select target folder*.
+.. Select a Mule runtime (Mule) version for your project.
+.. Select a supported Java version for Mule.
+.. After the scaffolding process completes, view the scaffolded interface for your project from the `src/main/mule` directory in the Explorer.
++
+If the scaffold fails, see xref:troubleshoot-implementation-errors.adoc[].
++
+You can also open your new project's `mule-artifact.json` file from the Explorer to check the Mule and Java versions, for example:
++
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag=mule-artifact-json-ex]
++
+The `mule-artifact.json` file is located at the root level of the project directory. 
+====
+// end::scaffold-spec-substeps[]
+//
+
+//
+// tag::mule-artifact-json-ex[]
+[source,XML]
+--
+{
+    "minMuleVersion": "4.6.2",
+    "javaSpecificationVersions": [
+        "11"
+    ]
+}
+--
+// end::mule-artifact-json-ex[]
+//
+
+//
+// tag::pom-api-dependency-ex[]
+[source,XML]
+--
+<dependency>
+    <groupId>e91cab06-650b-4634-9c6f-5bc4f4fc4d17</groupId>
+    <artifactId>OAS-Example</artifactId>
+    <version>1.0.1</version>
+    <classifier>oas</classifier>
+    <type>zip</type>
+</dependency>
+--
+// end::pom-api-dependency-ex[]
+//
+
+//
+// tag::set-versions-manually[]
+//for Mule and Java/Java versions in Settings tab:
+Although it is also possible to set the versions as values to *muleRuntimeVersion* and *jdkVersion* items directly in the *Settings* tab, you must know the major, minor, and patch numbers, and in some cases, the timestamp. It is easier to set them after clicking *Edit defaults through command palette*. 
+// end::set-versions-manually[]
+//
+
 
 ////////// MUnit /////////
 //

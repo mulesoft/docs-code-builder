@@ -1,0 +1,106 @@
+= Version Settings for Mule, Java, and Connectors
+//used in procedures:
+:open-project: Open your implementation or integration project. 
+
+Set Mule runtime engine (Mule), Java, and connector versions to use in your projects.
+
+* <<default-versions, Default versions>>: Set default Mule and Java versions to display in version drop-down menus. 
+
+* Project-level versions: Set versions to use in a specific project.
+** For Mule and Java versions, see <<project-version-mule-java>>.
+** For connector versions, see <<project-versions-connectors>>.  
+
+[[default-versions]]
+== Select Default Mule and Java Versions
+
+Select the default Mule and Java versions for new implementation and integration projects. The defaults appear in drop-down menus from which you select a version, for example, when creating a project. 
+
+Versions not present in the IDE append a message similar to *downloads upon project creation*. Versions that don't support a feature typically append a message, such as *AsyncAPI implementation unsupported* for Mule 4.4. 
+
+You can set a different version at the project level (see <<project-version-mule-java>>). 
+
+[[set-defaults-from-palette]]
+=== Select Defaults from the Command Palette
+
+To select the default Mule and Java versions from the command palette:
+
+//step: open command palette:
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Run the following command:
++
+[source,command]
+--
+MuleSoft: Get a Runtime
+--
+//TODO: VERIFY Get a Runtime EVERYWHERE
+//TODO: PROVIDE SCREENSHOTS
+//step: select versions from command palette:
+include::partial$acb-runtime-java.adoc[tags="runtime-java-version-selection"]
+
+[[set-defaults-from-settings]]
+=== Select Defaults from the Settings Tab
+
+To select the default Mule and Java versions from the *Settings* tab:
+
+//step: open Settings tab and bulleted "show me how" options
+include::partial$acb-reusable-steps.adoc[tags="open-settings-all"]
+include::partial$acb-reusable-steps.adoc[tags="mule-settings-nav-options"]
+//TODO: VERIFY NAME CHANGE JDK -> Java Versions
+. Find *Mule › Application: Default Mule Runtime And Java Versions* in the open tab.
+. Click *Edit defaults through command palette*. 
++
+include::partial$acb-reusable-steps.adoc[tags="set-versions-manually"]
+//step: select versions from command palette:
+include::partial$acb-runtime-java.adoc[tags="runtime-java-version-selection"]
+
+[[project-version-mule-java]]
+== Select Mule and Java Versions for a Project
+
+Set Mule or Java versions for a specific implementation or integration project from *Project Properties*. You can change versions at any time, but it is important to test your projects with the versions you intend to deploy. 
+
+Version settings are important in several scenarios:
+
+* Updating a project to use more current versions
+* Switching to a supported version, for example, for a project that you import into Anypoint Code Builder that uses an unsupported version
+* Adding a version of Mule or Java that is missing from your project
+* Selecting versions of Mule or Java that are compatible with each other
+
+When a Mule or Java version is unset for a project, the IDE's canvas and notifications provide a *Set version* button that opens the *Project Properties* tab. You can also navigate directly to the *Project Properties* tab. 
+
+
+[[project-versions-from-properties]]
+To select Mule and Java versions for a project:
+
+//open project local attribute:
+. {open-project}
+//step: open project properties tab from Project Properties menu item
+include::partial$acb-runtime-java.adoc[tags="open-project-properties-properties"]
+//step: open project properties tab
+include::partial$acb-runtime-java.adoc[tags="open-project-properties-menu"]
+. In *Project Properties*, select the versions to use in this project.
++
+image::int-project-properties.png["Mule and Java versions in Project Properties tab"]
+
+
+[[project-versions-connectors]]
+== Select Connector Versions for a Project
+
+Set connector versions for a specific implementation or integration project from *Project Properties*. You can change versions at any time, but it is important to test your projects with the versions you intend to deploy. 
+ 
+//TODO: RECOMMENDATIONS? 
+//TODO: WHAT IF EMPTY? an empty notification will appear in the UI -- no need to add image or details in doc
+
+[[connector-version-from-properties]]
+To select connector versions for a project:
+
+//open project local attribute:
+. {open-project}
+//step: open project properties tab from Project Properties menu item
+include::partial$acb-runtime-java.adoc[tags="open-project-properties-properties"]
+//step: open project properties tab
+include::partial$acb-runtime-java.adoc[tags="open-project-properties-menu"]
+. Click *Connectors* from the *Project Properties* side bar. 
++
+image::int-project-properties-connectors.png["Connector versions in Project Properties tab"]
+. Select connector versions. 
+
