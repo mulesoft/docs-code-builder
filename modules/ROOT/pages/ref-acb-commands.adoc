@@ -1,4 +1,5 @@
 = Command Reference
+:rulesets-xref: For information about rulesets, see xref:des-govern-api.adoc[].
 
 Anypoint Code Builder provides a set of commands through the Command Palette. 
 
@@ -9,22 +10,31 @@ Anypoint Code Builder provides a set of commands through the Command Palette.
 +
 Add an API spec fragment from Exchange to the project directory so that you can include the fragment in your spec. For a procedure that uses this command, see xref:des-create-api-fragments.adoc#add-fragment-to-project[Add a Fragment from Exchange to Your Project].
 
+//DONE: 5/20/24 - HIDING: NOT FOUND IN SAMPLE APP
+//* `MuleSoft: Add Governance Ruleset Version`
+
 * `MuleSoft: API Console`
 +
-Open the API Console from a design project. See xref:des-create-api-specs.adoc[].
+Open the API Console from an API design project. See xref:des-create-api-specs.adoc[].
+
+* `MuleSoft: Change Ruleset Version`
++
+Change the version of an API governance ruleset in an API design project. Select from rulesets in your project, and change the version. 
+//xref to API gov page: 
+{rulesets-xref}
 
 * `MuleSoft: Deploy to CloudHub`
 +
 Deploy an integration or implementation to CloudHub. See xref:int-deploy-mule-apps.adoc#deploy-an-app-to-cloudhub[Deploy an App to CloudHub].
 
-//TODO: added 4/22/24
+//TODO: revisiting 5/20/24
 //* `MuleSoft: Delete`
 //+
 //TODO_TODO
 
 * `MuleSoft: Design an API`
 +
-Start an API design project. You can also start an API design project from the UI. See xref:des-create-api-specs.adoc[].
+Start an API design project. You can also start the project from the UI. See xref:des-create-api-specs.adoc[].
 
 * `MuleSoft: Develop an Integration`
 +
@@ -43,10 +53,10 @@ Export a Mule project with its compiled code and all dependencies into a distrib
 +
 Export a compressed file that contains your project’s workspace folders, logs, and information about environment variables, CPU, operating system, and system properties. See xref:troubleshooting.adoc#export-troubleshooting-info[Export Troubleshooting Information].
 
-//TODO: added 4/22/24: COMMAND NAME ISSUE
-//* `MuleSoft: Get a Runtime`
-//+
-//TODO_TODO
+//TODO: TEST WITH IMP PROJ
+* `MuleSoft: Get a Runtime`
++
+Select Mule runtime and Java versions for an implementation or integration project. 
 
 * `MuleSoft: Implement an API Specification`
 +
@@ -91,47 +101,59 @@ Add a configuration XML file to your integration or implementation project. See 
 +
 Open the *Settings* page for Anypoint Code Builder settings, which include settings for the Anypoint Platform host (EU or US). For an example that uses the command, see xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud].
 
-// Removed per Shobana's request (will be removed from command palette, for more info, Subhash)
+// NO LONGER AVAILABLE from command palette
 //* `MuleSoft: Project Properties`
-//+
-//Open the *Project Properties* tab to select a Mule runtime or Java version for the project. 
-//See xref:int-versions.adoc[].
 
 //
 //NOT YET:
 //* `MuleSoft: Open Einstein`
-//+
-//
+
+//TODO: 05/20/24 THROWS AN ERROR IN INT PROJECT, seemed to work in des proj
 // throws an error - reported on ACB Slack channel 011924
 // recommended change-> "text editor" -> "Text Editor"
-// TODO: follow up; TODO added on 4/22
 //* `MuleSoft: Open in text editor`
-//
+//+
+//Opens an edit view for a project.
 
 * `MuleSoft: Publish API Specification to Exchange`
 +
 Publish an API spec or fragment from the IDE to Anypoint Exchange. See xref:des-publish-api-spec-to-exchange.adoc##publish-spec[Publish an API spec to Exchange].
+
+
+//TODO: Revisited 5/20/24
+// not clear what this one does when you try it out
+//* `MuleSoft: Refresh DataSense Results`
+//+
+//TODO_TODO
+
+//TODO: Revisited 5/20/24
+// not clear what this one does when you try it out
+//* `MuleSoft: Refresh Projects`
+//+
+//TODO_TODO
+
+* `MuleSoft: Remove Governance Ruleset...`
++
+Select a ruleset to remove from an API design project. 
+//xref to API gov page: 
+{rulesets-xref}
 
 // recommended change-> "this local" -> "This Local"
 * `MuleSoft: Re-scaffold this local API`
 +
 After scaffolding an API design project from the IDE into an interface within an implementation project and making subsequent changes to the _design_ project, use this command from the design project to re-scaffold your changes into your interface. See xref:imp-implement-local-apis.adoc#rescaffold-api-spec[Re-Scaffold the API Spec].
 
-//TODO: added TODO ON 4/22/24
-//* `MuleSoft: Set Mule Runtime location`
-//+
+//TODO: 5/20/24
+* `MuleSoft: Run Governance Validation with all Rulesets and Rules`
++
+Validate your API specification against rules in all rulesets added to a design project. 
+//xref to API gov page: 
+{rulesets-xref}
+
+//TODO: 5/20/24
+* `MuleSoft: Save and Hot-deploy to Local Runtime`
++
 //TODO_TODO
-
-//
-// not clear what this one does when you try it out
-//TODO: follow up on this; added TODO ON 4/22/24
-//* `MuleSoft: Refresh DataSense Results`
-//
-// not clear what this one does when you try it out
-// TODO: FOLLOW UP added TODO on 4/22
-//* `MuleSoft: Refresh Projects`
-//
-
 
 // TODO: Is this for all types of assets, and is it limited to public assets? 
 // recommended change-> Search in Anypoint Exchange
@@ -139,16 +161,28 @@ After scaffolding an API design project from the IDE into an interface within an
 +
 Search for an asset by its name in Anypoint Exchange.
 
-//
+//TODO: revisited on 05/20/24
 // ISSUE: the command doesn't set location (e.g., let you select a runtime to use)
 //   and can return error "Mule Runtime executable could not be found. 
 //   Please select a valid Mule Runtime folder"
-// recommended change-> Set Mule Runtime Location 
 //* `MuleSoft: Set Mule Runtime location`
 //+
 //Opens the `muleRuntimes` directory. 
+
+//TODO: 5/20/24
+* `MuleSoft: Show API Governance`
++
+Expand the Governance Rulesets panel from an open API design project. 
+//xref to API gov page: 
+{rulesets-xref}
+
+//TODO: 5/20/24
+* `MuleSoft: Show canvas UI`
++
+//TODO_TODO
+
 //
-//
+//TODO: revisit 5/20/24
 //ISSUE: throws error
 //* `MuleSoft: Show Component in Canvas UI`
 //
@@ -169,6 +203,11 @@ The command `Explorer: Focus on Project Dependencies View` also opens this area.
 * `MuleSoft: Show Welcome`
 +
 Open the *Welcome* tab for Anypoint Code Builder. See an example of the tab in xref:start-discover-ui.adoc[].
+
+//TODO: 5/20/24 - DID NOT appear in command palette from API design project
+//* `MuleSoft: View API Conformance Status on Exchange`
+//+
+//TODO_TODO
 
 == Other Commands
 
