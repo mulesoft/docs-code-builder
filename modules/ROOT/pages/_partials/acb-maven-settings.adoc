@@ -26,3 +26,19 @@ Navigate to `settings.xml`, typically in `{user.home}/.m2/`.
 // end::nav-to-maven-settings[]
 //
 
+
+//
+// tag::pom-releases-ee[]
+. Specify `repository` settings with your Mule username and password _within_ `<project><repositories></repositories></project>`:
++
+[source,xml]
+----
+<repository>
+    <id>releases-ee</id>
+    <name>Mule Release Repository</name>
+    <url>https://repository-master.mulesoft.org/nexus/content/repositories/releases-ee</url>
+</repository>
+----
+// end::pom-releases-ee[]
+//
+
