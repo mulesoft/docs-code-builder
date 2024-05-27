@@ -41,15 +41,81 @@ Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, su
 [[prereqs]]
 == Before You Begin
 
-Understand the fundamentals of MUnit. Refer to the MUnit documentation for an overview and guidance with test configurations:
+* Configure the settings required to run MUnit. 
++
+For guidance, see <<maven-settings>>.
 
-* xref:munit::index.adoc[MUnit Overview]
-* xref:munit::munit-test-concept.adoc[]
-* xref:munit::event-processors.adoc[]
-* xref:munit::munit-cookbook.adoc[]
+* Understand the fundamentals of MUnit. Refer to the MUnit documentation for an overview and guidance with test configurations:
+
+** xref:munit::index.adoc[MUnit Overview]
+** xref:munit::munit-test-concept.adoc[]
+** xref:munit::event-processors.adoc[]
+** xref:munit::munit-cookbook.adoc[]
+
+For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[]. Anypoint Studio supports testing with all MUnit features.
 
 //
-For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[]. Anypoint Studio supports testing with all MUnit features.
+//MUNIT SETTINGS
+[[maven-settings]]
+== Configure Access to MUnit Features
+
+Make MUnit resources available to your project. The process differs depending on whether you have a Mule enterprise edition (EE) license.
+
+* <<configure-settings-license-yes>>:
++
+If you have a Mule EE license (_not a trial license_), configure `server` credentials settings in the Maven file, `settings.xml`. 
++
+Access to MUnit features applies across all implementation and integration projects in Anypoint Code Builder because all settings are in the Maven `settings.xml` file.
+
+* <<configure-settings-license-no>>:
++
+If you _don't have_ a Mule EE license or if your license is a trial license, configure your `mule-artifact.json` for the project.
++
+Access to MUnit features applies per project because of the project-level settings in `mule-artifact.json`.
+
+[[configure-settings-license-yes]]
+=== Configure Maven Settings (Licensed Access)
+
+If you have a Mule EE license (_not a trial license_), configure `server` credentials  in the Maven file, `settings.xml`.
+
+See xref:mule-runtime::installing-an-enterprise-license.adoc[Install an Enterprise License], to acquire or install an Enterprise license. If you are a MuleSoft customer and do not have credentials to access the https://repository.mulesoft.org/nexus-ee/content/repositories/releases-ee/[MuleSoft Enterprise repository^], contact Support and request Nexus enterprise credentials.
+
+//navigate to settings.xml:
+. {empty}
+include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag=nav-to-maven-settings]
+. Specify `server` settings with your Mule username and password _within_ `<servers></servers>`:
++
+[source,xml]
+----
+<server>
+  <username>yourMuleUsername</username>
+  <password>yourMulePassword</password>
+  <id>releases-ee</id>
+</server>
+----
+//set releases ee repo:
+include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag="pom-releases-ee"]
+
+[[configure-settings-license-no]]
+=== Configure Maven Settings (Unlicensed Access)
+
+If you do not own a Mule Enterprise Edition (EE) license or if your license is a trial license, configure your `mule-artifact.json` for the project.
+
+. Open your project in the *Explorer*.
+. In the `mule-artifact.json` file for your project, add the key-value pair `"requiredProduct" : "MULE"` to the existing configuration. For example:
++
+[[source,json]]
+----
+{
+    "minMuleVersion": "4.6.2",
+    "javaSpecificationVersions": [
+        "11"
+    ],
+    "requiredProduct" : "MULE"
+}
+----
+
+For more information about Maven settings, see xref:ref-acb-maven.adoc[].
 
 //
 //MUNIT WORKFLOWS AND TASKS
@@ -58,6 +124,7 @@ For MUnit features supported by Anypoint Code Builder, see xref:acb-release-note
 
 A typical workflow includes one or more of the following steps:
 
+. <<maven-settings>>
 . <<open-test, Opening tests>>
 . <<run, Running tests>>
 . <<run-debug, Debugging>>
