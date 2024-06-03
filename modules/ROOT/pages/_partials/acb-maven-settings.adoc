@@ -23,22 +23,47 @@ Updates that you save to your `settings.xml` are reflected automatically within 
 //
 // tag::nav-to-maven-settings[]
 Navigate to `settings.xml`, typically in `{user.home}/.m2/`.
++
+If `settings.xml` does not exist, create it.
 // end::nav-to-maven-settings[]
 //
 
 
 //
 // tag::pom-releases-ee[]
-. In the project's `pom.xml` file, specify `repository` settings with your Mule username and password _within_ `<repositories></repositories>`:
+. Specify `repository` settings _within_ `<repositories></repositories>`.
 +
 [source,xml]
 ----
-<repository>
-    <id>releases-ee</id>
-    <name>Mule Release Repository</name>
-    <url>https://repository-master.mulesoft.org/nexus/content/repositories/releases-ee</url>
-</repository>
+<profiles>
+...
+    <profile>
+
+        <id>Mule</id>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <repositories>
+            <repository>
+                <id>MuleRepository</id>
+                <name>MuleRepository</name>
+                <url>https://repository.mulesoft.org/nexus-ee/content/repositories/releases-ee/</url>
+                <layout>default</layout>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>true</enabled>
+                </snapshots>
+            </repository>
+        </repositories>
+
+    </profile>
+...
+</profiles>
 ----
++
+For more information, see xref:mule-runtime::maven-reference.adoc#configure-maven-to-access-mulesoft-enterprise-repository[Configure Maven to Access MuleSoft Enterprise Repository].
 // end::pom-releases-ee[]
 //
 
