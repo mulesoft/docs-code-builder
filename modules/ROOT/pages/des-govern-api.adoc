@@ -1,0 +1,357 @@
+= Validating API Specifications Against Governance Rulesets
+:page-deployment-options: cloud-ide, desktop-ide
+// :page-aliases: 
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+Test your API specifications in Anypoint Code Builder design projects against rules in governance rulesets, and fix conformance issues that result.
+
+For information about rulesets and governance, see xref:api-governance::index.adoc#anypoint-api-governance-concepts[Anypoint API Governance Concepts].
+
+[[prereqs]]
+== Before You Begin
+
+You must have an API design project with a supported specification in Anypoint Code Builder. See xref:des-create-api-specs.adoc[].
+
+//TODO: TIME PERMITTING, SHARE INFO FROM RNS HERE VIA INCLUDE
+Ensure that your API specification is supported. See API governance xref:acb-release-notes.adoc#compatibility[Compatibility].
+
+
+[[workflows-tasks]]
+== Workflows and tasks
+
+A typical workflow consists of one or more of the following tasks: 
+
+. Add one or more rulesets to an API design project: 
++
+<<add-rulesets>>
+. Run rules in the rulesets to determine if your API specification conforms with the rules:
++
+<<run-rules>>
+. Fix any conformance issues in the specification:
++
+<<fix-issues>>
+
+
+[[add-rulesets]]
+== Add Rulesets to a Project
+
+Add governance rulesets as dependencies to your API design project in Anypoint Code Builder. 
+
+Rulesets are hosted on Exchange. MuleSoft provides a number of public rulesets that you can find from Anypoint Code Builder or review directly on https://anypoint.mulesoft.com/exchange/?type=ruleset&show=mulesoft&sort=last&view=grid[Exchange]. For example, the ruleset https://anypoint.mulesoft.com/exchange/68ef9520-24e9-4cf2-b2f5-620025690913/anypoint-best-practices/minor/1.6/[Anypoint Best Practices] provides documentation and examples. Your team can also create and publish rulesets for your organization to Exchange (see xref:api-governance::create-custom-rulesets.adoc[]).
+
+. Open your API design project in Anypoint Code Builder.
+. From the *Explorer*, expand the *Governance Rulesets* panel in your project. 
++
+If the panel is not in the *Explorer*, activate the panel from the *Views and More Actions...* (*...*) menu in the *Explorer*.
+. Add a ruleset:
+
+* If the panel does not contain any rulesets, click *Add Rulesets*.
+For example:
++
+image:anypoint-code-builder::gov-rulesets-add-panel.png["Governance Rulesets panel",width=600]
+* If the panel contains rulesets, you can hover over the panel and click image:anypoint-code-builder::icon-gov-ruleset-add.png["", 15,15] (*Add Governance Rulesets*) to add another ruleset. For example:
++
+image:anypoint-code-builder::gov-rulesets-add-panel-not-empty.png["Add ruleset icon",width=600]
+
+. If prompted, sign in to Anypoint Platform.
+. Search for the ruleset, and click *Add Rulesets*. For example:
++
+image:anypoint-code-builder::gov-rulesets-search-add.png["All Available Rulesets",width=600]
++
+You can also narrow your search to specific organizations from the *Any organization* menu, and you can select a different version of a ruleset if more than one version is available.
+. Proceed to <<run-rules>>.
+
+[[run-rules]]
+== Run Rules Against Your API Specification 
+
+Determine whether your API specification conforms with rules in governance rulesets. 
+
+. Open your API design project in Anypoint Code Builder.
+. From the *Explorer*, expand the *Governance Rulesets* panel to check for rulesets in your project.
+
+* If any rulesets are present and you don't intend to add more, proceed to the next step.
++
+image:anypoint-code-builder::gov-rulesets-add-panel-not-empty.png["Add ruleset icon",width=500]
+* If no rulesets are present or if you intend to add more rulesets, go to <<add-rulesets>>.
++
+image:anypoint-code-builder::gov-rulesets-add-panel.png["Governance Rulesets panel",width=500]
+. Run rules from the *Governance Rulesets* panel.
++
+You can run rulesets at multiple levels:
+
+* All rules in all rulesets
++
+image:anypoint-code-builder::gov-rulesets-run-all.png["Clicking icon to run all rulesets",width=500]
+* All rules in a single ruleset
++
+image:anypoint-code-builder::gov-rulesets-run-ruleset.png["Clicking icon to run a rulesets",width=500]
+* A single rule in a ruleset
++
+image:anypoint-code-builder::gov-rulesets-run-rule.png["Clicking icon to run a rule",width=500]
++
+You can monitor the rules as they run. For example:
++
+image:anypoint-code-builder::gov-rulesets-running.png["Rules running in the panel",width=500]
+
+. If any rules return an error (image:anypoint-code-builder::icon-gov-rule-error.png["",15,15]) or a warning (image:anypoint-code-builder::icon-gov-rule-warning.png["",15,15]), proceed to <<fix-issues>>.
++
+For example, this ruleset returns a warning on some rules:
++
+image:anypoint-code-builder::gov-rulesets-warning.png["Ruleset with warnings in API Governance panel",width=500]
++
+Execution times displayed for a ruleset (such as 19.25s) represent the sum of time it takes to run each rule. Due to parallel execution of rules on machines with multiple cores, the execution time displayed for a ruleset is likely to be greater than the actual time to complete the execution. 
++
+The *Governance Results* panel also identifies any warnings or errors. For example:
++
+image:anypoint-code-builder::gov-rulesets-warning-output.png["Ruleset with warnings in Governance Results panel",width=700]
+
+[[fix-issues]]
+== Fix Conformance Issues
+
+To address rules that return errors or warnings, fix the specification to comply with the rules. Then re-run the rules to ensure that the fix is effective.
+
+[[example]]
+=== Example 
+
+To illustrate the process for addressing issues, the example in this procedure starts with a partial RAML specification and some rulesets:
+
+image:anypoint-code-builder::gov-example-prefix.png["Re-running HTTPs rule",width=700]
+
+.Full Example
+[%collapsible]
+====
+* The specification has this markup:
++ 
+[source,yaml]
+--
+#%RAML 1.0
+title: my-des-with-governance
+protocols:
+  - HTTP
+--
+* The design project for the specification applies these rulesets:
+
+** HTTPS Enforcement
+** Anypoint Best Practices
+====
+
+[[fix-conformance-issues]]
+=== Fix Conformance Issues
+
+To fix errors (image:anypoint-code-builder::icon-gov-rule-error.png["",15,15]) and warnings (image:anypoint-code-builder::icon-gov-rule-warning.png["",15,15]):
+
+. Run the rulesets in your project.
++
+For guidances, see <<run-rules>>.
+. Review any resulting errors and warnings in the *Governance Results* panel. For example:
++
+image:anypoint-code-builder::gov-example-postrun-issues.png["Error and Warnings in Governance Rulesets"]
++
+*Governance Results* lists the corresponding issues. For example:
++
+image:anypoint-code-builder::gov-example-postrun-issues-output.png["Error and Warnings in Governance Results"]
+
+* `Error: [HTTPS Enforcement] Only use https protocol scheme.`
+* `Warning: [Anypoint Best Practices] Provide the documentation for the API.`
+* `Warning: [Anypoint Best Practices] Provide the description for the API.`
+. Address errors in the specification. 
++
+For instance, fix the *HTTPS Enforcement* error in the <<example, specification example>> by changing `HTTP` to `HTTPS`:
++
+[source,yaml]
+--
+#%RAML 1.0
+title: my-des-with-governance
+protocols:
+  - HTTPS
+--
+. Re-run the failing rule to ensure that the error is fixed.
++
+For instance, after fixing the `protocols` error in the <<example, specification example>>, run *use-https-for-scheme-protocol* from the *Governance Rulesets* panel. For example:
++
+image:anypoint-code-builder::gov-example-run-fixed-error-https.png["Re-running HTTPs rule",width=700]
++
+Notice that the error no longer appears in *Governance Rulesets*. For example:
++
+image:anypoint-code-builder::gov-example-error-fixed-https.png["Fixed HTTPs rule",width=700]
++
+In addition, the *Governance Results* panel no longer lists the issue. 
+. Address warnings, as needed. 
++
+For instance:
+
+.. Address the warning `Provide the description for the API` by adding a `description` to the <<example, specification example>>. For example:
++
+[source,yaml]
+--
+#%RAML 1.0
+title: my-des-with-governance
+description: my description
+protocols:
+  - HTTPS
+--
++
+The description is between `title` and `protocols`.
+.. Re-run the rule *api-must-have-description*, and notice that the specification now conforms to the rule.
++
+image:gov-example-warning-fixed-description.png["Fixed description"]
++
+The ruleset continues to identify a warning because a different rule in the ruleset has a warning. 
+. Address any remaining issues that you intend to fix.
++ 
+For instance, for the warning `Provide the documentation for the API` in the <<example, example>>, add and save `documentation` markup to the specification:
++
+[source,yaml]
+--
+#%RAML 1.0
+title: my-des-with-governance
+description: my description
+documentation:
+  - title:  My Title
+    content: |
+      Welcome to my API documentation.
+  - title: Legal
+    content: |
+      This is my legal documentation. 
+protocols:
+  - HTTPS
+--
+. Re-run the corresponding rule from the *Governance Rulesets* panel.
++
+For example, re-run *api-must-have-documentation*, and notice that the specification now conforms to the rule. 
++
+image:gov-example-warning-fixed-all.png["Fixed documentation"]
+
+The specification has no more errors or warnings. For example:
+
+image:anypoint-code-builder::gov-example-error-fixed-all.png["Panel displaying rulesets validate",width=700]
+
+[[ruleset-remove]]
+== Remove a Ruleset from a Project
+
+. In the *Governance Ruleset* panel, hover over a ruleset to display the *More actions* (*...*) menu.
+. In the *More actions* menu, click *Remove Ruleset...*. 
+
+You can also use the command *MuleSoft: Remove Governance Ruleset...* from the command palette for this purpose.
+
+[[ruleset-yaml]]
+== Open a Ruleset YAML File
+
+To examine the configuration of a ruleset's YAML file:
+
+. In the *Governance Ruleset* panel, hover over a ruleset to display its *More actions* (*...*) menu.
+. Click *Show in Files* to open the YAML file in a *ruleset.yaml* tab in the IDE.
+
+The following example shows version 1.6.1 of the HTTPS Enforcement YAML file:
+
+[source,YAML]
+----
+#%Validation Profile 1.0
+profile: HTTPS enforcement
+description: This ruleset helps ensure the use of HTTPS across URLs in API
+  definitions, both in the base server URL and in any callbacks optionally
+  defined.
+violation:
+  - use-https-for-callbacks
+  - use-https-for-scheme-protocol
+  - use-https-for-urls
+tags:
+  - security
+validations:
+  use-https-for-callbacks:
+    message: "{{apiContract.expression}} must use https as it is a callback url"
+    targetClass: apiContract.Callback
+    propertyConstraints:
+      apiContract.expression:
+        pattern: ^https://
+    examples:
+      valid: |
+        openapi: "3.0.0"
+        info:
+          title: example API
+          version: "1.0.0"
+        paths:
+          /subscribe:
+            post:
+              responses:
+                '201':
+                  description: Webhook created
+              callbacks:
+                myEvent:   
+                  'https://{$request.body#/callbackUrl}'
+      invalid: |
+        openapi: "3.0.0"
+        info:
+          title: example API
+          version: "1.0.0"
+        paths:
+          /subscribe:
+            post:
+              responses:
+                '201':
+                  description: Webhook created
+              callbacks:
+                myEvent:   
+                  'http://{$request.body#/callbackUrl}'
+  use-https-for-scheme-protocol:
+    message: Only use https protocol scheme
+    targetClass: apiContract.WebAPI
+    not:
+      propertyConstraints:
+        apiContract.scheme:
+          containsSome:
+            - HTTP
+            - http
+    examples:
+      valid: |
+        #%RAML 1.0
+        protocols:
+          - HTTPS
+      invalid: |
+        #%RAML 1.0
+        protocols:
+          - HTTP
+  use-https-for-urls:
+    message: "{{core.urlTemplate}} should use https"
+    targetClass: apiContract.Server
+    propertyConstraints:
+      core.urlTemplate:
+        pattern: ^https://
+    examples:
+      valid: |
+        openapi: "3.0.0"
+        servers:
+          - url: "https://mySecureEndpoint"
+            description: "My endpoint that uses HTTPS"
+      invalid: |
+        openapi: "3.0.0"
+        servers:
+          - url: "http://myNotSoSecureEndpoint"
+            description: "My endpoint that uses HTTP"
+----
+
+
+[[ruleset-exchange]]
+== Open a Ruleset in Exchange
+
+In Exchange, rulesets list all rules and can provide documentation with examples.
+
+To open the ruleset in Exchange:
+
+. In the *Governance Ruleset* panel, hover over a ruleset to display its *More actions* (*...*) menu.
+. Click *Open in Exchange*.
+
+
+[[ruleset-version]]
+== Change a Ruleset Version
+
+To select a different version of a ruleset:
+
+. In the *Governance Ruleset* panel, hover over a ruleset to display its *More actions* (*...*) menu.
+. Click *Change Version...*.
+. Select a different version from the *Change Version* menu that opens. 
+
+
+
+
