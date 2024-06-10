@@ -53,6 +53,9 @@ image::implement-api-option-mat.png["*Implement an API* link highlighted in the 
 . If prompted, click *Allow* to sign in to Anypoint Platform. 
 . Complete the *Implement an API Specification* form:
 +
+image::implement-api-configure-in-task.png["Form for starting an implementation project"]
++
+[calloutlist]
 [%header,cols="20a,60a"] 
 |===
 | Field Name | Field Value
@@ -67,9 +70,12 @@ See xref:start-add-folders.adoc[].
 
 include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 
-| *Show filters* |See xref:filter-search-results.adoc[] for more information.
+| *Search an API Specification from Exchange* |Name of the specification in Exchange. Activate *Show filters* to narrow your search results. See xref:filter-search-results.adoc[] for more information.
+| *Mule runtime* |Mule runtime version to use for your project. 
+| *Java Version* |Java version to use for Mule. 
 |===
-
++
+include::partial$acb-runtime-java.adoc[tags="runtime-java-download"]
 . Search for an API spec on Exchange:
 +
 .. Start typing the name of an API spec.
@@ -87,17 +93,10 @@ When you create the project, Anypoint Code Builder:
 +
 ** Adds the API spec as a dependency in your project's `pom.xml` file:
 +
-[source,XML]
---
-<dependency>
-    <groupId>e91cab06-650b-4634-9c6f-5bc4f4fc4d17</groupId>
-    <artifactId>OAS-Example</artifactId>
-    <version>1.0.1</version>
-    <classifier>oas</classifier>
-    <type>zip</type>
-</dependency>
---
-+
+include::partial$acb-reusable-steps.adoc[tags="pom-api-dependency-ex"]
+** Adds the Mule and Java versions to the project's `mule-artifact.json` file.
+//+
+//include::partial$acb-reusable-steps.adoc[tags="mule-artifact-json-ex"]
 ** Scaffolds your API into the new Mule project and opens the configuration XML file.
 +
 The configuration XML file includes the interface for your implementation project,
@@ -139,32 +138,24 @@ When you scaffold the API dependency, Anypoint Code Builder:
 +
 ** Adds the API spec as a dependency in your project's `pom.xml` file:
 +
-[source,XML]
---
-<dependency>
-    <groupId>e91cab06-650b-4634-9c6f-5bc4f4fc4d17</groupId>
-    <artifactId>OAS-Example</artifactId>
-    <version>1.0.1</version>
-    <classifier>oas</classifier>
-    <type>zip</type>
-</dependency>
---
+include::partial$acb-reusable-steps.adoc[tags="pom-api-dependency-ex"]
+** Adds the Mule and Java versions to the `mule-artifact.json` file:
++
+include::partial$acb-reusable-steps.adoc[tags="mule-artifact-json-ex"]
 ** Adds a new configuration XML file, such as `oas-example.xml`, to the project:
 +
---
 image::imp-new-config-file.png["New configuration file in the Explorer view"]
-
++
 The new configuration XML file includes the interface for your integration project,
 with flows for each endpoint in the spec, error handlers, and a built-in router, for example:
-
++
 image:imp-api-imported.png["OAS Example Integration in Anypoint Code Builder"]
-
++
 This example includes:
 
 * The main flow
 * An HTTP Listener with a built-in router
 * Several error handlers
---
 +
 For GraphQL APIs, Anypoint Code Builder also creates a data fetcher (`<graphql-router:data-fetcher>`) as a source for each Mule flow.
 See the xref:tut-graphql-implement-api.adoc[] tutorial for an example GraphQL API and xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
@@ -383,4 +374,4 @@ See xref:int-trigger-flows.adoc[].
 
 * xref:int-create-integrations.adoc[]
 * xref:imp-implement-local-apis.adoc[]
-* xref:tut-graphql-implement-api.adoc[] Tutorial
+* xref:tut-graphql-implement-api.adoc[]

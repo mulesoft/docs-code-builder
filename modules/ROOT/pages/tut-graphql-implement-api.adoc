@@ -89,15 +89,15 @@ MuleSoft: Implement an API Specification
 // Use the table format?
 +
 image::implement-api-configure-in-task.png[]
-+
-[calloutlist]
+
 .. *Project Name*: `books-implementation`
 .. *Project Location*: click *Browse*, and then select your home directory.
 .. Search for your *books-api* specification in Exchange by typing `books` and pressing Return to display the results. 
 .. In the search results, hover over *books-api*, and click the *Add Asset* button that appears:
 +
 image::select-books-graphql-api.png[]
-. In the *Implement an API Specification* form, click *Create Project*.
+.. Provide *Mule runtime* and *Java* versions. 
+. Click *Create Project*.
 . If prompted, trust the authors of the API specification. 
 +
 Trusting is required before you can work on the project from the IDE.
@@ -147,7 +147,7 @@ type Bestsellers {
 --
 |===
 +
-Each flow contains configurations for the elements `<graphqlrouter:data-fetcher/>`, `<set-payload/>`, and ` <graphqlrouter:serialize/>`.
+Each flow contains configurations for the elements `<graphql-router:data-fetcher/>`, `<set-payload/>`, and ` <graphql-router:serialize/>`.
 The `<graphql-router:data-fetcher>` element serves as a trigger for a flow. See xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
 
 . Proceed to xref:tut-graphql-test-first-implementation.adoc[] to run your application in Anypoint Code Builder and post GraphQL queries to your endpoint.
