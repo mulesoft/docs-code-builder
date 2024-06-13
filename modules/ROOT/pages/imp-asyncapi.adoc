@@ -1,34 +1,64 @@
 = Implementing AsyncAPI Specifications
 :page-deployment-options: cloud-ide, desktop-ide
-:page-aliases: 
+:page-aliases: imp-implement-apis.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-Anypoint Code Builder supports the implementation of AsyncAPI specifications. When creating an implementation project in Anypoint Code Builder, you can import and scaffold an AsyncAPI specification from Anypoint Exchange into an API interface that you can implement from the cloud or desktop IDE. The scaffolding process uses xref:apikit::apikit-for-asyncapi.adoc[APIkit for AsyncAPI] to create a set of flows for each `publish` operation in the specification and adds the xref:apikit::apikit-asyncapi-module-reference.adoc[APIkit for AsyncAPI Module] to the project. The module provides a Message Listener, a Publish operation, and set of error codes that you can handle with Error Handling components (see xref:apikit::apikit-asyncapi-error-handling-reference.adoc[]).
-
+Anypoint Code Builder supports the implementation of AsyncAPI specifications. When creating an implementation project in Anypoint Code Builder, you can import and scaffold an AsyncAPI spec from Anypoint Exchange into an API interface that you can implement from the cloud or desktop IDE. 
 
 For supported specification versions, see xref:acb-release-notes.adoc#compatibility[Compatibility] in the Release Notes.
 
 [prereqs]
 == Before You Begin
 
+* If you do not yet have access to Anypoint Code Builder, follow the IDE procedures in xref:start-acb.adoc[].
+* {empty}
++
 //How org admin provides access to feature from ACB landing page:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="asyncapi-beta-access"]
+* If you are unfamiliar with the scaffolding process for AsyncAPI specs, review <<scaffolding>>.
+
+[[scaffolding]]
+== Scaffolding Overview
+
+Before you implement an AsyncAPI spec with Anypoint Code Builder, it's important to understand the scaffolding process at a high level. 
+
+[IMPORTANT]
+====
+include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
+====
+
+When scaffolding an AsyncAPI spec into a Mule project (implementation or integration), Anypoint Code Builder:
+
+* Introspects the AsyncAPI spec 
+* Creates a new Mule project with a separate flow for each `publish` operation in the spec
++
+See <<ex-flows-scaffolded>>.
+* Generates a `global-configs.xml` file with connection configurations for the *Message Listener* operations
++
+See <<ex-connection-configs-scaffolded>>.
+* Produces the configuration properties file `dev.properties.properties` file in the `src/main/resources` directory of your Mule project
++
+See <<ex-config-properties>>.
+* Adds the APIkit for AsyncAPI Module to the project 
++
+** *Publish*: AsyncAPI `subscribe` operations in the spec are available for configuration  as *Publish* (`<apikit-asyncapi:publish/>`) operations from the module. 
+** *Message Listener*: AsyncAPI `publish` operations in the spec are configurable *Message Listener* (`<apikit-asyncapi:message-listener/>`) operations in the module.
++
+The scaffolder transforms each `publish` operation into a *Message Listener* operation.
+
+For information about the module and its error codes, see xref:apikit::apikit-for-asyncapi.adoc[]. 
 
 [[scaffold-new]]
 == Scaffold an AsyncAPI Spec into a New Project
 
 Create an implementation project from an AsyncAPI specification on Anypoint Exchange. When creating the project, Anypoint Code Builder scaffolds the spec into an interface that you can implement as a Mule app.
 
-When scaffolding, Anypoint Code Builder:
+//note on publishing and designing asyncapi specs from design center
+include::partial$acb-api-design.adoc[tags="note-asyncapi"]
 
-. Introspects the API spec
-. Creates a new Mule project with a flow for each `publish` operation in the spec, translating each operation to a listener and adding a Logger with message `payload` 
-//TODO: NANDA
-[NOTE]
-If your AsyncAPI specification is not published to Exchange, see xref:design-center::TODO_TODO.xml[]. To create an AsyncAPI specification before publishing to Exchange, see xref:design-center::TODO_TODO.xml[].
-
+////
 For reference, the following procedure scaffolds the 2.6 AsyncAPI spec in <<examples>>:
 
 . Create an implementation project from an AsyncAPI specification on Exchange:
@@ -39,16 +69,88 @@ For reference, the following procedure scaffolds the 2.6 AsyncAPI spec in <<exam
 
 . Review the scaffolded specification in your implementation project. 
 .. TODO_TODO: 
+////
+
+If you have not already created a project, use Anypoint Code Builder to scaffold the API in a new Mule project:
+
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
++
+image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
+. From *Quick Actions*, click *Implement an API*:
++
+image::implement-api-option-mat.png["*Implement an API* link highlighted in the *Getting Started* section"]
+. Complete the *Implement an API Specification* form:
++
+image::implement-api-configure-in-task.png["Form for starting an implementation project"]
++
+[calloutlist]
+[%header,cols="20a,60a"] 
+|===
+| Field Name | Field Value
+
+| *Project Name* | Unique name for your project.
+
+This name is used as the title and name of the project file.
+For example, if the project name is _OAS Integration_, the project file name is `oas-integration`.
+| *Project Location* | Your home directory or another directory you create.
+
+See xref:start-add-folders.adoc[].
+
+include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
+
+| *Search an API Specification from Exchange* |Name of the specification in Exchange. Activate *Show filters* to narrow your search results. See xref:filter-search-results.adoc[] for more information.
+| *Mule runtime* |Mule runtime version to use for your project. 
+| *Java Version* |Java version to use for Mule. 
+|===
++
+include::partial$acb-runtime-java.adoc[tags="runtime-java-download"]
+. Search for an API spec on Exchange:
++
+.. Start typing the name of an API spec.
+.. Press Enter to display a list of search results.
+.. Click *Add Asset* to add the selected API spec:
++
+image::imp-api-search.png["Search an API from Exchange"]
++
+The form shows the selected API spec, for example:
++
+image:imp-api-selected.png["OAS Example API selected in the Implement an API Specification form"]
+. Click *Create Project*.
++
+When you create the project, Anypoint Code Builder:
++
+** Adds the API spec as a dependency in your project's `pom.xml` file:
++
+include::partial$acb-reusable-steps.adoc[tags="pom-api-dependency-ex"]
+** Adds the Mule and Java versions to the project's `mule-artifact.json` file.
+** Scaffolds your API into the new Mule project and opens the configuration XML file.
++
+The configuration XML file includes the interface for your implementation project,
+with flows for each endpoint in the spec, error handlers, and a built-in router, for example:
++
+image:imp-api-scaffolded.png["OAS Example Integration in Anypoint Code Builder"]
+This example includes:
++
+--
+* The main flow
+* An HTTP Listener with a built-in router
+* Several error handlers
+--
++
+For GraphQL APIs, Anypoint Code Builder also creates a data fetcher (`<graphql-router:data-fetcher>`) as a source for each Mule flow.
+See the xref:tut-graphql-implement-api.adoc[] tutorial for an example GraphQL API and xref:apikit::apikit-graphql-api-mapping.adoc[] for more information about data fetchers.
+
+You can now implement the interface within the Mule app.
 
 [[scaffold-new]]
 == Scaffold an AsyncAPI Spec into an Existing Project
 
-You can import and scaffold an AsyncAPI spec from Exchange into an existing project in Anypoint Code Builder. This process is similar for other types of specs, such the xref:tut-af-implement-am-flights-api.adoc#import-and-scaffold-your-american-flights-api-specification[American Flights example].
+Import and scaffold an AsyncAPI spec from Exchange into an existing project in Anypoint Code Builder. This process is similar for other types of specs, such the xref:tut-af-implement-am-flights-api.adoc#import-and-scaffold-your-american-flights-api-specification[American Flights example].
 
-[NOTE]
-====
-The AsyncAPI specification must be hosted on Exchange. For AsyncAPI specifications, iterative design and implementation is not supported at this time. For information about this process, see xref:imp-implement-local-apis.adoc[].
-====
+//note on publishing and designing asyncapi specs from design center
+include::partial$acb-api-design.adoc[tags="note-asyncapi"]
+
 
 TODO_TODO: NAME OF SPEC, LINK TO INFO ON WHAT GETS SCAFFOLDED AND WHAT DOESN'T
 
@@ -104,7 +206,7 @@ If the server is not supported, an error results.
 [[errors]]
 == Error Conditions
 
-TODO_TODO:
+TODO_TODO_VERIFY_ALL
 
 The scaffolder implements one flow per channel, server, and operation (`publish` or `subscribe`).
 
@@ -469,12 +571,12 @@ xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft
 </mule>
 ----
 
-[[ex-connection-configs-added]]
+[[ex-config-properties]]
 === Example: Configuration Properties File
 
 Anypoint Code Builder also generates a `dev.properties.properties` file in the `src/main/resources` directory of your implementation project. 
 
-The <<ex-asyncapi-spec, specification example>> defines server settings for an Anypoint MQ broker. To listen for and publish to an Anypoint MQ queue of operations in the Anypoint Connector for MQ (Anypoint MQ Connector) operations in your to listen or publish  scaffolding process for Anypoint MQ produces a properties file for a xref:mq::mq-client-apps.adoc[client app] you create to generate credentials to use for publishing and consuming from an Anypoint MQ queue. 
+The <<ex-asyncapi-spec, specification example>> defines server settings for an Anypoint MQ broker. To listen for and publish messages to an Anypoint MQ queue, you must supply a `clientAppId` and `clientSecret` for an mq::mq-client-apps.adoc[MQ client app]. The associated `api-path` setting is generated automatically during the scaffolding process. 
 
 [source,properties]
 ----
@@ -502,7 +604,7 @@ For help with configuration properties, including secure properties for password
 
 === Example: Additional Connection Configurations for the Implementation
 
-When adding business logic to your scaffolded project, you can add other connection configurations to `global-configs.xml` for any additional connector operations you use in your flows or subflows. The following example adds connection configurations for xref:http-connector::http-connector-config-acb.adoc[HTTP], xref:email-connector::index.adoc[Email], and xref:slack-connector::index.adoc[Slack] connector operations.
+When adding business logic to your scaffolded project, you can add other connection configurations to `global-configs.xml` for any additional connector operations you add to your flows or subflows. The following example adds connection configurations for xref:http-connector::http-connector-config-acb.adoc[HTTP], xref:email-connector::index.adoc[Email], and xref:slack-connector::index.adoc[Slack] connector operations. You can define configuration properties for these, such as `${email.password}` in a <<ex-config-properties, properties file>>.
 
 [source,xml]
 ----

@@ -8,7 +8,10 @@ After you create your API spec, use Anypoint Code Builder to scaffold your API
 into a Mule project for your implementation or integration.
 
 [IMPORTANT]
+====
 include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
+include::partial$acb-reusable-steps.adoc[tags="fragments-inline"]
+====
 
 Anypoint Code Builder uses the information that you defined in your spec to 
 autogenerate a basic interface in your implementation project.
@@ -30,11 +33,8 @@ the spec to Exchange, see xref:imp-implement-local-apis.adoc[].
 
 == Before You Begin
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
-* xref:des-create-api-specs.adoc[Create and test your API spec].
-* xref:des-publish-api-spec-to-exchange.adoc[Publish your API spec to Exchange].
-* Optionally, xref:int-create-integrations.adoc[create your integration project (Mule app)].
-
+//shared implementation prereqs
+include::partial$acb-reusable-steps.adoc[tags="prereqs-implementation"]
 
 [[scaffold-new-integration]]
 == Scaffold an API into a New Project
@@ -92,8 +92,6 @@ When you create the project, Anypoint Code Builder:
 +
 include::partial$acb-reusable-steps.adoc[tags="pom-api-dependency-ex"]
 ** Adds the Mule and Java versions to the project's `mule-artifact.json` file.
-//+
-//include::partial$acb-reusable-steps.adoc[tags="mule-artifact-json-ex"]
 ** Scaffolds your API into the new Mule project and opens the configuration XML file.
 +
 The configuration XML file includes the interface for your implementation project,
