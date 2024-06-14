@@ -155,13 +155,13 @@ The <<scaffold, scaffolding procedure>> builds an implementation project from th
 
 * <<ex-asyncapi-spec>>
 +
-The AsyncAPI specification TODO_TODO
+The AsyncAPI specification is a mock order processing API that uses Anypoint MQ and Kafka protocols.
 * <<ex-flows-scaffolded>>
 +
-TODO_TODO
+The scaffolder generates a set of flows for the order processing API from `publish` operations defined in the AsyncAPI specification example. The example includes a 
 * <<ex-connection-configs-scaffolded>>
 +
-TODO_TODO
+
 * <<ex-config-properties>>
 +
 TODO_TODO
@@ -324,8 +324,7 @@ The `publish` and `subscribe` operations handle messages of the `BackOrder` type
 [[ex-flows-scaffolded]]
 === Example: Flows Generated from the Scaffolded Spec
 
-//TODO: CONSIDER SHARING THIS PARAGRAPH ABOVE AS AN INCLUDE 
-When scaffolding the specification into an implementation project, Anypoint Code Builder creates a flow (`<flow/>`) for each `publish` operation and transforms the `publish` operation into a Message Listener from the AsyncAPI module for APIkit (`<apikit-asyncapi:message-listener/>`). The scaffolder also adds a Logger component to each flow.   The AsyncAPI module also provides a Publish operation, which you can manually add to your app when implementing `subscribe` operations. For more information about this module, see xref:apikit::apikit-asyncapi-module-reference.adoc[].
+When scaffolding the specification into an implementation project, Anypoint Code Builder creates a flow (`<flow/>`) for each `publish` operation and transforms the `publish` operation into a Message Listener from the AsyncAPI module for APIkit (`<apikit-asyncapi:message-listener/>`). The scaffolder also adds a Logger component to each flow. The AsyncAPI module also provides a Publish operation, which you can manually add to your app when implementing `subscribe` operations. For more information about this module, see xref:apikit::apikit-asyncapi-module-reference.adoc[].
 
 Scaffolding the <<ex-asyncapi-spec, AsyncAPI specification example>> into an implementation in Anypoint Code Builder produces a `flow.xml` file similar to this one:
 
@@ -372,10 +371,120 @@ Scaffolding the <<ex-asyncapi-spec, AsyncAPI specification example>> into an imp
 </mule>
 ----
 
+[[ex-flows-implemented]]
+The following example adds business logic to the following scaffolded flows: 
+
+* `LISTEN:listen-order-placed` listens for orders and, when triggered, uses a DataWeave expression to check for sufficient inventory. If enough items exist in the inventory, the flow publishes order data to the `order-confirmed` channel in the `LISTEN:listen-order-confirmations` flow. If not, the flow publishes order data to a `order-backordered` channel. 
+* `LISTEN:listen-order-confirmations` listens for order confirmations and, when triggered, sends order information and messages intended for Slack and email for processing by the `notification-flow` subflow (see <<ex-flows-notification>>).
+
+[source,xml]
+----
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:apikit-asyncapi="http://www.mulesoft.org/schema/mule/apikit-asyncapi" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" 
+xmlns:http="http://www.mulesoft.org/schema/mule/http" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/apikit-asyncapi http://www.mulesoft.org/schema/mule/apikit-asyncapi/current/mule-apikit-asyncapi.xsd http://www.mulesoft.org/schema/mule/kafka http://www.mulesoft.org/schema/mule/kafka/current/mule-kafka.xsd http://www.mulesoft.org/schema/mule/anypoint-mq http://www.mulesoft.org/schema/mule/anypoint-mq/current/mule-anypoint-mq.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd  http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+  <flow name="LISTEN:listen-order-placed"><!--1-->
+    <apikit-asyncapi:message-listener channelName="order-placed" config-ref="asyncapi-config" doc:name="Listen for new orders">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="AMQ-prod"></apikit-asyncapi:server>
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]"></logger>
+    <http:request config-ref="HTTP_Request_config" doc:id="nscwew" doc:name="check inventory" target="inventory" url="https://anypoint.mulesoft.com/mocking/api/v1/links/3a7158be-3edb-40d9-a776-71614fe490e9/inventory?ProductID=12345"></http:request>
+    <choice doc:id="e61a19-cfc986" doc:name="If in stock"><!--2-->
+      <when doc:id="43efa6-eb5afe" doc:name="in stock" expression="#[vars.inventory.stockDetails.availableStock > payload.items.quantity[0]]">
+        <http:request config-ref="HTTP_Request_config" doc:id="aa26a8-7a1ec5" doc:name="CreateOrder" target="status" url="https://anypoint.mulesoft.com/mocking/api/v1/links/d0d179d9-8a69-4227-ade1-626f1754404d/order"></http:request>
+        <ee:transform doc:id="9c714a-117d59" doc:name="Prepare confirmation message"> <!--3-->
+          <ee:message>
+            <ee:set-payload doc:id="166d40-4bf0b6" doc:name="Set payload">
+              <![CDATA[%dw 2.0
+                output application/json
+                ---
+                {
+                  orderId : payload.orderId,
+                  email : payload.email,
+                }]]>
+            </ee:set-payload>
+          </ee:message>
+        </ee:transform>
+        <apikit-asyncapi:publish channelName="order-confirmed" config-ref="asyncapi-config" doc:id="oigqfw" doc:name="Order confirmation notification" serverName="AMQ-prod"> <!--4-->
+        </apikit-asyncapi:publish>
+      </when>
+      <otherwise doc:name="out of stock">
+        <ee:transform doc:id="90dd99-c160de" doc:name="Prepare notification message">
+          <ee:message>
+            <ee:set-payload doc:id="f5aced-23fcf9" doc:name="Set payload">
+              <![CDATA[%dw 2.0
+            output application/json
+            ---
+            {
+              orderId : payload.orderId,
+              email : payload.email,
+            }]]>
+            </ee:set-payload>
+          </ee:message>
+        </ee:transform>
+        <apikit-asyncapi:publish channelName="order-backordered" config-ref="asyncapi-config" doc:id="lsmcyo" doc:name="Out of stock notification" serverName="Kafka-prod"></apikit-asyncapi:publish>
+      </otherwise>
+    </choice>
+  </flow>
+  <flow name="LISTEN:listen-order-confirmations"><!--4-->
+    <apikit-asyncapi:message-listener channelName="order-confirmed" config-ref="asyncapi-config" doc:name="listen for order confirmation">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="AMQ-prod"></apikit-asyncapi:server>
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]"></logger>
+    <set-payload doc:id="28ace0-983314" doc:name="Set Payload" 
+                  value="#[ 
+                    { 'orderId': payload.orderId,                           
+                      'email': payload.email,                         
+                      'subject': 'Order: ' ++ payload.orderId as String ++ ' is confirmed',                         
+                      'emailmessage': 'We are pleased to let you know that your order: ' ++ payload.orderId as String ++ ' is confirmed. \nThank you for shopping with us.\n\nThrone of Games Corporation',                         
+                      'slackmessage': ':mega: Please note that the order with OrderId ' ++ payload.orderId as String ++ ' has been confirmed.'                     
+                    }                
+                  ]">
+    </set-payload>
+    <flow-ref name="notification-flow"></flow-ref>
+  </flow>
+  <flow name="LISTEN:listen-order-cancellations">
+    <apikit-asyncapi:message-listener channelName="order-cancelled" config-ref="asyncapi-config">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="AMQ-prod"></apikit-asyncapi:server>
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]"></logger>
+  </flow>
+  <flow name="LISTEN:listen-order-backordered"><!--5-->
+    <apikit-asyncapi:message-listener channelName="order-backordered" config-ref="asyncapi-config">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="Kafka-prod"></apikit-asyncapi:server>
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]"></logger>
+  </flow>
+  <flow name="new-orders">
+        <http:listener path="neworder" config-ref="HTTP_Listener_config" doc:name="listen for new orders" doc:id="nghrkl" allowedMethods="POST"/>
+        <logger doc:name="Logger" doc:id="adydcs" /></flow>
+</mule>
+----
+--
+[calloutlist]
+. After the flow `LISTEN:listen-order-placed` is triggered by the MQ client app, and HTTP request (`<http:request/>`) receives sample data for the order and stores the data in the target variable `inventory`.
+. The Choice component (`<choice/>`) receives the sample data, and checks for available stock (`vars.inventory.stockDetails.availableStock`) from the target variable against a `quantity` value in the mock payload (`payload.items.quantity[0]`) that the flow received when it was triggered. 
++
+If the stock is available, the Set Payload component (<set-payload/>) configures a confirmation message for the *Publish* operation (<apikit-asyncapi:publish/>) to the `order-confirmed` channel.
+. The flow `LISTEN:listen-order-confirmations` listens for activity on the Anypoint MQ channel `order-cancelled`. When triggered, the flow configures its `<set-payload/>` component to create an order confirmation message for the Flow Reference (`<flow-ref/>`) to send for processing withing the `notification-flow` subflow.
+. The unimplemented flow `LISTEN:listen-order-backordered` is triggered by `LISTEN:listen-order-placed` when inventory is insufficient. 
+
+--
+
 [[ex-connection-configs-scaffolded]]
 === Example: Connection Configurations from the Scaffolded Spec
 
-The scaffolding also generates `global-configs.xml` for server connection configurations defined in the specification:
+The scaffolding process generates `global-configs.xml` for server connection configurations defined in the specification:
 
 [source,xml]
 ----
@@ -414,92 +523,39 @@ The scaffolding also generates `global-configs.xml` for server connection config
 </mule>
 ----
 
-[[ex-flows-implemented]]
-The following example adds business logic to the scaffolded flows:
+[[ex-config-props]]
+When adding business logic to your scaffolded project, you can add other connection configurations to `global-configs.xml` for any additional connector operations you add to your flows or subflows. The following example adds connection configurations for xref:http-connector::http-connector-config-acb.adoc[HTTP], xref:email-connector::index.adoc[Email], and xref:slack-connector::index.adoc[Slack] connector operations. You can define configuration properties for these, such as `${email.password}` in a <<ex-config-properties, properties file>>.
 
 [source,xml]
 ----
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
-xmlns:apikit-asyncapi="http://www.mulesoft.org/schema/mule/apikit-asyncapi" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
-xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" 
-xmlns:http="http://www.mulesoft.org/schema/mule/http" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/apikit-asyncapi http://www.mulesoft.org/schema/mule/apikit-asyncapi/current/mule-apikit-asyncapi.xsd http://www.mulesoft.org/schema/mule/kafka http://www.mulesoft.org/schema/mule/kafka/current/mule-kafka.xsd http://www.mulesoft.org/schema/mule/anypoint-mq http://www.mulesoft.org/schema/mule/anypoint-mq/current/mule-anypoint-mq.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd  http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-  <flow name="LISTEN:listen-order-placed">
-    <apikit-asyncapi:message-listener channelName="order-placed" config-ref="asyncapi-config" doc:name="Listen for new orders">
-      <apikit-asyncapi:servers>
-        <apikit-asyncapi:server value="AMQ-prod"></apikit-asyncapi:server>
-      </apikit-asyncapi:servers>
-    </apikit-asyncapi:message-listener>
-    <logger level="INFO" message="#[payload]"></logger>
-    <http:request config-ref="HTTP_Request_config" doc:id="nscwew" doc:name="check inventory" target="inventory" url="https://anypoint.mulesoft.com/mocking/api/v1/links/3a7158be-3edb-40d9-a776-71614fe490e9/inventory?ProductID=12345"></http:request>
-    <choice doc:id="e61a19-cfc986" doc:name="If in stock">
-      <when doc:id="43efa6-eb5afe" doc:name="in stock" expression="#[vars.inventory.stockDetails.availableStock > payload.items.quantity[0]]">
-        <http:request config-ref="HTTP_Request_config" doc:id="aa26a8-7a1ec5" doc:name="CreateOrder" target="status" url="https://anypoint.mulesoft.com/mocking/api/v1/links/d0d179d9-8a69-4227-ade1-626f1754404d/order"></http:request>
-        <ee:transform doc:id="9c714a-117d59" doc:name="Prepare confirmation message">
-          <ee:message>
-            <ee:set-payload doc:id="166d40-4bf0b6" doc:name="Set payload">
-              <![CDATA[%dw 2.0
-            output application/json
-            ---
-            {
-              orderId : payload.orderId,
-              email : payload.email,
-            }]]>
-            </ee:set-payload>
-          </ee:message>
-        </ee:transform>
-        <apikit-asyncapi:publish channelName="order-confirmed" config-ref="asyncapi-config" doc:id="oigqfw" doc:name="Order confirmation notification" serverName="AMQ-prod"></apikit-asyncapi:publish>
-      </when>
-      <otherwise doc:name="out of stock">
-        <ee:transform doc:id="90dd99-c160de" doc:name="Prepare notification message">
-          <ee:message>
-            <ee:set-payload doc:id="f5aced-23fcf9" doc:name="Set payload">
-              <![CDATA[%dw 2.0
-            output application/json
-            ---
-            {
-              orderId : payload.orderId,
-              email : payload.email,
-            }]]>
-            </ee:set-payload>
-          </ee:message>
-        </ee:transform>
-        <apikit-asyncapi:publish channelName="order-backordered" config-ref="asyncapi-config" doc:id="lsmcyo" doc:name="Out of stock notification" serverName="Kafka-prod"></apikit-asyncapi:publish>
-      </otherwise>
-    </choice>
-  </flow>
-  <flow name="LISTEN:listen-order-confirmations">
-    <apikit-asyncapi:message-listener channelName="order-confirmed" config-ref="asyncapi-config" doc:name="listen for order confirmation">
-      <apikit-asyncapi:servers>
-        <apikit-asyncapi:server value="AMQ-prod"></apikit-asyncapi:server>
-      </apikit-asyncapi:servers>
-    </apikit-asyncapi:message-listener>
-    <logger level="INFO" message="#[payload]"></logger>
-    <set-payload doc:id="28ace0-983314" doc:name="Set Payload" value="#[                     {                         'orderId': payload.orderId,                         'email': payload.email,                         'subject': 'Order: ' ++ payload.orderId as String ++ ' is confirmed',                         'emailmessage': 'We are pleased to let you know that your order: ' ++ payload.orderId as String ++ ' is confirmed. \nThank you for shopping with us.\n\nThrone of Games Corporation',                         'slackmessage': ':mega: Please note that the order with OrderId ' ++ payload.orderId as String ++ ' has been confirmed.'                     }                 ]"></set-payload>
-    <flow-ref name="notification-flow"></flow-ref>
-  </flow>
-  <flow name="LISTEN:listen-order-cancellations">
-    <apikit-asyncapi:message-listener channelName="order-cancelled" config-ref="asyncapi-config">
-      <apikit-asyncapi:servers>
-        <apikit-asyncapi:server value="AMQ-prod"></apikit-asyncapi:server>
-      </apikit-asyncapi:servers>
-    </apikit-asyncapi:message-listener>
-    <logger level="INFO" message="#[payload]"></logger>
-  </flow>
-  <flow name="LISTEN:listen-order-backordered">
-    <apikit-asyncapi:message-listener channelName="order-backordered" config-ref="asyncapi-config">
-      <apikit-asyncapi:servers>
-        <apikit-asyncapi:server value="Kafka-prod"></apikit-asyncapi:server>
-      </apikit-asyncapi:servers>
-    </apikit-asyncapi:message-listener>
-    <logger level="INFO" message="#[payload]"></logger>
-  </flow>
-  <flow name="new-orders">
-        <http:listener path="neworder" config-ref="HTTP_Listener_config" doc:name="listen for new orders" doc:id="nghrkl" allowedMethods="POST"/>
-        <logger doc:name="Logger" doc:id="adydcs" /></flow>
-</mule>
+<!-- additional connection configuration examples -->
+  <http:request-config name="HTTP_Request_config" basePath="path" > <!--1-->
+    <http:request-connection protocol="HTTP" host="example.com" />
+  </http:request-config>
+  
+  <http:listener-config name="HTTP_Listener_config" > <!--2-->
+    <http:listener-connection host="0.0.0.0" port="8081" />
+  </http:listener-config>
+  
+  <email:smtp-config name="Email_SMTP"> <!--3-->
+    <email:smtps-connection host="smtp.gmail.com" password="${email.password}" user="${email.username}">
+      <tls:context>
+        <tls:trust-store insecure="true"></tls:trust-store>
+      </tls:context>
+    </email:smtps-connection>
+  </email:smtp-config>
+
+  <slack:config name="Slack_Config"> <!--4-->
+    <slack:token-connection token="${slack.token}" />
+  </slack:config>
 ----
+--
+[calloutlist]
+. HTTP Request connection configuration example
+. HTTP Listener connection configuration example
+. Email SMTP connection configuration example
+. Slack connection configuration example
+--
 
 [[ex-config-properties]]
 === Example: Configuration Properties File
@@ -532,82 +588,10 @@ api.path=resource\:\:8dbc2756-83d6-4a1c-91c4-6eafbe7d7ae0\:async-amq-kafka-test\
 
 For help with configuration properties, including secure properties for passwords and other sensitive data, see xref:int-create-secure-configs.adoc[].
 
-[[ex-config-props]]
-=== Example: Additional Connection Configurations for the Implementation
-
-When adding business logic to your scaffolded project, you can add other connection configurations to `global-configs.xml` for any additional connector operations you add to your flows or subflows. The following example adds connection configurations for xref:http-connector::http-connector-config-acb.adoc[HTTP], xref:email-connector::index.adoc[Email], and xref:slack-connector::index.adoc[Slack] connector operations. You can define configuration properties for these, such as `${email.password}` in a <<ex-config-properties, properties file>>.
-
-[source,xml]
-----
-<?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:anypoint-mq="http://www.mulesoft.org/schema/mule/anypoint-mq" xmlns:apikit-asyncapi="http://www.mulesoft.org/schema/mule/apikit-asyncapi" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:kafka="http://www.mulesoft.org/schema/mule/kafka" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
-	xmlns:email="http://www.mulesoft.org/schema/mule/email"
-	xmlns:slack="http://www.mulesoft.org/schema/mule/slack" 
-  xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/apikit-asyncapi http://www.mulesoft.org/schema/mule/apikit-asyncapi/current/mule-apikit-asyncapi.xsd http://www.mulesoft.org/schema/mule/kafka http://www.mulesoft.org/schema/mule/kafka/current/mule-kafka.xsd http://www.mulesoft.org/schema/mule/anypoint-mq http://www.mulesoft.org/schema/mule/anypoint-mq/current/mule-anypoint-mq.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd http://www.mulesoft.org/schema/mule/slack http://www.mulesoft.org/schema/mule/slack/current/mule-slack.xsd">
-  <kafka:producer-config name="Apache_Kafka_Producer_configuration_Kafka-prod">
-    <kafka:producer-plaintext-connection>
-      <kafka:bootstrap-servers>
-        <kafka:bootstrap-server value="localhost:9092" />
-      </kafka:bootstrap-servers>
-    </kafka:producer-plaintext-connection>
-  </kafka:producer-config>
-  <kafka:consumer-config name="Apache_Kafka_Consumer_configuration_Kafka-prod">
-    <kafka:consumer-plaintext-connection>
-      <kafka:bootstrap-servers>
-        <kafka:bootstrap-server value="localhost:9092" />
-      </kafka:bootstrap-servers>
-      <kafka:topic-patterns>
-        <kafka:topic-pattern value="order-backordered" />
-      </kafka:topic-patterns>
-    </kafka:consumer-plaintext-connection>
-  </kafka:consumer-config>
-  <anypoint-mq:config name="Anypoint_MQ_configuration_AMQ-prod">
-    <anypoint-mq:connection clientId="${anypointmq.server.AMQ-prod.clientAppId}" clientSecret="${anypointmq.server.AMQ-prod.clientSecret}" url="https://mq-us-east-1.stgx.anypoint.mulesoft.com/api/v1/organizations/8dbc2756-83d6-4a1c-91c4-6eafbe7d7ae0/environments/49cbf562-fed4-4b42-bce9-98fe8f7bcf60" />
-  </anypoint-mq:config>
-  <configuration-properties file="${env}-properties.properties" />
-  <global-property name="env" value="dev" />
-  <apikit-asyncapi:config name="asyncapi-config" apiDefinition="${api.path}">
-    <apikit-asyncapi:kafka-configs>
-      <apikit-asyncapi:kafka-config serverKey="Kafka-prod" producerConfigRef="Apache_Kafka_Producer_configuration_Kafka-prod" consumerConfigRef="Apache_Kafka_Consumer_configuration_Kafka-prod" />
-    </apikit-asyncapi:kafka-configs>
-    <apikit-asyncapi:anypoint-mq-configs>
-      <apikit-asyncapi:anypoint-mq-config serverKey="AMQ-prod" configRef="Anypoint_MQ_configuration_AMQ-prod" />
-    </apikit-asyncapi:anypoint-mq-configs>
-  </apikit-asyncapi:config>
-  
-  <http:request-config name="HTTP_Request_config" basePath="path" > <!--1-->
-    <http:request-connection protocol="HTTP" host="example.com" />
-  </http:request-config>
-  
-  <http:listener-config name="HTTP_Listener_config" > <!--2-->
-    <http:listener-connection host="0.0.0.0" port="8081" />
-  </http:listener-config>
-  
-  <email:smtp-config name="Email_SMTP"> <!--3-->
-      <email:smtps-connection host="smtp.gmail.com" password="${email.password}" user="${email.username}">
-        <tls:context>
-          <tls:trust-store insecure="true"></tls:trust-store>
-        </tls:context>
-      </email:smtps-connection>
-    </email:smtp-config>
-
-    <slack:config name="Slack_Config"> <!--4-->
-      <slack:token-connection token="${slack.token}" />
-    </slack:config>
-</mule>
-----
---
-[calloutlist]
-. HTTP Request connection configuration example
-. HTTP Listener connection configuration example
-. Email SMTP connection configuration example
-. Slack connection configuration example
---
-
 [[ex-flows-notification]]
 === Example: Notification Flows
+
+The notification flow examples are triggered by the 
 
 [source,xml]
 ----
