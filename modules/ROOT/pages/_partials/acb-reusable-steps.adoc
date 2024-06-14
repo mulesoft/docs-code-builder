@@ -263,11 +263,12 @@ When the application deploys successfully, you see a `DEPLOYED` log message in t
 //
 // tag::fragments-not-scaffolded[]
 // Fragments Not Scaffolded
-Anypoint Code Builder does not support the scaffolding of AsyncAPI, OAS, or JSON schema fragments that are referenced from specs that you import from Exchange into your project. The scaffolder does not add these fragments as project dependencies. RAML fragments from Exchange are not affected by this limitation.
+Anypoint Code Builder does not support the scaffolding of AsyncAPI, OAS, or JSON schema fragments that are referenced from API specs. The scaffolder does not add these fragments as project dependencies when you import the spec from Exchange. However, you can scaffold fragments that are specified inline within the spec. RAML fragments imported from Exchange are not affected by this limitation. 
 // end::fragments-not-scaffolded[]
 //
 // tag::fragments-inline[]
-For OAS, RAML, and JSON schema, you can scaffold a spec with such fragments by providing the fragments inline within the spec or through fragment files that you create manually within your project directory.
+
+For OAS and JSON schema, you can also specify fragment files that you create manually within the implementation or integration project directory.
 // end::fragments-inline[]
 //
 // If you add an OAS fragment or JSON schema fragment from Exchange to a project and then use it in an API spec, Anypoint Code Builder fails to scaffold the API.
@@ -479,3 +480,41 @@ When the AsyncAPI feature is available for your organization, the Anypoint Code 
 * Optionally, xref:int-create-integrations.adoc[create your integration project (Mule app)].
 // end::prereqs-implementation[]
 // 
+
+//
+// tag::start-implementation[]
+. From *Quick Actions*, click *Implement an API*:
++
+image::implement-api-option-mat.png["*Implement an API* link highlighted in the *Getting Started* section"]
+. Complete the *Implement an API Specification* form:
++
+image::implement-api-configure-in-task.png["Form for starting an implementation project"]
++
+[calloutlist]
+[%header,cols="20a,60a"] 
+|===
+| Field Name | Field Value
+
+| *Project Name* | Unique name for your project.
+
+This name is used as the title and name of the project file.
+For example, if the project name is _OAS Integration_, the project file name is `oas-integration`.
+| *Project Location* | Your home directory or another directory you create.
+
+See xref:start-add-folders.adoc[].
+
+include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
+
+| *Search an API Specification from Exchange* |Name of the specification in Exchange. Activate *Show filters* to narrow your search results. See xref:filter-search-results.adoc[] for more information.
+| *Mule runtime* |Mule runtime version to use for your project. 
+| *Java Version* |Java version to use for Mule. 
+|===
++
+include::partial$acb-runtime-java.adoc[tags="runtime-java-download"]
+. Search for an API spec on Exchange:
++
+.. Start typing the name of an API spec.
+.. Press Enter to display a list of search results.
+.. Click *Add Asset* to add the selected API spec:
+// end::start-implementation[]
+//
