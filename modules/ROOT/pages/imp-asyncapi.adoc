@@ -59,7 +59,7 @@ You can scaffold an AsyncAPI specification into a new or existing Mule project:
 * To scaffold an AsyncAPI specification into a new implementation project, follow the procedure in <<scaffold-new>>. 
 
 * To scaffold or re-scaffold an AsyncAPI specification into an existing Mule project (implementation or integration), see <<scaffold-existing>>. Re-scaffolding can be useful when the specification is updated to introduce _new, as yet unscaffolded operations_. 
-
++
 [IMPORTANT]
 ====
 When re-scaffolding, the scaffolder acts on new combinations of channel, operation, and server groupings only and does not re-scaffold combinations that are not new.
@@ -341,7 +341,7 @@ The `publish` and `subscribe` operations handle messages of the `BackOrder` type
 --
 
 [[ex-flows-scaffolded]]
-=== Example: Flows Generated from the Scaffolded Spec
+=== Example: Flows Generated from the Scaffolded Specification
 
 When scaffolding the specification into an implementation project, Anypoint Code Builder creates a flow (`<flow/>`) for each `publish` operation and transforms the `publish` operation into a Message Listener from the AsyncAPI module for APIkit (`<apikit-asyncapi:message-listener/>`). The scaffolder also adds a Logger component to each flow. The AsyncAPI module also provides a Publish operation, which you can manually add to your app when implementing `subscribe` operations. For more information about this module, see xref:apikit::apikit-asyncapi-module-reference.adoc[].
 
