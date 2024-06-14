@@ -1,0 +1,790 @@
+= Implementing AsyncAPI Specifications
+:page-deployment-options: cloud-ide, desktop-ide
+:page-aliases: imp-implement-apis.adoc
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+
+Anypoint Code Builder supports the implementation of AsyncAPI specifications. When creating an implementation project in Anypoint Code Builder, you can import and scaffold an AsyncAPI specification from Anypoint Exchange into an API interface that you can implement from the cloud or desktop IDE. 
+
+* To scaffold an AsyncAPI specification into a Mule project, follow the procedure in <<scaffold-new>> or <<scaffold-existing>>. 
+* To re-scaffold an AsyncAPI specification into an existing project, follow the procedure in <<scaffold-new>>. Re-scaffolding can be useful when the specification is updated to introduce _new, as yet unscaffolded operations_. 
++
+[IMPORTANT]
+====
+When re-scaffolding, the scaffolder acts on new combinations of channel, operation, and server groupings only and does not re-scaffold combinations that are not new.
+====
+
+For supported specification versions, see xref:acb-release-notes.adoc#compatibility[Compatibility] in the Release Notes.
+
+[[prereqs]]
+== Before You Begin
+
+* If you do not yet have access to Anypoint Code Builder, follow the IDE procedures in xref:start-acb.adoc[].
+* {empty}
++
+//How org admin provides access to feature from ACB landing page:
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="asyncapi-beta-access"]
+* If you are unfamiliar with the scaffolding process for AsyncAPI specs, review <<scaffolding>>.
+* You must have access to an AsyncAPI specification that is hosted on Anypoint Exchange: 
++
+//note on publishing and designing asyncapi specs from design center
+include::partial$acb-api-design.adoc[tags="note-asyncapi"]
+
+[[scaffolding]]
+== Scaffolding Overview
+
+Before you implement an AsyncAPI specification with Anypoint Code Builder, it's important to understand the scaffolding process at a high level. 
+
+[IMPORTANT]
+====
+include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
+====
+
+When scaffolding an AsyncAPI specification into a Mule project (implementation or integration), Anypoint Code Builder:
+
+* Introspects the AsyncAPI specification 
+* Creates a new Mule project with a separate flow for each `publish` operation in the spec
++
+See <<ex-flows-scaffolded>>.
+* Generates a `global-configs.xml` file with connection configurations for the *Message Listener* operations
++
+See <<ex-connection-configs-scaffolded>>.
+* Produces the configuration properties file `dev.properties.properties` file in the `src/main/resources` directory of your Mule project
++
+See <<ex-config-properties>>.
+* Adds the APIkit for AsyncAPI Module to the project 
++
+** *Publish*: AsyncAPI `subscribe` operations in the specification are available for configuration  as *Publish* (`<apikit-asyncapi:publish/>`) operations from the module. 
+** *Message Listener*: AsyncAPI `publish` operations in the specification are configurable *Message Listener* (`<apikit-asyncapi:message-listener/>`) operations in the module.
++
+The scaffolder transforms each `publish` operation into a *Message Listener* operation.
+
+[[scaffold-new]]
+== Scaffold an AsyncAPI Specification into a New Project
+
+Create an implementation project from an AsyncAPI specification on Anypoint Exchange. When creating the project, Anypoint Code Builder scaffolds the specification into an interface that you can implement as a Mule app.
+
+. Meet the prerequisites in <<prereqs>>.
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
++
+image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
+//configure implementation creation form:
+include::partial$acb-reusable-steps.adoc[tags="start-implementation"]
++
+image:implement-api-search-async.png["AsyncAPI specification examples in the Implement an API Specification form"]
+. Click *Create Project*.
++
+When you create the project, Anypoint Code Builder:
++
+** Adds the API specification as a dependency in your project's `pom.xml` file, for example:
++
+[source,xml]
+----
+<dependency>
+    <groupId>e21dd38b-8231-45bf-aaa7-abde2072d538</groupId>
+    <artifactId>my-asyncapi-example</artifactId>
+    <version>1.0.0</version>
+    <classifier>evented-api</classifier>
+    <type>zip</type>
+</dependency>
+----
+** Adds the Mule and Java versions to the project's `mule-artifact.json` file, for example:
++
+[source,json]
+----
+{
+    "minMuleVersion": "4.7.0",
+    "javaSpecificationVersions": [
+      "17"
+    ]
+}
+----
+** Scaffolds your API specification into the new Mule project.
+** Opens the `flows.xml` configuration file in the project.
++
+The configuration XML file includes the interface for your implementation project,
+with flows for each endpoint in the spec, error handlers, and a built-in router.
++
+For a detailed example, see <<ex-flows-scaffolded>>. 
+
+You can now implement this interface within the Mule app. For detailed configurations,  <<examples>>.
+
+[[scaffold-existing]]
+== Scaffold an AsyncAPI Specification into an Existing Project
+
+Scaffold an AsyncAPI specification from Exchange into an existing project in Anypoint Code Builder. This process is similar for other types of specs, such the xref:tut-af-implement-am-flights-api.adoc#import-and-scaffold-your-american-flights-api-specification[American Flights example].
+
+//note on publishing and designing asyncapi specs from design center
+include::partial$acb-api-design.adoc[tags="note-asyncapi"]
+
+. Meet the prerequisites in <<prereqs>>.
+. In Anypoint Code Builder, open your project.
++
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide this command:
++
+[source,command]
+----
+MuleSoft: Import Asset from Exchange
+----
+. Select *AsyncAPI* from the list of assets.
+. If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code. 
+. Type the name of your American Flights API specification, for example:
++
+----
+My AsyncAPI Spec
+----
+. Wait for the IDE to load a list of matches to the name, and then select your AsyncAPI specification.
+. When prompted for a version, select the version of the API to import, such as `_1.0.0_`.
+. Select *Yes* when prompted to scaffold the API dependency.
+
+You can now implement this interface within the Mule app. For detailed configurations,  <<examples>>.
+
+
+== Deploy an Implementation
+
+Deploy the implementation to CloudHub or to another host. You can deploy to CloudHub from xref:int-deploy-mule-apps.adoc[Anypoint Code Builder]. For other deployment options, see xref:runtime-manager::deployment-strategies.adoc[].
+
+[[examples]]
+== Examples
+
+The <<scaffold, scaffolding procedure>> builds an implementation project from the following version 2.6 AsyncAPI spec:
+
+* <<ex-asyncapi-spec>>
++
+The AsyncAPI specification TODO_TODO
+* <<ex-flows-scaffolded>>
++
+TODO_TODO
+* <<ex-connection-configs-scaffolded>>
++
+TODO_TODO
+* <<ex-config-properties>>
++
+TODO_TODO
+* <<ex-flows-notification>>
+
+[[ex-asyncapi-spec]]
+=== Example: AsyncAPI 2.6 Specification
+
+The following example is a mock API specification that uses Anypoint MQ and Kafka protocols. The specification defines channels for orders (new, confirmed, and cancelled orders) that use Anypoint MQ, and it defines a channel that uses Kafka for backorders (items that are not in stock). Each channel includes a `publish` and `subscribe` operation. 
+
+[source,yaml]
+----
+asyncapi: '2.6.0'
+info:
+  title: Async-AMQ-kafka-test
+  version: '1.0.0'
+  description: Orders API
+tags:
+  - name: Orders API
+    description: API for orders
+servers:
+  AMQ-prod: <!--1-->
+    url: https:://your_MQ_server_URL_here 
+    protocol: anypointmq
+    protocolVersion: v1
+    description: Anypoint MQ broker
+  Kafka-prod: <!--2-->
+    url: localhost:9092
+    protocol: kafka
+    description: kafka broker
+channels:
+  order-placed:  <!--3-->
+    description: new orders channel
+    servers:
+      - AMQ-prod
+    publish:
+      operationId: listen-order-placed
+      description: listen for new order events
+      summary: Order Placed Event
+      message:
+        $ref: '#/components/messages/OrderPlaced'
+    subscribe:
+      operationId: publish-order-placed
+      description: publish new order events
+      summary: Order Placed Event
+      message:
+        $ref: '#/components/messages/OrderPlaced'
+  order-cancelled:
+    description: orders cancelled channel
+    servers:
+      - AMQ-prod
+    publish:
+      operationId: listen-order-cancellations
+      description: listen for order cancellation events
+      summary: Order Cancelled Event
+      message:
+        $ref: '#/components/messages/OrderCancelled'
+    subscribe:
+      operationId: publish-order-cancellations
+      description: publish order cancellation events
+      summary: Order Cancelled Event
+      message:
+        $ref: '#/components/messages/OrderCancelled'
+  order-confirmed:
+    description: orders confirmed channel
+    servers:
+      - AMQ-prod
+    publish:
+      operationId: listen-order-confirmations
+      description: listen for order confirmation events
+      summary: Order Confirmed Event
+      message:
+        $ref: '#/components/messages/OrderConfirmed'
+    subscribe:
+      operationId: publish-order-confirmations
+      description: publish order confirmation events
+      summary: Order Confirmed Event
+      message:
+        $ref: '#/components/messages/OrderConfirmed'
+  order-backordered: <!--4-->
+    servers:
+      - Kafka-prod
+    description: orders backordered channel
+    publish:
+      operationId: listen-order-backordered
+      description: listen for backorder events
+      summary: Backorder Event
+      message:
+        $ref: '#/components/messages/BackOrder'
+    subscribe:
+      operationId: publish-order-backordered
+      description: publish backorder events
+      summary: Backorder Event
+      message:
+        $ref: '#/components/messages/BackOrder'
+components:  <!--7-->
+  messages:
+    OrderPlaced:
+      payload:
+        type: object
+        properties:
+          orderId:
+            type: string
+          customerName:
+            type: string
+          email:
+            type: string
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                productId:
+                  type: string
+                productName:
+                  type: string
+                quantity:
+                  type: integer
+                price:
+                  type: number
+    OrderConfirmed:
+      payload:
+        type: object
+        properties:
+          orderId:
+            type: string
+          email:
+            type: string
+    OrderCancelled:
+      payload:
+        type: object
+        properties:
+          orderId:
+            type: string
+          email:
+            type: string
+          reason:
+            type: string
+    BackOrder:
+      payload:
+        type: object
+        properties:
+          orderId:
+            type: string
+          email:
+            type: string
+----
+--
+[calloutlist]
+. Anypoint MQ server URL for the associated client app: You can copy the URL from the region that you select when creating the queue. See the *copy* button in xref:mq-queues.adoc#create-a-queue[Create a Queue], and see xref:mq::mq-client-apps.adoc[].
+. Example of a local host configured for a Kafka broker
+. The `order-placed` channel uses Anypoint MQ for publishing (listening for) and subscribing to (publishing) orders on the queue. Similarly configured channels are `order-cancelled` and `order-confirmed`.
++
+Sending, cancelling, or confirming an order triggers the Listener for the associated channel to start the associated flow in the Mule app. You can add any number of processors to handle the event. The `publish` and `subscribe` operations handle messages of the defined type, either `OrderPlaced`, `OrderCancelled`, or `OrderConfirmed`.
+. The `order-backordered` channel uses Kafka  publishing (listening for) and subscribing to (publishing) backorders. 
++
+The `publish` and `subscribe` operations handle messages of the `BackOrder` type, defined in the spec.
+--
+
+[[ex-flows-scaffolded]]
+=== Example: Flows Generated from the Scaffolded Spec
+
+//TODO: CONSIDER SHARING THIS PARAGRAPH ABOVE AS AN INCLUDE 
+When scaffolding the specification into an implementation project, Anypoint Code Builder creates a flow (`<flow/>`) for each `publish` operation and transforms the `publish` operation into a Message Listener from the AsyncAPI module for APIkit (`<apikit-asyncapi:message-listener/>`). The scaffolder also adds a Logger component to each flow.   The AsyncAPI module also provides a Publish operation, which you can manually add to your app when implementing `subscribe` operations. For more information about this module, see xref:apikit::apikit-asyncapi-module-reference.adoc[].
+
+Scaffolding the <<ex-asyncapi-spec, AsyncAPI specification example>> into an implementation in Anypoint Code Builder produces a `flow.xml` file similar to this one:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+      xmlns:apikit-asyncapi="http://www.mulesoft.org/schema/mule/apikit-asyncapi" 
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/apikit-asyncapi http://www.mulesoft.org/schema/mule/apikit-asyncapi/current/mule-apikit-asyncapi.xsd http://www.mulesoft.org/schema/mule/kafka http://www.mulesoft.org/schema/mule/kafka/current/mule-kafka.xsd http://www.mulesoft.org/schema/mule/anypoint-mq http://www.mulesoft.org/schema/mule/anypoint-mq/current/mule-anypoint-mq.xsd">
+  <flow name="LISTEN:listen-order-placed">
+    <apikit-asyncapi:message-listener config-ref="asyncapi-config" channelName="order-placed">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="AMQ-prod" />
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]" />
+  </flow>
+  <flow name="LISTEN:listen-order-cancellations">
+    <apikit-asyncapi:message-listener config-ref="asyncapi-config" channelName="order-cancelled">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="AMQ-prod" />
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]" />
+  </flow>
+  <flow name="LISTEN:listen-order-confirmations">
+    <apikit-asyncapi:message-listener config-ref="asyncapi-config" channelName="order-confirmed">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="AMQ-prod" />
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]" />
+  </flow>
+  <flow name="LISTEN:listen-order-backordered">
+    <apikit-asyncapi:message-listener config-ref="asyncapi-config" channelName="order-backordered">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="Kafka-prod" />
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]" />
+  </flow>
+</mule>
+----
+
+[[ex-connection-configs-scaffolded]]
+=== Example: Connection Configurations from the Scaffolded Spec
+
+The scaffolding also generates `global-configs.xml` for server connection configurations defined in the specification:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:anypoint-mq="http://www.mulesoft.org/schema/mule/anypoint-mq" xmlns:apikit-asyncapi="http://www.mulesoft.org/schema/mule/apikit-asyncapi" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:kafka="http://www.mulesoft.org/schema/mule/kafka" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/apikit-asyncapi http://www.mulesoft.org/schema/mule/apikit-asyncapi/current/mule-apikit-asyncapi.xsd http://www.mulesoft.org/schema/mule/kafka http://www.mulesoft.org/schema/mule/kafka/current/mule-kafka.xsd http://www.mulesoft.org/schema/mule/anypoint-mq http://www.mulesoft.org/schema/mule/anypoint-mq/current/mule-anypoint-mq.xsd">
+  <kafka:producer-config name="Apache_Kafka_Producer_configuration_Kafka-prod">
+    <kafka:producer-plaintext-connection>
+      <kafka:bootstrap-servers>
+        <kafka:bootstrap-server value="localhost:9092" />
+      </kafka:bootstrap-servers>
+    </kafka:producer-plaintext-connection>
+  </kafka:producer-config>
+  <kafka:consumer-config name="Apache_Kafka_Consumer_configuration_Kafka-prod">
+    <kafka:consumer-plaintext-connection>
+      <kafka:bootstrap-servers>
+        <kafka:bootstrap-server value="localhost:9092" />
+      </kafka:bootstrap-servers>
+      <kafka:topic-patterns>
+        <kafka:topic-pattern value="order-backordered" />
+      </kafka:topic-patterns>
+    </kafka:consumer-plaintext-connection>
+  </kafka:consumer-config>
+  <anypoint-mq:config name="Anypoint_MQ_configuration_AMQ-prod">
+    <anypoint-mq:connection clientId="${anypointmq.server.AMQ-prod.clientAppId}" clientSecret="${anypointmq.server.AMQ-prod.clientSecret}" url="https://mq-us-east-1.stgx.anypoint.mulesoft.com/api/v1/organizations/8dbc2756-83d6-4a1c-91c4-6eafbe7d7ae0/environments/49cbf562-fed4-4b42-bce9-98fe8f7bcf60" />
+  </anypoint-mq:config>
+  <configuration-properties file="${env}-properties.properties" />
+  <global-property name="env" value="dev" />
+  <apikit-asyncapi:config name="asyncapi-config" apiDefinition="${api.path}">
+    <apikit-asyncapi:kafka-configs>
+      <apikit-asyncapi:kafka-config serverKey="Kafka-prod" producerConfigRef="Apache_Kafka_Producer_configuration_Kafka-prod" consumerConfigRef="Apache_Kafka_Consumer_configuration_Kafka-prod" />
+    </apikit-asyncapi:kafka-configs>
+    <apikit-asyncapi:anypoint-mq-configs>
+      <apikit-asyncapi:anypoint-mq-config serverKey="AMQ-prod" configRef="Anypoint_MQ_configuration_AMQ-prod" />
+    </apikit-asyncapi:anypoint-mq-configs>
+  </apikit-asyncapi:config>
+</mule>
+----
+
+[[ex-flows-implemented]]
+The following example adds business logic to the scaffolded flows:
+
+[source,xml]
+----
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:apikit-asyncapi="http://www.mulesoft.org/schema/mule/apikit-asyncapi" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" 
+xmlns:http="http://www.mulesoft.org/schema/mule/http" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/apikit-asyncapi http://www.mulesoft.org/schema/mule/apikit-asyncapi/current/mule-apikit-asyncapi.xsd http://www.mulesoft.org/schema/mule/kafka http://www.mulesoft.org/schema/mule/kafka/current/mule-kafka.xsd http://www.mulesoft.org/schema/mule/anypoint-mq http://www.mulesoft.org/schema/mule/anypoint-mq/current/mule-anypoint-mq.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd  http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+  <flow name="LISTEN:listen-order-placed">
+    <apikit-asyncapi:message-listener channelName="order-placed" config-ref="asyncapi-config" doc:name="Listen for new orders">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="AMQ-prod"></apikit-asyncapi:server>
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]"></logger>
+    <http:request config-ref="HTTP_Request_config" doc:id="nscwew" doc:name="check inventory" target="inventory" url="https://anypoint.mulesoft.com/mocking/api/v1/links/3a7158be-3edb-40d9-a776-71614fe490e9/inventory?ProductID=12345"></http:request>
+    <choice doc:id="e61a19-cfc986" doc:name="If in stock">
+      <when doc:id="43efa6-eb5afe" doc:name="in stock" expression="#[vars.inventory.stockDetails.availableStock > payload.items.quantity[0]]">
+        <http:request config-ref="HTTP_Request_config" doc:id="aa26a8-7a1ec5" doc:name="CreateOrder" target="status" url="https://anypoint.mulesoft.com/mocking/api/v1/links/d0d179d9-8a69-4227-ade1-626f1754404d/order"></http:request>
+        <ee:transform doc:id="9c714a-117d59" doc:name="Prepare confirmation message">
+          <ee:message>
+            <ee:set-payload doc:id="166d40-4bf0b6" doc:name="Set payload">
+              <![CDATA[%dw 2.0
+            output application/json
+            ---
+            {
+              orderId : payload.orderId,
+              email : payload.email,
+            }]]>
+            </ee:set-payload>
+          </ee:message>
+        </ee:transform>
+        <apikit-asyncapi:publish channelName="order-confirmed" config-ref="asyncapi-config" doc:id="oigqfw" doc:name="Order confirmation notification" serverName="AMQ-prod"></apikit-asyncapi:publish>
+      </when>
+      <otherwise doc:name="out of stock">
+        <ee:transform doc:id="90dd99-c160de" doc:name="Prepare notification message">
+          <ee:message>
+            <ee:set-payload doc:id="f5aced-23fcf9" doc:name="Set payload">
+              <![CDATA[%dw 2.0
+            output application/json
+            ---
+            {
+              orderId : payload.orderId,
+              email : payload.email,
+            }]]>
+            </ee:set-payload>
+          </ee:message>
+        </ee:transform>
+        <apikit-asyncapi:publish channelName="order-backordered" config-ref="asyncapi-config" doc:id="lsmcyo" doc:name="Out of stock notification" serverName="Kafka-prod"></apikit-asyncapi:publish>
+      </otherwise>
+    </choice>
+  </flow>
+  <flow name="LISTEN:listen-order-confirmations">
+    <apikit-asyncapi:message-listener channelName="order-confirmed" config-ref="asyncapi-config" doc:name="listen for order confirmation">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="AMQ-prod"></apikit-asyncapi:server>
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]"></logger>
+    <set-payload doc:id="28ace0-983314" doc:name="Set Payload" value="#[                     {                         'orderId': payload.orderId,                         'email': payload.email,                         'subject': 'Order: ' ++ payload.orderId as String ++ ' is confirmed',                         'emailmessage': 'We are pleased to let you know that your order: ' ++ payload.orderId as String ++ ' is confirmed. \nThank you for shopping with us.\n\nThrone of Games Corporation',                         'slackmessage': ':mega: Please note that the order with OrderId ' ++ payload.orderId as String ++ ' has been confirmed.'                     }                 ]"></set-payload>
+    <flow-ref name="notification-flow"></flow-ref>
+  </flow>
+  <flow name="LISTEN:listen-order-cancellations">
+    <apikit-asyncapi:message-listener channelName="order-cancelled" config-ref="asyncapi-config">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="AMQ-prod"></apikit-asyncapi:server>
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]"></logger>
+  </flow>
+  <flow name="LISTEN:listen-order-backordered">
+    <apikit-asyncapi:message-listener channelName="order-backordered" config-ref="asyncapi-config">
+      <apikit-asyncapi:servers>
+        <apikit-asyncapi:server value="Kafka-prod"></apikit-asyncapi:server>
+      </apikit-asyncapi:servers>
+    </apikit-asyncapi:message-listener>
+    <logger level="INFO" message="#[payload]"></logger>
+  </flow>
+  <flow name="new-orders">
+        <http:listener path="neworder" config-ref="HTTP_Listener_config" doc:name="listen for new orders" doc:id="nghrkl" allowedMethods="POST"/>
+        <logger doc:name="Logger" doc:id="adydcs" /></flow>
+</mule>
+----
+
+[[ex-config-properties]]
+=== Example: Configuration Properties File
+
+Anypoint Code Builder also generates a `dev.properties.properties` file in the `src/main/resources` directory of your implementation project. 
+
+The <<ex-asyncapi-spec, specification example>> defines server settings for an Anypoint MQ broker. To listen for and publish messages to an Anypoint MQ queue, you must supply a `clientAppId` and `clientSecret` for an xref:mq::mq-client-apps.adoc[MQ client app]. The associated `api-path` setting is generated automatically during the scaffolding process. 
+
+[source,properties]
+----
+#Fri Jun 07 09:32:50 PDT 2024
+anypointmq.server.AMQ-prod.clientAppId=
+anypointmq.server.AMQ-prod.clientSecret=
+api.path=resource\:\:e21dd38b-8231-45bf-aaa7-abde2072d538\:my-asyncapi-example\:1.0.0\:evented-api\:zip\:anypointmq-kafka-orders-demo-final.yaml
+----
+
+You can add additional properties to this file, for example:
+
+[source,properties]
+----
+#Fri Jun 07 17:05:33 PDT 2024
+anypointmq.server.AMQ-prod.clientAppId=my_client_app_id_here
+anypointmq.server.AMQ-prod.clientSecret=my_client_app_secret_here
+slack.token=my_slack_token_here
+email.host=smtp.gmail.com
+email.username=me@gmail.com
+email.password=my_gmail_password_here
+api.path=resource\:\:8dbc2756-83d6-4a1c-91c4-6eafbe7d7ae0\:async-amq-kafka-test\:1.0.2\:evented-api\:zip\:anypointmq-kafka-orders-demo-compliant.yaml
+----
+
+For help with configuration properties, including secure properties for passwords and other sensitive data, see xref:int-create-secure-configs.adoc[].
+
+[[ex-config-props]]
+=== Example: Additional Connection Configurations for the Implementation
+
+When adding business logic to your scaffolded project, you can add other connection configurations to `global-configs.xml` for any additional connector operations you add to your flows or subflows. The following example adds connection configurations for xref:http-connector::http-connector-config-acb.adoc[HTTP], xref:email-connector::index.adoc[Email], and xref:slack-connector::index.adoc[Slack] connector operations. You can define configuration properties for these, such as `${email.password}` in a <<ex-config-properties, properties file>>.
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:anypoint-mq="http://www.mulesoft.org/schema/mule/anypoint-mq" xmlns:apikit-asyncapi="http://www.mulesoft.org/schema/mule/apikit-asyncapi" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:kafka="http://www.mulesoft.org/schema/mule/kafka" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:slack="http://www.mulesoft.org/schema/mule/slack" 
+  xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/apikit-asyncapi http://www.mulesoft.org/schema/mule/apikit-asyncapi/current/mule-apikit-asyncapi.xsd http://www.mulesoft.org/schema/mule/kafka http://www.mulesoft.org/schema/mule/kafka/current/mule-kafka.xsd http://www.mulesoft.org/schema/mule/anypoint-mq http://www.mulesoft.org/schema/mule/anypoint-mq/current/mule-anypoint-mq.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd http://www.mulesoft.org/schema/mule/slack http://www.mulesoft.org/schema/mule/slack/current/mule-slack.xsd">
+  <kafka:producer-config name="Apache_Kafka_Producer_configuration_Kafka-prod">
+    <kafka:producer-plaintext-connection>
+      <kafka:bootstrap-servers>
+        <kafka:bootstrap-server value="localhost:9092" />
+      </kafka:bootstrap-servers>
+    </kafka:producer-plaintext-connection>
+  </kafka:producer-config>
+  <kafka:consumer-config name="Apache_Kafka_Consumer_configuration_Kafka-prod">
+    <kafka:consumer-plaintext-connection>
+      <kafka:bootstrap-servers>
+        <kafka:bootstrap-server value="localhost:9092" />
+      </kafka:bootstrap-servers>
+      <kafka:topic-patterns>
+        <kafka:topic-pattern value="order-backordered" />
+      </kafka:topic-patterns>
+    </kafka:consumer-plaintext-connection>
+  </kafka:consumer-config>
+  <anypoint-mq:config name="Anypoint_MQ_configuration_AMQ-prod">
+    <anypoint-mq:connection clientId="${anypointmq.server.AMQ-prod.clientAppId}" clientSecret="${anypointmq.server.AMQ-prod.clientSecret}" url="https://mq-us-east-1.stgx.anypoint.mulesoft.com/api/v1/organizations/8dbc2756-83d6-4a1c-91c4-6eafbe7d7ae0/environments/49cbf562-fed4-4b42-bce9-98fe8f7bcf60" />
+  </anypoint-mq:config>
+  <configuration-properties file="${env}-properties.properties" />
+  <global-property name="env" value="dev" />
+  <apikit-asyncapi:config name="asyncapi-config" apiDefinition="${api.path}">
+    <apikit-asyncapi:kafka-configs>
+      <apikit-asyncapi:kafka-config serverKey="Kafka-prod" producerConfigRef="Apache_Kafka_Producer_configuration_Kafka-prod" consumerConfigRef="Apache_Kafka_Consumer_configuration_Kafka-prod" />
+    </apikit-asyncapi:kafka-configs>
+    <apikit-asyncapi:anypoint-mq-configs>
+      <apikit-asyncapi:anypoint-mq-config serverKey="AMQ-prod" configRef="Anypoint_MQ_configuration_AMQ-prod" />
+    </apikit-asyncapi:anypoint-mq-configs>
+  </apikit-asyncapi:config>
+  
+  <http:request-config name="HTTP_Request_config" basePath="path" > <!--1-->
+    <http:request-connection protocol="HTTP" host="example.com" />
+  </http:request-config>
+  
+  <http:listener-config name="HTTP_Listener_config" > <!--2-->
+    <http:listener-connection host="0.0.0.0" port="8081" />
+  </http:listener-config>
+  
+  <email:smtp-config name="Email_SMTP"> <!--3-->
+      <email:smtps-connection host="smtp.gmail.com" password="${email.password}" user="${email.username}">
+        <tls:context>
+          <tls:trust-store insecure="true"></tls:trust-store>
+        </tls:context>
+      </email:smtps-connection>
+    </email:smtp-config>
+
+    <slack:config name="Slack_Config"> <!--4-->
+      <slack:token-connection token="${slack.token}" />
+    </slack:config>
+</mule>
+----
+--
+[calloutlist]
+. HTTP Request connection configuration example
+. HTTP Listener connection configuration example
+. Email SMTP connection configuration example
+. Slack connection configuration example
+--
+
+[[ex-flows-notification]]
+=== Example: Notification Flows
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:slack="http://www.mulesoft.org/schema/mule/slack"
+	xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+  xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+	http://www.mulesoft.org/schema/mule/slack http://www.mulesoft.org/schema/mule/slack/current/mule-slack.xsd
+	http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+	http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+  <sub-flow name="notification-flow">
+        <logger doc:name="Logger" doc:id="pdclup" />
+        <ee:transform doc:name="extract variables" doc:id="14b208-1ae908">
+          <ee:variables>
+            <ee:set-variable variableName="emailmsg">
+                <![CDATA[%dw 2.0 output application/java --- payload.emailmessage]]>
+            </ee:set-variable>
+            <ee:set-variable variableName="slackmsg">
+                <![CDATA[%dw 2.0 output application/java --- payload.slackmessage]]>
+            </ee:set-variable>
+            <ee:set-variable variableName="email">
+                <![CDATA[%dw 2.0 output application/java --- payload.email]]>
+            </ee:set-variable>
+            <ee:set-variable variableName="subject">
+                <![CDATA[%dw 2.0 output application/java --- payload.subject]]>
+            </ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+      <slack:post-message channel="order-status" config-ref="Slack_Config" doc:id="305e92-9dc173" doc:name="Send order notification to slack">
+        <slack:message>
+          <![CDATA[#[vars.slackmsg]]]>   
+        </slack:message>
+      </slack:post-message>
+      <email:send config-ref="Email_SMTP" doc:id="7dd748-b67d3d" doc:name="Send notification email" fromAddress="#[vars.email]" subject="#[vars.subject]">
+        <email:to-addresses>
+          <email:to-address value="#[vars.email]"></email:to-address>
+        </email:to-addresses>
+        <email:body contentType="text/plain">
+          <email:content>
+            <![CDATA[#[vars.emailmsg]]]>
+          </email:content>
+        </email:body>
+      </email:send>
+      <logger doc:id="hyxybs" doc:name="Logger"></logger>
+    </sub-flow>
+</mule>
+----
+
+
+////
+[[errors]]
+== Error Conditions
+
+TODO_TODO_VERIFY_ALL
+
+The scaffolder implements one flow per channel, server, and operation (`publish` or `subscribe`).
+
+* The following conditions produce an error during the scaffolding process stops, and the IDE displays an error message: 
+
+** No channels are defined in the specification.
+** None of the defined message brokers for the server are supported.
+
+* If the specification defines at least one channel but no server is defined, the IDE prompts you for server details and defaults to the defined channel. 
+* If the specification defines a server but the n is missing, TODO_TODO_WHAT_HAPPENS
+* If a channel is defined without a `publish` or `subscribe` operation, TODO_TODO_IS_THERE_A_DEFAULT
+
+If a specification defines only one server and a channel definition is missing a reference to a server, the scaffolder uses the defined server. If the specification defines multiple servers and a channel definition is missing a reference to a server, the IDE prompts you to identify the server to implement. 
+
+Channel with no server ref, but 1 server defined: we use that server
+Channel with no server ref, but multiple servers defined: we ask for the server(s) to be implemented: one flow per channel+server+pub-or-sub
+Can we have more than one message type in channel?
+Binding missing: binding overwrites channel name. If there is no binding, we take the channel name for topic name
+Only subscribe operations are defined (they are translated into “publish”): For the first time flow, we will create a new project and add the API and APIkit connector
+////
+
+////
+Kafka setup local
+# This is a gist by @anishmahapatra to efficiently run Kafka commands to run a prodcuer and consumer locally
+# Command to kill ports
+kill -9 $(lsof -i tcp:9092,8080,2181)
+
+# Command to run Zookeeper
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+# Command to run Server
+bin/kafka-server-start.sh config/server.properties
+
+# Command to run standalone server
+bin/connect-standalone.sh config/connect-standalone.properties
+
+# Create a topic "anishmahapatra"
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3 --topic anishmahapatra
+
+# Command to check for the list of topics
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+
+# Command to delete topic
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic anishmahapatra
+
+# Command to run Kafka producer 
+bin/kafka-console-producer.sh --topic anishmahapatra --bootstrap-server localhost:9092
+
+# Command to run Kafka consumer
+bin/kafka-console-consumer.sh --topic anishmahapatra --bootstrap-server localhost:9092
+
+# Connect with me at https://www.linkedin.com/in/anishmahapatra/
+////
+
+////
+NOTES -- 
+duke's connected apps:
+"When you configure the connector, click Copy Id and Copy Secret to copy the ID and secret for the app you just created"
+* my-connected-app
+** id: 8a980c42d8974ef496378c1fcf9f357b
+** sec: Bf0D387De4f2406d818F9D7f94e2D5D4
+* my-connected-app-2
+** id 82e504a7b3bc43fe85f050e26f78525a
+** sec: A9Cfa9131Bc04F5087e89bDfC0c51cD4
+
+
+MQ CLIENT APP SETUP
+--------------------
+US West Oregon -- server URL in the AsyncAPI spec
+https://mq-us-west-2.anypoint.mulesoft.com/api/v1/organizations/346d7416-8f46-4256-8e45-c85d10787232/environments/7a3f6e1c-0bba-46f7-881d-63420a9a6057
+my-mq-client-app
+ID:   ae33b4ff870e42b49e145ca770b8f1a5
+CSec: B3E83b6760Ab479Ea06C03B9De515c65
+Queue: my-queue (will be channel name in your API specification)
+
+There was an issue solving the dependencies for the artifact [/Users/sduke/acb-projects/async-amq-kafka-test-proj3/pom.xml]. Failed to collect dependencies at 8dbc2756-83d6-4a1c-91c4-6eafbe7d7ae0:async-amq-kafka-test:zip:evented-api:1.0.2
+
+
+Orders-AsyncAPI-example
+
+APIkit for AsyncAPI
+
+1. introspects the API spec
+2. creates a new Mule project
+3. generates flows and configs 
+
+starts with server section, for each server, creates new config in project and adds connectors as dependencies to the project as well as module AsyncAPI
+
+sets up configs for connectors and defines APIkit config using o
+
+Then introspects channels in specification and configs operations from module in the project
+
+- translates publish to listeners in flow and 
+- subscribe to publish in flow 
+new mule flow for Publish operations
+
+For all PUBLISH operations, you get a flow with a listener (with channel and server definitions) and logger
+
+Datasense: also sets up Datasense for incoming payload based on the message def in API specification -- so you can extract values and transform payload
+
+validation: performs message validation and throws errors if incoming or outgoing messages not valid
+
+listener flow: channel defs can have multiple servers and message types; only one flow per channel can listen to messages from the different servers and to different message types -- BUT you can change to make one flow per message broker
+
+Subscribe operations in specification translated to Publish ops in flow; user decides where to add the Publish op
+
+
+Implement an API form has new filter for AsyncAPI specs
+- Simone gets Orders-async
+
+Scaffolded spec, you also get dev version of the properties file for connectors
+if local, no additional properties needed
+
+(you can create other -- non-dev -- versions as well)
+
+global-configs.xml also created with all connector configs (local and not local) 
+
+
+Adding a Publish operation to a flow
+(skips business logic)
+
+Order placed flow
+////

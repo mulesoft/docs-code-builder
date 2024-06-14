@@ -263,15 +263,18 @@ When the application deploys successfully, you see a `DEPLOYED` log message in t
 //
 // tag::fragments-not-scaffolded[]
 // Fragments Not Scaffolded
---
-Anypoint Code Builder does not support scaffolding API specs that reference OAS or JSON schema fragments that you import from Exchange as project dependencies. Instead, you can scaffold a spec with such fragments by providing the fragments inline within the spec or through fragment files that you create manually within your project directory. RAML fragments from Exchange are not affected by this limitation.
-
-If you add an OAS fragment or JSON schema fragment from Exchange to a project and then use it in an API spec, Anypoint Code Builder fails to scaffold the API.
---
+Anypoint Code Builder does not support the scaffolding of AsyncAPI, OAS, or JSON schema fragments that are referenced from API specs. The scaffolder does not add these fragments as project dependencies when you import the spec from Exchange. However, you can scaffold fragments that are specified inline within the spec. RAML fragments imported from Exchange are not affected by this limitation. 
 // end::fragments-not-scaffolded[]
 //
+// tag::fragments-inline[]
+
+For OAS and JSON schema, you can also specify fragment files that you create manually within the implementation or integration project directory.
+// end::fragments-inline[]
+//
+
 
 //
+// NOT USED
 // tag::open-beta-asyncapi[]
 // AsyncAPI scaffolding feature in open Beta from June 2024 until the Oct 2024
 *AsyncAPI Open Beta*: Starting in June 2024, scaffolding and implementing version 2.6 and 2.0 AsyncAPI specifications are supported. Your Anypoint Platform organization administrator must accept Beta terms and conditions before you can discover an AsyncAPI spec in Exchange and scaffold it into your project. Enablement status is available in Anypoint Platform from https://anypoint.mulesoft.com/codebuilder/[Anypoint Code Builder^].
@@ -455,4 +458,71 @@ Although it is also possible to set the versions as values to *muleRuntimeVersio
 // tag::munit-open-testing-panel[]
 . Click the image:anypoint-code-builder::icon-munit-testing.png["",18,18] (Testing) icon to open the Testing panel.
 // end::munit-open-testing-panel[]
+//
+
+
+// ASYNCAPI BETA ACCESS//
+//
+// tag::asyncapi-beta-access[]
+Make sure that you have access to AsyncAPI implementation features from the IDE:
+
+. Log in to Anypoint Platform.
+. From Anypoint Platform, open Anypoint Code Builder, but _do not_ launch the IDE.
+. If you do not yet have access to the AsyncAPI Beta, ask your organization administrator to accept the terms of the beta program by:
+
+.. Clicking *Join Beta* from the Anypoint Code Builder landing page
+.. Reviewing the terms and conditions of the beta program
+.. Clicking *Get Access*
++ 
+When the AsyncAPI feature is available for your organization, the Anypoint Code Builder landing page provides the following notification:
++
+*AsyncAPI Implementation Beta for Anypoint Code Builder and Studio is enabled for your organization. Tell your team to learn more.*
+// end::asyncapi-beta-access[]
+//
+
+//
+// tag::prereqs-implementation[]
+* xref:start-acb.adoc[Set up and access the desktop or cloud IDE].
+* xref:des-create-api-specs.adoc[Create and test your API spec].
+* xref:des-publish-api-spec-to-exchange.adoc[Publish your API spec to Exchange].
+* Optionally, xref:int-create-integrations.adoc[create your integration project (Mule app)].
+// end::prereqs-implementation[]
+// 
+
+//
+// tag::start-implementation[]
+. From *Quick Actions*, click *Implement an API*:
++
+image::implement-api-option-mat.png["*Implement an API* link highlighted in the *Getting Started* section"]
+. Complete the *Implement an API Specification* form:
++
+image::implement-api-configure-in-task.png["Form for starting an implementation project"]
++
+[calloutlist]
+[%header,cols="20a,60a"] 
+|===
+| Field Name | Field Value
+
+| *Project Name* | Unique name for your project.
+
+This name is used as the title and name of the project file.
+For example, if the project name is _OAS Integration_, the project file name is `oas-integration`.
+| *Project Location* | Your home directory or another directory you create.
+
+See xref:start-add-folders.adoc[].
+
+include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
+
+| *Search an API Specification from Exchange* |Name of the specification in Exchange. Activate *Show filters* to narrow your search results. See xref:filter-search-results.adoc[] for more information.
+| *Mule runtime* |Mule runtime version to use for your project. 
+| *Java Version* |Java version to use for Mule. 
+|===
++
+include::partial$acb-runtime-java.adoc[tags="runtime-java-download"]
+. Search for an API spec on Exchange:
++
+.. Start typing the name of an API spec.
+.. Press Enter to display a list of search results.
+.. Click *Add Asset* to add the selected API spec:
+// end::start-implementation[]
 //
