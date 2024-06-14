@@ -5,9 +5,13 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-Anypoint Code Builder supports the implementation of AsyncAPI specifications. When creating an implementation project in Anypoint Code Builder, you can import and scaffold an AsyncAPI specification from Anypoint Exchange into an API interface that you implement from the cloud or desktop IDE. 
+Anypoint Code Builder supports the implementation of AsyncAPI 2.6 and 2.0 specifications. When creating an implementation project in Anypoint Code Builder, you can import and scaffold an AsyncAPI specification from Anypoint Exchange into an API interface that you implement from the cloud or desktop IDE. 
 
-For supported specification versions, see xref:acb-release-notes.adoc#compatibility[Compatibility] in the Release Notes.
+[[supported-brokers]]
+Supported message brokers:
+
+* https://kafka.apache.org/[Kafka]
+* xref:mq::index.adoc[Anypoint MQ]
 
 [[prereqs]]
 == Before You Begin
@@ -52,17 +56,22 @@ See <<ex-config-properties>>.
 +
 The scaffolder transforms each `publish` operation into a *Message Listener* operation.
 
+Errors can occur during the scaffolding process:
+
+* If no channels are defined in the spec
+* For unsupported <<supported-brokers, message brokers>> 
+
 == Scaffold an AsyncAPI API Specification into a Mule Project
 
 You can scaffold an AsyncAPI specification into a new or existing Mule project: 
 
 * To scaffold an AsyncAPI specification into a new implementation project, follow the procedure in <<scaffold-new>>. 
 
-* To scaffold or re-scaffold an AsyncAPI specification into an existing Mule project (implementation or integration), see <<scaffold-existing>>. Re-scaffolding can be useful when the specification is updated to introduce _new, as yet unscaffolded operations_. 
+* To scaffold or re-scaffold an AsyncAPI specification into an existing Mule project (implementation or integration), see <<scaffold-existing>>. Re-scaffolding can be useful when the specification version is updated to introduce a new operation or server. If the specification contains a new server, the scaffolder adds a new configuration for it to the Mule project.
 +
 [IMPORTANT]
 ====
-When re-scaffolding, the scaffolder acts on new combinations of channel, operation, and server groupings only and does not re-scaffold combinations that are not new.
+When re-scaffolding, the scaffolder acts on new combinations of channel, server, and `subscribe` operation groupings and does not re-scaffold combinations that are not new. New `publish` operations are not affected by this condition.
 ====
 
 [[scaffold-new]]
