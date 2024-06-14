@@ -5,15 +5,7 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-Anypoint Code Builder supports the implementation of AsyncAPI specifications. When creating an implementation project in Anypoint Code Builder, you can import and scaffold an AsyncAPI specification from Anypoint Exchange into an API interface that you can implement from the cloud or desktop IDE. 
-
-* To scaffold an AsyncAPI specification into a Mule project, follow the procedure in <<scaffold-new>> or <<scaffold-existing>>. 
-* To re-scaffold an AsyncAPI specification into an existing project, follow the procedure in <<scaffold-new>>. Re-scaffolding can be useful when the specification is updated to introduce _new, as yet unscaffolded operations_. 
-+
-[IMPORTANT]
-====
-When re-scaffolding, the scaffolder acts on new combinations of channel, operation, and server groupings only and does not re-scaffold combinations that are not new.
-====
+Anypoint Code Builder supports the implementation of AsyncAPI specifications. When creating an implementation project in Anypoint Code Builder, you can import and scaffold an AsyncAPI specification from Anypoint Exchange into an API interface that you implement from the cloud or desktop IDE. 
 
 For supported specification versions, see xref:acb-release-notes.adoc#compatibility[Compatibility] in the Release Notes.
 
@@ -60,12 +52,27 @@ See <<ex-config-properties>>.
 +
 The scaffolder transforms each `publish` operation into a *Message Listener* operation.
 
+== Scaffold an AsyncAPI API Specification into a Mule Project
+
+You can scaffold an AsyncAPI specification into a new or existing Mule project: 
+
+* To scaffold an AsyncAPI specification into a new implementation project, follow the procedure in <<scaffold-new>>. 
+
+* To scaffold or re-scaffold an AsyncAPI specification into an existing Mule project (implementation or integration), see <<scaffold-existing>>. Re-scaffolding can be useful when the specification is updated to introduce _new, as yet unscaffolded operations_. 
+
+[IMPORTANT]
+====
+When re-scaffolding, the scaffolder acts on new combinations of channel, operation, and server groupings only and does not re-scaffold combinations that are not new.
+====
+
 [[scaffold-new]]
-== Scaffold an AsyncAPI Specification into a New Project
+=== Scaffold an AsyncAPI Specification into a New Project
 
 Create an implementation project from an AsyncAPI specification on Anypoint Exchange. When creating the project, Anypoint Code Builder scaffolds the specification into an interface that you can implement as a Mule app.
 
 . Meet the prerequisites in <<prereqs>>.
++
+Use of AsyncAPI features in the IDE requires enablement by an Anypoint Platform organization administrator.
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 +
@@ -78,6 +85,12 @@ image:implement-api-search-async.png["AsyncAPI specification examples in the Imp
 +
 When you create the project, Anypoint Code Builder:
 +
+** Scaffolds your API specification into the new Mule project that opens to a configuration XML file with scaffolded flows (`flows.xml`), for example:
++
+image::imp-asyncapi-project-ex.png["AsyncAPI implementation project in the IDE"]
++
+The configuration XML file includes the interface for your implementation project,
+with flows that contain Message Listener (`<apikit-asyncapi:message-listener/>`) configurations for each `publish` operation in the spec. 
 ** Adds the API specification as a dependency in your project's `pom.xml` file, for example:
 +
 [source,xml]
@@ -101,25 +114,23 @@ When you create the project, Anypoint Code Builder:
     ]
 }
 ----
-** Scaffolds your API specification into the new Mule project.
-** Opens the `flows.xml` configuration file in the project.
+. Provide business logic to implement this interface within the Mule app:
 +
-The configuration XML file includes the interface for your implementation project,
-with flows for each endpoint in the spec, error handlers, and a built-in router.
+Configure connector operations and processing components that define your business logic. Provide configuration property values to the `dev-properties.properties` file. Optionally, create additional flows for your processing requirements.  
 +
-For a detailed example, see <<ex-flows-scaffolded>>. 
-
-You can now implement this interface within the Mule app. For detailed configurations,  <<examples>>.
+For an example of an AsyncAPI specification, the scaffolded interface, and some business logic for processing orders within a Mule application, see <<examples>>. 
 
 [[scaffold-existing]]
-== Scaffold an AsyncAPI Specification into an Existing Project
+=== Scaffold an AsyncAPI Specification into an Existing Project
 
-Scaffold an AsyncAPI specification from Exchange into an existing project in Anypoint Code Builder. This process is similar for other types of specs, such the xref:tut-af-implement-am-flights-api.adoc#import-and-scaffold-your-american-flights-api-specification[American Flights example].
+Scaffold an AsyncAPI specification from Exchange into an existing project in Anypoint Code Builder.
 
 //note on publishing and designing asyncapi specs from design center
 include::partial$acb-api-design.adoc[tags="note-asyncapi"]
 
 . Meet the prerequisites in <<prereqs>>.
++
+Use of AsyncAPI features in the IDE requires enablement by an Anypoint Platform organization administrator.
 . In Anypoint Code Builder, open your project.
 +
 // Pointer to Command Palette
@@ -132,7 +143,7 @@ MuleSoft: Import Asset from Exchange
 ----
 . Select *AsyncAPI* from the list of assets.
 . If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code. 
-. Type the name of your American Flights API specification, for example:
+. Type the name of your specification, for example:
 +
 ----
 My AsyncAPI Spec
@@ -140,9 +151,12 @@ My AsyncAPI Spec
 . Wait for the IDE to load a list of matches to the name, and then select your AsyncAPI specification.
 . When prompted for a version, select the version of the API to import, such as `_1.0.0_`.
 . Select *Yes* when prompted to scaffold the API dependency.
-
-You can now implement this interface within the Mule app. For detailed configurations,  <<examples>>.
-
+Opens a configuration XML file that contains the scaffolded flows (`flows.xml`) in the project.
+. Provide business logic to implement this interface within the Mule app:
++
+Configure connector operations and processing components that define your business logic. Provide configuration property values to the `dev-properties.properties` file. Optionally, create and configure additional flows or subflows for your processing requirements.  
++
+For an example of an AsyncAPI specification, the scaffolded interface, and some business logic for processing orders within a Mule application, see <<examples>>. 
 
 == Deploy an Implementation
 
@@ -151,21 +165,26 @@ Deploy the implementation to CloudHub or to another host. You can deploy to Clou
 [[examples]]
 == Examples
 
-The <<scaffold, scaffolding procedure>> builds an implementation project from the following version 2.6 AsyncAPI spec:
+The examples implement an API for processing mock orders and sending order status notifications by email and Slack. 
+
+//TODO: time permitting, NICE TO HAVE ARCHITECTURE DIAGRAM CAPTURING BIG PICTURE
 
 * <<ex-asyncapi-spec>>
 +
 The AsyncAPI specification is a mock order processing API that uses Anypoint MQ and Kafka protocols.
 * <<ex-flows-scaffolded>>
 +
-The scaffolder generates a set of flows for the order processing API from `publish` operations defined in the AsyncAPI specification example. The example includes a 
+The scaffolder generates a `flow.xml` file with a flow for each `publish` operation in the AsyncAPI specification. The example describes the generated flows and configures components that provide order-processing business logic to some of the flows. 
++
 * <<ex-connection-configs-scaffolded>>
 +
-
+The scaffolder generates a `global-configs.xml` file that contains connection configurations for the *Message Listener* operations. The example describes this file and adds connection configurations for the Email and Slack connector operations. 
 * <<ex-config-properties>>
 +
-TODO_TODO
+The scaffolder generates a `dev.properties.properties` file in the `src/main/resources` directory of your Mule project. The example describes the generated file and adds configuration properties used in the email and Slack notifications to the file. 
 * <<ex-flows-notification>>
++
+The subflow (`<sub-flow/>`) in `notifications.xml` implements the business logic for sending order confirmation messages by email and Slack. When triggered by the Flow Reference component in the `LISTEN:listen-order-confirmations` flow, the notifications subflow sends order confirmation messages defined in  `LISTEN:listen-order-confirmations`.
 
 [[ex-asyncapi-spec]]
 === Example: AsyncAPI 2.6 Specification
@@ -560,7 +579,7 @@ When adding business logic to your scaffolded project, you can add other connect
 [[ex-config-properties]]
 === Example: Configuration Properties File
 
-Anypoint Code Builder also generates a `dev.properties.properties` file in the `src/main/resources` directory of your implementation project. 
+Anypoint Code Builder generates a `dev.properties.properties` file in the `src/main/resources` directory of your implementation project. 
 
 The <<ex-asyncapi-spec, specification example>> defines server settings for an Anypoint MQ broker. To listen for and publish messages to an Anypoint MQ queue, you must supply a `clientAppId` and `clientSecret` for an xref:mq::mq-client-apps.adoc[MQ client app]. The associated `api-path` setting is generated automatically during the scaffolding process. 
 
@@ -572,7 +591,7 @@ anypointmq.server.AMQ-prod.clientSecret=
 api.path=resource\:\:e21dd38b-8231-45bf-aaa7-abde2072d538\:my-asyncapi-example\:1.0.0\:evented-api\:zip\:anypointmq-kafka-orders-demo-final.yaml
 ----
 
-You can add additional properties to this file, for example:
+You can add additional properties to this file. The `email` and `slack` examples are for Email and Slack connector operations in the <<ex-flows-notification, notifications subflow>>.
 
 [source,properties]
 ----
@@ -589,9 +608,11 @@ api.path=resource\:\:8dbc2756-83d6-4a1c-91c4-6eafbe7d7ae0\:async-amq-kafka-test\
 For help with configuration properties, including secure properties for passwords and other sensitive data, see xref:int-create-secure-configs.adoc[].
 
 [[ex-flows-notification]]
-=== Example: Notification Flows
+=== Example: Notification Subflow
 
-The notification flow examples are triggered by the 
+The subflow (`<sub-flow/>`) in `notifications.xml` implements the business logic for sending order confirmation messages by email and Slack. This file is not generated by the scaffolder.  
+
+When triggered by the Flow Reference component in the `LISTEN:listen-order-confirmations` flow, the notifications subflow sends order confirmation messages defined in `LISTEN:listen-order-confirmations`.
 
 [source,xml]
 ----
@@ -607,7 +628,7 @@ The notification flow examples are triggered by the
 	http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
   <sub-flow name="notification-flow">
         <logger doc:name="Logger" doc:id="pdclup" />
-        <ee:transform doc:name="extract variables" doc:id="14b208-1ae908">
+        <ee:transform doc:name="extract variables" doc:id="14b208-1ae908"><!--1-->
           <ee:variables>
             <ee:set-variable variableName="emailmsg">
                 <![CDATA[%dw 2.0 output application/java --- payload.emailmessage]]>
@@ -623,12 +644,12 @@ The notification flow examples are triggered by the
             </ee:set-variable>
             </ee:variables>
         </ee:transform>
-      <slack:post-message channel="order-status" config-ref="Slack_Config" doc:id="305e92-9dc173" doc:name="Send order notification to slack">
+      <slack:post-message channel="order-status" config-ref="Slack_Config" doc:id="305e92-9dc173" doc:name="Send order notification to slack"><!--2-->
         <slack:message>
           <![CDATA[#[vars.slackmsg]]]>   
         </slack:message>
       </slack:post-message>
-      <email:send config-ref="Email_SMTP" doc:id="7dd748-b67d3d" doc:name="Send notification email" fromAddress="#[vars.email]" subject="#[vars.subject]">
+      <email:send config-ref="Email_SMTP" doc:id="7dd748-b67d3d" doc:name="Send notification email" fromAddress="#[vars.email]" subject="#[vars.subject]"><!--3-->
         <email:to-addresses>
           <email:to-address value="#[vars.email]"></email:to-address>
         </email:to-addresses>
@@ -642,7 +663,13 @@ The notification flow examples are triggered by the
     </sub-flow>
 </mule>
 ----
+--
+[calloutlist]
+. Transforms payload output from the `LISTEN:listen-order-confirmations` flow into Mule variables that capture confirmation message data. 
+. Posts the Slack confirmation message by using the `<slack:post-message/>` operation from the Slack connector. 
+. Emails the confirmation message by using the `<email:send/>` operation from the Email connector.
 
+--
 
 ////
 [[errors]]
