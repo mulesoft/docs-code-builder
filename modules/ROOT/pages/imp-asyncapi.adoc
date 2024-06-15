@@ -1,8 +1,6 @@
 = Implementing AsyncAPI Specifications
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: imp-implement-apis.adoc
-:business-logic: Define your business logic by configuring connector operations and processing components, as needed for your use cases. Provide configuration property values to the `dev-properties.properties` file. Optionally, create and configure additional flows or subflows for your processing requirements.  
-
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -49,15 +47,15 @@ See <<ex-flows-scaffolded>>.
 * Generates a `global-configs.xml` file with connection configurations for the *Message Listener* operations
 +
 See <<ex-connection-configs-scaffolded>>.
-* Produces the configuration properties file `dev.properties.properties` file in the `src/main/resources` directory of your Mule project
+* Produces the configuration properties file `dev-properties.properties` file in the `src/main/resources` directory of your Mule project
 +
 See <<ex-config-properties>>.
-* Adds the APIkit for AsyncAPI Module to the project 
+* Makes the APIkit for AsyncAPI Module available for use in the project 
 +
 The module provides the following operations:
 +
-** *Publish* (`<apikit-asyncapi:publish/>`): AsyncAPI `subscribe` operations in the specification are available for configuration as AsyncAPI *Publish* operations from the module. 
-** *Message Listener* (`<apikit-asyncapi:message-listener/>`): AsyncAPI `publish` operations in the specification are configurable *Message Listener* operations from the module (_not_ as *Publish* operations in the module)
+** *Publish* (`<apikit-asyncapi:publish/>`): AsyncAPI `subscribe` operations in the specification are available for configuration as AsyncAPI *Publish* operations. 
+** *Message Listener* (`<apikit-asyncapi:message-listener/>`): AsyncAPI `publish` operations in the specification are configurable *Message Listener* (_not_ *Publish*) operations.
 +
 The scaffolder transforms each `publish` operation into a *Message Listener* operation.
 
@@ -134,7 +132,7 @@ with flows that contain Message Listener (`<apikit-asyncapi:message-listener/>`)
 ----
 . Provide business logic to implement this interface within the Mule app:
 +
-{business-logic}
+Define your business logic by configuring connector operations and processing components, as needed for your use cases. Provide configuration property values to the `dev-properties.properties` file. Optionally, create and configure additional flows or subflows for your processing requirements.
 +
 For an example of an AsyncAPI specification, the scaffolded interface, and business logic for processing some orders within a Mule application, see <<examples>>. 
 
@@ -173,7 +171,7 @@ My AsyncAPI Spec
 When the scaffolding process is complete, the IDE opens to a configuration XML file that contains the scaffolded flows (`flows.xml`).
 . Provide business logic to implement this interface within the Mule app:
 +
-{business-logic}
+Define your business logic by configuring connector operations and processing components, as needed for your use cases. Provide configuration property values to the `dev-properties.properties` file. Optionally, create and configure additional flows or subflows for your processing requirements. 
 +
 For an example of an AsyncAPI specification, the scaffolded interface, and business logic for processing some orders within a Mule application, see <<examples>>. 
 
@@ -295,7 +293,7 @@ channels:
       summary: Backorder Event
       message:
         $ref: '#/components/messages/BackOrder'
-components:  <!--7-->
+components:  <!--5-->
   messages:
     OrderPlaced:
       payload:
@@ -353,10 +351,11 @@ components:  <!--7-->
 . Example of a local host configured for a Kafka broker
 . The `order-placed` channel uses Anypoint MQ for publishing (listening for) and subscribing to (publishing) orders on the queue. Similarly configured channels are `order-cancelled` and `order-confirmed`.
 +
-Sending, cancelling, or confirming an order triggers the Listener for the associated channel to start the associated flow in the Mule app. You can add any number of processors to handle the event. The `publish` and `subscribe` operations handle messages of the defined type, either `OrderPlaced`, `OrderCancelled`, or `OrderConfirmed`.
+Sending, cancelling, or confirming an order triggers the Listener for the associated channel to start the associated flow in the Mule app. You can add any number of processors to handle the event. 
 . The `order-backordered` channel uses Kafka  publishing (listening for) and subscribing to (publishing) backorders. 
 +
-The `publish` and `subscribe` operations handle messages of the `BackOrder` type, defined in the spec.
+The `publish` and `subscribe` operations handle messages of the `BackOrder` type, defined in the specification.
+. The `components` defines the structure of messages for the different types of orders, which include `OrderPlaced`, `OrderCancelled`, `OrderConfirmed`, and `BackOrder`.  
 --
 
 [[ex-flows-scaffolded]]
@@ -511,10 +510,10 @@ xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft
 --
 [calloutlist]
 . After the flow `LISTEN:listen-order-placed` is triggered by an MQ client, an HTTP request operation (`<http:request/>`) returns and stores sample order data in the target variable `inventory`.
-. The Choice component (`<choice/>`) checks for available stock (`vars.inventory.stockDetails.availableStock`) in the target variable against a `quantity` value from the order payload (`payload.items.quantity[0]`) that the flow received when it was triggered. 
+. The Choice component (`<choice/>`) checks available stock in the target variable (`vars.inventory.stockDetails.availableStock`) against a `quantity` value from the order payload (`payload.items.quantity[0]`) that the flow receives when it is triggered. The structure of the order payload is defined in the specification as the `OrderPlaced` message.
 +
-If the stock is available, the Set Payload component (<set-payload/>) configures a confirmation message for the *Publish* operation (<apikit-asyncapi:publish/>) to the `order-confirmed` channel. If not, the flow publishes a message to the `order-backordered` channel in the flow `LISTEN:listen-order-backordered`. 
-. The flow `LISTEN:listen-order-confirmations` listens for activity on the Anypoint MQ channel `order-confirmed. When triggered, the flow configures its `<set-payload/>` component to create an order confirmation message. The Flow Reference (`<flow-ref/>`) sends this message for processing within the `notification-flow` subflow.
+If the stock is available, the Set Payload component (`<set-payload/>`) configures a confirmation message for the *Publish* operation (<apikit-asyncapi:publish/>) to the `order-confirmed` channel. If not, the flow publishes a message to the `order-backordered` channel in the flow `LISTEN:listen-order-backordered`. 
+. The flow `LISTEN:listen-order-confirmations` listens for activity on the Anypoint MQ channel `order-confirmed`. When triggered, the flow configures its `<set-payload/>` component to create an order confirmation message. The Flow Reference (`<flow-ref/>`) sends this message for processing within the `notification-flow` subflow.
 . The unimplemented flow `LISTEN:listen-order-backordered` is triggered by `LISTEN:listen-order-placed` when inventory is insufficient. 
 --
 
@@ -683,11 +682,17 @@ When triggered by the Flow Reference component (`<flow-ref/>`) in the `LISTEN:li
 ----
 --
 [calloutlist]
-. Transforms payload output from the `LISTEN:listen-order-confirmations` flow into Mule variables that capture confirmation message data. 
-. Posts the Slack confirmation message by using the `<slack:post-message/>` operation from the Slack connector. 
-. Emails the confirmation message by using the `<email:send/>` operation from the Email connector.
+. Transforms payload output from the `LISTEN:listen-order-confirmations` flow into Mule variables that capture confirmation message data
+. Posts the Slack confirmation message by using the `<slack:post-message/>` operation from the Slack connector 
+. Emails the confirmation message by using the `<email:send/>` operation from the Email connector
 
 --
+
+== See Also
+
+* xref:ref-connectors.adoc[]
+* xref:ref-components.adoc[]
+* xref:dataweave::index.adoc[]
 
 ////
 [[errors]]
