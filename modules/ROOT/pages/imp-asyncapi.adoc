@@ -348,19 +348,19 @@ components:  <!--5-->
 [calloutlist]
 . `AMQ-prod` configures an Anypoint MQ broker.
 +
-You can copy the URL from the region that you select when creating the queue. See the *copy* button in xref:mq-queues.adoc#create-a-queue[Create a Queue], and see xref:mq::mq-client-apps.adoc[].
+You can discover the URL for an MQ broker from the region that you select when creating the queue. See the *copy* button in xref:mq-queues.adoc#create-a-queue[Create a Queue], and see xref:mq::mq-client-apps.adoc[].
 . `Kafka-prod` configures a locally hosted Kafka broker.
 . `order-placed` configures an Anypoint MQ channel for publishing (listening for) and subscribing to (publishing) orders. Similarly configured channels are `order-cancelled` and `order-confirmed`.
-. `order-backordered` configures Kafka channel for publishing (listening for) and subscribing to (publishing) backorders.
+. `order-backordered` configures a Kafka channel for publishing (listening for) and subscribing to (publishing) backorders.
 . `components` defines the structure of messages for the different types of orders, which include `OrderPlaced`, `OrderCancelled`, `OrderConfirmed`, and `BackOrder`.  
 --
 
 [[ex-flows-scaffolded]]
 === Example: Scaffolded Flows
 
-When scaffolding the specification into an implementation project, Anypoint Code Builder creates a flow (`<flow/>`) for each `publish` operation and transforms the `publish` operation into a *Message Listener* from the AsyncAPI module for APIkit (`<apikit-asyncapi:message-listener/>`). Each flow also includes a Logger. For more information about this module, see xref:apikit::apikit-asyncapi-module-reference.adoc[].
+When scaffolding the specification into an implementation project, Anypoint Code Builder creates a flow (`<flow/>`) for each `publish` operation and transforms the `publish` operation into a *Message Listener* from the AsyncAPI module for APIkit (`<apikit-asyncapi:message-listener/>`). Each flow also includes a Logger. For more information about the module, see xref:apikit::apikit-asyncapi-module-reference.adoc[].
 
-The scaffolder generates a `flow.xml` file from <<ex-asyncapi-spec, AsyncAPI specification example>>, similar to this example:
+The scaffolder generates a `flow.xml` file from the specification. This example generates the file from the <<ex-asyncapi-spec, AsyncAPI specification example>>:
 
 [source,xml]
 ----
@@ -406,17 +406,15 @@ The scaffolder generates a `flow.xml` file from <<ex-asyncapi-spec, AsyncAPI spe
 ----
 --
 [calloutlist]
-. `AMQ-prod` in `<apikit-asyncapi:server value="AMQ-prod" />` identifies an Anypoint MQ server connection. The value matches a `serverKey` configuration for the Message Listener. 
-. `Kafka-prod` in `<apikit-asyncapi:server value="Kafka-prod" />` identifies a Kafka server connection. The value matches a `serverKey` configuration for the Message Listener. 
-
-For more information, see <<ex-connection-configs-scaffolded>>.
+. `AMQ-prod` in `<apikit-asyncapi:server value="AMQ-prod" />` identifies an Anypoint MQ server connection. For more information, see <<ex-connection-configs-scaffolded>>.
+. `Kafka-prod` in `<apikit-asyncapi:server value="Kafka-prod" />` identifies a Kafka server connection. For more information, see <<ex-connection-configs-scaffolded>>.
 --
 
 [[ex-flows-implemented]]
 The following example adds business logic to the scaffolded flows: 
 
 * `LISTEN:listen-order-placed` listens for orders and, when triggered, uses a DataWeave expression to check for sufficient inventory. If enough items exist in the inventory, the flow publishes order data to the `order-confirmed` channel, which triggers the `LISTEN:listen-order-confirmations` flow. If not, the flow publishes order data to a `order-backordered` channel, which triggers the `LISTEN:listen-order-backordered` flow.
-* `LISTEN:listen-order-confirmations` listens for order confirmations and, when triggered, sends order information and messages intended for Slack and email for processing by the `notification-flow` subflow (see <<ex-flows-notification>>).
+* `LISTEN:listen-order-confirmations` listens for order confirmations and, when triggered, sends order information to the `notification-flow` subflow, which sends confirmation notices through Slack and email (see <<ex-flows-notification>>).
 
 [source,xml]
 ----
@@ -433,7 +431,8 @@ xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft
       </apikit-asyncapi:servers>
     </apikit-asyncapi:message-listener>
     <logger level="INFO" message="#[payload]"></logger>
-    <http:request config-ref="HTTP_Request_config" doc:id="nscwew" doc:name="check inventory" target="inventory" url="https://anypoint.mulesoft.com/mocking/api/v1/links/3a7158be-3edb-40d9-a776-71614fe490e9/inventory?ProductID=12345"></http:request>
+    <http:request config-ref="HTTP_Request_config" doc:id="nscwew"
+    doc:name="check inventory" target="inventory" url="https://anypoint.mulesoft.com/mocking/api/v1/links/3a7158be-3edb-40d9-a776-71614fe490e9/inventory?ProductID=12345"></http:request>
     <choice doc:id="e61a19-cfc986" doc:name="If in stock"><!--2-->
       <when doc:id="43efa6-eb5afe" doc:name="in stock" expression="#[vars.inventory.stockDetails.availableStock > payload.items.quantity[0]]">
         <http:request config-ref="HTTP_Request_config" doc:id="aa26a8-7a1ec5" doc:name="CreateOrder" target="status" url="https://anypoint.mulesoft.com/mocking/api/v1/links/d0d179d9-8a69-4227-ade1-626f1754404d/order"></http:request>
@@ -514,21 +513,21 @@ xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft
 ----
 --
 [calloutlist]
-. After the flow `LISTEN:listen-order-placed` is triggered by an MQ client, an HTTP request operation (`<http:request/>`) returns sample order data and stores the data in the target variable `inventory`.
-. The Choice component (`<choice/>`) checks available stock in the target variable (`vars.inventory.stockDetails.availableStock`) against a `quantity` value from the order payload (`payload.items.quantity[0]`) that the flow receives when it is triggered. The structure of the order payload is defined in the specification as the `OrderPlaced` message.
+. After the flow `LISTEN:listen-order-placed` is triggered by an order, an HTTP request operation (`<http:request/>`) requests and stores inventory data in the target variable `inventory`.
+. The Choice component (`<choice/>`) checks the `availableStock` value in the target variable (`vars.inventory.stockDetails.availableStock`) against a `quantity` value from the order payload (`payload.items.quantity[0]`). The `quantity` value comes from an `OrderPlaced` message that triggers the flow.
 +
-If the stock is available, the Set Payload component (`<set-payload/>`) configures a confirmation message for the *Publish* operation (<apikit-asyncapi:publish/>) to the `order-confirmed` channel. If not, the flow publishes a message to the `order-backordered` channel, which triggers the flow `LISTEN:listen-order-backordered`. 
+If sufficient stock is available, a Set Payload component (`<set-payload/>`) configures a confirmation message that the *Publish* operation (`<apikit-asyncapi:publish/>`) submits to the `order-confirmed` channel, which triggers the `LISTEN:listen-order-confirmations` flow. If not, the flow publishes a message to the `order-backordered` channel, which triggers the flow `LISTEN:listen-order-backordered`. 
 . The flow `LISTEN:listen-order-confirmations` listens for activity on the Anypoint MQ channel `order-confirmed`. When triggered, the flow configures its `<set-payload/>` component to create an order confirmation message. The Flow Reference (`<flow-ref/>`) sends this message for processing within the `notification-flow` subflow.
 . The flow `LISTEN:listen-order-backordered` is triggered by `LISTEN:listen-order-placed` when inventory is insufficient. 
 --
 
 [[ex-connection-configs-scaffolded]]
-=== Example: Connection Configurations from the Scaffolded Specification
+=== Example: Connection Configurations
 
 The scaffolding process generates `global-configs.xml` for server connection configurations defined in the specification.
 
-*  *Publish* operations (`<apikit-asyncapi:publish/>`) in the flows rely on the connection configurations to publish to specified Kafka and Anypoint MQ channels. 
-* *Message Listener* operations (`<apikit-asyncapi:message-listener/>`) in the flow are automatically configured to listen on a specific channel based on a server `value` setting (`"Kafka-prod"` or `"AMQ-prod"`). This value matches one of the `serverKey` settings in the AsyncAPI connection configuration (`<apikit-asyncapi:config/>`).
+*  In flows, *Publish* operations (`<apikit-asyncapi:publish/>`) use the connection configurations when publishing to specified channel and server combinations. The flows publish to Kafka and Anypoint MQ channels on `Kafka-prod` or `AMQ-prod` servers. 
+* In flows, *Message Listener* operations (`<apikit-asyncapi:message-listener/>`) are automatically configured to listen on a specific channel based on a server `value` setting (`Kafka-prod` or `AMQ-prod`). This value matches one of the `serverKey` settings in the AsyncAPI connection configuration (`<apikit-asyncapi:config/>`).
 
 [source,xml]
 ----
@@ -574,7 +573,7 @@ The scaffolding process generates `global-configs.xml` for server connection con
 ----
 
 [[ex-config-props]]
-When adding business logic to your scaffolded project, you can add other connection configurations to `global-configs.xml` for any additional connector operations you add to your flows or subflows. The following example adds connection configurations for xref:http-connector::http-connector-config-acb.adoc[HTTP], xref:email-connector::index.adoc[Email], and xref:slack-connector::index.adoc[Slack] connector operations. You can define configuration properties for these, such as `${email.password}` in a <<ex-config-properties, properties file>>.
+When adding business logic to your scaffolded project, you can add other connection configurations to `global-configs.xml` for any connector operations you add to your flows or subflows. The following example adds connection configurations for xref:http-connector::http-connector-config-acb.adoc[HTTP], xref:email-connector::index.adoc[Email], and xref:slack-connector::index.adoc[Slack] connector operations. You can define configuration properties for these, such as `${email.password}` in a <<ex-config-properties, properties file>>.
 
 [source,xml]
 ----
