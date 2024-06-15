@@ -38,13 +38,10 @@ When scaffolding an AsyncAPI specification into a Mule project (implementation o
 * Creates a new Mule project with a separate flow for each `publish` operation in the specification
 +
 See <<ex-flows-scaffolded>>.
-* Generates a `global-configs.xml` file with connection configurations for the *Message Listener* operations
-+
-See <<ex-connection-configs-scaffolded>>.
 * Produces the configuration properties file `dev-properties.properties` file in the `src/main/resources` directory of your Mule project
 +
 See <<ex-config-properties>>.
-* Makes the APIkit for AsyncAPI Module available for use in the project 
+* Makes the APIkit for AsyncAPI Module (AsyncAPI Module) available for use in the project 
 +
 The module provides the following operations:
 +
@@ -52,6 +49,9 @@ The module provides the following operations:
 ** *Message Listener* (`<apikit-asyncapi:message-listener/>`): AsyncAPI `publish` operations in the specification are configurable *Message Listener* (_not_ *Publish*) operations.
 +
 The scaffolder transforms each `publish` operation into a *Message Listener* operation.
+* Generates a `global-configs.xml` file with connection configurations for *Message Listener* and *Publish* operations in the AsyncAPI Module and for any connectors that module depends on
++
+See <<ex-connection-configs-scaffolded>>.
 
 Errors can occur during the scaffolding process:
 
