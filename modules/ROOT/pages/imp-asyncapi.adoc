@@ -524,7 +524,9 @@ If sufficient stock is available, a Set Payload component (`<set-payload/>`) con
 [[ex-connection-configs-scaffolded]]
 === Example: Connection Configurations
 
-The scaffolding process generates `global-configs.xml` for server connection configurations defined in the specification.
+The scaffolding process generates `global-configs.xml` for server connection configurations defined in the specification. 
+
+The connection configuration for the AsyncAPI module within `<apikit-asyncapi:config/>` reference the connection configurations for Kafka and Anypoint MQ connectors. The scaffolding process adds the connectors to the project based on the server and channel configurations in the AsyncAPI specification.
 
 *  In flows, *Publish* operations (`<apikit-asyncapi:publish/>`) use the connection configurations when publishing to specified channel and server combinations. The flows publish to Kafka and Anypoint MQ channels on `Kafka-prod` or `AMQ-prod` servers. 
 * In flows, *Message Listener* operations (`<apikit-asyncapi:message-listener/>`) are automatically configured to listen on a specific channel based on a server `value` setting (`Kafka-prod` or `AMQ-prod`). This value matches one of the `serverKey` settings in the AsyncAPI connection configuration (`<apikit-asyncapi:config/>`).
