@@ -181,13 +181,13 @@ Deploy the implementation to CloudHub or to another host. You can deploy to Clou
 [[examples]]
 == Examples
 
-The examples implement an API for processing mock orders and sending order status notifications by email and Slack. 
+The examples describe an API specification and implementation for processing orders and sending order status notifications by email and Slack. 
 
 //TODO: time permitting, NICE TO HAVE ARCHITECTURE DIAGRAM CAPTURING BIG PICTURE
 
 * <<ex-asyncapi-spec>>
 +
-The AsyncAPI specification is a mock order processing API that uses Anypoint MQ and Kafka protocols.
+The AsyncAPI specification defines an order processing API that uses Anypoint MQ and Kafka protocols.
 * <<ex-flows-scaffolded>>
 +
 The scaffolder generates a `flow.xml` file with a flow for each `publish` operation in the AsyncAPI specification. The example describes the generated flows and configures components that provide order-processing business logic to some of the flows. 
@@ -205,7 +205,7 @@ The subflow (`<sub-flow/>`) in `notifications.xml` uses xref:email-connector::in
 [[ex-asyncapi-spec]]
 === Example: AsyncAPI 2.6 Specification
 
-The following example is a mock API specification that uses Anypoint MQ and Kafka protocols. The specification defines channels for orders (new, confirmed, and cancelled orders) that use Anypoint MQ, and it defines a channel that uses Kafka for backorders (items that are not in stock). Each channel includes a `publish` and `subscribe` operation. 
+The following example defines an API specification that uses Anypoint MQ and Kafka protocols. The specification defines channels for orders (new, confirmed, and cancelled orders) that use Anypoint MQ, and it defines a channel that uses Kafka for backorders (items that are not in stock). Each channel includes a `publish` and `subscribe` operation. 
 
 [source,yaml]
 ----
