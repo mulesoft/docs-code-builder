@@ -513,11 +513,11 @@ xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft
 ----
 --
 [calloutlist]
-. After the flow `LISTEN:listen-order-placed` is triggered by an order, an HTTP request operation (`<http:request/>`) requests and stores inventory data in the target variable `inventory`.
+. After the Message Listener in flow `LISTEN:listen-order-placed` is triggered by an order, an HTTP request operation (`<http:request/>`) requests and stores inventory data in the target variable `inventory`.
 . The Choice component (`<choice/>`) checks the `availableStock` value in the target variable (`vars.inventory.stockDetails.availableStock`) against a `quantity` value from the order payload (`payload.items.quantity[0]`). The `quantity` value comes from an `OrderPlaced` message that triggers the flow.
 +
 If sufficient stock is available, a Set Payload component (`<set-payload/>`) configures a confirmation message that the *Publish* operation (`<apikit-asyncapi:publish/>`) submits to the `order-confirmed` channel, which triggers the `LISTEN:listen-order-confirmations` flow. If not, the flow publishes a message to the `order-backordered` channel, which triggers the flow `LISTEN:listen-order-backordered`. 
-. The flow `LISTEN:listen-order-confirmations` listens for activity on the Anypoint MQ channel `order-confirmed`. When triggered, the flow configures its `<set-payload/>` component to create an order confirmation message. The Flow Reference (`<flow-ref/>`) sends this message for processing within the `notification-flow` subflow.
+. The the Message Listener in flow `LISTEN:listen-order-confirmations` listens for activity on the Anypoint MQ channel `order-confirmed`. When triggered, the flow configures its `<set-payload/>` component to create an order confirmation message. The Flow Reference (`<flow-ref/>`) sends this message for processing within the `notification-flow` subflow.
 . The flow `LISTEN:listen-order-backordered` is triggered by `LISTEN:listen-order-placed` when inventory is insufficient. 
 --
 
