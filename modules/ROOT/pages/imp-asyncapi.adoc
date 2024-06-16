@@ -73,7 +73,7 @@ You can scaffold an AsyncAPI specification into a new or existing Mule project:
 +
 [IMPORTANT]
 ====
-When re-scaffolding, the scaffolder acts on new combinations of channel, server, and `subscribe` operation groupings and does not re-scaffold combinations that are not new. New `publish` operations are not affected by this condition.
+When re-scaffolding, the scaffolder acts on new combinations of channel, server, and `publish` operation groupings and does not re-scaffold combinations that are not new.
 ====
 
 [[scaffold-new]]
@@ -129,11 +129,8 @@ with flows that contain Message Listener (`<apikit-asyncapi:message-listener/>`)
     ]
 }
 ----
-. Provide business logic to implement this interface within the Mule app:
-+
-Define your business logic by configuring connector operations and processing components, as needed for your use cases. Provide configuration property values to the `dev-properties.properties` file. Optionally, create and configure additional flows or subflows for your processing requirements.
-+
-For examples that include an AsyncAPI specification, the scaffolded interface, and business logic to implement the API, see <<examples>>. 
+// Shared step on adding business logic
+include::partial$acb-reusable-steps.adoc[tags="implement-business-logic"]
 
 [[scaffold-existing]]
 === Scaffold an AsyncAPI Specification into an Existing Project
@@ -165,11 +162,8 @@ My AsyncAPI Spec
 . Select *Yes* when prompted to scaffold the API dependency.
 +
 When the scaffolding process is complete, the IDE opens to a configuration XML file that contains the scaffolded flows (`flows.xml`).
-. Provide business logic to implement this interface within the Mule app:
-+
-Define your business logic by configuring connector operations and processing components, as needed for your use cases. Provide configuration property values to the `dev-properties.properties` file. Optionally, create and configure additional flows or subflows for your processing requirements. 
-+
-For an example of an AsyncAPI specification, the scaffolded interface, and business logic for processing some orders within a Mule application, see <<examples>>. 
+// Shared step on adding business logic
+include::partial$acb-reusable-steps.adoc[tags="implement-business-logic"]
 
 == Deploy an Implementation
 
@@ -202,7 +196,11 @@ The subflow (`<sub-flow/>`) in `notifications.xml` uses xref:email-connector::in
 [[ex-asyncapi-spec]]
 === Example: AsyncAPI 2.6 Specification
 
-The following example defines an API specification that uses Anypoint MQ and Kafka protocols. The specification defines channels for orders (new, confirmed, and cancelled orders) that use Anypoint MQ, and it defines a channel that uses Kafka for backorders (items that are not in stock). Each channel includes a `publish` and `subscribe` operation. 
+The following example defines an API specification that uses Anypoint MQ and Kafka protocols. The specification defines https://www.asyncapi.com/docs/concepts/channel[channels] for orders (new, confirmed, and cancelled orders) that use Anypoint MQ, and it defines a channel that uses Kafka for backorders (items that are not in stock). Each channel includes a `publish` and `subscribe` operation. The https://www.asyncapi.com/docs/concepts/server[server] settings in the specification define message brokers that determine the connectors to use (_indirectly_) when publishing events or subscribing to events through operations in the AsyncAPI module.
+
+* `channel` defines the binding. 
+* `message` defines the structure of the payload of the event.
+* `operation` defines the action that the application takes and whether the event is consumed or published.
 
 [source,yaml]
 ----
@@ -523,7 +521,7 @@ If sufficient stock is available, a Set Payload component (`<set-payload/>`) con
 
 The scaffolding process generates `global-configs.xml` for server connection configurations defined in the specification. 
 
-The connection configuration for the AsyncAPI module within `<apikit-asyncapi:config/>` references the connection configurations for Kafka and Anypoint MQ connectors. The scaffolding process adds the connectors to the project based on the server and channel configurations in the AsyncAPI specification.
+The connection configuration for the AsyncAPI module within `<apikit-asyncapi:config/>` references the connection configurations for Kafka and Anypoint MQ connectors. The scaffolding process adds the connectors to the project based on the https://www.asyncapi.com/docs/concepts/server[server] and https://www.asyncapi.com/docs/concepts/channel[channel] configurations in the AsyncAPI specification.
 
 *  In flows, *Publish* operations (`<apikit-asyncapi:publish/>`) use the connection configurations when publishing to specified channel and server combinations. The flows publish to Kafka and Anypoint MQ channels on `Kafka-prod` or `AMQ-prod` servers. 
 * In flows, *Message Listener* operations (`<apikit-asyncapi:message-listener/>`) are automatically configured to listen on a specific channel based on a server `value` setting (`Kafka-prod` or `AMQ-prod`). This value matches one of the `serverKey` settings in the AsyncAPI connection configuration (`<apikit-asyncapi:config/>`).
@@ -572,7 +570,7 @@ The connection configuration for the AsyncAPI module within `<apikit-asyncapi:co
 ----
 
 [[ex-config-props]]
-When adding business logic to your scaffolded project, you can add other connection configurations to `global-configs.xml` for any connector operations you add to your flows or subflows. The following example adds connection configurations for xref:http-connector::http-connector-config-acb.adoc[HTTP], xref:email-connector::index.adoc[Email], and xref:slack-connector::index.adoc[Slack] connector operations. You can define configuration properties for these, such as `${email.password}` in a <<ex-config-properties, properties file>>.
+When adding business logic to your scaffolded project, you can add other connection configurations to `global-configs.xml`, including any connector operations you add to your flows or subflows in the application. The following example adds connection configurations for xref:http-connector::http-connector-config-acb.adoc[HTTP], xref:email-connector::index.adoc[Email], and xref:slack-connector::index.adoc[Slack] connector operations. You can define configuration properties for these, such as `${email.password}` in a <<ex-config-properties, properties file>>.
 
 [source,xml]
 ----

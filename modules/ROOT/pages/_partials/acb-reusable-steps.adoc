@@ -263,7 +263,7 @@ When the application deploys successfully, you see a `DEPLOYED` log message in t
 //
 // tag::fragments-not-scaffolded[]
 // Fragments Not Scaffolded
-Anypoint Code Builder does not support the scaffolding of AsyncAPI, OAS, or JSON schema fragments that are referenced from API specs. The scaffolder does not add these fragments as project dependencies when you import the spec from Exchange. However, you can scaffold fragments that are specified inline within the spec. RAML fragments imported from Exchange are not affected by this limitation. 
+Anypoint Code Builder does not support the scaffolding of AsyncAPI, OAS, or JSON schema fragment files that are referenced from API specs. The scaffolder does not add these fragments as project dependencies when you import the specification from Exchange. However, you can scaffold and reference fragments that are specified inline, within the spec. RAML fragments imported from Exchange are not affected by this limitation. 
 // end::fragments-not-scaffolded[]
 //
 // tag::fragments-inline[]
@@ -529,4 +529,16 @@ include::partial$acb-runtime-java.adoc[tags="runtime-java-download"]
 .. Press Enter to display a list of search results.
 .. Click *Add Asset* to add the selected API spec:
 // end::search-exchange-spec[]
+//
+
+//
+// tag::implement-business-logic[]
+. Provide business logic to implement this interface within the Mule app:
++
+Define your business logic by configuring connector operations and processing components, as needed for your use cases. Provide configuration property values to the `dev-properties.properties` file. Optionally, create and configure additional flows or subflows for your processing requirements. 
++
+To find guidance on configuring components, debugging, performing unit testing on your application, and other tasks, see xref:int-developing-integrations.adoc[]. For information about connectors and processors for configuring your business logic, see xref:acb-reference.adoc[].
++
+For an example of an AsyncAPI specification, the scaffolded interface, and business logic for processing some orders within a Mule application, see <<examples>>. 
+// end::implement-business-logic[]
 //
