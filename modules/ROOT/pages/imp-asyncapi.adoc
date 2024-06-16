@@ -5,7 +5,7 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-Anypoint Code Builder supports the implementation of AsyncAPI 2.6 and 2.0 specifications. When creating an implementation project, Anypoint Code Builder imports and scaffolds an AsyncAPI specification from Anypoint Exchange into an API interface that you can implement. 
+Anypoint Code Builder supports the implementation of AsyncAPI 2.6 and 2.0 specifications. When creating an implementation project, Anypoint Code Builder imports and scaffolds an AsyncAPI specification that is hosted on Anypoint Exchange into an API interface that you can implement. 
 
 [[supported-brokers]]
 Supported message brokers:
@@ -79,7 +79,7 @@ When re-scaffolding, the scaffolder acts on new combinations of channel, server,
 [[scaffold-new]]
 === Scaffold an AsyncAPI Specification into a New Project
 
-Create an implementation project from an AsyncAPI specification on Anypoint Exchange. When creating the project, Anypoint Code Builder scaffolds the specification into an interface that you can implement as a Mule app.
+Create an implementation project from an AsyncAPI specification that is hosted on Anypoint Exchange. When creating the project, Anypoint Code Builder scaffolds the specification into an interface that you can implement as a Mule app.
 
 . Meet the prerequisites in <<prereqs>>.
 +
@@ -133,15 +133,12 @@ with flows that contain Message Listener (`<apikit-asyncapi:message-listener/>`)
 +
 Define your business logic by configuring connector operations and processing components, as needed for your use cases. Provide configuration property values to the `dev-properties.properties` file. Optionally, create and configure additional flows or subflows for your processing requirements.
 +
-For an example of an AsyncAPI specification, the scaffolded interface, and business logic for processing some orders within a Mule application, see <<examples>>. 
+For examples that include an AsyncAPI specification, the scaffolded interface, and business logic to implement the API, see <<examples>>. 
 
 [[scaffold-existing]]
 === Scaffold an AsyncAPI Specification into an Existing Project
 
 Scaffold an AsyncAPI specification from Exchange into an existing project in Anypoint Code Builder.
-
-//note on publishing and designing asyncapi specs from design center
-include::partial$acb-api-design.adoc[tags="note-asyncapi"]
 
 . Meet the prerequisites in <<prereqs>>.
 +
@@ -190,7 +187,7 @@ The examples describe an API specification and implementation for processing ord
 The AsyncAPI specification defines an order processing API that uses Anypoint MQ and Kafka protocols.
 * <<ex-flows-scaffolded>>
 +
-The scaffolder generates a `flow.xml` file with a flow for each `publish` operation in the AsyncAPI specification. The example describes the generated flows and configures components that provide order-processing business logic to some of the flows. 
+The scaffolder generates a `flow.xml` file with a flow for each `publish` operation in the AsyncAPI specification. The example describes the generated flows and configures components that provide order-processing logic to some of the flows. 
 +
 * <<ex-connection-configs-scaffolded>>
 +
