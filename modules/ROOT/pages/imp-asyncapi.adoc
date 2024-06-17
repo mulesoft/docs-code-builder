@@ -4,10 +4,9 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-
+[[intro]]
 Anypoint Code Builder supports the implementation of AsyncAPI 2.6 and 2.0 specifications. When creating an implementation project, Anypoint Code Builder imports and scaffolds an AsyncAPI specification that is hosted on Anypoint Exchange into an API interface that you can implement. 
 
-[[supported-brokers]]
 Supported message brokers:
 
 * https://kafka.apache.org/[Kafka]
@@ -56,7 +55,7 @@ See <<ex-connection-configs-scaffolded>>.
 Errors can occur during the scaffolding process:
 
 * If no channels are defined in the specification
-* For unsupported <<supported-brokers, message brokers>> 
+* For unsupported <<intro, message brokers>>
 
 [NOTE]
 ====
@@ -512,7 +511,7 @@ xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft
 . The Choice component (`<choice/>`) checks the `availableStock` value in the target variable (`vars.inventory.stockDetails.availableStock`) against a `quantity` value from the order payload (`payload.items.quantity[0]`). The `quantity` value comes from an `OrderPlaced` message that triggers the flow.
 +
 If sufficient stock is available, a Set Payload component (`<set-payload/>`) configures a confirmation message that the *Publish* operation (`<apikit-asyncapi:publish/>`) submits to the `order-confirmed` channel, which triggers the `LISTEN:listen-order-confirmations` flow. If not, the flow publishes a message to the `order-backordered` channel, which triggers the flow `LISTEN:listen-order-backordered`. 
-. The the Message Listener in flow `LISTEN:listen-order-confirmations` listens for activity on the Anypoint MQ channel `order-confirmed`. When triggered, the flow configures its `<set-payload/>` component to create an order confirmation message. The Flow Reference (`<flow-ref/>`) sends this message for processing within the `notification-flow` subflow.
+. The Message Listener in flow `LISTEN:listen-order-confirmations` listens for activity on the Anypoint MQ channel `order-confirmed`. When triggered, the flow configures its `<set-payload/>` component to create an order confirmation message. The Flow Reference (`<flow-ref/>`) sends this message for processing within the `notification-flow` subflow.
 . The flow `LISTEN:listen-order-backordered` is triggered by `LISTEN:listen-order-placed` when inventory is insufficient. 
 --
 
