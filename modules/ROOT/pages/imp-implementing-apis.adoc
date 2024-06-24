@@ -5,20 +5,17 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
-
 Use Anypoint Code Builder to start an API implementation by importing and scaffolding an API spec into an interface that you implement and integrate within a Mule app.
 
-Anypoint Code Builder supports automated scaffolding of OAS, RAML, and GraphQL APIs,
-except for APIs that reference OAS or JSON schema fragment dependencies from Exchange.
+Anypoint Code Builder supports automated scaffolding of OAS, RAML, AsyncAPI, and GraphQL APIs,
+_except for_ APIs that reference OAS or JSON schema fragment dependencies from Exchange.
 
 
 The methods for implementing APIs using Anypoint Code Builder are:
 
-* xref:imp-implement-apis.adoc#scaffold-new-integration[Scaffold an API from a spec in Exchange] and create a new implementation project.
+* xref:imp-implement-api-specs.adoc#scaffold-new-integration[Scaffold an API from a spec in Exchange] and create a new implementation project.
 [[import-spec-into-project]]
-* xref:imp-implement-apis.adoc#import-spec-into-project[Import an API spec] from Exchange to scaffold the API in an existing integration project.
+* xref:imp-implement-api-specs.adoc#import-spec-into-project[Import an API spec] from Exchange to scaffold the API in an existing integration project.
 * xref:imp-implement-local-apis.adoc[Scaffold an API] into an implementation project without first publishing it to Anypoint Exchange, enabling iterative design and implementation.
 
 After scaffolding an API specification into an interface, you are ready to develop, test, and deploy your Mule app as described in xref:int-developing-integrations.adoc[]. To understand how an integration project can implement an API specification, see the tutorial xref:tut-af-implement-am-flights-api.adoc[].

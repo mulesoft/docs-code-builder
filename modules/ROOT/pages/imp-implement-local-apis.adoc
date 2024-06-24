@@ -3,7 +3,6 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-
 Using Anypoint Code Builder, you can scaffold an API specification into a new integration project without first publishing the API to Anypoint Exchange.
 As you make changes, you sync changes in the project by re-scaffolding the spec.
 For example, after adding a new endpoint to your API spec,
@@ -11,8 +10,11 @@ you re-scaffold to add a new flow for that endpoint to the configuration XML fil
 
 
 [IMPORTANT]
+====
 include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
 
+For AsyncAPI specifications, iterative design and implementation is not supported at this time. 
+====
 
 After syncing the API spec and related Mule project, you can modify the API specification and implement changes simultaneously.
 
