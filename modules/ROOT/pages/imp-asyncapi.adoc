@@ -413,7 +413,7 @@ The scaffolder generates a `flow.xml` file from the specification. This example 
 [[ex-flows-implemented]]
 The following example adds business logic to the scaffolded flows: 
 
-* `LISTEN:listen-order-placed` listens for orders and, when triggered, uses a DataWeave expression to check for sufficient inventory. If enough items exist in the inventory, the flow publishes order data to the `order-confirmed` channel, which triggers the `LISTEN:listen-order-confirmations` flow. If not, the flow publishes order data to a `order-backordered` channel, which triggers the `LISTEN:listen-order-backordered` flow.
+* `LISTEN:listen-order-placed` listens for orders and, when triggered, uses a DataWeave expression to check for sufficient inventory. If enough items exist in the inventory, the flow configures a *Publish* operation to publish order data to the `order-confirmed` channel, which triggers the `LISTEN:listen-order-confirmations` flow. If not, the flow adds a *Publish* operation to publish order data to a `order-backordered` channel, which triggers the `LISTEN:listen-order-backordered` flow.
 * `LISTEN:listen-order-confirmations` listens for order confirmations and, when triggered, sends order information to the `notification-flow` subflow, which sends confirmation notices through Slack and email (see <<ex-flows-notification>>).
 
 [source,xml]
