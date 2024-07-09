@@ -1,16 +1,14 @@
 = Implementing AsyncAPI Specifications
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: imp-implement-apis.adoc
+:supported-spec-version: Only supported versions of the AsyncAPI specifications in Exchange are available for scaffolding. Unsupported versions do not appear in the search results.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 [[intro]]
 Anypoint Code Builder supports the implementation of AsyncAPI 2.6 and 2.0 specifications. When creating an implementation project, Anypoint Code Builder imports and scaffolds an AsyncAPI specification that is hosted on Anypoint Exchange into an API interface that you can implement. 
 
-Supported message brokers:
-
-* https://kafka.apache.org/[Kafka]
-* xref:mq::index.adoc[Anypoint MQ]
+For supported protocols, see xref:apikit::apikit-asyncapi-module-reference.adoc#supported-message-brokers[Supported Message Brokers] in APIkit for AsyncAPI Module Reference.
 
 [[prereqs]]
 == Before You Begin
@@ -20,14 +18,14 @@ Supported message brokers:
 +
 //How org admin provides access to feature from ACB landing page:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="asyncapi-beta-access"]
-* Review the scaffolding process for AsyncAPI specifications in <<scaffolding>>.
-* You must have access to an AsyncAPI specification that is hosted on Anypoint Exchange: 
+* Review important information about the scaffolding process for AsyncAPI specifications in <<scaffolding>>.
+* You must have access to a supported AsyncAPI specification that is hosted on Anypoint Exchange: 
 +
 //note on publishing and designing asyncapi specs from design center
 include::partial$acb-api-design.adoc[tags="note-asyncapi"]
 
 [[scaffolding]]
-== Scaffolding Overview
+== Scaffolding Fundamentals
 
 Before you implement an AsyncAPI specification with Anypoint Code Builder, it's important to understand the scaffolding process at a high level. 
 
@@ -44,8 +42,8 @@ See <<ex-config-properties>>.
 +
 The module provides the following operations:
 +
-** *Publish* (`<apikit-asyncapi:publish/>`): AsyncAPI `subscribe` operations in the specification are available for configuration as AsyncAPI *Publish* operations. 
-** *Message Listener* (`<apikit-asyncapi:message-listener/>`): AsyncAPI `publish` operations in the specification are configurable *Message Listener* (_not_ *Publish*) operations.
+** *Publish* (`<apikit-asyncapi:publish/>`): AsyncAPI `subscribe` operations in the specification are available for configuration as AsyncAPI *Publish* operations. See the <<ex-flows-implemented, implemented example>> in Example: Scaffolded Flows.
+** *Message Listener* (`<apikit-asyncapi:message-listener/>`): AsyncAPI `publish` operations in the specification are configurable *Message Listener* (_not_ *Publish*) operations. See examples in <<ex-flows-scaffolded>>.
 +
 The scaffolder transforms each `publish` operation into a *Message Listener* operation.
 * Generates a `global-configs.xml` file with connection configurations for *Message Listener* and *Publish* operations in the AsyncAPI Module and for any connectors that module depends on
@@ -55,13 +53,16 @@ See <<ex-connection-configs-scaffolded>>.
 Errors can occur during the scaffolding process:
 
 * If no channels are defined in the specification
-* For unsupported <<intro, message brokers>>
+* For unsupported <<intro, message broker protocols>>
++
+For supported protocols, see xref:apikit::apikit-asyncapi-module-reference.adoc#supported-message-brokers[Supported Message Brokers] in APIkit for AsyncAPI Module Reference.
 
 [NOTE]
 ====
 include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
 ====
 
+[[scaffold-procedures]]
 == Scaffold an AsyncAPI API Specification into a Mule Project
 
 You can scaffold an AsyncAPI specification into a new or existing Mule project: 
@@ -70,9 +71,10 @@ You can scaffold an AsyncAPI specification into a new or existing Mule project:
 
 * To scaffold or re-scaffold an AsyncAPI specification into an existing Mule project (implementation or integration), see <<scaffold-existing>>. Re-scaffolding can be useful when the specification version is updated to introduce a new operation or server. If the specification contains a new server, the scaffolder adds a new configuration for it to the Mule project.
 +
+[[important-rescaffold]]
 [IMPORTANT]
 ====
-When re-scaffolding, the scaffolder acts on new combinations of channel, server, and `publish` operation groupings and does not re-scaffold combinations that are not new.
+When re-scaffolding, the scaffolder acts on new combinations of channel, server, and `publish` operation groupings in the specification and does not re-scaffold combinations that are not new.
 ====
 
 [[scaffold-new]]
@@ -93,6 +95,8 @@ include::partial$acb-reusable-steps.adoc[tags="start-implementation"]
 If a notification on *Implement an API Specification* indicates that *AsyncAPI 2.6 (Beta) requires enablement by an Anypoint Platform organization administrator*, AsyncAPI features will not be available until your organization administrator accepts the terms and conditions of the beta program. See <<prereqs>>.
 //
 include::partial$acb-reusable-steps.adoc[tags="search-exchange-spec"]
++
+{supported-spec-version}
 +
 image:implement-api-search-async.png["List of AsyncAPI specification assets found in Exchange"]
 . Click *Create Project*.
@@ -132,9 +136,9 @@ with flows that contain Message Listener (`<apikit-asyncapi:message-listener/>`)
 include::partial$acb-reusable-steps.adoc[tags="implement-business-logic"]
 
 [[scaffold-existing]]
-=== Scaffold an AsyncAPI Specification into an Existing Project
+=== Scaffold or Re-Scaffold an AsyncAPI Specification into an Existing Project
 
-Scaffold an AsyncAPI specification from Exchange into an existing project in Anypoint Code Builder.
+Scaffold or re-scaffold an AsyncAPI specification from Exchange into an existing project in Anypoint Code Builder. Before re-scaffolding, review the <<important-rescaffold, important note>> about which new configurations are scaffolded into your project.
 
 . Meet the prerequisites in <<prereqs>>.
 +
@@ -151,16 +155,18 @@ MuleSoft: Import Asset from Exchange
 ----
 . Select *AsyncAPI* from the list of assets.
 . If prompted, log in to Anypoint Platform, allowing the extension to sign in and open an external web site and to open Visual Studio Code. 
-. Type the name of your specification, for example:
+. Type the full name or partially matching name of your specification, for example:
 +
 ----
 My AsyncAPI Spec
 ----
 . Wait for the IDE to load a list of matches to the name, and then select your AsyncAPI specification.
-. When prompted for a version, select the version of the API to import, such as `_1.0.0_`.
++
+{supported-spec-version}
+. When prompted for a version, select the version of the API to import, such as `_1.0.0_` or `_2.0.0_`.
 . Select *Yes* when prompted to scaffold the API dependency.
 +
-When the scaffolding process is complete, the IDE opens to a configuration XML file that contains the scaffolded flows (`flows.xml`).
+When the scaffolding process is complete, the IDE opens to a configuration XML file that contains the scaffolded flows (`flows.xml`). If you re-scaffolded the specification, see the <<important-rescaffold, important note>> about which new configurations are scaffolded into your project.
 // Shared step on adding business logic
 include::partial$acb-reusable-steps.adoc[tags="implement-business-logic"]
 
@@ -180,7 +186,7 @@ The examples describe an API specification and implementation for processing ord
 The AsyncAPI specification defines an order processing API that uses Anypoint MQ and Kafka protocols.
 * <<ex-flows-scaffolded>>
 +
-The scaffolder generates a `flow.xml` file with a flow for each `publish` operation in the AsyncAPI specification (for re-scaffolding behavior, see <<scaffolding>>). The example describes the generated flows and configures components that provide order-processing logic to some of the flows. 
+The scaffolder generates a `flow.xml` file with a flow for each `publish` operation in the AsyncAPI specification (for re-scaffolding behavior, see <<scaffold-procedure>>). The example describes the generated flows and configures components that provide order-processing logic to some of the flows. 
 +
 * <<ex-connection-configs-scaffolded>>
 +
@@ -407,7 +413,7 @@ The scaffolder generates a `flow.xml` file from the specification. This example 
 [[ex-flows-implemented]]
 The following example adds business logic to the scaffolded flows: 
 
-* `LISTEN:listen-order-placed` listens for orders and, when triggered, uses a DataWeave expression to check for sufficient inventory. If enough items exist in the inventory, the flow publishes order data to the `order-confirmed` channel, which triggers the `LISTEN:listen-order-confirmations` flow. If not, the flow publishes order data to a `order-backordered` channel, which triggers the `LISTEN:listen-order-backordered` flow.
+* `LISTEN:listen-order-placed` listens for orders and, when triggered, uses a DataWeave expression to check for sufficient inventory. If enough items exist in the inventory, the flow configures a *Publish* operation to publish order data to the `order-confirmed` channel, which triggers the `LISTEN:listen-order-confirmations` flow. If not, the flow adds a *Publish* operation to publish order data to a `order-backordered` channel, which triggers the `LISTEN:listen-order-backordered` flow.
 * `LISTEN:listen-order-confirmations` listens for order confirmations and, when triggered, sends order information to the `notification-flow` subflow, which sends confirmation notices through Slack and email (see <<ex-flows-notification>>).
 
 [source,xml]
