@@ -186,7 +186,7 @@ The examples describe an API specification and implementation for processing ord
 The AsyncAPI specification defines an order processing API that uses Anypoint MQ and Kafka protocols.
 * <<ex-flows-scaffolded>>
 +
-The scaffolder generates a `flow.xml` file with a flow for each `publish` operation in the AsyncAPI specification (for re-scaffolding behavior, see <<scaffold-procedure>>). The example describes the generated flows and configures components that provide order-processing logic to some of the flows. 
+The scaffolder generates a `flow.xml` file with a flow for each `publish` operation in the AsyncAPI specification (for re-scaffolding behavior, see <<scaffold-procedures>>). The example describes the generated flows and configures components that provide order-processing logic to some of the flows. 
 +
 * <<ex-connection-configs-scaffolded>>
 +
@@ -202,10 +202,6 @@ The subflow (`<sub-flow/>`) in `notifications.xml` uses xref:email-connector::in
 === Example: AsyncAPI 2.6 Specification
 
 The following example defines an API specification that uses Anypoint MQ and Kafka protocols. The specification defines https://www.asyncapi.com/docs/concepts/channel[channels] for orders (new, confirmed, and cancelled orders) that use Anypoint MQ, and it defines a channel that uses Kafka for backorders (items that are not in stock). Each channel includes a `publish` and `subscribe` operation. The https://www.asyncapi.com/docs/concepts/server[server] settings in the specification define message brokers that determine the connectors to use (_indirectly_) when publishing events or subscribing to events through operations in the AsyncAPI module.
-
-* `channel` defines the binding. 
-* `message` defines the structure of the payload of the event.
-* `operation` defines the action that the application takes and whether the event is consumed or published.
 
 [source,yaml]
 ----
@@ -707,132 +703,3 @@ When triggered by the Flow Reference component (`<flow-ref/>`) in the `LISTEN:li
 * xref:ref-connectors.adoc[]
 * xref:ref-components.adoc[]
 * xref:dataweave::index.adoc[]
-
-////
-[[errors]]
-== Error Conditions
-
-TODO_TODO_VERIFY_ALL
-
-The scaffolder implements one flow per channel, server, and operation (`publish` or `subscribe`).
-
-* The following conditions produce an error during the scaffolding process stops, and the IDE displays an error message: 
-
-** No channels are defined in the specification.
-** None of the defined message brokers for the server are supported.
-
-* If the specification defines at least one channel but no server is defined, the IDE prompts you for server details and defaults to the defined channel. 
-* If the specification defines a server but the n is missing, TODO_TODO_WHAT_HAPPENS
-* If a channel is defined without a `publish` or `subscribe` operation, TODO_TODO_IS_THERE_A_DEFAULT
-
-If a specification defines only one server and a channel definition is missing a reference to a server, the scaffolder uses the defined server. If the specification defines multiple servers and a channel definition is missing a reference to a server, the IDE prompts you to identify the server to implement. 
-
-Channel with no server ref, but 1 server defined: we use that server
-Channel with no server ref, but multiple servers defined: we ask for the server(s) to be implemented: one flow per channel+server+pub-or-sub
-Can we have more than one message type in channel?
-Binding missing: binding overwrites channel name. If there is no binding, we take the channel name for topic name
-Only subscribe operations are defined (they are translated into “publish”): For the first time flow, we will create a new project and add the API and APIkit connector
-////
-
-////
-Kafka setup local
-# This is a gist by @anishmahapatra to efficiently run Kafka commands to run a prodcuer and consumer locally
-# Command to kill ports
-kill -9 $(lsof -i tcp:9092,8080,2181)
-
-# Command to run Zookeeper
-bin/zookeeper-server-start.sh config/zookeeper.properties
-
-# Command to run Server
-bin/kafka-server-start.sh config/server.properties
-
-# Command to run standalone server
-bin/connect-standalone.sh config/connect-standalone.properties
-
-# Create a topic "anishmahapatra"
-bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3 --topic anishmahapatra
-
-# Command to check for the list of topics
-bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
-
-# Command to delete topic
-bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic anishmahapatra
-
-# Command to run Kafka producer 
-bin/kafka-console-producer.sh --topic anishmahapatra --bootstrap-server localhost:9092
-
-# Command to run Kafka consumer
-bin/kafka-console-consumer.sh --topic anishmahapatra --bootstrap-server localhost:9092
-
-# Connect with me at https://www.linkedin.com/in/anishmahapatra/
-////
-
-////
-NOTES -- 
-duke's connected apps:
-"When you configure the connector, click Copy Id and Copy Secret to copy the ID and secret for the app you just created"
-* my-connected-app
-** id: 8a980c42d8974ef496378c1fcf9f357b
-** sec: Bf0D387De4f2406d818F9D7f94e2D5D4
-* my-connected-app-2
-** id 82e504a7b3bc43fe85f050e26f78525a
-** sec: A9Cfa9131Bc04F5087e89bDfC0c51cD4
-
-
-MQ CLIENT APP SETUP
---------------------
-US West Oregon -- server URL in the AsyncAPI spec
-https://mq-us-west-2.anypoint.mulesoft.com/api/v1/organizations/346d7416-8f46-4256-8e45-c85d10787232/environments/7a3f6e1c-0bba-46f7-881d-63420a9a6057
-my-mq-client-app
-ID:   ae33b4ff870e42b49e145ca770b8f1a5
-CSec: B3E83b6760Ab479Ea06C03B9De515c65
-Queue: my-queue (will be channel name in your API specification)
-
-There was an issue solving the dependencies for the artifact [/Users/sduke/acb-projects/async-amq-kafka-test-proj3/pom.xml]. Failed to collect dependencies at 8dbc2756-83d6-4a1c-91c4-6eafbe7d7ae0:async-amq-kafka-test:zip:evented-api:1.0.2
-
-
-Orders-AsyncAPI-example
-
-APIkit for AsyncAPI
-
-1. introspects the API spec
-2. creates a new Mule project
-3. generates flows and configs 
-
-starts with server section, for each server, creates new config in project and adds connectors as dependencies to the project as well as module AsyncAPI
-
-sets up configs for connectors and defines APIkit config using o
-
-Then introspects channels in specification and configs operations from module in the project
-
-- translates publish to listeners in flow and 
-- subscribe to publish in flow 
-new mule flow for Publish operations
-
-For all PUBLISH operations, you get a flow with a listener (with channel and server definitions) and logger
-
-Datasense: also sets up Datasense for incoming payload based on the message def in API specification -- so you can extract values and transform payload
-
-validation: performs message validation and throws errors if incoming or outgoing messages not valid
-
-listener flow: channel defs can have multiple servers and message types; only one flow per channel can listen to messages from the different servers and to different message types -- BUT you can change to make one flow per message broker
-
-Subscribe operations in specification translated to Publish ops in flow; user decides where to add the Publish op
-
-
-Implement an API form has new filter for AsyncAPI specs
-- Simone gets Orders-async
-
-Scaffolded spec, you also get dev version of the properties file for connectors
-if local, no additional properties needed
-
-(you can create other -- non-dev -- versions as well)
-
-global-configs.xml also created with all connector configs (local and not local) 
-
-
-Adding a Publish operation to a flow
-(skips business logic)
-
-Order placed flow
-////
