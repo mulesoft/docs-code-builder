@@ -28,32 +28,30 @@ If your AsyncAPI specification is not published to Exchange, see xref:design-cen
 
 
 //
-// tag::apid-best-practices
+// tag::apid-best-practices[]
 
-* Divide your fragments into shorter reusable dependencies when possible.
+* Divide your fragments into short, reusable dependencies when possible.
 
-* Keep only one version of the same dependency
+* Keep only one version of the same dependency.
 
-* Keep only one browser tab open at a time for API Designer
-// end::apid-best-practices
+* Keep only one browser tab open at a time.
+// end::apid-best-practices[]
 // 
-
 //
-// tag::apid-resource-reqs 
+//
+// tag::apid-resource-reqs[]
 
 * 8 GB RAM
 * Ryzen series 5 / Intel i5 CPU or higher
 
-Due to parser limitations, the total project size (all files in your project) for your API Designer projects should be bellow 500 KB.
+Due to parser limitations, the recommendation for the total project size (all files in your design project) is less than 500 KB.
 
 If the project size exceeds 1.5 MB, validation takes longer.
-// end::apid-resource-reqs
+// end::apid-resource-reqs[]
 //
-
-
-
 //
-// tag:apid-best-practices-oas
+//
+// tag:apid-best-practices-oas[]
 
 * Use the `$ref` property to define reusable components. To improve parsing efficiency, reference components across the API specification, for example:
 
@@ -125,8 +123,7 @@ properties:
 
 ----
 
-* Use `response` headers to provide additional information without including it in the response body:
-
+* Use `response` headers instead of the response body to provide additional information, for example:
 +
 ----
 responses:
@@ -140,7 +137,7 @@ responses:
 
 ----
 
-* Include only concise and short examples: 
+* Include concise and short examples: 
 +
 ----
 Book:
@@ -148,16 +145,15 @@ Book:
   example: "Explain the string with as few words as possible."
 ----
 
-* When using union-type properties, use `oneOf` to represent union-type object fields, `allOf` to represent intersection type and composite objects and fields, and `anyOf` when defining a property with multiple possible data structures. 
+* When using union-type properties, use `oneOf` to represent union-type object fields, `allOf` to represent an intersection type and composite objects and fields, and `anyOf` when defining a property with multiple possible data structures. 
 
-// end::apid-best-practices-oas
+// end::apid-best-practices-oas[]
 //
-
-
 //
-// tag::apid-best-practices-raml
+//
+// tag::apid-best-practices-raml[]
 
-* When extracting RAML Fragments, import them as local declaration first.
+* When extracting RAML fragments, import the fragments as local declaration first.
 
 * Reuse data types as declarations.
 
@@ -205,5 +201,5 @@ Person:
       is: [ POSTSearchParams ]
 ----
 
-// end::apid-best-practices-raml
+// end::apid-best-practices-raml[]
 //
