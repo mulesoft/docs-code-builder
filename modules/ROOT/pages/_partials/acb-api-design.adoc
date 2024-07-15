@@ -153,7 +153,9 @@ Book:
 //
 // tag::apid-best-practices-raml[]
 
-* When extracting RAML fragments, import the fragments as a local declaration first.
+* When extracting RAML fragments, import each fragment as a local declaration first: 
++
+Create a fragment file, and before publishing the fragment to Anypoint Exchange, import the local fragment file to validate that the fragment works as expected. If the fragment works, publish the fragment to Exchange so you can reuse the fragment in your API specifications instead of duplicating it.
 
 * Reuse data types as declarations.
 
