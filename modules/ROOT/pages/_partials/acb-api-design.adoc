@@ -25,3 +25,183 @@ API design projects xref:anypoint-code-builder::des-create-api-specs.adoc#import
 If your AsyncAPI specification is not published to Exchange, see xref:design-center::design-publish.adoc[]. To create an AsyncAPI specification before publishing to Exchange, see xref:design-center::design-async-api.adoc[] in the Design Center documentation. 
 // end::note-asyncapi[]
 //
+
+
+//
+// tag::apid-best-practices[]
+
+* Divide your fragments into short, reusable dependencies when possible.
+
+* Keep only one version of the same dependency.
+
+* Keep only one browser tab open at a time.
+// end::apid-best-practices[]
+// 
+//
+//
+// tag::apid-resource-reqs[]
+
+* 8 GB RAM
+* Ryzen series 5 / Intel i5 CPU or higher
+
+To achieve optimal parser performance, keep the total project size for all files in your design project below 500 KB. 
+
+A project size that exceeds 1.5 MB severely affects validation time.
+// end::apid-resource-reqs[]
+//
+//
+//
+// tag::apid-best-practices-oas[]
+
+* Use the `$ref` property to define reusable components. To improve parsing efficiency, reference each component from the API specification instead of duplicating component definitions, for example:
+
++
+----
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+
+paths:
+  /users:
+    get:
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+----
+
+* Use simpler types to represent your data if possible. Avoid unnecessary nesting and complicated types, for example:
+
++
+----
+properties:
+  age:
+    type: integer  # Prefer simple types over complex types like objects
+
+----
+
+* Use the `enum` property for fields with a fixed set of values to improve parsing efficiency: 
+
++
+----
+properties:
+  status:
+    type: string
+    enum: [active, inactive]
+
+----
+
+* Use simple nesting for objects to simplify the structure and improve readability and parsing efficiency: 
+
++
+----
+# Good
+properties:
+  name:
+    type: string
+  address:
+    type: string
+
+# Avoid
+properties:
+  user:
+    type: object
+    properties:
+      profile:
+        type: object
+        properties:
+          name:
+            type: string
+
+----
+
+* Use `response` headers instead of the response body to provide additional information, for example:
++
+----
+responses:
+  '200':
+    description: Successful response
+    headers:
+      X-Rate-Limit-Limit:
+        description: The number of requests allowed in the current period
+        schema:
+          type: integer
+
+----
+
+* Provide concise and short examples: 
++
+----
+Book:
+  type: string
+  example: "Explain the string with as few words as possible."
+----
+
+* When using union-type properties, use `oneOf` to represent union-type object fields, `allOf` to represent an intersection type and composite objects and fields, and `anyOf` when defining a property with multiple possible data structures. 
+
+// end::apid-best-practices-oas[]
+//
+//
+//
+// tag::apid-best-practices-raml[]
+
+* When extracting RAML fragments, import each fragment as a local declaration first: 
++
+Create a fragment file, and before publishing the fragment to Anypoint Exchange, import the local fragment file to validate that the fragment works as expected. If the fragment works, publish the fragment to Exchange so you can reuse the fragment in your API specifications instead of duplicating it.
+
+* Reuse data types as declarations.
+
+* Use inheritance only when needed:
+
++
+----
+Car:
+  description: This is a car
+  properties:
+    brand: string
+    model: string
+  example:
+    brand: Toyota
+    model: Corolla
+Person:
+  properties:
+    owns: Car
+
+----
+
+* Use short unions:
+
++
+----
+Person:
+  type: Employee | Customer
+----
+
+* Use simple traits, and avoid combining traits with resource type properties:
+
++
+----
+/basic:
+  type: {resourceTypes.fhirResourceType: {
+      postExample : !include /examples/requests/post_resource.json,
+      getExample  : !include /examples/responses/get_resource.json,
+      bundleName : basic.BasicBundle
+    }
+  }
+  /_search:
+    get:
+      is: [ searchParams ]
+    post:
+      is: [ POSTSearchParams ]
+----
+
+// end::apid-best-practices-raml[]
+//
