@@ -20,7 +20,7 @@ Sets or updates the payload of the message.
 //tag::component-long-description[]
 
 The payload can be a literal string or a DataWeave expression. Use the `set-payload` component only for simple expressions or transformations.
-For complex scenarios, use the xref:acb-component-transform.adoc[Transform Message Component].
+For complex scenarios, use the xref:component-transform.adoc[Transform Message Component].
 
 //end::component-long-description[]
 //
@@ -96,15 +96,15 @@ Set Payload (`<set-payload/>`) attributes are configurable through the UI and XM
 |  A `.dwl` file containing a DataWeave transformation script. These values are resolved statically (not dynamically). For example, using `<ee:set-payload resource="myscript-${env}.dwl"/>` generates an error. For more information, see xref:dataweave::dataweave-language-introduction.adoc#dwl_file[dwl File].
 
 //entire output encoding row in this table
-include::partial$acb-component-info.adoc[tag=output-encoding]
-include::partial$acb-component-info.adoc[tag=output-encoding-description]
+include::partial$component-info.adoc[tag=output-encoding]
+include::partial$component-info.adoc[tag=output-encoding-description]
 
 //entire output MIME type row in this table
-include::partial$acb-component-info.adoc[tag=output-mime-type]
-include::partial$acb-component-info.adoc[tag=output-mime-type-description]
+include::partial$component-info.adoc[tag=output-mime-type]
+include::partial$component-info.adoc[tag=output-mime-type-description]
 
 //entire Parameters row in this table
-include::partial$acb-component-info.adoc[tag=mimetype-reader-properties]
+include::partial$component-info.adoc[tag=mimetype-reader-properties]
 
 |===
 
@@ -188,7 +188,7 @@ ERROR_HANDLING_DETAILS_HERE
 [[see-also]]
 == See Also
 
-* xref:4.4@mule-runtime::about-mule-message.adoc[Mule Message Structure]
-* xref:2.4@dataweave::dataweave.adoc[DataWeave Language]
+* xref:mule-runtime::about-mule-message.adoc[Mule Message Structure]
+* xref:dataweave::dataweave.adoc[DataWeave Language]
 
 //end::see-also[]

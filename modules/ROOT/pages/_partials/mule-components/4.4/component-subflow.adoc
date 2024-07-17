@@ -19,26 +19,26 @@ Group together a sequence of Core components and operations (provided by connect
 //
 //tag::component-long-description[]
 
-The Subflow component works in a similar way to the xref:acb-component-flow.adoc[Flow] component but with the following differences: 
+The Subflow component works in a similar way to the xref:component-flow.adoc[Flow] component but with the following differences: 
 
 * Subflows do not support Mule event sources.
 * Subflows do not have a built-in error handling scope.
 + 
 //TODO: Uncomment when Try doc is ready in ACB
-//Use the xref:acb-component-try.adoc[Try] scope within a subflow to perform error handling.
+//Use the xref:component-try.adoc[Try] scope within a subflow to perform error handling.
 * During design, subflows work as macros that replace the Flow Reference components that call them.
 +
 When you build the application, Mule replaces all Flow Reference components that call a subflow with the contents of the referenced subflow.
 * Referencing subflows results in better performance than referencing a flow.
 
 //TODO: Uncomment when Try doc is ready in ACB
-//Use the xref:acb-component-try.adoc[Try] scope within a subflow to perform error handling.
+//Use the xref:component-try.adoc[Try] scope within a subflow to perform error handling.
 You can create multiple subflows in your Mule application. 
 
-For a more in-depth discussion of uses, capabilities, and limits of flows and subflows, see xref:4.4@mule-runtime::about-flows.adoc[Flows and Subflows].
+For a more in-depth discussion of uses, capabilities, and limits of flows and subflows, see xref:mule-runtime::about-flows.adoc[Flows and Subflows].
 
 //TODO: Uncomment when Async doc is ready in ACB
-//Flows always function synchronously. To achieve asynchronous patterns, such as Fire-and-Forget, use the xref:acb-component-async.adoc[Async Scope].
+//Flows always function synchronously. To achieve asynchronous patterns, such as Fire-and-Forget, use the xref:component-async.adoc[Async Scope].
 
 == Limitations
 
@@ -242,9 +242,9 @@ The following example ACTION_VERB_HERE_WITH_DESCRIPTION_OF_WHAT_IT_DOES_OR_SHOWS
 [[see-also]]
 == See Also
 
-* xref:acb-component-flow.adoc[Flow]
+* xref:component-flow.adoc[Flow]
 
 //TODO: Uncomment when Flow Ref doc is ready
-//* xref:acb-component-flow-ref.adoc[Flow Reference]
+//* xref:component-flow-ref.adoc[Flow Reference]
 
 //end::see-also[]
