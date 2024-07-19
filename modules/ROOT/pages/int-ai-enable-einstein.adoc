@@ -2,17 +2,32 @@
 
 As an Anypoint Platform Organization Administrator, you can enable the Einstein for Anypoint Code Builder generative flows feature so that everyone in your Anypoint Platform organization can send requests to Einstein through the Einstein-enabled Salesforce org you select. 
 
+== Before you Begin
+
+Before enabling Einstein for Anypoint Code Builder, you must be familiar with the concept of Salesforce organizations.  
+
+When you enable Einstein for Anypoint Code Builder, you select a Salesforce organization (org) to route the Einstein requests through. 
+
+There is a Salesforce trial organization you can select, but it is only available until October 19, 2024, so it's best to select your own private Salesforce org to avoid service disruption. If you don't have a Salesforce org, contact your AE (?) to find out how to set up a Salesforce org with Einstein turned on.
+
+Using your own Salesforce org has these advantages:
+
+* You can store your Einstein generative AI audit and feedback data in Data Cloud. You can use that data for compliance, analytics, prompt adjustments, and LLM tuning to enhance your generative AI applications.
+* You aren't subject to the rate limiting policies of the trial org, which can sometimes result in the service being too busy to process Einstein requests.
+
+
 == Enabling Einstein for Anypoint Code Builder
 
 . Sign in to Anypoint Platform through Anypoint Code Builder with your organization administrator account. 
+. On the Anypoint Code Builder landing page, click *Get started*.
 . Select the *Enable Einstein for Anypoint Code Builder* checkbox.
-. Select the Salesforce organization to route Einstein requests through. 
+. Select the Salesforce organization (org) to route Einstein requests through. 
 +
-NOTE: The selected Salesforce organization must have Einstein turned on. 
+NOTE: The Salesforce org you select must have Einstein turned on. 
 +
-You can choose a shared or private Salesforce organization. It's best to use your private Salesforce org so that you can store your Einstein generative AI audit and feedback data in Data Cloud. You can use that data for compliance, analytics, prompt adjustments, and LLM tuning to enhance your generative AI applications.
+If your Salesforce org doesn't appear in the list of available orgs, verify that you established a tenant relationship between your Salesforce and Anypoint Platform organizations. See xref:access-management::trusted-salesforce-org.adoc[] for more information.
 +
-If you choose a shared organization, all Einstein requests are routed through the shared organization and Einstein requests are subject to any rate limiting policies in effect for that organization. 
+If you choose the Salesforce trial organization, all Einstein requests are routed through the shared organization and Einstein requests are subject to any rate limiting policies in effect for that organization. 
 . 
 
 
