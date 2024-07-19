@@ -1,20 +1,19 @@
 = Enable Einstein for Anypoint Code Builder
 
-As an Anypoint Platform Organization Administrator, you can enable the Einstein for Anypoint Code Builder generative flows feature so that everyone in your Anypoint Platform organization can send requests to Einstein through the Einstein-enabled Salesforce org you select. 
+As an Anypoint Platform Organization Administrator, you can enable the Einstein for Anypoint Code Builder generative flows feature so that everyone in your Anypoint Platform organization can send requests to Einstein through the Salesforce org you select. 
 
 == Before you Begin
 
-Before enabling Einstein for Anypoint Code Builder, you must be familiar with the concept of Salesforce organizations.  
+Before enabling Einstein for Anypoint Code Builder, you must be familiar with the concept of Salesforce And Anypoint Platform organizations and establishing a tenant relationship between them.  
 
-When you enable Einstein for Anypoint Code Builder, you select a Salesforce organization (org) to route the Einstein requests through. 
+When you enable Einstein for Anypoint Code Builder, you select the Salesforce organization (org) to route the Einstein requests through. The list of available Salesforce orgs is populated with Salesforce orgs xref:access-management::trusted-salesforce-org.adoc[you have established tenant relationships] with in access management.
 
-There is a Salesforce trial organization you can select, but it is only available until October 19, 2024, so it's best to select your own private Salesforce org to avoid service disruption. If you don't have a Salesforce org, contact your AE (?) to find out how to set up a Salesforce org with Einstein turned on.
+Although there is a Salesforce trial organization you can select when you enable Einstein for Anypoint Code Builder, it is only available until October 19, 2024, so it's best to select your own private Salesforce org to avoid service disruption. If you don't have a Salesforce org, contact your AE (?) to find out how to set up a Salesforce org with Einstein turned on.
 
 Using your own Salesforce org has these advantages:
 
 * You can store your Einstein generative AI audit and feedback data in Data Cloud. You can use that data for compliance, analytics, prompt adjustments, and LLM tuning to enhance your generative AI applications.
 * You aren't subject to the rate limiting policies of the trial org, which can sometimes result in the service being too busy to process Einstein requests.
-
 
 == Enabling Einstein for Anypoint Code Builder
 
@@ -26,8 +25,6 @@ Using your own Salesforce org has these advantages:
 NOTE: The Salesforce org you select must have Einstein turned on. 
 +
 If your Salesforce org doesn't appear in the list of available orgs, verify that you established a tenant relationship between your Salesforce and Anypoint Platform organizations. See xref:access-management::trusted-salesforce-org.adoc[] for more information.
-+
-If you choose the Salesforce trial organization, all Einstein requests are routed through the shared organization and Einstein requests are subject to any rate limiting policies in effect for that organization. 
 . 
 
 
