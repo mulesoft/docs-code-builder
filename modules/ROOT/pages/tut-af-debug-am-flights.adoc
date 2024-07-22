@@ -21,8 +21,9 @@ Complete these procedures:
 To facilitate debugging, add Set Variable and Logger components to your American Flights implementation:
 
 . Open the implementation file (`implementation.xml`).
-. After the Database Select operation (`<db:select/>`) named *Query Flights*, add a Set Variable component. 
-. In the configuration XML, provide this `<set-variable/>` configuration:
+. After the Database Select operation (`<db:select/>`) named *Query Flights*, add a Set Variable component: 
++
+In the configuration XML, provide this `<set-variable/>` configuration:
 +
 [source,xml]
 ----
@@ -30,7 +31,7 @@ To facilitate debugging, add Set Variable and Logger components to your American
      doc:name="Set variable Payload" 
      variableName="databasePayload" />
 ----
-. After the Set Variable component, add a Logger component with this configuration:
+. After the Transform component (`<ee:transform>`), add a Logger component with this configuration:
 +
 [source,xml]
 ----
@@ -86,7 +87,7 @@ To facilitate debugging, add Set Variable and Logger components to your American
     %dw 2.0
     output application/json
     ---
-    payload]" /> //<1>
+    payload]" /> //<2>
 
 </flow>
 --
