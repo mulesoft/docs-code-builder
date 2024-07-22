@@ -11,7 +11,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studio Code. Both the desktop and cloud IDEs for Anypoint Code Builder share these extensions. The cloud IDE provides built-in extensions to the code-server implementation of Visual Studio Code for the web.
 
 * <<set-up-desktop>>: For the desktop IDE, you must load the extension pack to your local Visual Studio Code IDE. 
-* <<set-up-web>>: For the cloud IDE, you must log in to Anypoint Platform and acquire the permission to use Anypoint Code Builder. 
+* <<set-up-web>>: For the cloud IDE, you must sign in to Anypoint Platform and acquire the permission to use Anypoint Code Builder. 
 
 [[set-up-desktop]]
 == Set up the Desktop IDE
@@ -22,43 +22,59 @@ include::anypoint-code-builder::partial$acb-start-desktop.adoc[]
 [[set-up-web]]
 == Launch the Cloud IDE 
 
-//launch cloud IDE
-include::anypoint-code-builder::partial$acb-start-cloud.adoc[]
+//intro: launch cloud IDE
+include::partial$acb-start-cloud.adoc[tag="start-cloud-intro"]
+
+
+//heading: before you begin
+[[prereqs]]
+include::partial$acb-start-cloud.adoc[tag="heading-before-you-begin",leveloffset=+2]
+
+//content: before you begin
+include::partial$acb-start-cloud.adoc[tag="before-you-begin"]
+
+//heading: launch cloud IDE
+[[login-cloud]]
+include::partial$acb-start-cloud.adoc[tag="heading-launch-cloud",leveloffset=+2]
+
+//content: launch cloud IDE
+include::partial$acb-start-cloud.adoc[tag=launch-cloud]
 
 [[login-ide]]
-== Log in to Anypoint Platform from the IDE
+== Sign in to Anypoint Platform from the IDE
 
-Some Anypoint Code Builder features require you to log in directly from the IDE to Anypoint Platform. The IDE prompts you when login is necessary and guides you through the login process. However, it is a good practice to log in from the IDE after opening MuleSoft features in the IDE. 
+Some Anypoint Code Builder features require you to sign in directly from the IDE to Anypoint Platform. The IDE prompts you when login is necessary and guides you through the login process. However, it is a good practice to sign in from the IDE after opening MuleSoft features in the IDE. 
 
 //Requirements for Anypoint Platform account and account config
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="platform-account"]
 
-From the IDE, you can log in from the status bar or through a command:
+From the IDE, you can sign in from the status bar or through a command, and you can log out from the status bar:
 
 * <<login-status-bar>>
 * <<login-command>>
 * <<change-user-account>>
+* <<logout-status-bar>>
 
 [[login-status-bar]]
-=== Log in from the IDE through the Status Bar
+=== Sign in to Anypoint Platform from the Status Bar
 
 The status bar in the desktop and cloud IDEs shows your login status:
 
-* *Not logged in to Anypoint Platform* indicates that you must log in to perform tasks that require a connection to Anypoint Platform. 
+* *Not logged in to Anypoint Platform* indicates that you must sign in to perform tasks that require a connection to Anypoint Platform. 
 +
 image::acb-not-logged-in.png["Login status message in the status bar"]
 + 
-You can log in by clicking this notification and following the prompts to log in.
-* A link to your user name indicates that you are logged in.
+You can sign in by clicking this notification and following the prompts to sign in.
+* A link to your user name indicates that you are signed in.
 +
 You can log out by clicking your user name and following the prompts.
 
 [[login-command]]
-=== Log in from the IDE through the Command Palette
+=== Sign in to Anypoint Platform from the Command Palette
 
-You can use the Command Palette to log in to Anypoint Platform. 
+You can use the Command Palette to sign in to Anypoint Platform from the IDE. 
 
-To log in from the IDE from the Command Palette:
+To sign in from the IDE from the Command Palette:
 
 // Pointer to Command Palette
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
@@ -83,16 +99,24 @@ After logging you in, Anypoint Platform displays a *You can close this page now*
 +
 . To verify your login, ensure that *<your-username>* replaces *Not logged in to Anypoint Platform*. 
 
+[[logout-status-bar]]
+=== Log Out from Anypoint Platform from the IDE
+
+Log out from the IDE by:
+
+. Clicking your username in the status bar 
+. Clicking *Yes* when asked *Logout from Anypoint?* 
+
+
 [[change-user-account]]
-=== Log In with a Different Anypoint Platform Account from the IDE
+=== Sign In to a Different Anypoint Platform Account from the IDE
 
 To use a different Anypoint Platform user account:
 
-. Log out of the IDE by:
-
-.. Clicking your username in the status bar 
-.. Clicking *Yes* when asked *Logout from Anypoint?* 
-. Log in from the status bar. 
+. Log out from the status bar in the IDE.
++
+For guidance, see <<logout-status-bar>>.
+. Sign in from the status bar. 
 +
 For more guidance, see <<login-status-bar>>.
 
@@ -108,4 +132,4 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="mule-setti
 . Scroll to *Mule: Control Plane*.
 . Select *US Cloud* or *EU Cloud*.
 . {restart-ide}
-. Follow the steps in xref:anypoint-code-builder::start-acb.adoc#login-ide[Log in to Anypoint Platform from the IDE].
+. Follow the steps in xref:anypoint-code-builder::start-acb.adoc#login-ide[Sign in to Anypoint Platform from the IDE].
