@@ -1,33 +1,52 @@
 = Enable Einstein for Anypoint Code Builder
 
-As an Anypoint Platform Organization Administrator, you can enable the Einstein for Anypoint Code Builder generative flows feature so that everyone in your Anypoint Platform organization can send requests to Einstein through the Salesforce org you select. 
+As an Anypoint Platform Organization Administrator, you can enable the Einstein for Anypoint Code Builder generative flows feature so that everyone in your Anypoint Platform organization can send requests to Einstein through the Salesforce organization you select. 
 
 == Before you Begin
 
-Before enabling Einstein for Anypoint Code Builder, you must be familiar with the concept of Salesforce And Anypoint Platform organizations and establishing a tenant relationship between them.  
+Before enabling Einstein for Anypoint Code Builder, you must:
 
-When you enable Einstein for Anypoint Code Builder, you select the Salesforce organization (org) to route the Einstein requests through. The list of available Salesforce orgs is populated with Salesforce orgs xref:access-management::trusted-salesforce-org.adoc[you have established tenant relationships] with in access management.
+* Be familiar with the concept of Salesforce And Anypoint Platform organizations.  
+* xref:access-management::trusted-salesforce-org.adoc[Establish a tenant relationship between your Anypoint Platform organization and trusted Salesforce organization] that has Einstein enabled. 
++
+When you enable Einstein for Anypoint Code Builder, you select the Salesforce organization to route the Einstein requests through. The list of available Salesforce orgs is populated with Salesforce orgs with established tenant relationships.
 
-Although there is a Salesforce trial organization you can select when you enable Einstein for Anypoint Code Builder, it is only available until October 19, 2024, so it's best to select your own private Salesforce org to avoid service disruption. If you don't have a Salesforce org, contact your AE (?) to find out how to set up a Salesforce org with Einstein turned on.
+If you don't have a tenant relationship established with a Salesforce organization, there is a Salesforce trial organization you can select when you enable Einstein for Anypoint Code Builder, however, it is only available until October 19, 2024. It's best to select your own private Salesforce organization to avoid service disruption. If you don't have a Salesforce organization with Einstein enabled, contact your AE (???).
 
-Using your own Salesforce org has these advantages:
+Using your own Salesforce organization has these advantages:
 
 * You can store your Einstein generative AI audit and feedback data in Data Cloud. You can use that data for compliance, analytics, prompt adjustments, and LLM tuning to enhance your generative AI applications.
-* You aren't subject to the rate limiting policies of the trial org, which can sometimes result in the service being too busy to process Einstein requests.
+* You aren't subject to the rate limiting policies of the trial organization, which can sometimes result in the service being too busy to process Einstein requests.
 
 == Enabling Einstein for Anypoint Code Builder
 
+Enable the Einstein generative flows feature for your Anypoint organization and its users:
+
 . Sign in to Anypoint Platform through Anypoint Code Builder with your organization administrator account. 
 . On the Anypoint Code Builder landing page, click *Get started*.
+. Read the terms and conditions and then click *Accept*.
 . Select the *Enable Einstein for Anypoint Code Builder* checkbox.
-. Select the Salesforce organization (org) to route Einstein requests through. 
+. Select the Salesforce organization to route Einstein requests through and click *Apply*. 
 +
-NOTE: The Salesforce org you select must have Einstein turned on. 
+NOTE: The Salesforce organization you select must have Einstein turned on. 
 +
-If your Salesforce org doesn't appear in the list of available orgs, verify that you established a tenant relationship between your Salesforce and Anypoint Platform organizations. See xref:access-management::trusted-salesforce-org.adoc[] for more information.
-. 
+If your Salesforce organization doesn't appear in the list of available orgs, verify that you established a tenant relationship between your Anypoint Platform and Salesforce organizations. See xref:access-management::trusted-salesforce-org.adoc[] for more information.
+. Click *Test Connection*.
++
+If the connection is unsuccessful, it might mean that the Salesforce organization you are trying to connect to doesn't have Einstein enabled. Contact your Salesforce organization administrator or select a different organization.
+. When the connection is successful, click *Apply*. 
++
+Einstein is now enabled for all the users in your Anypoint Platform organization. You can remove access to Einstein Generative Flows from individual users in access management. See [ADD LINK]
 
+== Changing the Connected Salesforce Organization
+
+The Salesforce organization you are routing Einstein requests through is displayed on the Anypoint Code Builder landing page. If you want to change the Salesforce organization that Einstein requests are routed through:
+
+. On the Anypoint Code Builder landing page, click *View Settings*.
+. Select your Salesforce organization from the list, and click *Test Connection*.
+. When the connection is successful, click *Apply*.
 
 == See Also
 
 * https://help.salesforce.com/s/articleView?id=sf.generative_ai_enable.htm&type=5[]
+* xref:troubleshoot-generative-ai.adoc[]
