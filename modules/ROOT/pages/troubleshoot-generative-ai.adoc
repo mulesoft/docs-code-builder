@@ -6,6 +6,23 @@ Errors sometimes occur when you use the Einstein Generative Flow feature.
 
 If the generative flow is not returning accurate and useful results for the prompts you enter, rewrite your prompt and follow the guidelines xref:int-create-integrations-ai.adoc#craft-ai-prompt[for crafting an effective prompt].
 
+== Access Errors
+
+If you can't access Einstein, contact your Anypoint Platform organization administrator. If you are the organization administrator, these are the things to check:
+
+* Did you accept the Terms and Conditions and xref:int-ai-enable-einstein.adoc[enable Einstein for Anypoint Code Builder] for your organization? 
+* Does the Salesforce organization you are connected to for Einstein requests xref:https://help.salesforce.com/s/articleView?id=sf.generative_ai_enable.htm&type=5[have Einstein turned on]? 
+* Does the Salesforce organization you are connected to for Einstein requests have an xref:xref:access-management::trusted-salesforce-org.adoc[established tenant relationship] with your Anypoint Platform organization, and is the connection enabled?  
+* Is the Salesforce organization you are connected to for Einstein request a valid organization? For example, verify that it's not expired or otherwise disabled. 
+
+== Authorization Errors
+
+If you receive an authorization error, contact your Anypoint Platform organization administrator. If you are the organization administrator, these are the things to check:
+
+* Does the user have the {PERMISSION} assigned in Anypoint Platform access management? 
+* Did you accept the Einstein for Anypoint Code Builder Terms and Conditions?
+* Is your Anypoint Platform organization current and active? 
+
 == Fixing Errors for Unknown Connectors
 
 To fix errors for unknown connector operations, or operations from connectors that are not bundled with your project, use *Quick Fix* to search for that operation in Exchange. 
@@ -18,6 +35,9 @@ If you are signed in to your Anypoint Platform account on the EU Cloud and Einst
 * xref:int-create-integrations-ai.adoc#before-you-begin[You have the required permissions].
 * You completed the xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud] procedure.
 
-== Limitations
+== The Einstein Generative Flow Isn't Working
 
 The Einstein Generative Flow feature works only when you have one project at a time open. It doesn't work if you have multiple projects open concurrently. 
+
+== See Also
+
