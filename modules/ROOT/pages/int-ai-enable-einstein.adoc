@@ -1,30 +1,30 @@
 = Enable Einstein for Anypoint Code Builder
 
-Anypoint Platform Organization Administrators establish a connection with a trusted Salesforce organization in Anypoint Platform access management, and then enable the Einstein for Anypoint Code Builder feature for their Anypoint Platform organization. 
+Anypoint Platform organization administrators must establish a connection with a trusted Salesforce organization in Anypoint Platform access management, and then enable the Einstein for Anypoint Code Builder feature for their Anypoint Platform organization. 
 
 == Before you Begin
 
 Before enabling Einstein for Anypoint Code Builder, you must:
 
-* Be familiar with the concept of Salesforce And Anypoint Platform organizations.  
+* Be familiar with the concept of Salesforce and Anypoint Platform organizations.  
 * xref:access-management::trusted-salesforce-org.adoc[Establish a connection between your Anypoint Platform organization and a trusted Salesforce organization] that has Einstein enabled. 
 +
 When you enable Einstein for Anypoint Code Builder, you select the Salesforce organization to route the Einstein requests through.  
 
-The list of available Salesforce orgs is populated with Salesforce orgs that are connected to your Anypoint Platform organization.
+The list of available Salesforce organizations is populated with Salesforce organizations that are connected to your Anypoint Platform organization.
 
 If you don't have a connection established with a Salesforce organization, there is a Salesforce trial organization you can select when you enable Einstein for Anypoint Code Builder, however, it's best to select your own private Salesforce organization to avoid service disruption. If you don't have a Salesforce organization with Einstein enabled, contact your AE (???).
 
-Using your own private Salesforce organization has these advantages:
+Using your private Salesforce organization has these advantages:
 
-* You can store your Einstein generative AI audit and feedback data in Data Cloud. You can use that data for compliance, analytics, prompt adjustments, and LLM tuning to enhance your generative AI applications.
+* You can store your Einstein generative AI audit and feedback data in Salesforce Data Cloud. You can use that data for compliance, analytics, prompt adjustments, and LLM tuning to enhance your generative AI applications.
 * You aren't subject to the rate-limiting policies of the trial organization, which can sometimes result in the service being too busy to process Einstein requests.
 
 == Enabling Einstein for Anypoint Code Builder
 
 Enable Einstein for Anypoint Code Builder for your Anypoint organization and users:
 
-. Sign in to Anypoint Platform through Anypoint Code Builder with your organization administrator account. 
+. xref:start-acb.adoc#login-ide[Sign in to Anypoint Platform through Anypoint Code Builder] with your organization administrator account.  
 . On the Anypoint Code Builder landing page, click *Get started*.
 . Read the terms and conditions and then click *Accept*.
 . Select the *Enable Einstein for Anypoint Code Builder* checkbox.
@@ -32,7 +32,7 @@ Enable Einstein for Anypoint Code Builder for your Anypoint organization and use
 +
 NOTE: The Salesforce organization you select must have Einstein enabled for your Anypoint Platform organization. 
 +
-If your Salesforce organization doesn't appear in the list of available organizations, verify that you established a tenant relationship between your Anypoint Platform and Salesforce organizations. See xref:access-management::trusted-salesforce-org.adoc[] for more information.
+If your Salesforce organization doesn't appear in the list of available organizations, verify that you established a connection between your Anypoint Platform and Salesforce organizations. See xref:access-management::trusted-salesforce-org.adoc[] for more information.
 . Click *Test Connection*.
 +
 If the connection is unsuccessful, it might mean that the Salesforce organization you are trying to connect to doesn't have Einstein enabled. Contact your Salesforce organization administrator or select a different organization.
@@ -62,6 +62,8 @@ Einstein for Anypoint Code Builder is now disabled for your Anypoint Platform or
 //QUESTION FOR REVIEWERS: If you disable Einstein and then later reenable it, is it reenabled for everyone again, or if you removed permissions from certain users, is that state saved? Do you have to go back and remove permissions from particular users again? 
 
 == See Also
-
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_enable.htm&type=5[]
+* xref:start-acb.adoc#login-ide[]
+* https://help.salesforce.com/s/articleView?id=sf.generative_ai_enable.htm&type=5[Set Up Einstein Generative AI]
+* https://help.salesforce.com/s/articleView?id=sf.generative_ai_usage.htm&type=5[Einstein Usage]
+* xref:access-management::trusted-salesforce-org.adoc[]
 * xref:troubleshoot-generative-ai.adoc[]
