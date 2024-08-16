@@ -2,7 +2,7 @@
 
 include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Use natural language prompts in Einstein for Anypoint Code Builder Generative Flows to jumpstart your integration development by generating flows for you. The engine for these generative flows are the pre-trained large language models (LLM) that exist within the Salesforce Shared Trust Boundary. These LLMs are at the core of the Generative Flows capabilities in Anypoint Code Builder. 
+To jumpstart your integration development, use natural language prompts in Einstein for Anypoint Code Builder Generative Flows to generate flows for you. The engine for these generative flows is the pre-trained large language models (LLM) that exist within the Salesforce Shared Trust Boundary. These LLMs are at the core of the Generative Flows capabilities in Anypoint Code Builder. 
 
 == Trust Layer
 
@@ -16,7 +16,7 @@ image::acb-einstein-trust-layer.png["Flow depicting how the trust layer works, i
 . To ensure the data is sent safely to the external LLM, the prompt is sent to Open AI via the secure gateway. 
 . To keep your data secure, all data remains in Salesforce.  
 . After the LLM generates a response, the content is sent back through the secure gateway.
-. MuleSoft validates the generated output to make sure that the flow works within the MuleSoft ecosystem. 
+. MuleSoft validates the generated output to ensure the generated flow works within the MuleSoft ecosystem. 
 . Anypoint Code Builder logs the prompt and generated responses for monitoring before surfacing the validated response in Anypoint Code Builder.
 
 [IMPORTANT]
@@ -24,5 +24,7 @@ This feature uses generative AI, which is known to include inaccurate or harmful
 
 == See Also
 
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_layer.htm&type=5[Einstein Trust Layer^]
+* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_overview.htm&type=5[]
+* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_layer.htm&type=5[]
+* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_arch.htm&type=5[]
 * xref:int-ai-create-integrations.adoc[]

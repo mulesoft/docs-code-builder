@@ -1,23 +1,39 @@
-= Troubleshoot Generative Flow
+= Troubleshoot Einstein for Anypoint Code Builder
 
-Errors sometimes occur when you use the Einstein Generative Flow feature.
+The following errors sometimes occur when you use the Einstein for Anypoint Code Builder.
 
-== Unexpected Query Results
+== Unexpected Query Results When Using the Einstein Generative Flow Feature
 
-If the generative flow is not returning accurate and useful results for the prompts you enter, rewrite your prompt and follow the guidelines xref:int-create-integrations-ai.adoc#craft-ai-prompt[for crafting an effective prompt].
+If the generative flow is not returning accurate and useful results for the prompts you enter, rewrite your prompt and follow the guidelines to xref:int-create-integrations-ai.adoc#craft-ai-prompt[craft an effective prompt].
 
-== Fixing Errors for Unknown Connectors
+== Troubleshoot Einstein Access Errors
 
-To fix errors for unknown connector operations, or operations from connectors that are not bundled with your project, use *Quick Fix* to search for that operation in Exchange. 
+If you can't access Einstein, contact your Anypoint Platform organization administrator. If you are the organization administrator, check the following:
 
-== Einstein Does Not Appear for EU Cloud Users on the Desktop IDE
+* You accepted the terms and conditions and xref:int-ai-enable-einstein.adoc[enabled Einstein for Anypoint Code Builder] for your organization. 
+* The Salesforce organization you are connected to for Einstein requests xref:https://help.salesforce.com/s/articleView?id=sf.generative_ai_enable.htm&type=5[has Einstein enabled]. 
+* The Salesforce organization you are connected to for Einstein requests has an xref:xref:access-management::trusted-salesforce-org.adoc[established tenant relationship] with your Anypoint Platform organization, and the connection is enabled.  
+* The Salesforce organization you are connected to for Einstein requests is valid. For example, verify that it's not expired or otherwise disabled. 
+
+== Troubleshoot Anypoint Platform Authorization Errors
+
+If you receive an authorization error, contact your Anypoint Platform organization administrator. If you are the organization administrator, check the following:
+
+* The user has the *Mule Developer Generative AI User* permission assigned in Anypoint Platform access management.
+* You accepted the terms and conditions and xref:int-ai-enable-einstein.adoc[enabled Einstein for Anypoint Code Builder] for your organization.
+* Your Anypoint Platform organization is current and active. 
+
+== Einstein Doesn't Appear for EU Cloud Users on the Desktop IDE
 
 If you are signed in to your Anypoint Platform account on the EU Cloud and Einstein doesn't appear in the UI, verify the following:
 
+* You completed the xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud] procedure.
 * You are signed in to Anypoint Platform through the Anypoint Code Builder app.
 * xref:int-create-integrations-ai.adoc#before-you-begin[You have the required permissions].
-* You completed the xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud] procedure.
 
-== Limitations
+== Einstein Generative Flow Isn't Working
 
 The Einstein Generative Flow feature works only when you have one project at a time open. It doesn't work if you have multiple projects open concurrently. 
+
+== See Also
+
