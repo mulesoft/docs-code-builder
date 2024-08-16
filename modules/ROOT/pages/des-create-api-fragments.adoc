@@ -44,9 +44,7 @@ Before adding fragments:
 See the xref:tutorials.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 +
-API spec fragments belong to a business group.
-// * xref:des-create-api-specs.adoc[Create and test your API specification].
-
+When you publish your API fragment to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. See xref:access-management::business-groups.adoc[].
 
 == Create an API Fragment and Publish it to Exchange
 
@@ -75,7 +73,7 @@ Ensure that you select the *API Fragment* tab.
 | *Project Name* | Unique name for your fragment.
 
 This name is used as the fragment title in Exchange and name of the fragment file.
-For example, if the project name is "Example OAS Fragment", the specification file name is `example-oas-fragment`.
+For example, if the project name is _Example OAS Fragment_, the specification file name is `example-oas-fragment`.
 
 include::partial$acb-reusable-steps.adoc[tags="no-project-name-reuse"]
 | *Project Location* | Your home directory or another directory you create.
@@ -88,10 +86,6 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 Select *OAS 3.0 (YAML)* to use the <<example-oas-api-frag,example>> in this procedure.| *<Language> Syntax* | The syntax for the selected language.
 
 Select *YAML* to use the <<example-oas-api-frag,example>> in this procedure.
-| *Business Group* | Business Group in Anypoint Platform for your API fragment.
-See xref:access-management::business-groups.adoc[].
-
-You cannot change the selected business group after creating the API fragment.
 |===
 . Click *Create Project*.
 +
@@ -106,8 +100,6 @@ image:des-api-fragment-new.png["API Fragment tab on the Design an API page"]
 As you enter elements, use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within the context.
 +
 If you created an OAS 3.0 (YAML) fragment project, you can replace the initial API fragment with the <<example-oas-api-frag,example>> code to test adding fragments to a spec.
-
-. xref:des-sync-with-design-center.adoc[Sync your fragment with Design Center].
 . xref:des-publish-api-spec-to-exchange.adoc[Publish your fragment to Exchange].
 +
 The status bar shows the progress.
@@ -371,7 +363,6 @@ paths:
 
 == See Also
 
-* xref:des-sync-with-design-center.adoc[]
 * xref:des-publish-api-spec-to-exchange.adoc[]
 * xref:tut-af-design-api-add-request-response-details.adoc[] Tutorial
 * xref:des-delete-api-projects.adoc[]

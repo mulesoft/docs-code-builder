@@ -3,14 +3,14 @@
 * xref:acb-release-notes.adoc[Release Notes]
 
 * xref:start-acb.adoc[Getting Started]
+** xref:start-acb-desktop.adoc[]
+** xref:start-acb-cloud.adoc[]
 ** xref:start-configure-permissions.adoc[]
 ** xref:start-discover-ui.adoc[]
-//TODO: CONSIDER moving command-palette to troubleshooting 
-** xref:use-the-command-palette.adoc[]
+** xref:start-use-command-palette.adoc[]
 ** xref:start-add-folders.adoc[]
-//TODO: better to tweak for troubleshooting? (It's about Mule DX Server; not setting a default output panel)
-** xref:configure-default-output-panel.adoc[]
-
+** xref:start-open-output-panel.adoc[]
+** xref:start-scm.adoc[]
 
 // TUTORIALS
 * xref:tutorials.adoc[]
@@ -19,7 +19,6 @@
 *** xref:tut-af-design-am-flights-api.adoc[]
 **** xref:tut-af-design-api-add-request-response-details.adoc[]
 **** xref:tut-af-design-api-test-specification.adoc[]
-**** xref:tut-af-design-api-synchronize-with-design-center.adoc[]
 **** xref:tut-af-design-api-publish-api-spec-to-exchange.adoc[]
 
 *** xref:tut-af-integrate-am-flights.adoc[]
@@ -36,11 +35,6 @@
 *** xref:tut-graphql-test-first-implementation.adoc[]
 *** xref:tut-graphql-configure-flow-responses.adoc[]
 
-** xref:tut-contacts-create-synchronization-sfdc-api.adoc[]
-*** xref:tut-contacts-create-config-files.adoc[]
-*** xref:tut-contacts-sync-api-configure-queries.adoc[]
-*** xref:tut-contacts-store-data-in-parallel.adoc[]
-
 ** xref:tut-slack-create-escalation-api.adoc[]
 *** xref:tut-slack-create-config-files-sfdc.adoc[]
 *** xref:tut-slack-extract-payload-information.adoc[]
@@ -52,24 +46,31 @@
 * xref:des-designing-api-specs.adoc[]
 ** xref:des-create-api-specs.adoc[]
 ** xref:des-create-api-fragments.adoc[]
-** xref:des-sync-with-design-center.adoc[]
 ** xref:des-publish-api-spec-to-exchange.adoc[]
+** xref:des-govern-api.adoc[]
 ** xref:des-delete-api-projects.adoc[]
 
 // INTEGRATE
 * xref:int-developing-integrations.adoc[]
 ** xref:int-create-integrations.adoc[]
-** xref:int-work-with-code-snippets.adoc[]
+** xref:int-configure-components.adoc[]
+*** xref:int-work-with-code-snippets.adoc[]
+*** xref:int-configure-components-add.adoc[]
+*** xref:int-configure-dw-expressions.adoc[]
+*** xref:int-configure-components-check-connection.adoc[]
+*** xref:int-configure-components-import-connector-exchange.adoc[]
+*** xref:int-configure-components-open-from-xml.adoc[]
 ** xref:int-create-secure-configs.adoc[]
 ** xref:int-trigger-flows.adoc[]
-** xref:int-use-dw-to-transform-data.adoc[]
-*** xref:int-address-dw-errors.adoc[]
-*** xref:int-import-dw-libraries.adoc[]
-*** xref:int-mock-data-using-dw-libraries.adoc[]
+//** xref:int-use-dw-to-transform-data.adoc[]
+//*** xref:int-address-dw-errors.adoc[]
+//*** xref:int-import-dw-libraries.adoc[]
 ** xref:int-debug-mule-apps.adoc[]
+** xref:int-test-munit.adoc[]
 ** xref:int-export-mule-project.adoc[]
 ** xref:int-import-mule-project.adoc[]
 ** xref:int-deploy-mule-apps.adoc[]
+** xref:int-versions.adoc[]
 
 // USE AI TO BUILD AN INTEGRATION
 * xref:int-ai-developing-integrations.adoc[]
@@ -80,15 +81,27 @@
 
 // IMPLEMENT
 * xref:imp-implementing-apis.adoc[]
-** xref:imp-implement-apis.adoc[]
+** xref:imp-implement-api-specs.adoc[]
+** xref:imp-asyncapi.adoc[]
 ** xref:imp-implement-local-apis.adoc[]
 ** xref:imp-filter-search-results.adoc[]
 
+
 * xref:troubleshooting.adoc[]
+** xref:troubleshoot-missing-features.adoc[]
 ** xref:troubleshoot-loading-errors.adoc[]
+** xref:troubleshoot-dataweave.adoc[]
 ** xref:troubleshoot-mule-runtime-errors.adoc[]
 ** xref:troubleshoot-authentication-errors.adoc[]
 ** xref:troubleshoot-implementation-errors.adoc[]
 ** xref:troubleshoot-deploy-errors.adoc[]
 
-* xref:acb-components.adoc[Reference]
+
+* xref:acb-reference.adoc[Reference]
+** xref:ref-connectors.adoc[Connectors]
+** xref:ref-components.adoc[]
+** xref:ref-acb-commands.adoc[MuleSoft Commands]
+** xref:ref-mule-settings.adoc[MuleSoft Settings]
+** xref:ref-acb-maven.adoc[Maven Settings Files]
+
+

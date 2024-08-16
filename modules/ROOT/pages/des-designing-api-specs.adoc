@@ -4,14 +4,15 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-Use Anypoint Code Builder to create, design, test, sync with Design Center, and publish new RAML or OAS API specifications to Exchange.
+Use Anypoint Code Builder to create, design, test, and publish new API specifications to Exchange.
 
 The process for designing API specifications is:
 
-. xref:des-create-api-specs.adoc[Create and test your API specification].
+. xref:des-create-api-specs.adoc[Create or import and test your API specification]
 . xref:des-create-api-fragments.adoc[Optionally, create and add fragments to your specification].
-. xref:des-sync-with-design-center.adoc[Synchronize your API specification with Design Center].
 . xref:des-publish-api-spec-to-exchange.adoc[Publish your API specifications to Exchange].
+
+For source management options, see xref:start-scm.adoc#anypoint-scm[SCM for API Design Projects].
 
 [[supported-spec-languages]]
 == Supported OAS and RAML Versions for API Specs
@@ -27,6 +28,8 @@ Supported OAS and RAML versions are:
 
 [[supported-fragment-languages]]
 == Supported Specification Languages for API Fragments
+
+Create, include, or reference API fragments within your API specification. 
 
 Supported API specification languages and syntaxes for API fragments are:
 
@@ -46,3 +49,51 @@ See the RAML 1.0 specification for descriptions of these types:
 ** Example
 --
 * JSON Schema
+
+[[resource-reqs]]
+== Minimum Resource Requirements for the Desktop IDE
+
+When parsing an API specification, the desktop IDE depends on your computer's resources. To avoid issues, ensure that your computer has the following minimum resources available:
+
+include::anypoint-code-builder::partial$acb-api-design.adoc[tag="apid-resource-reqs"]
+
+[[best-practices]]
+== Best Practices
+
+To avoid common issues, follow these guidelines:
+
+include::anypoint-code-builder::partial$acb-api-design.adoc[tag="apid-best-practices"]
++
+This best practice applies to the cloud IDE only. 
+
+* Before designing an OAS or RAML API specification, review <<apid-best-practices-oas>> or <<apid-best-practices-raml>>
+
+[[apid-best-practices-oas]]
+=== OAS Specification Best Practices
+
+include::anypoint-code-builder::partial$acb-api-design.adoc[tag="apid-best-practices-oas"]
+
+
+[[apid-best-practices-raml]]
+=== RAML Specification Best Practices
+
+include::anypoint-code-builder::partial$acb-api-design.adoc[tag="apid-best-practices-raml"]
+
+
+[[anypoint-scm]]
+== Source Control for API Design Projects
+
+// Shared intro to SCM
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="scm-intro-best-practice"]
+Source control options for API design projects depend on how and when you created the project: 
+
+* As of the February 2024 release, design projects that you create from scratch in Anypoint Code Builder with *Design an API* (see xref:anypoint-code-builder::des-create-api-specs.adoc#design-new-api-spec[Create a New API Specification Project]) or with the command `MuleSoft: Design an API` no longer spawn a corresponding design project in Design Center or use the Anypoint SCM to store and sync changes.  
+
+* {empty} 
++
+include::partial$acb-api-design.adoc[tags="api-dc-scm-scope"] 
++
+If you prefer to use your own remote repository, GitHub is one option. To store your API project in a repository on GitHub, without synchronizing with the project in Design Center, see xref:anypoint-code-builder::start-scm.adoc#add-extra-repo[publish your project files to another repository].
+
+// Shared link to SCM procedures
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="scm-doc-link"]

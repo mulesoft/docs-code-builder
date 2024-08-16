@@ -35,7 +35,7 @@ When you build the application, Mule replaces all Flow Reference components that
 //Use the xref:acb-component-try.adoc[Try] scope within a subflow to perform error handling.
 You can create multiple subflows in your Mule application. 
 
-For a more in-depth discussion of uses, capabilities, and limits of flows and subflows, see xref:mule-runtime::about-flows.adoc[Flows and Subflows].
+For a more in-depth discussion of uses, capabilities, and limits of flows and subflows, see xref:4.4@mule-runtime::about-flows.adoc[Flows and Subflows].
 
 //TODO: Uncomment when Async doc is ready in ACB
 //Flows always function synchronously. To achieve asynchronous patterns, such as Fire-and-Forget, use the xref:acb-component-async.adoc[Async Scope].
@@ -73,20 +73,20 @@ This component supports the following XML structure:
 
 //end::component-xml[]
 //
-//tag::component-snippet-xml[]
+//tag::component-snippet-json[]
 
 [[snippet]]
 
-=== Snippet XML
+=== Snippet JSON
 
-Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+Snippet JSON in Anypoint Code Builder serves as a customizable template for the component. 
 
 [source,xml]
 ----
-SNIPPET_XML_HERE
+SNIPPET_JSON_HERE
 ----
 
-//end::component-snippet-xml[]
+//end::component-snippet-json[]
 //
 //
 //
@@ -94,50 +94,22 @@ SNIPPET_XML_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1a,3a"]
+Subflow (`<sub-flow/>`) attributes are configurable through the UI and XML.
+
+[%header,cols="1,1,3a"]
 |===
-| `<sub-flow/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| *name1* (default)
 | `name` 
-| Editable name for the flow.
+| Editable name for the subflow.
 
 |===
 //end::component-xml-attributes-root[]
 //
 //
-//TABLE (IF NEEDED): CHILD XML ATTRIBUTES for each child element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//tag::component-xml-child1[]
-
-[%header, cols="1,3"]
-|===
-| <CHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-child1[]
-//
-//
-//TABLE (IF NEEDED): GRANDCHILD XML ATTRIBUTES for each grandchild element
-//  Repeat as needed, adding the next number to the tag value. 
-//  Provide intro text, as needed.
-//TAG
-//tag::component-xml-descendant1[]
-[%header, cols="1,3"]
-|===
-| <GRANDCHILD_ELEMENT/> Attributes | Description
-
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-| `attribute_here` | DESCRIPTION_HERE_WITH_DEFAULT_IF_AVAILABLE Defaults to `DEFAULT_HERE`.
-
-|===
-//end::component-xml-descendant1[]
-//
-
 
 //SECTION: EXAMPLES
 //

@@ -1,12 +1,16 @@
-= Creating API Specifications
+= Creating and Importing API Specifications
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: des-test-api-specs.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Use Anypoint Code Builder to create and test API specifications before publishing to Exchange or implementing:
+Use Anypoint Code Builder to create, import, and test API specs before publishing to Anypoint Exchange:
 
-. <<design-new-api-spec, Create a new API specification project>>.
+. Create a API spec project in Anypoint Code Builder from the IDE or by importing the spec from Design Center:
+
+* <<design-new-api-spec, Create an API spec project from the IDE>>
+* <<import-spec, Import an API spec from Design Center>>
+
 . <<open-output-panel, Track progress in the output panel>>.
 . <<review-spec-console, Review your spec in the API console>>.
 . <<test-spec, Test your spec using the mocking service>>.
@@ -17,17 +21,17 @@ Use the <<example-oas-api-spec,`oas-example`>> API spec to explore the functiona
 == Before You Begin
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
-* Understand the basics of designing API specifications. 
+* Understand the basics of designing API specs. 
 +
 See the xref:tutorials.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 +
-API specifications belong to a business group.
+When you publish your API spec to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. See xref:access-management::business-groups.adoc[].
 
 [[design-new-api-spec]]
 == Create a New API Specification Project
 
-To create a new API specification project:
+To create an API spec project in Anypoint Code Builder:
 
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
@@ -45,8 +49,8 @@ image::design-api-1.png["*Design an API* link highlighted in the *Quick Actions*
 
 | *Project Name* | Unique name for your project.
 
-This name is used as the API spec title in Exchange and name of the specification file.
-For example, if the project name is "OAS Example", the specification file name is `oas-example`.
+This name is used as the API spec title in Exchange, the name of the spec file, and the name of the project's root directory.
+For example, if the project name is _OAS Example_, the spec file name is `oas-example`.
 
 include::partial$acb-reusable-steps.adoc[tags="no-project-name-reuse"]
 | *Project Location* | Your home directory or another directory you create.
@@ -57,24 +61,44 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 | *API Specification Language* | See xref:des-designing-api-specs.adoc#supported-spec-languages[Supported OAS and RAML Versions].
 
 Select *OAS 3.0 (YAML)* to use the <<example-oas-api-spec,example>> in this procedure.
-| *Business Group* | Business Group in Anypoint Platform for your API specification.
-
-See xref:access-management::business-groups.adoc[].
-
-You cannot change the selected business group after creating the API specification.
 |===
 . Click *Create Project*.
 +
 If prompted, trust the authors of the files in the folder.
 +
-When the project is ready for editing, the API project opens the specification in the Editor view, for example, this OAS 3.0 (YAML) specification:
+When the project is ready for editing, the API project opens the spec in the Editor view, for example, this OAS 3.0 (YAML) spec:
 +
 image::des-oas-create.png[New OAS 3.0 (YAML) API project]
-. Continue designing your API specification. 
+. Continue designing your API spec. 
 +
 As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context. 
 
+[[import-spec]]
+== Import an API Specification from Design Center
 
+Import an API spec from Design Center, and optionally, keep your project in sync with Design Center by using the Anypoint source control management (SCM) system. Alternatively, use Git or another SCM that is compatible with VS Code in the desktop or cloud IDE. For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
+
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide the following command:
++
+[source,command]
+----
+MuleSoft: Import API Specification from Design Center
+----
+. If prompted, log in to Anypoint Platform through the IDE.
+. Complete the import process:
+.. Select your business group from the *Select a Business Group* popup. 
+.. Search for the API spec in the *APIs from Design Center* field.
+.. Navigate to or create a folder for the spec, and click *Select target folder*.
++
+If you receive an error that the import failed (*Importing project _a_project_name_ has failed*), check your target folder for a project with the same name. To address a duplicate naming issue before importing, you can import the design project to a different target folder or delete the project from your IDE (see xref:des-delete-api-projects.adoc[]).
+. Edit or continue designing your spec, as needed.
++
+As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context. 
+. Optionally, sync your changes with Design Center by using the Anypoint SCM.
++
+This feature is available only for API projects that you import from Design Center. You can also store your work in another SCM. For SCM options, see xref:start-scm.adoc[].
 
 [[open-output-panel]]
 == Track Progress in the Output Panel
@@ -91,20 +115,22 @@ image::des-output-panel.png["Mule DX Server in the output pane"]
 [[review-spec-console]]
 == Review Your Spec in the API Console
 
-To display your specification in the console:
+To display your spec in the console:
 
-. Click your specification file in the editor.
+. Click your spec file in the editor.
 . Click the image:icon-api-console.png["",14,14] (*API Console*) icon.
++
+Alternatively, you can provide the command `MuleSoft: API Console` from the xref:start-use-command-palette.adoc[Command Palette]. 
 . Wait for the endpoints to render in the API Console.
 +
-The API Console show the endpoints for the specification in API Console, for example:
+The API Console show the endpoints for the spec in API Console, for example:
 +
-image::des-api-console.png["API specification in the API Console"]
+image::des-api-console.png["API spec in the API Console"]
 +
 [calloutlist]
 .. Click a method to view details.
 .. Display the console menu.
-. Click methods in the console or select items from the menu to view different parts of your specification.
+. Click methods in the console or select items from the menu to view different parts of your spec.
 For example, click *GET*:
 +
 image::des-api-console-detail.png["API Console with Get details"]
@@ -113,10 +139,10 @@ image::des-api-console-detail.png["API Console with Get details"]
 == Test Your API Spec Using the Mocking Service
 
 Use the Mocking Service in the API Console to check the request and responses
-that you configured in your API specification.
+that you configured in your API spec.
 
-. In Anypoint Code Builder, open the specification for your API project, such as <<example-oas-api-spec,`oas-example`>>.
-. Click the image:icon-api-console.png["",14,14] (*API Console*) icon to display your specification in the console.
+. In Anypoint Code Builder, open the spec for your API project, such as <<example-oas-api-spec,`oas-example`>>.
+. Click the image:icon-api-console.png["",14,14] (*API Console*) icon to display your spec in the console.
 . In the API Console, click a method, such as GET or POST.
 . Click *Try It*:
 +
@@ -131,7 +157,7 @@ image::des-api-console-response.png["Example response in the API console"]
 [[example-oas-api-spec]]
 == Example OAS 3.0 (YAML) API Specification 
 
-If you created an OAS 3.0 (YAML) project, you can replace the initial specification with following example code:
+If you created an OAS 3.0 (YAML) project, you can replace the initial spec with following example code:
 
 .Example OAS 3.0 (YAML) API Specification
 [%collapsible]

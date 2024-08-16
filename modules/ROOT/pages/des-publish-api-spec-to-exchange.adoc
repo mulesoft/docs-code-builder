@@ -8,15 +8,17 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Publish your API spec or fragment to Anypoint Exchange so that other team members can find and use it.
 
+[[prereqs]]
 == Before You Begin
 
 Before publishing an API spec or fragment:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create your API specification] or xref:des-create-api-fragments.adoc[fragment].
-* xref:des-sync-with-design-center.adoc[Synchronize your API specification with Design Center].
+// Prereq bullet on familiarity with biz groups
+include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
 
-
+[[publish-spec]]
 == Publish an API spec to Exchange
 
 To publish your API spec to Exchange:
@@ -32,10 +34,10 @@ MuleSoft: Publish API Specification to Exchange
 ----
 +
 image::des-publish-to-exchange.png["MuleSoft: Publish API Specification to Exchange highlighted in Command Palette"]
+. If prompted, click *Allow*, and follow the prompts to sign in to Anypoint Platform.
+. In *Select a Business Group*, find and select your business group for the project. 
 +
-. If prompted, click *Allow* to allow sign in using Anypoint Platform.
-+
-If you have uncommitted changes, push them before publishing to Exchange.
+For more information, see <<prereqs>>.
 . In *Set Project Name*, confirm or type the project name and press Enter.
 . Confirm or change each item and press Enter:
 +
@@ -52,14 +54,15 @@ When complete, you see a message that the API specification successfully publish
 +
 image::des-publish-to-exchange-dialog.png["Publishing API specification to Exchange notification highlighted"]
 
-. When prompted to implement the API, select:
+. When prompted to implement the API, select one of the following:
 +
 ** *No* to avoid scaffolding the API specification into your integration.
-** *Yes* to scaffold the API specification into your integration.
+** *Yes* to scaffold the API specification into a new project.     
 +
-If the scaffold fails, see xref:troubleshoot-implementation-errors.adoc[].
+// Start an implementation project:
+include::partial$acb-reusable-steps.adoc[tags="scaffold-spec-substeps"]
 
-
+[[locate-api]]
 == Locate Your API in Exchange
 
 After publishing your API specification, you can find it in Anypoint Exchange:

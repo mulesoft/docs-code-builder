@@ -14,10 +14,12 @@ Iterative API design and implementation within the IDE takes place in a _multi-r
 
 NOTE: The procedures are currently written for the desktop IDE only.
 
+[[prereqs]]
 == Before You Begin
 
-Set up your MuleSoft environment. 
-See xref:start-acb.adoc[] for more information.
+* Set up your MuleSoft environment. See xref:start-acb.adoc[] for more information.
+// Prereq bullet on familiarity with biz groups
+include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
 
 [[create]]
 == Create an API Specification
@@ -50,9 +52,6 @@ In the *File* menu that opens in the desktop IDE, create a folder such as `works
 +
 When you are done, the full path in the *Project Location* field is similar to `/Users/me/workspace-retrieve-users`. Starting from the directory with your new folder prevents potential issues related to multi-root workspaces.
 .. In *API Specification Language*, select *RAML 1.0*.
-.. In *Business Group*, select the business group for your API specification. You can't change business groups after you create your API specification.
-+
-See xref:access-management::business-groups.adoc[Business Groups] for more information. 
 --
 When complete, *Design an API* is similar to this example:
 +
@@ -70,7 +69,7 @@ This process creates a project that contains your API specification within your 
 .. Press Cmd+Shift+u (Mac) or Ctrl+Shift+u (Windows) to open the Output panel.
 .. Select *Mule DX Server* from the drop-down menu in the panel.
 +
-For more guidance, see xref:configure-default-output-panel.adoc[].
+For more guidance, see xref:start-open-output-panel.adoc[].
 ====
 --
 . In the editor for your API specification, add this example to `retrieve-users-api.raml`:
@@ -339,35 +338,12 @@ company: {
     </ee:transform>
 </flow>
 --
-. Proceed to <<save-spec>>.
-
-[[save-spec]]
-== Save your API Specification in Design Center
-
-After implementing your API specification, save the specification to Design Center:
-
-// Pointer to Source Control Panel
-include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
-//TODO: bug? doesn't seem to work despite UI: 
-//* In either IDE, press ^+Shift+g (Mac) or ^+Shift+g (Windows).
-. Locate the API specification project for `retrieve-users-api.raml`.
-. In the *Source Control* view, stage your changes by mousing over the *Changes* heading to display the *+* (plus) icon and then clicking the icon:
-+
-image::tut-api-stage-changes.png["Stage API changes"]
-. Type a commit message that summarizes the changes, for example, `Retrieve Users Projects`.
-+
-This step avoids the need to specify a commit message through a separate file that pops up in the IDE.
-. Click *Commit* for the staged changes, and wait for the commit process to complete. 
-//TODO: check is Push is still there
-. If prompted, click *Sync Changes* or *Push*. 
-+
-Your changes are now stored in the Design Center SCM.
 . Proceed to <<publish>>.
 
 [[publish]]
 == Publish the API Specification to Exchange
 
-After committing your changes to Design Center, publish the API specification to Anypoint Exchange to make the specification discoverable by your team members.
+Publish the API specification to Anypoint Exchange to make the specification discoverable by your team members.
 
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
@@ -377,6 +353,10 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 ----
 MuleSoft: Publish API Specification to Exchange
 ----
+. If prompted, click *Allow*, and follow the prompts to sign in to Anypoint Platform.
+. In *Select a Business Group*, find and select your business group for the project. 
++
+For more information, see <<prereqs>>.
 . Type a project name: *Retrieve Users API*.
 +
 image::tut-api-publish.png["Publish Retrieve Users API"]
@@ -469,13 +449,13 @@ To monitor the status of this process, open the *Output* panel with Cmd+Shift+u 
 . Proceed to <<scaffold>> to start the implementation process.
 ////
 
-== Close a Multi-root Workspace
+== Close a Multi-Root Workspace
 
 Close a multi-root workspace with the command `Workspaces: Close Workspace`. 
 
 After closing, you can reopen a synchronized project from the workspace that you create when implementing the API.
 
-== Open a Multi-root Workspace
+== Open a Multi-Root Workspace
 
 Open a multi-root workspace from the `.code-workspace` file, such as `Retrieve Users API.code-workspace`, for the projects in the workspace. 
 

@@ -31,7 +31,7 @@ IMPORTANT: Never open or unpack a project folder within another project folder.
 [[import-desktop]]
 == Import and Open a Project in the Desktop IDE
 
-Use the desktop IDE to upload a project directory or sharable JAR file into a project workspace. 
+Use the desktop IDE to upload a project directory or shareable JAR file into a project workspace. 
 
 * <<desktop-project-package>>
 * <<desktop-project-folder>>
@@ -39,20 +39,20 @@ Use the desktop IDE to upload a project directory or sharable JAR file into a pr
 
 
 [[desktop-project-package]]
-=== Import a Sharable Project JAR File into the Desktop IDE
+=== Import a Shareable Project JAR File into the Desktop IDE
 
-Import a sharable JAR file for a snapshot of a Mule project into the desktop IDE.
+Import a shareable JAR file for a snapshot of a Mule project into the desktop IDE.
 
-To create a shareable JAR file, see xref:int-export-mule-project.adoc#sharable[Export to a Shareable JAR File].
+To create a shareable JAR file, see xref:int-export-mule-project.adoc#shareable[Export to a Shareable JAR File].
 The contents are lightweight because they don't include dependencies.
 The IDE generates the dependencies configured in the `pom.xml` for the project. 
 
-To import a sharable JAR file in your desktop IDE:
+To import a shareable JAR file in your desktop IDE:
 
 . Ensure that no project is open in the IDE.
 // include for this procedure
 include::partial$acb-open-packaged-sources.adoc[tags="open-command-palette-desktop"]
-include::partial$acb-open-packaged-sources.adoc[tags="load-sharable-jar"]
+include::partial$acb-open-packaged-sources.adoc[tags="load-shareable-jar"]
 . If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
 +
 include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
@@ -63,7 +63,7 @@ include::partial$acb-open-packaged-sources.adoc[tags="test-project"]
 [[desktop-project-folder]]
 === Import a Project Folder into the Desktop IDE
 
-Although it is more common to import a sharable JAR file or to open a project workspace from file directory, you can also drag a Mule project folder into the Explorer view and open the project in a VS Code workspace.
+Although it is more common to import a shareable JAR file or to open a project workspace from file directory, you can also drag a Mule project folder into the Explorer view and open the project in a VS Code workspace.
 
 Open any valid project folder, including a project from Anypoint Studio (Studio) that's stored on your desktop. Alternatively, use the procedure in <<both-open-project-folder>> to open the project from your file directory instead of dragging and dropping the folder into the IDE.
 
@@ -74,6 +74,8 @@ include::partial$acb-open-packaged-sources.adoc[tags="import-project-folder-desk
 . If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
 +
 include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
+//step: if prompted, set version
+include::partial$acb-reusable-steps.adoc[tags="set-version-prompted"]
 //step: test project
 include::partial$acb-open-packaged-sources.adoc[tags="test-project"]
 
@@ -90,7 +92,7 @@ The cloud IDE enables you to upload a project directory or JAR file into a works
 
 //WEB: PACKAGED PROJECT TO WORKSPACE
 [[web-project-package]]
-=== Import a Sharable Project JAR File into the Cloud IDE
+=== Import a Shareable Project JAR File into the Cloud IDE
 
 Import a JAR file for a Mule project and load the unpacked project into a workspace in the IDE.
 
@@ -111,7 +113,7 @@ IMPORTANT: Do not click *Open Anyway* in response to this warning in the IDE: `T
 +
 If the imported folder is large, Anypoint Code Builder displays an upload progress bar that you can click to expand.
 //last steps:
-// include::partial$acb-open-packaged-sources.adoc[tags="load-sharable-jar"]
+// include::partial$acb-open-packaged-sources.adoc[tags="load-shareable-jar"]
 // Different in cloud.
 . Open the Command Palette.
 +
@@ -130,12 +132,14 @@ If the imported folder is large, Anypoint Code Builder displays an upload progre
 MuleSoft: Import a Mule Project
 ----
 . Navigate to and select the shareable JAR file to import.
-. Navigate to a folder to which to unpack the JAR file, such as your home directory or any folder _outside_ of a Mule project folder, and click *OK*.
+. Navigate to a destination folder for your unpacked project, such as your home directory or any folder _outside_ of a Mule project folder, and click *OK*.
 +
 The IDE unpacks the shareable JAR file for your project into the selected folder.
 . If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
 +
 include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
+//step: if prompted, set version
+include::partial$acb-reusable-steps.adoc[tags="set-version-prompted"]
 //step: test project
 include::partial$acb-open-packaged-sources.adoc[tags="test-project"]
 
@@ -160,6 +164,8 @@ If the imported folder is large, Anypoint Code Builder displays an upload progre
 . If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
 +
 include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
+//step: if prompted, set version
+include::partial$acb-reusable-steps.adoc[tags="set-version-prompted"]
 //step: test project
 include::partial$acb-open-packaged-sources.adoc[tags="test-project"]
 
@@ -176,17 +182,3 @@ include::partial$acb-open-packaged-sources.adoc[tags="load-project"]
 //step: test project
 include::partial$acb-open-packaged-sources.adoc[tags="test-project"]
 
-[[use-dw-imported-project]]
-== Use DataWeave with Imported Projects
-
-To use DataWeave in an imported project, you must configure a `mule-service-weave-ee` dependency in your project `pom.xml` file, for example:
-
-[source,XML]
-----
-<dependency>
-  <groupId>com.mulesoft.services</groupId>
-  <artifactId>mule-service-weave-ee</artifactId>
-  <version>2.4.0-20220824</version>
-  <scope>runtime</scope>
-</dependency>
-----

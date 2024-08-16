@@ -21,8 +21,9 @@ Complete these procedures:
 To facilitate debugging, add Set Variable and Logger components to your American Flights implementation:
 
 . Open the implementation file (`implementation.xml`).
-. Below the Database Select operation (`<db:select/>`) named *Query Flights*, add a Set Variable component. 
-. In the configuration XML, provide this `<set-variable/>` configuration:
+. After the Database Select operation (`<db:select/>`) named *Query Flights*, add a Set Variable component: 
++
+In the configuration XML, provide this `<set-variable/>` configuration:
 +
 [source,xml]
 ----
@@ -30,7 +31,7 @@ To facilitate debugging, add Set Variable and Logger components to your American
      doc:name="Set variable Payload" 
      variableName="databasePayload" />
 ----
-. Below the Set Variable component, add a Logger component with this configuration:
+. After the Transform component (`<ee:transform>`), add a Logger component with this configuration:
 +
 [source,xml]
 ----
@@ -86,7 +87,7 @@ To facilitate debugging, add Set Variable and Logger components to your American
     %dw 2.0
     output application/json
     ---
-    payload]" /> //<1>
+    payload]" /> //<2>
 
 </flow>
 --
@@ -147,20 +148,20 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-termin
 > curl http://localhost:8081/api/flights
 ----
 +
-Notice the `_/api/flight_` in the URI for the listener in the interface.  For more information about this step, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
+Notice the `_/api/flight_` in the URI for the listener in the interface. For more information about this step, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
 . In your American Flights project, notice that the execution of the app stops at your first breakpoint:
 +
-image::debug-stop-at-flow-ref.png[]
+image::debug-stop-at-flow-ref.png["Stopping the flow at a breakpoint"]
 +
 The breakpoint is located in you interface file (`interface.xml`).
 . In your debug toolbar, click the *Step Over* button to continue execution to the next breakpoint, at the `<db:select/>` element in `implementation.xml`.
 . In the *Run and Debug* sidebar, notice that the *Variables* panel provides information about the Mule event at the breakpoint:
 +
-image::debugger-stop-db-select.png[]
+image::debugger-stop-db-select.png["Breakpoint in the configuration XML file where execution stops"]
 . Click the *Step Over* button on your debug toolbar to continue execution to your next breakpoint, at the `<set-variable/>` element.
 . In the *Variables* panel, navigate to *Mule Message* > *Payload*, and notice that the database response is an array of flight data:
 +
-image::debugger-stop-set-variable.png[]
+image::debugger-stop-set-variable.png["Array of flight data in the payload"]
 . Proceed to <<watch>>.
 
 [[watch]]
@@ -341,6 +342,6 @@ To stop your debugging session:
 
 . Click the *Stop* button on your debug toolbar:
 +
-image::debugger-stop.png[]
+image::debugger-stop.png["Stopping a debugging session from the debug toolbar"]
 . Proceed to xref:tut-af-deploy-am-flights.adoc[].
 

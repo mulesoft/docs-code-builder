@@ -1,0 +1,110 @@
+The desktop-based IDE extensions in Anypoint Extension Pack are available from the Visual Studio Marketplace.
+
+* <<prereqs>>
+* <<install-pack>>
+* <<update-pack>>
+* <<uninstall-pack>> 
+
+[[prereqs]]
+== Before You Begin Desktop IDE Setup
+
+Before installing the desktop extensions to VS Code, set up git and have an Anypoint Platform account with the required permissions:
+
+* Install https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[git^], and add git to your `PATH`. To work properly, some Anypoint Extension Pack extensions depend on this requirement.  
+
+//Requirements for Anypoint Platform account and account config
+include::partial$acb-reusable-steps.adoc[tags="platform-account"]
+
+For information about OS and system compatibility, see xref:acb-release-notes.adoc#compatibility[Anypoint Code Builder Release Notes].
+
+== Install, Update, or Uninstall Anypoint Extension Pack
+
+Use of Anypoint Code Builder in VS Code on your computer requires the Anypoint Extension Pack. 
+
+* <<install-pack>>
+* <<update-pack>>
+* <<uninstall-pack>>
+
+[[install-pack]]
+=== Install Anypoint Extension Pack
+
+To install the Anypoint Extension Pack into the desktop IDE: 
+
+. Open VS Code. 
+. Find *Anypoint Extension Pack* from the desktop IDE or from https://marketplace.visualstudio.com/items?itemName=salesforce.mule-dx-extension-pack[Visual Studio Marketplace^].
++
+[NOTE] 
+.To avoid installation errors:
+==== 
+Do not install the individual Anypoint Code Builder extensions that are also available separately from Anypoint Extension Pack in Visual Studio Marketplace.
+====
+
+* To install from the desktop IDE, launch the Extensions menu by clicking the Extensions icon from the activity bar or pressing Cmd+Shift+x (Mac) or Ctrl+Shift+x (Windows), and search for the extension pack.
++
+Select *Install Release Version*.
+
+* To install from the Visual Studio Marketplace website, find the extension pack, and install:
++
+Select *Install Release Version*.
++
+For additional guidance, see the https://code.visualstudio.com/learn/get-started/extensions[Visual Studio Code website^].
+. Open the Extensions menu, and review the extensions in Anypoint Extension Pack:
++
+//TODO: FOR GA NEW IMAGE FOR NEEDED
+//image::acb-setup-extensions-list.png[]
+//+
+Anypoint Extension Pack contains these extensions:
+
+* Anypoint Code Builder - API Extension
+* Anypoint Code Builder - APIkit Extension
+* Anypoint Code Builder - DataWeave Extension
+* Anypoint Code Builder - Dependencies Extension
+* Anypoint Code Builder - Integration Extension
+* Anypoint Code Builder - MUnit Extension
+* Anypoint Code Builder - Platform Extension
++
+For versioning information about extensions in Anypoint Extension Pack, see the https://marketplace.visualstudio.com/items/salesforce.mule-dx-extension-pack/changelog[Change Log^].
+
+. Recommended: Ensure that the Anypoint extensions update automatically by right-clicking each extension to see if *Auto Update All (From Publisher)* is checked. If it's not, select *Auto Update* for each extension, for example:
++
+image::start-extensions-auto-update.png["Setting an extension to auto-update"]
++
+Ensure this option is checked. 
+. Click the MuleSoft icon in the activity bar to access and use Anypoint Code Builder features.
++
+[[acb-menu]]
+image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder in the activity bar"]
+
+. Check that the IDE loads the <<acb-menu, Anypoint Code Builder menu>> with *Quick Actions* and *Documentation* links.
+
+. If you have an Anypoint Platform account running in the EU cloud, change the *Mule: Control Plane* setting to *EU cloud*. 
++
+For guidance, see xref:anypoint-code-builder::start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud].
+. Follow the steps in xref:anypoint-code-builder::start-acb.adoc#login-ide[Log in to Anypoint Platform from the IDE].
++
+NOTE::
+If an Anypoint Platform session is active in any of your browsers when you install Anypoint Extension Pack, the extension pack uses that session to sign in to Anypoint Platform from the IDE. You can xref:anypoint-code-builder::start-acb.adoc#logout-status-bar[log out] or  xref:anypoint-code-builder::start-acb.adoc#logout-status-bar[sign in] from the status bar in the IDE. 
+
+[[update-pack]]
+=== Update Anypoint Extension Pack 
+
+If Anypoint Extension Pack is installed on your desktop IDE, update to the latest version of the extension pack by following VS Code instructions in https://code.visualstudio.com/docs/editor/extension-marketplace#_update-an-extension-manually[Update an extension manually^].
+
+[[uninstall-pack]]
+=== Uninstall Anypoint Extension Pack
+
+Typically, it is unnecessary to uninstall the extension pack or individual Anypoint Code Builder extensions from VS Code. For example, you can update to a new version without uninstalling first. 
+
+If you decide to uninstall Anypoint Extension Pack, follow the same procedure that you use for other VS Code extensions. Uninstalling the extension pack also uninstalls the individual Anypoint Code Builder extensions that are bundled within the extension pack, such as the DataWeave and APIkit extensions. 
+
+To uninstall:
+
+. Open VS Code. 
+. From the activity bar, open the Extensions panel.
+. Find and select Anypoint Extension Pack.
+. In the Anypoint Extension Pack tab that opens, click *Uninstall*. 
+. To remove the Anypoint Code Builder extensions from the Extensions panel, click *Reload* on one of the extensions. 
+
+For additional guidance, see the VS Code documentation, https://code.visualstudio.com/docs/editor/extension-marketplace#_manage-extensions[Manage extensions^].
+
+You can reinstall at any time.

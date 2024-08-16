@@ -6,11 +6,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
 
-NOTE: Anypoint Code Builder can deploy applications only to CloudHub 1.0.
-
-To deploy to another supported environment, create a deployable JAR file.
-For information, see xref:int-export-mule-project.adoc#deployable[Export to a Deployable JAR File].
-
+NOTE: Anypoint Code Builder can deploy applications only to the 1.0 version of CloudHub. To deploy to CloudHub 2.0, create a deployable JAR file, and follow a deployment procedure identified in xref:int-export-mule-project.adoc#deployable[Export to a Deployable JAR File].
 
 == Before You Begin
 
@@ -21,7 +17,7 @@ For information, see xref:int-export-mule-project.adoc#deployable[Export to a De
 == Deploy an App to CloudHub
 
 When you deploy an application to CloudHub, Anypoint Code Builder configures a default `deploy.json` file in your `src/main/resources` directory.
-If you need to configure properties at deployment time, for example, 
+If you intend to configure properties at deployment time, for example, 
 to xref:int-create-secure-configs.adoc[create secure properties], Anypoint Code Builder prompts you to modify `deploy.json` during deployment the deployment process.
 
 To deploy your app to CloudHub:
@@ -59,9 +55,7 @@ The domain name of the application varies, but it follows a similar structure su
 . Open your preferred REST client and make a GET request to the domain name as 
 displayed in Runtime Manager, for example, `+http://app-with-100-schedulers.us-w1.cloudhub.io/api/flights+`.
 
-
 == See Also
 
 * xref:cloudhub::deploying-to-cloudhub.adoc[]
 * xref:runtime-manager::index.adoc[]
-* xref:int-export-mule-project.adoc#deployable[Export to a Deployable JAR File]

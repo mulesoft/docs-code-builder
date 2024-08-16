@@ -18,6 +18,7 @@ Trigger execution of a flow based on a time-based condition. For example, a Sche
 
 //
 //tag::component-long-description[]
+The Scheduler sets a scheduling strategy at a fixed frequency or an interval based on a cron expression. 
 
 When adding a Scheduler to your Mule application, consider these points:
 
@@ -25,7 +26,7 @@ When adding a Scheduler to your Mule application, consider these points:
 +
 To set a different time zone for the Scheduler, see `timeZone` in the <<cron-attributes, cron scheduling strategy attributes>>.
 * The `disallowConcurrentExecution` property enables you to prevent the Scheduler from triggering the execution of the flow while a previously-triggered execution is running.
-* If xref:mule-runtime::execution-engine.adoc#backpressure[back-pressure] occurs because no resources are available at the time of the scheduled trigger, Mule skips that execution.
+* If xref:4.4@mule-runtime::execution-engine.adoc#backpressure[back-pressure] occurs because no resources are available at the time of the scheduled trigger, Mule skips that execution.
 //Enhancement request for this: MULE-14930
 * In a Mule runtime engine cluster or multi-worker CloudHub deployment, the Scheduler executes only on the primary node (that is, only in one Mule instance).
 
@@ -55,20 +56,20 @@ This component supports the following XML structure:
 ----
 //end::component-xml[]
 //
-//tag::component-snippet-xml[]
+//tag::component-snippet-json[]
 
 [[snippet]]
 
-=== Snippet XML
+=== Snippet JSON
 
-Snippet XML in Anypoint Code Builder serves as a customizable template for the component. 
+Snippet JSON in Anypoint Code Builder serves as a customizable template for the component. 
 
 [source,xml]
 ----
-SNIPPET_XML_HERE
+SNIPPET_JSON_HERE
 ----
 
-//end::component-snippet-xml[]
+//end::component-snippet-json[]
 //
 //
 //
@@ -76,23 +77,28 @@ SNIPPET_XML_HERE
 //TABLE: ROOT XML ATTRIBUTES (for the top-level (root) element)
 //tag::component-xml-attributes-root[]
 
-[%header,cols="1,3a"]
+
+Scheduler (`<scheduler/>`) attributes are configurable through the UI and XML.
+
+[%header,cols="1,1,3a"]
 |===
-| `<scheduler/>` Attributes 
+| Attribute Name
+| Attribute XML 
 | Description
 
+| *Scheduler* (default)
 | `doc:name` 
-| Editable name for the component.
+| Editable name for the component to display in the canvas.
 
+| N/A
 | `doc:id` 
 | Automatically generated identifier for the component.
 
+| *Disallow concurrent execution*
 |`disallowConcurrentExecution`
 | When this attribute is set to `true`, the Scheduler skips its scheduled execution if a previous execution is still running. Once the flow finishes, the Scheduler executes at the next configured interval. The default value is `false`.
 
 |===
-
-The Scheduler sets a scheduling strategy at a fixed frequency or an interval based on a cron expression. 
 
 //end::component-xml-attributes-root[]
 //
@@ -100,45 +106,78 @@ The Scheduler sets a scheduling strategy at a fixed frequency or an interval bas
 //
 //tag::component-xml-attributes-child1[]
 
+*Scheduling strategy* (`<scheduling-strategy/>`) is a child element of Scheduler. 
+
+[%header,cols="1,3a"]
+|===
+| Child Element 
+| Description 
+
+|`<scheduling-strategy/>`
+| Accepts a <<fixed-frequency-attributes, `<fixed-frequency/>`>> or <<cron-attributes, `<cron/>`>> configuration. 
+|===
+//end::component-xml-attributes-child1[]
+//
+
+//
+//tag::component-xml-attributes-descendant1[]
+
 [[fixed-frequency-attributes]]
 === Fixed Frequency Attributes
 
-The fixed frequency (`<fixed-frequency/>`) scheduling strategy accepts these attributes:
+Scheduler accepts a fixed frequency (`<fixed-frequency/>`) element that accepts these attributes:
 
-[%header, cols="1,3"]
+[%header,cols="1,1,3a"]
 |===
-| <fixed-frequency/> Attributes | Description
+| Attribute Name
+| Attribute XML 
+| Description
 
-| `frequency` | The frequency at which the Scheduler triggers the flow given the `timeUnit` setting. Defaults to `1000`.
-| `startDelay` | The amount of time to delay execution of the Scheduler for the first time after the application starts. This property uses the same `timeUnit` as the frequency. Defaults to `0`.
-| `timeUnit` | One of the following time units for the values of `frequency` and `startDelay`: `MILLISECONDS`, `SECONDS`, `MINUTES`, `HOURS`, or `DAYS`. Defaults to `MILLISECONDS`.
+| N/A
+| `frequency` 
+| The frequency at which the Scheduler triggers the flow given the `timeUnit` setting. Defaults to `1000`.
+
+| N/A
+| `startDelay` 
+| The amount of time to delay execution of the Scheduler for the first time after the application starts. This property uses the same `timeUnit` as the frequency. Defaults to `0`.
+
+| N/A
+| `timeUnit` 
+| One of the following time units for the values of `frequency` and `startDelay`: `MILLISECONDS`, `SECONDS`, `MINUTES`, `HOURS`, or `DAYS`. Defaults to `MILLISECONDS`.
 
 |===
 
 See the <<example1, fixed frequency examples>>. 
-//end::component-xml-attributes-child1[]
+//end::component-xml-attributes-descendant1[]
 //
+
 //
-//
-//tag::component-xml-attributes-child2[]
+//tag::component-xml-attributes-descendant2[]
 
 [[cron-attributes]]
 === Cron Attributes
 
 For more complex scheduling, configure a cron expression in the `<cron/>` element.
 
-[%header, cols="1,3"]
+[%header,cols="1,1,3a"]
 |===
-| <cron/> Attributes | Description
+| Attribute Name
+| Attribute XML 
+| Description
 
-| `expression` | A cron expression for triggering the Scheduler. There is no default cron expression. For guidance with expressions, see <<cron-expressions>>. Example: `expression="1 1 1 1,7 * ?"`.
-| `timeZone` | Time zone passed as a system property, or in a machine's operating system. https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html[Java time zone^] values are supported. Avoid Java abbreviations, such as `PST` and `AGT`, and instead use the full-name Java equivalents, such as `America/Los_Angeles`. Example: `timeZone="America/Argentina/Buenos_Aires"`.
+| N/A
+| `expression` 
+| A cron expression for triggering the Scheduler. There is no default cron expression. For guidance with expressions, see <<cron-expressions>>. Example: `expression="1 1 1 1,7 * ?"`.
+
+| N/A
+| `timeZone` 
+| Time zone passed as a system property, or in a machine's operating system. https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html[Java time zone^] values are supported. Avoid Java abbreviations, such as `PST` and `AGT`, and instead use the full-name Java equivalents, such as `America/Los_Angeles`. Example: `timeZone="America/Argentina/Buenos_Aires"`.
 
 |===
 
 See the <<example2, cron examples>>. 
 
-//end::component-xml-attributes-child2[]
+//end::component-xml-attributes-descendant2[]
 //
 //
 
@@ -320,7 +359,7 @@ This example logs the message "hello" every second:
 </flow>
 ----
 
-Note that there are a number of free online tools that can help you build Cron expressions.
+Note that there are many free online tools that can help you build Cron expressions.
 //end::cron-expressions[]
 //
 
@@ -353,7 +392,7 @@ is expected.
 [[see-also]]
 == See Also
 
-* xref:mule-runtime::about-mule-event.adoc[Mule Events]
+* xref:4.4@mule-runtime::about-mule-event.adoc[Mule Events]
 
 //end::see-also[]
 //

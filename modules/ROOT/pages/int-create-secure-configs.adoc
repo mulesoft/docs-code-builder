@@ -486,7 +486,7 @@ A successful deployment produces the following message in the *OUTPUT* tab of th
 **********************************************************************
 ----
 +
-For information about the output panel, see xref:configure-default-output-panel.adoc[].
+For information about the output panel, see xref:start-open-output-panel.adoc[].
 +
 If the application does not deploy successfully, check the console for the error and troubleshoot. 
 . If you intend to deploy your application to CloudHub, proceed to <<deploy-to-cloudhub>>.
@@ -514,7 +514,10 @@ To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub
 +
 ----
 {
-    "minMuleVersion": "4.4.0",
+    "minMuleVersion": "4.6.2",
+    "javaSpecificationVersions": [
+        "11"
+    ],
     "secureProperties": ["encryption.key", "other.value.to.hide"]
 }
 ----
@@ -669,4 +672,4 @@ You can create properties or change the value of existing properties, for exampl
 
 == See Also
 
-* xref:mule-runtime::secure-configuration-properties.adoc[]
+* xref:4.4@mule-runtime::secure-configuration-properties.adoc[]
