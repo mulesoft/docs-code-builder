@@ -1,0 +1,25 @@
+//
+// tag::deploy-json-config[]
+The `deploy.json` file contains the following properties for deployments to CloudHub: 
+
+//TODO: this is for CH 1.0 deployments. UPDATE for 2.0 in Oct rel.
+* `runtime`: Provides the Mule runtime version used by the project. 
+* `workersize`: Sets a worker memory. The default is `0.1`. For more information, see xref:runtime-manager::cloudhub/cloudhub-architecture.adoc#cloudhub-workers[]. 
+* `workers`: Sets the number of Mule runtime instances for running this Mule application. The default is `1`. For more information, see xref:runtime-manager::cloudhub/cloudhub-architecture.adoc#cloudhub-workers[]. 
+* `autoStart`: Boolean flag to autostart the application after it is deployed. The default value is `true`.
+// end::deploy-json-config[]
+//
+// 
+// tag::deploy-json-edit[]
+Use auto-complete to select a preconfigured value in `deploy.json`.
+
+image::anypoint-code-builder::deploy-json-ch1.png["Using auto-complete to select a value for deploy.json"]
+
+. Open `deploy.json` from the Explorer.
++
+The file is located in the project's `src/main/resources` directory. The file opens to a *deploy.json* tab in the IDE.
+. In `deploy.json`, highlight the value to update. 
+. Press Ctrl+Space. 
+. Select a different value.
+// end::deploy-json-edit[]
+//
