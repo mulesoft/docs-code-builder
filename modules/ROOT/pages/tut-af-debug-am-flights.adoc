@@ -148,12 +148,12 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-termin
 curl http://localhost:8081/api/flights
 ----
 +
-Notice the `_/api/flight_` in the URI for the listener in the interface. For more information about this step, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
+Notice the `_/api/flights_` in the URI for the listener in the interface. For more information about this step, see xref:int-trigger-flows.adoc#trigger-flow[Trigger a flow].
 . In your American Flights project, notice that the execution of the app stops at your first breakpoint:
 +
 image::debug-stop-at-flow-ref.png["Stopping the flow at a breakpoint"]
 +
-The breakpoint is located in you interface file (`interface.xml`).
+The breakpoint is located in your interface file (`interface.xml`).
 . In your debug toolbar, click the *Step Over* button to continue execution to the next breakpoint, at the `<db:select/>` element in `implementation.xml`.
 . In the *Run and Debug* sidebar, notice that the *Variables* panel provides information about the Mule event at the breakpoint:
 +
