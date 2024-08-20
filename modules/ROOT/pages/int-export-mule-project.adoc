@@ -7,7 +7,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Package a snapshot of Mule application resources in a shareable or deployable JAR file. A Mule application is an integration or implementation application that runs on Mule runtime engine.
+A Mule application is an integration or implementation application that runs on Mule runtime engine. To share the application across different teams, or to deploy the application elsewhere, you can export and package a snapshot of Mule application resources. Additionally, you can publish a Mule project to Exchange as either a template or an example.
 
 * A <<shareable, shareable JAR file>> is lightweight, packaging only the source code of the application.
 The source code includes configuration files but not libraries or other dependencies required for your application to run and deploy successfully.
@@ -26,6 +26,10 @@ xref:cloudhub::deploying-to-cloudhub.adoc[].
 You don't need to create a deployable JAR file to deploy to CloudHub.
 To deploy an app directly from Anypoint Code Builder, see
 xref:int-deploy-mule-apps.adoc[].
+
+* A <<publishable, publishable Mule project template or example>> contains resources to share the project via Anypoint Exchange.
++
+You or your teammates can import the Mule project from Exchange and continue developing in Anypoint Code Builder or Anypoint Studio (Studio).
 
 == Before You Begin
 
@@ -89,6 +93,7 @@ The file name for the downloaded shareable JAR file follows the pattern `_applic
 To open a shareable JAR file in a project workspace within Anypoint Code Builder, see xref:int-import-mule-project.adoc#desktop-project-package[Import a Shareable Project JAR File into the Desktop IDE] and xref:int-import-mule-project.adoc#web-project-package[Import a Shareable Project JAR File into the Cloud IDE].
 // To import to Anypoint Studio, see xref:studio::import-export-packages.adoc[].
 
+
 [[deployable]]
 == Export to a Deployable JAR File
 
@@ -138,6 +143,26 @@ image::int-export-deployable.png["Deployable JAR file in the Java Projects folde
 
 The file name for the downloaded deployable JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application.jar`, for example: `my-app-example-1.0.0-SNAPSHOT-mule-application.jar`.
 
+[[publishable]]
+== Publish a Mule Project to Exchange as a Template or Example
+
+A project template is a pre-configured, reusable project setup that serves as a starting point for developing Mule applications. These templates are designed to provide a structured framework that includes common configurations, example code, and best practices.
+
+A project example is a sample application that demonstrates specific functionalities or use cases. These examples are designed to provide practical, real-world scenarios to help developers understand how to implement various features and integrations.
+
+// Templates are packaged integration patterns built on best practices to address common use cases. Examples are applications that are ready to run and demonstrate a use case or solution.
+
+To publish a Mule Project to Exchange as either a template or an example:
+
+. Open and place your cursor in the configuration XML file in a project for the Mule project to publish.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select the following command:
++
+[source,command]
+----
+MuleSoft: Publish Project to Exchange
+----
 
 
 
