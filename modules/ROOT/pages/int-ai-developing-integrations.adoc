@@ -1,0 +1,31 @@
+= Developing Integrations Using Einstein
+
+include::partial$acb-ide-logos.adoc[tags="both-ides"]
+
+To jumpstart your integration development, use natural language prompts in Einstein for Anypoint Code Builder Generative Flows to generate flows for you. The engine for these generative flows is the pre-trained large language models (LLM) that exist within the Salesforce Shared Trust Boundary. These LLMs are at the core of the Generative Flows capabilities in Anypoint Code Builder. 
+
+== Trust Layer
+
+The Einstein trust layer bridges Anypoint Platform and the LLMs, as shown in the following flow: 
+
+image::acb-einstein-trust-layer.png["Flow depicting how the trust layer works, including the steps of the flow"]
+
+[calloutlist]
+. The Anypoint Code Builder user creates a prompt based on their use case and sends it to Einstein.  
+. To minimize inaccurate responses (the AI "hallucination" effect), prompts are grounded with factual MuleSoft proprietary data and user context.
+. To ensure the data is sent safely to the external LLM, the prompt is sent to Open AI via the secure gateway. 
+. To keep your data secure, all data remains in Salesforce.  
+. After the LLM generates a response, the content is sent back through the secure gateway.
+. MuleSoft validates the generated output to ensure the generated flow works within the MuleSoft ecosystem. 
+. Anypoint Code Builder logs the prompt and generated responses for monitoring before surfacing the validated response in Anypoint Code Builder.
+
+[IMPORTANT]
+This feature uses generative AI, which is known to include inaccurate or harmful responses. Before implementing this feature, review the output for accuracy and safety. You assume responsibility for the output when making business decisions.
+
+== See Also
+
+* xref:int-ai-enable-einstein.adoc[]
+* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_overview.htm&type=5[Einstein Generative AI & Trust]
+* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_layer.htm&type=5[Einstein Trust Layer]
+* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_arch.htm&type=5[Einstein Trust Layer: Designed for Trust]
+* xref:int-ai-create-integrations.adoc[]
