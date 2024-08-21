@@ -146,9 +146,9 @@ The file name for the downloaded deployable JAR file follows the pattern `_appli
 [[publishable]]
 == Publish a Mule Project to Exchange as a Template or Example
 
-A project template is a pre-configured, reusable project setup that serves as a starting point for developing Mule applications. These templates are designed to provide a structured framework that includes common configurations, example code, and best practices.
+A _project template_ is a pre-configured, reusable project setup that serves as a starting point for developing Mule applications. These templates are designed to provide a structured framework that includes common configurations, example code, and best practices.
 
-A project example is a sample application that demonstrates specific functionalities or use cases. These examples are designed to provide practical, real-world scenarios to help developers understand how to implement various features and integrations.
+A _project example_ is a sample application that demonstrates specific functionalities or use cases. These examples are designed to provide practical, real-world scenarios to help developers understand how to implement various features and integrations.
 
 // Templates are packaged integration patterns built on best practices to address common use cases. Examples are applications that are ready to run and demonstrate a use case or solution.
 
@@ -164,7 +164,34 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 MuleSoft: Publish Project to Exchange
 ----
 
+. Either select your Anypoint Platform user and business group or create a new Anypoint Platform account by clicking *Add Account*.
+Additionally, you can click the *Add Account* button to use a new Anypoint Platform account.
+. Verify that the required identification and version information for your project is present and correct:
++
+image::configure-asset-properties.png["A form to publish a project to Exchange, with fields for user information, project details, and project type"]
 
+[calloutlist]
+. *Name*: The name of your API specification.
+. *Description*: (optional) A description of your API specification.
+. *Group ID*: The organization ID of your Anypoint Platform organization.
+. *Artifact ID*: The name of your project, minus its version. By default, Studio uses the artifact ID configured in your `pom.xml` file.
+. *Version*: The version of the asset you are publishing.
+. *Project type*: If you are publishing a new version of an already published asset, you cannot change the project type.
+
+[start=6]
+. Select *Next*.
+. Configure the tags, categories, and custom fields for your project:
++
+image::tags-and-categories-configuration.png["A window with options to add tags, categories, and custom fields"]
++
+Categories cannot be created from Anypoint Code Builder directly. Refer to the xref:exchange::to-manage-categories.adoc[Manage Categories] documentation to learn how to create Categories for your organization.
++
+Custom fields cannot be created from Anypoint Code Builder directly. Refer to the xref:exchange::to-manage-custom-fields.adoc[Manage Custom Fields] documentation to learn how to create custom fields for your organization.
++
+. Check the *Save updated project information to the pom.xml* box to update your `pom.xml` file with the data provided. This option syncs your local project information with the data you entered. If not checked, your project is deployed with the provided data, but your local project remains with the original information and is not updated.
+. Select *Finish*.
+
+Once you select *Finish*, the publication of your project as a new asset in Exchange begins. You can follow the progress of this publication process in the Console view, but you cannot cancel it.
 
 == See Also
 
