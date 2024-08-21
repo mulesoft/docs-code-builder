@@ -1,0 +1,30 @@
+//
+// tag::flow-counting-intro[]
+Flow Counting improves transparency in usage-based pricing by providing visibility into the number of billable flows when developing your project. With this new feature, you better understand your consumption patterns from design to deployment, preventing unexpected billing issues.
+
+Your Anypoint Platform Organization pays for billable flows, such as Trigger Flows or APIkit-generated flows, that are currently deployed and running in your project. To reduce these costs, consider using subflows or private flows, which aren't billable. Additionally, ensure you deploy only necessary flows from any accelerators or assets to avoid charges for unused flows. Learn more about managing and reducing billable flows.
+// end::flow-counting-intro[]
+//
+
+//
+// tag::flow-counting-billable-flows[]
+
+[%header,cols="20a,60a"] 
+|===
+| Type of Flow | Description
+
+| Trigger Flows 
+| This type of flow begins the execution of a process based on certain events or conditions. They are the starting point of any integration application. A trigger flow usually starts with a message source, like a listener or a scheduler. The message source reacts to external events (like HTTP requests, time schedules, or file updates) and starts the next process.
+
+| APIkit-generated Flows 
+| This type of flow is automatically created by the APIkit module if you import or design an API specification. These flows map incoming API requests to the appropriate logic and responses. Each action in the API specification results in a flow.
+|===
+
+// end::flow-counting-billable-flows[]
+//
+
+//
+// tag::flow-counting-prereq[]
+Make sure your Anypoint Platform administrator enabled this feature.
+// end::flow-counting-prereq[]
+//
