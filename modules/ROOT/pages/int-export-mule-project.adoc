@@ -150,8 +150,6 @@ A _project template_ is a pre-configured, reusable project setup that serves as 
 
 A _project example_ is a sample application that demonstrates specific functionalities or use cases. These examples are designed to provide practical, real-world scenarios to help developers understand how to implement various features and integrations.
 
-// Templates are packaged integration patterns built on best practices to address common use cases. Examples are applications that are ready to run and demonstrate a use case or solution.
-
 To publish a Mule Project to Exchange as either a template or an example:
 
 . Open and place your cursor in the configuration XML file in a project for the Mule project to publish.
@@ -161,37 +159,47 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 +
 [source,command]
 ----
-MuleSoft: Publish Project to Exchange
+MuleSoft: Publish Mule Project to Exchange
 ----
 
-. Either select your Anypoint Platform user and business group or create a new Anypoint Platform account by clicking *Add Account*.
-Additionally, you can click the *Add Account* button to use a new Anypoint Platform account.
-. Verify that the required identification and version information for your project is present and correct:
+. Select an *Asset Type*.
+. Ensure that the following fields contain the correct values for your asset:
 +
-image::configure-asset-properties.png["A form to publish a project to Exchange, with fields for user information, project details, and project type"]
+* *Asset Name*
++
+The name that Anypoint Exchange uses to identify the published project.
+* *Version*
++
+The version number to be displayed in the *Version* section of the page that Anypoint Exchange creates for the asset.
++
+If you are publishing the asset for the first time, you can use any valid number. A typical starting version is `1.0.0`.
++
+If you are republishing the asset, Anypoint Code Builder automatically populates the *Version* field with the existing patch level number incremented by 1. You can change this number, but the republish fails if you use a version number that has already been used to publish a stable version of this asset.
+* *Description*
++
+An optional description of your asset.
+* *Business Group*
++
+The business unit in Anypoint Platform to which the asset belongs.
+* *Group ID*
++
+The ID of the business unit in Anypoint Platform to which the asset belongs.
+* *Artifact ID*
++
+A unique ID that Anypoint Exchange uses to identify the published asset. You should use the default value unless there is a published asset with the same ID.
+. In *Advanced Options*, ensure that the following fields contain the correct values for your asset:
++
+* *Tags*
++
+The descriptors that Anypoint Exchange uses to search for assets.
+* *Categories*
++
+The category that was previously added to Anypoint Exchange. Refer to the xref:exchange::to-manage-categories.adoc[Manage Categories] documentation to learn how to create Categories for your organization.
 
-[calloutlist]
-. *Name*: The name of your API specification.
-. *Description*: (optional) A description of your API specification.
-. *Group ID*: The organization ID of your Anypoint Platform organization.
-. *Artifact ID*: The name of your project, minus its version. By default, Studio uses the artifact ID configured in your `pom.xml` file.
-. *Version*: The version of the asset you are publishing.
-. *Project type*: If you are publishing a new version of an already published asset, you cannot change the project type.
+. In *Advanced Options*, check the *Keep your local and published project in sync* box to sync your local project information with the data you entered. If not checked, your project is deployed with the provided data, but your local project remains with the original information and is not updated.
+. Select *Publish*.
 
-[start=6]
-. Select *Next*.
-. Configure the tags, categories, and custom fields for your project:
-+
-image::tags-and-categories-configuration.png["A window with options to add tags, categories, and custom fields"]
-+
-Categories cannot be created from Anypoint Code Builder directly. Refer to the xref:exchange::to-manage-categories.adoc[Manage Categories] documentation to learn how to create Categories for your organization.
-+
-Custom fields cannot be created from Anypoint Code Builder directly. Refer to the xref:exchange::to-manage-custom-fields.adoc[Manage Custom Fields] documentation to learn how to create custom fields for your organization.
-+
-. Check the *Save updated project information to the pom.xml* box to update your `pom.xml` file with the data provided. This option syncs your local project information with the data you entered. If not checked, your project is deployed with the provided data, but your local project remains with the original information and is not updated.
-. Select *Finish*.
-
-Once you select *Finish*, the publication of your project as a new asset in Exchange begins. You can follow the progress of this publication process in the Console view, but you cannot cancel it.
+Once you select *Publish*, the publication of your project as a new asset in Exchange begins. You can follow the progress of this publication process in the *Terminal* view.
 
 == See Also
 
