@@ -27,9 +27,9 @@ You don't need to create a deployable JAR file to deploy to CloudHub.
 To deploy an app directly from Anypoint Code Builder, see
 xref:int-deploy-mule-apps.adoc[].
 
-* A <<publishable, publishable Mule project template or example>> contains resources to share the project via Anypoint Exchange.
+* A <<publishable, publishable Mule project template or example>> contains resources to share the project via Anypoint Exchange (Exchange).
 +
-You or your teammates can import the Mule project from Exchange and continue developing in Anypoint Code Builder or Anypoint Studio (Studio).
+You or your teammates can import the Mule project from Exchange and continue developing in Anypoint Code Builder or Studio.
 
 == Before You Begin
 
@@ -144,7 +144,9 @@ image::int-export-deployable.png["Deployable JAR file in the Java Projects folde
 The file name for the downloaded deployable JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application.jar`, for example: `my-app-example-1.0.0-SNAPSHOT-mule-application.jar`.
 
 [[publishable]]
-== Publish a Mule Project to Exchange as a Template or Example
+== Publish a Mule Project to Exchange
+
+You can publish a project as either a template or an example.
 
 A _project template_ is a pre-configured, reusable project setup that serves as a starting point for developing Mule applications. These templates are designed to provide a structured framework that includes common configurations, example code, and best practices.
 
@@ -163,14 +165,16 @@ MuleSoft: Publish Mule Project to Exchange
 ----
 
 . Select an *Asset Type*.
++
+Select either an *Example* or a *Template*.
 . Ensure that the following fields contain the correct values for your asset:
 +
 * *Asset Name*
 +
-The name that Anypoint Exchange uses to identify the published project.
+The name that Exchange uses to identify the published project.
 * *Version*
 +
-The version number to be displayed in the *Version* section of the page that Anypoint Exchange creates for the asset.
+The version number to be displayed in the *Version* section of the page that Exchange creates for the asset.
 +
 If you are publishing the asset for the first time, you can use any valid number. A typical starting version is `1.0.0`.
 +
@@ -186,20 +190,20 @@ The business unit in Anypoint Platform to which the asset belongs.
 The ID of the business unit in Anypoint Platform to which the asset belongs.
 * *Artifact ID*
 +
-A unique ID that Anypoint Exchange uses to identify the published asset. You should use the default value unless there is a published asset with the same ID.
+A unique ID that Exchange uses to identify the published asset. You should use the default value unless there is a published asset with the same ID.
 . In *Advanced Options*, ensure that the following fields contain the correct values for your asset:
 +
 * *Tags*
 +
-The descriptors that Anypoint Exchange uses to search for assets.
+The descriptors that Exchange uses to search for assets.
 * *Categories*
 +
-The category that was previously added to Anypoint Exchange. Refer to the xref:exchange::to-manage-categories.adoc[Manage Categories] documentation to learn how to create Categories for your organization.
+The category that was previously added to Exchange. Refer to the xref:exchange::to-manage-categories.adoc[Manage Categories] documentation to learn how to create Categories for your organization.
 
 . In *Advanced Options*, check the *Keep your local and published project in sync* box to sync your local project information with the data you entered. If not checked, your project is deployed with the provided data, but your local project remains with the original information and is not updated.
 . Select *Publish*.
 
-Once you select *Publish*, the publication of your project as a new asset in Exchange begins. You can follow the progress of this publication process in the *Terminal* view.
+The publication of your project as a new asset begins. Once publication succeeds, select *View Asset* to view the asset in Exchange.
 
 == See Also
 
