@@ -1,39 +1,90 @@
 //
-// tag::deploy-json-config-ch1[]
-The `deploy.json` file contains the following properties for deployments of Mule applications to CloudHub from Anypoint Code Builder.
+// tag::deploy-json-config[]
+For deployments to CloudHub from Anypoint Code Builder, `deploy.json` supports the following properties.
 
-//TODO: this is for CH 1.0 deployments. UPDATE for 2.0 in Oct rel.
 [%header,cols="1a,3a,1a"]
 |===
 | Property 
 | Description
-| Host
+| Default
 
 | `runtime`
 | Required: Provides the Mule runtime version used by the project.  
 | CloudHub
 
 | `workersize`
-| Required: Sets the worker memory relative to a single worker or a number of available workers. The default is `0.1`. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation.  
-| CloudHub
+| Required: Sets the worker memory relative to a single worker or a number of available workers. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation.  
+| `0.1`
 
 | `applicationName`
-| Required: Provides the hyphenated, lowercase name of the Mule application.  
-| CloudHub
+| Provides the hyphenated, lowercase name of the Mule application.  
+| N/A
 
 | `workers`
-| Required: Sets the number of Mule runtime instances for running this Mule application. The default is `1`. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation. 
-| CloudHub
+| Required: Sets the number of Mule runtime instances for running this Mule application. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation. 
+| `1`
 
 | `autoStart`
-|  Required: Indicates whether to start the application automatically after the deployment process completes. The default value is `true`.
+|  Required: Indicates whether to start the application automatically after the deployment process completes. 
+| `true`
+
+| `loggingNgEnabled`
+| TODO_TODO_TODO.
+
+| `monitoringAutoRestart`
+| TODO_TODO_TODO.
+| `false`
+
+| `monitoringEnabled`
+| Enables Anypoint Monitoring. See xref:monitoring::index.adoc[]. The default value is `false`.
+| CloudHub
+
+| `objectStoreV2`
+| Sets the Object Store version. Mule applications in Anypoint Code Builder run on Mule 4, which support xref:object-store::index.adoc[Object Store v2]. The default value is `true`.
+| CloudHub
+
+| `persistentQueues`
+| Stores data from a persistent queue for your Mule application to disk. The default value is `false`. For more information, see xref:runtime-manager::managing-queues.adoc[Manage Queues].
+| CloudHub
+
+| `persistentQueuesEncrypted`
+| Encrypts data stored in the input queue on disk when this property and `persistentQueues` are set to `true`. The default value is `false`.
+| CloudHub
+
+| `properties`
+| Sets a custom property value. The default value is `{"sampleKey": "sampleValue"}`. For a common use case, see xref:anypoint-code-builder::int-create-secure-configs#create-prop-file[Provide Settings for Different Environments]. After deployment, you can xref:cloudhub::cloudhub-manage-props[manage your properties in Runtime Manager].
+| CloudHub
+
+| `region`
+| Sets a deployment region. The default value is `us-east-2`. For more information, see xref:cloudhub::cloudhub-networking-guide.adoc#regional-services[Regional Services].
 | CloudHub
 |===
-// end::deploy-json-config-ch1[]
+// end::deploy-json-config[]
+//
+//
+// tag:deploy-json-config-ch-example[]
+{
+  "runtime": "4.7-e-java17",
+  "workerSize": 0.1,
+  "applicationName": "int-simple-duke",
+  "workers": 1,
+  "autoStart": true,
+  "loggingNgEnabled": true,
+  "monitoringAutoRestart": false,
+  "monitoringEnabled": false,
+  "objectStoreV2": true,
+  "persistentQueues": false,
+  "persistentQueuesEncrypted": false,
+  "properties": {
+    "sampleKey": "sampleValue"
+  },
+  "region": "us-east-2" 
+}
+// end:deploy-json-config-ch-example[]
 //
 //
 // tag::deploy-json-config-ch2[]
-The `deploy.json` file contains the following properties for deployments of Mule applications to CloudHub from Anypoint Code Builder.
+For deployments to CloudHub 2.0 from Anypoint Code Builder, `deploy.json` supports the following properties.
 
 //TODO: this is for CH 1.0 deployments. UPDATE for 2.0 in Oct rel.
 [%header,cols="1a,3a,1a"]
@@ -71,6 +122,13 @@ The `deploy.json` file contains the following properties for deployments of Mule
 | CloudHub 2.0
 |===
 // end::deploy-json-config-ch2[]
+//
+//
+// tag:deploy-json-config-ch2-example[]
+{
+  TODO_TODO_TODO
+}
+// end:deploy-json-config-ch-example[]
 //
 // 
 // tag::deploy-json-edit[]
