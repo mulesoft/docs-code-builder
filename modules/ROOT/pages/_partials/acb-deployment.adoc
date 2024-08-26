@@ -1,5 +1,5 @@
 //
-// tag::deploy-json-config[]
+// tag::deploy-json-config-ch1[]
 The `deploy.json` file contains the following properties for deployments of Mule applications to CloudHub from Anypoint Code Builder.
 
 //TODO: this is for CH 1.0 deployments. UPDATE for 2.0 in Oct rel.
@@ -10,26 +10,67 @@ The `deploy.json` file contains the following properties for deployments of Mule
 | Host
 
 | `runtime`
-| Provides the Mule runtime version used by the project.  
+| Required: Provides the Mule runtime version used by the project.  
 | CloudHub
 
 | `workersize`
-| Sets the worker memory relative to a single worker or a number of available workers. The default is `0.1`. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation.  
+| Required: Sets the worker memory relative to a single worker or a number of available workers. The default is `0.1`. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation.  
 | CloudHub
 
 | `applicationName`
-| Provides the hyphenated, lowercase name of the Mule application.  
+| Required: Provides the hyphenated, lowercase name of the Mule application.  
 | CloudHub
 
 | `workers`
-| Sets the number of Mule runtime instances for running this Mule application. The default is `1`. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation. 
+| Required: Sets the number of Mule runtime instances for running this Mule application. The default is `1`. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation. 
 | CloudHub
 
 | `autoStart`
-|  Indicates whether to start the application automatically after the deployment process completes. The default value is `true`.
+|  Required: Indicates whether to start the application automatically after the deployment process completes. The default value is `true`.
 | CloudHub
 |===
-// end::deploy-json-config[]
+// end::deploy-json-config-ch1[]
+//
+//
+// tag::deploy-json-config-ch2[]
+The `deploy.json` file contains the following properties for deployments of Mule applications to CloudHub from Anypoint Code Builder.
+
+//TODO: this is for CH 1.0 deployments. UPDATE for 2.0 in Oct rel.
+[%header,cols="1a,3a,1a"]
+|===
+| Property 
+| Description
+| Host
+
+| `applicationName`
+| Required: Provides the hyphenated, lowercase name of the Mule application.  
+| CloudHub 2.0
+
+| `deploymentModel`
+| Required: TODO_TBD_FROM_DHAIRYA "rolling", enum - rolling / recreate  
+| CloudHub 2.0
+
+| `desiredState`
+| Required: TODO_TBD_FROM_DHAIRYA "State of deployed application" false // optional default - false
+| CloudHub 2.0
+
+| `objectStoreV2`
+| Required: TODO_TBD_FROM_DHAIRYA "STARTED", enum - STARTED / STOPPED 
+| CloudHub 2.0
+
+| `properties`
+| Optional: TODO_TBD_FROM_DHAIRYA {} // optional
+| CloudHub 2.0
+
+| `replicas`
+| Required: Specifies the number of replicas, or instances, of the Mule application to deploy. The default value is `1`. 
+| CloudHub 2.0
+
+| `replicaSize`
+| Required: Sets the size of each replica, specified in vCores. The default value is `0.1`.
+| CloudHub 2.0
+|===
+// end::deploy-json-config-ch2[]
 //
 // 
 // tag::deploy-json-edit[]
