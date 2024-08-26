@@ -9,23 +9,23 @@ For deployments to CloudHub from Anypoint Code Builder, `deploy.json` supports t
 | Default
 
 | `runtime`
-| Required: Provides the Mule runtime version used by the project.  
-| CloudHub
+| Provides the Mule runtime version used by the project.  
+| See the description.
 
 | `workersize`
-| Required: Sets the worker memory relative to a single worker or a number of available workers. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation.  
+| Sets the worker memory relative to a single worker or a number of available workers. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation.  
 | `0.1`
 
 | `applicationName`
 | Provides the hyphenated, lowercase name of the Mule application.  
-| N/A
+| See the description.
 
 | `workers`
-| Required: Sets the number of Mule runtime instances for running this Mule application. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation. 
+| Sets the number of Mule runtime instances for running this Mule application. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation. 
 | `1`
 
 | `autoStart`
-|  Required: Indicates whether to start the application automatically after the deployment process completes. 
+|  Indicates whether to start the application automatically after the deployment process completes. 
 | `true`
 
 | `loggingNgEnabled`
@@ -91,35 +91,35 @@ For deployments to CloudHub 2.0 from Anypoint Code Builder, `deploy.json` suppor
 |===
 | Property 
 | Description
-| Host
+| Default
 
 | `applicationName`
-| Required: Provides the hyphenated, lowercase name of the Mule application.  
-| CloudHub 2.0
+| Provides the hyphenated, lowercase name of the Mule application.  
+| See the description.
 
 | `deploymentModel`
-| Required: TODO_TBD_FROM_DHAIRYA "rolling", enum - rolling / recreate  
-| CloudHub 2.0
+| TODO_TBD_FROM_DHAIRYA "rolling", enum - rolling / recreate  
+| TODO_TODO_TODO
 
 | `desiredState`
-| Required: TODO_TBD_FROM_DHAIRYA "State of deployed application" false // optional default - false
-| CloudHub 2.0
+| TODO_TBD_FROM_DHAIRYA "State of deployed application" false // optional default - false
+| TODO_TODO_TODO
 
 | `objectStoreV2`
-| Required: TODO_TBD_FROM_DHAIRYA "STARTED", enum - STARTED / STOPPED 
-| CloudHub 2.0
+| TODO_TBD_FROM_DHAIRYA "STARTED", enum - STARTED / STOPPED 
+| TODO_TODO_TODO
 
 | `properties`
-| Optional: TODO_TBD_FROM_DHAIRYA {} // optional
-| CloudHub 2.0
+| Sets a custom property value. For a common use case, see xref:anypoint-code-builder::int-create-secure-configs#create-prop-file[Provide Settings for Different Environments]. After deployment, you can xref:cloudhub::cloudhub-manage-props[manage your properties in Runtime Manager].
+| `{"sampleKey": "sampleValue"}`
 
 | `replicas`
-| Required: Specifies the number of replicas, or instances, of the Mule application to deploy. The default value is `1`. 
-| CloudHub 2.0
+| Specifies the number of replicas, or instances, of the Mule application to deploy. The default value is `1`. 
+| TODO_TODO_TODO
 
 | `replicaSize`
-| Required: Sets the size of each replica, specified in vCores. The default value is `0.1`.
-| CloudHub 2.0
+| Sets the size of each replica, specified in vCores. The default value is `0.1`.
+| TODO_TODO_TODO
 |===
 // end::deploy-json-config-ch2[]
 //
