@@ -29,10 +29,11 @@ For deployments to CloudHub from Anypoint Code Builder, `deploy.json` supports t
 | `true`
 
 | `loggingNgEnabled`
-| TODO_TODO_TODO.
+| TODO_TODO_TODO
+| `true`
 
 | `monitoringAutoRestart`
-| TODO_TODO_TODO.
+| TODO_TODO_TODO
 | `false`
 
 | `monitoringEnabled`
@@ -40,8 +41,8 @@ For deployments to CloudHub from Anypoint Code Builder, `deploy.json` supports t
 | `false`
 
 | `objectStoreV2`
-| Sets the Object Store version. Mule applications in Anypoint Code Builder run on Mule 4, which support xref:object-store::index.adoc[Object Store v2].
-| `true`
+| Instructs the deployed Mule 4 application to use xref:object-store::index.adoc[] when set to `true`.
+| `false`
 
 | `persistentQueues`
 | Stores data from a persistent queue for your Mule application to disk. For more information, see xref:runtime-manager::managing-queues.adoc[Manage Queues].
@@ -94,32 +95,35 @@ For deployments to CloudHub 2.0 from Anypoint Code Builder, `deploy.json` suppor
 | Default
 
 | `applicationName`
-| Provides the hyphenated, lowercase name of the Mule application.  
+| Provides the hyphenated, lowercase name of the Mule application.
 | See the description.
 
 | `deploymentModel`
-| TODO_TBD_FROM_DHAIRYA "rolling", enum - rolling / recreate  
-| TODO_TODO_TODO
+| Sets the update strategy for a Mule application:
+
+* `rolling`: Maintains availability by updating replicas incrementally.
+* `recreate`: Terminates replicas before redeployment
+| `rolling`
 
 | `desiredState`
-| TODO_TBD_FROM_DHAIRYA "State of deployed application" false // optional default - false
-| TODO_TODO_TODO
+| Automatically starts the application upon deployment when set to `STARTED`. Does not start the application when set to  `STOPPED`.
+| `STARTED`
 
 | `objectStoreV2`
-| TODO_TBD_FROM_DHAIRYA "STARTED", enum - STARTED / STOPPED 
-| TODO_TODO_TODO
+| Instructs the deployed Mule 4 application to use xref:object-store::index.adoc[] when set to `true`.
+| `false`
 
 | `properties`
 | Sets a custom property value. For a common use case, see xref:anypoint-code-builder::int-create-secure-configs#create-prop-file[Provide Settings for Different Environments]. After deployment, you can xref:cloudhub::cloudhub-manage-props[manage your properties in Runtime Manager].
 | `{"sampleKey": "sampleValue"}`
 
 | `replicas`
-| Specifies the number of replicas, or instances, of the Mule application to deploy. The default value is `1`. 
-| TODO_TODO_TODO
+| Specifies the number of replicas, or instances, of the Mule application to deploy. For more information, see xref:cloudhub-2::ch2-architecture.adoc#cloudhub-2-replicas[CloudHub 2.0 Replicas].
+| `1`
 
 | `replicaSize`
-| Sets the size of each replica, specified in vCores. The default value is `0.1`.
-| TODO_TODO_TODO
+| Sets the size of each replica, specified in vCores. For more information, see xref:cloudhub-2::ch2-architecture.adoc#cloudhub-2-replicas[CloudHub 2.0 Replicas].
+| `0.1`
 |===
 // end::deploy-json-config-ch2[]
 //
