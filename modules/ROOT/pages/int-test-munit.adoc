@@ -348,67 +348,6 @@ Create and run an MUnit launch configuration:
  
 //step to open run&debug panel:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-run-debug"]
-//// 
-MUNIT NOT SUPPORTED IN OCT:
-. Add a launch configuration to `launch.json`: 
-.. Click image:anypoint-code-builder::icon-gear.png["",18,18] (gear icon) to open the *launch.json* tab.
-+
-The default configuration looks something like this:
-+
-[source,json]
-----
-{
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "type": "mule-xml-debugger",
-        "request": "launch",
-        "name": "Debug Mule Application",
-        "mule.project": "${workspaceFolder}",
-        "mule.runtime.args": "${config:mule.runtime.defaultArguments}"
-      }
-    ]
-  }
-----
-.. In the `launch.json` file, add a comma after the first object in the array, and append the MUnit launch configuration by using xref:start-discover-ui.adoc#auto-complete[auto-complete] (or pressing Ctrl+Space) and selecting *MUnit Debug Launch*. For example:
-+
-image:munit-launch-config-autocomplete.png["Adding launch configuration for MUnit from the auto-complete menu"]
-+
-This action adds a new JSON object named `Munit Debug Tests` to the file. For example:
-+
-[source,JSON]
-----
-{
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "type": "mule-xml-debugger", <1>
-        "request": "launch",
-        "name": "Debug Mule Application",
-        "mule.project": "${workspaceFolder}",
-        "mule.runtime.args": "${config:mule.runtime.defaultArguments}"
-      },
-      {
-        "type": "munit-xml-debugger", <2>
-        "request": "launch",
-        "name": "Munit Run Tests",
-        "mule.project": "${workspaceFolder}",
-        "munit.runtime.args": "${config:munit.runtime.defaultArguments}",
-        "munit.runtime.debugger.version": "${config:munit.runtime.debugger.version}",
-        "munit.debug": "false"
-      }
-    ]
-  }
-----
-+
---
-[calloutlist]
-.. Launcher for the standard debugger, named `Debug Mule Application`.
-.. Launcher for the MUnit debugger, named `Munit Run Tests`.
---
-END MUNIT NOT SUPPORTED YET 
-////
-. Save the configuration to `launch.json`.
 . Run MUnit tests from the *MUnit Debug Tests* launch configuration:
 .. In the Run and Debug panel, select *MUnit Debug Tests* from the launch menu. For example:
 +
