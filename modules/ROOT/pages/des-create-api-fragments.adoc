@@ -31,6 +31,7 @@ Use these examples to explore the functionality of Anypoint Code Builder:
 
 * <<example-oas-api-frag,`example-oas-fragment`>> API spec fragment
 * <<example-oas-api-spec,`example-oas-api-spec`>> API spec
+* <<example-avro-api-frag,`example-asyncapi-avro-fragment` >> AsyncAPI spec fragment
 
 
 == Before You Begin
@@ -325,7 +326,6 @@ components:
 --
 ====
 
-
 [[example-oas-api-spec]]
 == Example OAS 3.0 (YAML) API Spec 
 
@@ -358,8 +358,67 @@ paths:
           content:
             application/json:
               schema:
+--
 ====
 
+[[example-avro-api-frag]]
+== Example Avro Schema AsyncAPI Spec Fragment
+
+If you created an Avro Schema fragment project, you can replace the initial API fragment with following example code:
+
+.Example Avro Schema AsyncAPI Spec Fragment
+[%collapsible]
+
+====
+[source,YAML,linenums]
+--
+asyncapi: 2.6.0
+info:
+  title: My API
+  version: '1.0.0'
+
+channels:
+  myChannel:
+    publish:
+      message:
+        schemaFormat: 'application/vnd.apache.avro;version=1.9.0'
+        payload:
+          name: Person
+          type: record
+          fields:
+            - name: name
+              type: string
+              example: Donkey
+            - name: age
+              type:
+                - 'null'
+                - int
+              default:
+              example: 123
+            - name: favoriteProgrammingLanguage
+              type:
+                name: ProgrammingLanguage
+                type: enum
+                symbols:
+                  - JS
+                  - Java
+                  - Go
+                  - Rust
+                  - C
+                default: JS
+            - name: address
+              type:
+                name: Address
+                type: record
+                fields:
+                  - name: zipcode
+                    type: int
+                    example: 53003
+            - name: someid
+              type: string
+              logicalType: uuid
+--
+====
 
 == See Also
 
