@@ -235,6 +235,7 @@ To create a fragment in your project and include it in your specification:
 --
 * OAS specs: Use the `$ref` directive.
 * RAML specs: Use the `!include` directive.
+* AsyncAPI specs: Use the `$ref` directive.
 --
 + 
 [tabs]
@@ -364,59 +365,38 @@ paths:
 [[example-avro-api-frag]]
 == Example Avro Schema AsyncAPI Spec Fragment
 
-If you created an Avro Schema fragment project, you can replace the initial API fragment with following example code:
+If you created an Avro Schema fragment, you can replace the initial API fragment with following example code:
 
 .Example Avro Schema AsyncAPI Spec Fragment
 [%collapsible]
 
 ====
-[source,YAML,linenums]
+[source,JSON,linenums]
 --
-asyncapi: 2.6.0
-info:
-  title: My API
-  version: '1.0.0'
-
-channels:
-  myChannel:
-    publish:
-      message:
-        schemaFormat: 'application/vnd.apache.avro;version=1.9.0'
-        payload:
-          name: Person
-          type: record
-          fields:
-            - name: name
-              type: string
-              example: Donkey
-            - name: age
-              type:
-                - 'null'
-                - int
-              default:
-              example: 123
-            - name: favoriteProgrammingLanguage
-              type:
-                name: ProgrammingLanguage
-                type: enum
-                symbols:
-                  - JS
-                  - Java
-                  - Go
-                  - Rust
-                  - C
-                default: JS
-            - name: address
-              type:
-                name: Address
-                type: record
-                fields:
-                  - name: zipcode
-                    type: int
-                    example: 53003
-            - name: someid
-              type: string
-              logicalType: uuid
+{
+  "name": "AmericanFlightDataType",
+  "type": "record",
+  "fields": [
+    {"name": "ID", "type": "int", "example": 1},
+    {"name": "code", "type": "string", "example": "ER38sd"},
+    {"name": "price", "type": "int", "example": 400},
+    {"name": "departureDate", "type": "string", "example": "2017/07/26"},
+    {"name": "origin", "type": "string", "example": "CLE"},
+    {"name": "destination", "type": "string", "example": "SFO"},
+    {"name": "emptySeats", "type": "int", "example": 0},
+    {
+      "name": "plane",
+      "type": {
+        "name": "Plane",
+        "type": "record",
+        "fields": [
+          {"name": "type", "type": "string"},
+          {"name": "totalSeats", "type": "int"}
+        ]
+      }
+    }
+  ]
+}
 --
 ====
 
