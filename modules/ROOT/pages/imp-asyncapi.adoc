@@ -28,6 +28,8 @@ Before you implement an AsyncAPI specification with Anypoint Code Builder, it's 
 When scaffolding an AsyncAPI specification into a Mule project (implementation or integration), Anypoint Code Builder:
 
 * Introspects the AsyncAPI specification 
+* Considers one specification at a time
+* Treats the imported specification as a modification of an existing specification and evaluates it for rescaffolding
 * Creates a new Mule project with a separate flow for each `publish` operation in the specification
 +
 See <<ex-flows-scaffolded>>.
