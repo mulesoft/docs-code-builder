@@ -33,6 +33,7 @@ Use these examples to explore the functionality of Anypoint Code Builder:
 * <<example-oas-api-spec,`example-oas-api-spec`>> API spec
 * <<example-avro-api-frag,`example-asyncapi-avro-fragment`>> AsyncAPI spec fragment
 * <<example-asyncapi-spec,`example-asyncapi-spec`>> AsyncAPI spec
+* <<example-asyncapi-spec-inline-avro,`example-asyncapi-spec-inline-avro`>> AsyncAPI spec (inline Avro)
 
 == Before You Begin
 
@@ -442,6 +443,63 @@ channels:
         schemaFormat: application/vnd.apache.avro;version=1.9.0
         payload:
           $ref: exchange_modules/e91cab06-650b-4634-9c6f-5bc4f4fc4d17/example-asyncapi-fragment/1.0.0/example-asyncapi-fragment.json
+--
+====
+
+[[example-asyncapi-spec-inline-avro]]
+== Example AsyncAPI Spec (Inline Avro)
+
+If you created an AsyncAPI API spec project, you can replace the initial API spec with following example code to test inlining the API spec fragments:
+
+.Example AsyncAPI Spec (Inline Avro)
+[%collapsible]
+====
+[source,YAML,linenums]
+--
+asyncapi: 2.6.0
+info:
+  title: Example AsyncAPI Spec (Inline Avro)
+  version: '1.0.0'
+channels:
+  myChannel:
+    publish:
+      message:
+        schemaFormat: 'application/vnd.apache.avro;version=1.9.0'
+        payload:
+          name: AmericanFlightDataType
+          type: record
+          fields:
+            - name: ID
+              type: int
+              example: 1
+            - name: code
+              type: string
+              example: ER38sd
+            - name: price
+              type: int
+              example: 400
+            - name: departureDate
+              type: string
+              example: 2017/07/26
+            - name: origin
+              type: string
+              example: CLE
+            - name: destination
+              type: string
+              example: SFO
+            - name: emptySeats
+              type: int
+              example: 0
+            - name: plane
+              type:
+                name: Plane
+                type: record
+                fields:
+                  - name: type
+                    type: string
+                  - name: totalSeats
+                    type: int
+
 --
 ====
 
