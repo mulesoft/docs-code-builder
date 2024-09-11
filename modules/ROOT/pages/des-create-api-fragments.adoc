@@ -21,7 +21,7 @@ include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
 The process for adding a fragment from Exchange is:
 
 . <<add-fragment-to-project,Add the API fragment from Exchange>> to your API spec project as a dependency.
-. <<add-fragment-to-spec, Add the API fragment to your API spec>> using the `$ref` (OAS) or `!include` (RAML) directives.
+. <<add-fragment-to-spec, Add the API fragment to your API spec>> using the `$ref` (OAS and AsyncAPI) or `!include` (RAML) directives.
 
 The process for adding a fragment without publishing it to Exchange is:
 
@@ -31,7 +31,9 @@ Use these examples to explore the functionality of Anypoint Code Builder:
 
 * <<example-oas-api-frag,`example-oas-fragment`>> API spec fragment
 * <<example-oas-api-spec,`example-oas-api-spec`>> API spec
-
+* <<example-avro-api-frag,`example-asyncapi-avro-fragment`>> AsyncAPI spec fragment
+* <<example-asyncapi-spec,`example-asyncapi-spec`>> AsyncAPI spec
+* <<example-asyncapi-spec-inline-avro,`example-asyncapi-spec-inline-avro`>> AsyncAPI spec (inline Avro)
 
 == Before You Begin
 
@@ -181,7 +183,7 @@ To add an API spec fragment to a spec:
 . Depending on the API spec language, select the directive to add the fragment to your specification.
 +
 --
-** OAS specs: Use the `$ref` directive.
+** OAS and AsyncAPI specs: Use the `$ref` directive.
 ** RAML specs: Use the `!include` directive.
 --
 +
@@ -205,6 +207,16 @@ This `!include` directive adds the `AmericanFlight` object from `AmericanFlightD
 --
 types:
   AmericanFlight: !include exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml 
+--
+
+AsyncAPI Example::
++
+This `$ref` directive adds the `AmericanFlightDataType` from `example-asyncapi-fragment` as a data type:
++
+[source,YAML]
+--
+payload:
+  $ref: exchange_modules/e91cab06-650b-4634-9c6f-5bc4f4fc4d17/example-asyncapi-fragment/1.0.0/example-asyncapi-fragment.json#/components/schemas/AmericanFlightDataType
 --
 ====
 
@@ -232,7 +244,7 @@ To create a fragment in your project and include it in your specification:
 . Depending on the API spec language, select the directive to add the fragment from the folder to your spec:
 +
 --
-* OAS specs: Use the `$ref` directive.
+* OAS and AsyncAPI specs: Use the `$ref` directive.
 * RAML specs: Use the `!include` directive.
 --
 + 
@@ -257,6 +269,17 @@ This `!include` directive adds the `AmericanFlightsExample.raml` example:
 examples: 
   output: !include examples/AmericanFlightExample.raml
 --
+
+AsyncAPI Example::
++
+This `$ref` directive adds the `fragments/my-fragment` example:
++
+[source,YAML]
+--
+payload:
+    $ref: fragments/my-fragment
+--
+
 ====
 . Use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within each context, for example:
 +
@@ -325,7 +348,6 @@ components:
 --
 ====
 
-
 [[example-oas-api-spec]]
 == Example OAS 3.0 (YAML) API Spec 
 
@@ -358,8 +380,128 @@ paths:
           content:
             application/json:
               schema:
+--
 ====
 
+[[example-avro-api-frag]]
+== Example AsyncAPI Spec Fragment (Avro Schema)
+
+If you created an Avro Schema fragment, you can replace the initial API fragment with following example code:
+
+.Example AsyncAPI Spec Fragment (Avro Schema)
+[%collapsible]
+
+====
+[source,JSON,linenums]
+--
+{
+  "name": "AmericanFlightDataType",
+  "type": "record",
+  "fields": [
+    {"name": "ID", "type": "int", "example": 1},
+    {"name": "code", "type": "string", "example": "ER38sd"},
+    {"name": "price", "type": "int", "example": 400},
+    {"name": "departureDate", "type": "string", "example": "2017/07/26"},
+    {"name": "origin", "type": "string", "example": "CLE"},
+    {"name": "destination", "type": "string", "example": "SFO"},
+    {"name": "emptySeats", "type": "int", "example": 0},
+    {
+      "name": "plane",
+      "type": {
+        "name": "Plane",
+        "type": "record",
+        "fields": [
+          {"name": "type", "type": "string"},
+          {"name": "totalSeats", "type": "int"}
+        ]
+      }
+    }
+  ]
+}
+--
+====
+
+[[example-asyncapi-spec]]
+== Example AsyncAPI Spec
+
+If you created an AsyncAPI API spec project, you can replace the initial API spec with following example code to test adding the API spec fragments:
+
+.Example AsyncAPI Spec
+[%collapsible]
+
+====
+[source,YAML,linenums]
+--
+asyncapi: 2.6.0
+info:
+  title: Example AsyncAPI Spec
+  version: '1.0.0'
+channels:
+  myChannel:
+    publish:
+      message:
+        schemaFormat: application/vnd.apache.avro;version=1.9.0
+        payload:
+          $ref: exchange_modules/e91cab06-650b-4634-9c6f-5bc4f4fc4d17/example-asyncapi-fragment/1.0.0/example-asyncapi-fragment.json
+--
+====
+
+[[example-asyncapi-spec-inline-avro]]
+== Example AsyncAPI Spec (Inline Avro)
+
+If you created an AsyncAPI API spec project, you can replace the initial API spec with following example code to test inlining the API spec fragments:
+
+.Example AsyncAPI Spec (Inline Avro)
+[%collapsible]
+====
+[source,YAML,linenums]
+--
+asyncapi: 2.6.0
+info:
+  title: Example AsyncAPI Spec (Inline Avro)
+  version: '1.0.0'
+channels:
+  myChannel:
+    publish:
+      message:
+        schemaFormat: 'application/vnd.apache.avro;version=1.9.0'
+        payload:
+          name: AmericanFlightDataType
+          type: record
+          fields:
+            - name: ID
+              type: int
+              example: 1
+            - name: code
+              type: string
+              example: ER38sd
+            - name: price
+              type: int
+              example: 400
+            - name: departureDate
+              type: string
+              example: 2017/07/26
+            - name: origin
+              type: string
+              example: CLE
+            - name: destination
+              type: string
+              example: SFO
+            - name: emptySeats
+              type: int
+              example: 0
+            - name: plane
+              type:
+                name: Plane
+                type: record
+                fields:
+                  - name: type
+                    type: string
+                  - name: totalSeats
+                    type: int
+
+--
+====
 
 == See Also
 
