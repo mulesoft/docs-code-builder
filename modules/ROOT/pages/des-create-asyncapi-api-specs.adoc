@@ -135,3 +135,168 @@ image::des-asyncapi-api-console.png["AsyncAPI API spec in the API Console"]
 For example, click *PUBLISH*:
 +
 image::des-asyncapi-api-console-detail.png["API Console with Publish details"]
+
+[[example-asyncapi-api-spec]]
+== Example AsyncAPI (YAML) API Specification
+
+If you created an AsyncAPI 2.6 (YAML) project, you can replace the initial spec with following example code:
+
+.Example AsyncAPI 2.6 (YAML) API Specification
+[%collapsible]
+
+====
+[source,YAML,linenums]
+--
+  asyncapi: '2.6.0'
+info:
+  title: asyncapi-example
+  version: '1.0.0'
+  description: Orders API
+defaultContentType: application/json
+tags:
+  - name: Orders API
+    description: API for orders
+servers:
+  AMQ-prod:
+    url: https:://your_MQ_server_URL_here
+    protocol: anypointmq
+    protocolVersion: v1
+    description: Anypoint MQ broker
+  Kafka-prod:
+    url: localhost:9092
+    protocol: kafka
+    description: kafka broker
+channels:
+  order-placed:
+    description: new orders channel
+    servers:
+      - AMQ-prod
+    publish:
+      operationId: listen-order-placed
+      description: listen for new order events
+      summary: Order Placed Event
+      message:
+        $ref: '#/components/messages/OrderPlaced'
+    subscribe:
+      operationId: publish-order-placed
+      description: publish new order events
+      summary: Order Placed Event
+      message:
+        $ref: '#/components/messages/OrderPlaced'
+  order-updated:
+    description: updated orders channel
+    servers:
+      - AMQ-prod
+    publish:
+      operationId: listen-order-updated
+      description: listen for updated order events
+      summary: Order updated Event
+      message:
+        $ref: '#/components/messages/OrderPlaced'
+    subscribe:
+      operationId: publish-order-updated
+      description: publish updated order events
+      summary: Order updated Event
+      message:
+        $ref: '#/components/messages/OrderPlaced'
+  order-cancelled:
+    description: orders cancelled channel
+    servers:
+      - AMQ-prod
+    publish:
+      operationId: listen-order-cancellations
+      description: listen for order cancellation events
+      summary: Order Cancelled Event
+      message:
+        $ref: '#/components/messages/OrderCancelled'
+    subscribe:
+      operationId: publish-order-cancellations
+      description: publish order cancellation events
+      summary: Order Cancelled Event
+      message:
+        $ref: '#/components/messages/OrderCancelled'
+  order-confirmed:
+    description: orders confirmed channel
+    servers:
+      - AMQ-prod
+    publish:
+      operationId: listen-order-confirmations
+      description: listen for order confirmation events
+      summary: Order Confirmed Event
+      message:
+        $ref: '#/components/messages/OrderConfirmed'
+    subscribe:
+      operationId: publish-order-confirmations
+      description: publish order confirmation events
+      summary: Order Confirmed Event
+      message:
+        $ref: '#/components/messages/OrderConfirmed'
+  order-backordered:
+    servers:
+      - Kafka-prod
+    description: orders backordered channel
+    publish:
+      operationId: listen-order-backordered
+      description: listen for backorder events
+      summary: Backorder Event
+      message:
+        $ref: '#/components/messages/BackOrder'
+    subscribe:
+      operationId: publish-order-backordered
+      description: publish backorder events
+      summary: Backorder Event
+      message:
+        $ref: '#/components/messages/BackOrder'
+components:
+  messages:
+    OrderPlaced:
+      payload:
+        type: object
+        properties:
+          orderId:
+            type: string
+          customerName:
+            type: string
+          email:
+            type: string
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                productId:
+                  type: string
+                productName:
+                  type: string
+                quantity:
+                  type: integer
+                price:
+                  type: number
+    OrderConfirmed:
+      payload:
+        type: object
+        properties:
+          orderId:
+            type: string
+          email:
+            type: string
+    OrderCancelled:
+      payload:
+        type: object
+        properties:
+          orderId:
+            type: string
+          email:
+            type: string
+          reason:
+            type: string
+    BackOrder:
+      payload:
+        type: object
+        properties:
+          orderId:
+            type: string
+          email:
+            type: string
+--
+====
