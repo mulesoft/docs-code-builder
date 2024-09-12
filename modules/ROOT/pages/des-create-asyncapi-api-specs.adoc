@@ -70,10 +70,68 @@ If prompted, trust the authors of the files in the folder.
 +
 When the project is ready for editing, the API project opens the spec in the Editor view, for example, this AsyncAPI 2.6 (YAML) spec:
 +
-image::des-asyncapi-create.png[New OAS 3.0 (YAML) API project]
+image::des-asyncapi-create.png[New AsyncAPI 2.6 (YAML) API project]
 . Continue designing your API spec.
 +
 As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context.
 
 [[import-spec]]
-== Import an API Specification from Design Center
+== Import an AsyncAPI API Specification from Design Center
+
+Import an AsyncAPI API spec from Design Center, and optionally, keep your project in sync with Design Center by using the Anypoint source control management (SCM) system. Alternatively, use Git or another SCM that is compatible with VS Code in the desktop or cloud IDE. For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
+
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide the following command:
++
+[source,command]
+----
+MuleSoft: Import API Specification from Design Center
+----
+. If prompted, log in to Anypoint Platform through the IDE.
+. Complete the import process:
+.. Select your business group from the *Select a Business Group* popup.
+.. Search for the API spec in the *APIs from Design Center* field.
+.. Navigate to or create a folder for the spec, and click *Select target folder*.
++
+If you receive an error that the import failed (*Importing project _a_project_name_ has failed*), check your target folder for a project with the same name. To address a duplicate naming issue before importing, you can import the design project to a different target folder or delete the project from your IDE (see xref:des-delete-api-projects.adoc[]).
+. Edit or continue designing your spec, as needed.
++
+As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context.
+. Optionally, sync your changes with Design Center by using the Anypoint SCM.
++
+This feature is available only for API projects that you import from Design Center. You can also store your work in another SCM. For SCM options, see xref:start-scm.adoc[].
+
+[[open-output-panel]]
+== Track Progress in the Output Panel
+
+To track the progress of internal processing as you design your API:
+
+// Pointer to Output Panel
+include::partial$acb-reusable-steps.adoc[tags="open-output-panel"]
+. Select *Mule DX Server* from the dropdown:
++
+image::des-output-panel.png["Mule DX Server in the output pane"]
+
+[[review-spec-console]]
+== Review Your Spec in the API Console
+
+To display your spec in the console:
+
+. Click your spec file in the editor.
+. Click the image:icon-api-console.png["",14,14] (*API Console*) icon.
++
+Alternatively, you can provide the command `MuleSoft: API Console` from the xref:start-use-command-palette.adoc[Command Palette].
+. Wait for the channels to render in the API Console.
++
+The API Console show the channels for the spec, for example:
++
+image::des-asyncapi-api-console.png["AsyncAPI API spec in the API Console"]
++
+[calloutlist]
+.. Click a channel to view details.
+.. Display the console menu.
+. Click channels in the console or select items from the menu to view different parts of your spec.
+For example, click *PUBLISH*:
++
+image::des-asyncapi-api-console-detail.png["API Console with Publish details"]
