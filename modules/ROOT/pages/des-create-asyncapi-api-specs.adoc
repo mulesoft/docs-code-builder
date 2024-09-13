@@ -146,7 +146,7 @@ If you created an AsyncAPI 2.6 (YAML) project, you can replace the initial spec 
 ====
 [source,YAML,linenums]
 --
-asyncapi: '2.6.0'
+asyncapi: '2.6.0' //<1>
 info:
   title: asyncapi-example
   version: '1.0.0'
@@ -155,7 +155,7 @@ defaultContentType: application/json
 tags:
   - name: Orders API
     description: API for orders
-servers:
+servers: //<2>
   AMQ-prod:
     url: https:://your_MQ_server_URL_here
     protocol: anypointmq
@@ -165,7 +165,7 @@ servers:
     url: localhost:9092
     protocol: kafka
     description: kafka broker
-channels:
+channels: //<3>
   order-placed:
     description: new orders channel
     servers:
@@ -246,7 +246,7 @@ channels:
       summary: Backorder Event
       message:
         $ref: '#/components/messages/BackOrder'
-components:
+components: //<4>
   messages:
     OrderPlaced:
       payload:
@@ -298,6 +298,29 @@ components:
           email:
             type: string
 --
+[calloutlist]
+.. AsyncAPI
++
+Identifies the API model as AsyncAPI and specifies the title and version of the API spec
+.. Servers
++
+Defines message brokers that determine the connectors to use (indirectly) when publishing events or subscribing to events through operations in the AsyncAPI module:
++
+* `AMQ-prod` configures an Anypoint MQ Broker
++
+* `Kafka-prod` configures a locally hosted Kafka broker
+.. Channels
++
+Defines the bindings:
++
+* `order-placed`, `order-cancelled`, and `order-confirmed` configures Anypoint MQ channels for publishing and subscribing to orders
++
+* `order-backordered` configures a Kafka channel for publishing and subscribing to backorders
+.. Components
++
+Defines the structure of messages for the different types of orders, which include `OrderPlaced`, `OrderCancelled`, `OrderConfirmed`, and `BackOrder`
+
+
 ====
 
 == See Also
