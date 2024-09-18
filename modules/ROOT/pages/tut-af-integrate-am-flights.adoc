@@ -53,18 +53,18 @@ The listener is for triggering the flow, and Set Payload provides some test data
 image::empty-canvas-state.png["american-ws-anypoint-code-builder.xml file shown in visual representation of its Mule flow and the Mule Configuration file"]
 +
 [calloutlist]
-.. The canvas UI provides space for a visual representation of your Mule flows or subflows.
+.. The canvas provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
 . Select *Build a Flow* from the canvas to create an empty flow within a Mule integration application.
-. Change the default name of the flow from the canvas UI or from the configuration XML.
+. Change the default name of the flow from the canvas or from the configuration XML.
 +
 [tabs]
 ====
-From the canvas UI::
+From the canvas::
 +
 Click *Flow name1* to open the configuration panel for the Flow component, change the flow name to `getFlights`, and click the check mark to set the new name.
 +
-image::int-flow-name-ui.png["Change name of flow through canvas UI."]
+image::int-flow-name-ui.png["Change name of flow through canvas."]
 
 From the configuration XML::
 +
@@ -93,7 +93,7 @@ Replace the default name of the flow (`name1`) with `getFlights`.
 ====
 
 . Add the HTTP Listener component to your configuration XML:
-.. In the canvas UI, after your *Flow* component, click the image:icon-plus.png["",15,15] (*Add component*) icon:
+.. In the canvas, after your *Flow* component, click the image:icon-plus.png["",15,15] (*Add component*) icon:
 +
 image::main-tutorial-add-first-http-listener.png["Plus icon highlighted in the flow"]
 .. Search for and select *Listener* from the *HTTP* results:
@@ -138,7 +138,7 @@ Notice that the `name` attribute changes to `inbound-request`. The `doc:id` is r
 +
 [tabs]
 ====
-From the canvas UI::
+From the canvas::
 +
 Click the *Listener* operation to open its configuration panel, and set the HTTP Listener attributes to the following values:
 +
@@ -160,12 +160,12 @@ In `<http:listener/>`, set the attributes to the values provided in the example.
 </flow>
 ----
 ====
-. From the canvas UI, add a Set Payload component after your HTTP Listener operation.
+. From the canvas, add a Set Payload component after your HTTP Listener operation.
 . Configure the Set Payload component attributes:
 +
 [tabs]
 ====
-From the canvas UI::
+From the canvas::
 +
 Click the Set Payload component to open its configuration panel, and set the attributes to the following values:
 +

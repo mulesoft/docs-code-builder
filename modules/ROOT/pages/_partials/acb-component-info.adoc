@@ -64,7 +64,7 @@ In Anypoint Code Builder, both integrations and implementations are Mule applica
 
 include::reuse::partial$connectors/connectors-mule-apps.adoc[]
 
-Built-in Anypoint connectors are available from the canvas UI and configuration XML for integration and implementation projects. These connectors include:
+Built-in Anypoint connectors are available from the canvas and configuration XML for integration and implementation projects. These connectors include:
 
 * xref:db-connector::index.adoc[Anypoint Connector for Database (<db:/>)] (Database Connector)
 * xref:email-connector::index.adoc[Anypoint Connector for Email (<email:/>)] (Email Connector)
@@ -140,7 +140,7 @@ Includes On-Error Continue (`<on-error-continue/>`) and On-Error Propagate (`<on
 //
 // tag::add-components[]
 
-The following example illustrates basic configurations for adding components to your project from the canvas UI, and the configuration XML. The example assumes you are beginning with an empty integration project.
+The following example illustrates basic configurations for adding components to your project from the canvas, and the configuration XML. The example assumes you are beginning with an empty integration project.
 
 . {open-config-xml}, such as `my-project-name.xml`. 
 +
@@ -150,16 +150,16 @@ image::anypoint-code-builder::int-empty-canvas.png["Canvas showing visual repres
 .. The canvas provides space for a visual representation of your Mule flows or subflows.
 .. The configuration XML editor displays the configuration file for your Mule application.
 . Select *Build a Flow* from the canvas to create an empty flow within a Mule integration application.
-. Change the default name of the flow from the canvas UI or from the configuration XML.
+. Change the default name of the flow from the canvas or from the configuration XML.
 +
 [tabs]
 ====
-From the canvas UI::
+From the canvas::
 +
 --
 Click *Flow name1* to open the configuration panel for the Flow component, change the flow name, and click the check mark to set the new name. 
 
-image::anypoint-code-builder::int-flow-name-ui.png["Change name of flow through canvas UI."]
+image::anypoint-code-builder::int-flow-name-ui.png["Change name of flow through canvas."]
 --
 From the configuration XML::
 +
@@ -335,7 +335,7 @@ To import a connector from Exchange to use later in your project:
 
 //Open config XML:
 . {open-config-xml}, such as `my-project-name.xml`.
-. Click image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) in the activity bar to open the canvas UI if it doesn't open automatically.
+. Click image:icon-tree-view.png["",15,15] (*Show Mule graphical mode*) in the activity bar to open the canvas if it doesn't open automatically.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Select the following command:
@@ -371,7 +371,7 @@ xref:exchange::index.adoc[].
 You can open a component and its configuration panel in the canvas from the XML editor. This feature is helpful, for example, if you want to configure the component from the UI, if a component is in another flow than the flow currently displayed in the canvas, or if the canvas is not open.  
  
 . From the configuration XML, place your cursor within the component's XML.
-. Right-click and select *Show Component in Canvas UI*. 
+. Right-click and select *Configure Component in UI*. 
 +
 This action displays the component in the canvas and opens its configuration panel, for example:
 +
