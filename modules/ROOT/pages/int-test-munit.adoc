@@ -207,9 +207,7 @@ The following example displays a running test.
 +
 image:anypoint-code-builder::munit-xml-test-run-panel-xml.png["Running test in the Test panel and XML"]
 +
-The panel and XML indicate the result of the test. The following example displays a failing test.
-+
-image:icon-munit-open-failed-test.png["Opening failed test from Test panel"]
+After the test runs, the panel and XML indicate the result.
 
 * Terminal:
 +
@@ -217,7 +215,7 @@ The following example provides the progress of a test that runs and fails.
 +
 ----
 ================================================================================
-=== Running suite: myTestSuitEx3.xml                                         ===
+=== Running suite: myTestSuiteEx3.xml                                         ===
 ================================================================================
 
 
@@ -227,16 +225,16 @@ The following example provides the progress of a test that runs and fails.
 
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-java.lang.AssertionError:  at file: [myTestSuitEx3.xml], line: [27]
-Expected: "yes" as String {encoding: "UTF-8", mediaType: "application/java; charset=UTF-8", mimeType: "application/java", class: "java.lang.String", contentLength: 3}
-     but: "no" as String {encoding: "UTF-8", mediaType: "application/java; charset=UTF-8", mimeType: "application/java", class: "java.lang.String", contentLength: 2} at (root)
+java.lang.AssertionError:  at file: [myTestSuiteEx3.xml], line: [27]
+Expected: "this" as String {encoding: "UTF-8", mediaType: "application/java; charset=UTF-8", mimeType: "application/java", class: "java.lang.String", contentLength: 4}
+     but: "that" as String {encoding: "UTF-8", mediaType: "application/java; charset=UTF-8", mimeType: "application/java", class: "java.lang.String", contentLength: 4} at (root)
         at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 [INFO] ===============================================================================
 [INFO] MUnit Run Summary - Product: MULE_EE, Version: 4.6.0
 [INFO] ===============================================================================
-[INFO]  >> myTestSuitEx3.xml test result: Tests: 1, Errors: 0, Failures: 1, Skipped: 0
+[INFO]  >> myTestSuiteEx3.xml test result: Tests: 1, Errors: 0, Failures: 1, Skipped: 0
 [INFO]   --- test-03-suite3 <<< FAILED
 [INFO] 
 [INFO] ===============================================================================
@@ -294,6 +292,7 @@ For example, on any line within XML similar to this example:
 
 ** *Run Test at Cursor*
 ** *Debug Test at Cursor*
+** *Run Test at Cursor with Coverage*
 +
 {open-xml-test-options}
 //run all tests option:
@@ -303,6 +302,7 @@ For example, on any line within XML similar to this example:
 
 ** *Run Tests in Current File*
 ** *Debug Tests in Current File*
+** *Run Tests with Coverage in Current File*
 +
 {open-xml-test-options}
 --
@@ -397,7 +397,6 @@ image:munit-launch-config-munit.png["Selecting *MUnit Debug Tests* from the laun
 Run your test in debug mode after adding breakpoints to the XML for your tests or Mule application. When Mule reaches the breakpoint, you can review variables in the Run and Debug panel. 
 
 This procedure requires the Enterprise Edition of Mule runtime engine (Mule). For licensing information, see xref:mule-runtime::installing-an-enterprise-license.adoc[Install an Enterprise License].
-.
 
 //open project (with tests) step as local variable
 . {open-project} 
@@ -409,7 +408,7 @@ For guidance with breakpoints and the Mule event, see xref:int-debug-mule-apps.a
 * From the *Testing* panel, click image:anypoint-code-builder::icon-munit-run-debug.png["",18,18] (*Debug test*) at any level (all tests, all tests in a suite, or a single test).
 +
 For more guidance, see <<run-test-panel>>.
-* From the suite XML, use the right-click menu to run the text. 
+* From the suite XML, use the right-click menu to run the test.
 +
 For more guidance, see <<run-test-xml>>.
 * From a launch configuration in the Run and Debug panel. 
@@ -429,7 +428,28 @@ By default, running tests fail after a timeout period. If a debugging session re
 [[run-coverage]]
 == Run MUnit Tests with Coverage
 
-image:anypoint-code-builder::munit-test-coverage.png["Run Tests with Coverage icon in the Testing panel"]
+// TODO: REMOVE
+//image:anypoint-code-builder::munit-test-coverage.png["Run Tests with Coverage icon in the Testing panel"]
+
+Run your test with coverage to measure how much of a Mule application has been executed by a set of MUnit tests.
+
+This procedure requires the Enterprise Edition of Mule runtime engine (Mule). For licensing information, see xref:mule-runtime::installing-an-enterprise-license.adoc[Install an Enterprise License].
+
+//open project (with tests) step as local variable
+. {open-project}
+. Run your test with coverage using one of the following options:
+
+* From the *Testing* panel, click *Run Test with Coverage* at any level (all tests, all tests in a suite, or a single test).
++
+For more guidance, see <<run-test-panel>>.
+* From the suite XML, use the right-click menu to run the test.
++
+For more guidance, see <<run-test-xml>>.
+
+
+
+
+
 
 
 //
@@ -442,8 +462,6 @@ After <<run, running a test>>, fix any errors.
 . Review test errors in the XML by clicking a failing test's name from the *Testing* panel. 
 +
 image:anypoint-code-builder::munit-test-panel-failed-test.png["All test results displayed in *Testing* panel and with an error highlighted in the XML"]
-//TODO: TO SELF - HIDING: ALREADY EMBEDDED IN IMAGE ABOVE -REMOVE?
-//image:icon-munit-open-failed-test.png["Opening failed test from Test panel"]
 +
 The error in the XML example identifies the error `java.lang.AssertionError`.
 
