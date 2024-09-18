@@ -6,17 +6,26 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //overview: what is autodiscovery
 //include::mule-gateway::partial$autodiscovery-mule4.adoc[tags="autodiscovery-ref"]
 
-Set up API Autodiscovery to track analytics on your Mule app endpoints from a Mule Gateway proxy in API Manager, on Anypoint Platform. Mule Gateway is an API gateway embedded within Mule runtime engine (Mule) that can connect directly to a Mule app.
-
+Set up API autodiscovery to track analytics on requests to endpoints in a deployed Mule app from API Manager, on Anypoint Platform.  
 //include::mule-gateway::partial$autodiscovery-mule4.adoc[tags="autodiscovery-concept"] 
 
-To set up this feature, your Mule app requires an API instance ID from a Mule Gateway proxy that is associated with an API spec on Anypoint Exchange. When running, the Mule runtime instance for your Mule app must be configured with credentials to access the business group on Anypoint Platform that hosts your Mule Gateway proxy. Access to the business group requires a client ID and secret that is available from Access Management, on Anypoint Platform.
+Autodiscovery configuration requires the following:
+
+* An API spec on Anypoint Exchange that defines the endpoints in your Mule app
+* An API instance ID from a Mule Gateway proxy that is associated with an API spec on Anypoint Exchange 
++
+A global element (`<api-gateway:discovery/>`) that you add to your Mule app requires this ID. Mule Gateway is an API gateway embedded within Mule runtime engine (Mule) that can connect directly to a Mule app. 
+* Credentials (client ID and secret) that enable the Mule runtime instance in your Mule app to access the business group on Anypoint Platform that hosts your Mule Gateway proxy 
++
+The credentials are available from Access Management, on Anypoint Platform.
+
+To acquire and configure the ID and credentials in a Mule app, see <<setup>>.
 //TODO: WHAT IS THE RELATIONSHIP BETWEEN THE SPEC AND APP?
 
 [[prereqs]]
 == Before You Begin
 
-You must have a supported API spec. To get analytics on your app in API manager through autodiscovery, you must select a spec from Anypoint Exchange or upload the spec directly to a Mule Gateway proxy in API Manager. 
+You must have a supported API spec. To get analytics on your app in API Manager through autodiscovery, you must select a spec from Anypoint Exchange or upload the spec directly to a Mule Gateway proxy in API Manager. 
 
 For guidance with the creation of API specs, see:
 
@@ -28,7 +37,7 @@ For guidance publishing an API specs to Exchange, see:
 * xref:anypoint-code-builder::des-publish-api-spec-to-exchange.adoc[] to publish your spec from Anypoint Code Builder 
 * xref:design-center::design-publish.adoc[] to publish your spec from Design Center
 
-
+[[setup]]
 == Set Up API Autodiscovery in Anypoint Code Builder
 
 . Meet the prerequisites in <<prereqs>>.
