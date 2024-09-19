@@ -428,9 +428,6 @@ By default, running tests fail after a timeout period. If a debugging session re
 [[run-coverage]]
 == Run MUnit Tests with Coverage
 
-// TODO: REMOVE
-//image:anypoint-code-builder::munit-test-coverage.png["Run Tests with Coverage icon in the Testing panel"]
-
 Run your test with coverage to measure how much of a Mule application has been executed by a set of MUnit tests.
 
 This procedure requires the Enterprise Edition of Mule runtime engine (Mule). For licensing information, see xref:mule-runtime::installing-an-enterprise-license.adoc[Install an Enterprise License].
@@ -446,6 +443,17 @@ For more guidance, see <<run-test-panel>>.
 +
 For more guidance, see <<run-test-xml>>.
 
+. After the test suite runs, view coverage results using one of the following options:
+
+* From the *Testing* panel, expand the *Test Coverage* panel.
+* From the *Explorer* panel.....
+
+
+
+//
+//RUN COVERAGE: CONFIGURE
+[[coverage-config]]
+=== Configure Coverage Settings
 
 
 
@@ -459,9 +467,7 @@ For more guidance, see <<run-test-xml>>.
 
 After <<run, running a test>>, fix any errors.
 
-. Review test errors in the XML by clicking a failing test's name from the *Testing* panel. 
-+
-image:anypoint-code-builder::munit-test-panel-failed-test.png["All test results displayed in *Testing* panel and with an error highlighted in the XML"]
+. Review test errors in the XML by clicking a failing test's name from the *Testing* panel.
 +
 The error in the XML example identifies the error `java.lang.AssertionError`.
 
@@ -497,10 +503,7 @@ For example, the failing test case in the example must return `"yes"` instead of
 
 * To rerun the test from the *Testing* panel, click image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (*Run test*). 
 
-* To rerun the test from the Testing Results panel, open the panel, click the failing test in the test logs, and click image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (*Run test*) from the test logs. 
-. Make sure that the test passes. For example:
-+
-image:anypoint-code-builder::munit-tests-results-pass.png["Successful test in the Test Results panel"]
+* To rerun the test from the Testing Results panel, open the panel, click the failing test in the test logs, and click image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (*Run test*) from the test logs.
 
 For guidance with MUnit XML configurations, see xref:munit::munit-test-concept.adoc[] and xref:munit::event-processors.adoc[].
 
@@ -609,9 +612,7 @@ For guidance, see <<run>>.
 
 After testing, you can clear test results from the *Testing* panel and the logs if you no longer need them.
 
-* From the *Testing* panel, click image: (Views and More Actions), and select *Clear All Results*. For example:
-+
-image:munit-clear-test-results-panel.png["Clearing test results from Testing panel"]
+* From the *Testing* panel, click the *Views and More Actions* (*...*) menu, and select *Clear All Results*.
 * From the *Test Results* panel, click image:icon-munit-clear-test-results.png["",18,18] (*Clear All Results*). For example:
 +
 image:munit-clear-testing-results-log.png["Clearing test results from Test Results panel"]
