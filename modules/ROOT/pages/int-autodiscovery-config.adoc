@@ -15,11 +15,9 @@ Autodiscovery configuration requires the following:
 * An API instance ID from a Mule Gateway proxy that is associated with an API spec on Anypoint Exchange 
 +
 A global element (`<api-gateway:discovery/>`) that you add to your Mule app requires this ID. Mule Gateway is an API gateway embedded within Mule runtime engine (Mule) that can connect directly to a Mule app. 
-* Credentials (client ID and secret) that enable the Mule runtime instance in your Mule app to access the business group on Anypoint Platform that hosts your Mule Gateway proxy 
-+
-The credentials are available from Access Management, on Anypoint Platform.
+* Credentials (client ID and secret) that enable the Mule runtime instance in your Mule app to access the business group on Anypoint Platform that manages your Mule Gateway proxy 
 
-To acquire and configure the ID and credentials in a Mule app, see <<setup>>.
+To acquire and configure the ID and credentials for autodiscovery in a Mule app, see <<setup>>.
 //TODO: WHAT IS THE RELATIONSHIP BETWEEN THE SPEC AND APP?
 
 [[prereqs]]
@@ -41,10 +39,11 @@ For guidance publishing an API specs to Exchange, see:
 == Set Up API Autodiscovery in Anypoint Code Builder
 
 . Meet the prerequisites in <<prereqs>>.
-. Obtain the client ID and secret for your business group from Access Management (https://anypoint.mulesoft.com/accounts/businessGroups/[US], https://eu1.anypoint.mulesoft.com/accounts/businessGroups[EU]).
+. In Anypoint Platform:
+.. Obtain the client ID and secret for your business group from Access Management (https://anypoint.mulesoft.com/accounts/businessGroups/[US], https://eu1.anypoint.mulesoft.com/accounts/businessGroups[EU]).
 +
 The credentials are associated with a business group. For more guidance ,see <<credentials>>. 
-. In API Manager, obtain an API instance ID from a Mule Gateway proxy for your API specification. 
+.. Navigate to API Manager to obtain an API instance ID from a Mule Gateway proxy for your API specification. 
 +
 For more guidance, see <<obtain-instance-id>>.
 . In Anypoint Code Builder: 
@@ -62,10 +61,80 @@ For more guidance, see <<append-credentials>>.
 
 . In API Manager, check that the is registered (active) and produce metrics in API Manager by triggering an endpoint in your Mule app. 
 
+
+[[credentials]]
+=== Obtain a Client ID and Client Secret 
+
+To pair a Mule app with your API spec in API Manager, you must first obtain client ID and client secret for the business group on Anypoint Platform that hosts your API specification and hosts (or will host) your Mule proxy. 
+
+//TODO: DO WE REQUIRE ANY SPECIAL PERMISSIONS TO GET THIS INFO FROM ACCESS MANAGER? 
+
+. Open the list of business groups in Access Management, on Anypoint Platform (https://anypoint.mulesoft.com/accounts/businessGroups/[US], https://eu1.anypoint.mulesoft.com/accounts/businessGroups[EU]).
++
+To navigate to the business group list from the Anypoint Platform home page instead, open Access Management, and click *Business Groups*.
+. In the business group list, click the name of your business group.
+. Click the *Settings* tab for your business group.
+. Obtain the *Client ID* and *Client Secrets* values from the *Settings* tab in Access Manager. 
+
+//see https://docs.mulesoft.com/mule-gateway/mule-gateway-org-credentials-mule4#obtaining-credentials
+
+
+////
+Profile:SD
+St Duke
+sdukeqax092024extra
+Business Group ID
+b3bc2059-64e6-4ee6-9f79-a3ed240a0d32
+Client ID
+1bf98d35846f4323a32c3c5384aacd97
+Client Secret
+989ED120B3f74604919d00b48D0F9Ef5
+
+sdukeqax092024
+Business Group ID
+c2fc6460-ed1a-454e-884b-42349f81dd47
+Client ID
+21f65666b3be4e05899d322aafd373cc
+Client Secret
+6c1f1AFFBBdf4267aCDDB8ec97f503dc
+<!-- Martin's config: 19797986 -->
+	<!-- <api-gateway:autodiscovery apiId="19797986" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="c79b71ef-1cd9-4272-a3ee-b3bf0333b0f9" flowRef="currentTimeFlow" /> -->
+	<!-- Dukes's config: 3862612 -->
+	<!-- <api-gateway:autodiscovery apiId="3862612" flowRef="currentTimeFlow" doc:name="Autodiscovery" /> -->
+
+QAX Sandbox sdukeqax2024
+Environment name: Sandbox
+Environment ID: 950da96a-3102-4646-83c9-87b11aefad97
+Client ID: 8ddf62e4110842ea85729038bc6f88b9
+Client secret: Fa40A8B5d5424b3eba5ef025000C7A05
+
+
+PROD:
+Business Group ID
+346d7416-8f46-4256-8e45-c85d10787232
+Client ID
+180bbafa1b904c9e9bdc00fd5d2b03b5
+Client Secret
+efb0e1912f5a4ab683E000D2066E6FB8
+////
+
 [[obtain-instance-id]]
 === Obtain Your an API Instance ID from API Manager
 
-To obtain the instance ID, an administrator must create a Mule Gateway proxy. 
+The API instance ID is available from a Mule proxy an administrator must create a Mule Gateway proxy. 
+
+* If you have a Mule gateway proxy for your Mule app, see <<find-instance-id>>.
+* If you do not have a Mule gateway proxy for your Mule app, see <<create-proxy>>.
+
+[[find-instance-id]]
+==== Locate the Instance ID
+
+. 
+
+[[create-proxy]]
+==== Create a Mule Proxy
+
+
 
 //TODO: DOES THIS REQUIRE ADMIN ACCESS
 
@@ -85,26 +154,21 @@ Retain the default settings on the *Runtime* page:
 Alternatively, you can upload the API directly by using 
 .. 
 
+[[append-credentials]]
+=== Append Credentials to Mule Runtime Settings
 
+In Anypoint Code Builder, append the client ID and secret to you default Mule runtime arguments. Do not delete other settings.
 
-=== Obtain a Client ID, Client Secret 
+//TODO: IS ONLY ONE CLIENT ID AND SECRET ALLOWED PER ACB INSTALLATION?
 
-To pair a Mule app with your API spec in API Manager, you must first obtain the following:
+////
+For example:
+-M-Danypoint.platform.client_id=1bf98d35846f4323a32c3c5384aacd97 -M-Danypoint.platform.client_secret=989ED120B3f74604919d00b48D0F9Ef5
+////
 
-* The client ID and client secret for the Anypoint Platform organization that hosts your API specification in API Manager
-* The API instance ID from a Mule Gateway your API specification. These credentials are available from Access Management in Anypoint Platform.
-
-
-to communicate with the runtime and Anypoint Platform organization where your Mule Gateway is deployed.
-
-. Meet prerequisites in <<prereqs>>.
-. Get the client ID and client secret from Access Management.
-. Get the API instance ID from API Manager.
-
-. 
-
-
-//see https://docs.mulesoft.com/mule-gateway/mule-gateway-org-credentials-mule4#obtaining-credentials
+MULE_HOME/bin/mule \
+-M-Danypoint.platform.client_id=XXXXXXXX \
+-M-Danypoint.platform.client_secret=XXXXXXXX
 
 
 
@@ -112,6 +176,19 @@ to communicate with the runtime and Anypoint Platform organization where your Mu
 === Configuring the Autodiscovery Element in a Mule App
 
 //see https://docs.mulesoft.com/mule-gateway/mule-gateway-config-autodiscovery-mule4#configuring-the-autodiscovery-element-in-your-mule-application
+
+
+////
+reminder API reqs
+. Create supported API spec. (DC or elsewhere)
+. Publish to Exchange. 
+. From API Manager:
+.. Click Add New API
+.. Select Mule Gateway (from UI: "API gateway embedded in Mule runtime. Connect directly to an existing Mule app or deploy a new proxy app.")
+. Connect to you API spec on Exchange. (be sure to use correct asset type -- TODO_TODO: can you use any of the asset types? or just RAML/OAS) 
+. Click Next (bottom of page)
+
+////
 
 
 //TODO: EDIT THIS INTRO
