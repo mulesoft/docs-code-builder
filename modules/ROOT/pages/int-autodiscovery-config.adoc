@@ -1,4 +1,4 @@
-= Getting Metrics on Mule Apps with Autodiscovery
+= Tracking Requests with Autodiscovery
 :page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
@@ -6,11 +6,15 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //overview: what is autodiscovery
 //include::mule-gateway::partial$autodiscovery-mule4.adoc[tags="autodiscovery-ref"]
 
-Set up API autodiscovery in a Mule app to display metrics in API Manager on requests to endpoints in the app. API Manager is part of Anypoint Platform. 
+Set up API autodiscovery in a Mule app to display key metrics in API Manager, including requests to endpoints in the app. API Manager is part of Anypoint Platform. 
 
-Autodiscovery configuration in a Mule app requires an API instance ID from a Mule Gateway API in API Manager that is associated with a supported API spec. To acquire and configure the API ID and Anypoint Platform credentials in a Mule app, see <<setup>>.
+image:anypoint-code-builder::autodiscovery-data-apim.png["View request metrics for a Mule app in API Manager"]
+
+Autodiscovery configuration in a Mule app requires an API instance ID from an API in API Manager that runs on a Mule Gateway runtime. To acquire and configure the API instance ID in a Mule app, configure credentials for connecting to your API in API Manager from the Mule app, and display metrics on your app in API Manager:
+
+. Meet the prerequisites in <<prereqs>>.
+. Follow the steps in <<setup>>.
 //include::mule-gateway::partial$autodiscovery-mule4.adoc[tags="autodiscovery-concept"] 
-
 
 
 //TODO: WHAT IS THE RELATIONSHIP BETWEEN THE SPEC AND APP?
@@ -18,11 +22,11 @@ Autodiscovery configuration in a Mule app requires an API instance ID from a Mul
 [[prereqs]]
 == Before You Begin
 
-If you don't have a Mule Gateway instance ID for your Mule app, you must create one.
-//(see SEE_TODO_TODO_TODO). 
-Mule Gateway API configuration in API Manager requires a supported API spec on Anypoint Exchange. 
+To obtain an API instance ID for your Mule app's autodiscovery configuration, you must have access to an API in API Manager that runs on a Mule Gateway runtime. The API must be associated with an API spec on Anypoint Exchange that defines endpoints in your Mule app. For an API spec example that defines an endpoint and Mule app example that implements the endpoint, see <<examples>>.
 
-* For guidance with the creation of API specs, see:
+* To create an API with a Mule Gateway runtime, see xref:api-manager::create-instance-task-mule.adoc[] in the API Manager documentation.
+
+* For guidance creating API specs, see:
 
 ** xref:anypoint-code-builder::des-create-api-specs.adoc[] to design a spec from Anypoint Code Builder
 ** xref:design-center::design-designing-api-specs-fragments.adoc[] to design a spec from Design Center 
@@ -32,17 +36,12 @@ Mule Gateway API configuration in API Manager requires a supported API spec on A
 ** xref:anypoint-code-builder::des-publish-api-spec-to-exchange.adoc[] to publish your spec from Anypoint Code Builder 
 ** xref:design-center::design-publish.adoc[] to publish your spec from Design Center
 
-For an API spec and Mule app example, see <<examples>>.
-
 [[setup]]
 == Set Up API Autodiscovery in a Mule App
 
-Autodiscovery configuration in a Mule app requires:
+Configure a Mule app to send request data to an API running on a Mule Gateway runtime in API Manager. The API tracks this data in charts on API Manager. 
 
-* A global element (`<api-gateway:discovery/>`) that references an API ID for a Mule Gateway instance. 
-+
-Mule Gateway is an API gateway embedded within Mule runtime engine (Mule) that can connect directly to a Mule app. 
-* Credentials (client ID and secret) that enable the Mule runtime instance in your Mule app to access the business group in Anypoint Platform that manages your Mule Gateway API instance 
+Autodiscovery configuration of a Mule app requires global element (`<api-gateway:discovery/>`) that references an API instance ID along with credentials (client ID and secret) that enable the Mule runtime engine in your Mule app to connect to the Anypoint Platform business group or environment for your API in API Manager. 
 
 To set up autodiscovery:
 
@@ -156,7 +155,7 @@ Examples tested for API autodiscovery include the following:
 Testing involved creating the spec in Design Center, publishing the spec to Exchange, creating an Mule Gateway API instance in API Manager that is associated with the spec on Exchange.
 * <<mule-app>>
 +
-Testing involved adding the `<api-gateway:autodiscovery/>` element with the `apiID` value for the Mule Gateway API instance in API, appending the client ID and secret to the default Mule runtime arguments in Anypoint Code Builder, deploying the app locally by running the app in debug mode, making requests to the defined endpoint, and checking that the associated Mule Gateway instance on API Manager is *Active* and that the requests produce data (key metrics) in the instance's charts. 
+Testing involved adding the `<api-gateway:autodiscovery/>` element with the `apiID` value from API Manager, appending the client ID and secret to the default Mule runtime arguments in Anypoint Code Builder settings, running the app in debug mode to deploy the app locally, making requests to the defined endpoint in the app, and checking that the associated Mule Gateway instance on API Manager is *Active* and that the requests produce data (key metrics) in the instance's charts. 
 
 [[oas-spec]]
 ==== Example: OAS Spec
