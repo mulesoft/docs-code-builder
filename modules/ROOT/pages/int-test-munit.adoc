@@ -22,19 +22,6 @@ Anypoint Code Builder provides a *Testing* panel from which you can run tests. I
 //TODO TO SELF: TEST LINKS LOCALLY -- RESOURCES NOT BUILT ON REVIEW SITE
 For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[Anypoint Code Builder Release Notes]. xref:studio::index.adoc[Anypoint Studio] also supports MUnit testing features.
 
-////
-[%header,cols="1a,1a"]
-|===
-| Test Suites in the Testing Panel
-image:anypoint-code-builder::icon-munit-testing.png["",18,18]
-| Test Suites in the *Explorer*
-image:anypoint-code-builder::icon-explorer.png["",18,18]
-
-|image::anypoint-code-builder::munit-tests-panel.png["MUnit tests in the Testing panel"]
-|image::anypoint-code-builder::munit-tests-explorer.png["MUnit tests in the Explorer"]
-|===
-////
-
 Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, supports MUnit functionality in Anypoint Code Builder. For information about extensions, see xref:index.adoc#extension-pack[Anypoint Extension Pack].
 //TODO: ADD MAVEN VERSION MINIMUM TO 
 
@@ -54,13 +41,6 @@ For guidance, see <<maven-settings>>.
 
 For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[]. Anypoint Studio supports testing with all MUnit features.
 
-
-[NOTE]
-====
-Anypoint Code Builder does not support use of *Run Tests with Coverage* at this time. 
-
-image:anypoint-code-builder::munit-test-coverage.png["Run Tests with Coverage icon in the Testing panel"]
-====
 
 //
 //MUNIT SETTINGS
@@ -144,15 +124,13 @@ If your project does not contain any tests, Anypoint Code Builder supports the f
 [[open-test]]
 == Open MUnit Tests
 
-Open the test suite XML from the *Testing* panelor the *Explorer*. 
+Open the test suite XML from the *Testing* panel or the *Explorer*.
 
 * *Testing panel* - Open the *Testing* panel from the activity bar in the IDE:
 //open project (with tests) step as local variable
 . {open-project} 
 . Click image:anypoint-code-builder::icon-munit-testing.png["",18,18] (*Testing*) to open the *Testing* panel.
-. Click or mouse over the suite or test name, and click image:anypoint-code-builder::icon-munit-go-to-test-gray.png["",18,18] or highlighted image:anypoint-code-builder::icon-munit-go-to-test.png["",18,18] (*Go to test*) to open the XML file that contains the test. For example:
-+
-image::anypoint-code-builder::munit-tests-panel.png["MUnit tests in the Testing panel"] 
+. Click or mouse over the suite or test name, and click image:anypoint-code-builder::icon-munit-go-to-test-gray.png["",18,18] (*Go to test*) or highlighted image:anypoint-code-builder::icon-munit-go-to-test.png["",18,18] (*Go to test*) to open the XML file that contains the test.
 +
 //TODO: BUT YOU CAN'T RUN THE TEST FROM THE XML IN THIS CASE :(
 Clicking the test name also opens to the XML file. 
@@ -161,9 +139,7 @@ Clicking the test name also opens to the XML file.
 //open project (with tests) step as local variable
 . {open-project}
 . In the activity bar, click (image:anypoint-code-builder::icon-explorer.png["",18,18]) (*Explorer*). 
-. Navigate to `src/main/test/munit`. For example:
-+
-image::anypoint-code-builder::munit-tests-explorer.png["MUnit tests in the Explorer"]
+. Navigate to `src/main/test/munit`.
 . Click a test suite XML file to view the tests in the suite. 
 
 //
@@ -177,6 +153,7 @@ Run MUnit tests using any of these options:
 * <<run-test-xml>>
 * <<run-launch-config>>
 * <<run-debug>>
+* <<run-coverage>>
 //TODO: CONSIDER ADDING WHEN WORKING (SECTION REMOVED UNTIL THEN)
 //* <<run-test-explorer>>
 
@@ -210,13 +187,13 @@ image:anypoint-code-builder::munit-testing-panel.png["Testing panel"]
 +
 --
 [calloutlist]
-.. All suites: To run all tests in all suites, click the *Run Tests* or *Debug Tests* icon. 
+.. All suites: To run all tests in all suites, click the *Run Tests*, *Debug Tests*, or *Run Tests with Coverage* icon.
 //or right-click:
 {right-click}
-.. Suite: To run all tests in a single suite, hover over or click the suite, and then click the *Run Test* or *Debug Test* icon.
+.. Suite: To run all tests in a single suite, hover over or click the suite, and then click the *Run Test*, *Debug Test*, or *Run Test with Coverage* icon.
 //or right-click:
 {right-click}
-.. Test: To run a single test, hover over or click a test in a test suite, and then click the *Run Test* or *Debug Test* icon.
+.. Test: To run a single test, hover over or click a test in a test suite, and then click the *Run Test*, *Debug Test*, or *Run Test with Coverage* icon.
 --
 //or right-click:
 {right-click}
@@ -230,9 +207,7 @@ The following example displays a running test.
 +
 image:anypoint-code-builder::munit-xml-test-run-panel-xml.png["Running test in the Test panel and XML"]
 +
-The panel and XML indicate the result of the test. The following example displays a failing test.
-+
-image:icon-munit-open-failed-test.png["Opening failed test from Test panel"]
+After the test runs, the panel and XML show the result.
 
 * Terminal:
 +
@@ -240,7 +215,7 @@ The following example provides the progress of a test that runs and fails.
 +
 ----
 ================================================================================
-=== Running suite: myTestSuitEx3.xml                                         ===
+=== Running suite: myTestSuiteEx3.xml                                         ===
 ================================================================================
 
 
@@ -250,16 +225,16 @@ The following example provides the progress of a test that runs and fails.
 
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-java.lang.AssertionError:  at file: [myTestSuitEx3.xml], line: [27]
-Expected: "yes" as String {encoding: "UTF-8", mediaType: "application/java; charset=UTF-8", mimeType: "application/java", class: "java.lang.String", contentLength: 3}
-     but: "no" as String {encoding: "UTF-8", mediaType: "application/java; charset=UTF-8", mimeType: "application/java", class: "java.lang.String", contentLength: 2} at (root)
+java.lang.AssertionError:  at file: [myTestSuiteEx3.xml], line: [27]
+Expected: "this" as String {encoding: "UTF-8", mediaType: "application/java; charset=UTF-8", mimeType: "application/java", class: "java.lang.String", contentLength: 4}
+     but: "that" as String {encoding: "UTF-8", mediaType: "application/java; charset=UTF-8", mimeType: "application/java", class: "java.lang.String", contentLength: 4} at (root)
         at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 [INFO] ===============================================================================
 [INFO] MUnit Run Summary - Product: MULE_EE, Version: 4.6.0
 [INFO] ===============================================================================
-[INFO]  >> myTestSuitEx3.xml test result: Tests: 1, Errors: 0, Failures: 1, Skipped: 0
+[INFO]  >> myTestSuiteEx3.xml test result: Tests: 1, Errors: 0, Failures: 1, Skipped: 0
 [INFO]   --- test-03-suite3 <<< FAILED
 [INFO] 
 [INFO] ===============================================================================
@@ -317,6 +292,7 @@ For example, on any line within XML similar to this example:
 
 ** *Run Test at Cursor*
 ** *Debug Test at Cursor*
+** *Run Test at Cursor with Coverage*
 +
 {open-xml-test-options}
 //run all tests option:
@@ -326,6 +302,7 @@ For example, on any line within XML similar to this example:
 
 ** *Run Tests in Current File*
 ** *Debug Tests in Current File*
+** *Run Tests with Coverage in Current File*
 +
 {open-xml-test-options}
 --
@@ -417,10 +394,7 @@ image:munit-launch-config-munit.png["Selecting *MUnit Debug Tests* from the laun
 [[run-debug]]
 == Run MUnit Tests in Debug Mode
 
-Run your test in debug mode after adding breakpoints to the XML for your tests or Mule application. When Mule reaches the breakpoint, you can review variables in the Run and Debug panel. 
-
-This procedure requires the Enterprise Edition of Mule runtime engine (Mule). For licensing information, see xref:mule-runtime::installing-an-enterprise-license.adoc[Install an Enterprise License].
-.
+Run your test in debug mode after adding breakpoints to the XML for your tests or Mule application. When Mule reaches the breakpoint, you can review variables in the Run and Debug panel.
 
 //open project (with tests) step as local variable
 . {open-project} 
@@ -432,7 +406,7 @@ For guidance with breakpoints and the Mule event, see xref:int-debug-mule-apps.a
 * From the *Testing* panel, click image:anypoint-code-builder::icon-munit-run-debug.png["",18,18] (*Debug test*) at any level (all tests, all tests in a suite, or a single test).
 +
 For more guidance, see <<run-test-panel>>.
-* From the suite XML, use the right-click menu to run the text. 
+* From the suite XML, use the right-click menu to run the test.
 +
 For more guidance, see <<run-test-xml>>.
 * From a launch configuration in the Run and Debug panel. 
@@ -445,7 +419,35 @@ image:anypoint-code-builder::munit-debug-test-mule-event.png["Variables after de
 //TODO: VERIFY STEP, ANYTHING TO ADD?
 . Examine the data, and address any issues.
 
-By default, running tests fail after a timeout period. If a debugging session reaches a breakpoint in a test, the test and the build fail at timeout. See xref:munit::munit-test-concept.adoc#test-timeout-attribute[Test TimeOut Attribute]. 
+By default, running tests fail after a timeout period. If a debugging session reaches a breakpoint in a test, the test and the build fail at timeout. See xref:munit::munit-test-concept.adoc#test-timeout-attribute[Test TimeOut Attribute].
+
+//
+//RUN: COVERAGE
+[[run-coverage]]
+== Run MUnit Tests with Coverage
+
+Run your test with coverage to measure how much of a Mule application is executed by a set of MUnit tests.
+
+//open project (with tests) step as local variable
+. {open-project}
+. Run your test with coverage using one of the following options:
+
+* From the *Testing* panel, click *Run Test with Coverage* at any level (all tests, all tests in a suite, or a single test).
++
+For more guidance, see <<run-test-panel>>.
+* From the suite XML, right-click and select an option to run the test.
++
+For more guidance, see <<run-test-xml>>.
+
+. After the test suite runs, view coverage results using one of the following options:
+
+* In the activity bar, click image:anypoint-code-builder::icon-munit-testing.png["",18,18] (*Testing*) to open the *Testing* panel. The *Test Coverage* panel shows coverage for directories and files:
++
+image:anypoint-code-builder::munit-test-coverage-panel.png["Test coverage percentages after running tests with coverage"]
+
+* In the activity bar, click (image:anypoint-code-builder::icon-explorer.png["",18,18]) (*Explorer*). Coverage is shown for directories and files.
+
+Numeric and graphic percentages both indicate the percentage of event processors executed by the MUnit test.
 
 //
 //FIX ERRORS
@@ -454,11 +456,7 @@ By default, running tests fail after a timeout period. If a debugging session re
 
 After <<run, running a test>>, fix any errors.
 
-. Review test errors in the XML by clicking a failing test's name from the *Testing* panel. 
-+
-image:anypoint-code-builder::munit-test-panel-failed-test.png["All test results displayed in *Testing* panel and with an error highlighted in the XML"]
-//TODO: TO SELF - HIDING: ALREADY EMBEDDED IN IMAGE ABOVE -REMOVE?
-//image:icon-munit-open-failed-test.png["Opening failed test from Test panel"]
+. Review test errors in the XML by clicking the name of the failing test from the *Testing* panel.
 +
 The error in the XML example identifies the error `java.lang.AssertionError`.
 
@@ -494,10 +492,7 @@ For example, the failing test case in the example must return `"yes"` instead of
 
 * To rerun the test from the *Testing* panel, click image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (*Run test*). 
 
-* To rerun the test from the Testing Results panel, open the panel, click the failing test in the test logs, and click image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (*Run test*) from the test logs. 
-. Make sure that the test passes. For example:
-+
-image:anypoint-code-builder::munit-tests-results-pass.png["Successful test in the Test Results panel"]
+* To rerun the test from the Testing Results panel, open the panel, click the name of the failing test in the test logs, and click image:anypoint-code-builder::icon-munit-run-test.png["",18,18] (*Run test*) from the test logs.
 
 For guidance with MUnit XML configurations, see xref:munit::munit-test-concept.adoc[] and xref:munit::event-processors.adoc[].
 
@@ -536,11 +531,11 @@ Configure MUnit tests and test suites from the XML editor.
 
 Create an MUnit test suite in your project from the *Explorer*. 
 
-. Open your project to `{munit-src}` in the *Explorer*. 
+. Open your project to `{munit-src}` in the *Explorer*.
 . Create a suite file in the `munit` folder:
-.. Right-click within the folder and select *New File...*. 
+.. Right-click the `munit` folder and select *New MUnit Test Suite File...*.
 .. Provide a name for your suite, such as `my-suite.xml`.
-.. In the file, provide the XML declaration (`<?xml>`), `<mule/>` and `<mule-config>` elements. For example:
+.. The new suite file includes the XML declaration (`<?xml>`), `<mule/>` and `<mule-config>` elements. For example:
 +
 [source,xml]
 ----
@@ -606,9 +601,7 @@ For guidance, see <<run>>.
 
 After testing, you can clear test results from the *Testing* panel and the logs if you no longer need them.
 
-* From the *Testing* panel, click image: (Views and More Actions), and select *Clear All Results*. For example:
-+
-image:munit-clear-test-results-panel.png["Clearing test results from Testing panel"]
+* From the *Testing* panel, click the *Views and More Actions* (*...*) menu, and select *Clear All Results*.
 * From the *Test Results* panel, click image:icon-munit-clear-test-results.png["",18,18] (*Clear All Results*). For example:
 +
 image:munit-clear-testing-results-log.png["Clearing test results from Test Results panel"]
