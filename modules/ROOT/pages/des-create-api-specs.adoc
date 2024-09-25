@@ -58,6 +58,12 @@ include::partial$acb-reusable-steps.adoc[tags="no-project-name-reuse"]
 See xref:start-add-folders.adoc[].
 
 include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
+| *API Type* | The type of API spec to create.
+
+Available options are *REST API* and *AsyncAPI*.
+
+Select *REST API* to use the <<example-oas-api-spec,example>> in this procedure.
+
 | *API Specification Language* | See xref:des-designing-api-specs.adoc#supported-spec-languages[Supported OAS and RAML Versions].
 
 Select *OAS 3.0 (YAML)* to use the <<example-oas-api-spec,example>> in this procedure.
@@ -71,7 +77,7 @@ When the project is ready for editing, the API project opens the spec in the Edi
 image::des-oas-create.png[New OAS 3.0 (YAML) API project]
 . Continue designing your API spec. 
 +
-As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context. 
+As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
 
 [[import-spec]]
 == Import an API Specification from Design Center
@@ -95,7 +101,7 @@ MuleSoft: Import API Specification from Design Center
 If you receive an error that the import failed (*Importing project _a_project_name_ has failed*), check your target folder for a project with the same name. To address a duplicate naming issue before importing, you can import the design project to a different target folder or delete the project from your IDE (see xref:des-delete-api-projects.adoc[]).
 . Edit or continue designing your spec, as needed.
 +
-As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context. 
+As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
 . Optionally, sync your changes with Design Center by using the Anypoint SCM.
 +
 This feature is available only for API projects that you import from Design Center. You can also store your work in another SCM. For SCM options, see xref:start-scm.adoc[].
@@ -279,6 +285,6 @@ If you created an OAS 3.0 (YAML) project, you can replace the initial spec with 
 * xref:start-acb.adoc[]
 * xref:tutorials.adoc[]
 * xref:access-management::business-groups.adoc[]
-* xref:start-discover-ui.adoc#use-autocomplete[Use IntelliSense to Auto-Complete in the Editor]
+* xref:start-discover-ui.adoc#use-autocomplete[Use Auto-Complete in the Editors]
 * xref:tut-af-design-am-flights-api.adoc[] Tutorial
 * xref:des-delete-api-projects.adoc[]
