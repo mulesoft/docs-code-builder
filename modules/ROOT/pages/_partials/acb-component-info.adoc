@@ -89,7 +89,35 @@ To find information about more connectors, see xref:connectors::introduction/int
 // end::connectors-ref[]
 //
 
+// tag::connection-configuration-panel[]
 
+The Connection Management Configuration Panel provides an interface that allows you to easily configure connections to third-party systems directly from the UI. 
+
+In this  panel, you can create, edit, delete, and test connections directly within the ACB interface, automatically populate connection fields using metadata provided by the connector, and save and manage connection configurations without switching to the XML view. To open the configuration panel: 
+
+* Click on an existing component, or add a new one.
+* Click the + icon: 
++
+This action displays the configuration panel, for example:
+
+|image:anypoint-code-builder::acb-configuration-panel-general.png["Configuration panel for connectors"] 
+
+From here, you can:
+
+* Configure a connection for this project.  You can select a previously saved connection on the Connection field, where the form is pre-populated with existing configuration data.
+
+NOTE: Changes impact all components using this connection.
+
+* Easily update connection details without manually editing the XML code.
+
+* Test the connection directly within the panel to verify that it is correctly configured. The test functionality helps prevent errors by allowing users to confirm that the connection is valid before committing changes.
+
+* You can delete an existing connection when it's no longer needed. A confirmation message is displayed, listing any affected components that use the connection.
+
+* You can view all components that depend on a connection.
+
+
+// end::connection-configuration-panel[]
 //
 // tag::core-component-ref[]
 
@@ -379,3 +407,5 @@ image::anypoint-code-builder::acb-open-component-ui-from-xml.png["Opening a comp
 
 // end::open-component-from-xml[]
 //
+
+
