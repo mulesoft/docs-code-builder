@@ -302,7 +302,29 @@ Your configuration XML file now looks similar to the following:
 
 //
 // tag::check-connection[]
-Most connectors provide an operation, such as the HTTP Listener operation, that triggers the flow to start. These operations typically have connection configurations that you can test from the configuration XML. For example, to test an HTTP Listener connection, click *Test Connection* in the configuration XML:
+
+Most connectors provide an operation, such as the HTTP Listener operation, that triggers the flow to start. These operations typically have connection configurations that you can test 
+
+== Test Connection from The Configuration Panel
+
+You can text the connection from the connectors *Configuration panel*. For example, to test an HTTP Listener connection: 
+
+image:anypoint-code-builder::acb-configuration-panel-test.png["Configuration panel for connectors"] 
+
+[calloutlist]
+.. Click the *+* icon in the connector to open the configuration panel
+.. After filling in the required fields, click *Test connection*.
+
+The status bar shows the progress:
+
+* *Verifying connection* indicates that the test is in progress.
+* *Connection is valid* indicates a successful connection. 
+* *Invalid Connection Got status code: 500 when trying to resolve a Mule Runtime operation* indicates a connection error.
+
+
+== Test Connection from The configuration XML
+
+You can test the connection from the configuration XML. For example, to test an HTTP Listener connection, click *Test Connection* in the configuration XML:
 
 image::http-listener-test-connection.png["HTTP Listener Test Connection link in the configuration XML"]
 
