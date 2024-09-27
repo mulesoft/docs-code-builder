@@ -1,0 +1,48 @@
+= Troubleshoot Einstein for Anypoint Code Builder
+
+The following errors sometimes occur when you use the Einstein for Anypoint Code Builder.
+
+== Einstein Settings Don't Appear
+
+If the Einstein Settings don't appear on the Anypoint Code Builder landing page, verify that you have the following permission and role in access management:
+
+* Organization Administrator xref:access-management::users.adoc#grant-user-permissions[permission]
+* Organization Administrators xref:access-management::roles.adoc[role]
+
+== Unexpected Query Results When Using the Einstein Generative Flow Feature
+
+If the generative flow is not returning accurate and useful results for the prompts you enter, rewrite your prompt and follow the guidelines to xref:int-ai-create-integrations.adoc#craft-ai-prompt[craft an effective prompt].
+
+== Troubleshoot Einstein Access Errors
+
+If you can't access Einstein, contact your Anypoint Platform organization administrator. If you are the organization administrator, check the following:
+
+* You accepted the terms and conditions and xref:int-ai-enable-einstein.adoc[enabled Einstein for Anypoint Code Builder] for your organization. 
+* The Salesforce organization you are connected to for Einstein requests has Einstein Generative AI enabled. For more information, see https://help.salesforce.com/s/articleView?id=sf.generative_ai_enable.htm&type=5[Set Up Einstein Generative AI].
+* The Salesforce organization you are connected to for Einstein requests has an xref:access-management::trusted-salesforce-org.adoc[established a tenant relationship] with your Anypoint Platform organization, and the connection is enabled.  
+* The Salesforce organization you are connected to for Einstein requests is valid. For example, verify that it's not expired or otherwise disabled. 
+
+== Troubleshoot Anypoint Platform Authorization Errors
+
+If you receive an authorization error, contact your Anypoint Platform organization administrator. If you are the organization administrator, check the following:
+
+* The user has the *Mule Developer Generative AI User* permission assigned in Anypoint Platform access management.
+* You accepted the terms and conditions and xref:int-ai-enable-einstein.adoc[enabled Einstein for Anypoint Code Builder] for your organization.
+* Your Anypoint Platform organization is current and active. 
+
+== Einstein Doesn't Appear for EU Cloud Users on the Desktop IDE
+
+If you are signed in to your Anypoint Platform account on the EU Cloud and Einstein doesn't appear in the UI, verify the following:
+
+* You completed the xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud] procedure.
+* You are signed in to Anypoint Platform through the Anypoint Code Builder app.
+* xref:int-ai-create-integrations.adoc#before-you-begin[You have the required permissions].
+
+
+== See Also
+
+* xref:int-ai-enable-einstein.adoc[]
+* xref:access-management::trusted-salesforce-org.adoc[]
+* xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform from the IDE]
+* xref:access-management::permissions-by-product.adoc#anypoint-code-builder[Anypoint Code Builder Permissions]
+

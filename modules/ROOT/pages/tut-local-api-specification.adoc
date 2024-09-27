@@ -36,26 +36,22 @@ Alternatively, open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Sh
 ----
 MuleSoft: Design an API
 ----
-. If prompted, sign in to Anypoint Platform, and follow all the prompts to reopen the IDE. 
-. Start your API specification:
+. If prompted, sign in to Anypoint Platform, and follow all the prompts to reopen the IDE.
+. Complete the *API Specification* form:
 +
-image::design-api-ui-first.png["Configure Retrieve Users API"]
-+
---
-[calloutlist]
-.. In *Project name*, type *Retrieve Users API*.
-+
-The name must be unique.
-.. In *Project Location*, click *Browse*. 
-+
-In the *File* menu that opens in the desktop IDE, create a folder such as `workspace-retrieve-users`, and then select that folder's location. 
-+
-When you are done, the full path in the *Project Location* field is similar to `/Users/me/workspace-retrieve-users`. Starting from the directory with your new folder prevents potential issues related to multi-root workspaces.
-.. In *API Specification Language*, select *RAML 1.0*.
---
-When complete, *Design an API* is similar to this example:
-+
-image::tut-api-create.png["Design an API configuration"]
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Project Name* | *Retrieve Users API* +
+Alternatively, provide a similar name of your choice. The name must be unique. The name of the project and specification file is based on the name you provide.
+| *Project Location* | Your home directory or another directory you create (see xref:start-add-folders.adoc[]).
+| *API Type* | *REST API* +
+Anypoint Code Builder supports REST and AsyncAPI API types.
+| *API Specification Language* | *RAML 1.0* +
+Anypoint Code Builder supports OAS and RAML.
+|===
+
 . Click *Create Project*.
 +
 This process creates a project that contains your API specification within your workspace.
@@ -167,7 +163,7 @@ The configuration XML file for the implementation (`retrieve-users-implementatio
 ----
 retrieve-users-implementation/src/main/mule/retrieve-users-implementation.xml
 ----
-* The canvas UI for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
+* The canvas for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
 * In the implementation XML, the flow `<flow name="get:\users:retrieve-users-api-config">` contains an `<ee:transform/>` element with your example:
 +
 [source,XML,linenums]
