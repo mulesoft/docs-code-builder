@@ -111,7 +111,7 @@ Set a home directory for downloaded assets, which include Mule runtime (`runtime
 
 Enable auto-completion suggestions in the API design editor in Anypoint Code Builder. This setting prevents the need to press Ctrl+Space to activate a list of suggestions and is disabled by default. See also <<setting-auto-complete-debouncer>>.
 
-* To activate the auto-completion menu, place your cursor in the editor and click Enter. 
+* To open the auto-completion menu, place your cursor in the editor and click Enter. 
 * To close the auto-suggestion menu, click Escape. 
 
 [[setting-auto-complete-debouncer]]
@@ -120,3 +120,5 @@ Enable auto-completion suggestions in the API design editor in Anypoint Code Bui
 Set the time in milliseconds to wait before displaying auto-completion options. This setting defaults to 1500 milliseconds. See also <<setting-auto-complete>>.
 
 Avoid setting a long delay. If you activate the auto-completion menu but initiate other actions in your project before the delay period ends, the IDE automatically returns focus to the editor and opens the menu where you activated auto-completion. Such actions include opening the command palette or using the command terminal after activating the menu.
+
+If you move your cursor to a new location or use the up or down arrow keys in the editor before the trigger delay expires, the  request to open the auto-completion menu is cancelled. 
