@@ -34,14 +34,12 @@ For guidance creating API specs, see:
 
 Configure a Mule app to send request data to an API running on a Mule Gateway runtime in API Manager. The API tracks this data in charts on API Manager. 
 
-Autodiscovery configuration of a Mule app requires global element (`<api-gateway:discovery/>`) that references an API instance ID along with credentials (client ID and secret) that enable the Mule runtime engine in your Mule app to connect to the Anypoint Platform business group or environment for your API in API Manager. 
+Autodiscovery configuration of a Mule app requires a global element (`<api-gateway:discovery/>`) that references an API instance ID along with credentials (client ID and secret) that enable the Mule runtime engine in your Mule app to connect to the Anypoint Platform business group or environment for your API in API Manager. 
 
 To set up autodiscovery:
 
 . Meet the prerequisites in <<prereqs>>.
 . Obtain the client ID and secret for your business group from Access Management (https://anypoint.mulesoft.com/accounts/businessGroups/[US], https://eu1.anypoint.mulesoft.com/accounts/businessGroups[EU]), in Anypoint Platform.
-+
-To pair a Mule app with your API spec in API Manager, you must first obtain client ID and client secret for the business group on Anypoint Platform that hosts your API specification and hosts (or will host) your Mule proxy. The credentials are associated with a business group. 
 +
 --
 .Show me how
