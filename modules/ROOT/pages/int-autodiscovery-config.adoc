@@ -22,7 +22,7 @@ Autodiscovery configuration in a Mule app requires an API instance ID from an AP
 [[prereqs]]
 == Before You Begin
 
-To obtain an API instance ID for your Mule app's autodiscovery configuration, you must have access to an API in API Manager that runs on a Mule Gateway runtime. The API must be associated with an API spec on Anypoint Exchange that defines endpoints in your Mule app. For an API spec example that defines an endpoint and Mule app example that implements the endpoint, see <<examples>>.
+To obtain the API instance ID for your Mule app's autodiscovery configuration, you must have access to an API in API Manager that runs on a Mule Gateway runtime. The API must be associated with an API spec on Anypoint Exchange that defines endpoints in your Mule app. For an API spec example that defines an endpoint and Mule app example that implements the endpoint, see <<examples>>.
 
 * To create an API with a Mule Gateway runtime, see xref:api-manager::create-instance-task-mule.adoc[] in the API Manager documentation.
 
@@ -46,104 +46,75 @@ Autodiscovery configuration of a Mule app requires global element (`<api-gateway
 To set up autodiscovery:
 
 . Meet the prerequisites in <<prereqs>>.
-. In Anypoint Platform:
-.. Obtain the client ID and secret for your business group from Access Management (https://anypoint.mulesoft.com/accounts/businessGroups/[US], https://eu1.anypoint.mulesoft.com/accounts/businessGroups[EU]).
+. Obtain the client ID and secret for your business group from Access Management (https://anypoint.mulesoft.com/accounts/businessGroups/[US], https://eu1.anypoint.mulesoft.com/accounts/businessGroups[EU]), in Anypoint Platform.
 +
-The credentials are associated with a business group. For more guidance ,see <<credentials>>. 
-.. Navigate to API Manager to obtain an API instance ID from a Mule Gateway API instance for your API specification. 
+To pair a Mule app with your API spec in API Manager, you must first obtain client ID and client secret for the business group on Anypoint Platform that hosts your API specification and hosts (or will host) your Mule proxy. The credentials are associated with a business group. 
 +
-For more guidance, see <<obtain-instance-id>>.
-. In your Mule app in Anypoint Code Builder: 
-.. Configure autodiscovery in your Mule app by adding a global `api-gateway:discovery` element with your API instance ID value for the `apiID` attribute.
-+
-For guidance, see <<config-element>>.
-.. Append the client ID and client secret for your business group to the default Mule runtime arguments in the *Settings* tab.
-+
-For more guidance, see <<append-credentials>>.
-.. Run your application to ensure that the API is connected by checking the build logs:
-
-* The client ID and client secret validated successfully against API Manager 
-* The underlying `GateKeeper` is available (unblocked) and in `FLEXIBLE` mode
-* The API Gateway extension is in `STANDALONE` mode
-
-. In API Manager, check that the is registered (active) and produce metrics in API Manager by triggering an endpoint in your Mule app. 
-
-
-[[credentials]]
-=== Obtain a Client ID and Client Secret 
-
-To pair a Mule app with your API spec in API Manager, you must first obtain client ID and client secret for the business group on Anypoint Platform that hosts your API specification and hosts (or will host) your Mule proxy. 
-
-//TODO: DO WE REQUIRE ANY SPECIAL PERMISSIONS TO GET THIS INFO FROM ACCESS MANAGER? 
-
+--
+.Show me how
+[%collapsible]
+====
+[loweralpha]
 . Open the list of business groups in Access Management, on Anypoint Platform (https://anypoint.mulesoft.com/accounts/businessGroups/[US], https://eu1.anypoint.mulesoft.com/accounts/businessGroups[EU]).
 +
 To navigate to the business group list from the Anypoint Platform home page instead, open Access Management, and click *Business Groups*.
 . In the business group list, click the name of your business group.
 . Click the *Settings* tab for your business group.
 . Obtain the *Client ID* and *Client Secrets* values from the *Settings* tab in Access Manager. 
-
-//see https://docs.mulesoft.com/mule-gateway/mule-gateway-org-credentials-mule4#obtaining-credentials
-
-[[obtain-instance-id]]
-=== Obtain Your an API Instance ID from API Manager
-
-The API instance ID is available from a Mule proxy an administrator must create a Mule Gateway proxy. 
-
-* If you have a Mule gateway proxy for your Mule app, see <<find-instance-id>>.
-* If you do not have a Mule gateway proxy for your Mule app, see <<create-proxy>>.
-
-[[find-instance-id]]
-==== Locate the Instance ID
-
-. 
-
-[[create-proxy]]
-==== Create a Mule Proxy
-
-
-
-//TODO: DOES THIS REQUIRE ADMIN ACCESS
-
-. Meet the prerequisites in <<prereqs>>.
-. Open API Manager to *API Administration* 
-
-.. Click *Add API*, and select *Add new API*.
-.. In the *Runtime* page that opens, click *Mule Gateway* and then click *Next*.
+====
+--
+. Obtain the API instance ID from your API instance in API Manager. 
 +
-Retain the default settings on the *Runtime* page:
-
-* *Proxy Type*: *Connect to existing application (basic endpoint)*
-* *Mule version*: *Mule 4* 
-
-.. Click *Connect to an existing application (basic endpoint)* to connect to a Mule app using API autodiscovery.
+--
+.Show me how
+[%collapsible]
+====
+[loweralpha]
+. In Anypoint Platform (https://anypoint.mulesoft.com/accounts/businessGroups/[US], https://eu1.anypoint.mulesoft.com/accounts/businessGroups[EU]), navigate to API Manager.
+. In the *API Administration* page of API Manager, locate and click the name of your API to open its *API Summary* page.
+. Find the *API Instance ID* in the *API Summary* page. 
 +
-Alternatively, you can upload the API directly by using 
-.. 
+You'll need the instance ID when configuring your Mule app for autodiscovery.
+====
+--
+. In your Mule app in Anypoint Code Builder, user your API instance ID to pair your app to the API instance:
+.. In the XML editor for your Mule app, add the `<api-gateway:autodiscovery/>` element, for example:
++
+[source,xml]
+----
+<api-gateway:autodiscovery apiId="YOUR_API_ID_HERE" flowRef="currentTimeFlow" doc:name="Autodiscovery" />
+----
++
+For more complete context, see the example in <<mule-app>>.
+.. Paste your API instance ID as the `apiID` value, for example:
++
+[source,xml]
+----
+<api-gateway:autodiscovery apiId="123456" flowRef="currentTimeFlow" doc:name="Autodiscovery" />
+----
+. In Anypoint Code Builder, append the client ID and client secret for your business group to the default Mule runtime arguments in the *Settings* tab:
++
+.. Open the *Settings* page, and locate *Mule › Runtime: Default Arguments*.
+.. In the text field, append your client ID and secret arguments to the end of the existing arguments, for example
++
+----
+-M-Danypoint.platform.client_id=999abcde1f888e9h9aaa00ff5a5b03c5 -M-Danypoint.platform.client_secret=abc0d1234e5a4ab321A000B2033D4E56
+----
++
+Replace the values in the example with your client ID and secret.
 
-[[append-credentials]]
-=== Append Credentials to Mule Runtime Settings
+. Run your application to ensure that the API is connected by checking the build logs:
 
-In Anypoint Code Builder, append the client ID and secret to you default Mule runtime arguments. Do not delete other settings.
+* The client ID and client secret validated successfully against API Manager 
+* The underlying `GateKeeper` is available (unblocked) and in `FLEXIBLE` mode
+* The API Gateway extension is in `STANDALONE` mode
 
-//TODO: IS ONLY ONE CLIENT ID AND SECRET ALLOWED PER ACB INSTALLATION?
+. Send requests to an endpoint in your app that is tracked by your API instance.
++
+For guidance, see xref:int-trigger-flows.adoc[].
+. In API Manager, check that the API instance is now registered (active) and produces metrics in API Manager. 
++
 
-MULE_HOME/bin/mule \
--M-Danypoint.platform.client_id=XXXXXXXX \
--M-Danypoint.platform.client_secret=XXXXXXXX
-
-
-
-[[config-element]]
-=== Configuring the Autodiscovery Element in a Mule App
-
-//see https://docs.mulesoft.com/mule-gateway/mule-gateway-config-autodiscovery-mule4#configuring-the-autodiscovery-element-in-your-mule-application
-
-
-[[analytics-view]]
-== View Analytics in API Manager
-
-TODO_TODO_TODO
 
 [[examples]]
 === Examples
