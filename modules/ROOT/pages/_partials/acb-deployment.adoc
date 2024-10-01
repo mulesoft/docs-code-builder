@@ -1,6 +1,6 @@
 //
 // tag::deploy-json-config[]
-The `deploy.json` file contains the following properties for deployments of Mule applications to CloudHub from Anypoint Code Builder.
+The `deploy.json` and `deploy_ch2.json` files contain the following properties for deployments of Mule applications to CloudHub and CloudHub 2.0, respectively, from Anypoint Code Builder.
 
 //TODO: this is for CH 1.0 deployments. UPDATE for 2.0 in Oct rel.
 [%header,cols="1a,3a,1a"]
@@ -11,36 +11,52 @@ The `deploy.json` file contains the following properties for deployments of Mule
 
 | `runtime`
 | Provides the Mule runtime version used by the project.  
-| CloudHub
+| CloudHub or CloudHub 2.0
 
 | `workersize`
 | Sets the worker memory relative to a single worker or a number of available workers. The default is `0.1`. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation.  
-| CloudHub
+| CloudHub 
+
+| `replicaSize`
+| Sets the replica specific amount of memory capacity and processing power. The default value is `0.1`. For more information, see xref:cloudhub-2::ch2-architecture.adoc#cloudhub-2-replicas[CloudHub 2.0 Replicas] in the CloudHub 2.0 documentation.  
+| CloudHub 2.0 
 
 | `applicationName`
 | Provides the hyphenated, lowercase name of the Mule application.  
-| CloudHub
+| CloudHub or CloudHub 2.0
 
 | `workers`
 | Sets the number of Mule runtime instances for running this Mule application. The default is `1`. For more information, see xref:cloudhub::cloudhub-architecture.adoc#cloudhub-workers[CloudHub Workers] in the CloudHub documentation. 
 | CloudHub
 
+| `replicas`
+| Sets dedicated instances of Mule runtime engine for running this Mule application. The default is `1`. For more information, see xref:cloudhub-2::ch2-architecture.adoc#cloudhub-2-replicas[CloudHub 2.0 Replicas] in the CloudHub 2.0 documentation. 
+| CloudHub
+
 | `autoStart`
 |  Indicates whether to start the application automatically after the deployment process completes. The default value is `true`.
-| CloudHub
+| CloudHub or CloudHub 2.0
+
+| `deploymentModel`
+|  Indicates the model by which you want the replicas of your application to be updated or redeployed. The default value is `rolling`. For more information, see xref:cloudhub-2::ch2-update-apps.adoc#rolling-update-vs-recreate-deployment-model[Rolling Update vs. Recreate Deployment Model] in the CloudHub 2.0 documentation. 
+| CloudHub 2.0 
+
+| `ObjectStoreV2`
+|  Indicates whether Object Store v2 is enabled  for this application. The default value is `true`. For more information, see xref:object-store::index.adoc[]
+| CloudHub or CloudHub 2.0
 |===
 // end::deploy-json-config[]
 //
 // 
 // tag::deploy-json-edit[]
-Use auto-complete to select a preconfigured value in `deploy.json`.
+Use auto-complete to select a preconfigured value in `deploy.json` or `deploy_ch2.json`.
 
 image:anypoint-code-builder::deploy-json-ch1.png["Using auto-complete to select a value for deploy.json"]
 
-. Open `deploy.json` from the Explorer.
+. Open `deploy.json` or `deploy_ch2.json` from the Explorer.
 +
-The file is located in the project's `src/main/resources` directory. The file opens to a *deploy.json* tab in the IDE.
-. In `deploy.json`, highlight the value to update. 
+The file is located in the project's `src/main/resources` directory. The file opens to a *deploy.json* or *deploy.json_ch2* tab in the IDE.
+. In `deploy.json` or `deploy_ch2.json`, highlight the value to update. 
 . Press Ctrl+Space. 
 . Select a different value.
 // end::deploy-json-edit[]
