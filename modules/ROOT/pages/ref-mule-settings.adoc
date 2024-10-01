@@ -115,3 +115,7 @@ Enable auto-completion suggestions in the API design editor in Anypoint Code Bui
 ==  Mule > Editor > Auto-completion: Trigger Delay
 
 Set the time in milliseconds to wait before displaying auto-completion options. This setting defaults to 1500 milliseconds. See also <<setting-auto-complete>>.
+
+Avoid setting a long delay. If you activate the auto-completion menu but initiate other actions in your project before the delay period ends, the IDE automatically returns focus to the editor and opens the menu where you activated auto-completion. Such actions include opening the command palette or using the command terminal after activating the menu.
+
+If you move your cursor to a new location or use the up or down arrow keys in the editor before the trigger delay expires, the request to open the auto-completion menu is cancelled. 
