@@ -16,7 +16,7 @@ NOTE: Anypoint Code Builder can deploy applications only to the 1.0 version of C
 
 == Deploy an App to CloudHub or CloudHub 2.0
 
-When you deploy an application to CloudHub, Anypoint Code Builder configures a default `deploy.json` or `deloy_ch2.json` file in your `src/main/resources` directory.
+When you deploy an application to CloudHub or CloudHub 2.0, Anypoint Code Builder configures a default `deploy.json` or `deloy_ch2.json` file in your `src/main/resources` directory.
 If you intend to configure properties at deployment time, for example, 
 to xref:int-create-secure-configs.adoc[create secure properties], Anypoint Code Builder prompts you to modify `deploy.json` or `deloy_ch2.json` during the deployment process.
 
@@ -33,25 +33,23 @@ Alternatively, open the Command Palette and select `MuleSoft: Deploy to CloudHub
 // include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . If prompted, click *Allow* to allow sign in using Anypoint Platform and select the business group.
 . Select a Business Group to use for deployment.
-. When prompted via the VSCode command palette, select the deployment target: “CloudHub 2.0” or “CloudHub 1.0”.
+. When prompted via the VSCode command palette, select the deployment target: *CloudHub 2.0* or *CloudHub 1.0*.
++
+If you select CloudHub 2.0, you are prompted to select the space to deploy your application, for example: “myprivspace”.
 +
 If the project doesn't already have a `deploy.json` or `deploy_ch2.json` file, Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review, for example:
 +
 image::int-deploy-json-desktop.png["Review deploy.json file"]
-. When prompted, select the environment to deploy your application.
-+
-If you select CloudHub 2.0, you are prompted to select the space to deploy your application, for example: “myprivspace”.
 +
 For applications deployed to CloudHub 2.0, ensure that the deploy_ch2.json file contais the value for the deployment model. You can set this to the default value: "rolling".
-. After you click *Deploy*, the packaging and deployment of the application starts, and the VSCode status bar shows the progress of the deployment.
 +
 The `applicationName` property defines part of the URL that you use to access your application on CloudHub.
 +
 This name must be unique across all applications deployed to CloudHub.
-. After reviewing the deployment configuration, click *Deploy* to deploy the application to CloudHub.
+. After reviewing the deployment configuration, click *Deploy* to deploy the application to CloudHub or CloudHub 2.0. The VSCode status bar shows the progress of the deployment.
 . At the prompt, select the environment to deploy to.
 +
-Anypoint Code Builder packages the application and deploys it to CloudHub.
+Anypoint Code Builder packages the application and deploys it to CloudHub or CloudHub 2.0.
 The Output panel opens with *Mule Maven Output* selected:
 +
 image::int-deploy-output.png["Output panel with Mule Maven Output selected"]
