@@ -4,19 +4,20 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 
-Set up API autodiscovery in a Mule app to display key metrics in API Manager, including requests to endpoints in the app. API Manager is part of Anypoint Platform. 
+Set up API autodiscovery in a Mule app to display key metrics in API Manager, including requests to endpoints in the app. API Manager is part of Anypoint Platform.
 
 image:anypoint-code-builder::autodiscovery-data-apim.png["View request metrics for a Mule app in API Manager"]
 
 Autodiscovery configuration in a Mule app requires an API instance ID from an API in API Manager that runs on a Mule Gateway runtime, and your app requires Anypoint Platform credentials (client ID and secret) for connecting to your API in API Manager.
 
+For other important uses of Mule Gateway API instances, review xref:api-manager::api-instance-landing-page.adoc[] and xref:mule-gateway::manage-policies-overview.adoc[].
+
 [[prereqs]]
 == Before You Begin
 
-To obtain the API instance ID for your Mule app's autodiscovery configuration, you must have access to an API in API Manager that runs on a Mule Gateway runtime, or you can create your API by following the procedure in xref:api-manager::create-instance-task-mule.adoc[], in the API Manager documentation.
+To obtain the API instance ID for your Mule app's autodiscovery configuration, you must have access to an API in API Manager that runs on a Mule Gateway runtime, or you can create your API by following the procedure in xref:api-manager::create-instance-task-mule.adoc[], in the API Manager documentation. 
 
 APIs in API Manager are associated with an API spec on Anypoint Exchange that defines endpoints in your Mule app. For an API spec example that defines an endpoint and a Mule app example that implements the endpoint, see <<examples>>. 
-
 For guidance creating API specs, see:
 
 * xref:anypoint-code-builder::des-create-api-specs.adoc[] to design a spec from Anypoint Code Builder
@@ -190,13 +191,13 @@ output application/json
 . HTTP Listener connection configuration example
 . Autodiscovery configuration that references the flow `currentTimeFlow`
 +
-If you try this app, replace `YOUR_API_ID_HERE` with the `apiID` value of an Mule Gateway API instance associated with the <<OAS spec example, oas-spec>>. 
+If you try this app, replace `YOUR_API_ID_HERE` with the `apiID` value of an Mule Gateway API instance associated with the <<oas-spec, OAS spec example>>. 
 . Flow `currentTimeFlow`
 . HTTP listener with endpoint configuration `path="/current-time"`
 +
-This endpoint matches the name of the endpoint defined in the <<OAS spec example, oas-spec>>.
+This endpoint matches the name of the endpoint defined in the <<oas-spec, OAS spec example>>.
 . Transform Message component that uses DataWeave to get the current time in the specified format
 +
-The format matches the formats defined in the <<OAS spec example, oas-spec>>.
+The format matches the formats defined in the <<oas-spec, OAS spec example>>.
 . Logger component that prints the current time (in the `payload`) upon requests to `http://localhost:8081/current-time` when the app is running
 --
