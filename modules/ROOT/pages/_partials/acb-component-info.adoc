@@ -89,7 +89,44 @@ To find information about more connectors, see xref:connectors::introduction/int
 // end::connectors-ref[]
 //
 
+// tag::connection-configuration-panel[]
 
+Use the Connection Management Configuration Panel to easily configure connections to third-party systems directly from the UI. 
+
+In this panel, you can create, edit, delete, and test connections directly within the ACB interface, automatically populate connection fields using metadata provided by the connector, and save and manage connection configurations without switching to the XML view. 
+
+To open the configuration panel: 
+
+* Click on an existing component, or add a new one.
+* Click the *+* icon.
++
+This action displays the configuration panel, for example:
+
+image:anypoint-code-builder::acb-configuration-panel-general.png["Configuration panel for connectors"] 
+
+From here, you can:
+
+* Configure a connection for this project.
++
+You can select a previously saved connection in the *Connection* field and the form is pre-populated with existing configuration data.
+
++
+NOTE: Changes impact all components using this connection.
+
+* Update connection details without manually editing the XML code.
+
+* Test the connection directly within the panel to verify it's correctly configured.
++
+The test functionality helps prevent errors by allowing users to confirm that the connection is valid before committing changes.
+
+* Delete an existing connection if it's no longer needed.
++
+A confirmation message shows any affected components that use the connection.
+
+* View all components that depend on a connection.
+
+
+// end::connection-configuration-panel[]
 //
 // tag::core-component-ref[]
 
@@ -274,7 +311,29 @@ Your configuration XML file now looks similar to the following:
 
 //
 // tag::check-connection[]
-Most connectors provide an operation, such as the HTTP Listener operation, that triggers the flow to start. These operations typically have connection configurations that you can test from the configuration XML. For example, to test an HTTP Listener connection, click *Test Connection* in the configuration XML:
+
+Most connectors provide an operation, such as the HTTP Listener operation, that triggers the flow to start. These operations typically include connection configurations that you can test.
+
+== Test Connection from the Configuration Panel
+
+You can test the connection from the connectors *Configuration* panel. For example, to test an HTTP Listener connection: 
+
+image:anypoint-code-builder::acb-configuration-panel-test.png["Configuration panel for connectors"] 
+
+[calloutlist]
+.. Click the *+* icon on the connector to open the configuration panel.
+.. After filling in the required fields, click *Test Connection*.
+
+The status bar shows the progress:
+
+* *Verifying connection* indicates that the test is in progress.
+* *Connection is valid* indicates a successful connection. 
+* *Invalid Connection Got status code: 500 when trying to resolve a Mule Runtime operation* indicates a connection error.
+
+
+== Test Connection from the Configuration XML
+
+You can test the connection from the configuration XML. For example, to test an HTTP Listener connection, click *Test Connection* in the configuration XML:
 
 image::http-listener-test-connection.png["HTTP Listener Test Connection link in the configuration XML"]
 
