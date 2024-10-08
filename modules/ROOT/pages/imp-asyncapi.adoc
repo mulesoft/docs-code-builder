@@ -14,10 +14,6 @@ For supported protocols, see xref:apikit::apikit-asyncapi-module-reference.adoc#
 == Before You Begin
 
 * If you do not yet have access to Anypoint Code Builder, follow the procedures in xref:start-acb.adoc[].
-* {empty}
-+
-//How org admin provides access to feature from ACB landing page:
-include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="asyncapi-beta-access"]
 * Review important information about the scaffolding process for AsyncAPI specifications in <<scaffolding>>.
 * You must have access to a supported AsyncAPI specification that is hosted on Anypoint Exchange: 
 +
@@ -32,6 +28,8 @@ Before you implement an AsyncAPI specification with Anypoint Code Builder, it's 
 When scaffolding an AsyncAPI specification into a Mule project (implementation or integration), Anypoint Code Builder:
 
 * Introspects the AsyncAPI specification 
+* Considers one specification at a time
+* Treats the imported specification as a modification of an existing specification and evaluates it for rescaffolding
 * Creates a new Mule project with a separate flow for each `publish` operation in the specification
 +
 See <<ex-flows-scaffolded>>.
@@ -63,7 +61,7 @@ include::partial$acb-reusable-steps.adoc[tags="fragments-not-scaffolded"]
 ====
 
 [[scaffold-procedures]]
-== Scaffold an AsyncAPI API Specification into a Mule Project
+== Scaffold an AsyncAPI Specification into a Mule Project
 
 You can scaffold an AsyncAPI specification into a new or existing Mule project: 
 
@@ -83,8 +81,6 @@ When re-scaffolding, the scaffolder acts on new combinations of channel, server,
 Create an implementation project from an AsyncAPI specification that is hosted on Anypoint Exchange. When creating the project, Anypoint Code Builder scaffolds the specification into an interface that you can implement as a Mule app.
 
 . Meet the prerequisites in <<prereqs>>.
-+
-For the Beta program, use of AsyncAPI features in the IDE requires enablement by an Anypoint Platform organization administrator.
 // Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 +
@@ -92,7 +88,6 @@ image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in
 //configure implementation creation form:
 include::partial$acb-reusable-steps.adoc[tags="start-implementation"]
 +
-If a notification on *Implement an API Specification* indicates that *AsyncAPI 2.6 (Beta) requires enablement by an Anypoint Platform organization administrator*, AsyncAPI features will not be available until your organization administrator accepts the terms and conditions of the beta program. See <<prereqs>>.
 //
 include::partial$acb-reusable-steps.adoc[tags="search-exchange-spec"]
 +
@@ -172,7 +167,7 @@ include::partial$acb-reusable-steps.adoc[tags="implement-business-logic"]
 
 == Deploy an Implementation
 
-Deploy the implementation to CloudHub or to another host. You can deploy to CloudHub from xref:int-deploy-mule-apps.adoc[Anypoint Code Builder]. For other deployment options, see xref:runtime-manager::deployment-strategies.adoc[].
+Deploy the implementation to CloudHub and CloudHub 2.0 or to another host. You can deploy to CloudHub or CloudHub 2.0 from xref:int-deploy-mule-apps.adoc[Anypoint Code Builder]. For other deployment options, see xref:runtime-manager::deployment-strategies.adoc[].
 
 [[examples]]
 == Examples
@@ -352,7 +347,7 @@ components:  <!--5-->
 [calloutlist]
 . `AMQ-prod` configures an Anypoint MQ broker.
 +
-You can discover the URL for an MQ broker from the region that you select when creating the queue. See the *copy* button in xref:mq::mq-queues.adoc#create-a-queue[Create a Queue], and see xref:mq::mq-client-apps.adoc[].
+You can discover the URL for an MQ broker from the region that you select when creating the queue. See the *copy* button in xref:mq-queues.adoc#create-a-queue[Create a Queue], and see xref:mq::mq-client-apps.adoc[].
 . `Kafka-prod` configures a locally hosted Kafka broker.
 . `order-placed` configures an Anypoint MQ channel for publishing (listening for) and subscribing to (publishing) orders. Similarly configured channels are `order-cancelled` and `order-confirmed`.
 . `order-backordered` configures a Kafka channel for publishing (listening for) and subscribing to (publishing) backorders.
@@ -711,3 +706,4 @@ When triggered by the Flow Reference component (`<flow-ref/>`) in the `LISTEN:li
 * xref:ref-connectors.adoc[]
 * xref:ref-components.adoc[]
 * xref:dataweave::index.adoc[]
+* xref:apikit::apikit-asyncapi-module-reference.adoc#validation-of-messages[AsyncAPI JSON Schema Validation]
