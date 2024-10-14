@@ -6,12 +6,13 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
 
-NOTE: Anypoint Code Builder can deploy applications only to the 1.0 version of CloudHub. To deploy to CloudHub 2.0, create a deployable JAR file, and follow a deployment procedure identified in xref:int-export-mule-project.adoc#deployable[Export to a Deployable JAR File].
-
 == Before You Begin
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
+* For CloudHub 2.0 deployments, update your `pom.xml` file:
+** Modify `groupId` to match your Anypoint Platform Organization ID.
+** Remove the `-SNAPSHOT` suffix from `version`.
 * Install a REST client, such as Postman or AdvancedRestClient.
 
 == Deploy an App to CloudHub or CloudHub 2.0
