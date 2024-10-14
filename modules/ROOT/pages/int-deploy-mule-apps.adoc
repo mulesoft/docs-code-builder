@@ -10,9 +10,6 @@ You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
-* For CloudHub 2.0 deployments, update your `pom.xml` file:
-** Modify `groupId` to match your Anypoint Platform Organization ID.
-** Remove the `-SNAPSHOT` suffix from `version`.
 * Install a REST client, such as Postman or AdvancedRestClient.
 
 == Deploy an App to CloudHub or CloudHub 2.0
@@ -20,6 +17,14 @@ You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
 When you deploy an application to CloudHub or CloudHub 2.0, Anypoint Code Builder configures a default `deploy.json` or `deploy_ch2.json` file in your `src/main/resources` directory.
 If you intend to configure properties at deployment time, for example, 
 to xref:int-create-secure-configs.adoc[create secure properties], Anypoint Code Builder prompts you to modify `deploy.json` or `deploy_ch2.json` during the deployment process.
+
+[NOTE]
+--
+For CloudHub 2.0 deployments, you must update your `pom.xml` file:
+
+* Modify `groupId` to match your Anypoint Platform Organization ID.
+* Remove the `-SNAPSHOT` suffix from `version`.
+--
 
 To deploy your app to CloudHub or CloudHub 2.0:
 
