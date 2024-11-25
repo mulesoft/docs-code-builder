@@ -51,14 +51,17 @@ Keyboard shortcut: Cmd+Shift+d (Mac) or Ctrl+Shift+d (Windows)
 . *Breakpoints* panel: Lists all breakpoints in your Mule application.
 . *Terminal* console: Displays the output of the Maven build process and the results of the deployment to the embedded Mule Runtime engine.
 . *Breakpoint* icon: Identifies a line in the configuration XML to pause execution of the flow so that you can check for and fix any issues.
+. *Breakpoint* icon: Identifies a component that contains one or more breakpoints.
 
 
 [[add-breakpoint]]
 == Add a Breakpoint
 
-A breakpoint enables you to pause your Mule application at a specific place to learn more about what is happening.
+A breakpoint enables you to pause your Mule application at a specific place to learn more about what is happening. You can either add a breakpoint to a configuration XML file or to a component in the canvas UI.
 
-To add a breakpoint to your Mule application:
+=== Add a Breakpoint in a Configuration File
+
+To add a breakpoint in a configuration XML file:
 
 . In Anypoint Code Builder, on the Explorer view, open your configuration XML file, for example, `my-project-name.xml`.
 // Pointer to Run and Debug
@@ -69,11 +72,26 @@ image::deb-add-breakpoint.png["Add breakpoint on a line number"]
 +
 You can also use F9 to add a breakpoint to the current line.
 . In your configuration XML file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components.
-
++
 All breakpoints appear in the *Breakpoints* panel:
-
++
 image::int-breakpoints-panel.png["Breakpoints panel"]
 
+=== Add a Breakpoint to a Component in the Canvas UI
+
+To add a breakpoint to a component in the canvas UI:
+
+. In Anypoint Code Builder, on the Explorer view, open your configuration XML file, for example, `flights-implementation.xml`.
+// Pointer to Run and Debug
+include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
+
+. In the canvas UI, right-click on the component you want to add a breakpoint to:
++
+image::debug-add-breakpoint-canvas.png["Add breakpoint to a component in the canvas UI"]
+
+. Select *Add Breakpoint*.
++
+A breakpoint icon appears on the component and in the configuration XML for that component.
 
 [[run-debug-mode]]
 == Run Your Application in Debug Mode

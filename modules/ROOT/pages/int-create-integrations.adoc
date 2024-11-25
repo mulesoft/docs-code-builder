@@ -87,14 +87,14 @@ Partial searches are accepted.
 ====
 . Select a *Mule runtime* and *Java* version. 
 +
-//Info about downloads:
-include::partial$acb-runtime-java.adoc[tags="runtime-java-download"]
+//Info about downloads and versioning:
+include::anypoint-code-builder::partial$acb-runtime-java.adoc[tags="runtime-java-download;runtime-version-note;runtime-java-defaults"]
 . Click *Create Project*.
 +
 //Info about download notifications and location:
 include::partial$acb-runtime-java.adoc[tags="runtime-java-notification"]
 
-When you create an integration project from scratch or if your project from Exchange does not contain a flow structure (Flow, Subflow, or Error handling component), the canvas UI provides the option to create one. Otherwise, the canvas UI generates a graphical representation of the imported asset's components that you can use to start your configuration.
+When you create an integration project from scratch or if your project from Exchange does not contain a flow structure (Flow, Subflow, or Error handling component), the canvas provides the option to create one. Otherwise, the canvas generates a graphical representation of the imported asset's components that you can use to start your configuration.
 
 [[create-new-config]]
 == Create an Additional Configuration XML File
@@ -112,7 +112,7 @@ image::int-add-config-xml.png["Provide name of Mule configuration XML file"]
 +
 The name must be unique within the project. Permitted special characters are `_` (underscore), `-` (hyphen), `.`, `@`, `(`, and `)`.
 +
-The process automatically appends an `xml` extension to the file name and opens the new configuration XML file and its canvas UI within the IDE. The new configuration XML file contains the `<mule/>` element with default namespaces:
+The process automatically appends an `xml` extension to the file name and opens the new configuration XML file and its canvas within the IDE. The new configuration XML file contains the `<mule/>` element with default namespaces:
 +
 [source,xml]
 --
@@ -125,7 +125,7 @@ The process automatically appends an `xml` extension to the file name and opens 
 </mule>
 --
 +
-The file's canvas UI provides the same options for building your project file that appear when you create an integration project. For an example and to get started with your configuration, see <<add-components, Add a Component to Your Project>>.
+The file's canvas provides the same options for building your project file that appear when you create an integration project. For an example and to get started with your configuration, see <<add-components, Add a Component to Your Project>>.
 
 
 == See Also

@@ -1,4 +1,4 @@
-= Deploying Mule Apps to CloudHub
+= Deploying Mule Apps to CloudHub and CloudHub 2.0
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: deploy-a-mule-application-to-cloudhub.adoc
 
@@ -6,25 +6,34 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 You can use Anypoint Code Builder to deploy your Mule application to CloudHub.
 
-NOTE: Anypoint Code Builder can deploy applications only to the 1.0 version of CloudHub. To deploy to CloudHub 2.0, create a deployable JAR file, and follow a deployment procedure identified in xref:int-export-mule-project.adoc#deployable[Export to a Deployable JAR File].
-
 == Before You Begin
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
 * Install a REST client, such as Postman or AdvancedRestClient.
 
-== Deploy an App to CloudHub
+== Deploy an App to CloudHub or CloudHub 2.0
 
-When you deploy an application to CloudHub, Anypoint Code Builder configures a default `deploy.json` file in your `src/main/resources` directory.
+When you deploy an application to CloudHub or CloudHub 2.0, Anypoint Code Builder configures a default `deploy.json` or `deploy_ch2.json` file in your `src/main/resources` directory.
 If you intend to configure properties at deployment time, for example, 
-to xref:int-create-secure-configs.adoc[create secure properties], Anypoint Code Builder prompts you to modify `deploy.json` during deployment the deployment process.
+to xref:int-create-secure-configs.adoc[create secure properties], Anypoint Code Builder prompts you to modify `deploy.json` or `deploy_ch2.json` during the deployment process.
 
-To deploy your app to CloudHub:
+[NOTE]
+--
+For CloudHub 2.0 deployments, you must update your `pom.xml` file:
+
+* Modify `groupId` to match your Anypoint Platform business group (organization) ID.
++
+For more information, see xref:access-management::managing-business-groups.adoc#find-business-group-id[Finding your Business Group ID].
+* Remove the `-SNAPSHOT` suffix from `version`.
+* Increment `version` when redeploying.
+--
+
+To deploy your app to CloudHub or CloudHub 2.0:
 
 // Open IDE
-include::partial$acb-reusable-steps.adoc[tags="open-ide"]
-. Open the configuration XML file for the Mule app to deploy.
+// include::partial$acb-reusable-steps.adoc[tags="open-ide"]
+. Open any configuration XML file for the Mule app to deploy.
 . Click the image:icon-deploy.png["",20,20] (*Deploy to CloudHub*) icon.
 +
 Alternatively, open the Command Palette and select `MuleSoft: Deploy to CloudHub`.
@@ -32,18 +41,24 @@ Alternatively, open the Command Palette and select `MuleSoft: Deploy to CloudHub
 // Pointer to Command Palette
 // include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . If prompted, click *Allow* to allow sign in using Anypoint Platform and select the business group.
+. Select a Business Group to use for deployment.
+. When prompted via the VSCode command palette, select the deployment target: *CloudHub 2.0* or *CloudHub 1.0*.
 +
-If the project doesn't already have a `deploy.json` file, Anypoint Code Builder prompts that a deployment configuration file has been created and opens it for you to review, for example:
+If you select CloudHub 2.0, you are prompted to select the space to deploy your application, for example: “myprivspace”.
++
+If the project doesn't already have a `deploy.json` or `deploy_ch2.json` file, Anypoint Code Builder indicates that a deployment configuration file has been created and opens it for you to review, for example:
 +
 image::int-deploy-json-desktop.png["Review deploy.json file"]
++
+For applications deployed to CloudHub 2.0, ensure that the deploy_ch2.json file contains the value for the deployment model. You can set this to the default value of *rolling*.
 +
 The `applicationName` property defines part of the URL that you use to access your application on CloudHub.
 +
 This name must be unique across all applications deployed to CloudHub.
-. After reviewing the deployment configuration, click *Deploy* to deploy the application to CloudHub.
+. After reviewing the deployment configuration, click *Deploy* to deploy the application to CloudHub or CloudHub 2.0. The VSCode status bar shows the progress of the deployment.
 . At the prompt, select the environment to deploy to.
 +
-Anypoint Code Builder packages the application and deploys it to CloudHub.
+Anypoint Code Builder packages the application and deploys it to CloudHub or CloudHub 2.0.
 The Output panel opens with *Mule Maven Output* selected:
 +
 image::int-deploy-output.png["Output panel with Mule Maven Output selected"]
@@ -55,7 +70,21 @@ The domain name of the application varies, but it follows a similar structure su
 . Open your preferred REST client and make a GET request to the domain name as 
 displayed in Runtime Manager, for example, `+http://app-with-100-schedulers.us-w1.cloudhub.io/api/flights+`.
 
+
+== Change a Value in deploy.json
+
+//shared 
+include::anypoint-code-builder::partial$acb-deployment.adoc[tags="deploy-json-edit"]
+
+
+== Deployment Properties 
+
+//shared 
+include::anypoint-code-builder::partial$acb-deployment.adoc[tags="deploy-json-config"]
+
+
 == See Also
 
 * xref:cloudhub::deploying-to-cloudhub.adoc[]
+* xref:cloudhub-2::ch2-deploy.adoc[]
 * xref:runtime-manager::index.adoc[]

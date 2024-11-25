@@ -51,10 +51,12 @@ Anypoint Code Builder creates and opens a deployment file (`deploy.json`) for yo
 }
 --
 +
-The `applicationName` property defines part of the URL for accessing your application on CloudHub. 
+* The `applicationName` property defines part of the URL for accessing your application on CloudHub. 
+* The name must be unique across all applications deployed to your business group in CloudHub.
+* The `runtime` version is the Mule runtime version you select when creating the integration. 
 +
-//TODO: VERIFY
-The name must be unique across all applications deployed to your business group in CloudHub.
+include::partial$acb-runtime-java.adoc[tags="runtime-version-note"]
+
 . After reviewing the deployment configuration, click *Deploy* to deploy the application to CloudHub:
 +
 image::deploy-config-created.png["Deployment configuration file created pop-up message"]

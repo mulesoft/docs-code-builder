@@ -26,15 +26,15 @@ See xref:start-acb.adoc[] for more information.
 // . Select *Develop an Integration*.
 . Configure your integration using the following values:
 +
-image::int-create-integration-scratch.png[]
+image::int-create-integration-scratch.png["Develop an Integration form, with Empty Project selected"]
 
 .. Under *Project Name*, provide the name *mock-dw-library.
 .. Under *Project Location*, click *Browse*, and then select your home directory.
 .. Under *Create*, select *Empty Project*. 
 .. Select a *Mule runtime* and *Java* version.
 +
-//Info about downloads:
-include::partial$acb-runtime-java.adoc[tags="runtime-java-download"]
+//Info about downloads and versioning:
+include::anypoint-code-builder::partial$acb-runtime-java.adoc[tags="runtime-java-download;runtime-version-note;runtime-java-defaults"]
 . Click *Create Project*.
 
 == Create a Flow
@@ -67,8 +67,6 @@ Start by configuring a flow with an HTTP listener that exposes a root path (`/`)
 MuleSoft: Import Asset from Exchange
 ----
 +
-// TODO: cc: I don't think we need this screenshot.
-// image::import-asset-from-exchange-db.png[]
 . Select *DataWeave Library*.
 . Start typing _DataWeave_, and press Return to list assets that match your search.
 . Select *DataWeave Mock Data Generators Library*.
@@ -142,15 +140,20 @@ MuleSoft: Deploy to CloudHub
 [source,json]
 --
 {
-  "runtime": "4.4.0",
+  "runtime": "4.4.0", //<1>
   "workerSize": 0.1,
-  "applicationName": "mock-dw-library", //<1>
+  "applicationName": "mock-dw-library", //<2>
   "workers": 1,
   "autoStart": true
 }
 --
 [calloutlist]
-.. The `applicationName` property defines the part of the URL that you use to access your application on CloudHub. +
+.. The `runtime` version is the Mule runtime version you select when creating the integration. 
++
+//Info about downloads and versioning:
+include::anypoint-code-builder::partial$acb-runtime-java.adoc[tags="runtime-version-note"]
+.. The `applicationName` property defines the part of the URL that you use to access your application on CloudHub. 
++
 The name must be unique across all applications deployed to CloudHub.
 . After reviewing the deployment configuration, select *Deploy* to deploy the application to CloudHub.
 . Select your preferred environment.

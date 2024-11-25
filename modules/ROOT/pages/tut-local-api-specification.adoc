@@ -6,7 +6,7 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-Scaffold an API specification into an implementation project within your IDE, and sync changes to the specification with the interface without first publishing to Anypoint Exchange. For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the interface to add a flow for that endpoint to the interface's configuration XML file.
+Scaffold a REST API specification into an implementation project within your IDE, and sync changes to the specification with the interface without first publishing to Anypoint Exchange. For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the interface to add a flow for that endpoint to the interface's configuration XML file.
 
 The interface XML is automatically created in a Mule project during the scaffolding process. You define an API in a specification file within an API Design project.
 
@@ -36,26 +36,22 @@ Alternatively, open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Sh
 ----
 MuleSoft: Design an API
 ----
-. If prompted, sign in to Anypoint Platform, and follow all the prompts to reopen the IDE. 
-. Start your API specification:
+. If prompted, sign in to Anypoint Platform, and follow all the prompts to reopen the IDE.
+. Complete the *API Specification* form:
 +
-image::design-api-ui-first.png["Configure Retrieve Users API"]
-+
---
-[calloutlist]
-.. In *Project name*, type *Retrieve Users API*.
-+
-The name must be unique.
-.. In *Project Location*, click *Browse*. 
-+
-In the *File* menu that opens in the desktop IDE, create a folder such as `workspace-retrieve-users`, and then select that folder's location. 
-+
-When you are done, the full path in the *Project Location* field is similar to `/Users/me/workspace-retrieve-users`. Starting from the directory with your new folder prevents potential issues related to multi-root workspaces.
-.. In *API Specification Language*, select *RAML 1.0*.
---
-When complete, *Design an API* is similar to this example:
-+
-image::tut-api-create.png["Design an API configuration"]
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Project Name* | *Retrieve Users API* +
+Alternatively, provide a similar name of your choice. The name must be unique. The name of the project and specification file is based on the name you provide.
+| *Project Location* | Your home directory or another directory you create (see xref:start-add-folders.adoc[]).
+| *API Type* | *REST API* +
+Anypoint Code Builder supports the REST API type for iterative design.
+| *API Specification Language* | *RAML 1.0* +
+Anypoint Code Builder supports OAS (JSON), OAS (YAML), and RAML.
+|===
+
 . Click *Create Project*.
 +
 This process creates a project that contains your API specification within your workspace.
@@ -113,9 +109,9 @@ version: 1.0.development
 . Proceed to <<scaffold>>.
 
 [[scaffold]]
-== Scaffold the Local API Specification into an Interface
+== Scaffold the Local REST API Specification into an Interface
 
-Scaffold your local API specification into a local implementation project. The scaffolding process creates a configuration XML for your implementation. 
+Scaffold your local REST API specification into a local implementation project. The scaffolding process creates a configuration XML for your implementation.
 
 Local projects reside in the Anypoint Code Builder IDE, whether the projects are in your desktop IDE or in the cloud IDE associated with your user account in Anypoint Platform. 
 
@@ -167,7 +163,7 @@ The configuration XML file for the implementation (`retrieve-users-implementatio
 ----
 retrieve-users-implementation/src/main/mule/retrieve-users-implementation.xml
 ----
-* The canvas UI for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
+* The canvas for this Mule project contains a Router component and several error handlers. APIkit automatically creates these components during the scaffolding process.
 * In the implementation XML, the flow `<flow name="get:\users:retrieve-users-api-config">` contains an `<ee:transform/>` element with your example:
 +
 [source,XML,linenums]

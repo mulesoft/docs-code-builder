@@ -38,7 +38,7 @@ Integration and implementation projects are Mule applications with similar UIs:
 image::ui-elements.png["Anypoint Code Builder UI with integration project"]
 [calloutlist]
 . *Explorer*: Open a workspace for your project.
-. *Editors*: Develop your project in the canvas UI and configuration XML files. Configuration XML files support <<use-autocomplete, auto-completion>>. 
+. *Editors*: Develop your project in the canvas and configuration XML files. Configuration XML files support <<use-autocomplete, auto-completion>>. 
 . *Status Bar*: Check for your user name to learn if you are logged in to Anypoint Platform. 
 . *Output Panel*: As your projects run in Anypoint Code Builder, view output and logs from *Mule DX Server*. Open the built-in command terminal. View problems and ports.
 +
@@ -54,19 +54,31 @@ image::ui-elements-api.png["Anypoint Code Builder UI with integration project"]
 See xref:des-designing-api-specs.adoc[] for more detail.
 
 [[use-autocomplete]]
-== Use IntelliSense to Auto-Complete in the Editors
+== Use Auto-Completion Menus
 
-Anypoint Code Builder uses IntelliSense, a built-in code-completion feature of VS Code, 
-to provide auto-completion in Editor views.
+The IDE supports auto-completion through the Anypoint Code Builder extensions and through IntelliSense, a built-in code-completion feature of VS Code, to provide auto-completion in Editor views. 
 
-. In the Editor view, press Ctrl+Space to display available options.
-. Enter a search term to narrow the results, for example:
+. Open auto-completion options from the Editor view using one of the following options:
+
+* Using IntelliSense: Press Ctrl+Space to display a list of available options, and enter a search term to narrow the results, for example:
 +
 image::des-autocomplete.png[Auto-complete options for `get`]
 +
 IntelliSense shows different options, depending on the context, for example:
 +
 image::des-autocomplete-context.png[Auto-complete options for `responses`]
+
+* Using the extensions: Place your cursor at the location where you intend to use the auto-suggestion menu, and optionally, start typing to narrow the list of suggested options to return. If the line has some content, click Tab, provide a space, or start typing after the content on the line. To close the auto-suggestion menu, click Escape. 
++
+For API design, you can enable or disable auto-completion:
++
+.Show me how
+[%collapsible]
+====
+[loweralpha]
+include::partial$acb-api-design.adoc[tags="apid-extension-props"]
+====
+
 . Use the arrow keys to navigate the list.
 . Press Enter or Tab to insert the selected element.
 +

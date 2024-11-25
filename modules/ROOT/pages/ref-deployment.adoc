@@ -1,0 +1,22 @@
+= Deployment Properties for Mule Applications
+:page-deployment-options: cloud-ide, desktop-ide
+
+When deploying a Mule application to CloudHub, Anypoint Code Builder relies on a configuration in `deploy.json`. Mule applications are integration or implementation projects.
+
+.Example:
+----
+{
+  "runtime": "4.7-e-java17",
+  "workerSize": 0.1,
+  "applicationName": "my-integration-app",
+  "workers": 1,
+  "autoStart": true
+}
+----
+
+//shared 
+include::anypoint-code-builder::partial$acb-deployment.adoc[tags="deploy-json-config"]
+
+== See Also
+
+* xref:int-deploy-mule-apps.adoc[]

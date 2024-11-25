@@ -96,3 +96,15 @@ To find this icon, see xref:start-discover-ui.adoc[].
 * If the extension pack is _not_ installed, follow the installation steps at xref:start-acb.adoc#set-up-desktop[Set up the Desktop IDE].
 * If the extension pack is installed but the MuleSoft icon is not present in the Activity Bar, see xref:troubleshoot-missing-features.adoc#missing-mulesoft-icon[MuleSoft Icon Missing from Activity Bar] to display the icon.
 
+[[folder-permission]]
+== Folder Permission Error
+
+Some high-level folders in the cloud IDE are protected and not available for your projects. Examples include `/home`, `/`, and `.config`. Attempts to create an integration, implementation, or design project in a protected folder produces the following error:
+
+----
+EACCES: permission denied, mkdir '/home/XXXX/.vscode'
+----
+
+To avoid this error, create and import your projects within your `/home/_your-user-name_/` folder or in a subdirectory that you create under this folder. The cloud IDE automatically provides the folder with your username.
+
+Also avoid creating your projects under `/home/AnypointCodeBuilder`, which is intended for downloads of Mule and Java versions and for xref:ref-acb-maven.adoc#anypoint-code-builder-settings-file[acb_settings.xml]. 
