@@ -6,10 +6,10 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Use Anypoint Code Builder to create, import, and test API specs before publishing to Anypoint Exchange:
 
-. Create a API spec project in Anypoint Code Builder from the IDE or by importing the spec from Design Center:
+. Create a API spec project in Anypoint Code Builder from the IDE or by importing the spec from MuleSoft VSC:
 
 * <<design-new-api-spec, Create an API spec project from the IDE>>
-* <<import-spec, Import an API spec from Design Center>>
+* <<import-spec, Import an API spec from MuleSoft VCS>>
 
 . <<open-output-panel, Track progress in the output panel>>.
 . <<review-spec-console, Review your spec in the API console>>.
@@ -80,9 +80,9 @@ image::des-oas-create.png[New OAS 3.0 (YAML) API project]
 As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
 
 [[import-spec]]
-== Import an API Specification from Design Center
+== Import an API Specification from MuleSoft VCS
 
-Import an API spec from Design Center, and optionally, keep your project in sync with Design Center by using the Anypoint source control management (SCM) system. Alternatively, use Git or another SCM that is compatible with VS Code in the desktop or cloud IDE. For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
+Import an API spec from MuleSoft VCS, and optionally, keep your project in sync by using the Anypoint source control management (SCM) system. Alternatively, use Git or another SCM that is compatible with VS Code in the desktop or cloud IDE. For more information, see xref:des-designing-api-specs.adoc#anypoint-scm[Source Control for API Design Projects].
 
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
@@ -90,21 +90,21 @@ include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 +
 [source,command]
 ----
-MuleSoft: Import API Specification from Design Center
+MuleSoft: Import API Specification from MuleSoft VCS
 ----
 . If prompted, log in to Anypoint Platform through the IDE.
 . Complete the import process:
 .. Select your business group from the *Select a Business Group* popup. 
-.. Search for the API spec in the *APIs from Design Center* field.
+.. Search for the API spec in the *APIs from MuleSoft VCS* field.
 .. Navigate to or create a folder for the spec, and click *Select target folder*.
 +
 If you receive an error that the import failed (*Importing project _a_project_name_ has failed*), check your target folder for a project with the same name. To address a duplicate naming issue before importing, you can import the design project to a different target folder or delete the project from your IDE (see xref:des-delete-api-projects.adoc[]).
 . Edit or continue designing your spec, as needed.
 +
 As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
-. Optionally, sync your changes with Design Center by using the Anypoint SCM.
+. Optionally, sync your changes with MuleSoft VCS by using the Anypoint SCM.
 +
-This feature is available only for API projects that you import from Design Center. You can also store your work in another SCM. For SCM options, see xref:start-scm.adoc[].
+This feature is available only for API projects that you import from MuleSoft VCS. You can also store your work in another SCM. For SCM options, see xref:start-scm.adoc[].
 
 [[open-output-panel]]
 == Track Progress in the Output Panel
