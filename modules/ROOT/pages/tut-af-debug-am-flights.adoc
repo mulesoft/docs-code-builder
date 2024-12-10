@@ -107,17 +107,17 @@ Add breakpoints to your American Flights project:
 . Open the _interface_ (`interface.xml`) for your American Flights project. 
 . Select the *Run and Debug* icon in the activity bar:
 +
-image::run-and-debug.png[]
+image::run-and-debug.png["An interface XML file open in the code editor, with the Run and Debug icon highlighted"]
 . In the interface file (`interface.xml`), add a breakpoint to the line that contains the `<flow-ref/>` component:
 +
-image::add-breakpoint.png[]
+image::add-breakpoint.png["An interface XML file open in the code editor, with a breakpoint enabled"]
 +
 Alternatively, use F9 to add a breakpoint to the line.
 . Open the implementation file (`implementation.xml`) for your American Flights project, and add breakpoints to the `<db:select/>` and `<set-variable/>` components.
 +
 . Notice that all the breakpoints are now listed in the *Breakpoints* panel:
 +
-image::breakpoints-panel.png[]
+image::breakpoints-panel.png["A menu panel displaying three enabled breakpoints"]
 . Proceed to <<debug>>. 
 +
 Run a debugging session, and inspect the message and variables at different points during your app's execution.
@@ -127,11 +127,11 @@ Run a debugging session, and inspect the message and variables at different poin
 
 . From the *Run and Debug* menu, click *Debug Mule Application*:
 +
-image::start-debugging.png[]
+image::start-debugging.png["The Run and Debug, and Debug Mule Applications icons highlighted"]
 +
 The IDE packages the app and opens a new terminal that deploys the app to the embedded Mule runtime engine:
 +
-image::packaged-and-running-terminals.png[]
+image::packaged-and-running-terminals.png["A terminal window displaying application status as deployed"]
 . Proceed to <<test>>.
 
 [[test]]
@@ -170,15 +170,15 @@ image::debugger-stop-set-variable.png["Array of flight data in the payload"]
 . From the *Run and Debug* sidebar, open the *Watch* panel.
 . Click the *+* icon in the panel, and add the expression `payload.^mediaType`:
 +
-image::debug-add-expression.png[]
+image::debug-add-expression.png["A debug window displaying application variables, with the Add Expression button highlighted"]
 . Click the *Step Over* button until your execution moves to the Transform Message component (`<ee:transform/>`).
 . Notice that the payload is `application/java`:
 +
-image:tut-debug-mediatype-java.png[]
+image:tut-debug-mediatype-java.png["The Watch panel displaying a payload type of 'application/java'"]
 . Continue clicking the *Step Over* button until you reach the Logger component (`<logger>`).
 . Notice that your payload transforms to `application/json`:
 +
-image::tut-debug-mediatype-json.png[]
+image::tut-debug-mediatype-json.png["The Watch panel displaying a payload type of 'application/json'"]
 . Click the *Continue* button in the debug toolbar, and notice that the app returns the response from the database to your REST client or browser.
 +
 .Click for the complete implementation XML example.
