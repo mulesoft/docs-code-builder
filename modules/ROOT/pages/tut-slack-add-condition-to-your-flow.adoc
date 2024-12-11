@@ -23,11 +23,11 @@ Use a Choice router to define behaviors based on specific conditions. In this ca
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file.
 . Click the image:icon-plus.png["",15,15] (*Add component*) icon for the Logger component:
 +
-image::add-choice-router-slack-escalation-canvas.png[]
+image::add-choice-router-slack-escalation-canvas.png["A flow diagram with the Add Component button icon highlighted"]
 . Type `choice` and select *Choice* under *Flow Control*:
 . Add the `<when/>` and `<otherwise/>` elements:
 +
-image::sync-api-choice-when.png[]
+image::sync-api-choice-when.png["Search result for 'when', with resulting highlighted text reading 'mule:when'"]
 +
 [source,XML]
 --
@@ -75,9 +75,6 @@ To configure the `<when/>` element, you must first configure operations from the
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `<salesforce:sfdc-config/>` element.
 . Type `smtp` and select *email:smtp-config*:
-//+
-//TODO: cc: screenshot doesn't match actual desktop UI
-//image::add-smtp-config.png[]
 +
 [source,XML]
 --
@@ -91,10 +88,10 @@ To configure the `<when/>` element, you must first configure operations from the
 --
 . Click the image:icon-plus.png["",15,15] (*Add component*) icon after the *Escalated* section:
 +
-image::add-email-operation-slack-integration-canvas.png[]
+image::add-email-operation-slack-integration-canvas.png["A Choice flow with the Escalated Add Component button icon highlighted"]
 . Type `send` and select *Send* from the *Email* section:
 +
-image::send-email-slack-integration-canvas.png[]
+image::send-email-slack-integration-canvas.png["A list of components in the search results section, with Send highlighted"]
 . Configure `send` using the following code sample:
 +
 [source,XML]
@@ -142,10 +139,10 @@ image::send-email-slack-integration-canvas.png[]
 . After your application deploys successfully, log in to your Salesforce account.
 . From *App Launcher*, select *Service*:
 +
-image::salesforce-select-service.png[]
+image::salesforce-select-service.png["The Setup menu with Home and Service options highlighted"]
 . Select *Cases* > *New Case*:
 +
-image::salesfroce-create-new-case.png[]
+image::salesfroce-create-new-case.png["The Service navigation bar with the New Case button highlighted in the Cases section"]
 . Ensure that the *Status* of the new case is *Escalated*.
 . After a few seconds, ensure that your configured email account received an email with the information configured in the case:
 +
