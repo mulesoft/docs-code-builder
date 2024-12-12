@@ -21,7 +21,7 @@ Complete these procedures:
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file and delete  *Temporary Logger* from the *Not Escalated* route of the Choice router:
 +
-image::delete-temporary-logger-slack.png[]
+image::delete-temporary-logger-slack.png["A workflow with the Temporary Logger component highlighted, both in the flow canvas UI and in the code view"]
 +
 [source,XML]
 --
@@ -29,14 +29,14 @@ image::delete-temporary-logger-slack.png[]
 --
 . Click the image:icon-plus.png["",15,15] (*Add component*) icon after the *Not Escalated* route of the Choice router:
 +
-image::add-slack-action-example-canvas.png[]
+image::add-slack-action-example-canvas.png["A flow in the canvas UI with the Add Component button highlighted"]
 . Click the image:icon-search-exchange.png["",15,15] (*Search in Exchange*) icon, type `Slack`, and select *Slack Connector*:
 +
-image::add-slack-connector-canvas-exchange.png[]
+image::add-slack-connector-canvas-exchange.png["A list of search results with the Slack connector highlighted"]
 . Select the *Chat: Post Message* operation from the Slack section:
 // TO DO: create a better version of this!
 +
-image::select-post-message-operation.png[]
+image::select-post-message-operation.png["A list of search results containing Slack connector components"]
 . Configure the Slack operation using the following code sample:
 +
 [source,XML]
@@ -54,9 +54,6 @@ image::select-post-message-operation.png[]
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `<email:smtp-config/>` element.
 . Type `slack:` and select *slack:config*.
-//+
-//TODO: cc: the connector name in the following screenshot does not match the desktop experience
-//image::add-slack-config.png[]
 . Add the following configuration to your `<slack:config/>` element:
 +
 [source,XML]
@@ -75,10 +72,10 @@ image::select-post-message-operation.png[]
 . After your application deploys successfully, log in to your Salesforce account.
 . From *App Launcher*, select *Service*:
 +
-image::salesforce-select-service.png[]
+image::salesforce-select-service.png["The Setup menu with the App Launcher button icon highlighted"]
 . Select *Cases* > *New Case*:
 +
-image::salesfroce-create-new-case.png[]
+image::salesfroce-create-new-case.png["The Service navigation bar with the New Case button highlighted in the Cases section"]
 . Ensure that the *Status* of the new case is *New*.
 . After a few seconds, ensure that your configured Slack channel received a message with the information configured in the case:
 +
