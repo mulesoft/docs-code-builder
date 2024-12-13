@@ -18,7 +18,7 @@ Complete xref:tut-slack-create-escalation-api.adoc[].
 
 . In your Explorer view, right-click the *resources* folder (`src/main/resources`) and select *New File*:
 +
-image::contact-sync-integration-new-file.png[]
+image::contact-sync-integration-new-file.png["The resources directory highlighted in the explorer, with the *New File* menu option selected"]
 . Name the file `config.yaml`.
 . Populate your file with your Salesforce, Gmail, and Slack configurations:
 +
@@ -39,7 +39,7 @@ slack:
 --
 . Navigate to your `new-case-salesforce.xml` file, add a new line before the `</mule>` tag, type `configuration` and select *mule:configurationProperties*:
 +
-image::select-mule-config-properties-contacts-sync.png[]
+image::select-mule-config-properties-contacts-sync.png["Code snippet with *mule:configurationProperties* highlighted in search results"]
 . Scroll through the attributes and set the value of `file` to `config.yaml`:
 +
 [source,XML]
@@ -53,11 +53,11 @@ Use the values in your `config.yaml` file to connect the Salesforce Connector to
 
 . In your `new-case-salesforce.xml` file, create a new line after the `<configuration-properties/>` element, type `salesforce`, and select *salesforce:sfdc-config*:
 +
-image::sync-api-select-sfdc-config.png[]
+image::sync-api-select-sfdc-config.png["Code snippet with *Salesforce:sfdc-config* highlighted in search results"]
 . Set the *name* field to `Salesforce-Config`.
 . Create a new line, type `basic` and select *Salesforce:Basic*:
 +
-image::basic-auth-sfdc-connector.png[]
+image::basic-auth-sfdc-connector.png["Code snippet with *Salesforce:basic* highlighted in search results"]
 . Configure the `username` and `password` properties to use your configuration file values:
 +
 [source,XML]
@@ -71,7 +71,7 @@ When you move your cursor over the `${salesforce.username}` and `${salesforce.pa
 --
 . Verify your connection to Salesforce by clicking *Test Connection* for the `<salesforce:sfdc-config/>` element:
 +
-image::sync-api-sfdc-test-connection.png[]
+image::sync-api-sfdc-test-connection.png["Code snippet with *Test Connection* button highlighted"]
 +
 Anypoint Code Builder returns a *Connection is valid* message.
 +
@@ -79,14 +79,6 @@ If you get an error, verify the error message to troubleshoot further.
 
 == Add a Salesforce Trigger
 
-// TODO: cc: the following two commented out steps don't match the actual desktop experience. Instead there's UI text that asks, "What do you want to build in this file?". A flow is one of the options.
-// . Select the `plus` icon on your canvas:
-// +
-// image::add-flow-structure.png[]
-// . Select *Flow*:
-// +
-// image::add-flow-to-canvas.png[]
-// TODO: cc: is this generic enough for both desktop and web?
 . Add a new flow on your canvas.
 +
 . In the code editor, name the flow `​NewSalesforceCaseFlow`:
@@ -98,9 +90,6 @@ If you get an error, verify the error message to troubleshoot further.
 </flow>
 --
 . On your canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon after *Flow*, type `new object`, and select *On new object* after *Salesforce*.
-// TODO: cc: the screenshot doesn't match the step
-//+
-//image::salesforce-on-new-object-canvas.png[]
 . In the code editor, set the following values of the `<salesforce:new-object-listener/>` element:
 // TODO: can we make this what they actually type?
 * `objectType`: *Case*
@@ -119,9 +108,9 @@ If you get an error, verify the error message to troubleshoot further.
 
 . Add a logger at the end of your flow:
 +
-image::add-logger-end-flow-canvas.png[]
+image::add-logger-end-flow-canvas.png["The flow canvas with the *Add Flow* plus sign button highlighted"]
 +
-image::drag-logger-canvas.png[]
+image::drag-logger-canvas.png["A workflow with the *Logger* component added"]
 +
 A `logger` component is added to the `flow` snippet in the code editor. 
 +
@@ -134,7 +123,7 @@ A `logger` component is added to the `flow` snippet in the code editor.
 +
 . Add a breakpoint to this line by clicking the red dot at the line number:
 +
-image::logger-breakpoint-sfdc.png[]
+image::logger-breakpoint-sfdc.png["A line of code with the breakpoint highlighted"]
 +
 Alternatively, add a breakpoint to the `logger` component by right-clicking on the component in the canvas UI and selecting *Add Breakpoint*.
 
@@ -142,16 +131,16 @@ Alternatively, add a breakpoint to the `logger` component by right-clicking on t
 . After your application deploys successfully, log in to your Salesforce account.
 . From *App Launcher*, select *Service*:
 +
-image::salesforce-select-service.png[]
+image::salesforce-select-service.png["The Setup menu with the App Launcher button icon highlighted"]
 . Select *Cases* > *New Case*:
 +
-image::salesfroce-create-new-case.png[]
+image::salesfroce-create-new-case.png["The Service navigation bar with the New Case button highlighted in the Cases section"]
 . Ensure that the *Status* of the new case is *New*.
 . Create a new case and save it.
 . In Anypoint Code Builder, your application stops at the logger. Inspect the payload in *Variables*:
 // the screenshot isn't pointing to Variables.
 +
-image::slack-app-debugger-logger-breakpoint.png[]
+image::slack-app-debugger-logger-breakpoint.png["The *Variables* panel with the *Payload* variables highlighted"]
 +
 The payload contains information about your newly created case.
 . Step over your Logger component.
