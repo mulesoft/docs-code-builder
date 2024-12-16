@@ -3,7 +3,15 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-To delete a design project for your API spec or fragment from Anypoint Code Builder, delete the entire project folder. If you imported the API spec from MuleSoft VCS or if your project was created with earlier versions of Anypoint Code Builder (prior to February 2024) that required storage of the spec in the MuleSoft VCS, you can delete the project from MuleSoft VCS by accessing Design Center. Deletion is necessary if you want to reuse the project name for a new design project in Anypoint Code Builder. 
+Deleting API specs and fragments varies depending on the project creation date and project hosting.
+
+* To delete a design project hosted locally on Anypoint Code Builder, delete the entire project folder. 
+* To delete a design project hosted on US cloud or EU cloud with an API spec imported from MuleSoft VCS, you must delete the project from MuleSoft VCS by accessing Design Center.
+* To delete a design project project created with versions of Anypoint Code Builder released prior to February 2024 that required storage of the spec in the MuleSoft VCS, you must delete the project from MuleSoft VCS by accessing Design Center. 
+* To delete a project hosted on JP cloud or CA cloud, you must use an Anypoint CLI command. 
+
+[NOTE]
+You must delete the previous project to reuse the project name for a new design project in Anypoint Code Builder.
 
 == Before You Begin
 
@@ -25,7 +33,7 @@ To delete an API project (API spec or API spec fragment) from Anypoint Code Buil
 // note on limited scope of this section:
 include::partial$acb-api-design.adoc[tags="api-dc-scm-scope"]
 
-Design project names must be unique. To create a new design project with the same name in Anypoint Code Builder, you must delete the existing project from the IDE. If your design project is stored in MuleSoft VCS, you can delete it from MuleSoft VCS by accessing Design Center.
+Design project names must be unique. To create a new design project with a name already used in Anypoint Code Builder, you must delete the existing project from the IDE.
 
 To delete an API project (API spec or API spec fragment) from Anypoint Code Builder:
 
@@ -33,15 +41,25 @@ To delete an API project (API spec or API spec fragment) from Anypoint Code Buil
 
 To delete a design project from Design Center:
 
-.. Navigate to Anypoint Platform and log in using your credentials.
+. Navigate to Anypoint Platform and log in using your credentials.
 +
 --
 // Pointer to Platform URLs
 include::partial$acb-reusable-steps.adoc[tags="platform-urls"]
 --
-.. Select *Design Center* from the navigation panel.
-.. Select *API Projects* from the navigation panel.
-.. Select the project and click the image:icon-dc-delete-project.png["",15,15] (*Delete Project*) icon.
+. Select *Design Center* from the navigation panel.
+. Select *API Projects* from the navigation panel.
+. Select the project and click the image:icon-dc-delete-project.png["",15,15] (*Delete Project*) icon.
+
+To delete a design project by using Anypoint CLI:
+
+. Run this command:
+[source,command]
+----
+designcenter:project:delete [flags] <name>
+----
+
+== Delete an API Hosted in JP cloud or CA cloud
 
 == See Also
 
