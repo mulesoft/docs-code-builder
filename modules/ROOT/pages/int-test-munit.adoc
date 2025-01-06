@@ -19,7 +19,7 @@ MUnit is a MuleSoft unit testing framework for creating and running unit tests o
 
 With MUnit, you can create MUnit tests and MUnit test suites. MUnit test is an individual test case, defined by the `<munit:test>` element, which includes specific validations and assertions to ensure the functionality of a Mule application. A MUnit test suite is a container for multiple MUnit tests, organizing them within an XML file typically found in the `/src/test/munit` directory.
 
-Anypoint Code Builder provides a *Testing* panel from which you can run tests. In the *Explorer*, test suites are also located within the project directory `{munit-src}`. The IDE also provides a canvas for creating MUnut test suits, a Testing Results panel that provides the status of tests, and logs that identify the status of tests that you run. 
+Anypoint Code Builder provides a *Testing* panel from which you can run tests. In the *Explorer*, test suites are also located within the project directory `{munit-src}`. The IDE also provides a canvas for creating and maintaining MUnut test suits, a Testing Results panel that provides the status of tests, and logs that identify the status of tests that you run. 
 
 //TODO TO SELF: TEST LINKS LOCALLY -- RESOURCES NOT BUILT ON REVIEW SITE
 For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[Anypoint Code Builder Release Notes]. xref:studio::index.adoc[Anypoint Studio] also supports MUnit testing features.
@@ -322,7 +322,6 @@ For example, on any line within XML similar to this example:
 //next step:
 . Check the status of the running test in the Testing, Terminal, and Testing Results panels. See the <<results-example, example>>.
 
-
 //local variable to clear results:
 {clear-results}
 
@@ -534,13 +533,13 @@ Instead of starting with an empty project when creating the integration project,
 [[create-tests]]
 == Create MUnit Tests and Test Suites
 
-Configure MUnit tests and test suites from the XML editor. 
+Configure MUnit tests and test suites using the canvas or the XML editor. 
 
 * <<create-suite>>
 * <<create-test>>
 
 [[create-suite]]
-=== Create an MUnit Suite
+=== Create an MUnit Test Suite
 
 Create an MUnit test suite in your project from the *Explorer*. 
 
@@ -548,7 +547,10 @@ Create an MUnit test suite in your project from the *Explorer*.
 . Create a suite file in the `munit` folder:
 .. Right-click the `munit` folder and select *New MUnit Test Suite File*.
 .. Provide a name for your suite, such as `my-suite.xml`.
-.. The new suite file includes the XML declaration (`<?xml>`), `<mule/>` and `<mule-config>` elements. For example:
++
+After the February 2025, the IDE creates a canvas with a link to build a new test with scope and flow structure options.
++
+The new suite file includes the XML declaration (`<?xml>`), `<mule/>` and `<mule-config>` elements. For example:
 +
 [source,xml]
 ----
@@ -568,6 +570,10 @@ Create an MUnit test suite in your project from the *Explorer*.
 
 </mule>
 ----
+. Select a component from the canvas to customize your test:
+* With the *Behavior* components, you can set the conditions for the test. 
+* With the *Validation* components, you can check the output or state of the application to ensure it matches the expected results so you can confirm the application behaves as intended.
+* With the *Execution* components, you can specify the actions or processes to test.
 . Continue to <<create-test>>.
 
 [[create-test]]
