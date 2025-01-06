@@ -48,7 +48,7 @@ For MUnit features supported by Anypoint Code Builder, see xref:acb-release-note
 [[maven-settings]]
 == Configure Access to MUnit Features
 
-Make MUnit resources available to your project. The process differs depending on whether you have a Mule enterprise edition (EE) license.
+Make MUnit resources available to your project. The process differs depending on whether you have a Mule Enterprise Edition (EE) license.
 
 * <<configure-settings-license-yes>>:
 +
@@ -61,9 +61,9 @@ If you _don't have_ a Mule EE license or if your license is a trial license, con
 [[configure-settings-license-yes]]
 === Configure Maven Settings (Licensed Access)
 
-If you have a Mule EE license (_not a trial license_), configure `server` credentials  in the Maven file, `settings.xml`.
+If you have a Mule EE license (_not a trial license_), configure `server` credentials in the Maven file, `settings.xml`.
 
-See xref:mule-runtime::installing-an-enterprise-license.adoc[Install an Enterprise License], to get or install an Enterprise license. If you're a MuleSoft customer and don't have credentials to access the https://repository.mulesoft.org/nexus-ee/content/repositories/releases-ee/[MuleSoft Enterprise repository^], contact Support and request Nexus enterprise credentials.
+See xref:mule-runtime::installing-an-enterprise-license.adoc[Install an Enterprise License], to get or install an Enterprise license. If you're a MuleSoft customer and don't have credentials to access the https://repository.mulesoft.org/nexus-ee/content/repositories/releases-ee/[MuleSoft Enterprise repository^], contact Support and request Nexus Enterprise credentials.
 
 //navigate to settings.xml:
 . {empty}
@@ -78,7 +78,7 @@ include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag=nav-to-maven
   <id>releases-ee</id>
 </server>
 ----
-//set releases ee repo:
+//set releases EE repo:
 include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag="pom-releases-ee"]
 
 [[configure-settings-license-no]]
@@ -107,7 +107,7 @@ For more information about Maven settings, see xref:ref-acb-maven.adoc[].
 [[workflow]]
 == MUnit Tasks and Workflows
 
-A typical workflow includes one or more of the following steps:
+A workflow can include one or more steps:
 
 . <<maven-settings>>
 . <<open-test, Opening tests>>
@@ -115,10 +115,10 @@ A typical workflow includes one or more of the following steps:
 . <<run-debug, Debugging>>
 . <<fix-errors, Fixing errors>>
 
-If your project does not contain any tests, Anypoint Code Builder supports the following tasks:
+If your project doesn't contain any tests, you can:
 
-* <<import-test, Importing a project that contains MUnit tests>>
-* <<create-tests, Creating tests or test suites in an existing project>>
+* <<import-test, Import a project that contains MUnit tests>>
+* <<create-tests, Create tests or test suites in an existing project>>
 
 //
 //OPEN MUNIT TESTS
@@ -132,7 +132,7 @@ After the February 2025 release, the IDE shows a canvas with the test components
 //open project (with tests) step as local variable
 . {open-project} 
 . Click image:anypoint-code-builder::icon-munit-testing.png["",18,18] (*Testing*) to open the *Testing* panel.
-. Click or mouse over the suite or test name, and click image:anypoint-code-builder::icon-munit-go-to-test-gray.png["",18,18] (*Go to test*) or highlighted image:anypoint-code-builder::icon-munit-go-to-test.png["",18,18] (*Go to test*) to open the XML file that contains the test.
+. Click or hover the suite or test name, and click image:anypoint-code-builder::icon-munit-go-to-test-gray.png["",18,18] (*Go to test*) or highlighted image:anypoint-code-builder::icon-munit-go-to-test.png["",18,18] (*Go to test*) to open the XML file that contains the test.
 +
 //TODO: BUT YOU CAN'T RUN THE TEST FROM THE XML IN THIS CASE :(
 Clicking the test name also opens to the XML file. 
@@ -141,7 +141,7 @@ Clicking the test name also opens to the XML file.
 //open project (with tests) step as local variable
 . {open-project}
 . In the activity bar, click (image:anypoint-code-builder::icon-explorer.png["",18,18]) (*Explorer*). 
-. Navigate to `src/main/test/munit`.
+. Go to `src/main/test/munit`.
 . Click a test suite XML file to view the tests in the suite. 
 
 //
@@ -160,7 +160,7 @@ Run MUnit tests using any of these options:
 //TODO: CONSIDER ADDING WHEN WORKING (SECTION REMOVED UNTIL THEN)
 //* <<run-test-explorer>>
 
-When you run a test, a test build executes, and the Terminal displays the progress of the test. If all tests execute successfully the build succeeds. Otherwise, the build fails. 
+If you run a test, a test build executes, and the Terminal displays the progress of the test. If all tests execute successfully, the build succeeds. Otherwise, the build fails. 
 
 The IDE displays the results of the tests in the *Testing* panel, the *Terminal*, and the *Test Results* panels. Time-stamped logs are also available from the *Test Results* panel. You can clear the results at any time.
 
@@ -190,13 +190,13 @@ image:anypoint-code-builder::munit-testing-panel.png["Testing panel"]
 +
 --
 [calloutlist]
-.. All suites: To run all tests in all suites, click the *Run Tests*, *Debug Tests*, or *Run Tests with Coverage* icon.
+.. All suites: to run all tests in all suites, click the *Run Tests*, *Debug Tests*, or *Run Tests with Coverage* icon.
 //or right-click:
 {right-click}
-.. Suite: To run all tests in a single suite, hover over or click the suite, and then click the *Run Test*, *Debug Test*, or *Run Test with Coverage* icon.
+.. Suite: to run all tests in a single suite, hover over, or click the suite, and then click the *Run Test*, *Debug Test*, or *Run Test with Coverage* icon.
 //or right-click:
 {right-click}
-.. Test: To run a single test, hover over or click a test in a test suite, and then click the *Run Test*, *Debug Test*, or *Run Test with Coverage* icon.
+.. Test: to run a single test, hover over, or click a test in a test suite, and then click the *Run Test*, *Debug Test*, or *Run Test with Coverage* icon.
 --
 //or right-click:
 {right-click}
@@ -301,7 +301,7 @@ For example, on any line within XML similar to this example:
   </munit:validation>
 </munit:test>
 ---- 
-.. Right-click, and select one of the following options:
+.. Right-click, and select an option:
 
 ** *Run Test at Cursor*
 ** *Debug Test at Cursor*
@@ -311,7 +311,7 @@ For example, on any line within XML similar to this example:
 //run all tests option:
 * To run all tests in the test suite XML: 
 .. Place your cursor in the XML file.
-.. Right-click, and select one of the following options:
+.. Right-click, and select an option:
 
 ** *Run Tests in Current File*
 ** *Debug Tests in Current File*
@@ -460,7 +460,7 @@ image:anypoint-code-builder::munit-test-coverage-panel.png["Test coverage percen
 
 * In the activity bar, click (image:anypoint-code-builder::icon-explorer.png["",18,18]) (*Explorer*). Coverage is shown for directories and files.
 
-Numeric and graphic percentages both indicate the percentage of event processors executed by the MUnit test.
+Numeric and graphic percentages both show the percentage of event processors executed by the MUnit test.
 
 //
 //FIX ERRORS
@@ -568,12 +568,12 @@ Create an MUnit test suite in your project from the *Explorer*.
 
 </mule>
 ----
-. Proceed to <<create-test>>.
+. Continue to <<create-test>>.
 
 [[create-test]]
 === Create an MUnit Test
 
-Create an MUnit test in a new or existing test suite. Use auto-complete from the MUnit XML to start an MUnit tests. For guidance with your test configuration, refer to the <<prereqs, MUnit documentation>> described in the prerequisites.
+Create an MUnit test in a new or existing test suite. Use auto-complete from the MUnit XML to start an MUnit test. For guidance with your test configuration, refer to the <<prereqs, MUnit documentation>> described in the prerequisites.
 
 . Open the test suite XML in the editor.
 +
