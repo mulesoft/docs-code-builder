@@ -17,7 +17,9 @@ Run, modify, and create MUnit tests for your implementation and integration proj
 
 MUnit is a MuleSoft unit testing framework for creating and running unit tests on a Mule application, as described in xref:munit::index.adoc[MUnit Overview]. 
 
-Anypoint Code Builder provides a *Testing* panel from which you can run tests. In the *Explorer*, test suites are also located within the project directory `{munit-src}`. The IDE also provides a Testing Results panel that provides the status of tests and logs that identify the status of tests that you run. 
+With MUnit, you can create MUnit tests and MUnit test suites. MUnit test is an individual test case, defined by the `<munit:test>` element, which includes specific validations and assertions to ensure the functionality of a Mule application. A MUnit test suite is a container for multiple MUnit tests, organizing them within an XML file typically found in the `/src/test/munit` directory.
+
+Anypoint Code Builder provides a *Testing* panel from which you can run tests. In the *Explorer*, test suites are also located within the project directory `{munit-src}`. The IDE also provides a canvas for creating MUnut test suits, a Testing Results panel that provides the status of tests, and logs that identify the status of tests that you run. 
 
 //TODO TO SELF: TEST LINKS LOCALLY -- RESOURCES NOT BUILT ON REVIEW SITE
 For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[Anypoint Code Builder Release Notes]. xref:studio::index.adoc[Anypoint Studio] also supports MUnit testing features.
@@ -40,7 +42,6 @@ For guidance, see <<maven-settings>>.
 ** xref:munit::munit-cookbook.adoc[]
 
 For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[]. Anypoint Studio supports testing with all MUnit features.
-
 
 //
 //MUNIT SETTINGS
@@ -124,7 +125,8 @@ If your project does not contain any tests, Anypoint Code Builder supports the f
 [[open-test]]
 == Open MUnit Tests
 
-Open the test suite XML from the *Testing* panel or the *Explorer*.
+Open the test suite XML from the *Testing* panel or the *Explorer*. + 
+After the February 2025 release, the IDE shows a canvas with the test components, or provides a link to build a new test.   
 
 * *Testing panel* - Open the *Testing* panel from the activity bar in the IDE:
 //open project (with tests) step as local variable
@@ -150,6 +152,7 @@ Clicking the test name also opens to the XML file.
 Run MUnit tests using any of these options:
 
 * <<run-test-panel>>
+* <<run-test-canvas>>
 * <<run-test-xml>>
 * <<run-launch-config>>
 * <<run-debug>>
@@ -255,6 +258,16 @@ Expected: "this" as String {encoding: "UTF-8", mediaType: "application/java; cha
 
 //local variable to clear results:
 {clear-results}
+
+//RUN: FROM TEST CANVAS
+[[run-test-canvas]]
+=== Run Tests from the Canvas
+
+Run a test, with or without coverage. Add a test scope to test specific parts of your Mule application or flow structure to define the execution context.
+
+image:munit-run-test-canvas.png["Running a test from the canvas"]
+
+See <<create-tests>>.
 
 //
 //RUN: FROM XML
@@ -533,7 +546,7 @@ Create an MUnit test suite in your project from the *Explorer*.
 
 . Open your project to `{munit-src}` in the *Explorer*.
 . Create a suite file in the `munit` folder:
-.. Right-click the `munit` folder and select *New MUnit Test Suite File...*.
+.. Right-click the `munit` folder and select *New MUnit Test Suite File*.
 .. Provide a name for your suite, such as `my-suite.xml`.
 .. The new suite file includes the XML declaration (`<?xml>`), `<mule/>` and `<mule-config>` elements. For example:
 +
