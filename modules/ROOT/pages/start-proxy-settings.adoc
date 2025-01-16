@@ -1,0 +1,79 @@
+= Configuring your Proxy in Anypoint Code Builder
+:page-deployment-options: desktop-ide
+:restart-ide: Restart the IDE to load all your changes. 
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Anypoint Code Builder supports proxy configuration through your current Visual Studio Code (VS Code) proxy settings. If your proxy settings are set correctly, the network-dependent functions, like publishing to Exchange, logging into Anypoint Platform, and running/debugging applications, work well through the proxy you set.
+
+[NOTE]
+Proxy settings doesn’t work on the cloud IDE 
+
+== Configure Your Proxy Settings in VS Code
+
+When you configure your proxy setting in VS Code, you must take into account the following considerations:
+
+* When setting a proxy URL, the `protocol` can be `HTTP` or `SOCKS`. For example:
+** PROTOCOL://username:password@host:port
+** PROTOCOL://host:port
++
+[NOTE]
+Anypoint Code Builder supports `SOCKS` proxies without authentication but doesn't support `SOCKS` proxies with basic authentication.
++
+* Anypoint Code Builder ignores these fields because it derives its settings from the proxy URL and the no-proxy list: 
+** Proxy Authorization
+** Proxy Kerberos Service Principal
+** Proxy Strict SSL
++
+* If you must exclude certain hosts from the proxy, use the *Proxy bypass* settings.
+
+Configure the proxy settings through the VS Code settings UI. Anypoint Code Builder reads your settings from VS Code and puts them into its own tools and functions that need network connections so that requests for network connections go through the proxy you set up. For configuring your proxy settings:
+
+. Open Visual Studio Code (VS Code).
+. Open VS Code settings:
+.. In Windows, go to File > Preferences > Settings.
+.. In macOS, go to Code > Settings > Settings.
+. Search for "proxy" in the settings search bar.
+. Configure your proxy URL and no-proxy settings as needed.
+. Configure your proxy settings in your Maven settings.xml file.
+. Restart VS Code to make the changes take effect.
+
+[NOTE]
+For Anypoint Code Builder to use proxy settings correctly, the 'Proxy Support' setting must be set to 'override' or 'on'.
+
+== Add Anypoint Platform URLs to an Allowlist
+
+If you must add Anypoint Code Builder and Anypoint Platform URLs to an allowlist, see these tables:
+
+[%header,cols="20a,60a"] 
+|===
+|MuleSoft |URL
+
+|Anypoint Platform services: CloudHub, Exchange, Core Services
+|
+* \https://(+++*+++).anypoint.mulesoft.com (/+++*+++)
+* \https://repository.mulesoft.org/(+++*+++)
+* \https://(+++*+++).cloudhub.io/(+++*+++/)
+|Assets downloaded from Exchange
+|
+* \https://exchange2-asset-manager-kprod.s3.amazonaws.com (/+++*+++)
+* \https://exchange2-asset-manager-kprod-eu.s3.eu-central-1.amazonaws.com (/+++*+++)
+|Resources for API Portals
+|
+* \https://exchange2-file-upload-service-kprod.s3.amazonaws.com (/+++*+++)
+|===
+
+[%header,cols="20a,60a"] 
+|===
+|Third Party |URL
+|Eclipse libraries and Eclipse update sites
+|
+* \https://download.eclipse.org/eclipse/updates (/+++*+++)
+|MuleSoft Maven repositories and connectors update site
+|
+* \https://repo.maven.apache.org/maven2 (/+++*+++)
+* \https://repo1.maven.org/maven2 (/+++*+++)
+|===
+
+[NOTE]
+For services that use the web browser, such as the *Login* or *Exchange* operations, refer to the browser documentation to learn about the browser network requirements. If you use an external identity provider (IdP), you must also grant permission to other third-party domains.
