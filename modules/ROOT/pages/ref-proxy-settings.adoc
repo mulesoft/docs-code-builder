@@ -1,17 +1,17 @@
-= Configuring your Proxy in Anypoint Code Builder
+= Using a Proxy in Anypoint Code Builder
 :page-deployment-options: desktop-ide
 :restart-ide: Restart the IDE to load all your changes. 
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Anypoint Code Builder supports proxy configuration through your current Visual Studio Code (VS Code) proxy settings. If your proxy settings are set correctly, the network-dependent functions, like publishing to Exchange, logging into Anypoint Platform, and running/debugging applications, work well through the proxy you set.
+Execute network-dependent functions in Anypoint Code Builder, such as publishing to Exchange, logging into Anypoint Platform, and running or debugging applications, you must configure your proxy settings in Visual Studio Code (VS Code). 
 
 [NOTE]
 Proxy settings doesn’t work on the cloud IDE 
 
-== Configure Your Proxy Settings in VS Code
+== Before You Begin Configuring Your Proxy
 
-Configure the proxy settings through the VS Code settings UI. Anypoint Code Builder reads your settings from VS Code and puts them into its own tools and functions that need network connections so that requests for network connections go through the proxy you set up. When you configure your proxy setting in VS Code, you must take into account these considerations:
+Take into account these considerations before configuring your proxy setting in VS Code:
 
 * When setting a proxy URL, the `protocol` can be `HTTP` or `SOCKS`. For example:
 ** PROTOCOL://username:password@host:port
@@ -27,7 +27,9 @@ Anypoint Code Builder supports `SOCKS` proxies without authentication but doesn'
 +
 * To exclude certain hosts from the proxy, use the *Proxy bypass* settings.
 
-For configuring your proxy settings:
+== Configure Your Proxy Settings in VS Code
+
+To configure your proxy settings for Anypoint Code Builder:
 
 . Open Visual Studio Code (VS Code).
 . Open VS Code settings:
@@ -36,10 +38,8 @@ For configuring your proxy settings:
 . Search for "proxy" in the settings search bar.
 . Configure your proxy URL and no-proxy settings.
 . Configure your proxy settings in your Maven `settings.xml` file. See https://maven.apache.org/guides/mini/guide-proxies.html[Configure a Proxy in Maven] for configuration instructions.
+. Set the 'Proxy Support' setting to 'override' or 'on'.
 . Restart VS Code to apply your changes.
-
-[NOTE]
-For Anypoint Code Builder to use proxy settings correctly, the 'Proxy Support' setting must be set to 'override' or 'on'.
 
 == Add Anypoint Platform URLs to an Allowlist
 
