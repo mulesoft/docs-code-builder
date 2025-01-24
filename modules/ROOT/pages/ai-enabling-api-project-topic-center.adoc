@@ -16,7 +16,7 @@ image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in
 . From *Quick Actions*, click *Design an API*:
 +
 image::design-api-1.png["*Design an API* link highlighted in the *Quick Actions* section"]
-
+. Select *Enable this API for Agent Topics and Actions*.
 . Complete the *API Specification* form:
 +
 [%header,cols="20a,60a"] 
@@ -39,7 +39,7 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 | *API Specification Language* | Select *OAS 3.0 (YAML)* or *OAS 3.0 (JSON)*.
 
 [NOTE]
-API projects that are enabled for topics and agents support OAS 3.0 only.
+Only OAS 3.0 is supported for topics and actions. 
 |===
 . Click *Create Project*.
 +
@@ -50,7 +50,27 @@ As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-comple
 
 == Add Topic Metadata to the API Project
 
-
+. In *Explorer*, right-click the API specification and select *Open API Project Properties*.
++
+The *API Project Properties* tab opens and is auto populated with:
+* *Asset Version*
+* *API Version*
+* *Business Group*
+* *Asset ID*
+* *Asset Name*
+* *Tags*
+* *Categories*
++
+These properties are used when you publish your API specification to Exchange.
++
+Tags and categories help users filter search results when they search Anypoint Exchange. 
++
+The `sf-api-catalog` and `sf-api-topic` tags are applied automatically when you enable the API for agent actions and topics. If you remove these tags, the API is no longer enabled for agent actions and topics.
++
+image::ai-topic-center-api-project-properties.png["API Project Properties tab with sf-api-catalog and sf-api-topic tags applied"]
++
+You can edit any of the fields. 
+. If you made any changes to the API project properties, click *Apply*.
 
 == Enable an Existing API Project for Agent Actions and Topics
 
