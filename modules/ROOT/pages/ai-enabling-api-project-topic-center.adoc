@@ -72,11 +72,58 @@ image::ai-topic-center-api-project-properties.png["API Project Properties tab wi
 You can edit any of the fields. 
 . If you made any changes to the API project properties, click *Apply*.
 
+== Configure Topics
+
+You can configure your topic directly in the API specification or use the *Configuration Panel*.
+
+. In the *Configuration Panel*, configure:
++
+[%header,cols="20a,35a,35a"] 
+|===
+|Field Name | Description | Example
+|*Topic Label* | Enter a unique name for the topic.  |
+| *Classification Description*| Enter one to three plain text sentences. An agent uses this description to determine when to use a topic in a conversation. When a user enters a message, the agent identifies the user’s intent, compares it to the topic name and classification description, and uses the best matching topic. | 
+
+* Answers questions about business policies, procedures, or products.
+* Interacts with the user to draft or revise content.
+* Answers questions related to a user’s order status, return status, or making a return.
+
+|*Scope* | The scope defines exactly what the agent can and can't do for a given topic. The scope is most effective when it narrowly defines the agent’s job for a given topic as it helps limit the agent so it doesn't try to respond outside the desired job or scope you want the topic to include. 
+| * Your job is to only handle tasks related to setting a closing strategy to close deals. This may include answering product-related pricing questions, briefing users on customer sentiment based on conversations, suggesting a close plan to help users close deals, or giving advice based on video and voice calls.
+
+* Your job is to only educate the user with their reservation questions and only handle changing upcoming or existing reservations by resending the reservation confirmation email. You aren’t able to make new reservations.
+| *Instructions* | Plain text instructions help an agent make decisions about how to use the actions in a topic for different use cases. Each instruction is a single topic-specific guideline, usually phrased as “Always…”, “Never…”, “If x, then y…” “As a first step,…”.
+
+Instructions are nondeterministic, so they shouldn’t include sensitive or deterministic business rules. 
+| * Always clarify what type of mobile device (iOS or Android) before using the Answer Questions with Knowledge function to retrieve troubleshooting information.
+
+* Never ask the user for an ID. Instead, use the name or ask for the name of the record to use IdentifyRecordByName to get the ID to call other actions.
+
+* If a user asks about the status of their order or order confirmation, ask if they have their order number or their email. If a user doesn’t have their email or order number, ask if they'd like to escalate to an agent or create a case.
+|===
+
 == Enable an Existing API Project for Agent Actions and Topics
 
-== Apply Governance Rules
+== Apply Governance Rulesets
 
-Monitor conformance of APIs that are enabled for Topic Center.
+Validate API content and agent topic information to ensure agent actions and topics conform to the Agentforce requirements in Salesforce. 
+
+By default, when you create an API specification and enable it for agents and topics, these two centralized rulesets are applied:
+
+* Topic Enforcement
++
+
+* Action Enforcement
++
+. xref:des-govern-api.adoc[Validate the governance rulesets]. 
+
+== Publish the API Specification to Exchange
+
+xref:des-publish-api-spec-to-exchange.adoc[Publish your API specification] to Anypoint Exchange so that other team members can find and use it.
+
+== See Also
+
+* xref:des-create-api-specs.adoc[]
 
 
 
