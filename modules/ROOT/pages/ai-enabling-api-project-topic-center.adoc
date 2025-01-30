@@ -6,7 +6,15 @@ Design and configure your API specs with agent usage in mind.
 
 * Establish xref:access-management::trusted-salesforce-org.adoc[a tenant relationship] between your Anypoint Platform organization and a trusted Salesforce organization that has agent entitlements. 
 * Verify that xref:access-management::enabling-api-catalog.adoc[API Catalog is enabled] for the connected Salesforce organization.
-* Complete xref:start-acb.adoc[].
+* Verify that you have the xref:start-configure-permissions.adoc[required permissions]. 
+* In *Anypoint Platform -> API Governance*, make sure you xref:api-governance::get-started.adoc[opt in to govern APIs by version].
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* Understand the basics of designing API specs. 
++
+See the xref:tutorials.adoc[] for details.
+* Have some familiarity with xref:access-management::business-groups.adoc[business groups].
++
+When you publish your API spec to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. See xref:access-management::business-groups.adoc[].
 
 == Create an API Specification Project for Agent Actions and Topics
 
@@ -40,6 +48,8 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 
 [NOTE]
 Only OAS 3.0 is supported for topics and actions. 
+
+| *Business Group* | Optionally, select the business group the API will belong to.
 |===
 . Click *Create Project*.
 +
@@ -52,7 +62,8 @@ As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-comple
 
 . In *Explorer*, right-click the API specification and select *Open API Project Properties*.
 +
-The *API Project Properties* tab opens and is auto populated with:
+The *API Project Properties* tab opens and is auto-populated with:
+
 * *Asset Version*
 * *API Version*
 * *Business Group*
@@ -81,7 +92,7 @@ You can configure your topic directly in the API specification or use the *Confi
 [%header,cols="20a,35a,35a"] 
 |===
 |Field Name | Description | Example
-|*Topic Label* | Enter a unique name for the topic.  |
+|*Topic Label* | Enter a unique name for the topic.  | Sales Agent
 | *Classification Description*| Enter one to three plain text sentences. An agent uses this description to determine when to use a topic in a conversation. When a user enters a message, the agent identifies the user’s intent, compares it to the topic name and classification description, and uses the best matching topic. | 
 
 * Answers questions about business policies, procedures, or products.
