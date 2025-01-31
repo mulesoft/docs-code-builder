@@ -83,7 +83,7 @@ image::ai-topic-center-api-project-properties.png["API Project Properties tab wi
 You can edit any of the fields. 
 . If you made any changes to the API project properties, click *Apply*.
 
-== Configure Topics and Agents
+== Configure Topics
 
 You can configure your topic in the *Configuration Panel*.
 
@@ -113,8 +113,11 @@ Instructions are nondeterministic, so they shouldn’t include sensitive or dete
 
 * If a user asks about the status of their order or order confirmation, ask if they have their order number or their email. If a user doesn’t have their email or order number, ask if they'd like to escalate to an agent or create a case.
 |===
-. In the API specification editor, configure the actions:
-+
+
+== Configure Actions
+
+Create agent actions using a schema to define the required metadata: 
+
 [%header%autowidth.spread]
 |===
 | Extension | Description | Default Value
@@ -123,7 +126,45 @@ Instructions are nondeterministic, so they shouldn’t include sensitive or dete
 | x-sfdc/agent/action/isUserInput | Required. Set this attribute to `true` to surface the field to the user for further input. | false
 | x-sfdc/agent/action/isDisplayable | Required. Set this attribute to `true` for the field to be displayable to the user.  | false
 |===
-. Click *Apply*.
+
+Adding agent metadata in a schema that's defined using `$ref` isn't supported. The metadata must be defined inside the schema, for example:
+
+[source,openai]
+----
+... (Inside response, request body, etc..)
+schema:
+  $ref: '#/components/schemas/Pet'
+
+...
+
+components:
+  schemas:
+    Pet:
+      x-sfdc:
+        agent:
+            action:
+                isDisplayable: true
+      required:
+        - name
+        - photoUrls
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: doggie
+        status:
+          type: string
+          description: pet status in the store
+          enum:
+            - available
+            - pending
+            - sold
+----
+
+[NOTE]
 
 == Governance Rulesets
 
