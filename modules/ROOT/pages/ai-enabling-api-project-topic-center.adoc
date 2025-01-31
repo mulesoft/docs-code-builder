@@ -83,11 +83,12 @@ image::ai-topic-center-api-project-properties.png["API Project Properties tab wi
 You can edit any of the fields. 
 . If you made any changes to the API project properties, click *Apply*.
 
-== Configure Topics
+== Configure Topics and Agents
 
-You can configure your topic directly in the API specification or use the *Configuration Panel*.
+You can configure your topic in the *Configuration Panel*.
 
-. In the *Configuration Panel*, configure:
+. Click the # icon to open the *Configuration Panel*. 
+. Configure these fields for topics:
 +
 [%header,cols="20a,35a,35a"] 
 |===
@@ -112,8 +113,19 @@ Instructions are nondeterministic, so they shouldn’t include sensitive or dete
 
 * If a user asks about the status of their order or order confirmation, ask if they have their order number or their email. If a user doesn’t have their email or order number, ask if they'd like to escalate to an agent or create a case.
 |===
+. Configure the actions in your API spec:
++
+[%header%autowidth.spread]
+|===
+| Extension | Description | Default Value
+| x-sfdc/agent/action/publishAsAgentAction | Required. Set this attribute to `true` to enable the operation as an action.  | false
+| x-sfdc/privacy/isPii | Optional. Set this attribute to `true` to enables PII service for queries sent under that operation | false
+| x-sfdc/agent/action/isUserInput | Required. Set this attribute to `true` to surface the field to the user for further input. | false
+| x-sfdc/agent/action/isDisplayable | Required. Set this attribute to `true` for the field to be displayable to the user.  | false
+|===
+. Click *Apply*.
 
-== Apply Governance Rulesets
+== Governance Rulesets
 
 To validate that your API is ready to generate agent actions and topics in Salesforce, these two centralized rulesets are applied to your topic-enabled API project automatically:
 
@@ -122,14 +134,37 @@ To validate that your API is ready to generate agent actions and topics in Sales
 
 . Optionally, xref:des-govern-api.adoc#add-rulesets[add additional rulesets] that are required for your project.
 . xref:des-govern-api.adoc[Validate the governance rulesets]. 
++
+If you remove the `sf-api-catalog` and `sf-api-topic` tags from your API project, the topic and action rulesets are automatically removed.
+
+After you validate your API specification rulesets, a *Publish to Exchange* tab is opened. 
 
 == Publish the API Specification to Exchange
 
-xref:des-publish-api-spec-to-exchange.adoc[Publish your API specification] to Anypoint Exchange so that other team members can find and use it.
+. In the *Publish to Exchange* tab, confirm or change each item:
++
+--
+** Asset version, such as `1.0.0`
+** API version, such as `v1`
+** Lifecycle state
+--
+. Click *Publish*.
+. Click *View* to view the asset in Exchange.
+
+After you publish your API to Exchange and create an active API instance in API Manager, it is available to sync to API Catalog. For more information, see https://help.salesforce.com/s/articleView?id=platform.api_catalog.htm[API Catalog].
+
+== Disable the API Specification for Topics
+
+. In *Explorer*, right-click the API specification and select *Open API Project Properties*.
+. Switch to *Disable this API for Agent Topic and Actions*.
+. Click *Apply*.
+
+The `sf-api-catalog` and `sf-api-topic` tags and the Topic Enforcement and Topic Action rulesets are removed from the API project. 
 
 == See Also
 
 * xref:des-create-api-specs.adoc[]
+* xref:des-publish-api-spec-to-exchange.adoc[]
 
 
 
