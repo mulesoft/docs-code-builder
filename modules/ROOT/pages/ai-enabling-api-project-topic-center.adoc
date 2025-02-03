@@ -13,8 +13,6 @@ Design and configure your API specs for topics and agents, which can then be syn
 +
 See the xref:tutorials.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
-+
-When you publish your API spec to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. See xref:access-management::business-groups.adoc[].
 
 == Create an API Specification Project for Agent Actions and Topics
 
@@ -49,7 +47,7 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 [NOTE]
 Only OAS 3.0 is supported for topics and actions. 
 
-| *Business Group* | Optionally, select the business group the API will belong to.
+| *Business Group* | Select the business group the API will belong to. The business group is required for API governance and syncing centralized rulesets. When you publish your API spec to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. 
 |===
 . Click *Create Project*.
 +
@@ -76,53 +74,61 @@ These properties are used when you publish your API specification to Exchange.
 +
 Tags and categories help users filter search results when they search Anypoint Exchange. 
 +
-The `sf-api-catalog` and `sf-api-topic` tags are applied automatically when you enable the API for agent actions and topics. If you remove these tags, the API is no longer enabled for agent actions and topics.
+The `sf-api-catalog` and `sf-api-topic` tags are applied automatically when you enable the API for agent actions and topics. 
 +
 image::ai-topic-center-api-project-properties.png["API Project Properties tab with sf-api-catalog and sf-api-topic tags applied"]
 +
 You can edit any of the fields. 
-. If you made any changes to the API project properties, click *Apply*.
+. If you make any changes to the API project properties, click *Apply*.
 
 == Configure Topics
 
-You can configure your topic in the *Configuration Panel*.
+Configure your topic in the *Agent Topics* configuration panel:
 
-. Click the # icon to open the *Configuration Panel*. 
+. Click the *#* icon to open the *Agent Topics* configuration panel if it's not already open. 
 . Configure these fields for topics:
 +
 [%header,cols="20a,35a,35a"] 
 |===
 |Field Name | Description | Example
 |*Topic Label* | Enter a unique name for the topic.  | Sales Agent
-| *Classification Description*| Enter one to three plain text sentences. An agent uses this description to determine when to use a topic in a conversation. When a user enters a message, the agent identifies the user’s intent, compares it to the topic name and classification description, and uses the best matching topic. | 
+| *Classification Description*| Enter one to three plain text sentences. An agent uses this description to determine when to use a topic in a conversation. When a user enters a message, the agent identifies the user’s intent, compares it to the topic name and classification description, and uses the best matching topic. | These are some examples of classification descriptions:
 
-* Answers questions about business policies, procedures, or products.
-* Interacts with the user to draft or revise content.
-* Answers questions related to a user’s order status, return status, or making a return.
+Answers questions about business policies, procedures, or products.
+
+Interacts with the user to draft or revise content.
+
+Answers questions related to a user’s order status, return status, or making a return.
 
 |*Scope* | The scope defines exactly what the agent can and can't do for a given topic. The scope is most effective when it narrowly defines the agent’s job for a given topic as it helps limit the agent so it doesn't try to respond outside the desired job or scope you want the topic to include. 
-| * Your job is to only handle tasks related to setting a closing strategy to close deals. This may include answering product-related pricing questions, briefing users on customer sentiment based on conversations, suggesting a close plan to help users close deals, or giving advice based on video and voice calls.
+| These are some examples of scope descriptions:
 
-* Your job is to only educate the user with their reservation questions and only handle changing upcoming or existing reservations by resending the reservation confirmation email. You aren’t able to make new reservations.
+Your job is to only handle tasks related to setting a closing strategy to close deals. This may include answering product-related pricing questions, briefing users on customer sentiment based on conversations, suggesting a close plan to help users close deals, or giving advice based on video and voice calls.
+
+Your job is to only educate the user with their reservation questions and only handle changing upcoming or existing reservations by resending the reservation confirmation email. You aren’t able to make new reservations.
 | *Instructions* | Plain text instructions help an agent make decisions about how to use the actions in a topic for different use cases. Each instruction is a single topic-specific guideline, usually phrased as “Always…”, “Never…”, “If x, then y…” “As a first step,…”.
 
 Instructions are nondeterministic, so they shouldn’t include sensitive or deterministic business rules. 
-| * Always clarify what type of mobile device (iOS or Android) before using the Answer Questions with Knowledge function to retrieve troubleshooting information.
+| These are some examples of instructions:
 
-* Never ask the user for an ID. Instead, use the name or ask for the name of the record to use IdentifyRecordByName to get the ID to call other actions.
+Always clarify what type of mobile device (iOS or Android) before using the Answer Questions with Knowledge function to retrieve troubleshooting information.
 
-* If a user asks about the status of their order or order confirmation, ask if they have their order number or their email. If a user doesn’t have their email or order number, ask if they'd like to escalate to an agent or create a case.
+Never ask the user for an ID. Instead, use the name or ask for the name of the record to use IdentifyRecordByName to get the ID to call other actions.
+
+If a user asks about the status of their order or order confirmation, ask if they have their order number or their email. If a user doesn’t have their email or order number, ask if they'd like to escalate to an agent or create a case.
 |===
 
 == Configure Actions
 
-Create agent actions using a schema to define the required metadata: 
+Create agent actions using a schema to define the required metadata. As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
+
+This is the required metadata:
 
 [%header%autowidth.spread]
 |===
 | Extension | Description | Default Value
 | x-sfdc/agent/action/publishAsAgentAction | Required. Set this attribute to `true` to enable the operation as an action.  | false
-| x-sfdc/privacy/isPii | Optional. Set this attribute to `true` to enables PII service for queries sent under that operation | false
+| x-sfdc/privacy/isPii | Optional. Set this attribute to `true` to enable PII service for queries sent under that operation | false
 | x-sfdc/agent/action/isUserInput | Required. Set this attribute to `true` to surface the field to the user for further input. | false
 | x-sfdc/agent/action/isDisplayable | Required. Set this attribute to `true` for the field to be displayable to the user.  | false
 |===
@@ -168,39 +174,25 @@ components:
 
 == Governance Rulesets
 
-To validate that your API is ready to generate agent actions and topics in Salesforce, these two centralized rulesets are applied to your topic-enabled API project automatically:
-
-* Topic Enforcement
-* Action Enforcement
+To make sure your API is ready to generate agent actions and topics in Salesforce, the *SF API Topic and Action Enablement* centralized ruleset is added to your topic-enabled API project automatically.
 
 . Optionally, xref:des-govern-api.adoc#add-rulesets[add additional rulesets] that are required for your project.
 . xref:des-govern-api.adoc[Validate the governance rulesets]. 
 +
 If you remove the `sf-api-catalog` and `sf-api-topic` tags from your API project, the topic and action rulesets are automatically removed.
 
-After you validate your API specification rulesets, a *Publish to Exchange* tab is opened. 
+== Publish the API spec to Exchange
 
-== Publish the API Specification to Exchange
-
-. In the *Publish to Exchange* tab, confirm or change each item:
-+
---
-** Asset version, such as `1.0.0`
-** API version, such as `v1`
-** Lifecycle state
---
-. Click *Publish*.
-. Click *View* to view the asset in Exchange.
+After you validate your API specification rulesets, xref:des-publish-api-spec-to-exchange.adoc[publish your API specification to Exchange].
 
 After you publish your API to Exchange and create an active API instance in API Manager, it is available to sync to API Catalog. For more information, see https://help.salesforce.com/s/articleView?id=platform.api_catalog.htm[API Catalog].
 
 == Disable the API Specification for Topics
 
 . In *Explorer*, right-click the API specification and select *Open API Project Properties*.
-. Switch to *Disable this API for Agent Topic and Actions*.
-. Click *Apply*.
+. Deselect *Enable this API for Agent Topic and Actions*, and click *Apply*.
 
-The `sf-api-catalog` and `sf-api-topic` tags and the Topic Enforcement and Topic Action rulesets are removed from the API project. 
+The `sf-api-catalog` and `sf-api-topic` tags and the *SF API Topic and Action Enablement* ruleset are removed from the API project. 
 
 == See Also
 
