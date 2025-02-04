@@ -6,7 +6,15 @@ Design and configure your API specs for topics and agents, which can then be syn
 
 * Establish xref:access-management::trusted-salesforce-org.adoc[a tenant relationship] between your Anypoint Platform organization and a trusted Salesforce organization that has agent entitlements. 
 * Verify that xref:access-management::enabling-api-catalog.adoc[API Catalog is enabled] for the connected Salesforce organization.
-* Verify that you have the xref:start-configure-permissions.adoc[required permissions]. 
+* Verify that you have the xref:start-configure-permissions.adoc[required permissions]:
+** xref:access-management::permissions-by-product.adoc#exchange[Anypoint Exchange permissions] so that users can download and publish assets:
+*** *Viewer*
+*** *Creator*
+** xref:access-management::permissions-by-product.adoc#runtime-manager[Runtime Manager permissions] to enable services related to CloudHub and CloudHub 2.0, such as deploying applications:
+*** *Read applications*
+*** *Create applications*
+*** *Delete applications*
+** xref:access-management::permissions-by-product.adoc#design-center[Design Center Developer] permission so that users can view and create APIs. 
 * In *Anypoint Platform -> API Governance*, make sure you xref:api-governance::get-started.adoc[opt in to govern APIs by version].
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * Understand the basics of designing API specs. 
@@ -185,7 +193,7 @@ If you remove the `sf-api-catalog` and `sf-api-topic` tags from your API project
 
 After you validate your API specification rulesets, xref:des-publish-api-spec-to-exchange.adoc[publish your API specification to Exchange].
 
-After you publish your API to Exchange and create an active API instance in API Manager, it is available to sync to API Catalog. For more information, see https://help.salesforce.com/s/articleView?id=platform.api_catalog.htm[API Catalog].
+After you publish your API to Exchange and create an active API instance in API Manager, it is available for use in API Catalog. For more information, see https://help.salesforce.com/s/articleView?id=platform.api_catalog.htm[API Catalog].
 
 == Disable the API Specification for Topics
 
