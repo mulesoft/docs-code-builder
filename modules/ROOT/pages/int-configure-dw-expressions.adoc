@@ -3,7 +3,7 @@
 
 Configure DataWeave expressions in your integrations and implementations from *Expression Builder*, *Transformation Builder*, or from the configuration XML. DataWeave is the programming language designed by MuleSoft for data transformation and expressions in connector operations and other components that process messages (payload and attributes) and other Mule event data.
 
-image::transform-ui.png["The *Expression Field*, *Expression Builder*, and *Transformation Builder* button location highlighted in a component."]
+image::int-dw-transform-ui.png["The *Expression Field*, *Expression Builder*, and *Transformation Builder* button location highlighted in a component."]
 
 [calloutlist]
 . *Expression Field*: Open an expression field in a component configuration panel to enter a DataWeave expression or script.
@@ -29,7 +29,7 @@ The IDE also provides built-in documentation for functions. For example, see <<t
 For more resources, see xref:dataweave::index.adoc[]. 
 
 [[open-fx-field]]
-== Open an Expression (fx) Field 
+== Open the Expression Field 
 
 Most connector operations and components provide at least one field that accepts DataWeave expressions and scripts. In the configuration panel for a component, the *fx* button indicates that the field accepts an expression. In the XML, these fields have the `#[]` markup. Expression fields accept DataWeave expressions, including DataWeave functions and Mule event data, such as `payload`, `attributes`, and `vars`. 
 
@@ -39,7 +39,7 @@ To open a component expression field (*fx*):
 +
 . Click *fx* to change the field from a string field to an expression field. For example:
 +
-image::int-dw-fx-field-set-variable.png["Expression (fx) field in Set Variable"]
+image::int-dw-fx-field-set-variable.png["Expression (fx) field in the *Set Variable* component."]
 +
 The markup `#[]` in the *fx* field also appears in the XML to indicate that the field is for an expression, for example:
 +
@@ -47,16 +47,22 @@ The markup `#[]` in the *fx* field also appears in the XML to indicate that the 
 <set-variable variableName="variableName" value="#[]" 
               doc:name="Set variable" doc:id="ndpiap" />
 ----
-. Click inside the field to open the expression builder for the component, for example:
+. Click the *Expression Builder* button to configure the component.
 +
 image::int-dw-fx-expression-builder.png["Expression builder for Set Variable"]
 +
-Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of expressions in your components. You can preview the expression output without running your Mule app with data from external sources:
+Use the *Data* tab to view the structure of the incoming data, the *Functions* to access and insert DataWeave functions, and the *Preview* tab to see the output of your expression without running your Mule app with data from external sources:
 
 * <<tab-data>>
 * <<tab-functions>>
 * <<tab-preview>>
- 
+
+== Open the Expression Builder
+
+
+== Open the Transformation Builder
+
+
 [[tab-data]]
 == Check the Data Structure
 
