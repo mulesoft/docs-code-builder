@@ -3,14 +3,14 @@
 
 Configure DataWeave expressions in your integrations and implementations from *Expression Builder*, *Transformation Builder*, or from the configuration XML. DataWeave is the programming language designed by MuleSoft for data transformation and expressions in connector operations and other components that process messages (payload and attributes) and other Mule event data.
 
-image::transform-ui.png["Expression Builder and Transformation Builder location highlighted in the transform message component."]
+image::transform-ui.png["The *Expression Field*, *Expression Builder*, and *Transformation Builder* button location highlighted in a component."]
 
 [calloutlist]
+. *Expression Field*: Open an expression field in a component configuration panel to enter a DataWeave expression or script.
 . *Expression Builder*: Simplify and enhance the process of creating and managing expressions within your Mule applications.
-
 . *Transformation Builder*: Create DataWeave transformations in your Mule applications in a visual interface.
 
-When you create an implementation or integration in Anypoint Code Builder, you're creating a Mule app that runs on an instance of the Mule runtime engine. Mock data for your expressions to preview sample output of your expressions in Anypoint Code Builder.
+If you create an implementation or integration in Anypoint Code Builder, you create a Mule app that runs on an instance of the Mule runtime engine. Mock data for your expressions to preview sample output of your expressions in Anypoint Code Builder.
 
 == Before You Begin
 
@@ -31,13 +31,13 @@ For more resources, see xref:dataweave::index.adoc[].
 [[open-fx-field]]
 == Open an Expression (fx) Field 
 
-Most connector operations and components provide at least one field that accepts DataWeave expressions and scripts. In the configuration panel for a component, these fields are identified by an *fx* above the field. In the XML, these fields have `#[]` markup. Expression fields accept DataWeave expressions, including DataWeave functions and Mule event data, such as `payload`, `attributes`, and `vars`. 
+Most connector operations and components provide at least one field that accepts DataWeave expressions and scripts. In the configuration panel for a component, the *fx* button indicates that the field accepts an expression. In the XML, these fields have the `#[]` markup. Expression fields accept DataWeave expressions, including DataWeave functions and Mule event data, such as `payload`, `attributes`, and `vars`. 
 
-To open a component expression field: 
+To open a component expression field (*fx*): 
 
 . Open a component that accepts expressions from the canvas in your implementation or integration project. 
 +
-. Click *fx* above the field to change the field from a string field to an expression field. For example:
+. Click *fx* to change the field from a string field to an expression field. For example:
 +
 image::int-dw-fx-field-set-variable.png["Expression (fx) field in Set Variable"]
 +
