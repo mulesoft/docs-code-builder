@@ -167,8 +167,15 @@ image::int-dw-transform-builder-ui.png["The *Transformation Builder* window and 
 . Click on *Transformation Builder*.
 . In the *Transformation Workspace* section, drag the source field from the input payload to the target field to map the source data to the target data.
 +
-The mapped fields display a green dot to indicate that the mapping is correct, the *Script* section updates with the new mapping, and the *Output Preview*"* section displays the output of the transformation.
+The mapped fields display a green dot and are highlighted to indicate that the mapping, the *Script* section updates with the new mapping, and the *Output Preview*"* section displays the output of the transformation.
++
+If needed, map more than one source field to a target field and the Transform Builder concatenates them.
 . Click on the *More Actions* icon to refresh metadata or remove all mappings.
+. Verify the input sample generated from the field mapping.
++
+You can select the generated sample or provide your own <<sample-data, sample data>>.
+
+// TODO: See if the supported use cases can be added or if such an info is already covered by DW docs. If ACB only supports a subset of DW features, then we should mention that here.
 
 [[sample-data]]
 == Provide Sample Data for a DataWeave Expression
@@ -190,7 +197,7 @@ You can create sample data in the following formats:
 ====
 
 To create sample data for a Mule variable:
-
+// TODO: Rewrite the instructions considering the new UI.
 . Open your project. 
 . In the XML editor, hover over the Mule event variable (such as `payload`), for example:
 +
