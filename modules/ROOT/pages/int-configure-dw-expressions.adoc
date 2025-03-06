@@ -37,11 +37,11 @@ To open a component expression field (*fx*):
 
 . Open a component that accepts expressions from the canvas in your implementation or integration project. 
 +
-. Click *fx* to change the field from a string field to an expression field. For example:
+. Click *fx* to change the field from a string field to an expression field.
 +
 image::int-dw-fx-field-set-variable.png["Expression (fx) field in the *Set Variable* component."]
 +
-The markup `#[]` in the *fx* field also appears in the XML to indicate that the field is for an expression, for example:
+The markup `#[]` in the *fx* field also appears in the XML to indicate that the field is for an expression.
 +
 ----
 <set-variable variableName="variableName" value="#[]" 
@@ -51,7 +51,7 @@ The markup `#[]` in the *fx* field also appears in the XML to indicate that the 
 +
 image::int-dw-fx-expression-builder.png["Expression builder for Set Variable"]
 +
-Use the *Data* tab to view the structure of the incoming data, the *Functions* to access and insert DataWeave functions, and the *Preview* tab to see the output of your expression without running your Mule app with data from external sources:
+Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of expressions in your components. Preview the expression output without the need to run your Mule app with data from external sources:
 
 * <<tab-data>>
 * <<tab-functions>>
@@ -61,11 +61,8 @@ Use the *Data* tab to view the structure of the incoming data, the *Functions* t
 
 *Expression Builder* simplifies the process of creating and managing expressions within your Mule applications. The builder provides a visual interface to create DataWeave expressions and transformations.
 
-== Open the Transformation Builder
-
-
 [[tab-data]]
-== Check the Data Structure
+=== Check the Data Structure
 
 To review the data structure of the Mule event, including the payload, attributes, and Mule variables, use the *Data* tab. The tab includes any sample data and is part of the expression builder for a component *fx* field. For example:
 
@@ -86,7 +83,7 @@ The *Input/Output* tab in component configuration panels provides the structure 
 image:int-dw-fx-input-output-sample.png["Input/Output tab for a component"]
 
 [[tab-functions]]
-== List DataWeave Functions and Get Documentation
+=== List DataWeave Functions and Get Documentation
 
 To get a list of available functions from a component's *Functions* tab, the *fx* field, or the auto-complete menu in the XML editor:
 
@@ -119,7 +116,7 @@ image:int-dw-fx-functions-tab-details.png["Data tab for expression field"]
 |===
 
 [[tab-preview]]
-== Preview Output of DataWeave Expressions 
+=== Preview Output of DataWeave Expressions 
 
 Preview output of DataWeave expressions from the canvas or from the XML editor. The preview feature acts on sample data that you provide from the configuration XML for the payload (`payload`) or Mule variables (for example, `vars.somevar`) in your *fx* (expression) field. 
 
@@ -129,7 +126,7 @@ To provide your own sample data, see <<sample-data>>.
 * <<preview-results-xml>>
 
 [[preview-results-fx]]
-=== Preview Results in the UI
+==== Preview Results in the UI
 
 Preview auto-generated sample data, or preview your own sample data. Preview the output in the *Preview* tab of the expression builder for a component's expression field.
 
@@ -151,7 +148,7 @@ image:int-dw-fx-preview-tab-output.png["Data tab for expression field"]
 You can apply DataWeave selectors and functions to your sample data. To create sample data that has the structure and data types you expect, see <<sample-data>>.
 
 [[preview-results-xml]]
-=== Preview Results from the XML Editor
+==== Preview Results from the XML Editor
 
 To preview the results from the configuration XML, place the cursor within your DataWeave code, click the *Show Code Actions* icon, and then click *Run Preview*:
 
@@ -161,10 +158,19 @@ Anypoint Code Builder opens a new *Preview Output* tab with the result of the fu
 
 image::dataweave-function-preview-output.png["Preview Output tab]
 
+== Open the Transformation Builder
+
+*Transformation Builder* is a visual interface for creating DataWeave transformations in your Mule applications.
+
+. Open the *Transformation Builder*
+. Drag the source and target data structures into the *Transformation Builder*.
+. Map the source data to the target data.
+. Click *Preview* to see the output of the transformation.
+
 [[sample-data]]
 == Provide Sample Data for a DataWeave Expression
 
-Test and preview DataWeave expressions in your components locally, without running your application to retrieve Mule event data from an external source, add sample data for Mule variables, such as `payload` in *fx* fields.
+Test and preview DataWeave expressions locally in Anypoint Code Builder. Add sample data for Mule variables such as `payload` in *fx* fields to preview outputs without running your application.
 
 You can create sample data in the following formats:
 
@@ -201,7 +207,7 @@ image::int-dw-sample-quick-fix-example-dir.png["Sample data files in the project
 +
 The file name is `payload.json`. Files for your sample data and for the autocreated sample data are stored in the project directory `src/test/resources`.
 + 
-See the <<important, Important>> note before adding sample data.
+See <<important, Important>> before adding sample data.
 +
 Hover over the value in the XML editor to display the structure, data keys, and data types of your sample data, for example:
 +
