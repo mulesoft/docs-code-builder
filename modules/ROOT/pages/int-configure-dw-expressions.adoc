@@ -56,7 +56,7 @@ The markup `#[]` in the *fx* field also appears in the XML to indicate that the 
 ----
 . Click the *Expression Builder* button to configure the component.
 +
-image::int-dw-fx-expression-builder.png["Expression builder for Set Variable"]
+image::int-dw-fx-expression-builder.png["*Expression Builder* for the `Set Variable` component."]
 +
 Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of expressions in your components. Preview the expression output without the need to run your Mule app with data from external sources:
 
@@ -64,14 +64,14 @@ Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of express
 * <<tab-functions>>
 * <<tab-preview>>
 
-== Open the Expression Builder
+== Open Expression Builder
 
 *Expression Builder* simplifies the process of creating and managing expressions within your Mule applications. The builder provides a visual interface to create DataWeave expressions and transformations.
 
 [[tab-data]]
 === Check the Data Structure
 
-To review the data structure of the Mule event, including the payload, attributes, and Mule variables, use the *Data* tab. The tab includes any sample data and is part of the expression builder for a component *fx* field. For example:
+To review the data structure of the Mule event, including the payload, attributes, and Mule variables, use the *Data* tab. The tab includes any sample data and is part of *Expression Builder* for a component *fx* field. For example:
 
 [%header,cols="1a,1a"]
 |===
@@ -101,11 +101,11 @@ For guidance, see <<open-fx-field>>.
 
 * To display a list of DataWeave functions from the Core module from an empty *fx* field, press Ctrl+Space in an _empty_ *fx* field. For example:
 +
-image::int-dw-fx-field-autocomplete.png["Expression builder for Set Variable"]
+image::int-dw-fx-field-autocomplete.png["*Expression Builder* for the `Set Variable` component."]
 * To display functions from all xref:dataweave::dw-functions.adoc#dw_modules[DataWeave modules], such as String, Array, and Core modules:
 
-.. Click the *fx* field to open the expression builder. 
-.. Click the *Functions* tab in the expression builder, for example:
+.. Click the *fx* field to open *Expression Builder*. 
+.. Click the *Functions* tab.
 +
 [%header,cols="1a,1a"]
 |===
@@ -135,7 +135,7 @@ To provide your own sample data, see <<sample-data>>.
 [[preview-results-fx]]
 ==== Preview Results in the UI
 
-Preview auto-generated sample data, or preview your own sample data. Preview the output in the *Preview* tab of the expression builder for a component's expression field.
+Preview auto-generated sample data, or preview your own sample data. Preview the output in the *Preview* tab of *Expression Builder* for a component expression field.
 
 [%header,cols="1a,1a"]
 |===
@@ -204,7 +204,7 @@ You can create sample data in the following formats:
 ====
 
 To create sample data for a Mule variable:
-// TODO: Rewrite the instructions considering the new UI.
+// TODO: Rewrite the instructions considering the new UI. Take new screenshots.
 
 . Open your project. 
 . In the XML editor, hover over the Mule event variable (such as `payload`), for example:
@@ -223,19 +223,19 @@ The IDE opens a tab for your sample data.
 +
 image::int-dw-sample-quick-fix-example-dir.png["Sample data files in the project directory"]
 +
-The file name is `payload.json`. Files for your sample data and for the autocreated sample data are stored in the project directory `src/test/resources`.
+The file name is `payload.json`. Files for your sample data and for the autocreated sample data is stored in the project directory `src/test/resources`.
 + 
 See <<important, Important>> before adding sample data.
 +
 Hover over the value in the XML editor to display the structure, data keys, and data types of your sample data, for example:
 +
 image::int-dw-sample-quick-fix-example-hover-xml.png["Hover over XML to display sample data"]
-. Preview your sample data from the expression builder UI:
-.. From the canvas, click the component that contains your sample data to open the expression builder for that field. 
-.. Click the expression field of the component that has sample data to open the expression builder for that field. 
+. Preview your sample data in *Expression Builder*:
+.. From the canvas, click the component that contains your sample data to open *Expression Builder* for that field. 
+.. Click *xf* of the component that has sample data to open *Expression Builder* for that field. 
 .. Click *Preview* to display the sample data. For example:
 +
-image::int-dw-sample-quick-fix-example-preview.png["Sample data preview in the expression builder"]
+image::int-dw-sample-quick-fix-example-preview.png["Sample data preview in *Expression Builder*"]
 +
 You can modify the value. For example, add DataWeave selectors or functions:
 +
@@ -255,15 +255,16 @@ When your DataWeave code contains a syntactic or semantic error, Anypoint Code B
 === Add a Missing Import Directive for a DataWeave Module
 
 Many DataWeave modules require an explicit `import` directive in the expression. Only the Core module doesn't require this directive. 
+// TODO: Take new screenshots.
 
-For example, if you don't import the String module to which this function belongs, the function `camelize( "hello world")` produces an error `Unable to resolve the reference of 'camelize'`.
+For example, if you don't import the string module to which this function belongs, the function `camelize( "hello world")` produces an error `Unable to resolve the reference of 'camelize'`.
 
 [source,xml]
 ----
 <set-payload value='#[ camelize( "hello world")]' doc:name="Set payload" doc:id="vyvcds" />
 ----
 
-The expression builder identifies the error. For example:
+*Expression Builder* identifies the error. For example:
 
 image::int-dw-fx-error-add-import.png["'Import required' error"]
 
