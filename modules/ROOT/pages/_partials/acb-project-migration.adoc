@@ -1,8 +1,6 @@
 
 //
 // tag::export-mule-projects-from-studio[]
-== Export Your Mule Project to a Sharable JAR File in Anypoint Studio
-
 . Open the project to export in Anypoint Studio.
 . Select *Export* from the *File* menu.
 . Click to expand the Mule folder.
@@ -10,9 +8,11 @@
 . Select the project to export and click *Next*.
 . In the *JAR file* menu, click the ellipses (...) button to explore your local drive, and select the folder to which you want to export your deployable JAR file.
 . Click *Finish*.
+// end::export-mule-projects-from-studio[]
+//
 
-=== Exporting Considerations
-
+//
+// tag::exporting-considerations-from-studio[]
 * Select *Attach Project Sources* to include the project metadata if you plan to:
 ** Reimport the deployable file as an open Mule project into your workspace
 ** Import the JAR file into Anypoint Code Builder
@@ -22,13 +22,11 @@
 Selecting *Attach Project Sources* flags the `-DattachMuleSources` parameter as if you would pack your Mule project with Mule Maven Plugin. 
 
 * Select *Include project module and dependencies* if you plan to deploy your exported Mule project to CloudHub.
-// end::export-mule-projects-from-studio[]
+// end::exporting-considerations-from-studio[]
 //
 
 //
 // tag::import-mule-project-into-acb[]
-== Import a Mule Project from a Sharable JAR File in Anypoint Code Builder
-
 Import a shareable JAR file for a snapshot of a Mule project into the desktop IDE.
 
 To create a shareable JAR file, see xref:int-export-mule-project.adoc#shareable[Export to a Shareable JAR File].
