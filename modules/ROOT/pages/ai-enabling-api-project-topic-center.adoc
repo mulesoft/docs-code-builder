@@ -1,17 +1,7 @@
 = Enabling an API Project for Topics and Agent Actions
-:page-aliases: ai-creating-topic-enabled-api-spec.adoc, ai-topic-center.adoc
+:page-aliases: ai-creating-topic-enabled-api-spec.adoc
 
-Use MuleSoft for Agentforce: Topic Center (also known as Topic Center) to enable API specifications for topics and agents, which can then be synced to API Catalog in Salesforce. You can then augment agent functionality by assigning topics to Agentforce agents in Agent Builder.  
-
-Use the Topic Center visual editor to:
-
-* Enable the API specifications for topics and agents.
-* Apply governance rules to validate that your API is ready to generate agent actions and topics in Salesforce.
-* Add metadata to make your topic and action-enabled APIs available in Salesforce using Salesforce API Catalog.
-
-Topics are bundles of actions and sets of instructions Agentforce agents use to complete tasks. Actions are tasks that the agent can do, and instructions help the agent understand how to use actions. 
-
-Topic Center automatically makes all of your API operations available as agent actions and topics. Agents perform common tasks autonomously, such as updating records, searching and summarizing data, and securely taking action in various systems. Agents are reusable across any set of topics and can contain multiple topics. 
+Design and configure your API specs for topics and agents, which makes them available for use by developers in API Catalog in Salesforce.
 
 == Before You Begin
 
@@ -141,7 +131,7 @@ If a user asks about the status of their order or order confirmation, ask if the
 
 Create agent actions using a schema to define the required metadata. As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
 
-To enable an API for agent topics and actions, you need to annotate at least one operation to use as an agent with `x-sfdc/agent/action/publishAsAgentAction` and set the value to `true`. 
+This is the required metadata:
 
 [%header%autowidth.spread]
 |===
@@ -215,9 +205,6 @@ The `sf-api-catalog` and `sf-api-topic` tags and the *SF API Topic and Action En
 
 == See Also
 
-* https://help.salesforce.com/s/articleView?id=sf.copilot_overview.htm&type=5[What are Agents]
-* https://help.salesforce.com/s/articleView?id=sf.copilot_building_blocks.htm&type=5[The Building Blocks of Agents]
-* https://help.salesforce.com/s/articleView?id=sf.copilot_topics.htm&type=5[Agent Topics]
 * xref:des-create-api-specs.adoc[]
 * xref:des-publish-api-spec-to-exchange.adoc[]
 
