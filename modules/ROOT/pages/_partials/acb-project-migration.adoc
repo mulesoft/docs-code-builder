@@ -1,0 +1,49 @@
+
+//
+// tag::export-mule-projects-from-studio[]
+. Open the project to export in Anypoint Studio.
+. Select *Export* from the *File* menu.
+. Click to expand the Mule folder.
+. Select *Anypoint Studio Project to Mule Deployable Archive (includes Studio metadata)* and click *Next*.
+. Select the project to export and click *Next*.
+. In the *JAR file* menu, click the ellipses (...) button to explore your local drive, and select the folder to which you want to export your deployable JAR file.
+. Click *Finish*.
+// end::export-mule-projects-from-studio[]
+//
+
+//
+// tag::exporting-considerations-from-studio[]
+* Select *Attach Project Sources* to include the project metadata if you plan to:
+** Reimport the deployable file as an open Mule project into your workspace
+** Import the JAR file into Anypoint Code Builder
+** Import the JAR file back into the same Studio workspace
+
+[NOTE]
+Selecting *Attach Project Sources* flags the `-DattachMuleSources` parameter as if you would pack your Mule project with Mule Maven Plugin. 
+
+* Select *Include project module and dependencies* if you plan to deploy your exported Mule project to CloudHub.
+// end::exporting-considerations-from-studio[]
+//
+
+//
+// tag::import-mule-project-into-acb[]
+Import a shareable JAR file for a snapshot of a Mule project into the desktop IDE.
+
+To create a shareable JAR file, see xref:int-export-mule-project.adoc#shareable[Export to a Shareable JAR File].
+The contents are lightweight because they don't include dependencies.
+The IDE generates the dependencies configured in the `pom.xml` for the project. 
+
+To import a shareable JAR file in your desktop IDE:
+
+. Ensure that no project is open in the IDE.
+// include for this procedure
+include::partial$acb-open-packaged-sources.adoc[tags="open-command-palette-desktop"]
+include::partial$acb-open-packaged-sources.adoc[tags="load-shareable-jar"]
+. If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
++
+include::partial$acb-open-packaged-sources.adoc[tags="import-note"]
+//step: test project
+include::partial$acb-open-packaged-sources.adoc[tags="test-project"]
+
+// end::import-mule-project-into-acb[]
+// 
