@@ -19,14 +19,18 @@ Before publishing an API spec or fragment:
 include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
 
 [[publish-spec]]
-== Publish an API spec to Exchange
+== Publish an API Spec to Exchange
 
 To publish your API spec to Exchange:
 
-. Open your API specification in Anypoint Code Builder.
+. In *Explorer*, right-click the API specification and select *Publish API Project to Exchange*.
++
+Alternatively:
++
+.. Open your API specification in Anypoint Code Builder.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Enter `publish` and select the following command:
+.. Enter `publish` and select the following command:
 +
 [source,command]
 ----
@@ -35,32 +39,15 @@ MuleSoft: Publish API Specification to Exchange
 +
 image::des-publish-to-exchange.png["MuleSoft: Publish API Specification to Exchange highlighted in Command Palette"]
 . If prompted, click *Allow*, and follow the prompts to sign in to Anypoint Platform.
-. In *Select a Business Group*, find and select your business group for the project. 
-+
-For more information, see <<prereqs>>.
-. In *Set Project Name*, confirm or type the project name and press Enter.
-. Confirm or change each item and press Enter:
-+
---
-** Artifact ID, such as `OAS-Example`
-** Asset version, such as `1.0.0`
-** API version, such as `v1`
---
-+
-Press Escape to cancel publishing.
+. Confirm or change each item and click *Publish*:
+* *Asset Version*
+* *API Version*
+* *Business Group*
 +
 The status bar shows the progress.
++
 When complete, you see a message that the API specification successfully published to Exchange:
-+
-image::des-publish-to-exchange-dialog.png["Publishing API specification to Exchange notification highlighted"]
-
-. When prompted to implement the API, select one of the following:
-+
-** *No* to avoid scaffolding the API specification into your integration.
-** *Yes* to scaffold the API specification into a new project.     
-+
-// Start an implementation project:
-include::partial$acb-reusable-steps.adoc[tags="scaffold-spec-substeps"]
+. Click *View Asset* to see the published asset in Exchange. 
 
 [[locate-api]]
 == Locate Your API in Exchange
