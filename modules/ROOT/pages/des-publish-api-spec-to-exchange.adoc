@@ -1,4 +1,4 @@
-= Publishing API Specs and Fragments to Exchange
+= Publishing API Projects to Exchange
 :page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
@@ -6,12 +6,12 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Publish your API spec or fragment to Anypoint Exchange so that other team members can find and use it.
+Publish your API project to Anypoint Exchange so that other team members can find and use it.
 
 [[prereqs]]
 == Before You Begin
 
-Before publishing an API spec or fragment:
+Before publishing an API project:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create your API specification] or xref:des-create-api-fragments.adoc[fragment].
@@ -19,9 +19,9 @@ Before publishing an API spec or fragment:
 include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
 
 [[publish-spec]]
-== Publish an API Spec to Exchange
+== Publish an API Project to Exchange
 
-To publish your API spec to Exchange:
+To publish your API project to Exchange:
 
 . In *Explorer*, right-click the API specification and select *Publish API Project to Exchange*.
 +
@@ -53,16 +53,22 @@ image::des-publish-to-exchange.png["MuleSoft: Publish API Specification to Excha
 * *API Version*
 +
 If the API project has never been published to Exchange, the default version is `1.0.0`. 
++
+The API version isn't required for API fragments.
 * *Business Group*
 +
 . Optionally, expand *Project Metadata* and click *API Project Properties* to update metadata for the API project, such as updating the asset name and ID and adding tags and categories. For more information, see xref:ai-enabling-api-project-topic-center.adoc#add-metadata[Add Metadata to the API Project].
 .. After you complete your updates, click *Apply*.
 . In the banner click *Sync centralized governance rulesets and run validation* to ensure the API project conforms to the applied rulesets. 
 +
+This step is optional, but it's recommended as a best practice.
++
 image::des-publish-api-project.png["Publish API Project to Exchange form with banner to sync centralized rulesets"]
 . Click *Publish*.
 +
 When publishing is complete, you see a message that the API specification successfully published to Exchange.
++
+. Click *View Asset* to see the published asset in Exchange. 
 . When prompted to implement the API, select one of the following:
 +
 ** *No* to avoid scaffolding the API specification into your integration.
@@ -70,7 +76,7 @@ When publishing is complete, you see a message that the API specification succes
 +
 // Start an implementation project:
 include::partial$acb-reusable-steps.adoc[tags="scaffold-spec-substeps"]
-. Click *View Asset* to see the published asset in Exchange. 
+
 
 [[locate-api]]
 == Locate Your API in Exchange
