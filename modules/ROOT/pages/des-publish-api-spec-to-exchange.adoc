@@ -23,11 +23,15 @@ include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
 
 To publish your API project to Exchange:
 
-. In *Explorer*, right-click the API specification and select *Publish API Project to Exchange*.
+. Log in to your Anypoint Platform account.
+. In *Explorer*, open your API project and click the public to exchange icon. 
++ 
+image::icon-publish-to-exchange.png["Publish to Exchange icon"]
++
+If you don't open the project, you can also right-click the API specification and select *Publish API Project to Exchange*.
 +
 Alternatively:
 +
-.. Open your API specification in Anypoint Code Builder.
 .. Open the Command Palette.
 +
 .Show me how
@@ -57,17 +61,19 @@ If the API project has never been published to Exchange, the default version is 
 The API version isn't required for API fragments.
 * *Business Group*
 +
-. Optionally, expand *Project Metadata* and click *API Project Properties* to update metadata for the API project, such as updating the asset name and ID and adding tags and categories. For more information, see xref:ai-enabling-api-project-topic-center.adoc#add-metadata[Add Metadata to the API Project].
+If you selected a business group when you created the API project, this field isn't shown in the form. You can view and update the business by expanding *Project Metadata*.
+. Optionally, expand *Project Metadata* and click *API Project Properties* to update metadata for the API project, such as updating the asset name and ID and adding tags and categories, updating the business group, and so on. For more information, see xref:ai-enabling-api-project-topic-center.adoc#add-metadata[Add Metadata to the API Project].
 .. After you complete your updates, click *Apply*.
 . In the banner click *Sync centralized governance rulesets and run validation* to ensure the API project conforms to the applied rulesets. 
 +
-This step is optional, but it's recommended as a best practice.
+This step is optional, but it's recommended as a best practice. You must be logged in to your Anypoint Platform account and have a business group defined in the API project metadata to validate rulesets.
 +
 image::des-publish-api-project.png["Publish API Project to Exchange form with banner to sync centralized rulesets"]
 . Click *Publish*.
 +
 When publishing is complete, you see a message that the API specification successfully published to Exchange.
 +
+If the API project has errors, you must fix the errors before you can publish to Exchange. Errors are listed in the *Problems* tab, which is automatically in-focus if there are errors.
 . Click *View Asset* to see the published asset in Exchange. 
 . When prompted to implement the API, select one of the following:
 +
