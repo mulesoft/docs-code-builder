@@ -1,24 +1,24 @@
-= Developing Integrations Using Einstein
+= Developing Integrations Using Agentforce
 :page-deployment-options: cloud-ide, desktop-ide
 
-To jumpstart your integration development, use natural language prompts in Einstein for Anypoint Code Builder Generative Flows to generate flows for you. The engine for these generative flows is the pre-trained large language models (LLM) that exist within the Salesforce Shared Trust Boundary. These LLMs are at the core of the Generative Flows capabilities in Anypoint Code Builder.
+To jumpstart your integration development, use natural language input in Agentforce for Anypoint Code Builder Generative Flows to generate flows for you. The engine for these generative flows is the pre-trained large language models (LLM) that exist within the Salesforce Shared Trust Boundary. These LLMs are at the core of the Generative Flows capabilities in Anypoint Code Builder.
 
-NOTE: Einstein for Anypoint Code Builder Generative Flows is available only on US and EU cloud hosts. Canada and Japan cloud hosts are currently not supported.
+NOTE: Agentforce for Anypoint Code Builder Generative Flows is available only on US and EU cloud hosts. Canada and Japan cloud hosts are currently not supported.
 
 == Trust Layer
 
-The Einstein trust layer bridges Anypoint Platform and the LLMs, as shown in the following flow: 
+The Agentforce trust layer bridges Anypoint Platform and the LLMs, as shown in the following flow: 
 
 image::acb-einstein-trust-layer.png["Flow depicting how the trust layer works, including the steps of the flow"]
 
 [calloutlist]
-. The Anypoint Code Builder user creates a prompt based on their use case and sends it to Einstein.  
-. To minimize inaccurate responses (the AI "hallucination" effect), prompts are grounded with factual MuleSoft proprietary data and user context.
-. To ensure the data is sent safely to the external LLM, the prompt is sent to Open AI via the secure gateway. 
+. The Anypoint Code Builder user creates a message based on their use case and sends it to Agentforce.  
+. To minimize inaccurate responses (the AI "hallucination" effect), messages are grounded with factual MuleSoft proprietary data and user context.
+. To ensure the data is sent safely to the external LLM, the message is sent to Open AI via the secure gateway. 
 . To keep your data secure, all data remains in Salesforce.  
 . After the LLM generates a response, the content is sent back through the secure gateway.
 . MuleSoft validates the generated output to ensure the generated flow works within the MuleSoft ecosystem. 
-. Anypoint Code Builder logs the prompt and generated responses for monitoring before surfacing the validated response in Anypoint Code Builder.
+. Anypoint Code Builder logs the message and generated responses for monitoring before surfacing the validated response in Anypoint Code Builder.
 
 [IMPORTANT]
 This feature uses generative AI, which is known to include inaccurate or harmful responses. Before implementing this feature, review the output for accuracy and safety. You assume responsibility for the output when making business decisions.
