@@ -11,7 +11,7 @@ Use the Topic Center visual editor to:
 
 Topics are bundles of actions and sets of instructions Agentforce agents use to complete tasks. Actions are tasks that the agent can do, and instructions help the agent understand how to use actions. 
 
-Topic Center automatically makes all of your API operations available as agent actions and topics. Agents perform common tasks autonomously, such as updating records, searching and summarizing data, and securely taking action in various systems. Agents are reusable across any set of topics and can contain multiple topics. 
+Topic Center makes your API operations available as agent actions and topics. Agents perform common tasks autonomously, such as updating records, searching and summarizing data, and securely taking action in various systems. Agents are reusable across any set of topics and can contain multiple topics. 
 
 == Before You Begin
 
@@ -33,6 +33,7 @@ Topic Center automatically makes all of your API operations available as agent a
 See the xref:tutorials.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 
+[[create-api-spec-agent-topic]]
 == Create an API Specification Project for Agent Actions and Topics
 
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
@@ -71,19 +72,29 @@ Only OAS 3.0 is supported for topics and actions.
 . Click *Create Project*.
 +
 If prompted, trust the authors of the files in the folder.
++
+The Agent Topics configuration panel opens. 
+. In the Agent Topics configuration panel, configure agent topic metadata and instructions, and click *Apply*.
 . Continue designing your API spec. 
 +
 As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
 
-== Add Topic Metadata to the API Project
+[[add-metadata]]
+== Add Metadata to the API Project
 
 . In *Explorer*, right-click the API specification and select *Open API Project Properties*.
 +
 The *API Project Properties* tab opens and is auto-populated with:
 
 * *Asset Version*
++
+The asset version for your API project must follow the semantic versioning model. For more information, see xref:exchange::asset-versions.adoc[Asset Versions].
 * *API Version*
++
+The major version for the API.
 * *Business Group*
++
+Select the Anypoint Platform business group this API will be available in. 
 * *Asset ID*
 * *Asset Name*
 * *Tags*
@@ -100,6 +111,7 @@ image::ai-topic-center-api-project-properties.png["API Project Properties tab wi
 You can edit any of the fields. 
 . If you make any changes to the API project properties, click *Apply*.
 
+[[configure-topics]]
 == Configure Topics
 
 Configure your topic in the *Agent Topics* configuration panel:
@@ -137,11 +149,12 @@ Never ask the user for an ID. Instead, use the name or ask for the name of the r
 If a user asks about the status of their order or order confirmation, ask if they have their order number or their email. If a user doesn’t have their email or order number, ask if they'd like to escalate to an agent or create a case.
 |===
 
+[[configure-actions]]
 == Configure Actions
 
 Create agent actions using a schema to define the required metadata. As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
 
-To enable an API for agent topics and actions, you need to annotate at least one operation to use as an agent with `x-sfdc/agent/action/publishAsAgentAction` and set the value to `true`. 
+To enable an API for agent topics and actions, you must annotate at least one operation to use as an agent with `x-sfdc/agent/action/publishAsAgentAction` and set the value to `true`. 
 
 [%header%autowidth.spread]
 |===
@@ -191,7 +204,8 @@ components:
 
 [NOTE]
 
-== Governance Rulesets
+[[governance-rulesets]]
+== Topic and Agent Governance Rulesets
 
 To make sure your API is ready to generate agent actions and topics in Salesforce, the *SF API Topic and Action Enablement* centralized ruleset is added to your topic-enabled API project automatically.
 
@@ -200,12 +214,14 @@ To make sure your API is ready to generate agent actions and topics in Salesforc
 +
 If you remove the `sf-api-catalog` and `sf-api-topic` tags from your API project, the topic and action rulesets are automatically removed.
 
+[[publish-to-exchange]]
 == Publish the API spec to Exchange
 
 After you validate your API specification rulesets, xref:des-publish-api-spec-to-exchange.adoc[publish your API specification to Exchange].
 
 After you publish your API to Exchange and create an active API instance in API Manager, it is available for use in API Catalog. For more information, see https://help.salesforce.com/s/articleView?id=platform.api_catalog.htm[API Catalog].
 
+[[disable-api-spec-for-topics]]
 == Disable the API Specification for Topics
 
 . In *Explorer*, right-click the API specification and select *Open API Project Properties*.

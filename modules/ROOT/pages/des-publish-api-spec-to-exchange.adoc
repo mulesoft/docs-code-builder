@@ -1,4 +1,4 @@
-= Publishing API Specs and Fragments to Exchange
+= Publishing API Projects to Exchange
 :page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
@@ -6,12 +6,12 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Publish your API spec or fragment to Anypoint Exchange so that other team members can find and use it.
+Publish your API project to Anypoint Exchange so that other team members can find and use it.
 
 [[prereqs]]
 == Before You Begin
 
-Before publishing an API spec or fragment:
+Before publishing an API project:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:des-create-api-specs.adoc[Create your API specification] or xref:des-create-api-fragments.adoc[fragment].
@@ -19,41 +19,60 @@ Before publishing an API spec or fragment:
 include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
 
 [[publish-spec]]
-== Publish an API spec to Exchange
+== Publish an API Project to Exchange
 
-To publish your API spec to Exchange:
+To publish your API project to Exchange:
 
-. Open your API specification in Anypoint Code Builder.
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Enter `publish` and select the following command:
+. Log in to your Anypoint Platform account.
+. In *Explorer*, open your API project and click the Publish API Project to Exchange icon. 
++ 
+image::icon-publish-to-exchange.png["Publish API Project to Exchange icon"]
++
+If you don't open the project, you can also right-click the API specification and select *Publish API Project to Exchange*.
++
+Alternatively:
++
+.. Open the Command Palette.
++
+.Show me how
+[%collapsible]
+====
+* Use the keyboard shortcuts:
+** Mac: Cmd+Shift+p
+** Windows: Ctrl+Shift+p
+* In the desktop IDE, select *View* > *Command Palette*. 
+* In the cloud IDE, click the image:anypoint-code-builder::icon-menu.png["",18,18] (menu) icon, and select *View* > *Command Palette*.
+====
+.. Enter `publish` and select the following command:
 +
 [source,command]
 ----
-MuleSoft: Publish API Specification to Exchange
+MuleSoft: Publish API Project to Exchange
 ----
-+
-image::des-publish-to-exchange.png["MuleSoft: Publish API Specification to Exchange highlighted in Command Palette"]
 . If prompted, click *Allow*, and follow the prompts to sign in to Anypoint Platform.
-. In *Select a Business Group*, find and select your business group for the project. 
+. Confirm or change each item in *Publish API Project to Exchange*:
+* *Asset Version*
+* *API Version*
 +
-For more information, see <<prereqs>>.
-. In *Set Project Name*, confirm or type the project name and press Enter.
-. Confirm or change each item and press Enter:
+If the API project has never been published to Exchange, the default version is `1.0.0`. 
 +
---
-** Artifact ID, such as `OAS-Example`
-** Asset version, such as `1.0.0`
-** API version, such as `v1`
---
+The API version isn't required for API fragments.
+* *Business Group*
 +
-Press Escape to cancel publishing.
+If you selected a business group when you created the API project, this field isn't shown in the form. You can view and update the business by expanding *Project Metadata*.
+. Optionally, expand *Project Metadata* and click *API Project Properties* to update metadata for the API project, such as updating the asset name and ID and adding tags and categories, updating the business group, and so on. For more information, see xref:ai-enabling-api-project-topic-center.adoc#add-metadata[Add Metadata to the API Project].
+.. After you complete your updates, click *Apply*.
+. In the banner click *Sync centralized governance rulesets and run validation* to ensure the API project conforms to the applied rulesets. 
 +
-The status bar shows the progress.
-When complete, you see a message that the API specification successfully published to Exchange:
+This step is optional, but it's recommended as a best practice. You must be logged in to your Anypoint Platform account and have a business group defined in the API project metadata to validate rulesets.
 +
-image::des-publish-to-exchange-dialog.png["Publishing API specification to Exchange notification highlighted"]
-
+image::des-publish-api-project.png["Publish API Project to Exchange form with banner to sync centralized rulesets"]
+. Click *Publish*.
++
+When publishing is complete, you see a message that the API specification successfully published to Exchange.
++
+If the API project has errors, you must fix the errors before you can publish to Exchange. Errors are listed in the *Problems* tab. Click the Publish API Project to Exchange icon to bring the *Problems* tab into focus.
+. Click *View Asset* to see the published asset in Exchange. 
 . When prompted to implement the API, select one of the following:
 +
 ** *No* to avoid scaffolding the API specification into your integration.
@@ -61,6 +80,7 @@ image::des-publish-to-exchange-dialog.png["Publishing API specification to Excha
 +
 // Start an implementation project:
 include::partial$acb-reusable-steps.adoc[tags="scaffold-spec-substeps"]
+
 
 [[locate-api]]
 == Locate Your API in Exchange
@@ -123,3 +143,8 @@ image::des-graphql-publish-exchange.png["Publish a new asset form on Exchange"]
 Your GraphQL API spec is now available on Exchange, for example:
 
 image::des-graphql-asset-exchange.png["GraphQL API spec on Exchange]
+
+== See Also
+
+* xref:des-govern-api.adoc[]
+* xref:ai-enabling-api-project-topic-center.adoc[]
