@@ -263,7 +263,16 @@ When the application deploys successfully, you see a `DEPLOYED` log message in t
 //
 // tag::fragments-not-scaffolded[]
 // Fragments Not Scaffolded
-Anypoint Code Builder doesn't support the scaffolding of AsyncAPI, OAS, or JSON schema fragment files that are referenced from API specs. The scaffolder doesn't add these fragments as project dependencies when you import the specification from Exchange. However, you can scaffold and reference fragments that are specified inline, within the spec. 
+Anypoint Code Builder supports scaffolding these schema fragment files if referenced from API specs:
+
+[cols="1,1,1,1,1,1"]
+|===
+| | Avro | JSON | OAS | RAML | YAML
+| AsyncAPI | Yes | Yes | No | No | No
+| REST | No | No | Yes | Yes | No
+|===
+
+If you add a fragment that isn't supported, the scaffolder doesn't add these fragments as project dependencies if you import the spec from Exchange. However, you can scaffold schemas that are specified inline within the spec.
 // end::fragments-not-scaffolded[]
 //
 // tag::fragments-inline[]
