@@ -265,14 +265,17 @@ When the application deploys successfully, you see a `DEPLOYED` log message in t
 // Fragments Not Scaffolded
 Anypoint Code Builder supports scaffolding these schema fragment files if referenced from API specs:
 
-[%header,cols="1,1,1,1,1,1"]
+[%header,cols="1,1,1,1"]
 |===
-| | Avro | JSON | OAS | RAML 
-| *AsyncAPI* | Yes | Yes | No | No 
-| *REST* | No | No | Yes | Yes 
+| | Avro | JSON | RAML 
+| *AsyncAPI* | Yes | Yes | No 
+| *GraphQL* | No | No | Yes 
+| *OData* | No | No | Yes 
+| *REST* | No | No | Yes 
+| *SOAP* | No | No | Yes 
 |===
 
-If you add a fragment that isn't supported, the scaffolder doesn't add these fragments as project dependencies if you import the spec from Exchange. However, you can scaffold schemas that are specified inline within the spec.
+If you add a fragment that isn't supported, the scaffolder doesn't add these fragments as project dependencies when you import the spec from Exchange. However, you can scaffold schemas that are specified inline within the spec.
 // end::fragments-not-scaffolded[]
 //
 // tag::fragments-inline[]
