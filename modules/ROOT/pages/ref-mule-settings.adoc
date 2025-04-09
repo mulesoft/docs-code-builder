@@ -39,6 +39,29 @@ Set the Maven group ID value for the IDE to use when you create a Mule integrati
 
 For information about Maven group IDs, see https://maven.apache.org/guides/introduction/introduction-to-the-pom.html[Introduction to the POM^] in the Apache Maven Project documentation. 
 
+[[setting-logging]]
+==  Mule > Logging: Level
+
+Set the verbosity of logs that appear in the Anypoint Code Builder extension and Mule DX Server logs. Verbosity options are progressive:
+
+* Off: No issues 
+* Fatal: Fatal issues only
+* Error: Fatal and Error issues 
+* Warn (default): Fatal, Error, and Warn issues  
+* Info: Fatal, Error, Warn, and Info issues 
+* Debug: Fatal, Error, Warn, Info, and Debug issues
+* Trace: Fatal, Error, Warn, Info, Debug, and Trace issues
+
+[[setting-designservice]]
+==  Mule > Design Service: System Properties
+
+Used for the Anypoint Code Builder design experience with the MCP Connector (beta). These are the available values.
+
+* `-Dmule.http.service.implementation=NETTY`: The MCP Connector is enabled. 
+* blank: The MCP Connector is disabled or not installed.
+
+_MCP Connector is a beta connector that is subject to the Beta Services Terms at https://www.salesforce.com/company/legal/agreements/[Agreements - Salesforce.com] or a written Unified Pilot Agreement if executed by Customer, and the Non-GA Gen AI and Non-GA Credit Consumption terms in the https://ptd.salesforce.com/?_ga=2.247987783.1372150065.1709219475-629000709.1639001992[Product Terms Directory]. Use of this beta connector with external systems or services consumes Mule messages and is at the Customer's sole discretion._
+
 [[setting-lsp]]
 == Mule › Lsp › Trace: Server
 
@@ -86,19 +109,6 @@ For more information, see xref:index.adoc#us-eu-clouds[US and EU Cloud Hosts].
 ==  Mule > Telemetry
 
 You can enable or disable telemetry services in the US cloud. By default, this setting is disabled and not used for the EU cloud. When telemetry services are enabled, the IDE sends anonymous usage data to the MuleSoft team. The data helps identify important usage trends.
-
-[[setting-logging]]
-==  Mule > Logging: Level
-
-Set the verbosity of logs that appear in the Anypoint Code Builder extension and Mule DX Server logs. Verbosity options are progressive:
-
-* Off: No issues 
-* Fatal: Fatal issues only
-* Error: Fatal and Error issues 
-* Warn (default): Fatal, Error, and Warn issues  
-* Info: Fatal, Error, Warn, and Info issues 
-* Debug: Fatal, Error, Warn, Info, and Debug issues
-* Trace: Fatal, Error, Warn, Info, Debug, and Trace issues
 
 [[setting-home-dir]]
 ==  Mule: Home Directory
