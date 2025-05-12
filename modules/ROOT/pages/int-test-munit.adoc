@@ -578,6 +578,32 @@ After testing, you can clear test results from the *Testing* panel and the logs 
 +
 image:munit-clear-testing-results-log.png["Clearing test results from Test Results panel"]
 
+[[observe-processors-in-your-flow]]
+== Observe Processors in Your Flow
+
+Add these processors to your MUnit test to focus on individual components of your Mule flow:
+
+[options="header,footer",cols="1,2",]
+|====
+| Processor | Description
+| `Mock-when` | Create a mock of an event processor in your flow to simulate the behavior of the event processor without actually executing it.
+| `Spy` | Observe what happens before and after a specific event processor in your flow is executed, without altering its behavior.
+|====
+
+=== Setting Up Processors
+
+. On your test suite, click *+*.
+. Search for a processor designed to observe your flow (see <<observe-processors-in-your-flow>>).
+. Select the type of processor to-be observed by clicking on the *+* icon.
+//TODO: ADD IMAGE
+. Configure the attributes.
+//TODO: ADD IMAGE
+
+When selecting the processor and its attributes, consider these aspects:
+
+//TODO: REVIEW THESE CONSIDERATIONS
+* The setup configured for one processor applies to all processors of the same type in your flow.
+* The attributes of all processors of the same type are listed.  
 
 [[examples]]
 == MUnit Examples
