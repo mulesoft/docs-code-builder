@@ -13,11 +13,11 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Run, modify, and create MUnit tests for your implementation and integration projects in Anypoint Code Builder. Import projects that contain MUnit test files. 
+Create, run, and modify MUnit tests for your implementation and integration projects in Anypoint Code Builder. Import projects that contain MUnit test files. 
 
 MUnit is a MuleSoft unit testing framework for creating and running unit tests on a Mule application, as described in xref:munit::index.adoc[MUnit Overview]. 
 
-With MUnit, you can create MUnit tests and MUnit test suites. MUnit test is an individual test case, defined by the `<munit:test>` element, which includes specific validations and assertions to make sure the functionality of a Mule application. A MUnit test suite is a container for multiple MUnit tests, organizing them within an XML file typically found in the `/src/test/munit` directory.
+With MUnit, create MUnit tests and MUnit test suites. MUnit test is an individual test case, defined by the `<munit:test>` element, which includes specific validations and assertions to make sure the functionality of a Mule application. A MUnit test suite is a container for multiple MUnit tests, organizing them within an XML file typically found in the `/src/test/munit` directory.
 
 Anypoint Code Builder provides a *Testing* panel from which you can run tests. In the *Explorer*, test suites are also located within the project directory `{munit-src}`. The IDE also shows a canvas for creating and maintaining MUnit test suits, a Testing Results panel with the status of tests, and logs that identify the status of tests. 
 
@@ -106,11 +106,11 @@ Create an MUnit test in a new or existing test suite. Use the canvas, the XML Ed
 
 ==== Create a Test from a Flow
 You can quickly generate the basic structure for an MUnit test designed to test a specific flow within your Mule application.
-. Open the XML file containing the flow you want to test.
-. In the XML editor or canvas view, **right-click on the flow** element (e.g., `flow`).
-. From the context menu, select **"Create MUnit Test"**.
-. Anypoint Code Builder will create a new MUnit test suite file in your project's `{munit-src}` directory, containing a basic test structure targeting the selected flow.
-. **Configure the new test** by adding necessary setup, execution, and validation components (see <>).
+
+. Open your Mule project.
+. In the canvas, right-click on your flow.
+. Select *Create MUnit Test*.
+. Anypoint Code Builder creates a new MUnit test suite file in your project `{munit-src}` folder with the test structure targeting the selected flow.
 
 ==== Create a Test from the Canvas
 
