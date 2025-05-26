@@ -186,7 +186,7 @@ image::dataweave-function-preview-output.png["Preview Output tab]
 
 == Open Transformation Builder
 
-Create DataWeave transformations in your Mule applications with the *Transformation Builder* tool.
+Create DataWeave transformations in your Mule applications with the *Transformation Builder* tool, now enhanced with AI capabilities. Provide input and output sample metadata or data to generate DataWeave scripts.
 
 image::int-dw-transform-builder-ui.png["The *Transformation Builder* window and its sections highlighted"]
 
@@ -201,18 +201,30 @@ If needed, map multiple source field to a target field, and then the Transform B
 +
 You can select the generated sample or provide your own <<sample-data, sample data>>.
 
-// TODO: See if the supported use cases can be added or if such an info is already covered by DW docs. If ACB only supports a subset of DW features, then we should mention that here.
+// TODO: Add information about understanding and using generated transformations, including explanations, inserting/copying scripts, regenerating, and providing feedback.
+
+// TODO: Add a "Considerations" section for AI-assisted transformations, including details on metadata vs. sample data, supported MIME types, loading indicators, inability to change sample data during generation, cancellation, and the number of generated options.
+// TODO: Add a "Considerations on PII and Validations" section, warning against using PII and explaining how generated transformations are validated.
 
 [[sample-data]]
 == Provide Sample Data for a DataWeave Expression
 
-Test and preview DataWeave expressions locally in Anypoint Code Builder. Add sample data for Mule variables such as `payload` in *fx* fields to preview outputs without running your application.
+Test and preview DataWeave expressions locally in Anypoint Code Builder. Add sample data for Mule variables such as `payload` in *fx* fields to preview outputs without running your application. For AI-assisted transformations, providing sample input and output data helps AI understand the desired transformation and generate accurate DataWeave scripts.
 
 You can create sample data in the following formats:
 
 * JSON
 * XML
 * CSV
+* Java
+* Text
+* YAML
+* Avro
+* Excel
+* NDJSON
+* URL Encoded
+* Protobuf
+* Multipart
 
 [[important]]
 [IMPORTANT] 
