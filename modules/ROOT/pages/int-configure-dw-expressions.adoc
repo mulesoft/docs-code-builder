@@ -1,7 +1,8 @@
 = Using DataWeave Expressions and Transformations in Anypoint Code Builder
 :page-aliases: int-use-dw-to-transform-data.adoc, int-address-dw-errors.adoc, int-import-dw-libraries.adoc
+// TODO: Add "Einstein generative AI" to the appropriate topic titles.
 
-Configure DataWeave expressions in your integrations and implementations from *Expression Builder*, *Transformation Builder*, or from the configuration XML. DataWeave is the programming language designed by MuleSoft for data transformation and expressions in connector operations and other components that process messages, such as payload and attributes, and other Mule event data. Create DataWeave transformations with AI by providing input and output sample metadata or data.
+DataWeave is the MuleSoft programming language for data transformation and for defining expressions. Use DataWeave to process Mule event data, such as `payload`, `attributes`, and `vars`, in connector operations and other components. Develop DataWeave expressions and transformations in your Mule applications using the *Expression Field*, *Expression Builder*, *Transformation Builder*, or by editing the configuration XML. Generate DataWeave transformations with AI assistance by providing input and output sample data or metadata.
 
 //TODO: Take a new screenshot with the new UI.
 image::int-dw-transform-ui.png["The *Expression Field*, *Expression Builder*, and *Transformation Builder* button location highlighted in a component"]
@@ -40,16 +41,23 @@ Anypoint Code Builder supports these transform mapping use cases:
 
 == Before You Begin
 
-Understand the basics of the DataWeave language. 
+Understand the functions, operators, variables, and selectors of DataWeave expressions.
 
-DataWeave expressions accept the following: 
+* xref:dataweave::dw-functions.adoc[DataWeave functions and operators], and data types that their parameters accept. For example, the concatenation function (xref:dataweave::dw-core-functions-plusplus.adoc[]) accepts strings, arrays, objects, and date-related data types. 
 
-* xref:dataweave::dw-functions.adoc[DataWeave functions and operators] and data types that their parameters accept.
-+
-For example, the concatenation function (xref:dataweave::dw-core-functions-plusplus.adoc[++]) accepts strings, arrays, objects, and date-related data types. 
-+
+For using Einstein generative AI, you must:
+
+* Log in to Anypoint Platform.
+* The Org Admin must enable the AI features in Anypoint Platform
+* Enable Einstein in ACB settings
+//TODO: Add a link to the Einstein generative AI documentation: https://docs.mulesoft.com/anypoint-code-builder/ai-enabling-api-project-topic-center. 
+* Create sample input and output data
+//TODO: Add a link to the sample data documentation (If there's no examples in current docs, the PRD has some examples and also examples available at: https://docs.google.com/document/d/14iUy8qkh5xPeUXy_p4IaX_Zlsuy-1k50cNeod2eWLls/edit?usp=sharing).
+
 The IDE also provides built-in documentation for functions. For example, see <<tab-functions>>.
+
 * xref:dataweave::dataweave-variables-context.adoc[Predefined Mule event variables] such as `payload`, `attributes`, `vars`.
+
 * xref:dataweave::dataweave-selectors.adoc[DataWeave selectors] for capturing the values of fields within the payload, an attribute, or a variable within the xref:mule-runtime::about-mule-event.adoc[Mule event]. 
 
 For more resources, see xref:dataweave::index.adoc[]. 
