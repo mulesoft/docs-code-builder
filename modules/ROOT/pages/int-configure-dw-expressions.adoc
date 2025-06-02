@@ -39,6 +39,7 @@ Anypoint Code Builder supports these transform mapping use cases:
 // int-dw-sample-quick-fix-example-preview.png
 // int-dw-sample-quick-fix-example-preview-modified.png
 
+[[prereq-dw-transforms]]
 == Before You Begin
 
 Understand the functions, operators, variables, and selectors of DataWeave expressions.
@@ -190,15 +191,78 @@ image::function-validation-run-preview.png["Run Preview"]
 
 Anypoint Code Builder opens a new *Preview Output* tab with the result of the function:
 
-image::dataweave-function-preview-output.png["Preview Output tab]
+image::dataweave-function-preview-output.png["Preview Output tab"]
 
+[[open-transformation-builder]]
 == Open Transformation Builder
 
-Create DataWeave transformations in your Mule applications with the *Transformation Builder* tool, now enhanced with AI capabilities. Provide input and output sample metadata or data to generate DataWeave scripts.
+Create DataWeave transformations in your Mule applications with *Transformation Builder*, assisted by Einstein generative AI. Provide input and output sample metadata or data to generate DataWeave scripts.
 
+// TODO: Take a new screenshot with the new UI.
 image::int-dw-transform-builder-ui.png["The *Transformation Builder* window and its sections highlighted"]
 
-. Click on *Transformation Builder*.
+On *Transformation Builder*, choose the option that best suits your needs:
+
+* <<map-with-ai, Map with AI>>
+* <<map-and-transform-with-ai, Map and Transform with AI>>
+
+=== Considerations
+
+When using AI-assisted transformations, consider the following:
+
+* Metadata provides the shape of the ‌output.
+* Sample data provides the context to generate functions or expressions for calculations, conditions, etc (WSDL files can be provided with sample data).
+* Supported data formats (MIME types) for sample data:
+** JSON
+** CSV
+** Java
+** XML
+** Text
+** YAML
+** Avro
+** Excel
+** NDJSON
+** URL Encoded
+** Protobuf
+** Multipart
+* A loading indicator is shown when Einstein generates the transformation.
+* You can’t change sample data when Einstein generates the transformation.
+* History isn't available in *Transformation Builder*.
+* Enter valid data to create the script transformation with AI, or write it manually.
+* Chat history is not available in Expression Builder
+
+[[map-with-ai]]
+=== Map with AI
+
+Get a field-to-field mapping based on the sample data provided. 
+
+//TODO: complete the prereq to make the "Map with AI" button not grayed out.
+. Click on *Map with AI*.
+. 
+
+[[map-and-transform-with-ai]]
+=== Map and Transform with AI
+
+Create a DataWeave transformation script based on the sample data provided. 
+
+. Click on *Map and Transform with AI*.
+. Provide this information:
+.. Input sample data 
+.. Output sample data 
+.. Optional instructions to guide the AI 
+. Click on *Transform*.
++
+Einstein AI analyzes your input and output samples, and the instructions -if any-, to generate DataWeave script suggestions that aim to perform the suggested transformation. 
+. Review the generated scripts and insert one if appropriate, or copy a suggested script to the clipboard to make changes.
++
+After inserting a script, the XML file is updated, and you can regenerate the script by clicking *Regenerate*.
+
+//TODO: Make sure we want to show this path to the user.
+[[manually-add-data-sources-targets]]
+=== Manually Adding Data Sources and Targets
+
+You can manually add data sources and targets to your transformation script.
+
 . In the *Transformation Workspace* section, drag the source field from the input payload to the target field to map the source data to the target data.
 +
 The mapped fields display a green dot and are highlighted to indicate that the mapping is successful. The *Script* section updates with the new mapping, and the *Output Preview*"* section displays the output of the transformation.
@@ -212,6 +276,7 @@ You can select the generated sample or provide your own <<sample-data, sample da
 // TODO: Add information about understanding and using generated transformations, including explanations, inserting/copying scripts, regenerating, and providing feedback.
 
 // TODO: Add a "Considerations" section for AI-assisted transformations, including details on metadata vs. sample data, supported MIME types, loading indicators, inability to change sample data during generation, cancellation, and the number of generated options.
+
 // TODO: Add a "Considerations on PII and Validations" section, warning against using PII and explaining how generated transformations are validated.
 
 [[sample-data]]
