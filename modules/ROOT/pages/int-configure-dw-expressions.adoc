@@ -217,7 +217,7 @@ Get an automatic field-to-field mapping when accessing *Transformation Builder*.
 
 If you don't have access to *Map with AI*, you must:
 
-* Review provided sample data is valid. See <<sample-data>> for supported data formats (MIME types) for sample data.
+* Review that the provided input and output metadata are valid.
 * Ensure your configuration meets the prerequisites for using AI-assisted transformations. See <<prereq-dw-transforms>>.
 
 // TODO: Add a screenshot of the "Map with AI" button.
@@ -226,22 +226,29 @@ If you don't have access to *Map with AI*, you must:
 . Open *Transformation Builder*.
 + 
 The mapping starts automatically considering the sample data provided. The mapping is applied to the XML file.
-. After the mapping is complete, review the mapping to make changes if needed, or apply the mapping to your project.
+. After the mapping is complete, you must:
+.. Click *Apply Mapping* to apply suggested mapping to your project.
+.. Click *Revise Mapping* to get new suggestions from the AI.
 
 [[map-and-transform-with-ai]]
 === Map and Transform with AI
 
-Create a DataWeave transformation script based on the sample data provided. 
+Create a DataWeave transformation script assisted by AI. Provide input and output sample data, the input and output metadata, and optional instructions to guide the AI.
 
+. Open your Mule project.
+. Select a component that has a *fx* field.
+. Open *Transformation Builder*.
++
+The mapping starts automatically considering the data provided. The mapping is applied to the XML file.
 . Click on *Map and Transform with AI*.
-. Provide this information:
-.. Input sample data 
-.. Output sample data 
-.. Optional instructions to guide the AI 
+. Provide this information if needed, or modify it as needed:
+* Input sample data 
+* Output sample data 
+* Optional instructions to guide the AI 
 . Click on *Transform*.
 +
 Einstein AI analyzes your input and output samples, and the instructions -if any-, to generate DataWeave script suggestions that aim to perform the suggested transformation. 
-. Review the generated scripts and insert one if appropriate, or copy a suggested script to the clipboard to make changes.
+. Click *View Suggested Scripts* to insert one if appropriate, or copy the suggested script to the clipboard without losing its format.
 +
 After inserting a script, the XML file is updated, and you can regenerate the script by clicking *Regenerate*.
 
