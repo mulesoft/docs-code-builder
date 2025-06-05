@@ -36,24 +36,23 @@ Anypoint Code Builder supports these transform mapping use cases:
 [[prereq-dw-transforms]]
 == Before You Begin
 
-Understand the functions, operators, variables, and selectors of DataWeave expressions.
+* Understand the functions, operators, variables, and selectors of DataWeave expressions.
++
+xref:dataweave::dw-functions.adoc[DataWeave functions and operators], and data types that their parameters accept. For example, the concatenation function (xref:dataweave::dw-core-functions-plusplus.adoc[]) accepts strings, arrays, objects, and date-related data types. 
 
-* xref:dataweave::dw-functions.adoc[DataWeave functions and operators], and data types that their parameters accept. For example, the concatenation function (xref:dataweave::dw-core-functions-plusplus.adoc[]) accepts strings, arrays, objects, and date-related data types. 
+* Review the built-in documentation for functions the IDE provides. For example, see <<tab-functions>>.
 
-For using Einstein generative AI, you must:
+** xref:dataweave::dataweave-variables-context.adoc[Predefined Mule event variables] such as `payload`, `attributes`, `vars`.
 
-* Log in to Anypoint Platform.
-* The Org Admin must enable the AI features in Anypoint Platform. See xref:access-management::enabling-einstein.adoc[].
-* Enable Einstein in ACB settings. See xref:ai-enabling-api-project-topic-center[].
-* Create sample input and output data. See <<sample-data>>.
-
-The IDE also provides built-in documentation for functions. For example, see <<tab-functions>>.
-
-* xref:dataweave::dataweave-variables-context.adoc[Predefined Mule event variables] such as `payload`, `attributes`, `vars`.
-
-* xref:dataweave::dataweave-selectors.adoc[DataWeave selectors] for capturing the values of fields within the payload, an attribute, or a variable within the xref:mule-runtime::about-mule-event.adoc[Mule event]. 
-
+** xref:dataweave::dataweave-selectors.adoc[DataWeave selectors] for capturing the values of fields within the payload, an attribute, or a variable within the xref:mule-runtime::about-mule-event.adoc[Mule event]. 
++
 For more resources, see xref:dataweave::index.adoc[]. 
+
+* Ensure that you have these permissions to use the Anypoint Code Builder Agentforce feature:
+** Anypoint Code Builder Developer
+** Mule Developer Generative AI User
+
+* Enable Einstein in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
 
 [[open-fx-field]]
 == Open the Expression Field 
@@ -85,6 +84,7 @@ Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of express
 * <<tab-functions>>
 * <<tab-preview>>
 
+[[open-expression-builder]]
 == Open Expression Builder
 
 *Expression Builder* simplifies the process of creating and managing expressions within your Mule applications. The builder provides a visual interface to create DataWeave expressions and transformations.
@@ -200,15 +200,16 @@ On *Transformation Builder*, choose the option that best suits your needs:
 * <<map-with-ai, Map with AI>>
 * <<map-and-transform-with-ai, Map and Transform with AI>>
 
-=== Considerations
+[[considerations-for-transformation-builder-with-ai]]
+=== Considerations for AI-Assisted Transformations
 
 When using AI-assisted transformations, consider the following:
 
 * Metadata provides the shape of the ‌output.
-* Sample data provides the context to generate functions or expressions for calculations, conditions, etc (WSDL files can be provided with sample data).
+* Sample data provides the context to generate functions or expressions for calculations, conditions, etc. (WSDL files can be provided with sample data).
 * See <<sample-data>> for supported data formats (MIME types) for sample data.
 * A loading indicator is shown when Einstein generates the transformation.
-* You can’t change sample data when Einstein generates the transformation.
+* You can't change sample data when Einstein generates the transformation.
 * History isn't available in *Transformation Builder*.
 * Enter valid data to create the script transformation with AI, or write it manually.
 * Chat history is not available in *Expression Builder*.
