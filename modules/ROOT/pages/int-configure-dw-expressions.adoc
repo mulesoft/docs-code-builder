@@ -80,7 +80,7 @@ The markup `#[]` in the *fx* field also appears in the XML to indicate that the 
 image::int-dw-fx-expression-builder.png["*Expression Builder* for the `Set Variable` component"]
 // TODO: Take a new screenshot with the new UI.
 +
-Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of expressions in your components. Preview the expression output without the need to run your Mule app with data from external sources:
+Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of expressions in your components. Preview the expression output without running your Mule app with data from external sources:
 
 * <<tab-data>>
 * <<tab-functions>>
@@ -116,7 +116,7 @@ image:int-dw-fx-input-output-sample.png["Input/Output tab for a component"]
 [[tab-functions]]
 === List DataWeave Functions and Get Documentation
 
-To get a list of available functions from a component's *Functions* tab, the *fx* field, or the auto-complete menu in the XML editor:
+To get a list of available functions from a component's *Functions* tab, the *fx* field, or the auto complete menu in the XML editor:
 
 . Open a component that has the *fx* expression field. 
 +
@@ -159,15 +159,15 @@ To provide your own sample data, see <<sample-data>>.
 [[preview-results-fx]]
 ==== Preview Results in the UI
 
-Preview auto-generated sample data, or preview your own sample data. Preview the output in the *Preview* tab of *Expression Builder* for a component expression field.
+Preview auto generated sample data, or preview your own sample data. Preview the output in the *Preview* tab of *Expression Builder* for a component expression field.
 
 [%header,cols="1a,1a"]
 |===
-| Preview Auto-Generated Sample Data
+| Preview Auto Generated Sample Data
 | Preview Your Sample Data
 
 | 
-Output results from auto-generated sample data:
+Output results from auto generated sample data:
 
 image:int-dw-fx-preview-tab.png["Functions tab for expression field"]
 |
@@ -197,7 +197,7 @@ Create DataWeave transformations in your Mule applications with *Transformation 
 // TODO: Take a new screenshot with the new UI.
 image::int-dw-transform-builder-ui.png["The *Transformation Builder* window and its sections highlighted"]
 
-On *Transformation Builder*, choose the option that best suits your needs:
+On *Transformation Builder*, select the option that best suits your needs:
 
 * <<map-with-ai, Map with AI>>
 * <<map-and-transform-with-ai, Map and Transform with AI>>
@@ -208,7 +208,7 @@ On *Transformation Builder*, choose the option that best suits your needs:
 When using AI-assisted transformations, consider the following:
 
 * Metadata provides the shape of the ‌output.
-* Sample data provides the context to generate functions or expressions for calculations, conditions, etc. WSDL files can be provided with sample data. See <<sample-data>> for supported data formats (MIME types) for sample data.
+* Sample data provides the context to generate functions or expressions for calculations, conditions, and so on. WSDL files can be provided with sample data. See <<sample-data>> for supported data formats (MIME types) for sample data.
 * Valid data is required for the AI to create the transformation script. Write it manually if needed.
 * AI chat history isn't available in *Transformation Builder*.
 
@@ -220,7 +220,7 @@ Get an automatic field-to-field mapping when accessing *Transformation Builder*.
 If you don't have access to *Map with AI*, you must:
 
 * Review that the provided input and output metadata are valid.
-* Ensure your configuration meets the prerequisites for using AI-assisted transformations. See <<prereq-dw-transforms>>.
+* Make sure your configuration meets the prerequisites for using AI-assisted transformations. See <<prereq-dw-transforms>>.
 
 // TODO: Add a screenshot of the "Map with AI" button.
 . Open your Mule project.
@@ -242,12 +242,12 @@ Create a DataWeave transformation script assisted by AI. Provide input and outpu
 . Open *Transformation Builder*.
 +
 The mapping starts automatically considering the data provided. The mapping is applied to the XML file.
-. Click on *Map and Transform with AI*.
+. Click *Map and Transform with AI*.
 . Provide this information if needed, or modify it as needed:
 * Input sample data 
 * Output sample data 
 * Optional instructions to guide the AI 
-. Click on *Transform*.
+. Click *Transform*.
 +
 Einstein AI analyzes your input and output samples, and the instructions -if any-, to generate DataWeave script suggestions that aim to perform the suggested transformation. 
 . Click *View Suggested Scripts* to insert one if appropriate, or copy the suggested script to the clipboard without losing its format.
@@ -259,7 +259,7 @@ After inserting a script, the XML file is updated, and you can regenerate the sc
 
 If you have issues with the AI-assisted transformations, follow these steps:
 
-. Log in to Anypoint Platform and try again.
+. Login to Anypoint Platform and try again.
 . Ask your Anypoint Platform admin to verify that generative AI is enabled for your organization.
 . If you're logged in to Anypoint Platform, and your organization has access to Einstein generative AI, accept the terms and conditions for using Einstein generative AI.
 
@@ -288,7 +288,7 @@ You can select the generated sample or provide your own <<sample-data, sample da
 
 Test and preview DataWeave expressions locally in Anypoint Code Builder. Add sample data for Mule variables such as `payload` in *fx* fields to preview outputs without running your application. For AI-assisted transformations, providing sample input and output data helps AI understand the desired transformation and generate accurate DataWeave scripts.
 
-You can create sample data in the following formats:
+You can create sample data in these formats:
 
 * JSON
 * XML
