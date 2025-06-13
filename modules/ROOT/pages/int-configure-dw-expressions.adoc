@@ -200,11 +200,11 @@ On *Transformation Builder*, select the option that best suits your needs:
 [[considerations-for-transformation-builder-with-ai]]
 === Considerations for AI-Assisted Transformations
 
-When using AI-assisted transformations, consider the following:
+If using AI-assisted transformations, evaluate these considerations:
 
-* Metadata provides the shape of the ‌output.
-* Sample data provides the context to generate functions or expressions for calculations, conditions, and so on. WSDL files can be provided with sample data. See <<sample-data>> for supported data formats (MIME types) for sample data.
-* Valid data is required for the AI to create the transformation script. Write it manually if needed.
+* Metadata provides the shape of the output.
+* Sample data provides the context to generate functions or expressions for calculations, conditions, and other operations. WSDL files can be provided with sample data. See <<sample-data>> for supported data formats (MIME types) for sample data.
+* AI requires valid data to create the transformation script. Write it manually if needed.
 * AI chat history isn't available in *Transformation Builder*.
 
 [[map-with-ai]]
@@ -214,14 +214,15 @@ Get an automatic field-to-field mapping when accessing *Transformation Builder*.
 
 If you don't have access to *Map with AI*, you must:
 
-* Review that the provided input and output metadata are valid.
 * Make sure your configuration meets the prerequisites for using AI-assisted transformations. See <<prereq-dw-transforms>>.
+* Review that the provided input and output metadata are valid.
 
-// TODO: Add a screenshot of the "Map with AI" button.
 . Open your Mule project.
 . Select a component that has a *fx* field.
 . Open *Transformation Builder*.
-+ 
++
+image::int-map-with-ai.png["*Transformation Builder* is highlighted while fetching metadata"]
++
 The mapping starts automatically considering the sample data provided. The mapping is applied to the XML file.
 . After the mapping is complete, you must:
 .. Click *Apply Mapping* to apply suggested mapping to your project.
@@ -235,6 +236,8 @@ Create a DataWeave transformation script assisted by AI. Provide input and outpu
 . Open your Mule project.
 . Select a component that has a *fx* field.
 . Open *Transformation Builder*.
++
+image::int-map-with-ai.png["*Transformation Builder* is highlighted while fetching metadata"]
 +
 The mapping starts automatically considering the data provided. The mapping is applied to the XML file.
 . Click *Map and Transform with AI*.
@@ -358,7 +361,6 @@ When your DataWeave code contains a syntactic or semantic error, Anypoint Code B
 === Add a Missing Import Directive for a DataWeave Module
 
 Many DataWeave modules require an explicit `import` directive in the expression. Only the Core module doesn't require this directive. 
-// TODO: Take new screenshots.
 
 For example, if you don't import the string module to which this function belongs, the function `camelize( "hello world")` produces an error `Unable to resolve the reference of 'camelize'`.
 
