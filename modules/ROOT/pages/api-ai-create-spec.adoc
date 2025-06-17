@@ -1,0 +1,168 @@
+= Creating API Specs with AI
+:page-deployment-options: cloud-ide, desktop-ide
+
+The Generative API Specification feature unlocks AI capabilities for API design journeys by generating and mocking API specs from natural language. Accessible via the Einstein icon within an API project, it reduces the time spent on design by simplifying the creation of rigid, syntax-heavy specs. The system supports multi-turn conversations and provides validated API specifications.
+
+[[before-you-begin]]
+== Before You Begin
+
+Before you start creating your API spec:
+
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* Ensure that you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
+* Ensure that you have these permissions to use the Anypoint Code Builder Agentforce feature:
+** Anypoint Code Builder Developer
+** Mule Developer Generative AI User
+* Ensure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
+* Log in to Anypoint Code Builder with your Anypoint Platform credentials.
+* xref:des-create-api-specs.adoc[Create an API spec project or fragment] in Anypoint Code Builder in the supported RAML 1.0 or OAS 3.0 format, and then select a business group. The business group must have the xref:access-agentforce.adoc#agentforce[Agentforce feature enabled]. If you don't see the Agentforce feature after selecting a business group, contact your Anypoint Platform administrator to enable the feature.
+
+== Design an API with Agentforce
+
+To design an API with Agentforce:
+
+. Describe your API spec in the chat by using natural language. Review the starter prompt for guidance on the context the agent needs. If the agent doesn't understand your request, it asks for clarification.
+. Send your message. The agent creates a validated API spec or API fragment.
+. Review the spec and continue your conversation if you'd like to make changes.
+
+=== Provide Base Details
+
+You can provide base details for the API spec, such as the API name, version, and description. The agent uses this information to generate a more precise spec.
+
+The agent uses the HTTPS protocol by default, but you can specify a different protocol if needed and a base URI.
+
+=== Provide Security Details
+
+Include a security scheme of type Oauth 1.0, Oauth 2.0, Basic Authentication, Digest Authentication, or Pass Through.
+
+* For Basic Authentication, Digest Authentication, or Pass Through, specify responses, query parameters, and headers.
+* For Oauth 1.0 or 2.0, specify responses, query parameters, headers, and settings.
+** Settings for Oauth 1.0 can be of type `authorizationUri`, `requestTokenUri`, `tokenCredentialsUri`, or signatures.
+** Settings for Oauth 2.0 can be of type `authorizationUri`, `requestTokenUri`, or `authorizationGrants`.
+
+==== Header Requirements
+
+Headers must include the name, whether it's required, and one of the following types:
+
+* Array
+* Boolean
+* Date only
+* DateTime
+* DateTime only
+* File
+* nil
+* Number
+* Object
+* String
+* Time only
+
+Optionally, provide a description, format, minimum and maximum length, default value, and example for the header.
+
+==== Query Parameter Requirements
+
+Query parameters must include the name, whether it's required, and one of the following types:
+
+* Array
+* Boolean
+* Date only
+* DateTime
+* DateTime only
+* File
+* nil
+* Number
+* Object
+* String
+* Time only 
+
+Optionally, provide a description, format, minimum and maximum length, default value, and example for the query parameter.
+
+==== Response Requirements
+
+Responses must include the status code and description.
+
+=== Provide Resources and Methods
+
+Provide resources and methods for the API spec, such as the resource path, HTTP method, and request and response details. The agent uses this information to generate a more complete spec and prompts you to describe the operations you want to add if you haven't done so.
+
+==== Resource Requirements
+
+Each resource can include one or more of the following methods:
+
+* GET
+* POST
+* PUT
+* PATCH
+* DELETE
+* HEAD
+* OPTIONS
+
+For GET and HEAD methods, you can include a summary, responses, requests, and query or header parameters.
+
+For POST, PUT, PATCH, and OPTIONS methods, you can include a summary, responses, requests, body, and query or header parameters.
+
+==== Request Requirements
+
+Requests must include a description and body.
+
+==== Response Requirements
+
+Responses must include the status code and description. Response bodies are optional and can include a description, type, media type, and example
+
+==== Header Requirements
+
+Headers must include the name, whether it's required, and one of the following types:
+
+* Array
+* Boolean
+* Date only
+* DateTime
+* DateTime only
+* File
+* nil
+* Number
+* Object
+* String
+* Time only
+
+Optionally, provide a description, format, minimum and maximum length, default value, and example for the header.
+
+==== Query Parameter Requirements
+
+Query parameters must include the name, whether it's required, and one of the following types:
+
+* Array
+* Boolean
+* Date only
+* DateTime
+* DateTime only
+* File
+* nil
+* Number
+* Object
+* String
+* Time only 
+
+Optionally, provide a description, format, minimum and maximum length, default value, and example for the query parameter.
+
+[NOTE]
+Governance isn't included in the validation.
+
+== Add API Spec to Project
+
+To add the generated API spec to your project, click *Replace*. All file content is replaced by the inserted code.
+
+You can also copy the generated API spec to your clipboard by clicking *Copy*.
+
+== Give Feedback on Agent Responses
+
+Share your feedback about the agent's response by clicking thumbs up or thumbs down.
+
+== View Conversation History
+
+To view your past conversations, click *Open chat history*. Your last 30 days of conversations show.
+
+== Start a New Chat
+
+You can only create a new API spec if you have an API project open. Click *Create API Spec* from the *New Chat* dropdown to create a new spec.
+
+You can only create a new flow if you have an integration project open. Click *Create Flow Integration* from the *New Chat* dropdown to create a new integration project.
