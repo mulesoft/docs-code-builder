@@ -34,6 +34,60 @@ Understand the basics of Mule flows, the Mule event structure, including the pay
 //add component content
 include::partial$acb-component-info.adoc[tags="add-components"]
 
+== Disable Components
+
+You can temporarily remove components from your flow without deleting them by disabling them directly from the canvas. This action is equivalent to commenting out code in the XML editor.
+
+To disable a component:
+
+. Right-click a component in the canvas.
+
+. Select *Disable Component*.
+
+Disabled components appear with a dashed outline and a disabled icon. In the XML editor, the component is wrapped in an XML comment (<!-- ... -->), preserving the code but preventing it from executing.
+
+Disabled components appear greyed out in the canvas and are ignored at runtime.
+
+To remove all disabled components in a flow for cleanup:
+
+. Select Bulk Delete Disabled Components from the canvas toolbar.
+
+. Confirm the deletion in the dialog prompt.
+
+
+=== Re-enable a Disabled Component
+
+To restore a component:
+
+. Right-click the disabled component.
+
+. Select *Enable Component*.
+
+This also removes the comment from the XML view.
+
+If you previously set a breakpoint on a component and then disable it, the breakpoint remains associated with the component but is inactive. +
+You can't add new breakpoints to a disabled component until it's re-enabled.
+
+
+== Navigate to referenced flows
+If a component references another flow (for example, via a Flow Reference connector), you can quickly access the target flow in the canvas. To navigate to the referenced flow:
+
+. Right-click the connector.
+
+. Select *Go to Flow*.
+
+Anypoint Code Builder will open the target flow either in the application canvas or the MUnit canvas, depending on the context.
+
+In the MUnit canvas, you can use Flow Reference components to invoke or simulate execution of other flows. To help you trace and validate the logic, you can navigate to the referenced flow from within the test. To open the referenced flow:
+
+. Right-click the Flow Reference component in the MUnit canvas.
+
+. Select *Go to Flow*.
+
+Anypoint Code Builder opens the target flow in the application canvas (or in another MUnit test flow if that's the target). 
+
+* Right-click a Flow Reference in the MUnit canvas to navigate to its target flow.
+
 
 [[import-connectors-from-exchange]]
 == Import a Connector from Exchange
