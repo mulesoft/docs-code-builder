@@ -14,168 +14,29 @@ Complete these procedures:
 . xref:tut-af-integrate-am-flights.adoc[] 
 . xref:tut-af-integrate-connect-to-a-db.adoc[]
 
-[[snippets]]
-== Create a User Snippet for the Transformation
-
-Define snippets in the `mule-xml.json` file. For information about snippets, see xref:work-with-code-snippets.adoc[].
-
-// Pointer to Configure Snippets
-include::partial$acb-reusable-steps.adoc[tags="configure-user-snippets"]
-. In the *Select Snippets File or Create Snippets* field that opens, enter:
-+
-[source,command]
-----
-mule-xml.json (Mule XML)
-----
-. If the file has no configurations, `mule-xml.json` provides comments within curly braces:
-+
-[source,json]
---
-{
-	// Place your snippets for mule-xml here. Each snippet is defined under a snippet name and has a prefix, body and
-	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
-	// same ids are connected.
-	// Example:
-	// "Print to console": {
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
-}
---
-. Add this snippet code to the file: 
-+
-[[collapsible]]
-[source,json]
-----
-{
-  "Transform Message": {
-    "prefix": "muledx:transform-message",
-    "body": [
-      "<ee:transform doc:name=\"${1:Transform Message}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
-      "  <ee:message>",
-      "    <ee:set-payload>",
-      "      <![CDATA[${2:DataWeave}]]>",
-      "    </ee:set-payload>",
-      "  </ee:message>",
-      "</ee:transform>"
-    ]
-  },
-  "Mule Flow": {
-    "prefix": "muledx:flow",
-    "body": [
-      "<flow name=\"${1:$TM_FILENAME_BASE-Flow}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
-        "",
-      "</flow>"
-  ]
-  },
-  "HTTP Listener Config": {
-    "prefix": "muledx:http-listener-config",
-    "body": [
-      "<http:listener-config name=\"${1:httpListenerConfig}\" doc:name=\"${2:Listener Config}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
-      "  <http:listener-connection host=\"${3:Host}\" port=\"${4:Port}\"/>",
-      "</http:listener-config>"
-    ]
-  },
-  "HTTP Listener": {
-    "prefix": "muledx:http-listener",
-    "body": [
-      "<http:listener path=\"/${1:path}\" config-ref=\"${2:httpListenerConfig}\" doc:name=\"${3:Listener}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
-    ]
-  },
-  "Set Payload": {
-    "prefix": "muledx:set-payload",
-    "body": [
-      "<set-payload value=\"${1:#[payload]}\" doc:name=\"${2:Set Payload}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
-    ]
-  },
-  "Set Variable": {
-    "prefix": "muledx:set-variable",
-    "body": [
-      "<set-variable variableName=\"${1:name}\" value=\"${2:#[payload]}\" doc:name=\"${3:Set Variable}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
-    ]
-  },
-  "Logger": {
-    "prefix": "muledx:logger",
-    "body": [
-      "<logger level=\"INFO\" message=\"${1:#[payload]}\" doc:name=\"${2:Logger}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\"/>"
-    ]
-  },
-  "Database Config - MySQL": {
-    "prefix": "muledx:db-config-mysql",
-    "body": [
-      "<db:config name=\"${1:DatabaseConfig}\" doc:name=\"${2:mySQL DB}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
-      "  <db:my-sql-connection host=\"${3:Host}\" port=\"${4:Port}\" user=\"${5:Username}\" password=\"${6:Password}\" database=\"${7:DatabaseName}\" />",
-      "</db:config>"
-    ]
-  },
-  "Database Select": {
-    "prefix": "muledx:db-select",
-    "body": [
-      "<db:select config-ref=\"${1:DatabaseConfigRef}\" doc:name=\"${2:Select}\" doc:id=\"$RANDOM_HEX-$RANDOM_HEX\">",
-      "  <db:sql>",
-      "    <![CDATA[${3:SQL}]]>",
-      "  </db:sql>",
-      "</db:select>"
-    ]
-  }
-}
-----
-+
-The snippets provide starting configurations for several Mule components, including Transform Message. 
-. Proceed to <<return-payload>>. 
-
 [[return-payload]]
 == Return the Payload as JSON
 
 . In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
-. From the canvas, insert the snippet `Transform Message` below the *Database Select* operation.
+. From the canvas, add a `Transform Message` component after the *Database Select* operation.
 +
-After the listener, click the image:icon-plus.png["",15,15] (*Add component*) icon and navigate to *Snippets* > *User Snippets* > *Transform Message*.
+After the listener, click the image:icon-plus.png["",15,15] (*Add component*) icon and add a *Transform Message* component.
 +
-If the *User Snippets* panel is empty at first, wait a moment, and try again. Alternatively, navigate to the `muledx:transform-message` snippet from the configuration XML:
+image::transformation-builder-dataweave-tab.png["Transformation Builder DataWeave tab"]
 +
-//TODO: image seems out of date; where's the plus icon?
-image::transform-with-output-json.png["Transform component highlighted"]
-+
-.User snippet XML:
-[source,xml]
-----
-<ee:transform doc:name="" doc:id="51fed3-afee8c">
-  <ee:message>
-    <ee:set-payload>
-      <![CDATA[]]>
-    </ee:set-payload>
-  </ee:message>
-</ee:transform>
-----
-. In the configuration XML, add the `doc:name` value *Transform Message* or similar to the `<ee:transform/>` component:
-+
-----
-<ee:transform doc:name="Transform Message" doc:id="423214-fac9c4">
-...
-----
-. Within `<![CDATA[]]>` add a DataWeave script that outputs the message payload to a JSON format:
+. Enter this DataWeave script into the script editor:
 +
 [source,dataweave]
---
-<ee:transform doc:name="Transform Message" doc:id="51fed3-afee8c">
-  <ee:message>
-    <ee:set-payload>
-      <![CDATA[
-      %dw 2.0
-      output application/json
-      ---
-      payload      
-      ]]>
-    </ee:set-payload>
-  </ee:message>
-</ee:transform>
---
+----
+%dw 2.0
+output application/json
+---
+payload
+----
++
+The `payload` variable holds the output from the previous component, which in this case is the array of flight data from the *Database Select* operation.
++
+. Use the *Preview* tab to see the JSON output.
 . Deploy your app within the IDE by selecting *Run* > *Start Debugging (F5)*.
 +
 For guidance, see xref:tut-af-integrate-am-flights.adoc#run[Run Your App in Debug Mode].
