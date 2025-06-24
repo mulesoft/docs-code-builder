@@ -1,4 +1,4 @@
-= Creating API Specs and Fragments with AI
+= Creating API Specs with AI
 :page-deployment-options: cloud-ide, desktop-ide
 
 The Generative API Specification feature unlocks AI capabilities for API design journeys by generating and mocking API specs from natural language. Accessible after creating an API project or via the Open Agentforce icon within a project, it reduces the time spent on design by simplifying the creation of rigid, syntax-heavy specs. The system supports multi-turn conversations and provides validated API specifications.
@@ -15,13 +15,13 @@ Before you start creating your API spec:
 ** Mule Developer Generative AI User
 * Ensure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
 * Log in to Anypoint Code Builder with your Anypoint Platform credentials.
-* xref:des-create-api-specs.adoc[Create an API spec project or fragment] in Anypoint Code Builder in the supported RAML 1.0 or OAS 3.0 format, and then select a business group. The business group must have the xref:access-agentforce.adoc#agentforce[Agentforce feature enabled]. If you don't have the Agentforce feature after selecting a business group, contact your Anypoint Platform administrator to enable the feature.
+* xref:des-create-api-specs.adoc[Create an API spec project] in Anypoint Code Builder in the supported RAML 1.0 or OAS 3.0 format, and then select a business group. The business group must have the xref:access-agentforce.adoc#agentforce[Agentforce feature enabled]. If you don't have the Agentforce feature after selecting a business group, contact your Anypoint Platform administrator to enable the feature.
 
-== Design an API Spec or Fragment with AI
+== Design an API Spec with AI
 
-To design an API spec or fragment with AI, begin by reviewing the starter prompt for guidance on the context the agent needs. 
+To design an API spec with AI, begin by reviewing the starter prompt for guidance on the context the agent needs. 
 
-. Describe your API spec or fragment in the chat by using natural language. The agent prompts you for clarification if it doesn't understand your request.
+. Describe your API spec in the chat by using natural language. The agent prompts you for clarification if it doesn't understand your request.
 +
 Include the following required details and consider including optional details to generate a more precise spec:
 +
@@ -152,19 +152,16 @@ Query parameters must include the name, whether it's required, and one of the fo
 Optionally, provide a description, format, minimum and maximum length, default value, and example for the query parameter.
 ====
 
-. Send your message. The agent creates a validated API spec or API fragment.
+. Send your message. The agent creates a validated API spec.
 
 [NOTE]
 Governance isn't included in the validation.
 
 [start=3]
 . Review the spec and continue the conversation if you'd like to make changes.
-. Click *Replace* to add the generated API spec or fragment to your project. All file content is replaced by the inserted code.
+. Click *Replace* to add the generated API spec to your project. All file content is replaced by the inserted code.
 +
-You can also copy the generated API spec or fragment to your clipboard by clicking *Copy*.
-
-
-
+You can also copy the generated API spec to your clipboard by clicking *Copy*.
 
 == Give Feedback on Agent Responses
 
@@ -176,7 +173,7 @@ To view your past conversations, click *Open chat history*. Your last 30 days of
 
 == Start a New Chat
 
-You can only create a new API spec or fragment if you have a project open. Click *Create API Spec* from the *New Chat* dropdown to create a new API spec. 
+You can only create a new API spec if you have a project open. Click *Create API Spec* from the *New Chat* dropdown to create a new API spec. 
 
 == See Also
 
