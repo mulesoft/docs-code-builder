@@ -52,16 +52,6 @@ Set the verbosity of logs that appear in the Anypoint Code Builder extension, Mu
 * Debug: Fatal, Error, Warn, Info, and Debug issues
 * Trace: Fatal, Error, Warn, Info, Debug, and Trace issues
 
-[[setting-designservice]]
-==  Mule > Design Service: System Properties
-
-Used for the Anypoint Code Builder design experience with MCP Connector (beta). These are the available values.
-
-* `-Dmule.http.service.implementation=NETTY`: MCP Connector is enabled. 
-* blank: MCP Connector is disabled or not installed.
-
-_MCP Connector is a beta connector that is subject to the Beta Services Terms at https://www.salesforce.com/company/legal/agreements/[Agreements - Salesforce.com] or a written Unified Pilot Agreement if executed by Customer, and the Non-GA Gen AI and Non-GA Credit Consumption terms in the https://ptd.salesforce.com/?_ga=2.247987783.1372150065.1709219475-629000709.1639001992[Product Terms Directory]. Use of this beta connector with external systems or services consumes Mule messages and is at the Customer's sole discretion._
-
 [[setting-lsp]]
 == Mule › Lsp › Trace: Server
 
@@ -79,11 +69,6 @@ Available settings:
 Set default command-line arguments to use when starting Mule Runtime engine (Mule). Mule starts when you run a Mule application in an integration or implementation project. 
 
 Common uses of this setting are to append an encryption key value (such as `-M-Dencryption.key=my-key`) that is used when running a local deployment that incorporates secure configuration properties, or for a variable (such as `-M-Denv=dev`) that Mule uses when selecting a configuration properties file by its file name. For more information about these uses, see xref:int-create-secure-configs.adoc[]. 
-
-If you use MCP Connector (beta), include the following argument.
-`-M-Dmule.http.service.implementation=NETTY`
-
-_MCP Connector is a beta connector that is subject to the Beta Services Terms at https://www.salesforce.com/company/legal/agreements/[Agreements - Salesforce.com] or a written Unified Pilot Agreement if executed by Customer, and the Non-GA Gen AI and Non-GA Credit Consumption terms in the https://ptd.salesforce.com/?_ga=2.247987783.1372150065.1709219475-629000709.1639001992[Product Terms Directory]. Use of this beta connector with external systems or services consumes Mule messages and is at the Customer's sole discretion._
 
 [[setting-metaspace]]
 == Mule › Runtime: Default Metaspace Size
