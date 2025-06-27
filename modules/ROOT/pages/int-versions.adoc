@@ -1,9 +1,7 @@
 = Version Settings for Mule, Java, and Connectors
 
 include::reuse::partial$java8-eoss-banner.adoc[tag="java8-eoss"]
-//used in procedures:
-:open-project: Open your implementation or integration project. 
-
+//used in procedures::open-project: Open your implementation or integration project//
 Set Mule runtime engine (Mule), Java, and connector versions to use in your projects.
 
 * <<default-versions, Default versions>>: Set default Mule and Java versions to display in version drop-down menus. 
@@ -46,14 +44,14 @@ Version settings are important in several scenarios:
 * Adding a version of Mule or Java that is missing from your project
 * Selecting versions of Mule or Java that are compatible with each other
 
-When a Mule or Java version is unset for a project, the IDE's canvas and notifications provide a *Set version* button that opens the *Project Properties* tab. You can also navigate directly to the *Project Properties* tab. 
+When a Mule or Java version isn't set for a project, the IDE's canvas and notifications provide a *Set version* button that opens the *Project Properties* tab. You can also navigate directly to the *Project Properties* tab. 
 
 
 [[project-versions-from-properties]]
 To select Mule and Java versions for a project:
 
 //open project local attribute:
-. {open-project}
+. Open your implementation or integration project
 //step: open project properties tab from Project Properties menu item
 include::partial$acb-runtime-java.adoc[tags="open-project-properties-properties"]
 //step: open project properties tab
@@ -68,16 +66,13 @@ include::anypoint-code-builder::partial$acb-runtime-java.adoc[tags="runtime-java
 [[project-versions-connectors]]
 == Select Connector Versions for a Project
 
-Set connector versions for a specific implementation or integration project from *Project Properties*. You can change versions at any time, but it is important to test your projects with the versions you intend to deploy. 
- 
-//TODO: RECOMMENDATIONS? 
-//TODO: WHAT IF EMPTY? an empty notification will appear in the UI -- no need to add image or details in doc
+Set connector versions for a specific implementation or integration project from *Project Properties* or when you add a component to the canvas. You can change versions at any time, but it is important to test your projects with the versions you intend to deploy. 
 
 [[connector-version-from-properties]]
 To select connector versions for a project:
 
 //open project local attribute:
-. {open-project}
+. Open your implementation or integration project.
 //step: open project properties tab from Project Properties menu item
 include::partial$acb-runtime-java.adoc[tags="open-project-properties-properties"]
 //step: open project properties tab
@@ -85,5 +80,5 @@ include::partial$acb-runtime-java.adoc[tags="open-project-properties-menu"]
 . Click *Connectors* from the *Project Properties* side bar. 
 +
 image::int-project-properties-connectors.png["Connector versions in Project Properties tab"]
-. Select connector versions. 
+. Select connector versions. You can update Exchange connector versions for compatibility with your project's Mule runtime and Java versions.
 
