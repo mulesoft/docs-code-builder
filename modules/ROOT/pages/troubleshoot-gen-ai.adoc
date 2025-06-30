@@ -32,6 +32,27 @@ If you are signed in to your Anypoint Platform account on the EU Cloud and Agent
 * xref:int-ai-create-integrations.adoc#before-you-begin[You have the required permissions].
 
 
+== Troubleshoot Chat Availability in Agentforce
+
+Agentforce requires that a supported file is open in the editor when you open the panel. If this condition isn’t met, you might see one of the following messages:
+
+1. "To start a new chat for API, open a compatible API specification." +
+This message appears when you're in an API project but the active file is either not an API specification or is written in an unsupported format.
+To resolve this issue, open an API spec file in RAML 1.0 or OAS 3.0 format.
+
+2. "To start a new chat for Flow, open an integration project." +
+This message appears when you're in an API project or in an integration project but no .xml file is selected.
+To fix it, open a .xml file that is part of an integration project.
+
+If you're in an integration project and have an API spec open, the Agentforce panel will appear, but you won't be able to generate APIs.
+In this case, you can only use Agentforce to generate Flows. To generate APIs, switch to an API project and open a supported API specification file.
+
+If the file you have open is in OpenAPI 2.0 or another unsupported format, you will not be able to use Agentforce. Open a file that uses RAML 1.0 or OAS 3.0 instead.
+
+Agentforce determines the output format based on the file that was in focus when the panel was opened. If a RAML 1.0 file is active, the generated content will be in RAML 1.0. If an OAS 3.0 file is active, the generated content will be in OAS 3.0.
+
+
+
 == See Also
 
 * xref:access-management::trusted-salesforce-org.adoc[]
