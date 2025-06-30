@@ -108,3 +108,35 @@ EACCES: permission denied, mkdir '/home/XXXX/.vscode'
 To avoid this error, create and import your projects within your `/home/_your-user-name_/` folder or in a subdirectory that you create under this folder. The cloud IDE automatically provides the folder with your username.
 
 Also avoid creating your projects under `/home/AnypointCodeBuilder`, which is intended for downloads of Mule and Java versions and for xref:ref-acb-maven.adoc#anypoint-code-builder-settings-file[acb_settings.xml]. 
+
+== Disable Components to Isolate Issues
+
+When debugging a flow, you can disable (comment out) individual components directly in the canvas. This allows you to isolate and test parts of your logic without removing or rewriting anything.
+For example:
+
+* Temporarily disable a Transform or Logger to test a different path.
+
+* Comment out an entire flow or error handler to simplify the execution logic.
+
+* Disable MUnit test processors to troubleshoot specific assertions.
+
+To disable a component:
+
+. Right-click it in the canvas.
+
+. Select *Disable Component*.*
+
+Disabled components appear greyed out in the canvas and are ignored at runtime. In the XML editor, the block is wrapped in an XML comment.
+
+Once the issue is resolved, you can re-enable the component or use Delete to remove disabled items.
+
+//== View Error Messages and Warnings in the Canvas
+
+//Anypoint Code Builder shows validation issues directly in the canvas to help you resolve problems faster. 
+//Hover over a component to see a tooltip listing errors and warnings, along with affected field names.
+
+//The configuration sidebar also displays validation messages at the node level.
+
+//Field-level errors appear inline during component configuration.
+
+//Hover over a component with a red dot to view error details in the canvas.
