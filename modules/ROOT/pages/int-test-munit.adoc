@@ -13,48 +13,146 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Run, modify, and create MUnit tests for your implementation and integration projects in Anypoint Code Builder. Import projects that contain MUnit test files. 
+Create, run, and modify MUnit tests for your implementation and integration projects in Anypoint Code Builder. Import projects that contain MUnit test files. 
 
 MUnit is a MuleSoft unit testing framework for creating and running unit tests on a Mule application, as described in xref:munit::index.adoc[MUnit Overview]. 
 
-With MUnit, you can create MUnit tests and MUnit test suites. MUnit test is an individual test case, defined by the `<munit:test>` element, which includes specific validations and assertions to make sure the functionality of a Mule application. A MUnit test suite is a container for multiple MUnit tests, organizing them within an XML file typically found in the `/src/test/munit` directory.
+With MUnit, create MUnit tests and MUnit test suites. An MUnit test is an individual test case, defined by the `<munit:test>` element, which includes specific validations and assertions to test the functionality of a Mule application. An MUnit test suite is a container for multiple MUnit tests. It organizes tests in an XML file typically found in the `/src/test/munit` directory.
 
 Anypoint Code Builder provides a *Testing* panel from which you can run tests. In the *Explorer*, test suites are also located within the project directory `{munit-src}`. The IDE also shows a canvas for creating and maintaining MUnit test suits, a Testing Results panel with the status of tests, and logs that identify the status of tests. 
 
-//TODO TO SELF: TEST LINKS LOCALLY -- RESOURCES NOT BUILT ON REVIEW SITE
-For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[Anypoint Code Builder Release Notes]. xref:studio::index.adoc[Anypoint Studio] also supports MUnit testing features.
-
 Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, supports MUnit functionality in Anypoint Code Builder. For information about extensions, see xref:index.adoc#extension-pack[Anypoint Extension Pack].
-//TODO: ADD MAVEN VERSION MINIMUM TO 
 
 [[prereqs]]
 == Before You Begin
 
-* Understand the fundamentals of MUnit. Refer to the MUnit documentation for an overview and guidance with test configurations:
+Understand the fundamentals of MUnit. Refer to the MUnit documentation for an overview and guidance with test configurations:
 
-** xref:munit::index.adoc[MUnit Overview]
+** xref:munit::index.adoc[]
 ** xref:munit::munit-test-concept.adoc[]
 ** xref:munit::event-processors.adoc[]
 ** xref:munit::munit-cookbook.adoc[]
 
-For MUnit features supported by Anypoint Code Builder, see xref:acb-release-notes.adoc[]. Anypoint Studio supports testing with all MUnit features.
-
-//
 //MUNIT WORKFLOWS AND TASKS
 [[workflow]]
 == MUnit Tasks and Workflows
 
 A workflow can include one or more steps:
 
+. <<create-tests, Creating tests and test suites>>
 . <<open-test, Opening tests>>
 . <<run, Running tests>>
 . <<run-debug, Debugging>>
 . <<fix-errors, Fixing errors>>
+. <<import-test, Importing a project that contains MUnit tests>>
 
-If your project doesn't contain any tests, you can:
+//
+// CREATE TESTS AND TEST SUITES
+[[create-tests]]
+== Create MUnit Tests and Test Suites
 
-* <<import-test, Import a project that contains MUnit tests>>
-* <<create-tests, Create tests or test suites in an existing project>>
+Configure MUnit tests and test suites directly from a flow or by using the canvas or XML editor.
+
+* <<create-suite>>
+* <<create-test>>
+
+[[create-suite]]
+=== Create an MUnit Test Suite
+
+Create an MUnit test suite in your project from the *Explorer*. 
+
+. Open your project to `{munit-src}` in the *Explorer*.
+. Create a suite file in the `munit` folder:
+.. Right-click the `munit` folder and select *New MUnit Test Suite File*.
+.. Provide a name for your suite, such as `my-suite.xml`.
++
+A canvas shows with a link to build a new test with scope and flow structure options.
++
+The new suite file includes the XML declaration (`<?xml>`), `<mule/>` and `<mule-config>` elements. For example:
++
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                 xmlns:munit="http://www.mulesoft.org/schema/mule/munit" 
+                 xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" 
+                 xmlns="http://www.mulesoft.org/schema/mule/core" 
+                 xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+                 xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+                 http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+                 http://www.mulesoft.org/schema/mule/munit-tools  
+                 http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	
+  <munit:config name="my-suite.xml" />
+
+</mule>
+----
+. Select a component from the canvas to customize your test:
+* With the *Behavior* components, such as 'munit:before-test', 'munit:after-test', etc., you can set the conditions for the test.
+* With the *Execution* components, the '<flow-ref>' or inline flow definition within the '<munit:execution>' block, you can specify the actions or processes to test.
+* With the *Validation* components, such as 'munit:assert-that', you can check the output or state of the application after the execution phase to ensure it matches the expected results so you can confirm the application behaves as intended.
++
+See xref:munit::event-processors.adoc[] for more information.
+. Continue to <<create-test>>.
+
+[NOTE]
+Anypoint Code Builder requires MUnit 3.4.0 or later to create MUnit test suites from the canvas.
+
+[[create-test]]
+=== Create an MUnit Test
+
+Create an MUnit test in a new or existing test suite. Start an MUnit test by right-clicking the `flow` component, or by using the canvas or XML editor. For guidance with your test configuration, refer to the <<prereqs, MUnit documentation>> described in the prerequisites.
+
+[[create-test-from-flow]]
+==== Create a Test from a Flow
+
+Generate the basic structure for an MUnit test designed to test a specific flow within your Mule application.
+
+. Open your Mule project.
+. In the canvas, right-click on the `flow` component.
+. Select *Create Test*.
+. Anypoint Code Builder creates a new MUnit test suite file in your project `{munit-src}` folder with the test structure targeting the selected flow.
+
+[[create-test-from-canvas]]
+==== Create a Test from the Canvas
+
+See <<create-suite>>.
+
+[[create-test-from-xml]]
+==== Create a Test from the XML Editor
+
+. Open the test suite XML in the editor.
++
+For guidance, see <<open-test>>.
+. In the XML, press Ctrl+Space to display available options, and type `munit`. For example:
++
+image:anypoint-code-builder::munit-tests-test-xml-autocomplete.png["Using autocomplete in the XML to select the MUnit test element"]
+. Select `munit:test` and insert the test element in your suite. For example:
++
+[source,xml]
+----
+<munit:test name="name" >
+  
+</munit:test>
+----
+. Provide a name and other XML elements to create the test.
++
+For example, on any line within XML similar to these examples:
++
+[source,xml]
+----
+<munit:test name="test-01-suite1">
+  <munit:validation>
+    <munit-tools:assert-equals actual='#["that"]' expected='#["this"]' />
+  </munit:validation>
+</munit:test>
+---- 
++
+To find more examples, see <<examples>>.
+. Run your test from the Test panel.
++
+For guidance, see <<run>>.
 
 //
 //OPEN MUNIT TESTS
@@ -277,6 +375,7 @@ Create and run an MUnit launch configuration:
  
 //step to open run&debug panel:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-run-debug"]
+
 . Add a launch configuration to `launch.json`: 
 .. Click image:anypoint-code-builder::icon-gear.png["",18,18] (gear icon) to open the *launch.json* tab.
 +
@@ -473,100 +572,6 @@ Mule projects created in Anypoint Studio and Anypoint Code Builder for your inte
 Instead of starting with an empty project when creating the integration project, click *Template or Example Project* so that you can import the asset that contains tests into your project.
 
 //
-// CREATE TESTS AND SUITES
-[[create-tests]]
-== Create MUnit Tests and Test Suites
-
-Configure MUnit tests and test suites using the canvas or the XML editor. 
-
-* <<create-suite>>
-* <<create-test>>
-
-[[create-suite]]
-=== Create an MUnit Test Suite
-
-Create an MUnit test suite in your project from the *Explorer*. 
-
-. Open your project to `{munit-src}` in the *Explorer*.
-. Create a suite file in the `munit` folder:
-.. Right-click the `munit` folder and select *New MUnit Test Suite File*.
-.. Provide a name for your suite, such as `my-suite.xml`.
-+
-After the February 2025, the IDE creates a canvas with a link to build a new test with scope and flow structure options.
-+
-The new suite file includes the XML declaration (`<?xml>`), `<mule/>` and `<mule-config>` elements. For example:
-+
-[source,xml]
-----
-<?xml version="1.0" encoding="UTF-8"?>
-
-<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-                 xmlns:munit="http://www.mulesoft.org/schema/mule/munit" 
-                 xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" 
-                 xmlns="http://www.mulesoft.org/schema/mule/core" 
-                 xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
-                 xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-                 http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
-                 http://www.mulesoft.org/schema/mule/munit-tools  
-                 http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
-	
-  <munit:config name="my-suite.xml" />
-
-</mule>
-----
-. Select a component from the canvas to customize your test:
-* With the *Behavior* components, you can set the conditions for the test. 
-* With the *Execution* components, you can specify the actions or processes to test.
-* With the *Validation* components, you can check the output or state of the application to ensure it matches the expected results so you can confirm the application behaves as intended.
-. Continue to <<create-test>>.
-
-[NOTE]
-Anypoint Code Builder requires MUnit 3.4.0 or later to create MUnit test suites from the canvas.
-
-[[create-test]]
-=== Create an MUnit Test
-
-Create an MUnit test in a new or existing test suite. Use the canvas or the XML Editor to start an MUnit test. For guidance with your test configuration, refer to the <<prereqs, MUnit documentation>> described in the prerequisites.
-
-==== Create a Test from the Canvas
-
-See <<create-suite>>.
-
-==== Create a Test from the XML Editor
-
-. Open the test suite XML in the editor.
-+
-For guidance, see <<open-test>>.
-. In the XML, press Ctrl+Space to display available options, and type `munit`. For example:
-+
-image:anypoint-code-builder::munit-tests-test-xml-autocomplete.png["Using autocomplete in the XML to select the MUnit test element"]
-. Select `munit:test` and insert the test element in your suite. For example:
-+
-[source,xml]
-----
-<munit:test name="name" >
-  
-</munit:test>
-----
-. Provide a name and other XML elements to create the test.
-+
-For example, on any line within XML similar to these examples:
-+
-[source,xml]
-----
-<munit:test name="test-01-suite1">
-  <munit:validation>
-    <munit-tools:assert-equals actual='#["that"]' expected='#["this"]' />
-  </munit:validation>
-</munit:test>
----- 
-+
-To find more examples, see <<examples>>.
-. Run your test from the Test panel.
-+
-For guidance, see <<run>>.
-
-//
 //CLEAR TEST RESULTS
 [[clear-results]]
 == Clear Test Results
@@ -578,6 +583,34 @@ After testing, you can clear test results from the *Testing* panel and the logs 
 +
 image:munit-clear-testing-results-log.png["Clearing test results from Test Results panel"]
 
+[[targeting-specific-processors-and-attributes-in-your-test]]
+== Targeting Specific Processors and Attributes in Your Test
+
+Add these processors to your MUnit test to focus on individual components of your Mule flow:
+
+[options="header,footer",cols="1,2",]
+|====
+| Processor | Description
+| `Mock-when` | Create a mock of an event processor in your flow to simulate the behavior of the event processor without executing it.
+| `Spy` | Observe what happens before and after a specific event processor in your flow is executed, without altering its behavior.
+|====
+
+=== Setting Up Processors
+
+. On your test suite, click *+*.
+. Search for a processor designed to observe your flow (see <<observe-processors-in-your-flow>>).
+. Select the type of processor to be observed by clicking on the *+* icon.
+image:acb-munit-processor.png["Component window to add a processor"]
+. Select the components and attributes of the processor to observe.
+image:acb-munit-select-component-attribute.png["Component and attribute highlighted in the processor window"]
+. Click *Add* to add the processor to your test suite.
++
+The processor shows in the XML editor and the canvas.
+
+When selecting the processor and its attributes, consider these aspects:
+
+* The configuration for one processor applies to all processors of the same type in your flow.
+* The attributes of all processors of the same type are listed.  
 
 [[examples]]
 == MUnit Examples
