@@ -251,17 +251,16 @@ The last values are propagated outside of For Each. The logger (`Logger After Fo
 
 //SECTION: ERROR HANDLING
 //
-//tag::error-handling[]
+//tag::component-error-handling[]
 
 [[error-handling]]
 == Error Handling
 
-If one of the elements in a collection throws an exception, For Each stops processing that collection and invokes the error handler.
+If one of the elements in a collection throws an exception, For Each stops processing that collection and invokes the error handler. Unlike Parallel For Each, which processes all routes even when errors occur, For Each processes elements sequentially and halts execution when an error is encountered.
 
-//TODO: Point to ACB version of the On Error docs
-See xref:mule-runtime::on-error-scope-concept.adoc[] for information about Mule error handlers.
+You can add an xref:acb-component-error-handler.adoc[Error Handler] component to handle errors that occur during processing of the collection elements.
 
-//end::error-handling[]
+//end::component-error-handling[]
 //
 
 //SECTION: SEE ALSO
