@@ -35,15 +35,38 @@ Anypoint Studio uses an Eclipse workspace that contains multiple projects. Anypo
 * Configure Git for your projects, if needed
 * Set up any custom build configurations, if needed
 
+=== Import Studio Workspace into Anypoint Code Builder
+
+Import your Anypoint Studio workspace into Anypoint Code Builder as a VS Code workspace.
+
+. In Anypoint Code Builder, go to *File* > *Open Folder*.
+. Navigate to your Studio workspace.
+. Select the individual project folder. Don't select the entire workspace.
+
+Alternatively, you can export the Studio workspace as a ZIP file and import the project folder directly into Anypoint Code Builder:
+
+. In Studio, right-click your project and select *Export*.
+. Select *General* > *Archive File*.
+. Select one or more projects to export.
+. Click *Browse* to select the folder where you want to export the ZIP file.
+. Click *Finish*.
+. In Anypoint Code Builder, open the *Command Palette* (Ctrl+Shift+P).
+. Select *MuleSoft: Import a Mule project*.
+. Select *From compressed file*.
+. Select the exported ZIP file.
+
 === Verify Workspace Setup
 
 After importing your project into Anypoint Code Builder, verify the setup is correct:
 
-* Maven dependencies must resolve correctly
-* Run `mvn clean package` to make sure the project builds successfully
-* Test that your Mule application runs properly in the new Anypoint Code Builder workspace
-* Set up debug configurations if needed to troubleshoot your application
-* Check for errors and make sure that the configuration XML file and the canvas load correctly to verify that component dependencies resolve correctly
+* The `pom.xml` file is compatible with Anypoint Code Builder
+* The Mule runtime version is supported in Anypoint Code Builder
+* The Maven dependencies resolve correctly
+* The project builds successfully after running `mvn clean package` 
+* Your Mule application runs as expected in the new Anypoint Code Builder workspace
+* Debug configurations are set up to troubleshoot your application
+* The configuration XML file show no errors
+* The canvas loads correctly, which means that the component dependencies resolve correctly
 
 == See Also
 
