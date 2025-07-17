@@ -18,6 +18,33 @@ include::partial$acb-project-migration.adoc[tag="exporting-considerations-from-s
 
 include::partial$acb-project-migration.adoc[tag="import-mule-project-into-acb"]
 
+== Understand Workspaces Differences
+
+An IDE workspace is a logical environment that groups your projects. It also contains all associated settings, configurations, and state for development. Workspaces are primarily used for:
+
+* Managing multiple related projects
+* Keeping plugin-specific settings and environments consistent
+* Isolating different development contexts
+
+=== Workspace Considerations
+
+Anypoint Studio uses an Eclipse workspace that contains multiple projects. Anypoint Code Builder uses a folder-based VS Code workspace, typically with one or more projects per workspace. So Anypoint Code Builder workspace can be physically in the same location. Take into account these other considerations when migrating your project:
+
+* Make sure Anypoint Code Builder supports the Mule runtime version of your project
+* Install relevant extensions, if requested
+* Configure Git for your projects, if needed
+* Set up any custom build configurations, if needed
+
+=== Verify Workspace Setup
+
+After importing your project into Anypoint Code Builder, verify the setup is correct:
+
+* Maven dependencies must resolve correctly
+* Run `mvn clean package` to make sure the project builds successfully
+* Test that your Mule application runs properly in the new Anypoint Code Builder workspace
+* Set up debug configurations if needed to troubleshoot your application
+* Check for errors and make sure that the configuration XML file and the canvas load correctly to verify that component dependencies resolve correctly
+
 == See Also
 
 * xref:int-import-mule-project.adoc[] 
