@@ -44,7 +44,6 @@ This component supports the following XML structure:
 //
 //tag::component-xml[]
 
-[[component-xml]]
 [source,xml]
 ----
 <foreach doc:name="For Each" 
@@ -93,6 +92,14 @@ For Each (`<foreach/>`) attributes are configurable through the UI and XML.
 | Name of the variable that assigns a number to each iteration over a given element. The sequence starts with `1` and proceeds sequentially. Using the default name of this property (`counter`), you can access this number with `vars.counter`. For Each consumes this variable, so it is not available and returns `null` when used outside of the scope. Defaults to `counter`.
 |===
 //end::component-xml-attributes-root[]
+//
+
+//TABLE (IF NEEDED): CHILD XML ATTRIBUTES or ELEMENTS
+//tag::component-xml-attributes-child1[]
+
+For Each (`<foreach/>`) does not have any child elements or attributes beyond the root-level attributes.
+
+//end::component-xml-attributes-child1[]
 //
 
 //SECTION: EXAMPLES
@@ -252,17 +259,14 @@ The last values are propagated outside of For Each. The logger (`Logger After Fo
 
 //SECTION: ERROR HANDLING
 //
-//tag::error-handling[]
+//tag::component-error-handling[]
 
 [[error-handling]]
 == Error Handling
 
 If one of the elements in a collection throws an exception, For Each stops processing that collection and invokes the error handler.
 
-//TODO: Point to ACB version of the On Error docs
-See xref:mule-runtime::on-error-scope-concept.adoc[] for information about Mule error handlers.
-
-//end::error-handling[]
+//end::component-error-handling[]
 //
 
 //SECTION: SEE ALSO
