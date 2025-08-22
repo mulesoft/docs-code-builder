@@ -18,7 +18,7 @@ include::partial$acb-project-migration.adoc[tag="exporting-considerations-from-s
 
 include::partial$acb-project-migration.adoc[tag="import-mule-project-into-acb"]
 
-== Understand Workspaces Differences
+== Understand Workspaces
 
 An IDE workspace is a logical environment that groups your projects. It also contains all associated settings, configurations, and state for development. Workspaces are primarily used for:
 
@@ -28,12 +28,21 @@ An IDE workspace is a logical environment that groups your projects. It also con
 
 === Workspace Considerations
 
-Anypoint Studio uses an Eclipse workspace that contains multiple projects. Anypoint Code Builder uses a folder-based VS Code workspace, typically with one or more projects per workspace. So Anypoint Code Builder workspace can be physically in the same location. Evaluate these other considerations if migrating your project:
+* Studio uses an Eclipse workspace that contains multiple projects. Anypoint Code Builder uses a folder-based VS Code workspace, typically with one or more projects per workspace. So Anypoint Code Builder workspace can be physically in the same location as your Studio workspace.
+* All your projects within a workspace must use the same Mule runtime and Java version.
 
-* Make sure Anypoint Code Builder supports the Mule runtime version of your project
-* Install relevant extensions, if requested
-* Configure Git for your projects, if needed
-* Set up any custom build configurations, if needed
+=== Create a New Workspace
+
+//TODO: Verify this process.
+. In Anypoint Code Builder, go to *File* > *Open Folder*.
+. Go to the folder where you want to create your workspace.
+. Click *New Folder*.
+. Enter a name for your workspace.
+. Click *Create*.
+
+=== Add Projects to a Workspace
+
+//TODO: Complete this section. Include "How to add configs" in this section if appropriate.
 
 === Import Studio Workspace into Anypoint Code Builder
 
@@ -43,6 +52,7 @@ Import your Anypoint Studio workspace into Anypoint Code Builder as a VS Code wo
 . Go to your Studio workspace.
 . Select the individual project folder. Don't select the entire workspace.
 
+// TODO: If possible, provide only one option for importing the project. Let's choose the happy path.
 Alternatively, you can export the Studio workspace as a ZIP file and import the project folder directly into Anypoint Code Builder.
 
 . In Studio, right-click your project and select *Export*.
@@ -66,6 +76,22 @@ After importing your project into Anypoint Code Builder, verify that the setup i
 * Debug configurations are set up to troubleshoot your application
 * The configuration XML file show no errors
 * The canvas loads correctly, which means that the component dependencies resolve correctly
+
+=== Troubleshooting Migration Issues
+
+==== Canvas Loading Issues
+
+If the canvas is stuck loading flows, update your Mule projects in the workspace to use the same Java and Mule runtime versions. See xref:int-version.adoc#select-mule-and-java-versions-for-a-project[Select Mule and Java Versions for a Project]. 
+
+==== Mule Runtime or Java Version Issues
+
+If the IDE shows the *Mule runtime or Java version requires further action* error, this means that the Mule runtime or Java version in the project is not compatible with the IDE.
+
+. Click *Set Version* to update the Mule runtime or Java version. See xref:int-version.adoc#select-mule-and-java-versions-for-a-project[Select Mule and Java Versions for a Project]. 
+. After selecting compatible Mule runtime and Java versions, click *Apply*.
+. Open the *Mule Config XML* file in your project.
++ 
+The error disappears, and you can work on your project.
 
 == See Also
 
