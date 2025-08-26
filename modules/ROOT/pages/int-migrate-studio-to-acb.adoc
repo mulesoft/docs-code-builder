@@ -29,8 +29,7 @@ An IDE workspace is a logical environment that groups your projects. It also con
 === Workspace Considerations
 
 * Studio uses an Eclipse workspace that contains multiple projects. Anypoint Code Builder uses a folder-based VS Code workspace, typically with one or more projects per workspace. So Anypoint Code Builder workspace can be physically in the same location as your Studio workspace.
-* All your projects within a workspace must use the same Mule runtime and Java version.
-* Define configurations to a workspace by adding them to the `.code-workspace` file.
+* All your projects within a workspace must use the same Mule run-time and Java version.
 
 === Create a New Workspace
 
@@ -45,6 +44,38 @@ An IDE workspace is a logical environment that groups your projects. It also con
 . In Anypoint Code Builder, go to *File* > *Add Folder to Workspace*.
 . Select the folder where you want to add your project.
 . Click *Add*.
+
+=== Add Configurations to a Workspace
+
+Group multiple project folders into one top-level workspace if working on several related projects at one time.
+
+A workspace configuration file (`.code-workspace`) is created to store workspace-specific settings. This file is located in the root folder.
+
+To add configurations to your workspace:
+. Go to *File* > *Save Workspace As*.
+. Select a location for your `.code-workspace` file.
+. Open the `.code-workspace` file.
+. Add your configurations in JSON format.
+
+For example, you can define settings that apply to all projects in the workspace:
+[source,json]
+----
+{
+  "folders": [
+    {
+      "path": "project-a"
+    },
+    {
+      "path": "project-b"
+    }
+  ],
+  "settings": {
+    "java.home": "/path/to/your/jdk"
+  }
+}
+----
+
+You can add any VS Code setting to the `settings` section of your `.code-workspace` file.
 
 === Import Studio Workspace into Anypoint Code Builder
 
