@@ -30,6 +30,7 @@ An IDE workspace is a logical environment that groups your projects. It also con
 
 * Studio uses an Eclipse workspace that contains multiple projects. Anypoint Code Builder uses a folder-based VS Code workspace, typically with one or more projects per workspace. So Anypoint Code Builder workspace can be physically in the same location as your Studio workspace.
 * All your projects within a workspace must use the same Mule runtime and Java version.
+* Define configurations to a workspace by adding them to the `.code-workspace` file.
 
 === Create a New Workspace
 
@@ -41,7 +42,9 @@ An IDE workspace is a logical environment that groups your projects. It also con
 
 === Add Projects to a Workspace
 
-//TODO: Complete this section. Include "How to add configs" in this section if appropriate.
+. In Anypoint Code Builder, go to *File* > *Add Folder to Workspace*.
+. Select the folder where you want to add your project.
+. Click *Add*.
 
 === Import Studio Workspace into Anypoint Code Builder
 
@@ -51,9 +54,9 @@ Import your Anypoint Studio workspace into Anypoint Code Builder as a VS Code wo
 . Go to your Studio workspace.
 . Select the individual project folder. Don't select the entire workspace.
 
-// TODO: If possible, provide only one option for importing the project. Let's choose the happy path.
-Alternatively, you can export the Studio workspace as a ZIP file and import the project folder directly into Anypoint Code Builder.
+== Import a Studio Project into Anypoint Code Builder
 
+//TODO: Verify if this explanations is not duplicated.
 . In Studio, right-click your project and select *Export*.
 . Select *General* > *Archive File*.
 . Select one or more projects to export.
@@ -84,7 +87,7 @@ If the canvas is stuck loading flows, update your Mule projects in the workspace
 
 ==== Mule Runtime or Java Version Issues
 
-If the IDE shows the *Mule runtime or Java version requires further action* error, this means that the Mule runtime or Java version in the project is not compatible with the IDE.
+If the Mule runtime or Java version in the project is not compatible with the IDE, it shows a *Mule runtime or Java version requires further action* error.
 
 . Click *Set Version* to update the Mule runtime or Java version. See xref:int-version.adoc#select-mule-and-java-versions-for-a-project[Select Mule and Java Versions for a Project]. 
 . After selecting compatible Mule runtime and Java versions, click *Apply*.
