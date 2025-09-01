@@ -13,9 +13,11 @@ To locate `settings.xml`, the IDE first checks for a `maven.settings` configurat
 //
 // tag::maven-acb-settings-file[]
 
-Anypoint Code Builder doesn't make changes to your Maven `settings.xml` file. Instead, when you open the IDE, a separate settings file, `acb_settings.xml`, is created if the Anypoint Extension Pack is installed in the IDE. The extension pack is preinstalled in the cloud IDE, but you must install it to the desktop IDE. See xref:start-acb.adoc#set-up-desktop[Set up the Desktop IDE].
+Anypoint Code Builder reads its configuration from your Maven `settings.xml` file. To configure Maven, for example, to add repositories, proxies, or credentials, edit your `settings.xml` file, which is typically located in your `~/.m2/` directory.
 
-Updates that you save to your `settings.xml` are reflected automatically within `acb_settings.xml`. The `acb_settings.xml` file is located in `${user.home}/AnypointCodeBuilder/maven`. When troubleshooting a project in Anypoint Code Builder, you can export the file with any sensitive information, such as passwords, obfuscated. To export, see xref:anypoint-code-builder::troubleshooting.adoc#export-troubleshooting-info[Export Troubleshooting Information].
+Anypoint Code Builder uses the settings from your `settings.xml` file to create an internal temporary settings file named `acb_settings.xml`. Changes made to the `acb_settings.xml` file are lost when you reopen the IDE. The `acb_settings.xml` file is located in `${user.home}/AnypointCodeBuilder/maven`. 
+
+If you troubleshoot a project in Anypoint Code Builder, export the file with any sensitive information, such as passwords, obfuscated. See xref:anypoint-code-builder::troubleshooting.adoc#export-troubleshooting-info[Export Troubleshooting Information] for instructions.
 
 // end::maven-acb-settings-file[]
 //
