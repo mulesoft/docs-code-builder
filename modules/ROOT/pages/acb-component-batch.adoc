@@ -1,0 +1,130 @@
+= Batch Job (<batch:job/>)
+
+Defines the main batch processing scope. A batch job contains two phases:
+
+* *Process Records*: Executes record processing logic defined in Batch Steps.
+* *On Complete*: Executes after all records are processed, for example to log results or perform cleanup.
+
+== Configuration Options
+
+[cols="1,1,1,2", options="header"]
+|===
+| Property
+| Type
+| Default
+| Description
+
+| `doc:name`
+| String
+| Auto-generated
+| Display name for the component in the canvas.
+
+| `doc:id`
+| String
+| Auto-generated
+| Unique identifier for the component.
+
+| `batchBlockSize`
+| Integer
+| 50
+| Number of records per block to process concurrently within the Process Records phase.
+|===
+
+== Child Elements / Scopes
+
+* One or more <<batch-step, Batch Steps>> inside the job.
+* One optional *On Complete* scope.
+
+== Constraints
+
+* Batch jobs cannot be nested.
+* At least one Batch Step must be present.
+* If the last Batch Step is deleted, the Batch Job is removed automatically.
+
+== Example
+
+----
+<batch:job doc:name="Batch Job Example" doc:id="job-1" batchBlockSize="100">
+    <batch:step doc:name="Step 1" doc:id="step-1">
+        <!-- record processors -->
+    </batch:step>
+    <batch:on-complete doc:name="On Complete" doc:id="onComplete-1">
+        <!-- final operations -->
+    </batch:on-complete>
+</batch:job>
+----
+
+== Batch Step (batch:step/)
+
+Defines a step inside a batch job. Steps group record-level processors and can optionally include a batch aggregator.
+
+=== Configuration Options
+
+[cols="1,1,1,2", options="header"]
+|===
+| Property
+| Type
+| Default
+| Description
+
+| doc:name
+| String
+| Auto-generated
+| Display name in the canvas.
+
+| doc:id
+| String
+| Auto-generated
+| Unique identifier for the component.
+|===
+
+== Child Elements / Sub-Scopes
+
+*Processors*: A sequence of processors (for example, Transform, Logger) that act on each record.
+
+*Batch Aggregator*: Optional, aggregates records into blocks.
+
+== Constraints
+
+Only one Batch Aggregator is allowed per step.
+
+== Batch Aggregator (batch:aggregator/)
+
+Aggregates records into blocks within a Batch Step for grouped processing before records are sent back into the flow.
+
+== Configuration Options
+
+[cols="1,1,1,2", options="header"]
+|===
+| Property
+| Type
+| Default
+| Description
+
+| doc:name
+| String
+| Auto-generated
+| Display name in the UI.
+
+| doc:id
+| String
+| Auto-generated
+| Unique identifier for the component.
+
+| aggregatorSize
+| Integer
+| 100
+| Number of records to group before applying aggregation logic.
+|===
+
+== Behavior
+
+Groups incoming records into blocks of the specified size.
+
+After processing, the records are sent back to the Process Records phase of the Batch Job.
+
+== See Also
+
+xref:anypoint-code-builder::ref-components.adoc[Core Components Reference]
+
+xref:anypoint-code-builder::int-debug-mule-apps.adoc[Debugging Mule Applications]
