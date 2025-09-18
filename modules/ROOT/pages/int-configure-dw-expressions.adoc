@@ -204,9 +204,9 @@ On *Transformation Builder*, select the option that best suits your needs:
 
 If using AI-assisted transformations, evaluate these considerations:
 
-* Metadata provides the shape of the output.
+* To generate a DataWeave script, provide input and output samples. While optional, providing metadata helps the AI better understand the data structure and improves the accuracy of the transformation.
 * Sample data provides the context to generate functions or expressions for calculations, conditions, and other operations. You can provide Web Services Description Language (WSDL) files with sample data. See <<sample-data>> for supported data formats (MIME types) for sample data.
-* For automatic mapping of fields, provide both input and output payloads. Auto-mapping works if there is no existing DataWeave script in the component.
+* For automatic field-to-field mapping without samples, you must provide both input and output payloads. This auto-mapping only works if there is no existing DataWeave script in the component.
 * AI requires valid data to create the transformation script. Write it manually if needed.
 * AI chat history isn't available in *Transformation Builder*.
 * Avoid using real personally identifiable information (PII) in sample data or AI inputs. Provide input and output sample data that contains only fictional or masked data.
@@ -214,12 +214,15 @@ If using AI-assisted transformations, evaluate these considerations:
 [[map-with-ai]]
 === Map with AI
 
-The *Map with AI* feature suggests an automatic field-to-field mapping when you open the *Transformation Builder*. This auto-mapping feature requires you to provide both input and output payloads for the component, and it triggers the auto-mapping feature if no DataWeave script is present. *Map with AI* also generates mappings using input and output samples, without requiring full payloads.
+With *Map with AI*, you can automatically generate a DataWeave transformation. There are two ways to use this feature:
+
+* *Using Samples*: Provide input and output samples to generate a complete DataWeave script. This is the recommended approach.
+* *Using Payloads*: If you provide both input and output payloads for a component with no existing DataWeave script, the feature suggests a basic field-to-field mapping.
 
 If you don't have access to *Map with AI*, you must:
 
 * Make sure your configuration meets the prerequisites for using AI-assisted transformations. See <<prereq-dw-transforms>>.
-* Review that the provided input and output metadata are valid.
+* Review that the provided input and output metadata are valid if you choose to use them.
 
 . Open your Mule project.
 . Select a component that has a *fx* field.
@@ -239,7 +242,7 @@ The *Preview* tab shows the output of the transformation.
 [[map-and-transform-with-ai]]
 === Map and Transform with AI
 
-Create a DataWeave transformation script assisted by AI. Provide input and output sample data, the input and output metadata, and optional instructions to guide the AI.
+Create a DataWeave transformation script assisted by AI by providing input and output sample data. You can also provide optional metadata to help define the data structure and instructions to guide the AI.
 
 . Open your Mule project.
 . Select a component that has a *fx* field.
