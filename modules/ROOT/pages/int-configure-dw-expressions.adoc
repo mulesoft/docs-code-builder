@@ -1,7 +1,7 @@
 = Using DataWeave Expressions and Transformations in Anypoint Code Builder
 :page-aliases: int-use-dw-to-transform-data.adoc, int-address-dw-errors.adoc, int-import-dw-libraries.adoc
 
-DataWeave is the MuleSoft programming language for data transformation and for defining expressions. Use DataWeave to process Mule event data, such as `payload`, `attributes`, and `vars`, in connector operations and other components. Develop DataWeave expressions and transformations in your Mule applications using the *Expression Field*, *Expression Builder*, or *Transformation Builder*, or by editing the configuration XML. Generate DataWeave transformations with AI help by providing input and output sample data or metadata.
+DataWeave is the MuleSoft programming language for data transformation and for defining expressions. Use DataWeave to process Mule event data, such as `payload`, `attributes`, and `vars`, in connector operations and other components. Develop DataWeave expressions and transformations in your Mule applications using the *Expression Field*, *Expression Builder*, or *Transformation Builder*, or by editing the configuration XML. Generate DataWeave transformations with AI help by providing input and output sample data, metadata, or both.
 
 image::int-dw-transform-ui.png["A configuration panel showing three numbered callouts: 1) fx button for Expression Field, 2) Expression Builder button, and 3) Transformation Builder button"]
 
@@ -51,6 +51,8 @@ For more resources, see xref:dataweave::index.adoc[].
 ** Mule Developer Generative AI User
 
 * Enable Einstein in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
+
+* AI-assisted features support multiple languages.
 
 * If you have issues with the AI-assisted transformations, see <<troubleshoot-ai-assisted-transformations>>.
 
@@ -202,8 +204,9 @@ On *Transformation Builder*, select the option that best suits your needs:
 
 If using AI-assisted transformations, evaluate these considerations:
 
-* Metadata provides the shape of the output.
+* To generate a DataWeave script using *Map and Transform with AI*, provide input and output samples. While optional, providing metadata helps the AI better understand the data structure and improves the accuracy of the transformation.
 * Sample data provides the context to generate functions or expressions for calculations, conditions, and other operations. You can provide Web Services Description Language (WSDL) files with sample data. See <<sample-data>> for supported data formats (MIME types) for sample data.
+* For automatic field-to-field mapping using *Map with AI*, you must provide both input and output metadata. This auto-mapping only works if there is no existing DataWeave script in the component.
 * AI requires valid data to create the transformation script. Write it manually if needed.
 * AI chat history isn't available in *Transformation Builder*.
 * Avoid using real personally identifiable information (PII) in sample data or AI inputs. Provide input and output sample data that contains only fictional or masked data.
@@ -211,7 +214,7 @@ If using AI-assisted transformations, evaluate these considerations:
 [[map-with-ai]]
 === Map with AI
 
-Get an automatic field-to-field mapping when accessing *Transformation Builder*.
+The *Map with AI* feature automatically suggests a field-to-field mapping. This feature requires you to provide both input and output metadata for the component and only triggers if no DataWeave script is present. It performs auto-mapping based on the provided metadata.
 
 If you don't have access to *Map with AI*, you must:
 
@@ -236,7 +239,7 @@ The *Preview* tab shows the output of the transformation.
 [[map-and-transform-with-ai]]
 === Map and Transform with AI
 
-Create a DataWeave transformation script assisted by AI. Provide input and output sample data, the input and output metadata, and optional instructions to guide the AI.
+Create a DataWeave transformation script assisted by AI by providing input and output sample data. You can also provide optional metadata to help define the data structure and instructions to guide the AI.
 
 . Open your Mule project.
 . Select a component that has a *fx* field.
