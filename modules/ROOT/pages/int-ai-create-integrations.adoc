@@ -1,12 +1,12 @@
-= Creating Integrations Using Agentforce
+= Creating Integrations with MuleSoft Dev Assistant
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: int-ai-enable-einstein.adoc
 
-The Agentforce generative flow feature in Anypoint Code Builder transforms your natural language input, which describes your business logic, into a flow that contains the connector operations and processors, in the correct order, to accomplish the specified task. 
+The MuleSoft Dev Assistant feature in Anypoint Code Builder transforms your natural language input, which describes your business logic, into a flow that contains the connector operations and processors, in the correct order, to accomplish the specified task. 
 
-For example, if you want to create a flow that reads contacts from Salesforce in JSON format, enter a message describing that task. The message is then transformed into a series of the connector operations and processors needed to execute that task, in this case: Listener, Query, Transformer, and Logger. 
+For example, if you want to create a flow that reads contacts from Salesforce in JSON format, enter a prompt describing that task. Dev Assistant then generates a series of connector operations and processors to execute the task, such as Listener, Query, Transformer, and Logger. 
 
-Agentforce generates a flow, which you can then further configure to suit your specific needs. 
+Dev Assistant generates a flow, which you can then further configure to suit your specific needs. Unlike previous versions of this feature, interactions are stateless: there is no conversation history, and each prompt is processed independently. 
 
 [[before-you-begin]]
 == Before You Begin
@@ -15,27 +15,24 @@ Before you start creating your integration:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * Ensure that you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
-* Ensure that you have these permissions to use the Anypoint Code Builder Agentforce feature:
-** Anypoint Code Builder Developer
-** Mule Developer Generative AI User
-* Einstein must be enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
+* Install Node.js version 20 (v20.19.4).  
+For more information, see https://nodejs.org/en/download[Download Node.js].
 
-[[access-einstein]]
-== Access Agentforce
+[[access-dev-assistant]]
+== Access Dev Assistant
 
-There are two ways to open Agentforce:
+There are two ways to open MuleSoft Dev Assistant:
 
-* When you create a new integration project, click a card in the flow canvas. For example, the *Build a Flow with Agentforce* card.
-* Click the Agentforce icon in the toolbar. 
+* When you create a new integration project, click a card in the flow canvas. For example, the *Build a Flow with AI* card.
+* Click the Dev Assistant icon in the toolbar. 
 +
-image::int-einstein-icon-in-toolbar.png["Arrow pointing to Agentforce icon in the toolbar"]
+image::int-einstein-icon-in-toolbar.png["Arrow pointing to Dev Assistant icon in the toolbar"]
 
 [[create-integration-project]]
 == Create a New Integration Project
 
 To create a new integration development project:
 
-// Open the ACB IDE
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 . From *Quick Actions*, click *Develop an Integration*:
 +
@@ -58,106 +55,58 @@ For example, if the project name is "My Integration", the name of the folder for
 +
 The flow builder canvas appears with starting cards. 
 
-To use Agentforce to generate a flow, click *Use Agentforce* in the *Build a Flow with Agentforce* card.
-To use connectors, click *Connect to an agent* or *Create an MCP server* in the *Build Agent-Enabled Apps* card. 
+To generate a flow with AI, click *Use Dev Assistant* in the *Build a Flow with AI* card.
 
-To build your flow from scratch, click *Build a flow* in the *Start From Scratch* card.
+To build your flow manually, click *Build a flow* in the *Start From Scratch* card.
 
 [[craft-ai-prompt]]
-== Craft Your Input
+== Write Your Prompt
 
-Before you create a flow, define what you want to achieve with the flow, for example, optimizing a business process. In the Agentforce pane, click *New Chat* and craft your message using natural language. Keep in mind that the more concise and specific you make your message, the more effective Agentforce is when generating your flow. 
+Before you create a flow, define what you want to achieve with the flow, for example, optimizing a business process. In the Dev Assistant panel, enter your prompt using natural language. The clearer and more specific your prompt, the more accurate the generated flow. 
 
-These are some best practices for writing messages:
+Best practices for prompts:
 
-* Be clear and precise.
-+ 
-Use clear and specific language to describe the use case for the flow to build.
-* Include triggering events. 
-+
-Mention the triggering events that initiate the flow, for example, sending an email when a new case is created. 
-* Emphasize key components.
-+
-Highlight the key MuleSoft components and connector operations to include in the flow, for example, HTTP Connector *Listener* and Email Connector *Send* operations.
-* Specify the data objects.
-+
-Clearly mention the data objects to include in the flow, such as "Salesforce Account object" or any other relevant data source.
-* Proofread your message.
-+
-Review your message to ensure that it's clear and comprehensive before you send it.
+* Be clear and precise.  
+* Include triggering events (for example, sending an email when a new case is created).  
+* Emphasize key MuleSoft components and connector operations (for example, HTTP Connector *Listener* and Email Connector *Send*).  
+* Specify the data objects (for example, *Salesforce Account object*).  
+* Review your prompt before submitting it.  
 
-After Agentforce generates the initial flow, you can then customize the code for your specific needs. Or, you can continue the conversation to have Agentforce revise the flow after each message you send.
+After Dev Assistant generates the initial flow, you can further customize it to fit your requirements.
 
-For examples of messages and generated flows, see xref:int-ai-gen-flow-examples.adoc[].
+For examples of prompts and generated flows, see xref:int-ai-gen-flow-examples.adoc[].
 
-[NOTE]
-====
-* You can send up to 20 messages per chat. If you reach the limit, start a new chat.
-* Due to the sensitivity of LLMs and depending on which LLM is used, the same message can produce different responses. Sometimes, a similar message can produce different responses. 
-====
-
-[[view-prompt-history]]
-== View Your Chat History
-
-The message history for a project shows the previous 50 messages for that project. The history can be helpful for reference during the development process.
-
-To see the chat history:
-
-. Click the open chat history icon.
-+
-You see a list of your previous messages, up to the maximum of 50. You can rename your chats in chat history.
-. Click a message in the list to see the details of the generated flow. 
-+
-You can insert the code that was generated into your flow, or you can copy the code snippet and use or modify it elsewhere. 
-
-
-[[create-gen-flow]]
+[[add-gen-flow]]
 == Add a Flow to Your Project
 
-Add a flow to your integration project using Agentforce:
+To add a flow using MuleSoft Dev Assistant:
 
-. In the *Build a Flow with Agentforce* card, click *Use Agentforce*.
+. In the *Build your Enterprise with AI* card, click *Use Dev Assistant*.  
+. Enter a prompt to create the initial flow for your task.  
 +
-Optionally, click an example on the *Build a Flow with Agentforce* card to see how this feature works.
-. If this is the first time you're using this feature, agree to the terms, and continue. 
+Optionally, click an example to get started.  
 +
-The *Agentforce* panel opens:
-+
-image::acb-einstein-panel.png["Agentforce panel with welcome message and examples"]
-+
-. Enter a message to create the initial flow for your task.
-+
-Optionally, click an example to get started.
-+
-When your flow is ready, the code and a description of the components in the flow appear in the *Agentforce* panel:
-+
-image::int-generated-case-notification-email.png[]
-+
-. Optionally, click the thumbs up or thumbs down icon that appears after the generated code. 
-+
-Rating the flow that's created for you helps improve the quality of generative flows.
-. Inspect the generated code. If you're satisfied, click the insert code icon to add the code to your flow. 
-+
-If you aren't satisfied with the generated flow, try rewording your message and sending it again. 
+When your flow is ready, the code and a description of the components in the flow appear in the Dev Assistant panel.  
+. Inspect the generated code. If you're satisfied, click the insert code icon to add the code to your flow.  
+. If you aren't satisfied with the generated flow, try rewording your prompt and submitting it again.  
 
 [[customize-gen-flow]]
 == Complete Your Flow
 
-After Agentforce builds the flow, fill in information specific to your configuration as needed. 
+After Dev Assistant builds the flow, complete the configuration as needed.  
 
-. After you inspect the code for your generated flow, you can either copy it into your clipboard or insert it with a single click using the *Insert* action. 
+. After you inspect the code for your generated flow, you can either copy it into your clipboard or insert it with a single click using the *Insert* action.  
 +
-After you insert the code, the initial flow is built and the visual representation of the flow is shown in the flow canvas next to the XML code tab. 
+After you insert the code, the initial flow is built and the visual representation of the flow is shown in the flow canvas next to the XML code tab.  
 +
-Components that require further configuration display the error icon. 
-. Select the component in the canvas to determine where the error is.
+Components that require further configuration display the error icon.  
+. Select the component in the canvas to determine where the error is.  
 +
-Anypoint Code Builder highlights the location of the error within the configuration XML.
-
+Anypoint Code Builder highlights the location of the error within the configuration XML.  
 
 == See Also
 
-* xref:access-management::enabling-einstein.adoc[]
+* https://help.salesforce.com/s/articleView?id=sf.a4d_extension_overview&type=5[Salesforce A4D Extension Documentation]
 * xref:int-ai-gen-flow-examples.adoc[]
 * xref:int-ai-developing-integrations.adoc[]
 * xref:acb-components.adoc[]
