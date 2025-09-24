@@ -1,31 +1,29 @@
 = Designing API Specs with AI
 :page-deployment-options: cloud-ide, desktop-ide
 
-Simplify your API designs by generating API specifications with AI. Use natural language to create prompts and let Einstein Generative AI build APIs for you. Pre-trained large language models (LLMs) within the Salesforce Shared Trust Boundary power these capabilities and are at the core of API spec generation in Anypoint Code Builder.
+Simplify your API designs by generating API specifications with AI. Use natural language prompts in MuleSoft Dev Assistant to build APIs. The embedded MCP client powers these capabilities and is at the core of API spec generation in Anypoint Code Builder.
 
-NOTE: Anypoint Code Builder Generative AI API specifications is available on US, EU, Canada, and Japan cloud hosts.
+NOTE: AI-powered API specification generation is available on US, EU, Canada, and Japan cloud hosts.
 
 == Trust Layer
 
-The generative AI trust layer bridges Anypoint Platform and the LLMs, as shown in this flow: 
+The Dev Assistant flow bridges Anypoint Platform and the underlying large language models (LLMs):
 
-image::acb-einstein-trust-layer.png["Flow depicting how the trust layer works, including the steps of the flow"]
+image::acb-dev-assistant-trust-layer.png["Flow depicting how Dev Assistant interacts with the embedded MCP client"]
 
 [calloutlist]
-. The Anypoint Code Builder user creates a message based on their use case and sends it to Agentforce.  
-. To minimize inaccurate responses (the AI "hallucination" effect), messages are grounded with factual MuleSoft proprietary data and user context.
-. To ensure the data is sent safely to the external LLM, the message is sent to Open AI via the secure gateway. 
-. To keep your data secure, all data remains in Salesforce.  
-. After the LLM generates a response, the content is sent back through the secure gateway.
-. MuleSoft validates the generated output to ensure the generated flow works within the MuleSoft ecosystem. 
-. Anypoint Code Builder logs the message and generated responses for monitoring before surfacing the validated response in Anypoint Code Builder.
+. The Anypoint Code Builder user creates a prompt based on their use case and submits it through Dev Assistant.  
+. To minimize inaccurate responses (the AI "hallucination" effect), prompts are grounded with MuleSoft proprietary data and user context.
+. Data is processed through the embedded MCP client, which manages secure communication with the LLM.
+. To keep your data secure, all data remains within the Salesforce Shared Trust Boundary.  
+. After the LLM generates a response, the content is returned through the secure pathway.
+. MuleSoft validates the generated output to ensure that the specification works within the MuleSoft ecosystem. 
+. Anypoint Code Builder displays the validated response in the IDE.
 
 [IMPORTANT]
-This feature uses generative AI, which is known to include inaccurate or harmful responses. Before implementing this feature, review the output for accuracy and safety. You assume responsibility for the output when making business decisions.
+AI features can produce inaccurate or harmful responses. Review all generated output for accuracy and safety before applying it in production. You assume responsibility for the generated content when making business decisions.
 
 == See Also
 
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_overview.htm&type=5[Einstein Generative AI & Trust]
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_layer.htm&type=5[Einstein Trust Layer]
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_arch.htm&type=5[Einstein Trust Layer: Designed for Trust]
 * xref:api-ai-create-spec.adoc[]
+* https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-overview.html[Salesforce A4D Extension Pack Documentation]
