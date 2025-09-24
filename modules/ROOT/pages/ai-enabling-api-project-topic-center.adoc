@@ -1,4 +1,4 @@
-= Enabling an API Project for Topics and Actions
+= Enabling an API Project for Topics and Agent Actions
 :page-aliases: ai-creating-topic-enabled-api-spec.adoc, ai-topic-center.adoc
 
 Use MuleSoft Dev Assistant with MCP-enabled flows to enable API specifications for topics and actions, which can then be synced to API Catalog in Salesforce. You can then augment agent functionality by assigning topics to agents in Agent Builder.  
@@ -34,7 +34,7 @@ See the xref:tutorials.adoc[] for details.
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 
 [[create-api-spec-agent-topic]]
-== Create an API Specification Project for Topics and Actions
+== Create an API Specification Project for Agent Actions and Topics
 
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 +
@@ -42,7 +42,7 @@ image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in
 . From *Quick Actions*, click *Design an API*:
 +
 image::design-api-1.png["*Design an API* link highlighted in the *Quick Actions* section"]
-. Select *Enable this API for Topics and Actions*.
+. Select *Enable this API for Agent Topics and Actions*.
 . Complete the *API Specification* form:
 +
 [%header,cols="20a,60a"] 
@@ -81,23 +81,145 @@ As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-comple
 
 [[add-metadata]]
 == Add Metadata to the API Project
-... (no changes here, keep as-is) ...
+
+. In *Explorer*, right-click the API specification and select *Open API Project Properties*.
++
+The *API Project Properties* tab opens and is auto-populated with:
+
+* *Asset Version*
++
+The asset version for your API project must follow the semantic versioning model. For more information, see xref:exchange::asset-versions.adoc[Asset Versions].
+* *API Version*
++
+The major version for the API.
+* *Business Group*
++
+Select the Anypoint Platform business group this API will be available in. 
+* *Asset ID*
+* *Asset Name*
+* *Tags*
+* *Categories*
++
+These properties are used when you publish your API specification to Exchange.
++
+Tags and categories help users filter search results when they search Anypoint Exchange. 
++
+The `sf-api-catalog` and `sf-api-topic` tags are applied automatically when you enable the API for agent actions and topics. 
++
+image::ai-topic-center-api-project-properties.png["API Project Properties tab with sf-api-catalog and sf-api-topic tags applied"]
++
+You can edit any of the fields. 
+. If you make any changes to the API project properties, click *Apply*.
 
 [[configure-topics]]
 == Configure Topics
-... (no changes here, except panel name now is Topics configuration panel) ...
+
+Configure your topic in the *Agent Topics* configuration panel:
+
+. Click the *#* icon to open the *Agent Topics* configuration panel if it's not already open. 
+. Configure these fields for topics:
++
+[%header,cols="20a,35a,35a"] 
+|===
+|Field Name | Description | Example
+|*Topic Label* | Enter a unique name for the topic.  | Sales Agent
+| *Classification Description*| Enter one to three plain text sentences. An agent uses this description to determine when to use a topic in a conversation. When a user enters a message, the agent identifies the user’s intent, compares it to the topic name and classification description, and uses the best matching topic. | These are some examples of classification descriptions:
+
+Answers questions about business policies, procedures, or products.
+
+Interacts with the user to draft or revise content.
+
+Answers questions related to a user’s order status, return status, or making a return.
+
+|*Scope* | The scope defines exactly what the agent can and can't do for a given topic. The scope is most effective when it narrowly defines the agent’s job for a given topic as it helps limit the agent so it doesn't try to respond outside the desired job or scope you want the topic to include. 
+| These are some examples of scope descriptions:
+
+Your job is to only handle tasks related to setting a closing strategy to close deals. This may include answering product-related pricing questions, briefing users on customer sentiment based on conversations, suggesting a close plan to help users close deals, or giving advice based on video and voice calls.
+
+Your job is to only educate the user with their reservation questions and only handle changing upcoming or existing reservations by resending the reservation confirmation email. You aren’t able to make new reservations.
+| *Instructions* | Plain text instructions help an agent make decisions about how to use the actions in a topic for different use cases. Each instruction is a single topic-specific guideline, usually phrased as “Always…”, “Never…”, “If x, then y…”, or “As a first step,…”.
+
+Instructions are nondeterministic, so they shouldn’t include sensitive or deterministic business rules. 
+| These are some examples of instructions:
+
+Always clarify what type of mobile device (iOS or Android) before using the Answer Questions with Knowledge function to retrieve troubleshooting information.
+
+Never ask the user for an ID. Instead, use the name or ask for the name of the record to use IdentifyRecordByName to get the ID to call other actions.
+
+If a user asks about the status of their order or order confirmation, ask if they have their order number or their email. If a user doesn’t have their email or order number, ask if they'd like to escalate to an agent or create a case.
+|===
 
 [[configure-actions]]
 == Configure Actions
-... (no changes here) ...
+
+Create agent actions using a schema to define the required metadata. As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
+
+To enable an API for agent topics and actions, you must annotate at least one operation to use as an agent with `x-sfdc/agent/action/publishAsAgentAction` and set the value to `true`. 
+
+[%header%autowidth.spread]
+|===
+| Extension | Description | Default Value
+| x-sfdc/agent/action/publishAsAgentAction | Required. Set this attribute to `true` to enable the operation as an action.  | false
+| x-sfdc/privacy/isPii | Optional. Set this attribute to `true` to enable PII service for queries sent under that operation | false
+| x-sfdc/agent/action/isUserInput | Required. Set this attribute to `true` to surface the field to the user for further input. | false
+| x-sfdc/agent/action/isDisplayable | Required. Set this attribute to `true` for the field to be displayable to the user.  | false
+|===
+
+Adding agent metadata in a schema that's defined using `$ref` isn't supported. The metadata must be defined inside the schema, for example:
+
+[source,openai]
+----
+... (Inside response, request body, etc..)
+schema:
+  $ref: '#/components/schemas/Pet'
+
+...
+
+components:
+  schemas:
+    Pet:
+      x-sfdc:
+        agent:
+            action:
+                isDisplayable: true
+      required:
+        - name
+        - photoUrls
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: doggie
+        status:
+          type: string
+          description: pet status in the store
+          enum:
+            - available
+            - pending
+            - sold
+----
+
+[NOTE]
 
 [[governance-rulesets]]
 == Topic and Agent Governance Rulesets
-... (no changes here) ...
+
+To make sure your API is ready to generate agent actions and topics in Salesforce, the *SF API Topic and Action Enablement* centralized ruleset is added to your topic-enabled API project automatically.
+
+. Optionally, xref:des-govern-api.adoc#add-rulesets[add additional rulesets] that are required for your project.
+. xref:des-govern-api.adoc[Validate the governance rulesets]. 
++
+If you remove the `sf-api-catalog` and `sf-api-topic` tags from your API project, the topic and action rulesets are automatically removed.
 
 [[publish-to-exchange]]
 == Publish the API spec to Exchange
-... (no changes here) ...
+
+After you validate your API specification rulesets, xref:des-publish-api-spec-to-exchange.adoc[publish your API specification to Exchange].
+
+After you publish your API to Exchange and create an active API instance in API Manager, it is available for use in API Catalog. For more information, see https://help.salesforce.com/s/articleView?id=platform.api_catalog.htm[API Catalog].
 
 [[disable-api-spec-for-topics]]
 == Disable the API Specification for Topics
@@ -114,4 +236,4 @@ The `sf-api-catalog` and `sf-api-topic` tags and the *SF API Topic and Action En
 * https://help.salesforce.com/s/articleView?id=sf.copilot_topics.htm&type=5[Agent Topics]
 * xref:des-create-api-specs.adoc[]
 * xref:des-publish-api-spec-to-exchange.adoc[]
-* https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-overview.html[Salesforce A4D Extension Pack Documentation]
+* https://help.salesforce.com/s/articleView?id=sf.a4d_extension_pack_doc&type=5[Salesforce A4D Extension Pack]
