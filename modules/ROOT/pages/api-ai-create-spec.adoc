@@ -1,7 +1,8 @@
 = Creating API Specs with AI
 :page-deployment-options: cloud-ide, desktop-ide
 
-The Generative API Specification feature unlocks AI capabilities for API design journeys by generating and mocking API specs from natural language. The feature reduces the time spent on API design by simplifying the creation of rigid, syntax-heavy specs. You can access the feature after creating an API project that's in the supported RAML 1.0 or OAS 3.0 format or from the Open Agentforce icon within the project. The system supports multi-turn conversations and provides validated API specifications.
+The AI-powered API Specification feature enables you to generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications. You can access the feature after creating an API project that's in the supported RAML 1.0 or OAS 3.0 format and then opening MuleSoft Dev Assistant.
+
 
 [[before-you-begin]]
 == Before You Begin
@@ -10,19 +11,16 @@ Before you start creating your API spec:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
-* Make sure you have these permissions to use the Anypoint Code Builder Agentforce feature:
-** Anypoint Code Builder Developer
-** Mule Developer Generative AI User
 * Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
 * Log in to Anypoint Code Builder with your Anypoint Platform credentials.
 * xref:des-create-api-specs.adoc[Create an API spec project] in Anypoint Code Builder in the supported RAML 1.0 or OAS 3.0 format, and then select a business group. The business group must have xref:access-management::enabling-einstein.adoc[Einstein generative AI enabled]. If you don't have Einstein generative AI after selecting a business group, contact your Anypoint Platform administrator to enable the feature.
 
-[[design-spec-ai]]
 == Design an API Spec with AI
 
-To design an API spec with AI, begin by reviewing the starter prompt for guidance on the context the agent needs. 
+To design an API spec with MuleSoft Dev Assistant:
 
-. Describe your API spec in the chat. The agent prompts you for clarification if it doesn't understand your request.
+. Open MuleSoft Dev Assistant from the toolbar or from the *Build your enterprise with AI* card in the canvas.
+. Enter a prompt that describes your API specification.
 +
 Include these required details and consider including optional details to generate a more precise spec:
 +
@@ -153,30 +151,16 @@ Query parameters must include the name, whether it's required, and one of the fo
 Optionally, provide a description, format, minimum and maximum length, default value, and example for the query parameter.
 ====
 
-. Send your message. The agent creates a validated API spec.
-
-[NOTE]
-Governance isn't included in the validation.
-
-[start=3]
-. Review the spec and continue the conversation if you'd like to make changes.
-. Click *Replace* to add the generated API spec to your project. All file content is replaced by the inserted code.
+. Enter your prompt in MuleSoft Dev Assistant and submit it.  
++
+Dev Assistant generates a validated API specification based on your input.
+. Review the generated specification. 
+. Click *Replace* to insert the generated API spec into your project. All file content is replaced by the inserted code.
 +
 You can also copy the generated API spec to your clipboard by clicking *Copy*.
 
-== Give Feedback on Agent Responses
-
-Share your feedback about the agent's response by clicking thumbs up or thumbs down.
-
-== View Conversation History
-
-To view your past conversations, click *Open chat history*. Your last 30 days of conversations show.
-
-== Start a New Chat
-
-You can only create an API spec if you have a project open in the supported RAML 1.0 or OAS 3.0 format. Click *Create API Spec* from the *New Chat* dropdown to create a new API spec.
-
-The option doesn't show for projects that aren't in the supported format.
+[NOTE]
+Governance isn't included in the validation.
 
 == See Also
 
