@@ -1,0 +1,59 @@
+= URLs to Allow to Run Anypoint Code Builder
+
+Allowing URLs used by Anypoint Code Builder in your client OS security settings is important so that Anypoint Code Builder can interact with required external and Anypoint Platform hosts.
+
+== Allow Anypoint Code Builder URLs
+
+Follow these steps to allow URLs to ensure the best performance in Anypoint Code Builder.
+
+. Security and antivirus software
++
+If you have security and antivirus software, add Anypoint Code Builder to the allowlist. Running real-time antivirus protection software on your operating system might have a negative impact on Anypoint Code Builder performance. Steps to solve these performance issues vary depending on your antivirus software.
++
+Allowlist recommendation:
++
+Allow or exclude from your antivirus software Anypoint Code Builder, its Java executables, and the Anypoint Code Builder installation and workspace file locations.
+
+. Anypoint Code Builder directories
++
+All Anypoint Code Builder users need read and write permissions for the directory where Anypoint Code Builder is installed.
++
+If you use a Windows antivirus application, ensure that the plugins/ and features/ directories are under the trusted category.
++
+Allowlist recommendation:
++
+Allowlist the Anypoint Code Builder workspace folder in your client OS security settings. In Windows, allowlist the Windows default temp folder where Anypoint Code Builder stores temporary files.
+
+. MuleSoft and Third-Party URLs
++
+Allow these URLs so that they aren't blocked or interrupted by your organization's firewall or proxy.
+
+=== MuleSoft
+
+. MuleSoft Maven repositories and Connectors update site 
+.. https://repository.mulesoft.org (/*)
+. Anypoint Code Builder update sites
+.. https://anypoint.code-builder.platform.salesforce.com (/*)
+. Anypoint Platform services: CloudHub, Exchange, Core Services [Commcloud / Hyperforce]
+.. https://*.anypoint.mulesoft.com (/*)
+.. http://*.platform.mulesoft.com  (/*)
+. Nexus
+.. https://nexus.build.msap.io (/*)
+. All assets downloaded from Exchange
+.. https://exchange2-asset-manager-kprod.s3.amazonaws.com (/*) 
+.. https://exchange2-asset-manager-kprod-eu.s3.eu-central-1.amazonaws.com (/*)
+. Resources for API Portals
+.. https://exchange2-file-upload-service-kprod.s3.amazonaws.com (/*)
+
+=== Third-Party
+
+. Maven
+** https://repo.maven.apache.org/maven2 (/*)
+** https://repo1.maven.org/maven2 (/*)
+. Launchdarkly
+** https://clientstream.launchdarkly.com
+** https://clientsdk.launchdarkly.com
+** https://app.launchdarkly.com
+** https://events.launchdarkly.com
+** https://otel.observability.app.launchdarkly.com
+** https://pub.observability.app.launchdarkly.com
