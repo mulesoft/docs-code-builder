@@ -1,0 +1,57 @@
+= Publish Agent Network Assets
+
+Build and publish your agent network project as Anypoint Exchange assets. When you publish, an asset is created for each broker, agent, and MCP server that's in your agent network. The asset ID is the value of the name key in agent-network.yaml.
+
+For example, suppose you have an agent name of "badging-agent" in agent-network.yaml. After it's published, the Exchange assetId is "badging-agent".
+
+[NOTE]
+====
+If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see Build Agent Networks in a CI/CD Environment.
+====
+
+== Before You Begin Publishing Agent Networks
+
+Before you publish your agent network project, make sure that you completed all steps in Before You Begin with Agent Networks and familiarized yourself with Basic Concepts.
+
+If you want to publish your project assets to a different business group, update the relevant groupId in exchange.json.
+
+=== Permissions and Access
+
+Make sure you have this Anypoint Exchange permission to publish your agent network assets successfully. For more information, see link:https://docs.mulesoft.com/access-management/permissions-by-product#exchange[Permissions - Exchange].
+
+* Exchange Contributor
+
+=== Before You Begin Checklist
+
+If you followed the previous sections' instructions, Anypoint Code Builder desktop should be set up and ready to publish agent networks. Let's check!
+
+* Did you complete the steps in Before You Begin with Agent Networks?
+
+* Did you complete the steps in Before You Begin Creating Agent Networks?
+
+* Do you have the Exchange Contributor permission?
+
+== Publish Your Agent Network Assets to Anypoint Exchange
+
+Let MuleSoft Dev Agent help you publish your agent network assets! Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar and tell the agent that you want to publish your agent network. MuleSoft Dev Agent does the rest.
+
+**Suggested Prompts**
+
+* Publish my Employee Onboarding project.
+* Publish my agent network project version 1.0.0.
+* Publish the hello-world-network project to Exchange.
+* Publish agent network project at /path/to/project with version 2.1.0.
+
+If you don't want to use MuleSoft Dev Agent, publish your agent network assets using these steps.
+
+. In your Anypoint Code Builder project, in Explorer, right-click a project file and select **Publish Agent Network Assets**. Or, run the command **MuleSoft: Publish Agent Network Assets** in the Command Palette.
+
+. If you're not logged in already, log in to your Anypoint Platform account.
+
+. In Publish Agent Network Project Assets, enter a version for the project and review the project metadata. If you want to publish project assets to a different business group, update the groupId in exchange.json.
+
+. Select **Publish**.
+
+. Your agent network assets are published to Exchange with the defined agent cards and services (agents and MCP servers). An Exchange asset is created for each element in your agent network.
+
+Next, discover your agent network assets in **Agents & Tools** in Exchange to get a comprehensive view of your integration, including agent and MCP server assets. Exchange automatically tags brokers for easy identification.

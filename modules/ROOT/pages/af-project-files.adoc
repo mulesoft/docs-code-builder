@@ -1,0 +1,580 @@
+= Reference: Agent Network Project Files
+
+Your agent network project contains two primary configuration files: agent-network.yaml and exchange.json.
+
+== Basic Concepts
+
+=== Agent-network.yaml
+
+The agent network YAML file defines a structured configuration for multi-agent systems, enabling orchestration of AI agents with external services, tools, and inter-agent communication. This format provides a declarative way to define agent capabilities, dependencies, and service integrations.
+
+For example, think of the YAML as your organizational chart for digital labor. Each internal organization (for example, HR, IT, Sales, or Engineering) has a hierarchical structure through which actors collaborate. Jobs are split into tasks and assigned.
+
+Just like with human labor, digital agents require coordination. We call these coordinators "brokers". These are special types of agents in your agent network capable of receiving a user prompt, identifying the goal, determining the necessary steps to be carried out, and delegating each step to the proper agent, even if the agent is part of a different broker.
+
+=== Exchange.json
+
+All agent network projects also have an exchange.json file. If you're familiar with Anypoint Platform, you've probably seen this file before. This file contains asset metadata that will be available in Anypoint Exchange after you publish your agent network assets.
+
+== File Elements
+
+=== Exchange.json Elements
+
+Here's an example file. These key-value pairs are important for your agent network configuration.
+
+* groupId: The ID of the Anypoint business group that owns your agent network and all of the assets derived from it.
+* assetId: Identifies the agent network YAML file.
+* Dependencies: Existing assets that this network needs to reference.
+* variables: Nested in the metadata section, it defines all the variables whose values shouldn't be hardcoded in the agent network YAML file, but the user needs to be prompted for those values when publishing the agent network.
+
+When the agent network is published, all of the assets derived from it share the same groupId (business group) defined in exchange.json.
+
+[source,json]
+----
+{
+  "main": "agent-network.yaml",
+  "name": "Employee Onboarding Network",
+  "classifier": "agent-network",
+  "organizationId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+  "descriptorVersion": "1.0.0",
+  "tags": [],
+  "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+  "assetId": "employee-onboarding-network",
+  "version": "1.0.5",
+  "dependencies": [
+    {
+      "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+      "assetId": "workday-agent",
+      "version": "1.0.21",
+      "classifier": "agent-metadata",
+      "packaging": "zip"
+    }
+  ],
+  "metadata": {
+    "variables": {
+      "openai": {
+        "clientId": {
+          "description": "OpenAI LLM Client ID",
+          "default": ""
+        },
+        "clientSecret": {
+          "description": "OpenAI LLM Client Secret",
+          "default": ""
+        },
+        "url": {
+          "description": "OpenAI URL",
+          "default": "",
+          "secret": false
+        }
+      }
+    }
+  }
+}
+----
+
+==== Relationship to the Ref Element in Agent-Network.yaml
+
+The "ref" element is used in different elements in the agent network YAML, and is important for your agent network configuration.
+
+The "ref" element represents another asset that exists in Exchange. The type of asset referenced depends on the context (agent, MCP server, LLM provider, etc.). The semantic is always that of referencing an asset that exists in Exchange, or will exist when the agent network is published (meaning, it's defined in the file). If referenced, it's in the dependencies section of exchange.json.
+
+Let's see an example:
+
+[source,yaml]
+----
+     links:
+        - agent:
+            ref:
+              name: workday-agent
+----
+
+The above snippet represents a link to a workday agent. The *name* attribute doesn't point to the agent's human friendly or logical name (which can change); instead, it references the *assetId* that workday-agent has in Exchange.
+
+The workday-agent asset can either exist already, or can be defined in this same yaml. In either case, the Exchange *assetId* is the key to this reference.
+
+In some cases, we'll need the ref element to point to an asset that's defined in a different business group. For this, the *ref#namespace* attribute can be used to reference the asset's groupId.
+
+[source,yaml]
+----
+links:
+        - agent:
+            ref:
+              name: workday-agent
+              namespace: <the groupId>
+----
+
+=== Agent-Network.yaml Elements
+
+==== Brokers
+
+The brokers section defines the AI assets in your agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. The broker name is used as the assetId in exchange.json. The groupId defaults to the associated business group value used in exchange.json.
+
+===== Card
+
+The card section adheres to the Agent-to-Agent (A2A) specification v0.3.0 and describes the broker's contract, skills, and capabilities. This is a standard A2A agent card link:https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure[as defined in the Agent2Agent (A2A) Protocol specification.].
+
+[source,yaml]
+----
+brokers:
+employee-onboarding-broker:     # The name that the agent (broker) will be referenced by. This value is used as the asset ID in Anypoint Exchange.
+    card:
+      protocolVersion: 0.3.0    # A2A protocol version that the broker supports.
+      name: Employee Onboarding Broker
+description: This agent acts as a broker for employee onboarding. It orchestrates the onboarding process by leveraging available tools to ensure new employees have access to all of the required systems for their daily work.
+url: ${agentregistry.url}/employee-onboarding-broker   # URL where the broker is hosted. Represents the preferred endpoint as declared by the broker.
+      provider:
+        organization: MuleSoft
+        url: https://www.mulesoft.com/
+      defaultInputModes:         # Supported media types for input
+        - application/json
+        - text/plain
+      defaultOutputModes:        # Supported media types for output
+        - application/json
+      skills:                            
+        - id: onboarding-agent
+    name: Onboarding Agent
+description: This agent acts as a broker. It orchestrates the use of specialized tools and agents (including MCP servers) to manage employee onboarding. 
+          examples:              # Usage examples
+- Onboard a new sales employee. Employee name is 'Alex Smith', email is 'alex.smith@example.com', and phone number is '555-123-4567'.
+          inputModes:
+            - application/json
+            - text/plain
+          outputModes:
+            - application/json
+            - text/plain
+          tags: [onboarding]      # Categorization tags
+      version: 1.0.0		          # Agent (broker) version
+----
+
+===== Spec
+
+The `spec` configures the broker's internal implementation. You can think of this section as the source code for your broker.
+
+In this section, specify the LLM to use, custom instructions, available tools, and error handling. The `links` section defines the agents that are available to this broker. Essentially, the `links` section is where the agent network is defined.
+
+[source,yaml]
+----
+spec:
+  llm:                    		    # LLM provider reference
+  instructions:                   # Custom instructions
+  maxNumberOfLoops: 25            # Max task steps (default: 25)
+  maxConsecutiveErrors: 3         # Max recovery attempts 
+  tools: [...]                    # Available tools, including MCP servers
+  links: [...]                    # Connected agents
+----
+
+===== Llm
+
+The value of this section is a reference to one of the LLMs defined in Anypoint Exchange or in the `llmProviders` section of `agent-network.yaml`. Because it's a reference, you can choose to share the same LLM across all the brokers in your agent network. Or, you can have different brokers use different LLMs to better suit their tasks.
+
+When specifying an LLM model, it must support structured responses in JSON format. For example, a `gpt4.1` model is supported; a `gpt4` model isn't.
+
+[source,yaml]
+----
+  llm:                        # LLM provider reference
+    ref:
+name: my-openAI               # Exchange asset ID of this LLM provider. By default, the groupId for this asset is the same as that in exchange.json.
+namespace:                    # Optional. If the asset was defined in a different business group, set the corresponding groupId here. 
+      configuration:
+  model: gpt-5-mini
+----
+
+===== Instructions (optional)
+
+Provide optional instructions that are specific to this broker. These instructions often focus on business-oriented concerns. For example, here's instructions for an employee onboarding broker.
+
+**Example 1**
+
+[source,yaml]
+----
+     instructions:
+- |
+You're an Employee Onboarding Broker. Coordinate onboarding of a new employee across the systems needed for day-to-day work.
+         ## The process for onboarding an employee is:
+- Onboard in Workday: Create the new employee record. Fetch the address using available tools. Don't ask for the address unless you're not sure how to get it. 
+- Onboard in Salesforce: Create the employee's CRM profile in Salesforce. 
+- Since this a long running task, send a Slack update using tool SlackMcpServer.send_status_update to communicate the status of actions taken so far. It should be a human-readable summary. For example: {
+{
+"message": "Workday and Salesforce onboarding completed. Working on next steps...",
+"contextId": "<fetch-the-context-id-from-input>"
+}
+- Request employee laptop: Submit a laptop request in Zendesk. 
+- Request employee badge: Initiate the employee badge request.
+- Send a Slack update using tool SlackMcpServer.send_status_update to communicate the status of actions taken so far. It should be a human-readable summary. For example: {
+{
+"message": "Zendesk laptop and badge onboarding completed. Working on next steps...",
+"contextId": "<fetch-the-context-id-from-input>"
+}
+- IT system setup: Provision the ping ID system for the employee.
+## Final Response
+- Return a plain-text human-readable summary of all steps and actions taken, not just the final step. Format it in a bulleted list. DON'T include tool names in the summary.
+----
+
+Here's another example of instructions for a customer service broker. This broker coordinates management of customer-reported incidents.
+
+**Example 2**
+
+[source,yaml]
+----
+     instructions:
+        - |
+          You're an Incident Management Broker. Your primary responsibility is to coordinate the resolution of incidents reported by customers.
+          The process for incident management is:
+            1. Fetch Salesforce case details: Retrieve the latest critical case details for the customer.
+            2. Fetch entitlement details: Obtain the customer's entitlement information.
+            3. Fetch on-call engineer: Identify the current on-call engineer for the incident.
+            4. Create Slack war room and invite on-call engineer: Set up a Slack war room channel and invite the on-call engineer.
+            5. Summarize actions: Provide a clear, human-readable summary of the steps performed, including information about the created Slack channel and the on-call engineer assigned.
+----
+
+You don't need to provide instructions like "split the prompt into tasks", or "select the best tool". The broker does that on its own. These instructions are only necessary for describing specific business processes.
+
+While the instructions section is optional, it improves broker outcomes if you include as much detail about your business process as possible.
+
+===== Links
+
+This section is the most important part of the entire specification. The links section defines the agents that are available to this broker. Essentially, the links section is where the agent network is defined. It enables interagent communication and orchestration. The broker relies on the agents linked here to execute the appropriate actions to complete a user's goal.
+
+[source,yaml]
+----
+links:
+  - agent:
+      ref:
+name: workday-agent	 # Exchange asset ID of the linked agent. By default, the groupId for this asset is the same as that in exchange.json.
+namespace:      		 # Optional. If the asset was defined in a different business group, set the corresponding groupId here.
+- agent:
+ref:
+name: badging-agent
+- agent:
+ref:
+name: salesforce-agent
+- agent:
+ref:
+name: zendesk-agent
+- agent:
+ref:
+name: it-agent
+----
+
+Keep this section short. Don't add all available agents. Just like `tools`, excess values here leads to drops in agent network accuracy and determinism.
+
+Instead, we recommend a multi-level hierarchical approach. This favors traceability and management and helps keep context sizes in check.
+
+**Links Example**
+
+In this example, the Onboarding Broker orchestrates the process of onboarding a new hire. It orchestrates work with the IT, HR and security brokers, which also happen to be brokers in the same agent network.
+
+Assets, IT Stock, Workday, Payroll and Badges agents are what we call leaf agents. These aren't brokers but preexisting agents whose purpose isn't to coordinate work, but to act.
+
+image::af-onboarding-broker-example.png["Diagram showing an employee onboarding broker and its agents"]
+
+===== Tools
+
+Tools provide agents with external capabilities. When a broker needs to access an external service that's not another agent, it reaches out to an MCP (Model Context Protocol) server.
+
+[source,yaml]
+----
+tools:
+  - mcp:
+ref: 
+name: talent-pool-mcp	        # Exchange asset ID of MCP server. By default, the groupId for this asset is the same as that in exchange.json.
+allowed:                      # Allowlist specific tools
+- TalentPoolMcpServer.match_email_to_address
+- mcp:
+ref:
+name: slack-mcp
+allowed:
+- SlackMcpServer.send_status_update
+----
+
+By default, the broker has access to all the tools available in the MCP server. However, the most modern LLMs can only handle around 20 to 25 tools per context before starting to hallucinate. It's good practice to limit the available tools to the minimum needed. You can apply that filtering through the allowed list.
+
+===== Policies
+
+Policies contains the list of policies to apply to the broker. It contains a reference to the policy that needs to be added as a dependency to the agent network project.
+
+Policies can be applied at the broker or at the connection. Reference the policy definition and apply the configuration that wants to be set.
+
+[NOTE]
+====
+When you add governance policies to your project, those policies persist between deployments. However, if you add governance policies at run-time, those policies won't persist.
+====
+
+[source,yaml]
+----
+policies:
+  - ref: 
+name:          		# Exchange asset ID of the policy. By default, the groupId for this asset is the same as that in exchange.json.
+namespace:     		# Optional. If the policy was defined in a different business group, set the corresponding groupId here.
+configuration:
+policyConfig1: policyConfig1Value	
+----
+
+===== Error Handling
+
+Error scenarios can be handled through these attributes.
+
+[cols="1,3,1,1"]
+|===
+| Name | Description | Type | Default value
+| maxNumberOfLoops | The maximum number of steps that a task can take. Useful for keeping orchestrations from running too long and consuming too many tokens | Integer | 25
+| maxConsecutiveErrors | The maximum number of errors that the broker will attempt to recover from before returning a failed status. | Integer | 3
+|===
+
+==== Agents
+
+Reference agents defined in a different agent network, or another agent used in your company. Any agent is valid, as long as it supports A2A as its communication protocol.
+
+[source,yaml]
+----
+agents:
+workday-agent:			# Used as the assetId of the asset published to Anypoint Exchange. The default groupId is the associated value used in exchange.json.
+metadata:
+       platform: azure
+       protocol: a2a
+  badging-agent:
+    metadata:
+      platform: azure
+      protocol: a2a
+  salesforce-agent:
+    metadata:
+      platform: azure
+      protocol: a2a
+  zendesk-agent:
+    metadata:
+      platform: azure
+      protocol: a2a
+  it-agent:
+    metadata:
+      platform: azure
+      protocol: a2a
+----
+
+==== McpServers
+
+This section lists the MCP servers in your agent network. These servers can be used to obtain context relevant to the information and generate notifications. If you want to apply governance to an MCP server, it must be in your agent network or published to Anypoint Exchange as an asset.
+
+MCP StreamableHttp and SSE transports are supported. StreamableHttp is recommended.
+
+Just like in the brokers section, an allowed attribute is available to filter the available tools. The allowed attribute in the brokers section is more granular and applied only to that specific broker. In the mcpServers section, this attribute applies to the MCP server as whole, filtering at the group level.
+
+[source,yaml]
+----
+mcp-servers:
+talent-pool-mcp:				                # Value used as the assetId in exchange.json. The groupId defaults to the associated value used in exchange.json.
+    metadata:
+      transport:                        # Communication method
+        kind: streamableHttp            # HTTP-based transport
+        path: /mcp
+        # OR
+        sse:                            # Server-Sent Events transport
+          ssePath: /sse
+          messagesPath: /messages
+      tools:                            # Server-level tool filtering
+        allowed: [tool1, tool2]       
+  slack-mcp:
+    metadata:
+      transport:
+        kind: streamableHttp
+        path: /mcp
+----
+
+==== Llm-providers
+
+Configure the LLMs the brokers use for reasoning. For supported LLMs, see link:https://docs.mulesoft.com/agent-fabric/[Agent Fabric Overview].
+
+[source,yaml]
+----
+llm-providers:
+  my-openAI:                            # Provider reference name
+    label: OpenAI Provider
+    description: OpenAI LLM provider for incident management
+    metadata:
+	platform: OpenAI
+----
+
+==== Connections
+
+The `connections` section defines one or more connections to instances of an agent network asset. For example, if an agent is deployed multiple times across regions and environments, you can define a connection for each deployed agent instance, regardless of whether it's used by a broker or not.
+
+Connections are elements that are deployed, but they don't have Exchange assets that represent them. They're connected to assets (agents, MCP servers, LLMs). They're deployed in API Manager in the egress gateway.
+
+To define multiple connections for the same asset, put them in a resource file and reference the file in this section.
+
+[source,yaml]
+----
+connections:
+  workday-agent:
+    kind: agent
+    ref:
+name: workday-agent		 # Use the same name as in the associated entry in the agents section or use the Exchange asset ID.
+    spec:
+       url: https://workday-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/workday-agent/
+       authentication:
+         kind: oauth2-client-credentials
+         token:
+           bodyEncoding: form
+           timeout: 300
+           url: test.com
+        clientId: clientId
+        clientSecret: clientSecret
+
+  badging-agent:
+    kind: agent
+    ref:
+      name: badging-agent
+    spec:
+      url: https://badge-agent-inkbh1.paga8m.usa-w1.cloudhub.io/badge-agent/
+      authentication:
+        kind: oauth2-client-credentials
+        token:
+          bodyEncoding: form
+          timeout: 300
+          url: test.com
+        clientId: clientId
+        clientSecret: clientSecret
+
+  salesforce-agent:
+    kind: agent
+    ref:
+      name: salesforce-agent
+    spec:
+      url: https://salesforce-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/sfdc-agent/
+      authentication:
+        kind: oauth2-client-credentials
+        token:
+          bodyEncoding: form
+          timeout: 300
+          url: test.com
+        clientId: clientId
+        clientSecret: clientSecret
+
+  zendesk-agent:
+    kind: agent
+    ref:
+      name: zendesk-agent
+    spec:
+      url: https://zendesk-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/zendesk/
+      authentication:
+        kind: oauth2-client-credentials
+        token:
+          bodyEncoding: form
+          timeout: 300
+          url: test.com
+        clientId: clientId
+        clientSecret: clientSecret
+
+  it-agent:
+    kind: agent
+    ref:
+      name: it-agent
+    spec:
+      url: https://ping-id-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/pingid/
+      authentication:
+        kind: oauth2-client-credentials
+        token:
+          bodyEncoding: form
+          timeout: 300
+          url: test.com
+        clientId: clientId
+        clientSecret: clientSecret
+
+  my-openAI:
+    kind: llm
+    ref:
+      name: my-openAI
+    spec:
+      url: ${}
+      configuration:
+        apiKey: ${openai.apiKey}
+
+  talent-pool-mcp:
+    kind: mcp
+    ref:
+      name: talent-pool-mcp
+    spec:
+      url: https://talent-pool-mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/
+
+  slack-mcp:
+    kind: mcp
+    ref:
+      name: slack-mcp
+    spec:
+      url: https://slack-mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/
+----
+
+===== Connection Resolution
+
+Connection resolution is done at deployment time. The connection reference can be done explicitly or implicitly.
+
+**Explicit**
+
+In this example, the connection that will be used is **weather-agent-connection**. At deployment, it validates that a connection with the given name exists in the egress gateway on the specified environment.
+
+[source,yaml]
+----
+      - agent:
+
+           ref:
+
+             name: weather-agent
+
+           connection:
+
+             ref:
+
+               name: weather-agent-connection
+----
+
+**Implicit**
+
+If a connection isn't specified, it defaults to a connection whose name matches the target asset's name.
+
+In this example, at deployment a connection to the specified agent asset (weather-agent) is searched for. If it exists, it's injected. If not, it fails with an exception.
+
+[source,yaml]
+----
+      - agent:
+
+           ref:
+
+             name: weather-agent           
+----
+
+== Authentication Types
+
+Authentication is always expressed in accordance with link:https://swagger.io/docs/specification/v3_0/authentication/[Open API authentication methods]. For supported authentication types, see link:https://docs.google.com/document/d/1dVReyn8BzGdQ9QUF0PU1-0qBKUp7G8wZFZ8sFZs0LFM/edit?tab=t.0#heading=h.z4zzg6shhskh[Considerations: Authentication Types].
+
+These examples show how to define each type in YAML.
+
+=== Basic Authentication
+
+[source,yaml]
+----
+authentication:
+  type: basic
+  username: "username"
+  password: "password"
+----
+
+=== OAuth 2.0 Client Credentials
+
+[source,yaml]
+----
+authentication:
+  type: oauth2-client-credentials
+  clientId: "client_id"
+  clientSecret: "client_secret"
+  tokenUrl: "https://oauth.provider.com/token"
+  scopes: ["read", "write"]             # Optional
+----
+
+=== Anypoint Client Credentials
+
+[source,yaml]
+----
+authentication:
+  type: apikey-client-credentials
+  clientId: "client_id"
+  clientSecret: "client_secret"
+----

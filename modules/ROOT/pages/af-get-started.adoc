@@ -1,0 +1,84 @@
+= Get Started with Agent Networks
+
+Setting up Anypoint Code Builder, permissions, access, and gateways ensures that you can create agent networks quickly and easily.
+
+== Before You Begin with Agent Networks
+
+Before you start your agent network project, make sure that you have these products and access.
+
+=== Agent Network Prerequisites
+
+* A tenant relationship established with a trusted Salesforce organization.
+* Anypoint Platform (Titanium package). You can use an existing account or create one from Anypoint Platform.
+* Managed Flex Gateway with target space entitlements.
+* An OpenAI instance and login credentials.
+
+=== Anypoint Code Builder Desktop Prerequisites
+
+After you meet agent network prerequisites, set up your Anypoint Code Builder desktop environment.
+
+* Complete the steps in link:https://docs.mulesoft.com/anypoint-code-builder/start-acb-desktop[Setting Up the Desktop IDE].
+* Install PowerShell (Windows operating systems only). For more information, see link:https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3[Installing PowerShell on Windows].
+* Configure your allowlist. For more information, see URLs to Allow to Run Anypoint Code Builder`URL`.
+
+=== Permissions and Access
+
+* To set up agent network gateways, you need the Manage Servers permission in Runtime Manager.
+
+=== Create a Target Space for Your Environment
+
+To deploy an agent network, you'll need a target space. You can either create a private space for CloudHub 2.0 deployment or `a namespace for Runtime Fabric?`.
+
+==== Create a Private Space for CloudHub 2.0 Deployment
+
+. Open Anypoint Runtime Manager.
+. Select the environment to use.
+. Select **Private Spaces**.
+. Select **Create private space**.
+. Enter the name agent-network-space (or a name you prefer).
+. Select **Create**.
+. Select **Create private network**.
+
+=== Set Up Agent Network Gateways for Your Target Space
+
+After you create a private space, set up the ingress and egress gateways for deployment. For more information, see link:https://docs.mulesoft.com/gateway/latest/flex-architecture-basic-deployments[Flex Gateway Deployment Models]. `Runtime Fabric instrux?`
+
+. In Anypoint Code Builder desktop, open the Command Palette.
+. Select **MuleSoft: Set Up Agent Network Gateways**.
+. If you're not logged in already, log in to your Anypoint Platform account.
+. Select the business group, environment, and private space.
+. These gateways are created automatically in the selected private space.
++
+* agent-network-ingress-gw (with public and internal endpoint)
+* agent-network-egress-gw (with internal endpoint only)
+
+[NOTE]
+====
+If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see Build Agent Networks in a CI/CD Environment.
+====
+
+=== Before You Begin Checklist
+
+If you followed the previous sections' instructions, your environment should be set up and ready for agent networks. Let's check!
+
+* Did you meet all agent network prerequisites?
+
+* Did you meet all Anypoint Code Builder prerequisites?
+
+  * Did you install the latest updates to Visual Studio Code (VS Code) and configured the code command in $PATH?
+
+  * Did you install git and add it to $PATH?
+
+  * Did you install the Anypoint Code Builder extension packs?
+
+  * Did you install PowerShell (Windows operating systems only)?
+
+  * Did you configure your allowlist?
+
+* Did you create a target space for deployment?
+
+* Did you set up agent network gateways?
+
+== See Also
+
+* xref:api-ai-create-spec.adoc[]

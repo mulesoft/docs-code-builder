@@ -1,0 +1,54 @@
+= Deploy Agent Network Instances
+
+Deploy your agent network instance to a deployment target. You can deploy to a CloudHub 2.0 private space or to a Runtime Fabric (limited availability). When you deploy, Flex Gateway secures your agent network into the ingress gateway. Also, it secures your brokers, agents, and MCP servers into the egress gateway.
+
+[NOTE]
+====
+If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see Build Agent Networks in a CI/CD Environment.
+====
+
+== Before You Begin Deploying Agent Networks
+
+Before you deploy your agent network project, make sure that you completed all steps in Before You Begin with Agent Networks and familiarized yourself with Basic Concepts.
+
+=== Permissions and Access
+
+Make sure that you have these permissions to deploy your agent network instance successfully.
+
+* API Manager: Deploy API Proxies and Manage Policies
+* Runtime Manager: Create applications
+
+=== Before You Begin Checklist
+
+If you followed the previous sections' instructions, Anypoint Code Builder desktop should be set up and ready to deploy agent networks. Let's check!
+
+* Did you complete the steps in Before You Begin with Agent Networks, particularly creating a target space for deployment and setting up gateways?
+
+* Did you complete the steps in Before You Begin Creating Agent Networks?
+
+* Do you have the API Manager and Runtime Manager permissions specified in Permissions and Access?
+
+== Deploy Your Agent Network
+
+Let MuleSoft Dev Agent help you deploy your agent network instance! Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar and tell the agent that you want to deploy your agent network. MuleSoft Dev Agent does the rest.
+
+**Suggested Prompts**
+
+* Deploy my agent network project to the production environment.
+* Deploy the hello-world-network project to staging.
+* Deploy agent network project at /path/to/project to dev environment with specific gateways.
+* Deploy my agent network to CloudHub 2.0.
+
+If you don't want to use MuleSoft Dev Agent, deploy your agent network instance using these steps.
+
+. In your Anypoint Code Builder project, in Explorer, right-click a project file and select **Deploy Agent Network**. Or, run the command **MuleSoft: Deploy Agent Network** in the Command Palette.
+
+. If you're not logged in already, log in to your Anypoint Platform account.
+
+. In Deploy Agent Network, specify the environment, target space, gateways, and other deployment information.
+
+. Select **Deploy**.
+
+. Your agent network instance is deployed and ready to be tested.
+
+Next, discover your agent network assets in Agents & Tools in Exchange, apply a governance policy, or monitor your agent network activity in Anypoint Monitoring.

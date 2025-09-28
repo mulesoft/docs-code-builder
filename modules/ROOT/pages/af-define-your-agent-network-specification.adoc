@@ -1,0 +1,47 @@
+= Define Your Agent Network Specification
+
+After you create your agent network project, configure agent-network.yaml and exchange.json to reflect your business needs.
+
+Let MuleSoft Dev Agent help you configure your agent network specification! Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar. The agent will prompt you for information about your agent network, including the brokers, agents, MCP servers, and LLMs you want to connect. MuleSoft Dev Agent does the rest.
+
+**Suggested Prompts**
+
+* Help me build an agent network configuration for my Employee Onboarding project.
+* Scaffold my agent network project.
+* Revise my Employee Onboarding agent network project. Use OpenAI for the LLM.
+* Add a new broker for employee offboarding to my HR agent network.
+* Add a new skill to Offboarding broker.
+
+If you don't want to use MuleSoft Dev Agent, edit agent-network.yaml and exchange.json to define your agent network and authentication. The agent-network.yaml file can contain definitions for one or more brokers. For authentication, you'll need your client ID and secret from your connected app.
+
+If your agent network references Anypoint Exchange assets, you'll need to use the asset IDs in exchange.json to add references in agent-network.yaml. To understand sections of the project files and expected values, see Reference: Agent Network Project Files.
+
+== Add Exchange Assets to Your Agent Network Project
+
+Have existing Exchange assets you want to leverage in your agent network? No problem. Just add your Exchange assets to the dependencies attribute in exchange.json in your project. After you add assets, edit agent-network.yaml to indicate which brokers use those assets.
+
+Let MuleSoft Dev Agent help you add Exchange assets to your project! Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar and tell the agent that you want to add Exchange assets to your project. MuleSoft Dev Agent does the rest.
+
+**Suggested Prompts**
+
+* Add tools for background check processing in my Employee Onboarding project.
+* To my Employee Onboarding agent network project, add Talent Pool MCP server.
+
+If you don't want to use MuleSoft Dev Agent, add your Exchange assets as project dependencies using these steps.
+
+. In your Anypoint Code Builder project, in Explorer, right-click a project file and select **Add Exchange Assets to Agent Network Project**. Or, run the command **MuleSoft: Add Agent Network Assets to Agent Network Project** in the Command Palette.
+
+. If you're not logged in already, log in to your Anypoint Platform account.
+
+. In Add Exchange Assets to Project, enter information about the assets you want to add.
+
+. Select **Add to Project**. Assets are added to the dependencies attribute in the exchange.json file in your project.
+
+. Edit your agent network YAML to indicate which brokers use those assets.
+
+== Agentic Asset Name Guidelines
+
+To help you identify your agent network components on the Anypoint Code Builder canvas, consider naming your assets according to these guidelines.
+
+* For agents that are also brokers, append "Broker" to the end of the name.
+* For agents and MCP servers, append "Agent" and "MCP server" to the names.
