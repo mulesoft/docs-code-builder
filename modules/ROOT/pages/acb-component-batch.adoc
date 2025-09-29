@@ -2,7 +2,7 @@
 
 Defines the main batch processing scope. A batch job contains two phases:
 
-* *Process Records*: Executes the record processing logic defined in Batch Steps.
+* *Process Records*: Executes the record processing logic defined in nus.
 * *On Complete*: Executes after all records are processed, for example to log results or perform cleanup.
 
 == Configuration Options
@@ -30,17 +30,17 @@ Defines the main batch processing scope. A batch job contains two phases:
 | Number of records per block to process concurrently within the Process Records phase
 |===
 
-== Child Elements / Scopes
+== Child Elements and Scopes
 
 * One or more <<batch-step, Batch Steps>> inside the job
 * One optional *On Complete* scope
 
-== Constraints
+== Batch Processing Constraints
 
 * Batch jobs can't be nested.
-* At least one Batch Step must be present.
+* At least one <<batch-step, Batch Step>> must be present.
 
-== Example
+== Batch Processing Example
 
 ----
 <batch:job doc:name="Batch Job Example" doc:id="job-1" batchBlockSize="100">
@@ -57,7 +57,7 @@ Defines the main batch processing scope. A batch job contains two phases:
 
 Defines a step inside a batch job. Steps group record-level processors and can optionally include a batch aggregator.
 
-=== Configuration Options
+=== Batch Processing Configuration Options
 
 [cols="1,1,1,2", options="header"]
 |===
@@ -77,21 +77,21 @@ Defines a step inside a batch job. Steps group record-level processors and can o
 | Unique identifier for the component
 |===
 
-== Child Elements / Sub-Scopes
+== Child Elements and Sub-Scopes
 
 *Processors*: A sequence of processors (for example, *Transform*, *Logger*) that act on each record.
 
 *Batch Aggregator*: Aggregates records into blocks (optional).
 
-== Constraints
+== Batch Aggregator Constraints
 
 Only one Batch Aggregator is allowed per step.
 
 == Batch Aggregator (batch:aggregator/)
 
-Aggregates records into blocks within a Batch Step for grouped processing before records are sent back into the flow.
+Aggregates records into blocks within a <<batch-step, Batch Step>> for grouped processing before records are sent back into the flow.
 
-== Configuration Options
+== Batch Aggregator Configuration Options
 
 [cols="1,1,1,2", options="header"]
 |===
@@ -113,10 +113,10 @@ Aggregates records into blocks within a Batch Step for grouped processing before
 | aggregatorSize
 | Integer
 | 100
-| Number of records to group before applying aggregation logic.
+| Number of records to group before applying aggregation logic
 |===
 
-== Behavior
+== Batch Step Behavior
 
 Groups incoming records into blocks of the specified size.
 
