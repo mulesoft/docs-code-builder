@@ -1,29 +1,42 @@
-= Developing Integrations with MuleSoft Dev Assistant
+= Developing Integrations Using MuleSoft Dev Agent
 :page-deployment-options: cloud-ide, desktop-ide
 
-To jumpstart your integration development, use natural language input in MuleSoft Dev Assistant to generate flows for you. Dev Assistant runs on the A4D extension pack and an embedded MCP client, so you don’t need a Cursor subscription or any external LLM integration. All usage is billed through Einstein Requests.
+To jumpstart your integration development, use MuleSoft Dev Agent in Anypoint Code Builder. Dev Agent enables you to generate flows or API specifications directly in your project using natural language prompts. These capabilities are powered by large language models (LLMs) that run within the Salesforce Shared Trust Boundary.
 
-This feature provides stateless AI interactions. Conversation history is not stored, and each prompt is processed independently.
+NOTE: MuleSoft Dev Agent is available on US, EU, Canada, and Japan cloud hosts.
 
-[IMPORTANT]
-Generative AI can produce inaccurate or harmful responses. Always review generated content for accuracy and safety before applying it in production. You assume responsibility for the output when making business decisions.
+== Before You Begin
 
-== Prerequisites
+Before you start, ensure that you have the following prerequisites:
 
-* Install Node.js version 20 (v20.19.4).  
-For more information, see https://nodejs.org/en/download[Download Node.js].  
-* Anypoint Code Builder must be running Mule runtime 4.9.6 or later and Java 17 for MCP servers.
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].  
+* Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].  
+* Install Node.js v20. For more information, see https://nodejs.org/en/download[Download Node.js].  
+* Log in to Anypoint Code Builder with your Anypoint Platform credentials.  
 
-== How It Works
+== Unified Dev Agent Experience
 
-1. You describe what you want to build using natural language prompts in Dev Assistant.  
-2. The embedded MCP client securely processes your request and generates integration flows.  
-3. MuleSoft validates the output to ensure the generated flow works within the MuleSoft ecosystem.  
+MuleSoft Dev Agent provides a single panel where you can develop integrations and API specifications. Unlike earlier versions of generative features, Dev Agent no longer separates “Flows” and “API Specs” into different modes. Instead, you can type any prompt into the panel, and Dev Agent determines whether to generate a flow, create an API specification, or execute another action such as deploying an application.  
 
-== See Also
+Dev Agent does not insert output through a separate panel. Instead, it writes directly into your project files when you grant edit permissions.  
 
-* https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-overview.html[Salesforce A4D Extension Pack Documentation]
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_overview.htm&type=5[Einstein Generative AI & Trust]
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_layer.htm&type=5[Einstein Trust Layer]
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_arch.htm&type=5[Einstein Trust Layer: Designed for Trust]
-* xref:int-ai-create-integrations.adoc[]
+Depending on your settings, Dev Agent can:  
+* Request approval before writing to your files, or  
+* Write automatically if *Auto-approve* is enabled in the Dev Agent settings.  
+
+Dev Agent includes the MuleSoft MCP server by default. This server provides out-of-the-box tools, and you can add additional MCP servers from Marketplace or by configuring a remote server.  
+
+You can also extend Dev Agent behavior using *rules* and *workflows*.  
+* Rules define how Dev Agent should handle tasks according to your organization’s standards.  
+* Workflows define multi-step actions that you can invoke directly from the panel.  
+
+For details on configuring permissions, settings, and MCP servers, see xref:troubleshooting.adoc[Troubleshooting Dev Agent].
+
+== Trust Layer
+
+The Dev Agent trust layer bridges Anypoint Platform and the LLMs, as shown in this flow: 
+
+image::acb-einstein-trust-layer.png["Flow depicting how the trust layer works, including the steps of the flow"]
+
+[calloutlist]
+. You create a message based on your use case and send it to Dev A

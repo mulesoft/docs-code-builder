@@ -1,18 +1,21 @@
-= Troubleshoot AI features in Anypoint Code Builder
+= Troubleshoot AI Features in Anypoint Code Builder
 
-The following errors sometimes occur when you use MuleSoft Dev Assistant in Anypoint Code Builder.
+The following errors sometimes occur when you use MuleSoft Dev Agent in Anypoint Code Builder.
 
-== Unexpected Results When Using Dev Assistant
+== Unexpected Results When Using Dev Agent
 
 If the generated flow doesn't return accurate or useful results for your prompt, try rewriting your prompt and follow the guidelines to xref:int-ai-create-integrations.adoc#craft-ai-prompt[write an effective prompt].
 
-== Troubleshoot Dev Assistant Access Errors
+If results are still inconsistent, verify that your project context and Dev Agent settings are correctly configured.
 
-If you can't open Dev Assistant, verify the following:
+== Troubleshoot Dev Agent Access Errors
+
+If you can't open Dev Agent, verify the following:
 
 * You are logged in to Anypoint Platform from the IDE. For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform from the IDE].
 * You have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
 * You have installed Node.js version 20 (v20.19.4). For more information, see https://nodejs.org/en/download[Download Node.js].
+* The Salesforce A4D extension is installed. For more information, see https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-overview.html[Salesforce A4D Extension Pack Documentation].
 
 == Troubleshoot Anypoint Platform Authorization Errors
 
@@ -20,12 +23,6 @@ If you receive an authorization error, contact your Anypoint Platform organizati
 
 * The user has the required Anypoint Code Builder permissions.
 * Your Anypoint Platform organization is current and active.
-* You accepted the terms and conditions to xref:access-management::enabling-einstein.adoc[enable Einstein] for your organization.  
-
-== Considerations
-
-* Dev Assistant provides stateless AI interactions. Conversation history is not stored, and each prompt is processed independently.
-* Generative AI can produce inaccurate or harmful responses. Always review generated content for accuracy and safety before applying it in production.
 
 == See Also
 

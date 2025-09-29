@@ -1,8 +1,7 @@
 = Creating API Specs with AI
 :page-deployment-options: cloud-ide, desktop-ide
 
-The AI-powered API Specification feature enables you to generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications. You can access the feature after creating an API project that's in the supported RAML 1.0 or OAS 3.0 format and then opening MuleSoft Dev Assistant.
-
+The AI-powered API Specification feature enables you to generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications. You can access the feature after creating an API project that's in the supported RAML 1.0 or OAS 3.0 format and then opening MuleSoft Dev Agent.
 
 [[before-you-begin]]
 == Before You Begin
@@ -11,16 +10,17 @@ Before you start creating your API spec:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
-* Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
+* Install Node.js version 20 (v20.19.4).  
+For more information, see https://nodejs.org/en/download[Download Node.js].
 * Log in to Anypoint Code Builder with your Anypoint Platform credentials.
-* xref:des-create-api-specs.adoc[Create an API spec project] in Anypoint Code Builder in the supported RAML 1.0 or OAS 3.0 format, and then select a business group. The business group must have xref:access-management::enabling-einstein.adoc[Einstein generative AI enabled]. If you don't have Einstein generative AI after selecting a business group, contact your Anypoint Platform administrator to enable the feature.
+* xref:des-create-api-specs.adoc[Create an API spec project] in Anypoint Code Builder in the format you prefer.
 
 == Design an API Spec with AI
 
-To design an API spec with MuleSoft Dev Assistant:
+To design an API spec with MuleSoft Dev Agent:
 
-. Open MuleSoft Dev Assistant from the toolbar or from the *Build your enterprise with AI* card in the canvas.
-. Enter a prompt that describes your API specification.
+. Open MuleSoft Dev Agent from the toolbar or from the *Build Your Ecosystem with AI* card in the canvas.
+. Enter a prompt that describes your API specification.  
 +
 Include these required details and consider including optional details to generate a more precise spec:
 +
@@ -39,58 +39,12 @@ Include a required security scheme of type Oauth 1.0, Oauth 2.0, Basic Authentic
 **** For Oauth 1.0 or 2.0, specify responses, query parameters, headers, and settings.
 ***** Settings for Oauth 1.0 can be of type `authorizationUri`, `requestTokenUri`, `tokenCredentialsUri`, or signatures.
 ***** Settings for Oauth 2.0 can be of type `authorizationUri`, `requestTokenUri`, or `authorizationGrants`.
-
-The following additional details apply:
-
-*Header Requirements*
-
-Headers must include the name, whether it's required, and one of the following types:
-
-* Array
-* Boolean
-* Date only
-* DateTime
-* DateTime only
-* File
-* nil
-* Number
-* Object
-* String
-* Time only
-
-Optionally, provide a description, format, minimum and maximum length, default value, and example for the header.
-
-*Query Parameter Requirements*
-
-Query parameters must include the name, whether it's required, and one of the following types:
-
-* Array
-* Boolean
-* Date only
-* DateTime
-* DateTime only
-* File
-* nil
-* Number
-* Object
-* String
-* Time only 
-
-Optionally, provide a description, format, minimum and maximum length, default value, and example for the query parameter.
-
-*Response Requirements*
-
-Responses must include the status code and description.
 ====
 +
 [%collapsible]
 .Resources and Methods
 ====
-Include a required security scheme of type Oauth 1.0, Oauth 2.0, Basic Authentication, Digest Authentication, or Pass Through.
-
-The following additional details apply:
-
-*Resource Requirements*
+Define the resources and operations your API will support.  
 
 Each resource can include one or more of the following methods:
 
@@ -101,68 +55,47 @@ Each resource can include one or more of the following methods:
 * DELETE
 * HEAD
 * OPTIONS
-
-For GET and HEAD methods, you can include a summary, responses, requests, and query or header parameters.
-
-For POST, PUT, PATCH, and OPTIONS methods, you can include a summary, responses, requests, body, and query or header parameters.
-
-*Response Requirements*
-
-Responses must include the status code and description. Response bodies are optional and can include a description, type, media type, and example.
-
-*Request Requirements*
-
-Requests must include a description and body.
-
-*Header Requirements*
-
-Headers must include the name, whether it's required, and one of the following types:
-
-* Array
-* Boolean
-* Date only
-* DateTime
-* DateTime only
-* File
-* nil
-* Number
-* Object
-* String
-* Time only
-
-Optionally, provide a description, format, minimum and maximum length, default value, and example for the header.
-
-*Query Parameter Requirements*
-
-Query parameters must include the name, whether it's required, and one of the following types:
-
-* Array
-* Boolean
-* Date only
-* DateTime
-* DateTime only
-* File
-* nil
-* Number
-* Object
-* String
-* Time only 
-
-Optionally, provide a description, format, minimum and maximum length, default value, and example for the query parameter.
 ====
+. Submit your prompt. Dev Agent generates a validated API specification directly in your project.  
+. Review and adjust the generated specification as needed.  
 
-. Enter your prompt in MuleSoft Dev Assistant and submit it.  
-+
-Dev Assistant generates a validated API specification based on your input.
-. Review the generated specification. 
-. Click *Replace* to insert the generated API spec into your project. All file content is replaced by the inserted code.
-+
-You can also copy the generated API spec to your clipboard by clicking *Copy*.
+Depending on your settings, Dev Agent can either:  
+* Write directly to your project files, or  
+* Request approval before applying changes.  
 
-[NOTE]
-Governance isn't included in the validation.
+== Rules and Workflows
+
+To enforce consistency and reuse across generated API specifications, you can configure rules and workflows in Dev Agent:
+
+* *Rules* let you define guardrails or organizational guidelines (for example, require specific error-handling structures in every API).  
+* *Workflows* let you define repeatable sequences of steps that Dev Agent can execute, such as scaffolding a standard API template or adding headers across resources.  
+
+You can manage these configurations from the Dev Agent panel. Rules and workflows can be defined at the *workspace* level or *global* level.
+
+== Configure Dev Agent Settings
+
+MuleSoft Dev Agent provides settings to control how it reads and writes project files and how it connects to MCP servers:
+
+* *Read and write permissions*  
+Enable or disable whether Dev Agent can read or edit your project files directly. +
+
+**Read files** lets Dev Agent review existing code for context.  +
+
+**Edit files** lets Dev Agent apply changes automatically to your project.
+
+* *Auto-approve actions*  
+Choose whether Dev Agent requires your approval before each change.  +
+
+**Manual approval**: Dev Agent prompts you to accept or reject every edit.  +
+**Auto-approve**: Dev Agent writes changes automatically without prompting.
+
+* *MCP server configuration*  
+Dev Agent includes the MuleSoft MCP server by default. You can also add custom MCP servers from Marketplace or by providing configuration details in the *Remote MCP server* window.
+
+These settings determine whether Dev Agent applies changes interactively (with your approval) or directly in your project.
 
 == See Also
 
-* xref:api-ai-design-spec.adoc[]
+* xref:int-ai-developing-integrations.adoc[]
+* xref:troubleshooting.adoc[Troubleshooting Dev Agent]
 * https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-overview.html[Salesforce A4D Extension Pack Documentation]

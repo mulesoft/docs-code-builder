@@ -1,12 +1,12 @@
-= Creating Integrations with MuleSoft Dev Assistant
+= Creating Integrations with MuleSoft Dev Agent
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: int-ai-enable-einstein.adoc
 
-The MuleSoft Dev Assistant feature in Anypoint Code Builder transforms your natural language input, which describes your business logic, into a flow that contains the connector operations and processors, in the correct order, to accomplish the specified task. 
+The MuleSoft Dev Agent feature in Anypoint Code Builder transforms your natural language input into a flow that contains the connector operations and processors, in the correct order, to accomplish the specified task. 
 
-For example, if you want to create a flow that reads contacts from Salesforce in JSON format, enter a prompt describing that task. Dev Assistant then generates a series of connector operations and processors to execute the task, such as Listener, Query, Transformer, and Logger. 
+For example, if you want to create a flow that reads contacts from Salesforce in JSON format, enter a prompt describing that task. Dev Agent then generates the connector operations and processors to execute the task, such as Listener, Query, Transformer, and Logger. 
 
-Dev Assistant generates a flow, which you can then further configure to suit your specific needs. Unlike previous versions of this feature, interactions are stateless: there is no conversation history, and each prompt is processed independently. 
+Unlike previous versions of this feature, interactions are stateless: each prompt is processed independently, and the generated content is written directly into your project files when permissions are granted.
 
 [[before-you-begin]]
 == Before You Begin
@@ -18,15 +18,15 @@ Before you start creating your integration:
 * Install Node.js version 20 (v20.19.4).  
 For more information, see https://nodejs.org/en/download[Download Node.js].
 
-[[access-dev-assistant]]
-== Access Dev Assistant
+[[access-dev-agent]]
+== Access Dev Agent
 
-There are two ways to open MuleSoft Dev Assistant:
+There are two ways to open MuleSoft Dev Agent:
 
 * When you create a new integration project, click a card in the flow canvas. For example, the *Build a Flow with AI* card.
-* Click the Dev Assistant icon in the toolbar. 
+* Click the Dev Agent icon in the toolbar. 
 +
-image::int-einstein-icon-in-toolbar.png["Arrow pointing to Dev Assistant icon in the toolbar"]
+image::int-einstein-icon-in-toolbar.png["Arrow pointing to Dev Agent icon in the toolbar"]
 
 [[create-integration-project]]
 == Create a New Integration Project
@@ -55,14 +55,13 @@ For example, if the project name is "My Integration", the name of the folder for
 +
 The flow builder canvas appears with starting cards. 
 
-To generate a flow with AI, click *Use Dev Assistant* in the *Build a Flow with AI* card.
-
+To generate a flow with AI, click *Use Dev Agent* in the *Build a Flow with AI* card.  
 To build your flow manually, click *Build a flow* in the *Start From Scratch* card.
 
 [[craft-ai-prompt]]
 == Write Your Prompt
 
-Before you create a flow, define what you want to achieve with the flow, for example, optimizing a business process. In the Dev Assistant panel, enter your prompt using natural language. The clearer and more specific your prompt, the more accurate the generated flow. 
+Before you create a flow, define what you want to achieve with the flow, for example, optimizing a business process. In the Dev Agent panel, enter your prompt using natural language. The clearer and more specific your prompt, the more accurate the generated flow. 
 
 Best practices for prompts:
 
@@ -72,37 +71,38 @@ Best practices for prompts:
 * Specify the data objects (for example, *Salesforce Account object*).  
 * Review your prompt before submitting it.  
 
-After Dev Assistant generates the initial flow, you can further customize it to fit your requirements.
+After Dev Agent generates the initial flow, the code is written directly into your project. You can further customize it to fit your requirements.
 
 For examples of prompts and generated flows, see xref:int-ai-gen-flow-examples.adoc[].
 
-[[add-gen-flow]]
-== Add a Flow to Your Project
+[[agent-settings]]
+== Configure Dev Agent Settings
 
-To add a flow using MuleSoft Dev Assistant:
+Dev Agent can either request approval before writing into your project files, or apply edits automatically if *Auto-approve* is enabled.  
 
-. In the *Build your Enterprise with AI* card, click *Use Dev Assistant*.  
-. Enter a prompt to create the initial flow for your task.  
-+
-Optionally, click an example to get started.  
-+
-When your flow is ready, the code and a description of the components in the flow appear in the Dev Assistant panel.  
-. Inspect the generated code. If you're satisfied, click the insert code icon to add the code to your flow.  
-. If you aren't satisfied with the generated flow, try rewording your prompt and submitting it again.  
+You can configure:  
 
-[[customize-gen-flow]]
+* **Read project files** – Allow Dev Agent to read all files in the project.  
+* **Edit project files** – Allow Dev Agent to write changes directly into your project.  
+* **Auto-approve** – Bypass approval prompts and apply edits automatically.  
+
+These options are available in the Dev Agent settings panel.
+
+[[extend-dev-agent]]
+== Extend Dev Agent with MCP, Rules, and Workflows
+
+* The MuleSoft MCP server comes embedded in Dev Agent, providing built-in tools for tasks such as listing or deploying applications.  
+* You can add custom MCP servers from Marketplace or by configuring a remote server.  
+* Define *rules* to guide how Dev Agent generates flows according to your organization’s standards.  
+* Create *workflows* to automate multi-step actions, which can be triggered through slash commands in the panel.  
+
+[[complete-gen-flow]]
 == Complete Your Flow
 
-After Dev Assistant builds the flow, complete the configuration as needed.  
+After Dev Agent builds the flow, complete the configuration as needed.  
 
-. After you inspect the code for your generated flow, you can either copy it into your clipboard or insert it with a single click using the *Insert* action.  
-+
-After you insert the code, the initial flow is built and the visual representation of the flow is shown in the flow canvas next to the XML code tab.  
-+
 Components that require further configuration display the error icon.  
-. Select the component in the canvas to determine where the error is.  
-+
-Anypoint Code Builder highlights the location of the error within the configuration XML.  
+Select the component in the canvas to determine where the error is. Anypoint Code Builder highlights the location of the error within the configuration XML.  
 
 == See Also
 
