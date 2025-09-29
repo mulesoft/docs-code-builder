@@ -3,6 +3,8 @@
 
 The AI-powered API Specification feature enables you to generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications. You can access the feature after creating an API project that's in the supported RAML 1.0 or OAS 3.0 format and then opening MuleSoft Dev Agent.
 
+NOTE: AI-powered API specification generation is available on US, EU, Canada, and Japan cloud hosts.
+
 [[before-you-begin]]
 == Before You Begin
 
@@ -11,11 +13,11 @@ Before you start creating your API spec:
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
 * Install Node.js version 20 (v20.19.4).  
-  For more information, see https://nodejs.org/en/download[Download Node.js].
+For more information, see https://nodejs.org/en/download[Download Node.js].
 * Log in to Anypoint Code Builder with your Anypoint Platform credentials.
 * xref:des-create-api-specs.adoc[Create an API spec project] in Anypoint Code Builder in the supported RAML 1.0 or OAS 3.0 format, and then select a business group.
 
-[[design-api]]
+[[design-spec-ai]]
 == Design an API Spec with AI
 
 To design an API spec with MuleSoft Dev Agent:
@@ -40,32 +42,8 @@ Include a required security scheme of type Oauth 1.0, Oauth 2.0, Basic Authentic
 **** For Oauth 1.0 or 2.0, specify responses, query parameters, headers, and settings.
 ***** Settings for Oauth 1.0 can be of type `authorizationUri`, `requestTokenUri`, `tokenCredentialsUri`, or signatures.
 ***** Settings for Oauth 2.0 can be of type `authorizationUri`, `requestTokenUri`, or `authorizationGrants`.
-====
-+
-[%collapsible]
-.Resources and Methods
-====
-Each resource can include one or more of the following methods:
 
-* GET
-* POST
-* PUT
-* PATCH
-* DELETE
-* HEAD
-* OPTIONS
-
-For GET and HEAD methods, you can include a summary, responses, requests, and query or header parameters.
-
-For POST, PUT, PATCH, and OPTIONS methods, you can include a summary, responses, requests, body, and query or header parameters.
-
-*Response Requirements*
-
-Responses must include the status code and description. Response bodies are optional and can include a description, type, media type, and example.
-
-*Request Requirements*
-
-Requests must include a description and body.
+The following additional details apply:
 
 *Header Requirements*
 
@@ -102,14 +80,40 @@ Query parameters must include the name, whether it's required, and one of the fo
 * Time only 
 
 Optionally, provide a description, format, minimum and maximum length, default value, and example for the query parameter.
+
+*Response Requirements*
+
+Responses must include the status code and description.
+====
++
+[%collapsible]
+.Resources and Methods
+====
+Each resource can include one or more of the following methods:
+
+* GET
+* POST
+* PUT
+* PATCH
+* DELETE
+* HEAD
+* OPTIONS
+
+For GET and HEAD methods, you can include a summary, responses, requests, and query or header parameters.
+
+For POST, PUT, PATCH, and OPTIONS methods, you can include a summary, responses, requests, body, and query or header parameters.
+
+*Response Requirements*
+
+Responses must include the status code and description. Response bodies are optional and can include a description, type, media type, and example.
+
+*Request Requirements*
+
+Requests must include a description and body.
 ====
 . Submit your prompt in MuleSoft Dev Agent.  
-+
-Dev Agent generates a validated API specification based on your input.
-. Review the generated specification. 
-. Click *Replace* to insert the generated API spec into your project. All file content is replaced by the inserted code.
-+
-You can also copy the generated API spec to your clipboard by clicking *Copy*.
+. Dev Agent generates a validated API specification based on your input.  
+. Review the generated specification and continue refining it as needed.
 
 [NOTE]
 Governance isn't included in the validation.
