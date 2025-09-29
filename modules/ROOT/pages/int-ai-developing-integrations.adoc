@@ -16,21 +16,24 @@ Before you start, ensure that you have the following prerequisites:
 
 == Unified Dev Agent Experience
 
-MuleSoft Dev Agent provides a single panel where you can develop integrations and API specifications. Unlike earlier versions of generative features, Dev Agent no longer separates “Flows” and “API Specs” into different modes. Instead, you can type any prompt into the panel, and Dev Agent determines whether to generate a flow, create an API specification, or execute another action such as deploying an application.  
-
-Dev Agent does not insert output through a separate panel. Instead, it writes directly into your project files when you grant edit permissions.  
+MuleSoft Dev Agent provides a single panel where you can develop integrations and API specifications. Unlike earlier versions of generative features, Dev Agent does not insert output through a separate panel. Instead, it writes directly into your project files when you grant edit permissions.  
 
 Depending on your settings, Dev Agent can:  
 * Request approval before writing to your files, or  
 * Write automatically if *Auto-approve* is enabled in the Dev Agent settings.  
 
-Dev Agent includes the MuleSoft MCP server by default. This server provides out-of-the-box tools, and you can add additional MCP servers from Marketplace or by configuring a remote server.  
+For details on configuring permissions and server connections, see xref:troubleshooting.adoc[Troubleshooting Dev Agent].
 
-You can also extend Dev Agent behavior using *rules* and *workflows*.  
-* Rules define how Dev Agent should handle tasks according to your organization’s standards.  
-* Workflows define multi-step actions that you can invoke directly from the panel.  
+== Provide Additional Context
 
-For details on configuring permissions, settings, and MCP servers, see xref:troubleshooting.adoc[Troubleshooting Dev Agent].
+You can improve the accuracy of generated outputs by adding extra context to Dev Agent.  
+In addition to prompts, Dev Agent accepts the following types of input:
+
+* **Files** – Add a requirements file or other reference documents.  
+* **Folders** – Provide an entire project folder for Dev Agent to consider.  
+* **Terminal Input** – Share terminal outputs as context for the request.  
+
+This context helps Dev Agent generate flows and API specifications that align more closely with your requirements.
 
 == Trust Layer
 
@@ -39,4 +42,19 @@ The Dev Agent trust layer bridges Anypoint Platform and the LLMs, as shown in th
 image::acb-einstein-trust-layer.png["Flow depicting how the trust layer works, including the steps of the flow"]
 
 [calloutlist]
-. You create a message based on your use case and send it to Dev A
+. You create a message based on your use case and send it to Dev Agent.  
+. To minimize inaccurate responses, messages are grounded with MuleSoft proprietary data and user context.  
+. To ensure safe data transfer to external LLMs, the message is sent via a secure gateway.  
+. All data remains within Salesforce-managed boundaries.  
+. After the LLM generates a response, the content is returned through the secure gateway.  
+. MuleSoft validates the generated output to ensure compatibility with the MuleSoft ecosystem.  
+. Anypoint Code Builder logs the interaction for monitoring before surfacing the validated response.  
+
+[IMPORTANT]
+This feature uses AI models that can produce inaccurate or harmful responses. Review the generated output for accuracy and safety before using it. You assume responsibility for the output when making business decisions.
+
+== See Also
+
+* https://help.salesforce.com/s/articleView?id=sf.a4d_extension_pack_doc&type=5[Salesforce A4D Extension Pack]  
+* xref:troubleshooting.adoc[Troubleshooting Dev Agent]  
+* xref:api-ai-create-spec.adoc[Creating API Specs with Dev Agent]  
