@@ -1,0 +1,21 @@
+= Building Agent Networks for Agent Fabric
+
+Agent Fabric manages and coordinates the execution of agents across your enterprise, regardless of where they're deployed. Agent Fabric solves the problem of integrating and automating complex processes that involve multiple agents and tools.
+
+Complex tasks often require a series of steps, with each step handled by a different agent or tool. Managing this process manually is difficult and error-prone. Agent networks (networks of agents in a domain) act as central hubs for defining, validating, and executing these multi-step processes.
+
+Define your agent network in a simple, human-readable YAML file in Anypoint Code Builder desktop. This approach abstracts away the underlying technical complexities and so that you focus on the business constraints and context of your process without needing to understand the inner workings of the orchestration engine.
+
+Don't worry, we give you a head start by providing you with a YAML template in your agent network project. MuleSoft Dev Agent can help you configure it for your business environment, publish agent network assets to Anypoint Exchange, and deploy your agent network instance.
+
+For more information about Agent Fabric, see link:https://docs.mulesoft.com/agent-fabric/[Agent Fabric Overview].
+
+== Considerations
+
+Before you start your agent network project, familiarize yourself with the Agent Fabric considerations. For more information, see link:https://docs.mulesoft.com/agent-fabric[Agent Fabric Overview].
+
+Also, make sure you understand these limitations.
+
+* An agent network project supports only one domain (one YAML file per project). For multiple domains, create a separate project for each.
+* All LLM models in your agent network project must support structured responses in JSON format. For example, a `gpt4.1` model is supported; a `gpt4` model isn't.
+* When you add governance policies to your agent network project YAML file, those policies persist between deployments. However, if you add governance policies at run-time, those policies don't persist. The next time you deploy your agent network, the governance policies used are the ones in the agent-network.yaml file.
