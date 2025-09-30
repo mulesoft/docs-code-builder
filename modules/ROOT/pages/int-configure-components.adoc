@@ -34,6 +34,20 @@ Understand the basics of Mule flows, the Mule event structure, including the pay
 //add component content
 include::partial$acb-component-info.adoc[tags="add-components"]
 
+[[copy-components]]
+== Copy Components
+
+You can copy components and paste them in the same flow or in a different file or project.
+
+To copy a component:
+
+. Right-click the component. To copy multiple components, press and hold Ctrl (Windows) or Cmd (macOS), select the components, and then right-click a selected component.
+. Click *Copy Component*. Or press Ctrl+c (Windows) or Cmd+c (macOS).
+. Right-click the image:icon-plus.png["",15,15] icon in the current flow or in a different file or project and select *Paste Component* or press Ctrl+v (Windows) or Cmd+v (macOS). The component and its configuration are pasted in the new location. If multiple components are copied, they're pasted in the same order as they're copied.
+
+[NOTE]
+Some components, like an HTTP Listener, can't be pasted to certain locations. An error message shows if a component can't be pasted to the location.
+
 == Disable Components
 You can temporarily remove components from your flow without deleting them by disabling them directly from the canvas. This action is equivalent to commenting out code in the XML editor.
 
@@ -55,6 +69,12 @@ This also removes the comment from the XML view.
 
 If you previously set a breakpoint on a component and then disable it, the breakpoint remains associated with the component but is inactive. +
 You can't add new breakpoints to a disabled component until it's re-enabled.
+
+== Duplicate a Flow
+
+To duplicate a flow, right-click the flow bar and select *Duplicate Flow*, or click the image:icon-duplicate.png["",15,15] (*Duplicate*) icon in the Flow List.
+
+The new flow is named `[flow name] copy`. You can change the name in the configuration panel.
 
 [[navigate-to-referenced-flows]]
 == Navigate to Referenced Flows
