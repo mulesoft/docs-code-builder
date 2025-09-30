@@ -1,7 +1,8 @@
 = Creating API Specs with AI
 :page-deployment-options: cloud-ide, desktop-ide
 
-The Generative API Specification feature unlocks AI capabilities for API design journeys by generating and mocking API specs from natural language. The feature reduces the time spent on API design by simplifying the creation of rigid, syntax-heavy specs. You can access the feature after creating an API project that's in the supported RAML 1.0 or OAS 3.0 format or from the Open Agentforce icon within the project. The system supports multi-turn conversations and provides validated API specifications.
+The AI-powered API Specification feature enables you to generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications. Dev Agent powers these capabilities through the embedded MCP client in Anypoint Code Builder.
+
 
 [[before-you-begin]]
 == Before You Begin
@@ -10,19 +11,19 @@ Before you start creating your API spec:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
-* Make sure you have these permissions to use the Anypoint Code Builder Agentforce feature:
-** Anypoint Code Builder Developer
-** Mule Developer Generative AI User
-* Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
+* Install Node.js version 20 (v20.19.4).  
+For more information, see https://nodejs.org/en/download[Download Node.js].
+
 * Log in to Anypoint Code Builder with your Anypoint Platform credentials.
-* xref:des-create-api-specs.adoc[Create an API spec project] in Anypoint Code Builder in the supported RAML 1.0 or OAS 3.0 format, and then select a business group. The business group must have xref:access-management::enabling-einstein.adoc[Einstein generative AI enabled]. If you don't have Einstein generative AI after selecting a business group, contact your Anypoint Platform administrator to enable the feature.
+* xref:des-create-api-specs.adoc[Create an API spec project] in Anypoint Code Builder in the preferred format.
 
 [[design-spec-ai]]
 == Design an API Spec with AI
 
-To design an API spec with AI, begin by reviewing the starter prompt for guidance on the context the agent needs. 
+To design an API spec with MuleSoft Dev Agent:
 
-. Describe your API spec in the chat. The agent prompts you for clarification if it doesn't understand your request.
+. Open MuleSoft Dev Agent from the toolbar or from the *Build Your Ecosysyem with AI* card in the canvas.
+. Enter a prompt that describes your API specification.
 +
 Include these required details and consider including optional details to generate a more precise spec:
 +
@@ -159,24 +160,49 @@ Optionally, provide a description, format, minimum and maximum length, default v
 Governance isn't included in the validation.
 
 [start=3]
-. Review the spec and continue the conversation if you'd like to make changes.
-. Click *Replace* to add the generated API spec to your project. All file content is replaced by the inserted code.
+. Enter your prompt in MuleSoft Dev Agent and submit it.  
 +
-You can also copy the generated API spec to your clipboard by clicking *Copy*.
+. Review the generated specification.  
+. If *Auto-approve* is enabled, Dev Agent writes the generated API spec directly into your project files.  
+. If *Auto-approve* is disabled, Dev Agent prompts you to approve or reject each file change before applying it.
 
-== Give Feedback on Agent Responses
+[[rules-workflows]]
+== Define Rules and Workflows
 
-Share your feedback about the agent's response by clicking thumbs up or thumbs down.
+You can guide Dev Agent’s behavior by creating reusable rules and workflows:
 
-== View Conversation History
+* *Rules* – Define constraints or guidelines for how the API spec should be generated.  
+  For example, enforce a naming convention or require consistent error handling.  
+  Rules can be defined at the workspace or global level.
 
-To view your past conversations, click *Open chat history*. Your last 30 days of conversations show.
+* *Workflows* – Create a series of steps that Dev Agent executes as a predefined action.  
+  Workflows are invoked using slash commands in the Dev Agent panel.
 
-== Start a New Chat
+[[context-files]]
+== Provide Additional Context
 
-You can only create an API spec if you have a project open in the supported RAML 1.0 or OAS 3.0 format. Click *Create API Spec* from the *New Chat* dropdown to create a new API spec.
+You can add supporting files to help Dev Agent generate more accurate API specifications:
 
-The option doesn't show for projects that aren't in the supported format.
+* Upload requirement files, such as `requirements.txt`.
+* Provide additional folders or specific project files.
+* Include terminal input or outputs.  
+
+These files are used as contextual references during API generation.
+
+[[settings]]
+== Dev Agent Settings
+
+You can control how Dev Agent interacts with your project through the settings panel:
+
+* *Read project files*: Allow Dev Agent to read project files for context.  
+* *Edit project files*: Allow Dev Agent to write changes directly to your project.  
+* *Auto-approve*: Enable to apply changes automatically without prompting for confirmation.  +
+If *Auto-approve* is disabled, Dev Agent will request your approval before making any file changes.
+
+== See Also
+
+* xref:api-ai-design-spec.adoc[]
+* https://help.salesforce.com/s/articleView?id=sf.a4d_extension_pack_doc&type=5[Salesforce A4D Extension Pack Documentation]
 
 == See Also
 
