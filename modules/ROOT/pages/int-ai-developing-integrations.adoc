@@ -1,18 +1,39 @@
 = Developing Integrations Using MuleSoft Dev Agent
 :page-deployment-options: cloud-ide, desktop-ide
 
-To jumpstart your integration development, use MuleSoft Dev Agent in Anypoint Code Builder. Dev Agent enables you to generate flows or API specifications directly in your project using natural language prompts. These capabilities are powered by large language models (LLMs) that run within the Salesforce Shared Trust Boundary.
+To develop, manage, or maintain your applications, use MuleSoft Dev Agent in Anypoint Code Builder. MuleSoft Dev Agent is a purpose-built assistant for the development lifecycle, available directly in the IDE. It integrates with the xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server] and supports many capabilities, such as:
+
+* Developing API specifications  
+* Creating and configuring applications  
+* Searching for assets  
+* Deploying and managing instances  
+
+All of these actions are driven by natural language prompts.  
+
+When you generate an integration, MuleSoft Dev Agent transforms your business logic into a Mule application. The generated application includes:  
+
+* Flows  
+* Connector configurations  
+* A sample `mule-artifact.properties` file  
+* Dependencies required for connectors, such as Salesforce and HTTP  
+
+These capabilities are powered by large language models (LLMs) that run within the Salesforce Shared Trust Boundary.
 
 NOTE: MuleSoft Dev Agent is available on US, EU, Canada, and Japan cloud hosts.
 
+[[before-you-begin]]
 == Before You Begin
 
-Before you start, ensure that you have the following prerequisites:
+Before you start creating your API spec, make sure you meet the following prerequisites:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].  
 * Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].  
+* Ensure you have the following permissions to use MuleSoft Dev Agent:  
+** *Mule Developer Generative AI User*  
+* Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].  
 * Install Node.js v20. For more information, see https://nodejs.org/en/download[Download Node.js].  
-* Log in to Anypoint Code Builder with your Anypoint Platform credentials.  
+
+NOTE: MuleSoft Dev Agent always uses the permissions of the Anypoint Platform user who is logged into Anypoint Code Builder, and can only execute actions that the authenticated user has permission to perform in Anypoint Platform.
 
 == Unified Dev Agent Experience
 
@@ -55,6 +76,5 @@ This feature uses AI models that can produce inaccurate or harmful responses. Re
 
 == See Also
 
-* https://help.salesforce.com/s/articleView?id=sf.a4d_extension_pack_doc&type=5[Salesforce A4D Extension Pack]  
 * xref:troubleshooting.adoc[Troubleshooting Dev Agent]  
 * xref:api-ai-create-spec.adoc[Creating API Specs with Dev Agent]  
