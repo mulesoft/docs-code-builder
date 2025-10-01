@@ -4,26 +4,25 @@
 
 MuleSoft Dev Agent is a purpose-built assistant for the development lifecycle, available right in Anypoint Code Builder. MuleSoft Dev Agent supports many capabilities through the xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server], such as deploying applications, managing instances, and more. One such capability is transforming your business logic into a Mule application. 
 
-The generated application includes the flows, connector configurations, a sample properties file, and the dependencies required for connectors such as Salesforce and HTTP. These artifacts ensure that the generated integration is runnable and can be deployed directly from Anypoint Code Builder.
+The generated application includes the integration, connector configurations, a sample properties file, and the dependencies required for connectors. These artifacts ensure that the generated integration is runnable and can be deployed directly from Anypoint Code Builder.
 
 [[before-you-begin]]
 == Before You Begin
 
-Before you start creating your API spec, make sure you meet the following prerequisites:
+Before you start creating your application, make sure you meet the following prerequisites:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].  
 * Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].  
 * Ensure you have the following permissions to use MuleSoft Dev Agent:  
 ** *Mule Developer Generative AI User*  
 * Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].  
-* Install Node.js v20. For more information, see https://nodejs.org/en/download[Download Node.js].  
 
 [[access-dev-agent]]
 == Access Dev Agent
 
 There are two ways to open MuleSoft Dev Agent:
 
-* When you create a new integration project, click a card in the flow canvas. For example, the *Build a Flow with AI* card.
+* When you create a new integration project, click a card in the canvas. For example, the *Build an Ecosystem with AI* card.
 * Click the Dev Agent icon in the toolbar. 
 +
 image::int-einstein-icon-in-toolbar.png["Arrow pointing to Dev Agent icon in the toolbar"]
@@ -53,15 +52,14 @@ For example, if the project name is "My Integration", the name of the folder for
 +
 . Click *Create Project*.
 +
-The flow builder canvas appears with starting cards. 
+The integration builder canvas appears with starting cards. 
 
-To generate a flow with AI, click *Use Dev Agent* in the *Build a Flow with AI* card.  
-To build your flow manually, click *Build a flow* in the *Start From Scratch* card.
+To generate an integration with AI, click *Use Dev Agent* in the *Build an Ecosystem with AI* card.  
 
 [[craft-ai-prompt]]
 == Write Your Prompt
 
-Before you create a flow, define what you want to achieve with the flow, for example, optimizing a business process. In the Dev Agent panel, enter your prompt using natural language. The clearer and more specific your prompt, the more accurate the generated flow. 
+Before you create an integration, define what you want to achieve with the instegration, for example, optimizing a business process. In the Dev Agent panel, enter your prompt using natural language. The clearer and more specific your prompt, the more accurate the generated integration. 
 
 Best practices for prompts:
 
@@ -71,9 +69,7 @@ Best practices for prompts:
 * Specify the data objects (for example, *Salesforce Account object*).  
 * Review your prompt before submitting it.  
 
-After Dev Agent generates the initial flow, the code is written directly into your project. You can further customize it to fit your requirements.
-
-For examples of prompts and generated flows, see xref:int-ai-gen-flow-examples.adoc[].
+After Dev Agent generates the initial integration, the code is written directly into your project. You can further customize it to fit your requirements.
 
 [[agent-settings]]
 == Configure Dev Agent Settings
@@ -98,13 +94,13 @@ If *Auto-approve* is disabled, MuleSoft Dev Agent will request your approval bef
 
 * The MuleSoft MCP server comes embedded in Dev Agent, providing built-in tools for tasks such as listing or deploying applications.  
 * You can add custom MCP servers from Marketplace or by configuring a remote server.  
-* Define *rules* to guide how Dev Agent generates flows according to your organization’s standards.  
+* Define *rules* to guide how Dev Agent generates integrations according to your organization’s standards.  
 * Create *workflows* to automate multi-step actions, which can be triggered through slash commands in the panel.  
 
 [[complete-gen-flow]]
-== Complete Your Flow
+== Complete Your Integration
 
-After Dev Agent builds the flow, complete the configuration as needed.  
+After Dev Agent builds the integration, complete the configuration as needed.  
 
 Components that require further configuration display the error icon.  
 Select the component in the canvas to determine where the error is. Anypoint Code Builder highlights the location of the error within the configuration XML.  
