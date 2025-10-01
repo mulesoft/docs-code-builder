@@ -1,20 +1,20 @@
-= Designing API Specs with Dev Agent
+= Designing API Specs with MuleSoft Dev Agent
 :page-deployment-options: cloud-ide, desktop-ide
 
-Simplify your API designs by generating API specifications with MuleSoft Dev Agent. Use natural language prompts in Dev Agent to build APIs. The embedded MCP client powers these capabilities and is at the core of API spec generation in Anypoint Code Builder.
+Simplify your API designs by generating API specifications with MuleSoft Dev Agent. Use natural language prompts in Dev Agent to build APIs. The xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server]) powers these capabilities and is at the core of API spec generation in Anypoint Code Builder.
 
-NOTE: AI-powered API specification generation is available on US, EU, Canada, and Japan cloud hosts.
+NOTE: MuleSoft Dev Agent is available on US, EU, Canada, and Japan cloud hosts.
 
 == Trust Layer
 
-The Dev Agent trust layer bridges Anypoint Platform and the underlying large language models (LLMs):
+The Einstein trust layer bridges Anypoint Platform and the underlying large language models (LLMs):
 
 image::trust-layer-diagram.png["Flow depicting how Dev Agent interacts with the trust layer"]
 
 [calloutlist]
-. You create a prompt based on your use case and submit it through Dev Agent.  
+. You create a prompt based on your use case and submit it through MuleSoft Dev Agent.  
 . To minimize inaccurate responses, prompts are grounded with MuleSoft proprietary data and user context.  
-. Data is sent securely through the embedded MCP client to the LLM.  
+. Data is sent securely through the MuleSoft MCP Server, which comes pre-configured in Dev Agent, to the LLM.  
 . All data remains within the Salesforce Shared Trust Boundary.  
 . After the LLM generates a response, the content is returned through the secure pathway.  
 . MuleSoft validates the generated output to ensure that the specification works within the MuleSoft ecosystem.  
@@ -23,14 +23,39 @@ image::trust-layer-diagram.png["Flow depicting how Dev Agent interacts with the 
 [IMPORTANT]
 AI features can produce inaccurate or harmful responses. Review all generated output for accuracy and safety before applying it in production. You assume responsibility for the generated content when making business decisions.
 
-== Configuring Dev Agent Settings
+[[settings]]
+== MuleSoft Dev Agent Settings
 
-MuleSoft Dev Agent can read and edit your project files. Depending on your settings, you can:
+MuleSoft Dev Agent provides additional options to customize and extend how you interact with generative AI in Anypoint Code Builder.  
 
-* Approve or reject each file edit individually, or  
-* Enable *Auto-approve* to let Dev Agent write directly to your project files without prompting.  
+[[settings-approve]]
+=== Configure Dev Agent Settings
+Access the *Auto-approve Settings* panel by clicking the *Auto-approve* section at the bottom of the MuleSoft Dev Agent window.  
+From here, you can configure permissions such as reading and editing project files, executing commands, and using MCP servers.  
 
-You can configure these options in the Dev Agent panel under *Settings*. For details, see xref:troubleshoot-gen-ai.adoc[Troubleshooting Dev Agent].
+[[rules-workflows]]
+=== Add Rules and Workflows
+Click the *Rules & Workflows* icon in the lower-left corner of the Dev Agent panel.  
+Use global or workspace rules to guide Dev Agent behavior, and create workflows with slash commands for repeated tasks.  
+
+[[context-files]]
+=== Provide Additional Context
+Click the *Add Context* icon in the lower-left corner of the Dev Agent panel to upload supporting files, such as requirements, config files, or terminal outputs.  
+These files are used as context for more accurate API generation.  
+
+[[mcp]]
+=== Extend Dev Agent with MCP Servers
+MuleSoft Dev Agent comes preconfigured with a MuleSoft MCP Server, and you can connect additional MCP servers for custom capabilities.  
+See xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server documentation].
+
+[[new-chat]]
+=== Start a New Chat
+Start a new conversation with MuleSoft Dev Agent at any time by clicking the *New Chat* option in the panel.  
+This clears previous context and begins a new session.
+
+[[view-conversation]]
+=== View Conversation
+You can scroll and review the current conversation with MuleSoft Dev Agent directly in the panel to track generated outputs and file actions.
 
 == Adding Rules and Workflows
 
@@ -42,4 +67,3 @@ You can customize how Dev Agent generates API specifications by adding rules and
 == See Also
 
 * xref:api-ai-create-spec.adoc[Creating API Specs with Dev Agent]  
-* https://help.salesforce.com/s/articleView?id=sf.a4d_extension_pack_doc&type=5[Salesforce A4D Extension Pack Documentation]  
