@@ -14,7 +14,7 @@ When you generate an integration, MuleSoft Dev Agent transforms your business lo
 
 * Flows  
 * Connector configurations  
-* A sample `mule-artifact.properties` file  
+* A sample `config.properties` file  
 * Dependencies required for connectors, such as Salesforce and HTTP  
 
 These capabilities are powered by large language models (LLMs) that run within the Salesforce Shared Trust Boundary.
@@ -31,7 +31,6 @@ Before you start creating your API spec, make sure you meet the following prereq
 * Ensure you have the following permissions to use MuleSoft Dev Agent:  
 ** *Mule Developer Generative AI User*  
 * Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].  
-* Install Node.js v20. For more information, see https://nodejs.org/en/download[Download Node.js].  
 
 NOTE: MuleSoft Dev Agent always uses the permissions of the Anypoint Platform user who is logged into Anypoint Code Builder, and can only execute actions that the authenticated user has permission to perform in Anypoint Platform.
 
@@ -58,7 +57,7 @@ This context helps Dev Agent generate flows and API specifications that align mo
 
 == Trust Layer
 
-The Dev Agent trust layer bridges Anypoint Platform and the LLMs, as shown in this flow: 
+The Einstein trust layer bridges Anypoint Platform and the LLMs, as shown in this flow: 
 
 image::acb-einstein-trust-layer.png["Flow depicting how the trust layer works, including the steps of the flow"]
 
