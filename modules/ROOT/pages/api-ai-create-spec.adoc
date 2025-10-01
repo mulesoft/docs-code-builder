@@ -1,21 +1,25 @@
 = Creating API Specs with AI
 :page-deployment-options: cloud-ide, desktop-ide
 
-The AI-powered API Specification feature enables you to generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications. Dev Agent powers these capabilities through the embedded MCP client in Anypoint Code Builder.
+= Creating API Specs with MuleSoft Dev Agent
+:page-deployment-options: cloud-ide, desktop-ide
 
+MuleSoft Dev Agent is a purpose-built assistant for the development lifecycle, available directly in Anypoint Code Builder. It provides a unified panel that lets you interact with AI features using natural language prompts. Dev Agent works with the embedded MuleSoft MCP Server (see xref:mulesoft-mcp-server::index.adoc[Mulesoft MCP Server]) to support capabilities such as deploying applications, managing instances, and creating new projects.
+
+One of these capabilities is AI-powered API specification generation. With Dev Agent, you can generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications.
 
 [[before-you-begin]]
 == Before You Begin
 
-Before you start creating your API spec:
+Before you start creating your API spec, make sure you meet the following prerequisites:
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
-* Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
-* Install Node.js version 20 (v20.19.4).  
-For more information, see https://nodejs.org/en/download[Download Node.js].
-
-* Log in to Anypoint Code Builder with your Anypoint Platform credentials.
-* xref:des-create-api-specs.adoc[Create an API spec project] in Anypoint Code Builder in the preferred format.
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].  
+* Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].  
+* Ensure you have the following permissions to use MuleSoft Dev Agent:  
+** *Anypoint Code Builder Developer* (to use Dev Agent in the Cloud IDE)  
+** *Mule Developer Generative AI User*  
+* Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].  
+* Install Node.js v20. For more information, see https://nodejs.org/en/download[Download Node.js].  
 
 [[design-spec-ai]]
 == Design an API Spec with AI
@@ -161,49 +165,59 @@ Governance isn't included in the validation.
 
 [start=3]
 . Enter your prompt in MuleSoft Dev Agent and submit it.  
-+
 . Review the generated specification.  
 . If *Auto-approve* is enabled, Dev Agent writes the generated API spec directly into your project files.  
-. If *Auto-approve* is disabled, Dev Agent prompts you to approve or reject each file change before applying it.
+. If *Auto-approve* is disabled, Dev Agent prompts you to approve or reject each file change before applying it.  
+. After the API project is generated, you can also:  
+** Ask Dev Agent to publish the API asset to Exchange.  
+** Add governance rulesets to validate your specification.  
+** Mock requests to the API directly from the IDE.  
 
 [[rules-workflows]]
 == Define Rules and Workflows
 
-You can guide Dev Agent’s behavior by creating reusable rules and workflows:
+To define reusable rules and workflows for MuleSoft Dev Agent:
 
-* *Rules* – Define constraints or guidelines for how the API spec should be generated.  
-  For example, enforce a naming convention or require consistent error handling.  
-  Rules can be defined at the workspace or global level.
+. In the MuleSoft Dev Agent panel, click the *Rules/Workflows* icon in the lower-left corner (next to the *Context* icon).  
+. Choose one of the following tabs:
+* Rules: Define constraints or guidelines for how the API spec should be generated. +
+For example, enforce naming conventions or require consistent error handling. +
+Rules can be defined at the *Global Rules* or *Workspace Rules* level.  
 
-* *Workflows* – Create a series of steps that Dev Agent executes as a predefined action.  
-  Workflows are invoked using slash commands in the Dev Agent panel.
+* Workflows: Create a series of steps that MuleSoft Dev Agent executes as a predefined action. +
+Workflows are invoked using slash commands (for example, `/workflow-name`) in the MuleSoft Dev Agent panel.
 
 [[context-files]]
 == Provide Additional Context
 
-You can add supporting files to help Dev Agent generate more accurate API specifications:
+You can provide additional inputs, such as requirement files (for example, `requirements.txt`), terminal outputs, or project folders, to help Mulesoft Dev Agent generate more accurate API specifications. These files are used as contextual references during API generation.  
 
-* Upload requirement files, such as `requirements.txt`.
-* Provide additional folders or specific project files.
-* Include terminal input or outputs.  
+To add context:
 
-These files are used as contextual references during API generation.
+. In the MuleSoft Dev Agent panel, click the *Add Context* icon in the lower-left corner.  
+. Select the file or folder you want to attach, or paste terminal input/output.  
+. Confirm to add the context to your current task.  
 
 [[settings]]
-== Dev Agent Settings
+== MuleSoft Dev Agent Settings
 
-You can control how Dev Agent interacts with your project through the settings panel:
+You can control how MuleSoft Dev Agent interacts with your project through the *Settings* panel.  
+To access this panel, click the *Auto-approve* section at the bottom of the MuleSoft Dev Agent window.
 
-* *Read project files*: Allow Dev Agent to read project files for context.  
-* *Edit project files*: Allow Dev Agent to write changes directly to your project.  
+Available settings are:
+
 * *Auto-approve*: Enable to apply changes automatically without prompting for confirmation.  +
-If *Auto-approve* is disabled, Dev Agent will request your approval before making any file changes.
+If Auto-approve is disabled, Dev Agent will request your approval before making any file changes.
+* *Read project files*: Allow MuleSoft Dev Agent to read project files for context.  
+* *Edit project files*: Allow MuleSoft Dev Agent to write changes directly to your project.  
+* *Read all files*: Allow MuleSoft Dev Agent to read all files on your computer.
+* *Edit all files*: Allow MuleSoft Dev Agent to edit any file on your computer.
+* *Use MCP Servers*: Allow MuleSoft Dev Agent to use connected MCP servers.
+* *Execute safe commands*: Allow MuleSoft Dev Agent to execute safe terminal commands.
+* *Execute all commands*: Allow MuleSoft Dev Agent to execute any terminal command.
+* *Use the browser*: Allow MuleSoft Dev Agent to launch and interact with websites in a browser.
 
 == See Also
 
 * xref:api-ai-design-spec.adoc[]
-* https://help.salesforce.com/s/articleView?id=sf.a4d_extension_pack_doc&type=5[Salesforce A4D Extension Pack Documentation]
 
-== See Also
-
-* xref:api-ai-design-spec.adoc[]
