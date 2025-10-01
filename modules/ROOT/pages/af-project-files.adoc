@@ -44,7 +44,7 @@ When the agent network is published, all of the assets derived from it share the
   "dependencies": [
     {
       "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
-      "assetId": "workday-agent",
+      "assetId": "hr-agent",
       "version": "1.0.21",
       "classifier": "agent-metadata",
       "packaging": "zip"
@@ -85,21 +85,21 @@ Let's see an example:
      links:
         - agent:
             ref:
-              name: workday-agent
+              name: hr-agent
 ----
 
-The above snippet represents a link to a workday agent. The *name* attribute doesn't point to the agent's human friendly or logical name (which can change); instead, it references the *assetId* that workday-agent has in Exchange.
+The above snippet represents a link to an HR agent. The *name* attribute doesn't point to the agent's human friendly or logical name (which can change); instead, it references the *assetId* that `hr-agent` has in Exchange.
 
-The workday-agent asset can either exist already, or can be defined in this same yaml. In either case, the Exchange *assetId* is the key to this reference.
+The `hr-agent` asset can either exist already, or can be defined in this same YAML. In either case, the Exchange *assetId* is the key to this reference.
 
-In some cases, the ref element needs to point to an asset that's defined in a different business group. For this, the *ref#namespace* attribute can be used to reference the asset's groupId.
+In some cases, the `ref` element needs to point to an asset that's defined in a different business group. For this, the *ref#namespace* attribute can be used to reference the asset's `groupId`.
 
 [source,yaml]
 ----
 links:
         - agent:
             ref:
-              name: workday-agent
+              name: hr-agent
               namespace: <the groupId>
 ----
 
@@ -191,11 +191,11 @@ Provide optional instructions that are specific to this broker. These instructio
 - |
 You're an Employee Onboarding Broker. Coordinate onboarding of a new employee across the systems needed for day-to-day work.
          ## The process for onboarding an employee is:
-- Onboard in Workday: Create the new employee record. Fetch the address using available tools. Don't ask for the address unless you're not sure how to get it. 
-- Onboard in Salesforce: Create the employee's CRM profile in Salesforce. 
+- Onboard in HR: Create the new employee record. Fetch the address using available tools. Don't ask for the address unless you're not sure how to get it. 
+- Onboard in CRM: Create the employee's CRM profile. 
 - Since this a long running task, send a Slack update using tool SlackMcpServer.send_status_update to communicate the status of actions taken so far. It should be a human-readable summary. For example: {
 {
-"message": "Workday and Salesforce onboarding completed. Working on next steps...",
+"message": "HR and CRM onboarding completed. Working on next steps...",
 "contextId": "<fetch-the-context-id-from-input>"
 }
 - Request employee laptop: Submit a laptop request in Zendesk. 
@@ -220,7 +220,7 @@ Here's another example of instructions for a customer service broker. This broke
         - |
           You're an Incident Management Broker. Your primary responsibility is to coordinate the resolution of incidents reported by customers.
           The process for incident management is:
-            1. Fetch Salesforce case details: Retrieve the latest critical case details for the customer.
+            1. Fetch CRM case details: Retrieve the latest critical case details for the customer.
             2. Fetch entitlement details: Obtain the customer's entitlement information.
             3. Fetch on-call engineer: Identify the current on-call engineer for the incident.
             4. Create Slack war room and invite on-call engineer: Set up a Slack war room channel and invite the on-call engineer.
@@ -240,14 +240,14 @@ This section is the most important part of the entire specification. The links s
 links:
   - agent:
       ref:
-name: workday-agent	 # Exchange asset ID of the linked agent. By default, the groupId for this asset is the same as that in exchange.json.
+name: hr-agent	 # Exchange asset ID of the linked agent. By default, the groupId for this asset is the same as that in exchange.json.
 namespace:      		 # Optional. If the asset was defined in a different business group, set the corresponding groupId here.
 - agent:
 ref:
 name: badging-agent
 - agent:
 ref:
-name: salesforce-agent
+name: crm-agent
 - agent:
 ref:
 name: zendesk-agent
@@ -264,7 +264,7 @@ Instead, we recommend a multi-level hierarchical approach. This favors traceabil
 
 In this example, the Onboarding Broker orchestrates the process of onboarding a new hire. It orchestrates work with the IT, HR and security brokers, which also happen to be brokers in the same agent network.
 
-Assets, IT Stock, Workday, Payroll, and Badges agents are what we call leaf agents. These aren't brokers but preexisting agents whose purpose isn't to coordinate work, but to act.
+Assets, IT Stock, HR, Payroll, and Badges agents are what we call leaf agents. These aren't brokers but preexisting agents whose purpose isn't to coordinate work, but to act.
 
 image::af-onboarding-broker-example.png["Diagram showing an employee onboarding broker and its agents"]
 
@@ -328,7 +328,7 @@ Reference agents defined in a different agent network, or another agent used in 
 [source,yaml]
 ----
 agents:
-workday-agent:			# Used as the assetId of the asset published to Anypoint Exchange. The default groupId is the associated value used in exchange.json.
+hr-agent:			# Used as the assetId of the asset published to Anypoint Exchange. The default groupId is the associated value used in exchange.json.
 metadata:
        platform: azure
        protocol: a2a
@@ -336,7 +336,7 @@ metadata:
     metadata:
       platform: azure
       protocol: a2a
-  salesforce-agent:
+  crm-agent:
     metadata:
       platform: azure
       protocol: a2a
@@ -404,12 +404,12 @@ To define multiple connections for the same asset, put them in a resource file a
 [source,yaml]
 ----
 connections:
-  workday-agent:
+  hr-agent:
     kind: agent
     ref:
-name: workday-agent		 # Use the same name as in the associated entry in the agents section or use the Exchange asset ID.
+name: hr-agent		 # Use the same name as in the associated entry in the agents section or use the Exchange asset ID.
     spec:
-       url: https://workday-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/workday-agent/
+       url: https://hr-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/hr-agent/
        authentication:
          kind: oauth2-client-credentials
          token:
@@ -434,12 +434,12 @@ name: workday-agent		 # Use the same name as in the associated entry in the agen
         clientId: clientId
         clientSecret: clientSecret
 
-  salesforce-agent:
+  crm-agent:
     kind: agent
     ref:
-      name: salesforce-agent
+      name: crm-agent
     spec:
-      url: https://salesforce-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/sfdc-agent/
+      url: https://crm-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/crm-agent/
       authentication:
         kind: oauth2-client-credentials
         token:

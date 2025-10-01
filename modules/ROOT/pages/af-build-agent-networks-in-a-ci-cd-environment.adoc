@@ -8,7 +8,7 @@ Make sure you meet the prerequisites for this task. For prerequisites, see xref:
 
 === Create a Target Space for Your Environment
 
-To deploy an agent network, you'll need a target space. You can either create a private space for CloudHub 2.0 deployment or (a namespace for Runtime Fabric?).
+To deploy an agent network, you'll need a target space. You can either create a private space for CloudHub 2.0 deployment or a namespace for Runtime Fabric. For more information about Runtime Fabric deployments, see link:https://docs.mulesoft.com/runtime-fabric/latest/create-custom-namespace[Creating Namespaces for Application Deployments].
 
 ==== Create a Private Space for CloudHub 2.0 Deployment
 
@@ -16,13 +16,14 @@ To deploy an agent network, you'll need a target space. You can either create a 
 . Select the environment to use.
 . Select **Private Spaces**.
 . Select **Create private space**.
-. Enter the name agent-network-space (or a name you prefer).
+. Enter a name for the private space. We recommend `agent-network-space`.
 . Select **Create**.
 . Select **Create private network**.
+. Associate the space with the business group and environments you need to deploy your agent network to. You must complete this step so that the private space appears as a valid deployment target in Anypoint Code Builder and Anypoint CLI.
 
 === Set Up Agent Network Gateways for Your Target Space
 
-After you create a target space, set up the ingress and egress gateways for deployment. For more information, see link:https://docs.mulesoft.com/gateway/latest/flex-architecture-basic-deployments[Flex Gateway Deployment Models]. (Runtime Fabric instrux?)
+After you create a target space, set up the ingress and egress gateways for deployment. For agent networks, at least one small Managed Flex Gateway and one large Managed Flex Gateway is required. For more information about gateways, see link:https://docs.mulesoft.com/gateway/latest/flex-architecture-basic-deployments[Flex Gateway Deployment Models]. 
 
 Open a terminal window and run this command:
 
@@ -30,7 +31,11 @@ Open a terminal window and run this command:
 $ anypoint-cli-agent-fabric-plugin agent-network setup gateways --target-space <space>
 ----
 
-As a result, the command creates agent-network-ingress and agent-network-egress gateways in the selected target space.
+As a result, the command creates these gateways in the selected private space.
++
+* agent-network-ingress-gw (with public and internal endpoint)
+* agent-network-egress-gw (with internal endpoint only)
+
 
 == Default Flags and Authentication
 
