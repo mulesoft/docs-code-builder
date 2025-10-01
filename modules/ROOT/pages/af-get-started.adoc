@@ -8,26 +8,69 @@ Before you start your agent network project, make sure that you have these produ
 
 === Agent Network Prerequisites
 
-* A tenant relationship established with a trusted Salesforce organization.
-* Anypoint Platform (Titanium package). You can use an existing account or create one from Anypoint Platform.
-* Managed Flex Gateway with target space entitlements.
-* An OpenAI instance and login credentials.
+[cols="1,2,2",options="header",frame=all,grid=all]
+|===
+| Task | Product Prerequisites | Permissions and Access Prerequisites
 
-=== Anypoint Code Builder Desktop Prerequisites
+| Set up Agent Fabric |  | 
 
-After you meet agent network prerequisites, set up your Anypoint Code Builder desktop environment.
+| Create target space using Anypoint Runtime Manager | Managed Flex Gateway with target space entitlements. CloudHub 2.0 or Runtime Fabric | 
 
-* Complete the steps in link:https://docs.mulesoft.com/anypoint-code-builder/start-acb-desktop[Setting Up the Desktop IDE].
-* If you use Windows, install PowerShell. For more information, see link:https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3[Installing PowerShell on Windows].
-* Configure your allowlist. For more information, see URLs to Allow to Run Anypoint Code Builder`URL`.
+| Set up ingress and egress gateways for target space using Anypoint Code Builder desktop command palette command | Managed Flex Gateway with target space entitlements. At least one small Managed Flex Gateway and one large Managed Flex Gateway are required. + Anypoint Code Builder. For more information, see link:https://docs.mulesoft.com/anypoint-code-builder/start-acb-desktop[Setting Up the Desktop IDE]. | This Runtime Manager permission. + * Manage Servers
 
-=== Permissions and Access
+| Set up ingress and egress gateways for target space using Anypoint CLI | Managed Flex Gateway with target space entitlements. Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable. Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. | This Runtime Manager permission. + * Manage Servers
 
-To set up agent network gateways, you need the Manage Servers permission in Runtime Manager.
+| Create project |  | 
+
+| Create project using Anypoint Code Builder desktop with MuleSoft Dev Agent | Anypoint Code Builder. For more information, see link:https://docs.mulesoft.com/anypoint-code-builder/start-acb-desktop[Setting Up the Desktop IDE]. PowerShell (Windows operating systems only). For more information, see link:https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3[Installing PowerShell on Windows]. Einstein enablement in Access Management. For more information, see link:https://docs.mulesoft.com/access-management/enabling-einstein[Enabling Einstein for Anypoint Platform]. Anypoint Platform credentials. | A tenant relationship established with a trusted Salesforce organization. Configure your allowlist. For more information, see link:https://docs.google.com/document/d/1TxSZCQ6KMENmo0_SR8t_2bcGG5BlBlxLOnU74_YTICE/edit?usp=sharing[URLs to Allow to Run Anypoint Code Builder]. These Anypoint Code Builder permissions. For more information, see link:https://docs.mulesoft.com/anypoint-code-builder/start-configure-permissions[Configuring Permissions]. Anypoint Code Builder Developer +
+Mule Developer +
+Generative AI User
+
+| Create project using Anypoint Code Builder desktop UI or command palette commands | Anypoint Code Builder. For more information, see link:https://docs.mulesoft.com/anypoint-code-builder/start-acb-desktop[Setting Up the Desktop IDE]. PowerShell (Windows operating systems only). For more information, see link:https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3[Installing PowerShell on Windows]. | Configure your allowlist. For more information, see link:https://docs.google.com/document/d/1TxSZCQ6KMENmo0_SR8t_2bcGG5BlBlxLOnU74_YTICE/edit?usp=sharing[URLs to Allow to Run Anypoint Code Builder].
+
+| Create project using Anypoint CLI | Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable. Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. | This Runtime Manager permission. Manage Servers
+
+| Define agent network specification |  | 
+
+| Add Exchange assets to project using Anypoint Code Builder desktop with MuleSoft Dev Agent | Einstein enablement in Access Management. For more information, see link:https://docs.mulesoft.com/access-management/enabling-einstein[Enabling Einstein for Anypoint Platform]. Anypoint Platform credentials. | A tenant relationship established with a trusted Salesforce organization. Login credentials to your LLM instance. For supported LLMs, see Considerations. Allowlist Anypoint Code Builder URLs. For more information, see link:https://docs.google.com/document/d/1TxSZCQ6KMENmo0_SR8t_2bcGG5BlBlxLOnU74_YTICE/edit?usp=sharing[URLs to Allow to Run Anypoint Code Builder]. This Anypoint Design Center permission. Design Center Developer
+
+| Add Exchange assets to project using Anypoint CLI | Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable. Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. | These Runtime Manager and Anypoint Design Center permissions. +
+Runtime Manager: Manage Servers +
+Anypoint Design Center: Design Center Developer
+
+| Build project (applies only to CLI) |  | 
+
+| Build project using Anypoint CLI | Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable. Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. | This Runtime Manager permission. Manage Servers
+
+| Publish project assets to Exchange |  | 
+
+| Publish project assets using Anypoint Code Builder desktop with MuleSoft Dev Agent | Einstein enablement in Access Management. For more information, see link:https://docs.mulesoft.com/access-management/enabling-einstein[Enabling Einstein for Anypoint Platform]. Anypoint Platform credentials. | A tenant relationship established with a trusted Salesforce organization. Allowlist Anypoint Code Builder URLs. For more information, see link:https://docs.google.com/document/d/1TxSZCQ6KMENmo0_SR8t_2bcGG5BlBlxLOnU74_YTICE/edit?usp=sharing[URLs to Allow to Run Anypoint Code Builder]. This Anypoint Exchange permission. For more information, see link:https://docs.mulesoft.com/access-management/permissions-by-product#exchange[Permissions - Exchange]. Exchange Contributor
+
+| Publish project assets using Anypoint Code Builder desktop UI or command palette commands |  | Allowlist Anypoint Code Builder URLs. For more information, see link:https://docs.google.com/document/d/1TxSZCQ6KMENmo0_SR8t_2bcGG5BlBlxLOnU74_YTICE/edit?usp=sharing[URLs to Allow to Run Anypoint Code Builder]. This Anypoint Exchange permission. For more information, see link:https://docs.mulesoft.com/access-management/permissions-by-product#exchange[Permissions - Exchange]. Exchange Contributor
+
+| Publish project assets using Anypoint CLI | Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable. Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. | These Anypoint Exchange and Runtime Manager permissions. +
+Anypoint Exchange: Exchange Contributor +
+Runtime Manager: Manage Servers
+
+| Deploy project instance |  | 
+
+| Deploy project instance using Anypoint Code Builder desktop with MuleSoft Dev Agent | Einstein enablement in Access Management. For more information, see link:https://docs.mulesoft.com/access-management/enabling-einstein[Enabling Einstein for Anypoint Platform]. Anypoint Platform credentials. | A tenant relationship established with a trusted Salesforce organization. Allowlist Anypoint Code Builder URLs. For more information, see link:https://docs.google.com/document/d/1TxSZCQ6KMENmo0_SR8t_2bcGG5BlBlxLOnU74_YTICE/edit?usp=sharing[URLs to Allow to Run Anypoint Code Builder]. These API Manager and Runtime Manager permissions. +
+API Manager: Deploy API Proxies and Manage Policies +
+Runtime Manager: Create Applications
+
+| Deploy project instance using Anypoint Code Builder desktop UI or command palette commands |  | Allowlist Anypoint Code Builder URLs. For more information, see link:https://docs.google.com/document/d/1TxSZCQ6KMENmo0_SR8t_2bcGG5BlBlxLOnU74_YTICE/edit?usp=sharing[URLs to Allow to Run Anypoint Code Builder]. These API Manager and Runtime Manager permissions. +
+API Manager: Deploy API Proxies and Manage Policies +
+Runtime Manager: Create applications
+
+| Deploy project instance using Anypoint CLI | Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable. Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. | These API Manager and Runtime Manager permissions. +
+API Manager: Deploy API Proxies and Manage Policies +
+Runtime Manager: Create Applications and Manage Servers
+
+|===
 
 === Create a Target Space for Your Environment
 
-To deploy an agent network, you need a target space. You can either create a private space for CloudHub 2.0 deployment or `a namespace for Runtime Fabric?`.
+To deploy an agent network, you need a target space. You can either create a private space for CloudHub 2.0 deployment or a namespace for Runtime Fabric.
 
 ==== Create a Private Space for CloudHub 2.0 Deployment
 
@@ -41,7 +84,7 @@ To deploy an agent network, you need a target space. You can either create a pri
 
 === Set Up Agent Network Gateways for Your Target Space
 
-After you create a private space, set up the ingress and egress gateways for deployment. For more information, see link:https://docs.mulesoft.com/gateway/latest/flex-architecture-basic-deployments[Flex Gateway Deployment Models]. `Runtime Fabric instrux?`
+After you create a private space, set up the ingress and egress gateways for deployment. For agent networks, at least one small Managed Flex Gateway and one large Managed Flex Gateway is required. For more information, see link:https://docs.mulesoft.com/gateway/latest/flex-architecture-basic-deployments[Flex Gateway Deployment Models]. 
 
 . In Anypoint Code Builder desktop, open the Command Palette.
 . Select **MuleSoft: Set Up Agent Network Gateways**.
@@ -57,28 +100,7 @@ After you create a private space, set up the ingress and egress gateways for dep
 If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see Build Agent Networks in a CI/CD Environment.
 ====
 
-=== Before You Begin Checklist
-
-If you followed the previous sections' instructions, your environment should be set up and ready for agent networks. Let's check.
-
-* Did you meet all agent network prerequisites?
-
-* Did you meet all Anypoint Code Builder prerequisites?
-
-  * Did you install the latest updates to Visual Studio Code (VS Code) and configured the code command in $PATH?
-
-  * Did you install git and add it to $PATH?
-
-  * Did you install the Anypoint Code Builder extension packs?
-
-  * Did you install PowerShell (Windows operating systems only)?
-
-  * Did you configure your allowlist?
-
-* Did you create a target space for deployment?
-
-* Did you set up agent network gateways?
 
 == See Also
 
-* xref:api-ai-create-spec.adoc[]
+* xref:af-create-agent-network.adoc[]

@@ -10,12 +10,35 @@ Don't worry, we give you a head start by providing you with a YAML template in y
 
 For more information about Agent Fabric, see link:https://docs.mulesoft.com/agent-fabric/[Agent Fabric Overview].
 
+== Agent Network Components
+
+Brokers, agents, and Model Context Protocol (MCP) servers are supported in an agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. A broker is defined by the agents and MCP servers it can leverage to accomplish tasks. 
+
+A broker is a specialized agent that is shown in Anypoint Exchange after you publish your agent network assets and can be reused by other brokers.
+
+Agents and MCP servers are defined locally in the agent network, or externally. Externally-defined agents and MCP servers are defined in a different agent network or elsewhere in your company. Your agent network can use both locally-defined and externally-defined components to complete tasks across your enterprise.
+
 == Considerations
 
-Before you start your agent network project, familiarize yourself with the Agent Fabric considerations. For more information, see link:https://docs.mulesoft.com/agent-fabric[Agent Fabric Overview].
-
-Also, make sure you understand these limitations.
+Before you start your agent network project, make sure you understand these considerations.
 
 * An agent network project supports only one domain (one YAML file per project). For multiple domains, create a separate project for each.
+* These authentication types are supported.
+** Basic
+** Client Credentials
+** Anypoint Client Credentials
+* A2A specification 0.3.0 is supported. Brokers use the A2A protocol to accept requests to reach other agents.
+* These A2A features aren't available.
+** Task History
+** Push Notifications Config
+** Streaming
+* Text-based prompts and responses are supported. Image and binary message/artifact types aren't supported.
 * All LLM models in your agent network project must support structured responses in JSON format. For example, a `gpt4.1` model is supported; a `gpt4` model isn't.
-* When you add governance policies to your agent network project YAML file, those policies persist between deployments. However, if you add governance policies at run-time, those policies don't persist. The next time you deploy your agent network, the governance policies used are the ones in the agent-network.yaml file.
+* These LLMs are supported:
+** Azure OpenAI
+** OpenAI Direct API
+* When you add governance policies to your agent network project YAML file, those policies persist between deployments. However, if you add governance policies at run-time, those policies don't persist. The next time you deploy your agent network, the governance policies used are the ones in the `agent-network.yaml` file.
+
+== See Also
+
+* xref:af-get-started.adoc[]
