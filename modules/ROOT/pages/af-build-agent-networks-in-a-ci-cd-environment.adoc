@@ -6,40 +6,7 @@ If you run operations within a CI/CD environment, you can use Anypoint CLI's plu
 
 Make sure you meet the prerequisites for this task. For prerequisites, see xref:af-get-started.adoc[].
 
-=== Create a Target Space for Your Environment
-
-To deploy an agent network, you'll need a target space. You can either create a private space for CloudHub 2.0 deployment or a namespace for Runtime Fabric. For more information about Runtime Fabric deployments, see link:https://docs.mulesoft.com/runtime-fabric/latest/create-custom-namespace[Creating Namespaces for Application Deployments].
-
-==== Create a Private Space for CloudHub 2.0 Deployment
-
-. Open Anypoint Runtime Manager.
-. Select the environment to use.
-. Select **Private Spaces**.
-. Select **Create private space**.
-. Enter a name for the private space. We recommend `agent-network-space`.
-. Select **Create**.
-. Select **Create private network**.
-. Associate the space with the business group and environments you need to deploy your agent network to. You must complete this step so that the private space appears as a valid deployment target in Anypoint Code Builder and Anypoint CLI.
-
-=== Set Up Agent Network Gateways for Your Target Space
-
-After you create a target space, set up the ingress and egress gateways for deployment. For agent networks, at least one small Managed Flex Gateway and one large Managed Flex Gateway is required. For more information about gateways, see link:https://docs.mulesoft.com/gateway/latest/flex-architecture-basic-deployments[Flex Gateway Deployment Models]. 
-
-Open a terminal window and run this command:
-
-----
-$ anypoint-cli-agent-fabric-plugin agent-network setup gateways --target-space <space>
-----
-
-As a result, the command creates these gateways in the selected private space.
-+
-* agent-network-ingress-gw (with public and internal endpoint)
-* agent-network-egress-gw (with internal endpoint only)
-
-
-== Default Flags and Authentication
-
-For information on default flags that apply to all CLI commands, see link:https://docs.mulesoft.com/anypoint-cli/latest/#default-options[Default Flags].
+=== Authentication
 
 You can authenticate to Anypoint Platform through the command line by running the `anypoint-cli-agent-fabric-plugin` command with a combination of parameters.
 
@@ -59,79 +26,31 @@ $ anypoint-cli-agent-fabric-plugin conf organization myOrgId
 
 For more information, see link:https://docs.mulesoft.com/anypoint-cli/latest/auth[Authentication to the Anypoint Platform CLI].
 
-== Create Your Agent Network Project
+=== Create a Target Space for Your Environment
 
-(do CLI users need all the ACB perms/access?)
+To deploy an agent network, you'll need a target space, if you don't have one already. 
 
-----
-$ anypoint-cli-agent-fabric-plugin agent-network project create --name my-agent-network
-----
+You can either create a private space for CloudHub 2.0 deployment or a namespace for Runtime Fabric. For more information about Runtime Fabric deployments, see link:https://docs.mulesoft.com/runtime-fabric/latest/create-custom-namespace[Creating Namespaces for Application Deployments].
 
-For more information about the command and available flags, run:
+==== Create a Private Space for CloudHub 2.0 Deployment
 
-----
-$ anypoint-cli-agent-fabric-plugin agent-network project create --help
-----
+. Open Anypoint Runtime Manager.
+. Select the environment to use.
+. Select **Private Spaces**.
+. Select **Create private space**.
+. Enter a name for the private space. We recommend `agent-network-space`.
+. Select **Create**.
+. Select **Create private network**.
+. Associate the space with the business group and environments you need to deploy your agent network to. You must complete this step so that the private space appears as a valid deployment target in Anypoint Code Builder and Anypoint CLI.
 
-== Define Your Agent Network Specification
+After you create a target space, set up the ingress and egress gateways for deployment, if you haven't already done so. For agent networks, at least one small Managed Flex Gateway and one large Managed Flex Gateway is required in your environment. For more information about gateways, see link:https://docs.mulesoft.com/gateway/latest/flex-architecture-basic-deployments[Flex Gateway Deployment Models]. 
 
-Edit agent-network.yaml and exchange.json to define your agent network and authentication. For more information, see Define Your Agent Network Specification.
+Use the `agent-network:setup:gateways` command as specified in the command reference.
 
-== Build Your Agent Network Project
+== CLI for Agent Fabric Plugin Reference
 
-----
-$ anypoint-cli-agent-fabric-plugin agent-network project build
-----
+Use these commands to set up gateways and author, publish, and deploy agent network projects.
 
-As a result, the command builds the agent network application and asset definitions.
+include::anypoint-cli::partial$agent-fabric.adoc[tag=summary]
 
-For more information about the command and available flags, run:
-
-----
-$ anypoint-cli-agent-fabric-plugin agent-network project build --help
-----
-
-== Publish Your Agent Network to Anypoint Exchange
-
-=== Permissions and Access
-
-Make sure you have this Anypoint Exchange permission to publish your agent network assets successfully. For more information, see link:https://docs.mulesoft.com/access-management/permissions-by-product#exchange[Permissions - Exchange].
-
-* Exchange Contributor
-
-=== Command
-
-----
-$ anypoint-cli-agent-fabric-plugin agent-network project publish
-----
-
-As a result, the command provides the links and details for all the created assets.
-
-For more information about the command and available flags, run:
-
-----
-$ anypoint-cli-agent-fabric-plugin agent-network project publish --help
-----
-
-After you publish your assets, discover them in **Agents & Tools** in Exchange to get a comprehensive view of your integration, including agent and MCP server assets. Exchange automatically tags brokers for easy identification.
-
-== Deploy Your Agent Network
-
-Make sure that you've created a target space and set up gateways. For more information, see Before You Begin.
-
-=== Permissions and Access
-
-Make sure that you have these permissions to deploy your agent network instance successfully.
-
-* API Manager: Deploy API Proxies and Manage Policies
-* Runtime Manager: Create applications
-
-=== Command
-
-----
-$ anypoint-cli-agent-fabric-plugin agent-network project deploy
-----
-
-If prompted, provide values for the required deployment variables. The command provides details about the deployed assets.
-
-After you deploy your agent network instance, you can apply a governance policy or monitor your agent network activity in Anypoint Monitoring.
+include::anypoint-cli::partial$agent-fabric.adoc[tag=commands]

@@ -1,6 +1,6 @@
 = Create Agent Networks
 
-Anypoint Code Builder desktop includes all the agent network functionality out of the box. Before you start, make sure you completed the steps in Before You Begin with Agent Networks and familiarize yourself with Basic Concepts.
+Anypoint Code Builder desktop includes all the agent network functionality out of the box.
 
 [NOTE]
 If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
@@ -11,7 +11,7 @@ Make sure you meet the prerequisites for this task. For prerequisites, see xref:
 
 == Create Your Agent Network Project
 
-Let MuleSoft Dev Agent help you create your project. Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar. Describe your agent network, including the brokers, agents, MCP servers, and LLMs you want to connect. MuleSoft Dev Agent does the rest. For more information about MuleSoft Dev Agent, see link:https://docs.mulesoft.com/anypoint-code-builder/api-ai-create-spec[Creating API Specs with AI].
+MuleSoft Dev Agent can help you create your project. Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar. Describe your agent network, including the brokers, agents, MCP servers, and LLMs you want to connect. MuleSoft Dev Agent does the rest. For more information about MuleSoft Dev Agent, see link:https://docs.mulesoft.com/anypoint-code-builder/api-ai-create-spec[Creating API Specs with AI].
 
 **Suggested Prompts**
 
@@ -21,25 +21,28 @@ Let MuleSoft Dev Agent help you create your project. Just click the agent icon i
 
 If you don't want to use MuleSoft Dev Agent, create your project using these steps.
 
-. On the Anypoint Code Builder starting panel, under Quick Actions, select **Create an Agent Network**. Or, run the command **MuleSoft: Create an Agent Network Project** in the Command Palette.
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. On the Anypoint Code Builder starting panel, under Quick Actions, select **Create an Agent Network**. Or, run the command **MuleSoft: Create an Agent Network Project** in the xref:start-use-command-palette.adoc[Command Palette].
 
 . If you're not logged in already, log in to your Anypoint Platform account.
 
 . In Create an Agent Network Project, enter a name for the project and select the location where the project should be created.
 
-. Select the business group associated with the target space you created in Before You Begin with Agent Networks.
+. Select the business group associated with the target space you created in xref:af-get-started.adoc[]. The business group you select must be the same business group you selected when you created the target space.
 
 . Select **Create**.
 
-Anypoint Code Builder creates these files as part of your agent network project. You'll use these files to define your agent network specification to meet your business requirements. For more information, see Reference: Agent Network Project Files.
+Anypoint Code Builder creates these files as part of your agent network project. You'll use these files to define your agent network specification to meet your business requirements. For more information, see xref:af-project-files.adoc[].
 
 * **agent-network.yaml** - Specifies brokers, agents, MCP servers, LLMs, policies, and authentication in your agent network.
 
-* **exchange.json** - Specifies Anypoint Exchange assets that are referenced in your agent network. Each asset has an asset ID that you'll use in agent-network.yaml.
+* **exchange.json** - Specifies Anypoint Exchange assets that are referenced in your agent network, as well as the variables to use in your agent network. Each asset has an asset ID that you'll use in `agent-network.yaml`.
 
 The canvas shows a visual, read-only representation of your YAML file. Select any component to show the associated code in the code editor.
 
 image::af-acb-canvas.png["Anypoint Code Builder canvas showing two different brokers with their respective agents and MCP servers"]
 
 Next, configure your agent network project for your unique business needs by defining your agent network specification.
+
+== See Also
+
+* xref:af-define-your-agent-network-specification.adoc[]

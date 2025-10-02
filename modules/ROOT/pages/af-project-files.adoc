@@ -14,7 +14,7 @@ Just like with human labor, digital agents require coordination. We call these c
 
 === Exchange.json
 
-All agent network projects also have an exchange.json file. If you're familiar with Anypoint Platform, you've probably seen this file before. This file contains asset metadata that will be available in Anypoint Exchange after you publish your agent network assets.
+All agent network projects also have an `exchange.json` file. If you're familiar with Anypoint Platform, you've probably seen this file before. This file contains asset metadata that will be available in Anypoint Exchange after you publish your agent network assets.
 
 == File Elements
 
@@ -22,12 +22,12 @@ All agent network projects also have an exchange.json file. If you're familiar w
 
 Here's an example file. These key-value pairs are important for your agent network configuration.
 
-* groupId: The ID of the Anypoint business group that owns your agent network and all of the assets derived from it.
-* assetId: Identifies the agent network YAML file.
-* Dependencies: Existing assets that this network needs to reference.
-* variables: Nested in the metadata section, it defines all the variables whose values shouldn't be hardcoded in the agent network YAML file, but the user needs to be prompted for those values when publishing the agent network.
+* `groupId`: The ID of the Anypoint business group that owns your agent network and all of the assets derived from it.
+* `assetId`: Identifies the agent network project.
+* `dependencies`: Existing assets that this network needs to reference.
+* `variables`: Nested in the metadata section, it defines all the variables whose values shouldn't be hardcoded in the agent network YAML file. The user must be prompted for those values when publishing the agent network. Each variable has a `description` value, a `default` value, and a `secret` value that indicates whether it's treated as sensitive or not.
 
-When the agent network is published, all of the assets derived from it share the same groupId (business group) defined in exchange.json.
+When the agent network is published, all of the assets derived from it share the same `groupId` (business group) defined in `exchange.json`.
 
 [source,json]
 ----
@@ -59,7 +59,8 @@ When the agent network is published, all of the assets derived from it share the
         },
         "clientSecret": {
           "description": "OpenAI LLM Client Secret",
-          "default": ""
+          "default": "",
+          "secret": true
         },
         "url": {
           "description": "OpenAI URL",
@@ -74,9 +75,9 @@ When the agent network is published, all of the assets derived from it share the
 
 ==== Relationship to the Ref Element in Agent-Network.yaml
 
-The "ref" element is used in different elements in the agent network YAML, and is important for your agent network configuration.
+The `ref` element is used in different elements in the agent network YAML, and is important for your agent network configuration.
 
-The "ref" element represents another asset that exists in Exchange. The type of asset referenced depends on the context (agent, MCP server, LLM provider, etc.). The semantic is always that of referencing an asset that exists in Exchange, or will exist when the agent network is published (meaning, it's defined in the file). If referenced, it's in the dependencies section of exchange.json.
+The `ref` element represents another asset that exists in Exchange. The type of asset referenced depends on the context (agent, MCP server, LLM provider, etc.). The semantic is always that of referencing an asset that exists in Exchange, or will exist when the agent network is published (meaning, it's defined in the file). If referenced, it's in the dependencies section of `exchange.json`.
 
 Let's see an example:
 
@@ -88,11 +89,11 @@ Let's see an example:
               name: hr-agent
 ----
 
-The above snippet represents a link to an HR agent. The *name* attribute doesn't point to the agent's human friendly or logical name (which can change); instead, it references the *assetId* that `hr-agent` has in Exchange.
+The above snippet represents a link to an HR agent. The `name` attribute doesn't point to the agent's human friendly or logical name (which can change); instead, it references the `assetId` that `hr-agent` has in Exchange.
 
-The `hr-agent` asset can either exist already, or can be defined in this same YAML. In either case, the Exchange *assetId* is the key to this reference.
+The `hr-agent` asset can either exist already, or can be defined in this same YAML. In either case, the Exchange `assetId` is the key to this reference.
 
-In some cases, the `ref` element needs to point to an asset that's defined in a different business group. For this, the *ref#namespace* attribute can be used to reference the asset's `groupId`.
+In some cases, the `ref` element needs to point to an asset that's defined in a different business group. For this, the `ref#namespace` attribute can be used to reference the asset's `groupId`.  To find the `groupId`, look in the `dependencies` section in `exchange.json`.
 
 [source,yaml]
 ----
@@ -107,7 +108,7 @@ links:
 
 ==== Brokers
 
-The brokers section defines the AI assets in your agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. The broker name is used as the assetId in exchange.json. The groupId defaults to the associated business group value used in exchange.json.
+The brokers section defines the AI assets in your agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. It's defined by the agents and MCP servers it can leverage to accomplish tasks. The broker name is used as the `assetId` in `exchange.json`. The `groupId` defaults to the associated business group value used in `exchange.json`.
 
 ===== Card
 
@@ -116,12 +117,12 @@ The card section adheres to the Agent-to-Agent (A2A) specification v0.3.0 and de
 [source,yaml]
 ----
 brokers:
-employee-onboarding-broker:     # The name that the agent (broker) will be referenced by. This value is used as the asset ID in Anypoint Exchange.
+  employee-onboarding-broker:     # The name that the agent (broker) will be referenced by. This value is used as the asset ID in Anypoint Exchange.
     card:
-      protocolVersion: 0.3.0    # A2A protocol version that the broker supports.
+      protocolVersion: 0.3.0      # A2A protocol version that the broker supports.
       name: Employee Onboarding Broker
-description: This agent acts as a broker for employee onboarding. It orchestrates the onboarding process by leveraging available tools to ensure new employees have access to all of the required systems for their daily work.
-url: ${agentregistry.url}/employee-onboarding-broker   # URL where the broker is hosted. Represents the preferred endpoint as declared by the broker.
+      description: This agent acts as a broker for employee onboarding. It orchestrates the onboarding process by leveraging available tools to ensure new employees have access to all of the required systems for their daily work.
+      url: ${agentregistry.url}/employee-onboarding-broker   # URL where the broker is hosted. Represents the preferred endpoint as declared by the broker.
       provider:
         organization: MuleSoft
         url: https://www.mulesoft.com/
@@ -132,10 +133,10 @@ url: ${agentregistry.url}/employee-onboarding-broker   # URL where the broker is
         - application/json
       skills:                            
         - id: onboarding-agent
-    name: Onboarding Agent
-description: This agent acts as a broker. It orchestrates the use of specialized tools and agents (including MCP servers) to manage employee onboarding. 
-          examples:              # Usage examples
-- Onboard a new sales employee. Employee name is 'Alex Smith', email is 'alex.smith@example.com', and phone number is '555-123-4567'.
+          name: Onboarding Agent
+          description: This agent acts as a broker. It orchestrates the use of specialized tools and agents (including MCP servers) to manage employee onboarding. 
+          examples:                # Usage examples
+            - Onboard a new sales employee. Employee name is 'Alex Smith', email is 'alex.smith@example.com', and phone number is '555-123-4567'.
           inputModes:
             - application/json
             - text/plain
@@ -143,6 +144,16 @@ description: This agent acts as a broker. It orchestrates the use of specialized
             - application/json
             - text/plain
           tags: [onboarding]      # Categorization tags
+      capabilities:
+        streaming: false
+        pushNotifications: false
+        stateTransitionHistory: false
+        extensions:
+          - uri: "https://example.com/ext/konami-code/v1"
+            description: "Description text"
+            required: false
+            params:
+              hints: "Hint text"
       version: 1.0.0		          # Agent (broker) version
 ----
 
@@ -171,12 +182,12 @@ When specifying an LLM model, it must support structured responses in JSON forma
 
 [source,yaml]
 ----
-  llm:                        # LLM provider reference
+  llm:                              # LLM provider reference
     ref:
-name: my-openAI               # Exchange asset ID of this LLM provider. By default, the groupId for this asset is the same as that in exchange.json.
-namespace:                    # Optional. If the asset was defined in a different business group, set the corresponding groupId here. 
-      configuration:
-  model: gpt-5-mini
+      name: my-openAI               # Exchange asset ID of this LLM provider. By default, the groupId for this asset is the same as that in exchange.json.
+      namespace:                    # Optional. If the asset was defined in a different business group, set the corresponding groupId here. 
+    configuration:
+      model: gpt-5-mini
 ----
 
 ===== Instructions (optional)
@@ -187,27 +198,27 @@ Provide optional instructions that are specific to this broker. These instructio
 
 [source,yaml]
 ----
-     instructions:
+instructions:
 - |
-You're an Employee Onboarding Broker. Coordinate onboarding of a new employee across the systems needed for day-to-day work.
-         ## The process for onboarding an employee is:
-- Onboard in HR: Create the new employee record. Fetch the address using available tools. Don't ask for the address unless you're not sure how to get it. 
-- Onboard in CRM: Create the employee's CRM profile. 
-- Since this a long running task, send a Slack update using tool SlackMcpServer.send_status_update to communicate the status of actions taken so far. It should be a human-readable summary. For example: {
-{
-"message": "HR and CRM onboarding completed. Working on next steps...",
-"contextId": "<fetch-the-context-id-from-input>"
-}
-- Request employee laptop: Submit a laptop request in Zendesk. 
-- Request employee badge: Initiate the employee badge request.
-- Send a Slack update using tool SlackMcpServer.send_status_update to communicate the status of actions taken so far. It should be a human-readable summary. For example: {
-{
-"message": "Zendesk laptop and badge onboarding completed. Working on next steps...",
-"contextId": "<fetch-the-context-id-from-input>"
-}
-- IT system setup: Provision the ping ID system for the employee.
-## Final Response
-- Return a plain-text human-readable summary of all steps and actions taken, not just the final step. Format it in a bulleted list. DON'T include tool names in the summary.
+  You're an Employee Onboarding Broker. Coordinate onboarding of a new employee across the systems needed for day-to-day work.
+  ## The process for onboarding an employee is:
+  - Onboard in HR: Create the new employee record. Fetch the address using available tools. Don't ask for the address unless you're not sure how to get it. 
+  - Onboard in CRM: Create the employee's CRM profile. 
+  - Since this a long running task, send a Slack update using tool SlackMcpServer.send_status_update to communicate the status of actions taken so far. It should be a human-readable summary. For example: {
+  {
+  "message": "HR and CRM onboarding completed. Working on next steps...",
+  "contextId": "<fetch-the-context-id-from-input>"
+  }
+  - Request employee laptop: Submit a laptop request in Zendesk. 
+  - Request employee badge: Initiate the employee badge request.
+  - Send a Slack update using tool SlackMcpServer.send_status_update to communicate the status of actions taken so far. It should be a human-readable summary. For example: {
+  {
+  "message": "Zendesk laptop and badge onboarding completed. Working on next steps...",
+  "contextId": "<fetch-the-context-id-from-input>"
+  }
+  - IT system setup: Provision the ping ID system for the employee.
+  ## Final Response
+  - Return a plain-text human-readable summary of all steps and actions taken, not just the final step. Format it in a bulleted list. DON'T include tool names in the summary.
 ----
 
 Here's another example of instructions for a customer service broker. This broker coordinates management of customer-reported incidents.
@@ -240,20 +251,20 @@ This section is the most important part of the entire specification. The links s
 links:
   - agent:
       ref:
-name: hr-agent	 # Exchange asset ID of the linked agent. By default, the groupId for this asset is the same as that in exchange.json.
-namespace:      		 # Optional. If the asset was defined in a different business group, set the corresponding groupId here.
-- agent:
-ref:
-name: badging-agent
-- agent:
-ref:
-name: crm-agent
-- agent:
-ref:
-name: zendesk-agent
-- agent:
-ref:
-name: it-agent
+        name: hr-agent	      # Exchange asset ID of the linked agent. By default, the groupId for this asset is the same as that in exchange.json.
+        namespace:      		   # Optional. If the asset was defined in a different business group, set the corresponding groupId here.
+  - agent:
+      ref:
+        name: badging-agent
+  - agent:
+      ref:
+        name: crm-agent
+  - agent:
+      ref:
+        name: zendesk-agent
+  - agent:
+      ref:
+      name: it-agent
 ----
 
 Keep this section short. Don't add all available agents. Just like `tools`, excess values here leads to drops in agent network accuracy and determinism.
@@ -276,15 +287,15 @@ Tools provide agents with external capabilities. When a broker needs to access a
 ----
 tools:
   - mcp:
-ref: 
-name: talent-pool-mcp	        # Exchange asset ID of MCP server. By default, the groupId for this asset is the same as that in exchange.json.
-allowed:                      # Allowlist specific tools
-- TalentPoolMcpServer.match_email_to_address
-- mcp:
-ref:
-name: slack-mcp
-allowed:
-- SlackMcpServer.send_status_update
+      ref: 
+        name: talent-pool-mcp	        # Exchange asset ID of MCP server. By default, the groupId for this asset is the same as that in exchange.json.
+      allowed:                        # Allowlist specific tools
+        - TalentPoolMcpServer.match_email_to_address
+  - mcp:
+      ref:
+        name: slack-mcp
+      allowed:
+        - SlackMcpServer.send_status_update
 ----
 
 By default, the broker has access to all the tools available on the MCP server. However, the most modern LLMs can only handle around 20 to 25 tools per context before starting to hallucinate. Limit the available tools to the minimum needed. You can apply that filtering through the allowed list.
@@ -304,10 +315,10 @@ When you add governance policies to your project, those policies persist between
 ----
 policies:
   - ref: 
-name:          		# Exchange asset ID of the policy. By default, the groupId for this asset is the same as that in exchange.json.
-namespace:     		# Optional. If the policy was defined in a different business group, set the corresponding groupId here.
-configuration:
-policyConfig1: policyConfig1Value	
+      name:          		# Exchange asset ID of the policy. By default, the groupId for this asset is the same as that in exchange.json.
+      namespace:     		# Optional. If the policy was defined in a different business group, set the corresponding groupId here.
+    configuration:
+      policyConfig1: policyConfig1Value	
 ----
 
 ===== Error Handling
@@ -328,8 +339,8 @@ Reference agents defined in a different agent network, or another agent used in 
 [source,yaml]
 ----
 agents:
-hr-agent:			# Used as the assetId of the asset published to Anypoint Exchange. The default groupId is the associated value used in exchange.json.
-metadata:
+  hr-agent:			# Used as the assetId of the asset published to Anypoint Exchange. The default groupId is the associated value used in exchange.json.
+    metadata:
        platform: azure
        protocol: a2a
   badging-agent:
@@ -361,7 +372,7 @@ Just like in the brokers section, an allowed attribute is available to filter th
 [source,yaml]
 ----
 mcp-servers:
-talent-pool-mcp:				                # Value used as the assetId in exchange.json. The groupId defaults to the associated value used in exchange.json.
+  talent-pool-mcp:				                # Value used as the assetId in exchange.json. The groupId defaults to the associated value used in exchange.json.
     metadata:
       transport:                        # Communication method
         kind: streamableHttp            # HTTP-based transport
@@ -381,7 +392,7 @@ talent-pool-mcp:				                # Value used as the assetId in exchange.json
 
 ==== Llm-providers
 
-Configure the LLMs the brokers use for reasoning. For supported LLMs, see link:https://docs.mulesoft.com/agent-fabric/[Agent Fabric Overview].
+Configure the LLMs the brokers use for reasoning. For supported LLMs, see xref:af-agent-networks.adoc[].
 
 [source,yaml]
 ----
@@ -390,7 +401,7 @@ llm-providers:
     label: OpenAI Provider
     description: OpenAI LLM provider for incident management
     metadata:
-	platform: OpenAI
+	    platform: OpenAI
 ----
 
 ==== Connections
@@ -407,17 +418,17 @@ connections:
   hr-agent:
     kind: agent
     ref:
-name: hr-agent		 # Use the same name as in the associated entry in the agents section or use the Exchange asset ID.
+      name: hr-agent		            # Use the same name as in the associated entry in the agents section or use the Exchange asset ID.
     spec:
-       url: https://hr-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/hr-agent/
-       authentication:
-         kind: oauth2-client-credentials
-         token:
+      url: https://hr-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/hr-agent/  
+      authentication:
+        kind: oauth2-client-credentials
+        token:
            bodyEncoding: form
            timeout: 300
-           url: test.com
-        clientId: clientId
-        clientSecret: clientSecret
+           url: test.com            # Use a variable
+        clientId: clientId          # Use a variable like ${hrAgent.clientId} and define in in exchange.json so the user is prompted for the value at deployment.
+        clientSecret: clientSecret  # Use a variable
 
   badging-agent:
     kind: agent
@@ -543,7 +554,7 @@ In this example, at deployment a connection to the specified agent asset (weathe
 
 == Authentication Types
 
-Authentication is always expressed in accordance with link:https://swagger.io/docs/specification/v3_0/authentication/[Open API authentication methods]. For supported authentication types, see link:https://docs.google.com/document/d/1dVReyn8BzGdQ9QUF0PU1-0qBKUp7G8wZFZ8sFZs0LFM/edit?tab=t.0#heading=h.z4zzg6shhskh[Considerations: Authentication Types].
+Authentication is always expressed in accordance with link:https://swagger.io/docs/specification/v3_0/authentication/[Open API authentication methods]. For supported authentication types, see xref:af-agent-networks.adoc[].
 
 These examples show how to define each type in YAML.
 
