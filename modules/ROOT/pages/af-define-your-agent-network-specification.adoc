@@ -1,26 +1,27 @@
 = Define Your Agent Network Specification
 
-After you create your agent network project, configure `agent-network.yaml` and `exchange.json` to reflect your business needs.
+After you create your agent network project, configure `agent-network.yaml` and `exchange.json` to reflect your business needs. Make sure you meet the prerequisites for this task. For prerequisites, see xref:af-get-started.adoc[].
 
-Let MuleSoft Dev Agent help you configure your agent network specification. Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar. The agent will prompt you for information about your agent network, including the brokers, agents, MCP servers, and LLMs you want to connect. MuleSoft Dev Agent does the rest.
+MuleSoft Dev Agent can help you configure your agent network specification. Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar. The agent prompts you for information about your agent network, including the brokers, agents, MCP servers, and LLMs you want to connect. MuleSoft Dev Agent does the rest. For more information about MuleSoft Dev Agent, see xref:api-ai-create-spec.adoc[].
 
 **Suggested Prompts**
 
 * Help me build an agent network configuration for my Employee Onboarding project.
-* Scaffold my agent network project.
 * Revise my Employee Onboarding agent network project. Use OpenAI for the LLM.
 * Add a new broker for employee offboarding to my HR agent network.
 * Add a new skill to Offboarding broker.
 
-If you don't want to use MuleSoft Dev Agent, edit the `agent-network.yaml` and `exchange.json`files to define your agent network and authentication. The `agent-network.yaml` file can contain definitions for one or more brokers. For authentication, you need your client ID and a secret from your connected app.
+If you don't want to use MuleSoft Dev Agent, edit the `agent-network.yaml` and `exchange.json`files to define your agent network and authentication. The `agent-network.yaml` file can contain definitions for one or more brokers. If you're using Anypoint CLI, you need your client ID and a secret from your connected app for authentication.
 
-If your agent network references Anypoint Exchange assets, you need to use the asset IDs in exchange.json to add references in the `agent-network.yaml` file. To understand sections of the project files and expected values, see Reference: Agent Network Project Files.
+Use auto-completion menus in Anypoint Code Builder to speed your development. For more information, see xref:start-discover-ui.adoc#use-autocomplete[].
+
+If your agent network references Anypoint Exchange assets, you need to use the asset IDs in `exchange.json` to add references in the `agent-network.yaml` file. To understand sections of the project files and expected values, see xref:af-project-files.adoc[].
 
 == Add Exchange Assets to Your Agent Network Project
 
-Have existing Exchange assets you want to leverage in your agent network? No problem. Just add your Exchange assets to the dependencies attribute in exchange.json in your project. After you add assets, edit agent-network.yaml to indicate which brokers use those assets.
+If you have existing Exchange assets you want to leverage in your agent network, add them to the `dependencies` attribute in `exchange.json` in your project. After you add assets, edit `agent-network.yaml` to indicate which brokers use those assets.
 
-Let MuleSoft Dev Agent help you add Exchange assets to your project. Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar and tell the agent that you want to add Exchange assets to your project. MuleSoft Dev Agent does the rest.
+MuleSoft Dev Agent can help you add Exchange assets to your project. Click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar and tell the agent that you want to add Exchange assets to your project. MuleSoft Dev Agent does the rest. For more information about MuleSoft Dev Agent, see xref:api-ai-create-spec.adoc[].
 
 **Suggested Prompts**
 
@@ -33,15 +34,17 @@ If you don't want to use MuleSoft Dev Agent, add your Exchange assets as project
 
 . If you're not logged in already, log in to your Anypoint Platform account.
 
-. In Add Exchange Assets to Project, enter information about the assets you want to add.
+. In Add Exchange Assets to Project, enter information about the assets you want to add. 
 
 . Select **Add to Project**. Assets are added to the dependencies attribute in the exchange.json file in your project.
 
-. Edit your agent network YAML to indicate which brokers use those assets.
+. Edit your agent network YAML to indicate which brokers use those assets. If you added a dependency that doesn't belong to the same business group as your agent network, then in `agent-network.yaml`, specify the namespace property at the same level as name. Provide the `groupId` (business group ID) for the business group that the dependency belongs to. The `groupId` value is the same as the `groupId` value of the corresponding dependency in `exchange.json`.
+
+If you don't provide a namespace value, the same `groupId` as the agent network project is used.
+
+After you add dependencies, they're available as values in auto-completion menus in Anypoint Code Builder. For example, after you add `test-agent` to `exchange.json`, the value `test-agent` is available in auto-completion menus in the code editor in `agent-network.yaml` when you attempt to reference an agent.
 
 == Agentic Asset Name Guidelines
 
-To help you identify your agent network components on the Anypoint Code Builder canvas, consider naming your assets according to these guidelines.
+To help you identify agents that are also brokers on the Anypoint Code Builder canvas, consider appending "Broker" to the end of the name.
 
-* For agents that are also brokers, append "Broker" to the end of the name.
-* For agents and MCP servers, append "Agent" and "MCP server" to the names.

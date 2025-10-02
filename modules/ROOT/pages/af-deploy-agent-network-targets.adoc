@@ -4,33 +4,18 @@ Deploy your agent network instance to a deployment target. You can deploy to a C
 
 [NOTE]
 ====
-If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see Build Agent Networks in a CI/CD Environment.
+If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
 ====
 
 == Before You Begin Deploying Agent Networks
 
-Before you deploy your agent network project, make sure that you completed all steps in Before You Begin with Agent Networks and familiarized yourself with Basic Concepts.
+Make sure you meet the prerequisites for this task. For prerequisites, see xref:af-get-started.adoc[].
 
-=== Permissions and Access
-
-Make sure that you have these permissions to deploy your agent network instance successfully.
-
-* API Manager: Deploy API Proxies and Manage Policies
-* Runtime Manager: Create applications
-
-=== Before You Begin Checklist
-
-If you followed the previous sections' instructions, Anypoint Code Builder desktop should be set up and ready to deploy agent networks. Let's check.
-
-* Did you complete the steps in Before You Begin with Agent Networks, particularly creating a target space for deployment and setting up gateways?
-
-* Did you complete the steps in Before You Begin Creating Agent Networks?
-
-* Do you have the API Manager and Runtime Manager permissions specified in Permissions and Access?
+When you deploy your agent network, an instance is deployed for each connection defined in your agent network. If your agent network contains brokers, an instance is deployed per broker.
 
 == Deploy Your Agent Network
 
-Let MuleSoft Dev Agent help you deploy your agent network instance. Just click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar and tell the agent that you want to deploy your agent network. MuleSoft Dev Agent does the rest.
+MuleSoft Dev Agent can help you deploy your agent network instance. Click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar and tell the agent that you want to deploy your agent network. MuleSoft Dev Agent does the rest.  For more information about MuleSoft Dev Agent, see xref:api-ai-create-spec.adoc[].
 
 **Suggested Prompts**
 
@@ -41,14 +26,14 @@ Let MuleSoft Dev Agent help you deploy your agent network instance. Just click t
 
 If you don't want to use MuleSoft Dev Agent, deploy your agent network instance using these steps.
 
-. In your Anypoint Code Builder project, in the *EXPLORER* bar, right-click a project file and select **Deploy Agent Network**. Or, run the command **MuleSoft: Deploy Agent Network** in the Command Palette.
+. In your Anypoint Code Builder project, in the **Explorer** view, right-click a project file and select **Deploy Agent Network**. Or, run the command **MuleSoft: Deploy Agent Network** in the xref:start-use-command-palette.adoc[].
 
 . If you're not logged in already, log in to your Anypoint Platform account.
 
-. In Deploy Agent Network, specify the environment, target space, gateways, and other deployment information.
+. In Deploy Agent Network, specify the environment, target space, gateways, and other deployment information. If you don't see any deployment targets to select, then you need to set up your target deployment space and set up gateways. For instructions, see xref:af-get-started.adoc[].
 
 . Select **Deploy**.
 
-. Your agent network instance is deployed and ready to be tested.
+. Your instances are deployed and ready to be tested. An instance is deployed for each connection defined in your agent network. If your agent network contains brokers, an instance is deployed per broker.
 
-Next, discover your agent network assets in Agents & Tools in Exchange, apply a governance policy, or monitor your agent network activity in Anypoint Monitoring.
+Next, discover your agent network assets in **Agents & Tools** in Exchange, view your agent network in Agent Visualizer, apply a governance policy in API Manager, or monitor your agent network activity in Anypoint Monitoring.
