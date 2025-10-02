@@ -166,7 +166,7 @@ In this section, specify the LLM to use, custom instructions, available tools, a
 [source,yaml]
 ----
 spec:
-  llm:                    		    # LLM provider reference
+  llm:                            # LLM provider reference
   instructions:                   # Custom instructions
   maxNumberOfLoops: 25            # Max task steps (default: 25)
   maxConsecutiveErrors: 3         # Max recovery attempts 
@@ -251,8 +251,8 @@ This section is the most important part of the entire specification. The links s
 links:
   - agent:
       ref:
-        name: hr-agent	      # Exchange asset ID of the linked agent. By default, the groupId for this asset is the same as that in exchange.json.
-        namespace:      		   # Optional. If the asset was defined in a different business group, set the corresponding groupId here.
+        name: hr-agent        # Exchange asset ID of the linked agent. By default, the groupId for this asset is the same as that in exchange.json.
+        namespace:            # Optional. If the asset was defined in a different business group, set the corresponding groupId here.
   - agent:
       ref:
         name: badging-agent
@@ -288,7 +288,7 @@ Tools provide agents with external capabilities. When a broker needs to access a
 tools:
   - mcp:
       ref: 
-        name: talent-pool-mcp	        # Exchange asset ID of MCP server. By default, the groupId for this asset is the same as that in exchange.json.
+        name: talent-pool-mcp         # Exchange asset ID of MCP server. By default, the groupId for this asset is the same as that in exchange.json.
       allowed:                        # Allowlist specific tools
         - TalentPoolMcpServer.match_email_to_address
   - mcp:
@@ -372,16 +372,16 @@ Just like in the brokers section, an allowed attribute is available to filter th
 [source,yaml]
 ----
 mcp-servers:
-  talent-pool-mcp:				                # Value used as the assetId in exchange.json. The groupId defaults to the associated value used in exchange.json.
+  talent-pool-mcp:                    # Value used as the assetId in exchange.json. The groupId defaults to the associated value used in exchange.json.
     metadata:
-      transport:                        # Communication method
-        kind: streamableHttp            # HTTP-based transport
+      transport:                      # Communication method
+        kind: streamableHttp          # HTTP-based transport
         path: /mcp
         # OR
-        sse:                            # Server-Sent Events transport
+        sse:                          # Server-Sent Events transport
           ssePath: /sse
           messagesPath: /messages
-      tools:                            # Server-level tool filtering
+      tools:                          # Server-level tool filtering
         allowed: [tool1, tool2]       
   slack-mcp:
     metadata:
@@ -418,7 +418,7 @@ connections:
   hr-agent:
     kind: agent
     ref:
-      name: hr-agent		            # Use the same name as in the associated entry in the agents section or use the Exchange asset ID.
+      name: hr-agent                # Use the same name as in the associated entry in the agents section or use the Exchange asset ID.
     spec:
       url: https://hr-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/hr-agent/  
       authentication:
