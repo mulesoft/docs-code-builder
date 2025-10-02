@@ -13,10 +13,15 @@ If results are still inconsistent, verify that your project context and Dev Agen
 If you can't open MuleSoft Dev Agent, verify the following:
 
 * You are logged in to Anypoint Platform from the IDE. For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform from the IDE].
-* You have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions]:
-** *Mule Developer Generative AI User*  
-* You have installed Node.js version 20 (v20.19.4). For more information, see https://nodejs.org/en/download[Download Node.js].
+* You have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions], including:
+** *Mule Developer Generative AI User*
 * You have the required permissions for the tools in the MuleSoft MCP Server that MuleSoft Dev Agent uses to generate accurate responses.  
+
+[[required-permissions]]
+=== Required Permissions for MuleSoft Dev Agent
+
+MuleSoft Dev Agent always uses the permissions of the logged-in Anypoint Platform user.  
+Dev Agent cannot perform any action that the user does not already have permission to perform.
 
 Here are the permissions required across capabilities in the MuleSoft MCP Server:
 
@@ -50,10 +55,11 @@ Here are the permissions required across capabilities in the MuleSoft MCP Server
 
 *Usage*  
 * Usage Viewer  
-====
 
-[NOTE]
-MuleSoft Dev Agent always uses the permissions of the logged-in Anypoint Platform user. Dev Agent cannot perform any action that the user does not already have permission to perform.
+If you want to configure MuleSoft Dev Agent with a different set of permissions, you must:  
+
+. Remove or disable the out-of-the-box MuleSoft MCP Server.  
+. Follow the steps in the xref:mulesoft-mcp-server::getting-started.adoc#set-up-authentication[MuleSoft MCP Server documentation] to set up a connected app with the desired permissions.  
 
 == Troubleshoot Anypoint Platform Authorization Errors
 
