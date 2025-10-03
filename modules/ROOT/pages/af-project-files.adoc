@@ -4,7 +4,7 @@ Your agent network project contains two primary configuration files: `agent-netw
 
 == Basic Concepts
 
-=== Agent-network.yaml
+=== Agent-Network.YAML
 
 The agent network YAML file defines a structured configuration for multi-agent systems, enabling orchestration of AI agents with external services, tools, and inter-agent communication. This format provides a declarative way to define agent capabilities, dependencies, and service integrations.
 
@@ -12,13 +12,13 @@ For example, think of the YAML as your organizational chart for digital labor. E
 
 Just like with human labor, digital agents require coordination. We call these coordinators "brokers". These are special types of agents in your agent network capable of receiving a user prompt, identifying the goal, determining the necessary steps to be carried out, and delegating each step to the proper agent, even if the agent is part of a different broker.
 
-=== Exchange.json
+=== Exchange.JSON
 
 All agent network projects also have an `exchange.json` file. This file contains asset metadata available in Anypoint Exchange after publishing your agent network assets.
 
 == File Elements
 
-=== Exchange.json Elements
+=== Exchange.JSON Elements
 
 Here's an example file. These key-value pairs are important for your agent network configuration.
 
@@ -73,7 +73,7 @@ When the agent network is published, all of the assets derived from it share the
 }
 ----
 
-==== Relationship to the Ref Element in Agent-Network.yaml
+==== Relationship to the Ref Element in Agent-Network.YAML
 
 The `ref` element is used in different elements in the agent network YAML, and is important for your agent network configuration.
 
@@ -104,7 +104,7 @@ links:
               namespace: <the groupId>
 ----
 
-=== Agent-Network.Yaml Elements
+=== Agent-Network.YAML Elements
 
 ==== Brokers
 
