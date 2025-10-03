@@ -104,15 +104,15 @@ links:
               namespace: <the groupId>
 ----
 
-=== Agent-Network.yaml Elements
+=== Agent-Network.Yaml Elements
 
 ==== Brokers
 
-The brokers section defines the AI assets in your agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. It's defined by the agents and MCP servers it can leverage to accomplish tasks. The broker name is used as the `assetId` in `exchange.json`. The `groupId` defaults to the associated business group value used in `exchange.json`.
+The `brokers` section defines the AI assets in your agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. It's defined by the agents and MCP servers it can leverage to accomplish tasks. The broker name is used as the `assetId` in `exchange.json`. The `groupId` defaults to the associated business group value used in `exchange.json`.
 
 ===== Card
 
-The card section adheres to the Agent-to-Agent (A2A) specification v0.3.0 and describes the broker's contract, skills, and capabilities. This is a standard A2A agent card link:https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure[as defined in the Agent2Agent (A2A) Protocol specification.].
+The `card` section adheres to the Agent-to-Agent (A2A) specification v0.3.0 and describes the broker's contract, skills, and capabilities. This is a standard A2A agent card link:https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure[as defined in the Agent2Agent (A2A) Protocol specification.].
 
 [source,yaml]
 ----
@@ -159,7 +159,7 @@ brokers:
 
 ===== Spec
 
-The `spec` configures the broker's internal implementation. You can think of this section as the source code for your broker.
+The `spec` section configures the broker's internal implementation. You can think of this section as the source code for your broker.
 
 In this section, specify the LLM to use, custom instructions, available tools, and error handling. The `links` section defines the agents that are available to this broker. Essentially, the `links` section is where the agent network is defined.
 
@@ -367,11 +367,11 @@ This section lists the MCP servers in your agent network. These servers can be u
 
 MCP StreamableHttp and SSE transports are supported. StreamableHttp is recommended.
 
-Just like in the brokers section, an allowed attribute is available to filter the available tools. The allowed attribute in the brokers section is more granular and applied only to that specific broker. In the mcpServers section, this attribute applies to the MCP server as whole, filtering at the group level.
+Just like in the `brokers` section, an allowed attribute is available to filter the available tools. The allowed attribute in the brokers section is more granular and applied only to that specific broker. In the `mcpServers` section, this attribute applies to the MCP server as whole, filtering at the group level.
 
 [source,yaml]
 ----
-mcp-servers:
+mcpServers:
   talent-pool-mcp:                    # Value used as the assetId in exchange.json. The groupId defaults to the associated value used in exchange.json.
     metadata:
       transport:                      # Communication method
@@ -390,13 +390,13 @@ mcp-servers:
         path: /mcp
 ----
 
-==== Llm-providers
+==== LlmProviders
 
 Configure the LLMs the brokers use for reasoning. For supported LLMs, see xref:af-agent-networks.adoc[].
 
 [source,yaml]
 ----
-llm-providers:
+llmProviders:
   my-openAI:                            # Provider reference name
     label: OpenAI Provider
     description: OpenAI LLM provider for incident management
