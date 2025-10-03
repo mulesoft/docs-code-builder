@@ -1,31 +1,69 @@
-= Designing API Specs with AI
+= Designing API Specs with MuleSoft Dev Agent
 :page-deployment-options: cloud-ide, desktop-ide
 
-Simplify your API designs by generating API specifications with AI. Use natural language to create prompts and let Einstein Generative AI build APIs for you. Pre-trained large language models (LLMs) within the Salesforce Shared Trust Boundary power these capabilities and are at the core of API spec generation in Anypoint Code Builder.
+Simplify your API designs by generating API specifications with MuleSoft Dev Agent. Use natural language prompts in Dev Agent to build APIs. The xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server]) powers these capabilities and is at the core of API spec generation in Anypoint Code Builder.
 
-NOTE: Anypoint Code Builder Generative AI API specifications is available on US, EU, Canada, and Japan cloud hosts.
+NOTE: MuleSoft Dev Agent is available on US, EU, Canada, and Japan cloud hosts.
 
 == Trust Layer
 
-The generative AI trust layer bridges Anypoint Platform and the LLMs, as shown in this flow: 
+The Einstein trust layer bridges Anypoint Platform and the underlying large language models (LLMs):
 
-image::acb-einstein-trust-layer.png["Flow depicting how the trust layer works, including the steps of the flow"]
+image::trust-layer-diagram.png["Flow depicting how Dev Agent interacts with the trust layer"]
 
 [calloutlist]
-. The Anypoint Code Builder user creates a message based on their use case and sends it to Agentforce.  
-. To minimize inaccurate responses (the AI "hallucination" effect), messages are grounded with factual MuleSoft proprietary data and user context.
-. To ensure the data is sent safely to the external LLM, the message is sent to Open AI via the secure gateway. 
-. To keep your data secure, all data remains in Salesforce.  
-. After the LLM generates a response, the content is sent back through the secure gateway.
-. MuleSoft validates the generated output to ensure the generated flow works within the MuleSoft ecosystem. 
-. Anypoint Code Builder logs the message and generated responses for monitoring before surfacing the validated response in Anypoint Code Builder.
+. You create a prompt based on your use case and submit it through MuleSoft Dev Agent.  
+. To minimize inaccurate responses, prompts are grounded with MuleSoft proprietary data and user context.  
+. Data is sent securely through the MuleSoft MCP Server, which comes pre-configured in Dev Agent, to the LLM.  
+. All data remains within the Salesforce Shared Trust Boundary.  
+. After the LLM generates a response, the content is returned through the secure pathway.  
+. MuleSoft validates the generated output to ensure that the specification works within the MuleSoft ecosystem.  
+. Anypoint Code Builder displays the validated response in the IDE.  
 
 [IMPORTANT]
-This feature uses generative AI, which is known to include inaccurate or harmful responses. Before implementing this feature, review the output for accuracy and safety. You assume responsibility for the output when making business decisions.
+AI features can produce inaccurate or harmful responses. Review all generated output for accuracy and safety before applying it in production. You assume responsibility for the generated content when making business decisions.
+
+[[settings]]
+== MuleSoft Dev Agent Settings
+
+MuleSoft Dev Agent provides additional options to customize and extend how you interact with generative AI in Anypoint Code Builder.  
+
+[[settings-approve]]
+=== Configure Dev Agent Settings
+Access the *Auto-approve Settings* panel by clicking the *Auto-approve* section at the bottom of the MuleSoft Dev Agent window.  
+From here, you can configure permissions such as reading and editing project files, executing commands, and using MCP servers.  
+
+[[rules-workflows]]
+=== Add Rules and Workflows
+Click the *Rules & Workflows* icon in the lower-left corner of the Dev Agent panel.  
+Use global or workspace rules to guide Dev Agent behavior, and create workflows with slash commands for repeated tasks.  
+
+[[context-files]]
+=== Provide Additional Context
+Click the *Add Context* icon in the lower-left corner of the Dev Agent panel to upload supporting files, such as requirements, config files, or terminal outputs.  
+These files are used as context for more accurate API generation.  
+
+[[mcp]]
+=== Extend Dev Agent with MCP Servers
+MuleSoft Dev Agent comes preconfigured with a MuleSoft MCP Server, and you can connect additional MCP servers for custom capabilities.  
+See xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server documentation].
+
+[[new-chat]]
+=== Start a New Chat
+Start a new conversation with MuleSoft Dev Agent at any time by clicking the *New Chat* option in the panel.  
+This clears previous context and begins a new session.
+
+[[view-conversation]]
+=== View Conversation
+You can scroll and review the current conversation with MuleSoft Dev Agent directly in the panel to track generated outputs and file actions.
+
+== Adding Rules and Workflows
+
+You can customize how Dev Agent generates API specifications by adding rules and workflows:
+
+* *Rules* let you enforce coding or design conventions across generated specs. For example, you can define error-handling patterns or naming standards.  
+* *Workflows* define reusable sequences of steps that Dev Agent can execute automatically. Workflows can be triggered with slash commands in the Dev Agent panel.  
 
 == See Also
 
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_overview.htm&type=5[Einstein Generative AI & Trust]
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_layer.htm&type=5[Einstein Trust Layer]
-* https://help.salesforce.com/s/articleView?id=sf.generative_ai_trust_arch.htm&type=5[Einstein Trust Layer: Designed for Trust]
-* xref:api-ai-create-spec.adoc[]
+* xref:api-ai-create-spec.adoc[Creating API Specs with Dev Agent]  

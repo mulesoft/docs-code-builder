@@ -1,28 +1,35 @@
 = Creating API Specs with AI
 :page-deployment-options: cloud-ide, desktop-ide
 
-The Generative API Specification feature unlocks AI capabilities for API design journeys by generating and mocking API specs from natural language. The feature reduces the time spent on API design by simplifying the creation of rigid, syntax-heavy specs. You can access the feature after creating an API project that's in the supported RAML 1.0 or OAS 3.0 format or from the Open Agentforce icon within the project. The system supports multi-turn conversations and provides validated API specifications.
+= Creating API Specs with MuleSoft Dev Agent
+:page-deployment-options: cloud-ide, desktop-ide
+
+MuleSoft Dev Agent is a purpose-built assistant for the development lifecycle, available directly in Anypoint Code Builder. It provides a unified panel that lets you interact with AI features using natural language prompts. Dev Agent works with the embedded MuleSoft MCP Server (see xref:mulesoft-mcp-server::index.adoc[Mulesoft MCP Server]) to support capabilities such as deploying applications, managing instances, and creating new projects.
+
+One of these capabilities is AI-powered API specification generation. With Dev Agent, you can generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications.
 
 [[before-you-begin]]
 == Before You Begin
 
-Before you start creating your API spec:
+Before you start creating your API spec, make sure you meet the following prerequisites:
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
-* Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
-* Make sure you have these permissions to use the Anypoint Code Builder Agentforce feature:
-** Anypoint Code Builder Developer
-** Mule Developer Generative AI User
-* Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
-* Log in to Anypoint Code Builder with your Anypoint Platform credentials.
-* xref:des-create-api-specs.adoc[Create an API spec project] in Anypoint Code Builder in the supported RAML 1.0 or OAS 3.0 format, and then select a business group. The business group must have xref:access-management::enabling-einstein.adoc[Einstein generative AI enabled]. If you don't have Einstein generative AI after selecting a business group, contact your Anypoint Platform administrator to enable the feature.
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].  
+* Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].  
+* Ensure you have the following permissions to use MuleSoft Dev Agent:  
+** *Anypoint Code Builder Developer* (to use Dev Agent in the Cloud IDE)  
+** *Mule Developer Generative AI User*  
+* Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].  
+
+NOTE: Authentication happens through the user logged into Anypoint Code Builder. MuleSoft Dev Agent inherits the same permissions as that user and can only execute actions that the user is authorized to perform in Anypoint Platform.
+
 
 [[design-spec-ai]]
 == Design an API Spec with AI
 
-To design an API spec with AI, begin by reviewing the starter prompt for guidance on the context the agent needs. 
+To design an API spec with MuleSoft Dev Agent:
 
-. Describe your API spec in the chat. The agent prompts you for clarification if it doesn't understand your request.
+. Open MuleSoft Dev Agent from the toolbar or from the *Build Your Ecosysyem with AI* card in the canvas.
+. Enter a prompt that describes your API specification.
 +
 Include these required details and consider including optional details to generate a more precise spec:
 +
@@ -159,25 +166,60 @@ Optionally, provide a description, format, minimum and maximum length, default v
 Governance isn't included in the validation.
 
 [start=3]
-. Review the spec and continue the conversation if you'd like to make changes.
-. Click *Replace* to add the generated API spec to your project. All file content is replaced by the inserted code.
-+
-You can also copy the generated API spec to your clipboard by clicking *Copy*.
+. Enter your prompt in MuleSoft Dev Agent and submit it.  
+. Review the generated specification.  
+. If *Auto-approve* is enabled, Dev Agent writes the generated API spec directly into your project files.  
+. If *Auto-approve* is disabled, Dev Agent prompts you to approve or reject each file change before applying it.  
+. After the API project is generated, you can also:  
+** Ask Dev Agent to publish the API asset to Exchange.  
+** Add governance rulesets to validate your specification.  
+** Mock requests to the API directly from the IDE.  
 
-== Give Feedback on Agent Responses
+[[rules-workflows]]
+== Define Rules and Workflows
 
-Share your feedback about the agent's response by clicking thumbs up or thumbs down.
+To define reusable rules and workflows for MuleSoft Dev Agent:
 
-== View Conversation History
+. In the MuleSoft Dev Agent panel, click the *Rules/Workflows* icon in the lower-left corner (next to the *Context* icon).  
+. Choose one of the following tabs:
+* Rules: Define constraints or guidelines for how the API spec should be generated. +
+For example, enforce naming conventions or require consistent error handling. +
+Rules can be defined at the *Global Rules* or *Workspace Rules* level.  
 
-To view your past conversations, click *Open chat history*. Your last 30 days of conversations show.
+* Workflows: Create a series of steps that MuleSoft Dev Agent executes as a predefined action. +
+Workflows are invoked using slash commands (for example, `/workflow-name`) in the MuleSoft Dev Agent panel.
 
-== Start a New Chat
+[[context-files]]
+== Provide Additional Context
 
-You can only create an API spec if you have a project open in the supported RAML 1.0 or OAS 3.0 format. Click *Create API Spec* from the *New Chat* dropdown to create a new API spec.
+You can provide additional inputs, such as requirement files (for example, `requirements.txt`), terminal outputs, or project folders, to help Mulesoft Dev Agent generate more accurate API specifications. These files are used as contextual references during API generation.  
 
-The option doesn't show for projects that aren't in the supported format.
+To add context:
+
+. In the MuleSoft Dev Agent panel, click the *Add Context* icon in the lower-left corner.  
+. Select the file or folder you want to attach, or paste terminal input/output.  
+. Confirm to add the context to your current task.  
+
+[[settings]]
+== MuleSoft Dev Agent Settings
+
+You can control how MuleSoft Dev Agent interacts with your project through the *Settings* panel.  
+To access this panel, click the *Auto-approve* section at the bottom of the MuleSoft Dev Agent window.
+
+Available settings are:
+
+* *Auto-approve*: Enable to apply changes automatically without prompting for confirmation.  +
+If Auto-approve is disabled, Dev Agent will request your approval before making any file changes.
+* *Read project files*: Allow MuleSoft Dev Agent to read project files for context.  
+* *Edit project files*: Allow MuleSoft Dev Agent to write changes directly to your project.  
+* *Read all files*: Allow MuleSoft Dev Agent to read all files on your computer.
+* *Edit all files*: Allow MuleSoft Dev Agent to edit any file on your computer.
+* *Use MCP Servers*: Allow MuleSoft Dev Agent to use connected MCP servers.
+* *Execute safe commands*: Allow MuleSoft Dev Agent to execute safe terminal commands.
+* *Execute all commands*: Allow MuleSoft Dev Agent to execute any terminal command.
+* *Use the browser*: Allow MuleSoft Dev Agent to launch and interact with websites in a browser.
 
 == See Also
 
 * xref:api-ai-design-spec.adoc[]
+

@@ -1,41 +1,75 @@
-= Troubleshoot Agentforce for Anypoint Code Builder
+= Troubleshoot AI Features in Anypoint Code Builder
 
-The following errors sometimes occur when you use Agentforce for Anypoint Code Builder.
+The following errors sometimes occur when you use MuleSoft Dev Agent in Anypoint Code Builder.
 
-== Unexpected Query Results When Using the Agentforce Generative Flow Feature
+== Unexpected Results When Using Dev Agent
 
-If the generative flow doesn't return accurate and useful results for the messages you enter, rewrite your message and follow the guidelines to xref:int-ai-create-integrations.adoc#craft-ai-prompt[craft an effective message].
+If the generated flow doesn't return accurate or useful results for your prompt, try rewriting your prompt and follow the guidelines to xref:int-ai-create-integrations.adoc#craft-ai-prompt[write an effective prompt].
 
-== Troubleshoot Agentforce Access Errors
+If results are still inconsistent, verify that your project context and Dev Agent settings are correctly configured.
 
-If you can't access Agentforce, contact your Anypoint Platform organization administrator. If you're the organization administrator, check these considerations:
+== Troubleshoot Dev Agent Access Errors
 
-* You accepted the terms and conditions and xref:access-management::enabling-einstein.adoc[enabled Einstein for Anypoint Code Builder] for your organization. 
-* The Salesforce organization you are connected to for Agentforce requests has Generative AI enabled. For more information, see https://help.salesforce.com/s/articleView?id=sf.generative_ai_enable.htm[Set Up Einstein Generative AI].
-* The Salesforce organization you are connected to for Agentforce requests has an xref:access-management::trusted-salesforce-org.adoc[established a tenant relationship] with your Anypoint Platform organization, and the connection is enabled.  
-* The Salesforce organization you are connected to for Agentforce requests is valid. For example, verify that it's not expired or otherwise disabled. 
+If you can't open MuleSoft Dev Agent, verify the following:
+
+* You are logged in to Anypoint Platform from the IDE. For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform from the IDE].
+* You have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions], including:
+** *Mule Developer Generative AI User*
+* You have the required permissions for the tools in the MuleSoft MCP Server that MuleSoft Dev Agent uses to generate accurate responses.  
+
+[[required-permissions]]
+=== Required Permissions for MuleSoft Dev Agent
+
+MuleSoft Dev Agent always uses the permissions of the logged-in Anypoint Platform user.  
+Dev Agent cannot perform any action that the user does not already have permission to perform.
+
+Here are the permissions required across capabilities in the MuleSoft MCP Server:
+
+[%collapsible]
+.Required Permissions
+====
+*Anypoint Monitoring*  
+* Monitoring Viewer  
+
+*API Manager*  
+* Manage APIs Configuration  
+* Manage Policies  
+* View APIs Configuration  
+* View Policies  
+
+*Exchange*  
+* Exchange Administrator  
+* Exchange Contributor  
+* Exchange Creator  
+* Exchange Viewer  
+
+*General*  
+* View Organization  
+* View Connected Applications  
+
+*Runtime Manager*  
+* Read Applications  
+* Create Applications  
+* Read Runtime Fabrics  
+* CloudHub Network Viewer  
+
+*Usage*  
+* Usage Viewer  
+
+If you want to configure MuleSoft Dev Agent with a different set of permissions, you must:  
+
+. Remove or disable the out-of-the-box MuleSoft MCP Server.  
+. Follow the steps in the xref:mulesoft-mcp-server::getting-started.adoc#set-up-authentication[MuleSoft MCP Server documentation] to set up a connected app with the desired permissions.  
 
 == Troubleshoot Anypoint Platform Authorization Errors
 
 If you receive an authorization error, contact your Anypoint Platform organization administrator. If you are the organization administrator, check the following:
 
-* The user has the *Mule Developer Generative AI User* permission assigned in Anypoint Platform access management.
-* You accepted the terms and conditions to xref:access-management::enabling-einstein.adoc[enable Einstein] for your organization.
-* Your Anypoint Platform organization is current and active. 
-
-== Agentforce Doesn't Appear for EU Cloud Users on the Desktop IDE
-
-If you are signed in to your Anypoint Platform account on the EU Cloud and Agentforce doesn't appear in the UI, verify the following:
-
-* You completed the xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud] procedure.
-* You are signed in to Anypoint Platform through the Anypoint Code Builder app.
-* xref:int-ai-create-integrations.adoc#before-you-begin[You have the required permissions].
-
+* The user has the required Anypoint Code Builder permissions.
+* Your Anypoint Platform organization is current and active.
 
 == See Also
 
-* xref:access-management::trusted-salesforce-org.adoc[]
-* xref:access-management::enabling-einstein.adoc[]
 * xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform from the IDE]
-* xref:access-management::permissions-by-product.adoc#anypoint-code-builder[Anypoint Code Builder Permissions]
-
+* xref:start-configure-permissions.adoc#permissions[Anypoint Code Builder Permissions]
+* xref:int-ai-create-integrations.adoc[]
