@@ -155,6 +155,88 @@ Anypoint CLI Agent Fabric Plugin. For more information, see link:https://www.npm
 
 |===
 
+== Verify and Add the Anypoint Environment Variable for Your Non-U.S. Region
+
+Before you start Anypoint Code Builder desktop to create agent networks, if you're not located in the U.S., make sure that the `ANYPOINT_ENV` environment variable is set to the appropriate value for your region. 
+
+**Sample Valid Values**
+
+These are valid values for some geographic regions.
+[cols="1,1"]
+|===
+|Region |Value 
+
+|U.S.
+|`prod`
+
+|Canada
+|`ca1`
+
+|Europe
+|`prod-eu`
+
+|Japan
+|`jp1`
+|===
+
+=== MacOS
+
+If you run Anypoint Code Builder desktop on macOS, verify your environment variable and add it if needed.
+
+==== Verify the `ANYPOINT_ENV` Environment Variable
+
+. Open a Terminal window and run this command: `bash`.
+. Run this command: `echo $ANYPOINT_ENV`.
+
+If the value doesn't reflect your geographic region, or it is empty, set the `ANYPOINT_ENV` environment variable.
+
+==== Add the `ANYPOINT_ENV` Environment Variable
+
+Include environment variables by adding an export command to a shell configuration file.
+
+. Open a Terminal window.
+. Determine the shell configuration file you need to edit. To see your default shell, run `echo $SHELL`. Common files are:
+** `~/.bashrc` or `~/.bash_profile` for Bash users
+** `~/.zshrc` for Zsh users
+** `~/.profile`
+. Open the shell configuration file with a text editor. 
+. In the text editor, at the end of the file, add this line: `export ANYPOINT_ENV={region value}`.
+. Save and close the file.
+. If you want to use the updated shell configuration file without logging out and back in, source the file. For example:
+----
+Bash
+source ~/.zshrc  # Use the file you edited
+----
+
+=== Windows
+
+If you run Anypoint Code Builder desktop on Windows, verify your environment variable and add it if needed.
+
+==== Verify the ANYPOINT_ENV Environment Variable
+
+. Open a Command Prompt or PowerShell window.
+. If you're in a Command Prompt window, run this command: `echo %ANYPOINT_ENV%`. If you're in a PowerShell window, run this command: `echo $env:ANYPOINT_ENV`. 
+
+If the value doesn't reflect your geographic region (or is empty), set the `ANYPOINT_ENV` environment variable.
+
+==== Add the ANYPOINT_ENV Environment Variable Using System Properties
+
+. Open System Properties. Tip: From the **Start** menu, search for `Edit the system environment variables`.
+. In System Properties, click **Environment Variables**.
+. Choose whether to set a User variable (for the current user) or a System variable (for all users). For most cases, setting a User variable is sufficient.
+. In the User or System variable area, click **New**.
+. In variable name, enter `ANYPOINT_ENV`.
+. In variable value, enter the value for your region. For example, if you're in the U.S., enter `prod`.
+. Save the changes.
+. Open a new Command Prompt or PowerShell window to load the new variable.
+
+==== Set the ANYPOINT_ENV Environment Variable Using Command Prompt or PowerShell
+
+If the `ANYPOINT_ENV` environment variable exists, and you want to change the value quickly, use a Command Prompt or PowerShell window.
+
+. Open a Command Prompt or PowerShell window.
+. If you're in a Command Prompt window, run this command: `setx ANYPOINT_ENV {region value}` which sets the value permanently for new Command Prompt windows. If you're in a PowerShell window, run this command: `{Environment}::SetEnvironmentVariable("ANYPOINT_ENV", "{region value}", "User")` which sets the value for the current user.
+
 == Create a Target Space for Your Environment
 
 To deploy an agent network, you need a target space. You can either create a private space for CloudHub 2.0 deployment or a target space for Runtime Fabric (limited availability). For more information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Flex Gateway on Runtime Fabric].
