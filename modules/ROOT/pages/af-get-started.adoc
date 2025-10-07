@@ -19,10 +19,10 @@ Before you start your agent network project, make sure that you have these produ
 {sp} +
 CloudHub 2.0 or Runtime Fabric (limited availability) |
 
-| Set up ingress and egress gateways for target space using Anypoint Code Builder desktop command palette command | Managed Flex Gateway with target space entitlements. At least one small Managed Flex Gateway and one large Managed Flex Gateway are required. 
+| Set up ingress and egress gateways for target space using Anypoint Code Builder command palette command | Managed Flex Gateway with target space entitlements. At least one small Managed Flex Gateway and one large Managed Flex Gateway are required. 
 {sp} +
 {sp} +
-Anypoint Code Builder. For more information, see xref:start-acb-desktop.adoc[]. | Runtime Manager: Manage Servers permission
+Anypoint Code Builder desktop or web IDE. For more information, see xref:start-acb.adoc[]. | Runtime Manager: Manage Servers permission
 
 | Set up ingress and egress gateways for target space using Anypoint CLI | Managed Flex Gateway with target space entitlements. At least one small Managed Flex Gateway and one large Managed Flex Gateway are required. 
 {sp} +
@@ -37,7 +37,7 @@ Anypoint CLI Agent Fabric Plugin. For more information, see link:https://www.npm
 
 | *Create project* |  | 
 
-| Create project using Anypoint Code Builder desktop with MuleSoft Dev Agent | Anypoint Code Builder. For more information, see xref:start-acb-desktop.adoc[]. 
+| Create project using Anypoint Code Builder with MuleSoft Dev Agent | Anypoint Code Builder desktop or web IDE. For more information, see xref:start-acb.adoc[]. 
 {sp} +
 {sp} +
 PowerShell (Windows operating systems only). For more information, see link:https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3[Installing PowerShell on Windows]. 
@@ -54,7 +54,7 @@ Configure your allowlist. For more information, see xref:urls-to-allow.adoc[].
 {sp} + 
 Anypoint Code Builder permissions: Anypoint Code Builder Developer, Mule Developer Generative AI User
 
-| Create project using Anypoint Code Builder desktop UI or command palette commands | Anypoint Code Builder. For more information, see xref:start-acb-desktop.adoc[]. 
+| Create project using Anypoint Code Builder UI or command palette commands | Anypoint Code Builder desktop or web IDE. For more information, see xref:start-acb.adoc[]. 
 {sp} +
 {sp} +
 PowerShell (Windows operating systems only). For more information, see link:https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3[Installing PowerShell on Windows]. | Configure your allowlist. For more information, see xref:urls-to-allow.adoc[].
@@ -69,7 +69,7 @@ Anypoint CLI Agent Fabric Plugin. For more information, see link:https://www.npm
 
 | *Define agent network specification* |  | 
 
-| Add Exchange assets to project using Anypoint Code Builder desktop with MuleSoft Dev Agent | Einstein enablement in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[]. 
+| Add Exchange assets to project using Anypoint Code Builder with MuleSoft Dev Agent | Einstein enablement in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[]. 
 {sp} +
 {sp} +
 Anypoint Platform credentials. | A tenant relationship established with a trusted Salesforce organization. 
@@ -103,7 +103,7 @@ Anypoint CLI Agent Fabric Plugin. For more information, see link:https://www.npm
 
 | *Publish project assets to Exchange* |  | 
 
-| Publish project assets using Anypoint Code Builder desktop with MuleSoft Dev Agent | Einstein enablement in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[]. 
+| Publish project assets using Anypoint Code Builder with MuleSoft Dev Agent | Einstein enablement in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[]. 
 {sp} +
 {sp} +
 Anypoint Platform credentials. | A tenant relationship established with a trusted Salesforce organization.
@@ -114,7 +114,7 @@ Allowlist Anypoint Code Builder URLs. For more information, see xref:urls-to-all
 {sp} +
 Anypoint Exchange: Exchange Contributor permission. For more information, see xref:access-management::permissions-by-product.adoc#exchange[].
 
-| Publish project assets using Anypoint Code Builder desktop UI or command palette commands |  | Allowlist Anypoint Code Builder URLs. For more information, see xref:urls-to-allow.adoc[]. 
+| Publish project assets using Anypoint Code Builder UI or command palette commands |  | Allowlist Anypoint Code Builder URLs. For more information, see xref:urls-to-allow.adoc[]. 
 {sp} +
 {sp} +
 Anypoint Exchange: Exchange Contributor permission. For more information, see xref:access-management::permissions-by-product.adoc#exchange[].
@@ -129,7 +129,7 @@ Anypoint CLI Agent Fabric Plugin. For more information, see link:https://www.npm
 
 | *Deploy project instance* |  | 
 
-| Deploy project instance using Anypoint Code Builder desktop with MuleSoft Dev Agent | Einstein enablement in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[]. 
+| Deploy project instance using Anypoint Code Builder with MuleSoft Dev Agent | Einstein enablement in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[]. 
 {sp} +
 {sp} +
 Anypoint Platform credentials. | A tenant relationship established with a trusted Salesforce organization. 
@@ -140,7 +140,7 @@ Allowlist Anypoint Code Builder URLs. For more information, see xref:urls-to-all
 {sp} +
 API Manager: Deploy API Proxies and Manage Policies and Runtime Manager: Create Applications permissions
 
-| Deploy project instance using Anypoint Code Builder desktop UI or command palette commands |  | Allowlist Anypoint Code Builder URLs. For more information, see xref:urls-to-allow.adoc[]. 
+| Deploy project instance using Anypoint Code Builder UI or command palette commands |  | Allowlist Anypoint Code Builder URLs. For more information, see xref:urls-to-allow.adoc[]. 
 {sp} +
 {sp} +
 API Manager: Deploy API Proxies and Manage Policies and Runtime Manager: Create Applications permissions
@@ -157,7 +157,7 @@ Anypoint CLI Agent Fabric Plugin. For more information, see link:https://www.npm
 
 == Verify and Add the Anypoint Environment Variable for Your Non-U.S. Region
 
-Before you start Anypoint Code Builder desktop to create agent networks, if you're not located in the U.S., make sure that the `ANYPOINT_ENV` environment variable is set to the appropriate value for your region. 
+Before you start Anypoint Code Builder to create agent networks, if you're not located in the U.S., make sure that the `ANYPOINT_ENV` environment variable is set to the appropriate value for your region. 
 
 **Sample Valid Values**
 
@@ -181,7 +181,7 @@ These are valid values for some geographic regions.
 
 === MacOS
 
-If you run Anypoint Code Builder desktop on macOS, verify your environment variable and add it if needed.
+If you run Anypoint Code Builder on macOS, verify your environment variable and add it if needed.
 
 ==== Verify the `ANYPOINT_ENV` Environment Variable
 
@@ -210,7 +210,7 @@ source ~/.zshrc  # Use the file you edited
 
 === Windows
 
-If you run Anypoint Code Builder desktop on Windows, verify your environment variable and add it if needed.
+If you run Anypoint Code Builder on Windows, verify your environment variable and add it if needed.
 
 ==== Verify the ANYPOINT_ENV Environment Variable
 
@@ -257,7 +257,7 @@ To deploy an agent network, you need a target space. You can either create a pri
 
 After you create a target space, set up the ingress and egress gateways for deployment. For agent networks, at least one small Managed Flex Gateway and one large Managed Flex Gateway is required in your environment. For more information about gateways, see xref:gateway::flex-architecture-basic-deployments.adoc[]. For more information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Flex Gateway on Runtime Fabric].
 
-. In Anypoint Code Builder desktop, open the Command Palette.
+. In Anypoint Code Builder, open the Command Palette.
 . Select **MuleSoft: Set Up Agent Network Gateways**.
 . If you're not logged in already, log in to your Anypoint Platform account.
 . Select the business group, environment, and private space.
