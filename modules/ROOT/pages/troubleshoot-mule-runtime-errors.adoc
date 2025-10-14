@@ -8,45 +8,46 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Anypoint Code Builder bundles a version 4 instance of Mule runtime engine (Mule) to run your integrations and implementations.  
 
-Do not change the default locations of Mule unless you receive an error that Mule is not found or installed. If such errors occur, the following properties enable you to change the path to Mule:
+Don't change the default locations of Mule unless you receive an error that Mule isn't found or installed. If such errors occur, you can configure the Mule Home path.
 
-* *Mule Runtimes Directory*: The default location of the Mule installation.
-+
-Default value: `/Users/<user-name>/muleRuntimes/`
+If configuring your Mule runtime, ensure you're defining the `mule.homeDirectory` property. The `mule.runtime.muleRuntimesDirectory` and `mule.runtime.muleHome` properties are legacy configurations no longer used.
+
+* *Mule runtimes*: The Mule runtimes are located in the {yourACBHome}/runtimes directory. By default, this is located at /Users/{user}/AnypointCodeBuilder/runtime.
+
 * *Mule Home*: The full path that points to the root files of the Mule instance.
 +
-Default value: `/Users/<user-name>/muleRuntimes/<mule-runtime-installation>`
+Default value: `/Users/<user-name>/AnypointCodeBuilder/runtime/<mule-runtime-installation>`
 
 
 == Mule Runtime Is Not Installed
 
-The error `Mule Runtime Is Not Installed, You Must Configure a Mule Runtime to Enable This Feature` occurs if *Mule Home* and *Mule Runtimes Directory* are misconfigured or empty and a feature requires a running Mule instance. For example, auto-completion and debugging features require Mule to run. 
+The error `Mule Runtime Is Not Installed, You Must Configure a Mule Runtime to Enable This Feature` occurs if *Mule Home* is misconfigured or empty and a feature requires a running Mule instance. For example, auto completion and debugging features require Mule to run. 
 
-To troubleshoot this issue, use the following procedure: 
+To troubleshoot this issue, use this procedure: 
 
-. Locate the *Mule > Runtime: Mule Home* and *Mule > Runtime: Mule Runtimes Directory* properties:
+. Locate the *Mule > Runtime: Mule Home* property:
 +
 image::open-settings.png["The Settings gear icon highlighted in the Anypoint Code Builder menu panel"]
 
 . Provide the full path to the folder that contains Mule runtime. This field must not be empty.
 +
-image::mule-runtimes-settings.png["The default directory locations for the Mule Runtime Engine and its versions"]
+image::mule-runtimes-settings.png["Settings dialog showing Mule Home configuration field with default path"]
 
 == No Mule Runtime Found
 
 The warning `No Mule runtime found. To perform this action, you must have Mule runtime configured.`
-occurs if Mule is not configured properly when you open Anypoint Code Builder. 
-The *Mule Home* or *Mule Runtimes Directory* fields are misconfigured or empty. 
+occurs if Mule isn't configured properly when you open Anypoint Code Builder. 
+The *Mule Home* field is misconfigured or empty. 
 
-To troubleshoot this issue, use the following procedure:
+To troubleshoot this issue, use this procedure:
 
-. Navigate to your Anypoint Code Builder view, and select the *Open ACB Settings* icon.
+. Go to your Anypoint Code Builder view, and select *Open ACB Settings*.
 +
-image::open-settings.png[]
+image::open-settings.png["The Settings gear icon highlighted in the Anypoint Code Builder menu panel"]
 
-. Locate the *Mule > Runtime: Mule Home* and *Mule > Runtime: Mule Runtimes Directory* properties:
+. Locate the *Mule > Runtime: Mule Home* property:
 +
-image::mule-runtimes-settings.png[]
+image::mule-runtimes-settings.png["Settings dialog showing Mule Home configuration field with default path"]
 
 . Provide the full path to the folder that contains Mule runtime. This field must not be empty. 
 
@@ -54,6 +55,6 @@ image::mule-runtimes-settings.png[]
 
 This request is _not_ from MuleSoft or Anypoint Code Builder:
 
-image::troubleshoot-download-java-notification.png[]
+image::troubleshoot-download-java-notification.png["Notification showing a request to download and install a JDK to compile a project"]
 
 Instead of using this feature, you can use the command *Download Mule Runtime and Java Versions*. See also, xref:anypoint-code-builder::int-versions.adoc[].
