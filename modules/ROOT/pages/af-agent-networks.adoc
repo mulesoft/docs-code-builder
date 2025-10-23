@@ -12,12 +12,12 @@ For more information about Agent Fabric, see xref:agent-fabric::index.adoc[].
 
 == Agent Network Components
 
-Agent networks support brokers, agents, and Model Context Protocol (MCP) servers.
+Agent networks support brokers, A2A-compliant agents, and Model Context Protocol (MCP) servers.
 
 Agent network::
 A collection of agents, brokers, LLMs, and MCP servers that are connected to each other.
 Broker::
-An intelligent routing service that coordinates task delegation across specialized agents in your enterprise.
+An intelligent routing service that coordinates task delegation across specialized A2A-compliant agents in your enterprise.
 A broker is defined by the agents and MCP servers it can leverage to accomplish tasks.
 Brokers originate from MuleSoft and are referenced in the agent network YAML.
 +
@@ -27,6 +27,8 @@ An autonomous software component that uses goals, context, and available tools, 
 +
 Agents can be defined either locally in the agent network or externally in a different agent network or elsewhere in your company.
 Your agent network can use both locally defined and externally defined agents to complete tasks.
++
+include::anypoint-code-builder::partial$af-shared.adoc[tags="agent-support"]
 
 MCP server::
 A service that implements the Model Context Protocol (MCP) to expose tools and data to AI clients, enabling LLMs to invoke external capabilities through a standard interface.
