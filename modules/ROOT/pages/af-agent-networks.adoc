@@ -59,7 +59,15 @@ These servers will be published to Exchange.
 +
 The asset might also be published to Exchange.
 
-== Considerations
+== Supported LLMs
+
+Agent brokers support these LLMs:
+
+* Azure OpenAI
+* Google Gemini
+* OpenAI Direct API
+
+== Considerations for Agent Networks
 
 Agent networks have these considerations.
 
@@ -75,9 +83,7 @@ Agent networks have these considerations.
 ** Streaming
 * Text-based prompts and responses are supported. Image and binary message/artifact types aren't supported.
 * All LLM models in your agent network project must support structured responses in JSON format. For example, a `gpt4.1` model is supported; a `gpt4` model isn't.
-* These LLMs are supported.
-** Azure OpenAI
-** OpenAI Direct API
+
 * When you add governance policies to your agent network project YAML file, those policies persist between deployments. However, if you add governance policies at run-time, those policies don't persist. The next time you deploy your agent network, the governance policies used are the ones in the `agent-network.yaml` file.
 * These deployment targets are supported.
 ** CloudHub 2.0
