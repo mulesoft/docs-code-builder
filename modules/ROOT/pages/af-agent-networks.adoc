@@ -4,7 +4,7 @@ Agent Fabric manages and coordinates the execution of agents across your enterpr
 
 Complex tasks often require a series of steps, with each step handled by a different agent or tool. Managing this process manually is difficult and error-prone. Agent networks (networks of agents in a domain) act as central hubs for defining, validating, and executing these multi-step processes.
 
-Define your agent network in a simple, human-readable YAML file in Anypoint Code Builder desktop. This approach abstracts away the underlying technical complexities and so that you focus on the business constraints and context of your process without needing to understand the inner workings of the orchestration engine.
+Define your agent network in a simple, human-readable YAML file in Anypoint Code Builder. This approach abstracts away the underlying technical complexities so you focus on the business constraints and context of your process without needing to understand the inner workings of the orchestration engine.
 
 Don't worry, we give you a head start by providing you with a YAML template in your agent network project. MuleSoft Dev Agent can help you configure it for your business environment, publish agent network assets to Anypoint Exchange, and deploy your agent network instance.
 
@@ -12,11 +12,52 @@ For more information about Agent Fabric, see xref:agent-fabric::index.adoc[].
 
 == Agent Network Components
 
-Brokers, agents, and Model Context Protocol (MCP) servers are supported in an agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. A broker is defined by the agents and MCP servers it can leverage to accomplish tasks. 
+Agent networks support brokers, A2A-compliant agents, and Model Context Protocol (MCP) servers.
 
-A broker is a specialized agent that is shown in Anypoint Exchange after you publish your agent network assets and can be reused by other brokers.
+Agent network::
+A collection of agents, brokers, LLMs, and MCP servers that are connected to each other.
+Broker::
+An intelligent routing service that coordinates task delegation across specialized A2A-compliant agents in your enterprise.
+A broker is defined by the agents and MCP servers it can leverage to accomplish tasks.
+Brokers originate from MuleSoft and are referenced in the agent network YAML.
++
+After you publish your agent network, brokers appear as specialized agents in Anypoint Exchange and can be reused by other brokers.
+Agent::
+An autonomous software component that uses goals, context, and available tools, often via a large language model (LLM), to decide and execute actions on behalf of a user or system.
++
+Agents can be defined either locally in the agent network or externally in a different agent network or elsewhere in your company.
+Your agent network can use both locally defined and externally defined agents to complete tasks.
++
+include::anypoint-code-builder::partial$af-shared.adoc[tags="agent-support"]
 
-Agents and MCP servers are defined locally in the agent network, or externally. Externally-defined agents and MCP servers are defined in a different agent network or elsewhere in your company. Your agent network can use both locally-defined and externally-defined components to complete tasks across your enterprise.
+MCP server::
+A service that implements the Model Context Protocol (MCP) to expose tools and data to AI clients, enabling LLMs to invoke external capabilities through a standard interface.
++
+MCP servers can be defined either locally in the agent network or externally in a different agent network or elsewhere in your company.
+Your agent network can use both locally defined and externally defined MCP servers to complete tasks.
+
+image::af-agent-network-canvas.png["Anypoint Code Builder canvas showing brokers, agents, and MCP servers"]
+
+[calloutlist]
+. The *Brokers* component groups brokers defined locally in your agent network YAML.
+It can include assets defined locally within the project and assets previously published to Anypoint Exchange, either by your organization or third parties.
++
+Brokers can reference other brokers defined within the project.
++
+Agent network projects don't require brokers.
+They can contain only agents and MCP servers defined within the agent network project.
+
+. The *Agents* component groups agents defined locally in your agent network YAML.
++
+These agents will be published to Exchange.
+
+. The *MCP Servers* component groups MCP servers defined locally in your agent network YAML.
++
+These servers will be published to Exchange.
++
+. An asset that has been defined within this agent network project.
++
+The asset might also be published to Exchange.
 
 == Considerations
 
