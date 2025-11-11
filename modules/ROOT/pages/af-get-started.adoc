@@ -14,20 +14,20 @@ Before you start your agent network project, make sure that you have these produ
 
 | *Set up agent network* |  | 
 
-| Create target space using Anypoint Runtime Manager | Managed Flex Gateway with target space entitlements. At least one small Managed Flex Gateway and one large Managed Flex Gateway are required. 
+| Create target space using Anypoint Runtime Manager | Managed Flex Gateway with target space entitlements. Create at least one small Managed Flex Gateway and one large Managed Flex Gateway. 
 {sp} +
 {sp} +
 CloudHub 2.0 or Runtime Fabric (limited availability) |
 
-| Set up ingress and egress gateways for target space using Anypoint Code Builder Command Palette | Managed Flex Gateway with target space entitlements. At least one small Managed Flex Gateway and one large Managed Flex Gateway are required. 
+| Set up ingress and egress gateways for target space using Anypoint Code Builder Command Palette | Managed Flex Gateway with target space entitlements. Create at least one small Managed Flex Gateway and one large Managed Flex Gateway. 
 {sp} +
 {sp} +
 Anypoint Code Builder desktop or web IDE. For more information, see xref:start-acb.adoc[]. | Runtime Manager: Manage Servers permission
 
-| Set up ingress and egress gateways for target space using Anypoint CLI | Managed Flex Gateway with target space entitlements. At least one small Managed Flex Gateway and one large Managed Flex Gateway are required. 
+| Set up ingress and egress gateways for target space using Anypoint CLI | Managed Flex Gateway with target space entitlements. Create at least one small Managed Flex Gateway and one large Managed Flex Gateway. 
 {sp} +
 {sp} +
-Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable.
+Java 17. Because agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable.
 {sp} +
 {sp} +
 Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js].
@@ -59,7 +59,7 @@ Anypoint Code Builder permissions: Anypoint Code Builder Developer, Mule Develop
 {sp} +
 PowerShell (Windows operating systems only). For more information, see link:https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3[Installing PowerShell on Windows]. | Configure your allowlist. For more information, see xref:urls-to-allow.adoc[].
 
-| Create project using Anypoint CLI | Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the `JAVA_HOME` environment variable. 
+| Create project using Anypoint CLI | Java 17. Because agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the `JAVA_HOME` environment variable. 
 {sp} +
 {sp} +
 Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. 
@@ -103,7 +103,7 @@ Anypoint CLI Agent Fabric plugin. For more information, see link:https://www.npm
 
 | *Build project (applies only to CLI)* |  | 
 
-| Build project using Anypoint CLI | Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable. 
+| Build project using Anypoint CLI | Java 17. Because agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the JAVA_HOME environment variable. 
 {sp} +
 {sp} +
 Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. 
@@ -122,14 +122,14 @@ Anypoint Platform credentials. | A tenant relationship established with a truste
 Allowlist Anypoint Code Builder URLs. For more information, see xref:urls-to-allow.adoc[]. 
 {sp} +
 {sp} +
-Anypoint Exchange: Exchange Contributor permission. For more information, see xref:access-management::permissions-by-product.adoc#exchange[].
+Anypoint Exchange: Exchange Contributor permission. For more information, see xref:access-management::permissions-by-product.adoc#exchange[Permissions by Product in Anypoint Platform].
 
 | Publish project assets using Anypoint Code Builder UI or the command palette |  | Allowlist Anypoint Code Builder URLs. For more information, see xref:urls-to-allow.adoc[]. 
 {sp} +
 {sp} +
-Anypoint Exchange: Exchange Contributor permission. For more information, see xref:access-management::permissions-by-product.adoc#exchange[].
+Anypoint Exchange: Exchange Contributor permission. For more information, see xref:access-management::permissions-by-product.adoc#exchange[Permissions by Product in Anypoint Platform].
 
-| Publish project assets using Anypoint CLI | Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the `JAVA_HOME` environment variable.
+| Publish project assets using Anypoint CLI | Java 17. Because agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the `JAVA_HOME` environment variable.
 {sp} +
 {sp} +
 Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. 
@@ -155,7 +155,7 @@ API Manager: Deploy API Proxies and Manage Policies and Runtime Manager: Create 
 {sp} +
 API Manager: Deploy API Proxies and Manage Policies and Runtime Manager: Create Applications permissions
 
-| Deploy project instance using Anypoint CLI | Java 17. Since agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the `JAVA_HOME` environment variable.
+| Deploy project instance using Anypoint CLI | Java 17. Because agent network binaries require Java to build the agent network, make sure you install Java 17 on your machine and set the `JAVA_HOME` environment variable.
 {sp} +
 {sp} +
 Node 20 (v20.19.4). For more information, see link:https://nodejs.org/en/download[Download Node.js]. 
@@ -187,9 +187,10 @@ After you create a target space, set up the ingress and egress gateways for depl
 
 . In Anypoint Code Builder, open Command Palette.
 . Select **MuleSoft: Set Up Agent Network Gateways**.
-. If you're not logged in already, log in to your Anypoint Platform account.
+. If you're not logged in, log in to your Anypoint Platform account.
 . Select the business group, environment, and private space.
-. These gateways are created automatically in the selected private space.
++
+These gateways are created automatically in the selected private space.
 +
 * agent-network-ingress-gw (with public and internal endpoint)
 * agent-network-egress-gw (with internal endpoint only)
