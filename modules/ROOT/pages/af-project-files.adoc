@@ -1,8 +1,13 @@
-= Reference: Agent Network Project Files
+= Agent Network Project File Reference
 
-Your agent network project contains two primary configuration files: `agent-network.yaml` and `exchange.json`.
+Configure and publish your agent network using two key files: `agent-network.yaml` and `exchange.json`. 
+The `agent-network.yaml` file defines agent behaviors, tools, and inter-agent communication, while `exchange.json` contains metadata for Anypoint Exchange publication. Understanding these files enables you to orchestrate multi-agent systems with external services and manage asset dependencies across your organization.
 
-== Agent Network YAML File (agent-network.yaml)
+* <<agent-network-yaml,agent-network.yaml>>
+* <<exchange-json,exchange.json>>
+
+[[agent-network-yaml]]
+== agent-network.yaml File
 
 The agent network YAML file defines a structured configuration for multi-agent systems, enabling orchestration of AI agents with external services, tools, and inter-agent communication. This format provides a declarative way to define agent capabilities, dependencies, and service integrations.
 
@@ -10,103 +15,30 @@ For example, think of the YAML as your organizational chart for digital labor. E
 
 Just like with human labor, digital agents require coordination. We call these coordinators "brokers". These are special types of agents in your agent network capable of receiving a user prompt, identifying the goal, determining the necessary steps to be carried out, and delegating each step to the proper agent, even if the agent is part of a different broker.
 
-== Exchange JSON File (exchange.json)
+[[agent-network-yaml-file-elements]]
+=== agent-network.yaml File Elements
 
-All agent network projects have an `exchange.json` file. This file contains asset metadata available in Anypoint Exchange after publishing your agent network assets.
+* <<brokers-element,brokers>>
+** <<card-element,card>>
+** <<spec-element,spec>>
+*** <<llm-element,llm>>
+*** <<instructions-element,instructions>>
+*** <<links-element,links>>
+*** <<tools-element,tools>>
+** <<policies-element,policies>>
+** <<error-handling-element,error handling>>
+* <<agents-element,agents>>
+* <<mcp-servers-element,mcpServers>>
+* <<llm-providers-element,llmProviders>>
+* <<connections-element,connections>>
 
-=== exchange.json File Elements
-
-Here's an example file. These key-value pairs are important for your agent network configuration.
-
-* `groupId`: The ID of the Anypoint business group that owns your agent network and all of the assets derived from it.
-* `assetId`: Identifies the agent network project.
-* `dependencies`: Existing assets that this network needs to reference.
-* `variables`: Nested in the metadata section, it defines all the variables whose values shouldn't be hardcoded in the agent network YAML file. The user must be prompted for those values when publishing the agent network. Each variable has a `description` value, a `default` value, and a `secret` value that indicates whether it's treated as sensitive or not.
-
-When the agent network is published, all the assets derived from it share the same `groupId` (business group) defined in `exchange.json`.
-
-[source,json]
-----
-{
-  "main": "agent-network.yaml",
-  "name": "Employee Onboarding Network",
-  "classifier": "agent-network",
-  "organizationId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
-  "descriptorVersion": "1.0.0",
-  "tags": [],
-  "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
-  "assetId": "employee-onboarding-network",
-  "version": "1.0.5",
-  "dependencies": [
-    {
-      "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
-      "assetId": "hr-agent",
-      "version": "1.0.21",
-      "classifier": "agent-metadata",
-      "packaging": "zip"
-    }
-  ],
-  "metadata": {
-    "variables": {
-      "openai": {
-        "clientId": {
-          "description": "OpenAI LLM Client ID",
-          "default": ""
-        },
-        "clientSecret": {
-          "description": "OpenAI LLM Client Secret",
-          "default": "",
-          "secret": true
-        },
-        "url": {
-          "description": "OpenAI URL",
-          "default": "",
-          "secret": false
-        }
-      }
-    }
-  }
-}
-----
-
-==== Relationship to the Ref Element in Agent-Network.Yaml
-
-The `ref` element is used in different elements in the agent network YAML, and is important for your agent network configuration.
-
-The `ref` element represents another asset that exists in Exchange. The type of asset referenced depends on the context (agent, MCP server, LLM provider, etc.). The semantic is always that of referencing an asset that exists in Exchange, or will exist when the agent network is published (meaning, it's defined in the file). If referenced, it's in the dependencies section of `exchange.json`.
-
-Let's see an example:
-
-[source,yaml]
-----
-     links:
-        - agent:
-            ref:
-              name: hr-agent
-----
-
-The above snippet represents a link to an HR agent. The `name` attribute doesn't point to the agent's human friendly or logical name (which can change); instead, it references the `assetId` that `hr-agent` has in Exchange.
-
-The `hr-agent` asset can either exist already, or can be defined in this same YAML. In either case, the Exchange `assetId` is the key to this reference.
-
-In some cases, the `ref` element needs to point to an asset that's defined in a different business group. For this, the `ref#namespace` attribute can be used to reference the asset's `groupId`.  To find the `groupId`, look in the `dependencies` section in `exchange.json`.
-
-[source,yaml]
-----
-links:
-        - agent:
-            ref:
-              name: hr-agent
-              namespace: <the groupId>
-----
-
-=== Agent-Network.Yaml Elements
-
-==== Brokers
+[[brokers-element]]
+=== brokers Element
 
 The `brokers` section defines the AI assets in your agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. It's defined by the agents and MCP servers it can leverage to accomplish tasks. The broker name is used as the `assetId` in `exchange.json`. The `groupId` defaults to the associated business group value used in `exchange.json`.
 
-===== Card
+[[card-element]]
+==== card Element
 
 The `card` section adheres to the Agent-to-Agent (A2A) specification v0.3.0 and describes the broker's contract, skills, and capabilities. This is a standard A2A agent card link:https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure[as defined in the Agent2Agent (A2A) Protocol specification.].
 
@@ -130,7 +62,7 @@ brokers:
       skills:                            
         - id: onboarding-agent
           name: Onboarding Agent
-          description: This agent acts as a broker. It orchestrates the use of specialized tools and agents (including MCP servers) to manage employee onboarding. 
+          description: This agent acts as a broker. It orchestrates the use of specialized tools and agents, including MCP (Model Context Protocol) servers, to manage employee onboarding. 
           examples:                # Usage examples
             - Onboard a new sales employee. Employee name is 'Alex Smith', email is 'alex.smith@example.com', and phone number is '555-123-4567'.
           inputModes:
@@ -153,7 +85,8 @@ brokers:
       version: 1.0.0		          # Agent (broker) version
 ----
 
-===== Spec
+[[spec-element]]
+==== spec Element
 
 The `spec` section configures the broker's internal implementation. You can think of this section as the source code for your broker.
 
@@ -170,7 +103,8 @@ spec:
   links: [...]                    # Connected agents
 ----
 
-===== Llm
+[[llm-element]]
+===== llm Element
 
 The value of this section is a reference to one of the LLMs defined in Anypoint Exchange or in the `llmProviders` section of `agent-network.yaml`. Because it's a reference, you can choose to share the same LLM across all the brokers in your agent network. Or, you can have different brokers use different LLMs to better suit their tasks.
 
@@ -186,9 +120,14 @@ When specifying an LLM model, it must support structured responses in JSON forma
       model: gpt-5-mini
 ----
 
-===== Instructions (optional)
+[[instructions-element]]
+===== instructions Element
 
-Provide optional instructions that are specific to this broker. These instructions often focus on business-oriented concerns. For example, here's instructions for an employee onboarding broker.
+Provide instructions that are specific to this broker. Although not required, including instructions is recommended.
+
+These instructions often focus on business-oriented concerns.
+For example, here's instructions for an employee onboarding broker.
+
 
 **Example 1**
 
@@ -234,11 +173,12 @@ Here's another example of instructions for a customer service broker. This broke
             5. Summarize actions: Provide a clear, human-readable summary of the steps performed, including information about the created Slack channel and the on-call engineer assigned.
 ----
 
-You don't need to provide instructions like "split the prompt into tasks", or "select the best tool". The broker does that on its own. These instructions are only necessary for describing specific business processes.
+You don't have to provide instructions like "split the prompt into tasks", or "select the best tool". The broker does that on its own. These instructions are only necessary for describing specific business processes.
 
 While the instructions section is optional, it improves broker outcomes if you include as much detail about your business process as possible.
 
-===== Links
+[[links-element]]
+===== links Element
 
 This section is the most important part of the entire specification. The links section defines the agents that are available to this broker. Essentially, the links section is where the agent network is defined. It enables interagent communication and orchestration. The broker relies on the agents linked here to execute the appropriate actions to complete a user's goal.
 
@@ -275,9 +215,10 @@ Assets, IT Stock, HR, Payroll, and Badges agents are also called *leaf agents*. 
 
 image::af-onboarding-broker-example.png["Diagram showing an employee onboarding broker and its agents"]
 
-===== Tools
+[[tools-element]]
+===== tools Element
 
-Tools provide agents with external capabilities. When a broker needs to access an external service that's not another agent, it reaches out to an MCP (Model Context Protocol) server.
+Tools provide agents with external capabilities. When a broker needs to access an external service that's not another agent, it reaches out to an MCP server.
 
 [source,yaml]
 ----
@@ -296,7 +237,8 @@ tools:
 
 By default, the broker has access to all the tools available on the MCP server. However, the most modern LLMs can only handle around 20 to 25 tools per context before starting to hallucinate. Limit the available tools to the minimum needed. You can apply that filtering through the allowed list.
 
-===== Policies
+[[policies-element]]
+==== policies Element
 
 Policies contains the list of policies to apply to the broker. It contains a reference to the policy that needs to be added as a dependency to the agent network project.
 
@@ -317,9 +259,10 @@ policies:
       policyConfig1: policyConfig1Value	
 ----
 
+[[error-handling]]
 ===== Error Handling
 
-Error scenarios can be handled through these attributes.
+Use these attributes to handle error scenarios.
 
 [cols="1,3,1,1"]
 |===
@@ -328,7 +271,8 @@ Error scenarios can be handled through these attributes.
 | maxConsecutiveErrors | The maximum number of errors that the broker attempts to recover from before returning a failed status. | Integer | 3
 |===
 
-==== Agents
+[[agents-element]]
+=== agents Element
 
 Reference agents defined in a different agent network, or another agent used in your company. Any agent is valid, as long as it supports A2A as its communication protocol.
 
@@ -357,7 +301,8 @@ agents:
       protocol: a2a
 ----
 
-==== McpServers
+[[mcp-servers-element]]
+=== mcpServers Element
 
 This section lists the MCP servers in your agent network. These servers can be used to obtain context relevant to the information and generate notifications. If you want to apply governance to an MCP server using the agent network file, it must be in your `agent-network.yml` file or published to Anypoint Exchange as an asset.
 
@@ -386,7 +331,8 @@ mcpServers:
         path: /mcp
 ----
 
-==== LlmProviders
+[[llm-providers-element]]
+=== llmProviders Element
 
 Configure the LLMs the brokers use for reasoning. For supported LLMs, see xref:af-agent-networks.adoc[].
 
@@ -400,7 +346,8 @@ llmProviders:
 	    platform: OpenAI
 ----
 
-==== Connections
+[[connections-element]]
+=== connections Element
 
 The `connections` section defines one or more connections to instances of an agent network asset. For example, if an agent is deployed multiple times across regions and environments, you can define a connection for each deployed agent instance, regardless of whether it's used by a broker or not.
 
@@ -510,13 +457,16 @@ connections:
       url: https://slack-mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/
 ----
 
-===== Connection Resolution
 
-Connection resolution is done at deployment time. The connection reference can be done explicitly or implicitly.
+
+[[connection-resolution]]
+==== Connection Resolution
+
+Connection resolution happens at deployment time. The connection reference can be explicit or implicit.
 
 **Explicit**
 
-In this example, the connection that will be used is **weather-agent-connection**. At deployment, it validates that a connection with the given name exists in the egress gateway on the specified environment.
+In this example, the connection to use is *weather-agent-connection*. At deployment, it validates that a connection with the given name exists in the egress gateway on the specified environment.
 
 [source,yaml]
 ----
@@ -548,12 +498,110 @@ In this example, at deployment a connection to the specified agent asset (weathe
              name: weather-agent           
 ----
 
+
+[[exchange-json]]
+== exchange.json File
+
+All agent network projects have an `exchange.json` file. This file contains asset metadata available in Anypoint Exchange after publishing your agent network assets.
+
+[[exchange-json-file-elements]]
+=== exchange.json File Elements
+
+These key-value pairs are important for your agent network configuration.
+
+groupId:: ID of the Anypoint business group that owns your agent network and all the assets derived from it.
+assetId:: Unique identifier for the agent network project.
+dependencies:: Existing assets that this network needs to reference.
+variables:: Nested in the metadata section, defines all the variables whose values shouldn't be hardcoded in the agent network YAML file. The user must be prompted for those values when publishing the agent network. Each variable has a `description` value, a `default` value, and a `secret` value that indicates whether it's treated as sensitive or not.
+
+When the agent network is published, all the assets derived from it share the same `groupId` (business group) defined in `exchange.json`.
+
+Here's an example file. 
+
+[source,json]
+----
+{
+  "main": "agent-network.yaml",
+  "name": "Employee Onboarding Network",
+  "classifier": "agent-network",
+  "organizationId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+  "descriptorVersion": "1.0.0",
+  "tags": [],
+  "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+  "assetId": "employee-onboarding-network",
+  "version": "1.0.5",
+  "dependencies": [
+    {
+      "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+      "assetId": "hr-agent",
+      "version": "1.0.21",
+      "classifier": "agent-metadata",
+      "packaging": "zip"
+    }
+  ],
+  "metadata": {
+    "variables": {
+      "openai": {
+        "clientId": {
+          "description": "OpenAI LLM Client ID",
+          "default": ""
+        },
+        "clientSecret": {
+          "description": "OpenAI LLM Client Secret",
+          "default": "",
+          "secret": true
+        },
+        "url": {
+          "description": "OpenAI URL",
+          "default": "",
+          "secret": false
+        }
+      }
+    }
+  }
+}
+----
+
+[[ref-element]]
+=== Relationship to the ref Element in agent-network.yaml
+
+The `ref` element is used in different elements in the agent network YAML, and is important for your agent network configuration.
+
+The `ref` element represents another asset that exists in Exchange. The type of asset referenced depends on the context (such as agent, MCP server, LLM provider). The semantic is always that of referencing an asset that exists in Exchange, or will exist when the agent network is published (meaning, it's defined in the file). If referenced, it's in the dependencies section of `exchange.json`.
+
+Let's see an example:
+
+[source,yaml]
+----
+     links:
+        - agent:
+            ref:
+              name: hr-agent
+----
+
+The above snippet represents a link to an HR agent. The `name` attribute doesn't point to the agent's human friendly or logical name (which can change); instead, it references the `assetId` that `hr-agent` has in Exchange.
+
+The `hr-agent` asset can either exist already, or can be defined in this same YAML. In either case, the Exchange `assetId` is the key to this reference.
+
+In some cases, the `ref` element needs to point to an asset that's defined in a different business group. For this, the `ref#namespace` attribute can be used to reference the asset's `groupId`.  To find the `groupId`, look in the `dependencies` section in `exchange.json`.
+
+[source,yaml]
+----
+links:
+        - agent:
+            ref:
+              name: hr-agent
+              namespace: <the groupId>
+----
+
+[[authentication-types]]
 == Authentication Types
 
 Authentication is always expressed in accordance with link:https://swagger.io/docs/specification/v3_0/authentication/[Open API authentication methods]. For supported authentication types, see xref:af-agent-networks.adoc[].
 
 These examples show how to define each type in YAML.
 
+[[basic-authentication]]
 === Basic Authentication
 
 [source,yaml]
@@ -564,6 +612,7 @@ authentication:
   password: "password"
 ----
 
+[[oauth-client-credentials]]
 === OAuth 2.0 Client Credentials
 
 [source,yaml]
@@ -576,6 +625,7 @@ authentication:
   scopes: ["read", "write"]             # Optional
 ----
 
+[[anypoint-client-credentials]]
 === Anypoint Client Credentials
 
 [source,yaml]
