@@ -2,9 +2,7 @@
 
 Your agent network project contains two primary configuration files: `agent-network.yaml` and `exchange.json`.
 
-== Basic Concepts
-
-=== Agent-Network.Yaml
+== Agent Network YAML File (agent-network.yaml)
 
 The agent network YAML file defines a structured configuration for multi-agent systems, enabling orchestration of AI agents with external services, tools, and inter-agent communication. This format provides a declarative way to define agent capabilities, dependencies, and service integrations.
 
@@ -12,13 +10,11 @@ For example, think of the YAML as your organizational chart for digital labor. E
 
 Just like with human labor, digital agents require coordination. We call these coordinators "brokers". These are special types of agents in your agent network capable of receiving a user prompt, identifying the goal, determining the necessary steps to be carried out, and delegating each step to the proper agent, even if the agent is part of a different broker.
 
-=== Exchange.Json
+== Exchange JSON File (exchange.json)
 
-All agent network projects also have an `exchange.json` file. This file contains asset metadata available in Anypoint Exchange after publishing your agent network assets.
+All agent network projects have an `exchange.json` file. This file contains asset metadata available in Anypoint Exchange after publishing your agent network assets.
 
-== File Elements
-
-=== Exchange.Json Elements
+=== exchange.json File Elements
 
 Here's an example file. These key-value pairs are important for your agent network configuration.
 
@@ -27,7 +23,7 @@ Here's an example file. These key-value pairs are important for your agent netwo
 * `dependencies`: Existing assets that this network needs to reference.
 * `variables`: Nested in the metadata section, it defines all the variables whose values shouldn't be hardcoded in the agent network YAML file. The user must be prompted for those values when publishing the agent network. Each variable has a `description` value, a `default` value, and a `secret` value that indicates whether it's treated as sensitive or not.
 
-When the agent network is published, all of the assets derived from it share the same `groupId` (business group) defined in `exchange.json`.
+When the agent network is published, all the assets derived from it share the same `groupId` (business group) defined in `exchange.json`.
 
 [source,json]
 ----
@@ -363,7 +359,7 @@ agents:
 
 ==== McpServers
 
-This section lists the MCP servers in your agent network. These servers can be used to obtain context relevant to the information and generate notifications. If you want to apply governance to an MCP server, it must be in your agent network or published to Anypoint Exchange as an asset.
+This section lists the MCP servers in your agent network. These servers can be used to obtain context relevant to the information and generate notifications. If you want to apply governance to an MCP server using the agent network file, it must be in your `agent-network.yml` file or published to Anypoint Exchange as an asset.
 
 MCP StreamableHttp and SSE transports are supported. StreamableHttp is recommended.
 
