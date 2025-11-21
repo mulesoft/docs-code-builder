@@ -165,29 +165,23 @@ Anypoint CLI Agent Fabric Plugin. For more information, see link:https://www.npm
 
 |===
 
-== Create or Select a Target Space for Your Environment
+== Set Up the Target Space for Your Environment
 
-To deploy an agent network, you need a target space. 
+To deploy an agent network, you need a target space on either CloudHub 2.0 or Anypoint Runtime Fabric.
+
+If you already have a private space configured in CloudHub 2.0, you can associate it with the buisness groups and environments where you'll deploy your agent network.
 
 Depending on your deployment target:
 
 * CloudHub 2.0
 +
-. Create a private space for CloudHub 2.0 deployment, if you don't already have one set up:
-.. In Anypoint Runtime Manager, select the environment to use.
-+ 
-See 
-xref:runtime-manager::runtime-manager-switch-env.adoc[].
-.. Select *Private Spaces*.
-.. Select *Create private space*.
-.. Enter a name for the private space.
+. Create a private space in CloudHub 2.0 or verify that you can access an existing private space.
 +
-We recommend `agent-network-space`.
-.. Select *Create*.
-.. Select *Create private network*.
-. Associate the new or existing private space with the business group and environments where you plan to deploy your agent network.
+To create a private space, see xref:cloudhub-2::ps-create-configure.adoc[].
+We recommend naming the private space `agent-network-space`.
+. Associate the new or existing private space with the business groups and environments where you plan to deploy your agent network.
 +
-.. Select *Environments*.
+.. Select the *Environments* tab.
 .. Select the business groups.
 .. Select the environments. 
 .. Select *Save Changes*.
@@ -199,10 +193,14 @@ Create a target space for Runtime Fabric.
 +
 For more information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Flex Gateway on Runtime Fabric].
 
-
 == Set Up Agent Network Gateways for Your Target Space
 
-After you create a target space, set up the ingress and egress gateways for deployment. For agent networks, you must have at least one small Managed Flex Gateway and one large Managed Flex Gateway in your environment. For more information about gateways, see xref:gateway::flex-architecture-basic-deployments.adoc[]. For more information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Flex Gateway on Runtime Fabric].
+After you have a target space, use the *MuleSoft: Set Up Agent Network Gateways command to create the ingress and egress gateways required for deployment.
+
+For agent networks, you must have at least one small Managed Flex Gateway and one large Managed Flex Gateway in your environment.
+For more information about gateways, see xref:gateway::flex-architecture-basic-deployments.adoc[].
+
+For more information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Flex Gateway on Runtime Fabric].
 
 . In Anypoint Code Builder, open Command Palette.
 . Select *MuleSoft: Set Up Agent Network Gateways*.
