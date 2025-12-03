@@ -22,24 +22,23 @@ NOTE: MuleSoft Dev Agent is available on US, EU, Canada, and Japan cloud hosts.
 
 == Before You Begin
 
-Before you start using MuleSoft Dev Agent, ensure that you meet the following prerequisites:
+Before using MuleSoft Dev Agent, make sure that you meet these prerequisites:
 
 * Set up and access the web or desktop IDE.
 * Make sure you have the required Anypoint Code Builder permissions.
-* Ensure you have the following permissions to use MuleSoft Dev Agent:
-** Mule Developer Generative AI User
+* Make sure you have the Mule Developer Generative AI User permission to use MuleSoft Dev Agent.
 * Make sure Einstein is enabled in Access Management. For more information, see Enabling Einstein for Anypoint Platform.
 
-NOTE: Authentication happens through the user logged into Anypoint Code Builder. MuleSoft Dev Agent inherits the same permissions as that user and can only execute actions that the user is authorized to perform in Anypoint Platform.
+NOTE: Authentication happens through the user logged in to Anypoint Code Builder. MuleSoft Dev Agent inherits the same permissions as that user and can only execute actions that the user is authorized to perform in Anypoint Platform.
 
 
 == Use MuleSoft Dev Agent
 
-You can open MuleSoft Dev Agent from:
+You can open MuleSoft Dev Agent from the:
 
-* The toolbar icon
-* The top navigation bar
-* The *Build with AI* card in the project canvas
+* Toolbar icon
+* Top navigation bar
+* *Build with AI* card in the project canvas
 
 When you submit a prompt, MuleSoft Dev Agent processes it using the MuleSoft MCP Server and performs actions such as generating API specifications or integration flows.
 
@@ -56,7 +55,7 @@ MuleSoft Dev Agent operates in two modes:
 Dev Agent analyzes your prompt and produces a step-by-step plan describing how it will accomplish the task. No actions are executed automatically in this mode.
 
 * *Act Mode*  
-Dev Agent attempts to perform the actions outlined in the plan, using the MuleSoft MCP Server tools to modify files, create resources, or execute changes in your project.
+Dev Agent attempts to perform the actions outlined in the plan by using the MuleSoft MCP Server tools to modify files, create resources, or execute changes to your project.
 
 You can switch between modes depending on whether you prefer to review the plan before execution or allow Dev Agent to act directly.
 
@@ -65,7 +64,7 @@ You can switch between modes depending on whether you prefer to review the plan 
 
 MuleSoft Dev Agent uses MuleSoft-optimized AI pipelines to generate high-quality code for API specifications and integration flows.
 
-These pipelines are exposed to Dev Agent through the following MCP tools:
+The pipelines are exposed to Dev Agent through these MCP tools:
 
 * `generate_mule_flow` – Generates Mule integration flows.
 * `generate_api_spec` – Generates API specifications from natural language prompts.
@@ -123,8 +122,8 @@ Workflows let you streamline repeated development steps and can be triggered usi
 . In the *Rules and Workflows* section, choose whether you want to add a rule or a workflow.
 . Select *Add Rule* or *Add Workflow*.
 . Provide the required information:
-* For rules: Enter the natural-language instruction you want Dev Agent to follow.
-* For workflows: Enter a name, an optional description, and the steps the workflow should run.
+* For rules, enter the natural-language instruction you want Dev Agent to follow.
+* For workflows, enter a name, an optional description, and the steps the workflow should run.
 . Select *Save*.
 
 You can edit or delete existing rules and workflows from the same section.
@@ -138,7 +137,7 @@ The MuleSoft MCP Server is integrated within Anypoint Code Builder and provides 
 
 You can use these tools to generate API specifications, create and deploy integrations, manage governance rulesets, build Agent Fabric agent networks, work with DataWeave, and gain insights into how your applications and APIs perform—all directly from Anypoint Code Builder.
 
-The following MuleSoft MCP Server tools are available in Anypoint Code Builder and are also supported when you use the Anypoint Extension Pack in compatible IDEs such as VS Code, Cursor, and Windsurf:
+These MuleSoft MCP Server tools are available in Anypoint Code Builder and are also supported when you use the Anypoint Extension Pack in compatible IDEs such as VS Code, Cursor, and Windsurf:
 
 
 === Agent Network Development
@@ -153,17 +152,17 @@ The following MuleSoft MCP Server tools are available in Anypoint Code Builder a
 
 * `create_and_manage_assets` – Create, update, and delete assets in Anypoint Exchange.
 * `create_and_manage_metadata` – Define, attach, and update metadata for Mule flow components.
-* `create_MCP_server` – Create a MuleSoft MCP server using the MCP Connector in a Mule project.
+* `create_MCP_server` – Use the MCP Connector in a Mule project to create a MuleSoft MCP server.
 * `create_mule_project` – Create a Mule project structure in a given directory.
-* `generate_api_spec` – Generate, modify, or enhance an API specification using AI.
+* `generate_api_spec` – Use AI to generate, modify, or enhance an API specification.
 * `generate_mule_flow` – Generate or update Mule flows and integration logic from natural language prompts.
 * `get_topics_agent_actions_metadata_instructions` – Retrieve metadata and instructions for enabling topics and agent actions from an OpenAPI spec.
 * `mock_api_spec` – Mock an API specification to test endpoint functionality through a mocking service.
 * `open_project` – Open or manage an existing API, Mule, or agent-network project.
 * `run_local_mule_application` – Run a Mule application locally, handling build and local runtime setup.
-* `search_asset` – Search for assets in Anypoint Exchange using flexible filters and criteria.
+* `search_asset` – Search for assets in Anypoint Exchange by using flexible filters and criteria.
 * `test_connection` – Validate connector configurations (such as HTTP or Salesforce connectors) in a Mule project.
-* `validate_project` – Validate the current project—such as an API spec or agent network project—before deployment or publishing.
+* `validate_project` – Validate the current project, such as an API spec or agent network project, before deploying or publishing.
 
 
 === Connector Development
@@ -180,8 +179,8 @@ The following MuleSoft MCP Server tools are available in Anypoint Code Builder a
 * `dataweave_create_sample_data` – Create DataWeave input sample data for a given transformation file.
 * `dataweave_get_module_metadata` – Return functions, parameters, and types for a specific DataWeave module.
 * `dataweave_get_project_metadata` – Return metadata for a DataWeave project, including modules, functions, and supported data formats.
-* `dataweave_open_project` – Open a DataWeave project from a given URL in the current or a new window.
-* `dataweave_run_script_tool` – Run a DataWeave transformation with sample data to validate script output.
+* `dataweave_open_project` – Open a DataWeave project from a given URL in the current window or a new window.
+* `dataweave_run_script_tool` – Run a DataWeave transformation with sample data to validate the script output.
 
 
 === Application Management
@@ -202,7 +201,7 @@ The following MuleSoft MCP Server tools are available in Anypoint Code Builder a
 
 === Policy Management
 
-* `get_flex_gateway_policy_example` – Retrieve Flex Gateway policy examples to help configure Rust-based custom policies.
+* `get_flex_gateway_policy_example` – Retrieve Flex Gateway policy examples to configure Rust-based custom policies.
 * `manage_api_instance_policy` – Apply or update policies on an API instance in API Manager.
 * `manage_flex_gateway_policy_project` – Guide the LLM in creating, configuring, building, and publishing Flex Gateway custom policy projects.
 
@@ -226,7 +225,7 @@ From the MuleSoft Dev Agent panel, you can add your own MCP server or manage con
 . Select *Manage MCP Servers*.
 +
 NOTE: From this view, you can enable or disable MCP servers that have been installed. The MuleSoft MCP Server comes pre-installed with Dev Agent.
-. Select the gear icon to open full MCP Server settings.
+. Select the gear icon to open the full MCP Server settings.
 
 This opens the MCP Servers UI with three tabs:
 
@@ -234,12 +233,12 @@ This opens the MCP Servers UI with three tabs:
 * *Remote Servers*
 * *Installed*
 
-These views let you install new MCP servers, connect remote MCP servers, or manage existing ones.
+With these views, you can install new MCP servers, connect to remote MCP servers, and manage existing MCP servers.
 
 
 === Add an MCP Server
 
-You can add a custom MCP server in three ways: installing from the Marketplace, adding a remote MCP server, or manually editing the configuration file.
+You can add a custom MCP server by installing the server from the Marketplace, adding a remote MCP server, or manually editing the configuration file.
 
 
 ==== Install From Marketplace
@@ -309,7 +308,7 @@ To remove an MCP server:
 . Select *Delete Server*.
 . Confirm the deletion.
 
-Tool availability, behavior, and stability may vary depending on the MCP server version, configuration, and whether the server is community-provided or supported by Salesforce.
+Tool availability, behavior, and stability may vary depending on the MCP server version and configuration, as well as whether the server is community-provided or supported by Salesforce.
 
 == Provide Dev Agent with Context
 
@@ -319,7 +318,7 @@ Examples include requirement files (`requirements.txt`), configuration folders, 
 To add context:
 
 . In the MuleSoft Dev Agent panel, click the *Add Context* icon in the lower-left corner.
-. Select files or folders to attach, paste terminal input/output, or paste a URL.
+. Select files or folders to attach, paste the input or output from terminal, or paste a URL.
 . Confirm to add the context to your current task.
 
 You can also add context directly from the prompt input box by typing `@`, which opens the same context selector.
@@ -339,7 +338,7 @@ Dev Agent includes several built-in commands:
 * `/reportbug` — Report an issue by creating a GitHub ticket with Agentforce Vibes formatting.
 
 Workflows that you define also appear as commands under *Workflow Commands*.  
-You can trigger them the same way—by typing `/` followed by the workflow name.
+You can trigger them the same way by typing `/` followed by the workflow name.
 
 
 == Configure MuleSoft Dev Agent Settings
@@ -392,8 +391,8 @@ To favorite a task, click the *Star* icon next to the task entry.
 
 You can remove past tasks in two ways:
 
-* *Delete specific tasks* – Select individual tasks and click *Delete Specific*.
-* *Delete all history* – Select *Delete All History* to clear all tasks.
+* *Delete specific tasks* – Deletes the specific tasks you select.
+* *Delete all history* – Clears all tasks.
 
 
 == Example Prompts
@@ -409,7 +408,7 @@ Deploy this app.
 
 To create an implementation project:
 
-Create a Mule project that creates an order in NetSuite every time an opportunity in Salesforce is updated to stage ‘Closed Won’.
+Create a Mule project that creates an order in NetSuite every time an opportunity in Salesforce is updated to the ‘Closed Won’ stage.
 
 To deploy an implementation application:
 
@@ -444,7 +443,7 @@ Create an instance for the [application_name] and apply the rate limiting policy
 
 === Custom Metadata
 
-To set custom metadata using sample data:
+To set custom metadata that uses sample data:
 
 Can you help me define custom metadata on the following component? This is how the sample data looks:  
 [sample_data]
