@@ -2,21 +2,39 @@
 
 Deploy your agent network instance to a deployment target. You can deploy to a CloudHub 2.0 private space or to a Runtime Fabric (limited availability). When you deploy, Flex Gateway secures your agent network into the ingress gateway. Also, it secures your brokers, agents, and MCP servers into the egress gateway.
 
-These Flex Gateway policies are applied automatically at deployment:
+These Flex Gateway policies are applied automatically at deployment.
 
-* Brokers: 
+
+[%header,cols="20,40a"]
+|===
+|Agent Type | Policy
+|Broker
+|
+
 ** A2A Agent Card policy 
-** Tracing policy
-
-* Agents (ingress and egress):
-** A2A Agent Card policy 
-
-* MCP Servers (ingress and egress):
-** MCP Support policy
-
-* Agents and MCP Servers:
 ** Tracing policy
 ** Agent Connection Telemetry policy
+
+|Agent
+
+(ingress and egress)
+| 
+
+** A2A Agent Card policy
+** Tracing policy
+** Agent Connection Telemetry policy
+
+| MCP Server
+
+(ingress and egress)
+|
+
+** MCP Support policy
+** Tracing policy
+** Agent Connection Telemetry policy
+
+|===
+
 
 
 
