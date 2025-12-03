@@ -99,6 +99,7 @@ spec:
   instructions:                   # Custom instructions
   maxNumberOfLoops: 25            # Max task steps (default: 25)
   maxConsecutiveErrors: 3         # Max recovery attempts 
+  taskTimeoutSecs: 30             # Max number of seconds for each orchestration
   tools: [...]                    # Available tools, including MCP servers
   links: [...]                    # Connected agents
 ----
@@ -133,6 +134,7 @@ For example, here's instructions for an employee onboarding broker.
 
 [source,yaml]
 ----
+// Simplify per Ashley
 instructions:
 - |
   You're an Employee Onboarding Broker. Coordinate onboarding of a new employee across the systems needed for day-to-day work.
@@ -266,9 +268,11 @@ Use these attributes to handle error scenarios.
 
 [cols="1,3,1,1"]
 |===
-| Name | Description | Type | Default value
+| Name | Description | Type | Default Value
 | maxNumberOfLoops | The maximum number of steps that a task can take. Useful for keeping orchestrations from running too long and consuming too many tokens. | Integer | 25
 | maxConsecutiveErrors | The maximum number of errors that the broker attempts to recover from before returning a failed status. | Integer | 3
+| taskTimeoutSecs | The maximum number of seconds for each orchestration. | Integer | 60
+
 |===
 
 [[agents-element]]
@@ -498,6 +502,54 @@ In this example, at deployment a connection to the specified agent asset (weathe
              name: weather-agent           
 ----
 
+[[authentication-types]]
+==== Authentication Types
+
+Connection authentication is always expressed in accordance with link:https://swagger.io/docs/specification/v3_0/authentication/[Open API authentication methods]. For supported authentication types, see xref:af-agent-networks.adoc[].
+
+These examples show how to define each type in YAML.
+
+[[basic-authentication]]
+* Basic authentication
++
+====
+[source,yaml]
+----
+authentication:
+  type: basic
+  username: "username"
+  password: "password"
+----
+====
+
+[[oauth-client-credentials]]
+* OAuth 2.0 client credentials
++
+====
+[source,yaml]
+----
+authentication:
+  type: oauth2-client-credentials
+  clientId: "client_id"
+  clientSecret: "client_secret"
+  tokenUrl: "https://oauth.provider.com/token"
+  scopes: ["read", "write"]             # Optional
+----
+====
+
+[[anypoint-client-credentials]]
+* Anypoint client credentials
++
+====
+[source,yaml]
+----
+authentication:
+  type: apikey-client-credentials
+  clientId: "client_id"
+  clientSecret: "client_secret"
+----
+====
+
 
 [[exchange-json]]
 == exchange.json File
@@ -594,44 +646,3 @@ links:
               namespace: <the groupId>
 ----
 
-[[authentication-types]]
-== Authentication Types
-
-Authentication is always expressed in accordance with link:https://swagger.io/docs/specification/v3_0/authentication/[Open API authentication methods]. For supported authentication types, see xref:af-agent-networks.adoc[].
-
-These examples show how to define each type in YAML.
-
-[[basic-authentication]]
-=== Basic Authentication
-
-[source,yaml]
-----
-authentication:
-  type: basic
-  username: "username"
-  password: "password"
-----
-
-[[oauth-client-credentials]]
-=== OAuth 2.0 Client Credentials
-
-[source,yaml]
-----
-authentication:
-  type: oauth2-client-credentials
-  clientId: "client_id"
-  clientSecret: "client_secret"
-  tokenUrl: "https://oauth.provider.com/token"
-  scopes: ["read", "write"]             # Optional
-----
-
-[[anypoint-client-credentials]]
-=== Anypoint Client Credentials
-
-[source,yaml]
-----
-authentication:
-  type: apikey-client-credentials
-  clientId: "client_id"
-  clientSecret: "client_secret"
-----
