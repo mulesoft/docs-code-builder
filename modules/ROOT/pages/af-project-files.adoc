@@ -7,7 +7,7 @@ The `agent-network.yaml` file defines agent behaviors, tools, and inter-agent co
 * <<exchange-json,exchange.json>>
 
 [[agent-network-yaml]]
-== agent-network.yaml File
+== `agent-network.yaml` File
 
 The agent network YAML file defines a structured configuration for multi-agent systems, enabling orchestration of AI agents with external services, tools, and inter-agent communication. This format provides a declarative way to define agent capabilities, dependencies, and service integrations.
 
@@ -15,8 +15,7 @@ For example, think of the YAML as your organizational chart for digital labor. E
 
 Just like with human labor, digital agents require coordination. We call these coordinators "brokers". These are special types of agents in your agent network capable of receiving a user prompt, identifying the goal, determining the necessary steps to be carried out, and delegating each step to the proper agent, even if the agent is part of a different broker.
 
-[[agent-network-yaml-file-elements]]
-=== agent-network.yaml File Elements
+The agent network YAML file uses these elements. 
 
 * <<brokers-element,brokers>>
 ** <<card-element,card>>
@@ -33,14 +32,117 @@ Just like with human labor, digital agents require coordination. We call these c
 * <<connections-element,connections>>
 
 [[brokers-element]]
-=== brokers Element
+== `brokers` Element
 
 The `brokers` section defines the AI assets in your agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. It's defined by the agents and MCP servers it can leverage to accomplish tasks. The broker name is used as the `assetId` in `exchange.json`. The `groupId` defaults to the associated business group value used in `exchange.json`.
 
+[cols="1,2,1,3",options="header"]
+|===
+|Parameter |Description |Type |Valid Values
+
+|`brokers` |The list of brokers defined in your agent network |Object |Object with property names matching this pattern: `^[a-zA-Z_][a-zA-Z0-9_.-]*$`. The name must start with a letter or an underscore and can contain letters, numbers, underscores, dots, or hyphens. The name cannot be: `default`, `defaults`, `system`, `local`, `null`
+|===
+
+The `broker` element has these properties. 
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`card` |Agent card definition |Object |Refer to the `card` object properties. |Yes
+|`spec` |Broker specification |Object |Refer to the `spec` object properties.  |Yes
+|===
+
 [[card-element]]
-==== card Element
+=== `card` Element
 
 The `card` section adheres to the Agent-to-Agent (A2A) specification v0.3.0 and describes the broker's contract, skills, and capabilities. This is a standard A2A agent card link:https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure[as defined in the Agent2Agent (A2A) Protocol specification.].
+
+The `card` element has these properties. 
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`protocolVersion` | The version of the A2A protocol this agent supports | String | A2A protocol version (e.g., "0.3.0") | No
+|`name` | A human-readable name for the agent | String | Any string value | No
+|`description` | A human-readable description of the agent, assisting users and other agents in understanding its purpose | String | Any string value | No
+|`url` | The preferred endpoint URL for interacting with the agent. This URL must support the transport specified by 'preferredTransport' | String (URI) | Valid URI string | No
+|`preferredTransport` | The transport protocol for the preferred endpoint (the main 'url' field) | String | `JSONRPC`, `GRPC`, `HTTP+JSON`. Defaults to `JSONRPC` | No
+|`additionalInterfaces` | A list of additional supported interfaces (transport and URL combinations) | Array | Array of interface objects (see AdditionalInterfaces properties below) | No
+|`iconUrl` | An optional URL to an icon for the agent | String (URI) | Valid URI string | No
+|`provider` | Information about the agent's service provider | Object | Object with provider properties (see Provider properties below) | No
+|`version` | The agent's own version number. The format is defined by the provider | String | Version string (e.g., "1.0.0") | No
+|`documentationUrl` | An optional URL to the agent's documentation | String (URI) | Valid URI string | No
+|`capabilities` | A declaration of optional capabilities supported by the agent | Object | Object with capability properties (see Capabilities properties below) | No
+|`securitySchemes` | A declaration of the security schemes available to authorize requests | Object | Keys are scheme names; values follow the OpenAPI 3.0 Security Scheme Object | No
+|`security` | A list of security requirement objects that apply to all agent interactions | Array | Array of security requirement objects | No
+|`defaultInputModes` | Default set of supported input MIME types for all skills, which can be overridden on a per-skill basis | Array of strings | Array of MIME type strings (e.g., `["application/json", "text/plain"]`) | No
+|`defaultOutputModes` | Default set of supported output MIME types for all skills, which can be overridden on a per-skill basis | Array of strings | Array of MIME type strings (e.g., `["application/json", "text/plain"]`) | No
+|`skills` | The set of skills, or distinct capabilities, that the agent can perform | Array | Array of skill objects (see Skills properties below) | No
+|`supportsAuthenticatedExtendedCard` | Indicates if the agent can provide an extended agent card with additional details to authenticated users | Boolean | `true` or `false`. Defaults to `false` | No
+|`signatures` | JSON Web Signatures computed for this AgentCard | Array | Array of signature objects | No
+|===
+
+==== `provider` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`organization` |The name of the organization providing the agent |String |Any string value |No
+|`url` |The URL of the organization |String (URI) |Valid URI string |No
+|===
+
+
+==== `additionalInterfaces` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`url` |The URL for this additional interface |String (URI) |Valid URI string |Yes
+|`transport` |The transport protocol for this interface |String |`JSONRPC`, `GRPC`, `HTTP+JSON` |Yes
+|===
+
+==== `skills` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`id` |Unique identifier for the skill |String |Any string value |No
+|`name` |A human-readable name for the skill |String |Any string value |No
+|`description` |A description of what this skill does |String |Any string value |No
+|`examples` |Usage examples demonstrating how to use this skill |Array of strings |Array of example strings |No
+|`inputModes` |Supported input MIME types for this skill (overrides defaultInputModes) |Array of strings |Array of MIME type strings |No
+|`outputModes` |Supported output MIME types for this skill (overrides defaultOutputModes) |Array of strings |Array of MIME type strings |No
+|`tags` |Categorization tags for this skill |Array of strings |Array of tag strings |No
+|===
+
+==== `capabilities` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`streaming` |Indicates if the agent supports streaming responses |Boolean |`true` or `false` |No
+|`pushNotifications` |Indicates if the agent supports push notifications |Boolean |`true` or `false` |No
+|`stateTransitionHistory` |Indicates if the agent maintains state transition history |Boolean |`true` or `false` |No
+|`extensions` |List of extension capabilities supported by the agent |Array |Array of extension objects (see Extensions properties below) |No
+|===
+
+===== `Extensions` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`uri` |URI identifying the extension |String (URI) |Valid URI string |No
+|`description` |Description of the extension |String |Any string value |No
+|`required` |Indicates if this extension is required |Boolean |`true` or `false` |No
+|`params` |Parameters for the extension |Object |Any object (e.g., `{"hints": "Hint text"}`) |No
+|===
+
 
 [source,yaml]
 ----
@@ -86,11 +188,138 @@ brokers:
 ----
 
 [[spec-element]]
-==== spec Element
+=== `spec` Element
 
 The `spec` section configures the broker's internal implementation. You can think of this section as the source code for your broker.
 
-In this section, specify the LLM to use, custom instructions, available tools, and error handling. The `links` section defines the agents that are available to this broker. Essentially, the `links` section is where the agent network is defined.
+In this section, specify the LLM to use, custom instructions, available tools, and error handling. The `links` section defines the agents that are available to this broker. Essentially, the `links` section is where you define the agent network.
+
+The `spec` element has these properties.
+
+[cols="1,2,1,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required |Default
+
+|`llm` |LLM configuration for the broker. |Object |See LLM properties below |Yes |-
+|`instructions` |Set of custom instructions that will inform the orchestration. |Array of strings |Array of instruction strings |Yes |-
+|`links` |Defines the list of agents this agent is connected with. |Array |Array of link objects (see Links properties below) |Yes |-
+|`maxNumberOfLoops` |The maximum number of steps that a task can take. Useful for keeping orchestrations from running too long and consuming too many tokens. |Integer |Positive integer |No |25
+|`maxConsecutiveErrors` |The maximum number of errors that the orchestrator will attempt to recover from before returning a failed status. |Integer |Positive integer |No |3
+|`taskTimeoutSecs` |A timeout (in seconds) for how long should each orchestration task. |Integer |Positive integer |No |60
+|`tools` |The tools available to this broker. |Array |Array of tool objects (see Tools properties below) |No |-
+|`policies` |Policy bindings to be applied. |Array |Array of PolicyBinding objects (see PolicyBinding properties below) |No |-
+|===
+
+==== `llm` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`ref` |The reference to the LLM to be used by the orchestrator. |String |Reference to `references.json#/definitions/LLMRef` |Yes
+|`connection` |Connection configuration for the LLM. |Object |Object with connection properties (see LLM.connection properties below) |No
+|`configuration` |LLM configuration settings. |Object |Object with configuration properties (see LLM.configuration properties below) |Yes
+|===
+
+===== `llm.connection` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`ref` |Connection reference. |String |Reference to `references.json#/definitions/ConnectionRef` |Yes
+|===
+
+===== `llm.configuration` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`model` |The name of the model to use. |String |Model name string |Yes
+|`openAI` |OpenAI specific configuration settings. |Object |Object with OpenAI settings (see OpenAI properties below) |No
+|===
+
+`openAI` has these properties.
+
+[cols="1,2,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values
+
+|`reasoningEffort` |Constrains effort on reasoning for reasoning models. gtp-5.1 defaults to NONE, previous ones default to MEDIUM. |String |`NONE`, `MINIMAL`, `LOW`, `MEDIUM`, `HIGH`
+|`temperature` |Controls randomness in the output. |Number |Any number
+|`topP` |Nucleus sampling parameter. |Number |Any number
+|`topLogprobs` |Number of most likely tokens to return at each position. |Integer |Any integer
+|`maxOutputTokens` |Maximum number of tokens to generate. |Integer |Any integer
+|===
+
+==== `tools` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`mcp` |MCP server configuration. |Object |Object with MCP properties (see Tools[].mcp properties below) |Yes
+|===
+
+===== `tools[].mcp` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`ref` |The reference to the MCP server to be available to this broker. |String |Reference to `references.json#/definitions/MCPRef` |Yes
+|`connection` |The connection to be used by this mcp. |Object |Object with connection properties (see Tools[].mcp.connection properties below) |No
+|`allowed` |Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'. |Array of strings |Array of tool name strings |No
+|===
+
+`tools[].mcp.connection` has these properties.
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`ref` |Connection reference. |String |Reference to `references.json#/definitions/ConnectionRef` |Yes
+|===
+
+==== `links` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`agent` |Agent connection configuration. |Object |Object with agent properties (see Links[].agent properties below) |Yes
+|===
+
+===== `links[].agent` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`ref` |Agent reference. |String |Reference to `references.json#/definitions/AgentRef` |Yes
+|`connection` |The connection to be used by this agent. |Object |Object with connection properties (see Links[].agent.connection properties below) |No
+|===
+
+`links[].agent.connection` has these properties.
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`ref` |Connection reference. |String |Reference to `references.json#/definitions/ConnectionRef` |Yes
+|===
+
+==== `policies` Properties
+
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`ref` |Policy reference. |String |Reference to `references.json#/definitions/PolicyRef` |Yes
+|`configuration` |Policy configuration. |Object |Any object |Yes
+|===
+
 
 [source,yaml]
 ----
@@ -105,11 +334,67 @@ spec:
 ----
 
 [[llm-element]]
-===== llm Element
+=== `llm` Element
 
 The value of this section is a reference to one of the LLMs defined in Anypoint Exchange or in the `llmProviders` section of `agent-network.yaml`. Because it's a reference, you can choose to share the same LLM across all the brokers in your agent network. Or, you can have different brokers use different LLMs to better suit their tasks.
 
 When specifying an LLM model, it must support structured responses in JSON format. For example, a `gpt4.1` model is supported; a `gpt4` model isn't.
+
+=== `llmProviders` Property
+
+[cols="1,2,1,3"]
+|===
+|Parameter |Description |Type |Valid Values
+
+|`llmProviders` |The list of LLM providers defined as part of this network. |Object |Object with property names matching pattern: `^[a-zA-Z_][a-zA-Z0-9_.-]*$` (must start with letter or underscore, can contain letters, numbers, underscores, dots, hyphens). Each property value is an llmEntity object
+|===
+
+==== `llmEntity` Properties
+
+[cols="1,2,1,2,1"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`label` |A label for this LLM. |String |Any string value |No
+|`description` |The description of this LLM. |String |Any string value |No
+|`metadata` |LLM metadata configuration. |Object |Either WellKnownLLM or CustomLLM object (see metadata properties below) |Yes
+|===
+
+===== `metadata` Properties
+
+The `metadata` property uses a `oneOf` structure, so it must be either a `WellKnownLLM` or a `CustomLLM` object but not both.
+
+The `WellKnownLLM` object has these properties.
+
+[cols="1,2,1,2,1"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`platform` |The LLM platform provider. |String |`OpenAI`, `AzureOpenai` |Yes
+|`models` |List of available models for this platform. |Array of strings |Array of model name strings |No
+|===
+
+The `CustomLLM` object has these properties.
+
+[cols="1,2,1,2,1"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`platform` |The LLM platform provider name. |String |Any string value |Yes
+|`models` |List of available models for this platform. |Array of strings |Array of model name strings |No
+|`transcoder` |Transcoder configuration for custom LLM. |Object |Object with transcoder properties (see CustomLLM.transcoder properties below) |Yes
+|===
+
+The `CustomLLM.transcoder` object has these properties.
+
+[cols="1,2,1,2,1"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`ref` |Reference to the transcoder policy. |String |Reference to `references.json#/definitions/PolicyRef` |No
+|===
+
+
 
 [source,yaml]
 ----
@@ -122,13 +407,28 @@ When specifying an LLM model, it must support structured responses in JSON forma
 ----
 
 [[instructions-element]]
-===== instructions Element
+=== `instructions` Element
 
-Provide instructions that are specific to this broker. Although not required, including instructions is recommended.
+Provide instructions that are specific to this broker. 
 
-These instructions often focus on business-oriented concerns.
-For example, here's instructions for an employee onboarding broker.
+[cols="1,2,1,3,1"]
+|===
+|Parameter |Description |Type |Valid Values |Required
 
+|`instructions` |Set of custom instructions that will inform the behavior of the broker. |Array of strings |Array of instruction strings. Each item in the array is a string containing custom instructions for the broker |Yes
+|===
+
+==== `instructions` Properties
+
+[cols="1,2,1,3"]
+|===
+|Parameter |Description |Type |Valid Values
+
+|`instructions[]` |Individual instruction string. |String |Any string value. Typically contains business-oriented instructions, process descriptions, or guidelines for the broker's behavior.
+|===
+
+
+Instructions often focus on business-oriented concerns. For example, here's instructions for an employee onboarding broker.
 
 **Example 1**
 
@@ -175,14 +475,54 @@ Here's another example of instructions for a customer service broker. This broke
             5. Summarize actions: Provide a clear, human-readable summary of the steps performed, including information about the created Slack channel and the on-call engineer assigned.
 ----
 
-You don't have to provide instructions like "split the prompt into tasks", or "select the best tool". The broker does that on its own. These instructions are only necessary for describing specific business processes.
-
-While the instructions section is optional, it improves broker outcomes if you include as much detail about your business process as possible.
+You don't have to provide instructions like "split the prompt into tasks", or "select the best tool". The broker does that on its own.
 
 [[links-element]]
-===== links Element
+=== `links` Element
 
-This section is the most important part of the entire specification. The links section defines the agents that are available to this broker. Essentially, the links section is where the agent network is defined. It enables interagent communication and orchestration. The broker relies on the agents linked here to execute the appropriate actions to complete a user's goal.
+The `links` section is the most important part of the spec, as it defines the agents that are available to a broker. Essentially, you define the agent network in the `links` section. It enables interagent communication and orchestration. The broker relies on the agents linked here to execute the appropriate actions to complete a user's goal.
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`links` |Defines the list of agents this agent is connected with. This defines the agent network and enables inter-agent communication and orchestration.|Array|Array of link objects (see Links array item properties below)|Yes
+|===
+
+==== `links` Properties
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description|Type |Valid Values |Required
+
+|`agent` |Agent connection configuration.|Object|Object with agent properties (see Links[].agent properties below)|Yes
+|===
+
+===== `links[].agent` Properties
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+|`ref` |Reference to the agent asset.|Object|Object with ref properties (see Links[].agent.ref properties below)|Yes
+|`connection` |The connection to be used by this agent.|Object|Object with connection properties (see Links[].agent.connection properties below)|No
+|===
+
+`links[].agent.ref` has these properties.
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+|`name` |Exchange asset ID of the linked agent. This references the `assetId` that the agent has in Anypoint Exchange, not the human-friendly name.|String|Asset ID string (e.g., "hr-agent", "crm-agent"). By default, the groupId for this asset is the same as that in exchange.json|Yes
+|`namespace` |Business group ID (groupId) where the asset is defined. Use this when the asset was defined in a different business group than the current one.|String|Group ID string. To find the groupId, look in the `dependencies` section in `exchange.json`|No
+|===
+
+`links[].agent.connection` has these properties.
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter|Description|Type|Valid Values|Required
+|`ref` |Connection reference.|String|Reference to `references.json#/definitions/ConnectionRef`. This references a connection defined in the `connections` section|Yes
+|===
 
 [source,yaml]
 ----
@@ -207,7 +547,7 @@ links:
 
 Keep this section short. Don't add all available agents. Just like `tools`, excess values here leads to drops in agent network accuracy and determinism.
 
-Instead, we recommend a multi-level hierarchical approach. This favors traceability and management and helps keep context sizes in check.
+Instead, use a multi-level hierarchical approach. This favors traceability and management and helps keep context sizes in check.
 
 **Links Example**
 
@@ -218,7 +558,7 @@ Assets, IT Stock, HR, Payroll, and Badges agents are also called *leaf agents*. 
 image::af-onboarding-broker-example.png["Diagram showing an employee onboarding broker and its agents"]
 
 [[tools-element]]
-===== tools Element
+==== tools Element
 
 Tools provide agents with external capabilities. When a broker needs to access an external service that's not another agent, it reaches out to an MCP server.
 
@@ -240,7 +580,7 @@ tools:
 By default, the broker has access to all the tools available on the MCP server. However, the most modern LLMs can only handle around 20 to 25 tools per context before starting to hallucinate. Limit the available tools to the minimum needed. You can apply that filtering through the allowed list.
 
 [[policies-element]]
-==== policies Element
+=== policies Element
 
 Policies contains the list of policies to apply to the broker. It contains a reference to the policy that needs to be added as a dependency to the agent network project.
 
@@ -262,7 +602,7 @@ policies:
 ----
 
 [[error-handling]]
-===== Error Handling
+=== Error Handling
 
 Use these attributes to handle error scenarios.
 
