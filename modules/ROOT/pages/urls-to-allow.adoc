@@ -1,60 +1,76 @@
-= URLs to Allow to Run Anypoint Code Builder
+= Allow URLs for Anypoint Code Builder
 
-Allow Anypoint Code Builder URLs in your client OS security settings to let the IDE work with the external and Anypoint Platform hosts.
+Configure your firewall, antivirus, and proxy settings to allow Anypoint Code Builder URLs. Allowing these URLs ensures Anypoint Code Builder can connect to Anypoint Platform services, download dependencies, and access Maven repositories. This configuration prevents connection issues and improves performance if working with external hosts and Anypoint Platform services.
 
 == Allow Anypoint Code Builder URLs
 
 Allow URLs to ensure the best performance in Anypoint Code Builder.
 
-. Security and antivirus software
-+
-If you have security and antivirus software, add Anypoint Code Builder to the allowlist. Running real-time antivirus protection software on your operating system might have a negative impact on Anypoint Code Builder performance. Steps to solve these performance issues vary depending on your antivirus software.
-+
-Allowlist recommendation:
-+
+=== Security and Antivirus Software
+
+If you have security and antivirus software, add Anypoint Code Builder to the allowlist. Running real-time antivirus protection software on your operating system can have a negative impact on Anypoint Code Builder performance. Steps to solving these performance issues vary depending on your antivirus software.
+
+==== Allowlist Recommendation
+
 Allow or exclude from your antivirus software Anypoint Code Builder, its Java executables, and the Anypoint Code Builder installation and workspace file locations.
 
-. Anypoint Code Builder directories
-+
-All Anypoint Code Builder users need read and write permissions for the directory where Anypoint Code Builder is installed.
-+
-If you use a Windows antivirus application, ensure that the plugins/ and features/ directories are under the trusted category.
-+
-Allowlist recommendation:
-+
+=== Anypoint Code Builder Directories
+
+All Anypoint Code Builder users need read and write permissions for the directory where Anypoint Code Builder is installed. If you use a Windows antivirus application, ensure that the `plugins/` and `features/` directories are under the trusted category.
+
+==== Allowlist Recommendation
+
 Allowlist the Anypoint Code Builder workspace folder in your client OS security settings. In Windows, allowlist the Windows default temp folder where Anypoint Code Builder stores temporary files.
 
-. MuleSoft and Third-Party URLs
-+
+=== MuleSoft and Third-Party URLs
+
 Allow these URLs so that they aren't blocked or interrupted by your organization's firewall or proxy.
-+
-*MuleSoft*
-+
-1. MuleSoft Maven repositories and Connectors update site 
-** https://repository.mulesoft.org (/*)
-2. Anypoint Code Builder update sites
-** https://anypoint.code-builder.platform.salesforce.com (/*)
-3. Anypoint Platform services: CloudHub, Exchange, Core Services [Commcloud / Hyperforce]
-** https://*.anypoint.mulesoft.com (/*)
-** http://*.platform.mulesoft.com  (/*)
-4. Nexus
-** https://nexus.build.msap.io (/*)
-5. All assets downloaded from Exchange
-** https://exchange2-asset-manager-kprod.s3.amazonaws.com (/*) 
-** https://exchange2-asset-manager-kprod-eu.s3.eu-central-1.amazonaws.com (/*)
-6. Resources for API Portals
-** https://exchange2-file-upload-service-kprod.s3.amazonaws.com (/*)
 
-+
-*Third-Party*
+[NOTE]
+Some entries use a wildcard (*) to indicate that all subdomains must be allowed. The parent domain itself (for example, anypoint.code-builder.platform.salesforce.com) may not resolve directly, as it serves as a base for specific service endpoints. This is expected behavior.
 
-1. Maven
-** https://repo.maven.apache.org/maven2 (/*)
-** https://repo1.maven.org/maven2 (/*)
-2. Launchdarkly
-** https://clientstream.launchdarkly.com
-** https://clientsdk.launchdarkly.com
-** https://app.launchdarkly.com
-** https://events.launchdarkly.com
-** https://otel.observability.app.launchdarkly.com
-** https://pub.observability.app.launchdarkly.com
+==== MuleSoft
+
+* MuleSoft Maven repositories and connectors update site 
+** \https://repository.mulesoft.org
+** \https://*.repository.mulesoft.org
+* Anypoint Code Builder update sites
+** \https://anypoint.code-builder.platform.salesforce.com
+** \https://*.anypoint.code-builder.platform.salesforce.com
+* Anypoint Platform services: CloudHub, Exchange, Core Services [Commcloud / Hyperforce]
+** \https://anypoint.mulesoft.com
+** \https://*.anypoint.mulesoft.com
+** \http://platform.mulesoft.com
+** \http://*.platform.mulesoft.com
+* Nexus
+** \https://nexus.build.msap.io
+** \https://*.nexus.build.msap.io
+* All assets downloaded from Exchange
+** \https://exchange2-asset-manager-kprod.s3.amazonaws.com
+** \https://*.exchange2-asset-manager-kprod.s3.amazonaws.com
+** \https://exchange2-asset-manager-kprod-eu.s3.eu-central-1.amazonaws.com
+** \https://*.exchange2-asset-manager-kprod-eu.s3.eu-central-1.amazonaws.com
+* Resources for API Portals
+** \https://exchange2-file-upload-service-kprod.s3.amazonaws.com
+** \https://*.exchange2-file-upload-service-kprod.s3.amazonaws.com
+
+==== Third-Party
+
+* Maven
+** \https://repo.maven.apache.org/maven2
+** \https://*.repo.maven.apache.org/maven2
+** \https://repo1.maven.org/maven2
+** \https://*.repo1.maven.org/maven2
+* LaunchDarkly
+** \https://clientstream.launchdarkly.com
+** \https://*.clientstream.launchdarkly.com
+** \https://clientsdk.launchdarkly.com
+** \https://*.clientsdk.launchdarkly.com
+** \https://app.launchdarkly.com
+** \https://*.app.launchdarkly.com
+** \https://events.launchdarkly.com
+** \https://*.events.launchdarkly.com
+** \https://otel.observability.app.launchdarkly.com
+** \https://*.otel.observability.app.launchdarkly.com
+** \https://pub.observability.app.launchdarkly.com
+** \https://*.pub.observability.app.launchdarkly.com

@@ -1,69 +1,474 @@
-= Designing API Specs with MuleSoft Dev Agent
-:page-deployment-options: cloud-ide, desktop-ide
+= MuleSoft Dev Agent Overview
 
-Simplify your API designs by generating API specifications with MuleSoft Dev Agent. Use natural language prompts in Dev Agent to build APIs. The xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server]) powers these capabilities and is at the core of API spec generation in Anypoint Code Builder.
+MuleSoft Dev Agent is a purpose-built assistant for the development lifecycle, available directly in Anypoint Code Builder.
+
+MuleSoft Dev Agent enables you to build, deploy, and manage your projects using natural language prompts.
+
+Dev Agent integrates with the xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server], which provides a set of agentic tools that connect Dev Agent directly to your MuleSoft environment. Through this integration, Dev Agent can perform actions and retrieve data on your behalf, enabling capabilities such as:
+
+* Developing API specifications
+* Creating and configuring applications
+* Creating agent networks
+* Searching for assets
+* Deploying and managing instances
+* Securing your applications
+
+These features are powered by large language models (LLMs) that operate within the Salesforce Shared Trust Boundary.
+
+MuleSoft Dev Agent is part of the broader MuleSoft AI ecosystem, which also includes capabilities such as Map with AI and Map and Transform with AI. For an overview of all MuleSoft AI features, see the xref:general::learning-map-mulesoft-ai.adoc[Learning Map: MuleSoft AI].
 
 NOTE: MuleSoft Dev Agent is available on US, EU, Canada, and Japan cloud hosts.
 
-== Trust Layer
 
-The Einstein trust layer bridges Anypoint Platform and the underlying large language models (LLMs):
+== Before You Begin
 
-image::acb-einstein-trust-layer.png["Flow depicting how Dev Agent interacts with the trust layer"]
+Before using MuleSoft Dev Agent, make sure that you meet these prerequisites:
 
-[calloutlist]
-. You create a prompt based on your use case and submit it through MuleSoft Dev Agent.  
-. To minimize inaccurate responses, prompts are grounded with MuleSoft proprietary data and user context.  
-. Data is sent securely through the MuleSoft MCP Server, which comes pre-configured in Dev Agent, to the LLM.  
-. All data remains within the Salesforce Shared Trust Boundary.  
-. After the LLM generates a response, the content is returned through the secure pathway.  
-. MuleSoft validates the generated output to ensure that the specification works within the MuleSoft ecosystem.  
-. Anypoint Code Builder displays the validated response in the IDE.  
+* Set up and access the web or desktop IDE.
+* Make sure you have the required Anypoint Code Builder permissions.
+* Make sure you have the Mule Developer Generative AI User permission to use MuleSoft Dev Agent.
+* Make sure Einstein is enabled in Access Management. For more information, see Enabling Einstein for Anypoint Platform.
 
-[IMPORTANT]
-AI features can produce inaccurate or harmful responses. Review all generated output for accuracy and safety before applying it in production. You assume responsibility for the generated content when making business decisions.
+NOTE: Authentication happens through the user logged in to Anypoint Code Builder. MuleSoft Dev Agent inherits the same permissions as that user and can only execute actions that the user is authorized to perform in Anypoint Platform.
 
-[[settings]]
-== MuleSoft Dev Agent Settings
 
-MuleSoft Dev Agent provides additional options to customize and extend how you interact with generative AI in Anypoint Code Builder.  
+== Use MuleSoft Dev Agent
 
-[[settings-approve]]
-=== Configure Dev Agent Settings
-Access the *Auto-approve Settings* panel by clicking the *Auto-approve* section at the bottom of the MuleSoft Dev Agent window.  
-From here, you can configure permissions such as reading and editing project files, executing commands, and using MCP servers.  
+You can open MuleSoft Dev Agent from the:
 
-[[rules-workflows]]
-=== Add Rules and Workflows
-Click the *Rules & Workflows* icon in the lower-left corner of the Dev Agent panel.  
-Use global or workspace rules to guide Dev Agent behavior, and create workflows with slash commands for repeated tasks.  
+* Toolbar icon
+* Top navigation bar
+* *Build with AI* card in the project canvas
 
-[[context-files]]
-=== Provide Additional Context
-Click the *Add Context* icon in the lower-left corner of the Dev Agent panel to upload supporting files, such as requirements, config files, or terminal outputs.  
-These files are used as context for more accurate API generation.  
+When you submit a prompt, MuleSoft Dev Agent processes it using the MuleSoft MCP Server and performs actions such as generating API specifications or integration flows.
 
-[[mcp]]
-=== Extend Dev Agent with MCP Servers
-MuleSoft Dev Agent comes preconfigured with a MuleSoft MCP Server, and you can connect additional MCP servers for custom capabilities.  
-See xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server documentation].
+Depending on your configuration, MuleSoft Dev Agent can:
 
-[[new-chat]]
-=== Start a New Chat
-Start a new conversation with MuleSoft Dev Agent at any time by clicking the *New Chat* option in the panel.  
-This clears previous context and begins a new session.
+* Request approval before writing to your files
+* Write automatically if *Auto-approve* is enabled in settings
 
-[[view-conversation]]
-=== View Conversation
-You can scroll and review the current conversation with MuleSoft Dev Agent directly in the panel to track generated outputs and file actions.
+=== Plan and Act Modes
 
-== Adding Rules and Workflows
+MuleSoft Dev Agent operates in two modes:
 
-You can customize how Dev Agent generates API specifications by adding rules and workflows:
+* *Plan Mode*  
+Dev Agent analyzes your prompt and produces a step-by-step plan describing how it will accomplish the task. No actions are executed automatically in this mode.
 
-* *Rules* let you enforce coding or design conventions across generated specs. For example, you can define error-handling patterns or naming standards.  
-* *Workflows* define reusable sequences of steps that Dev Agent can execute automatically. Workflows can be triggered with slash commands in the Dev Agent panel.  
+* *Act Mode*  
+Dev Agent attempts to perform the actions outlined in the plan by using the MuleSoft MCP Server tools to modify files, create resources, or execute changes to your project.
+
+You can switch between modes depending on whether you prefer to review the plan before execution or allow Dev Agent to act directly.
+
+
+=== How Dev Agent Generates Code
+
+MuleSoft Dev Agent uses MuleSoft-optimized AI pipelines to generate high-quality code for API specifications and integration flows.
+
+The pipelines are exposed to Dev Agent through these MCP tools:
+
+* `generate_mule_flow` – Generates Mule integration flows.
+* `generate_api_spec` – Generates API specifications from natural language prompts.
+
+Because these tools run on pipelines optimized specifically for MuleSoft use cases, users typically receive higher-quality code outputs (on average, 60% better) compared to generic generation.
+
+To ensure the best results:
+
+* Verify that the MuleSoft MCP Server is loaded in Dev Agent prior to sending a prompt.
+* Make sure Dev Agent is invoking these specialized tools.
+* Verify that all required prerequisites for Dev Agent and MCP Server are enabled in your environment.
+
+For more information about how MuleSoft's AI generation pipelines work, see the MuleSoft research blog:
+https://blogs.mulesoft.com/automation/how-mulesoft-turns-generative-output-into-value/?_gl=1*fyflmd*_gcl_au*MTk3Mzc5OTkxNi4xNzYwOTY5MjM3LjczMDE0MjQxNy4xNzYxOTIxNzg2LjE3NjE5MjE3ODY.
+
+
+== Use Checkpoints to Track Changes
+
+When you have a folder or directory open in Visual Studio Code, you can use checkpoints to track changes to your workspace.
+
+Checkpoints capture the state of your files and Dev Agent tasks at a specific moment in time, allowing you to restore or compare your project with a prior state.
+
+To restore or compare your workspace:
+
+. Open a folder or directory in Visual Studio Code.
+. Interact with Dev Agent to generate actions that create checkpoints.
+. In the MuleSoft Dev Agent panel, locate the checkpoint that you want to reference.
+. Choose one of the available options:
+
+* *Restore* – Revert your workspace to the selected checkpoint. You can restore:
+** *Restore Files Only* – Restores only the file changes in your workspace.
+** *Restore Task Only* – Restores only the task history associated with the checkpoint.
+** *Restore Files and Tasks* – Restores both the file changes and the task history.
+
+* *Compare* – Compare the current state of your workspace to the selected checkpoint.  
+This opens a comparison view that highlights the differences between your current files and the files at the time the checkpoint was created.
+
+== Add Workflows and Rules
+
+Rules and Workflows allow developers to customize how MuleSoft Dev Agent operates within their project.
+
+Rules Define natural-language constraints or guidelines for how Dev Agent should generate content.  
+You can use rules to enforce naming conventions, ensure consistent error handling, or maintain coding standards across your workspace.  
+Rules can be defined at two levels:  
+* *Global* – Applies to all prompts sent to Dev Agent.  
+* *Workspace* – Applies only to the active workspace.
+
+Workflows create predefined multi-step tasks that Dev Agent executes automatically.  
+Workflows let you streamline repeated development steps and can be triggered using slash commands (for example, `/workflow-name`) in the Dev Agent panel.
+
+=== Add rules or workflows
+
+. Open MuleSoft Dev Agent in the sidebar.
+. Select *Settings*.
+. In the *Rules and Workflows* section, choose whether you want to add a rule or a workflow.
+. Select *Add Rule* or *Add Workflow*.
+. Provide the required information:
+* For rules, enter the natural-language instruction you want Dev Agent to follow.
+* For workflows, enter a name, an optional description, and the steps the workflow should run.
+. Select *Save*.
+
+You can edit or delete existing rules and workflows from the same section.
+
+
+== MCP Server Support
+
+=== Interact with Your MuleSoft Environment using the MuleSoft MCP Server
+
+The MuleSoft MCP Server is integrated within Anypoint Code Builder and provides built-in tools to extend MuleSoft Dev Agent’s capabilities.
+
+You can use these tools to generate API specifications, create and deploy integrations, manage governance rulesets, and build Agent Fabric agent networks. You can also work with DataWeave and gain insights into the performance of your applications and APIs—all directly from Anypoint Code Builder.
+
+These MuleSoft MCP Server tools are available in Anypoint Code Builder and are also supported when you use the Anypoint Extension Pack in compatible IDEs such as VS Code, Cursor, and Windsurf:
+
+
+=== Agent Network Development
+
+* `configure_agent_network_yaml` – Modify agent-network YAML configurations for Agent Fabric projects.
+* `create_agent_network_project` – Create and scaffold agent-network projects.
+* `deploy_agent_network` – Deploy an agent network to a runtime environment.
+* `publish_agent_network_assets` – Publish agent network assets to Anypoint Exchange for reuse.
+
+
+=== Application Development
+
+* `create_and_manage_assets` – Create, update, and delete assets in Anypoint Exchange.
+* `create_and_manage_metadata` – Define, attach, and update metadata for Mule flow components.
+* `create_MCP_server` – Use the MCP Connector in a Mule project to create a MuleSoft MCP server.
+* `create_mule_project` – Create a Mule project structure in a given directory.
+* `generate_api_spec` – Use AI to generate, modify, or enhance an API specification.
+* `generate_mule_flow` – Generate or update Mule flows and integration logic from natural language prompts.
+* `get_topics_agent_actions_metadata_instructions` – Retrieve metadata and instructions for enabling topics and agent actions from an OpenAPI spec.
+* `mock_api_spec` – Mock an API specification to test endpoint functionality through a mocking service.
+* `open_project` – Open or manage an existing API, Mule, or agent-network project.
+* `run_local_mule_application` – Run a Mule application locally, handling build and local runtime setup.
+* `search_asset` – Search for assets in Anypoint Exchange by using flexible filters and criteria.
+* `test_connection` – Validate connector configurations (such as HTTP or Salesforce connectors) in a Mule project.
+* `validate_project` – Validate the current project, such as an API spec or agent network project, before deploying or publishing.
+
+
+=== Connector Development
+
+* `uc_create_connector_workflow` – Create a complete LinkWeave connector end-to-end with a guided workflow plan.
+* `uc_generate_api_spec` – Generate an OpenAPI 3.0 spec from use cases and API documentation.
+* `uc_generate_connector` – Generate a complete LinkWeave connector from an existing API spec.
+
+
+=== DataWeave Development
+
+* `dataweave_create_documentation` – Generate DataWeave documentation for functions based on descriptions, parameters, and examples.
+* `dataweave_create_project` – Create a new DataWeave project and return the project location.
+* `dataweave_create_sample_data` – Create DataWeave input sample data for a given transformation file.
+* `dataweave_get_module_metadata` – Return functions, parameters, and types for a specific DataWeave module.
+* `dataweave_get_project_metadata` – Return metadata for a DataWeave project, including modules, functions, and supported data formats.
+* `dataweave_open_project` – Open a DataWeave project from a given URL in the current window or a new window.
+* `dataweave_run_script_tool` – Run a DataWeave transformation with sample data to validate the script output.
+
+
+=== Application Management
+
+* `create_and_manage_api_instances` – Create and configure API instances in Anypoint API Manager.
+* `deploy_mule_application` – Deploy Mule applications to CloudHub 2.0 or Runtime Fabric with optional HA, security, and performance settings.
+* `list_api_instances` – List API instances in an environment and optionally include applied and available policies.
+* `list_applications` – List Mule applications in an environment and optionally include metrics and logs.
+* `update_mule_application` – Update a Mule application deployment configuration, including runtime version, replicas, and scaling options.
+
+
+=== Governance
+
+* `add_governance_ruleset` – Add a governance ruleset from Anypoint Exchange to your project.
+* `list_governance_rulesets` – List governance rulesets that apply to your project.
+* `validate_api_against_ruleset` – Validate an API spec against governance rulesets and rules.
+
+
+=== Policy Management
+
+* `get_flex_gateway_policy_example` – Retrieve Flex Gateway policy examples to configure Rust-based custom policies.
+* `manage_api_instance_policy` – Apply or update policies on an API instance in API Manager.
+* `manage_flex_gateway_policy_project` – Guide the LLM in creating, configuring, building, and publishing Flex Gateway custom policy projects.
+
+
+=== Usage and Insights
+
+* `get_platform_insights` – Get usage and operational insights for applications and APIs across your organization.
+* `get_reuse_metrics` – Get reuse metrics for assets across your organization to understand adoption and reduce duplication.
+
+For more information about these tools and their parameters, see:
+xref:mulesoft-mcp-server::reference-mcp-tools.adoc[MuleSoft MCP Server Tool Reference].
+
+== Add and Manage Custom MCP Servers
+
+From the MuleSoft Dev Agent panel, you can add your own MCP server or manage connected MCP servers through the MCP Server settings.
+
+
+=== Open MCP Server Settings
+
+. Open the MuleSoft Dev Agent panel in Anypoint Code Builder.
+. Select *Manage MCP Servers*.
++
+NOTE: From this view, you can enable or disable MCP servers that have been installed. The MuleSoft MCP Server comes pre-installed with Dev Agent.
+. Select the gear icon to open the full MCP Server settings.
+
+This opens the MCP Servers UI with three tabs:
+
+* *Marketplace*
+* *Remote Servers*
+* *Installed*
+
+With these views, you can install new MCP servers, connect to remote MCP servers, and manage existing MCP servers.
+
+
+=== Add an MCP Server
+
+You can add a custom MCP server by installing the server from the Marketplace, adding a remote MCP server, or manually editing the configuration file.
+
+
+==== Install From Marketplace
+
+. In MCP Server settings, select the *Marketplace* tab.
+. Browse the available MCP servers or filter by category.
+. Click *Install* to add the selected MCP server to your environment.
++
+NOTE: Marketplace servers include community-provided MCP servers. Not all servers are supported by Salesforce.
+
+==== Add a Remote MCP Server
+
+. Select the *Remote Servers* tab.
+. Enter a *Server Name* and a *Service URL* for the remote MCP server.
+. Click *Add Server* to connect to the remote instance.
+. (Optional) Select *Edit Configuration* to manually configure the MCP server by updating the `a4d_mcp_settings.json` file.
+
+
+==== Manually Configure the JSON File
+
+If needed, you can configure MCP servers directly by editing the `a4d_mcp_settings.json` file:
+
+. From the *Remote Servers* tab, select *Edit Configuration*.
+. Update fields such as server names, URLs, and additional settings.
+. Save your changes to apply the configuration.
+
+
+=== Manage Installed MCP Servers
+
+Once an MCP server has been installed, you can manage it from the *Installed* tab.
+
+
+=== Enable, Disable, or Restart Servers
+
+. Select the *Installed* tab.
+. Toggle each MCP server on or off.
+. To restart a server, select *Restart Server* from its configuration panel.
+
+
+=== Manage Tools for an MCP Server
+
+Each MCP server provides a set of tools that Dev Agent can use. The following steps show you how to work with an MCP server:
+
+. In the *Installed* tab, select a server to expand its details.
+. View the list of available tools for that server.
+. To auto-approve an individual tool, check the *Auto-approve* box next to that tool.
++
+NOTE: Auto-approval for tools is available only if Auto-approve has been enabled in Dev Agent settings.
+. To auto-approve all tools from a server, scroll to the bottom of the list and enable *Auto-approve all tools*.
+
+
+=== Configure Request Timeout
+
+Follow these steps to configure how long Dev Agent waits for a response from an MCP server:
+
+. In the server details panel, locate *Request Timeout*.
+. Select a timeout value.
+
+
+=== Delete an MCP Server
+
+To remove an MCP server:
+
+. Open the server's configuration panel from the *Installed* tab.
+. Scroll to the bottom of the tools list.
+. Select *Delete Server*.
+. Confirm the deletion.
+
+Tool availability, behavior, and stability may vary depending on the MCP server version and configuration, as well as whether the server is community-provided or supported by Salesforce.
+
+== Provide Dev Agent with Context
+
+You can improve the accuracy of MuleSoft Dev Agent’s output by providing additional context files or inputs.  
+Examples include requirement files (`requirements.txt`), configuration folders, logs, URLs, or terminal output.
+
+To add context:
+
+. In the MuleSoft Dev Agent panel, click the *Add Context* icon in the lower-left corner.
+. Select files or folders to attach, paste the input or output from terminal, or paste a URL.
+. Confirm to add the context to your current task.
+
+You can also add context directly from the prompt input box by typing `@`, which opens the same context selector.
+
+These inputs are used as contextual references during generation.
+
+
+== Add Commands
+
+Commands provide quick shortcuts for interacting with MuleSoft Dev Agent.  
+You can invoke any command by typing `/` in the prompt input box.
+
+Dev Agent includes several built-in commands:
+
+* `/newrule` — Create a new rule based on the current conversation.
+* `/newchat` — Start a new chat that carries over context from your current task.
+* `/reportbug` — Report an issue by creating a GitHub ticket with Agentforce Vibes formatting.
+
+Workflows that you define also appear as commands under *Workflow Commands*.  
+You can trigger them the same way by typing `/` followed by the workflow name.
+
+
+== Configure MuleSoft Dev Agent Settings
+
+You can customize how MuleSoft Dev Agent interacts with your project through the *Settings* panel.  
+To access this panel, click the *Auto-approve* section at the bottom of the MuleSoft Dev Agent window.
+
+The available options include:
+
+* *Auto-approve*: Automatically apply changes without prompting for confirmation.
+* *Read project files*: Allow MuleSoft Dev Agent to read project files for context.
+* *Edit project files*: Allow MuleSoft Dev Agent to write changes directly to your project.
+* *Read all files*: Allow MuleSoft Dev Agent to read all files on your computer.
+* *Edit all files*: Allow MuleSoft Dev Agent to edit any file on your computer.
+* *Use MCP Servers*: Allow MuleSoft Dev Agent to use connected MCP servers.
+* *Execute safe commands*: Allow MuleSoft Dev Agent to execute safe terminal commands.
+* *Execute all commands*: Allow MuleSoft Dev Agent to execute any terminal command.
+* *Use the browser*: Allow MuleSoft Dev Agent to launch and interact with websites in a browser.
+
+== View Conversation History
+
+MuleSoft Dev Agent allows you to return to tasks you have previously started and continue working from where you left off.
+
+To open a recently started task:
+
+. In the MuleSoft Dev Agent panel, locate the *Recent Tasks* section.
+. Select the task you want to reopen.
+
+If the task is not listed under Recent Tasks:
+
+. Click *View All History*.
+. Use the search bar to find a specific task, or browse your full history list.
+
+You can sort tasks by:
+
+* *Newest*
+* *Oldest*
+* *Most Tokens*
+* Other available criteria
+
+You can also filter tasks by:
+
+* *Workspace*
+* *Favorites*
+
+To favorite a task, click the *Star* icon next to the task entry.
+
+
+=== Delete History
+
+You can remove past tasks in two ways:
+
+* *Delete specific tasks* – Deletes the specific tasks you select.
+* *Delete all history* – Clears all tasks.
+
+
+== Example Prompts
+
+Use these example prompts to guide MuleSoft Dev Agent in completing common tasks. Customize the values to match your project or environment.
+
+
+=== Application Deployment and Projects
+
+To deploy an app to CloudHub or Runtime Fabric:
+
+Deploy this app.
+
+To create an implementation project:
+
+Create a Mule project that creates an order in NetSuite every time an opportunity in Salesforce is updated to the ‘Closed Won’ stage.
+
+To deploy an implementation application:
+
+Deploy Mule application in current project. Deploy with high security, high availability, and performance optimized settings.
+
+To modify an existing application:
+
+Update this application so that it [business requirements].
+
+
+=== Exchange Asset Management
+
+To create an asset in Exchange:
+
+I would like to create an asset of [this type] in Exchange with this [name].
+
+To search for an asset in Exchange:
+
+Find [asset name].
+
+To search for an asset within a specific organization:
+
+Find [asset name] in [organization name].
+
+
+=== API Instances
+
+To create an instance and secure it:
+
+Create an instance for the [application_name] and apply the rate limiting policy to that instance.
+
+
+=== Custom Metadata
+
+To set custom metadata that uses sample data:
+
+Can you help me define custom metadata on the following component? This is how the sample data looks:  
+[sample_data]
+
+To set custom metadata using a file:
+
+Can you define custom metadata using the sample file below and attach it to [processor_name]?  
+@[path_to_file]
+
+
+=== Agent Network Operations
+
+To create an Agent Network:
+
+Create an Agent Network for onboarding employees.
+
+To publish an Agent Network:
+
+Publish this Agent Network project to Exchange.
+
+To deploy an Agent Network:
+
+Deploy this Agent Network project.
+
 
 == See Also
 
-* xref:api-ai-create-spec.adoc[Creating API Specs with Dev Agent]  
+* xref:troubleshoot-generative-ai.adoc[Troubleshooting MuleSoft Dev Agent]
+* xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server]

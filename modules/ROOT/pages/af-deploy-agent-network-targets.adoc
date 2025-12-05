@@ -2,6 +2,42 @@
 
 Deploy your agent network instance to a deployment target. You can deploy to a CloudHub 2.0 private space or to a Runtime Fabric (limited availability). When you deploy, Flex Gateway secures your agent network into the ingress gateway. Also, it secures your brokers, agents, and MCP servers into the egress gateway.
 
+These Flex Gateway policies are applied automatically at deployment.
+
+
+[%header,cols="20,40a"]
+|===
+|Agent Type | Policy
+|Broker
+|
+
+** A2A Agent Card policy 
+** Tracing policy
+** Agent Connection Telemetry policy
+
+|Agent
+
+(ingress and egress)
+| 
+
+** A2A Agent Card policy
+** Tracing policy
+** Agent Connection Telemetry policy
+
+| MCP Server
+
+(ingress and egress)
+|
+
+** MCP Support policy
+** Tracing policy
+** Agent Connection Telemetry policy
+
+|===
+
+
+
+
 [NOTE]
 ====
 If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
@@ -15,7 +51,7 @@ When you deploy your agent network, an instance is deployed for each connection 
 
 == Deploy Your Agent Network
 
-MuleSoft Dev Agent can help you deploy your agent network instance. Click the agent icon image:af-acb-dev-agent-icon.png["MuleSoft Dev Agent icon"] in the Anypoint Code Builder activity bar and tell the agent that you want to deploy your agent network. MuleSoft Dev Agent does the rest.  For more information about MuleSoft Dev Agent, see xref:api-ai-create-spec.adoc[].
+MuleSoft Dev Agent can help you deploy your agent network instance. Click the agent icon image:af-acb-dev-agent-icon.png["",18,18] in the Anypoint Code Builder activity bar and tell the agent that you want to deploy your agent network. MuleSoft Dev Agent does the rest.  For more information about MuleSoft Dev Agent, see xref:api-ai-create-spec.adoc[].
 
 **Suggested Prompts**
 
