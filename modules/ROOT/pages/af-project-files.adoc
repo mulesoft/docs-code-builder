@@ -452,7 +452,7 @@ Use these properties to handle error scenarios. Define these properties within t
  ** Default of 60 seconds is suitable for most API-based operations. Tasks exceeding this timeout are terminated.
 
 [[agents-element]]
-=== `agents` Element
+== `agents` Element
 
 Reference agents defined in a different agent network, or another agent used in your company. Any agent is valid, as long as it supports A2A as its communication protocol.
 
@@ -500,7 +500,7 @@ agents:
 ----
 
 [[mcp-servers-element]]
-=== `mcpServers` Element
+== `mcpServers` Element
 
 This section lists the MCP servers in your agent network. These servers can be used to obtain context relevant to the information and generate notifications. If you want to apply governance to an MCP server using the agent network file, it must be in your `agent-network.yml` file or published to Anypoint Exchange as an asset.
 
@@ -550,7 +550,7 @@ mcpServers:
 ----
 
 [[llm-providers]]
-=== `llmProviders` Element
+== `llmProviders` Element
 
 Configure the LLMs the brokers use for reasoning. For supported LLMs, see xref:af-agent-networks.adoc[].
 
@@ -567,7 +567,7 @@ The `llmProviders` element has these properties.
 |===
 
 [[metadata-properties]]
-==== `metadata` Properties
+=== `metadata` Properties
 
 The `metadata` property uses a `oneOf` structure, so it must be either a `WellKnownLLM` or a `CustomLLM` object but not both.
 
@@ -593,7 +593,7 @@ The `CustomLLM` object has these properties.
 |===
 
 [[connections-element]]
-=== `connections` Element
+== `connections` Element
 
 The `connections` section defines one or more connections to instances of an agent network asset. For example, if an agent is deployed multiple times across regions and environments, you can define a connection for each deployed agent instance, regardless of whether it's used by a broker or not.
 
