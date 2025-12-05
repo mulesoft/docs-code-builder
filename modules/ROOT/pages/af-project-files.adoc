@@ -233,7 +233,16 @@ The `llm` element has these properties.
 |`connection.ref` |Connection reference. |String |See <<connections-element,connections element>> |No
 |`configuration.model` |The name of the model to use. |String |Model name string |Yes
 |`configuration.openAI` |OpenAI specific configuration settings. |Object |Object with OpenAI settings (See <<llm-element,openAI properties>>) |No
-|`configuration.openAI.reasoningEffort` |Constrains effort on reasoning for reasoning models. gtp-5.1 defaults to NONE, previous ones default to MEDIUM. |String |`NONE`, `MINIMAL`, `LOW`, `MEDIUM`, `HIGH` |No
+|`configuration.openAI.reasoningEffort` |Constrains reasoning effort for reasoning models. Useful for managing performance and reason-token usage. |String 
+a| 
+
+* `NONE` (default for gtp-5.1)
+* `MINIMAL`
+* `LOW`
+* `MEDIUM` (default for versions previous to gtp-5.1)
+* `HIGH` 
+|No
+
 |`configuration.openAI.temperature` |Controls randomness in the output. |Number |Any number |No
 |`configuration.openAI.topP` |Nucleus sampling parameter. |Number |Any number |No
 |`configuration.openAI.topLogprobs` |Number of most likely tokens to return at each position. |Integer |Any integer |No
