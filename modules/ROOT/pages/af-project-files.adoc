@@ -138,6 +138,16 @@ The `card` element has these properties.
 [[extensions-properties]]
 ==== `extensions` Properties
 
+[cols="1,2,1,1,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`uri` |URI identifying the extension |String (URI) |Valid URI string |No
+|`description` |Description of the extension |String |Any string value |No
+|`required` |Indicates if this extension is required |Boolean |`true` or `false` |No
+|`params` |Parameters for the extension |Object |Any object (e.g., `{"hints": "Hint text"}`) |No
+|===
+
 *Example Usage*
 
 [source,yaml]
@@ -182,16 +192,6 @@ brokers:
               hints: "Hint text"
       version: 1.0.0		          # Agent (broker) version
 ----
-
-[cols="1,2,1,1,1",options="header"]
-|===
-|Parameter |Description |Type |Valid Values |Required
-
-|`uri` |URI identifying the extension |String (URI) |Valid URI string |No
-|`description` |Description of the extension |String |Any string value |No
-|`required` |Indicates if this extension is required |Boolean |`true` or `false` |No
-|`params` |Parameters for the extension |Object |Any object (e.g., `{"hints": "Hint text"}`) |No
-|===
 
 [[spec-element]]
 === `spec` Element
