@@ -223,7 +223,14 @@ The `spec` element has these properties.
 
 The value of this section is a reference to one of the LLMs defined in Anypoint Exchange or in the `llmProviders` section of `agent-network.yaml`. Because it's a reference, you can choose to share the same LLM across all the brokers in your agent network. Or, you can have different brokers use different LLMs to better suit their tasks.
 
-When specifying an LLM model, it must support structured responses in JSON format. For example, a `gpt4.1` model is supported; a `gpt4` model isn't.
+Agent Network brokers support OpenAI models. The model you use must support: 
+
+* The /responses endpoint
+* Reasoning
+* Native structured output
+* Function and Custom tool calling
+
+GPT-5-mini and GPT-5.1 meet these requirements. We recommend evaluating different models to find the right balance for your needs. For lower latency, consider smaller models like GPT-5-mini.
 
 The `llm` element has these properties.
 
