@@ -34,7 +34,9 @@ The agent-network.yaml file uses these sections.
 [[brokers-section]]
 == Brokers Section
 
-The `brokers` section defines the AI assets in your agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. It's defined by the agents and MCP servers it can use to accomplish tasks. The broker name is used as the `assetId` in the `exchange.json` file. The `groupId` defaults to the associated business group value used in `exchange.json`.
+`brokers`
+
+This section defines the AI assets in your agent network. A broker is an intelligent routing service that coordinates task delegation across specialized agents in your enterprise. It's defined by the agents and MCP servers it can use to accomplish tasks. The broker name is used as the `assetId` in the `exchange.json` file. The `groupId` defaults to the associated business group value used in `exchange.json`.
 
 [cols="1,2,1,3",options="header"]
 |===
@@ -56,7 +58,9 @@ The `broker` element has these properties.
 [[card-section]]
 === Card Section
 
-The `card` section adheres to the Agent-to-Agent (A2A) specification v0.3.0 and describes the broker's contract, skills, and capabilities. This is a standard A2A agent card link:https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure[as defined in the Agent2Agent (A2A) Protocol specification.].
+`card`
+
+This section adheres to the Agent-to-Agent (A2A) specification v0.3.0 and describes the broker's contract, skills, and capabilities. This is a standard A2A agent card link:https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure[as defined in the Agent2Agent (A2A) Protocol specification.].
 
 The `card` element has these properties. 
 [cols="1,2,1,1,1",options="header"]
@@ -198,7 +202,9 @@ The `extensions` element has these properties.
 [[spec-section]]
 === Spec Section
 
-The `spec` section configures the broker's internal implementation. You can think of this section as the source code for your broker.
+`spec`
+
+This section configures the broker's internal implementation. You can think of this section as the source code for your broker.
 
 In this section, specify the LLM to use, custom instructions, available tools, and error handling. The `links` section defines the agents that are available to this broker. Essentially, the `links` section is where you define the agent network.
 
@@ -219,7 +225,9 @@ The `spec` element has these properties.
 |===
 
 [[llm-section]]
-==== `llm` Section
+==== LLM Section
+
+`llm`
 
 The value of this section is a reference to one of the LLMs defined in Anypoint Exchange or in the `llmProviders` section of `agent-network.yaml`. Because it's a reference, you can choose to share the same LLM across all the brokers in your agent network. Or, you can have different brokers use different LLMs to better suit their tasks.
 
@@ -259,7 +267,9 @@ a|
 |===
 
 [[instructions-section]]
-==== `instructions` Section
+==== Instructions Section
+
+`instructions`
 
 Provides instructions that are specific to the broker. Instructions often focus on business-oriented concerns. For example, here's instructions for an employee onboarding broker.
 
@@ -308,7 +318,9 @@ The `instructions` element has these properties.
 
 
 [[tools-section]]
-==== `tools` Section
+==== Tools Section
+
+`tools`
 
 Tools provide agents with external capabilities. When a broker needs to access an external service that's not another agent, it reaches out to an MCP server.
 
@@ -343,9 +355,11 @@ The `tools` element has these properties.
 |===
 
 [[links-section]]
-==== `links` Section
+==== Links Section
 
-The `links` section is the most important part of the spec, as it defines the agents that are available to a broker. It enables interagent communication and orchestration. The broker relies on the agents linked here to execute the appropriate actions to complete a user's goal.
+`links`
+
+This section is the most important part of the spec, as it defines the agents that are available to a broker. It enables interagent communication and orchestration. The broker relies on the agents linked here to execute the appropriate actions to complete a user's goal.
 
 Example 1
 
@@ -399,7 +413,9 @@ The `links` element has these properties.
 
 
 [[policies-section]]
-==== `policies` Section
+==== Policies Section
+
+`policies`
 
 The `policies` section contains the list of policies to apply to the broker. It contains a reference to the policy that needs to be added as a dependency to the agent network project.
 
@@ -468,7 +484,9 @@ Use these properties to handle error scenarios. Define these properties within t
  ** Default of 60 seconds is suitable for most API-based operations. Tasks exceeding this timeout are terminated.
 
 [[agents-section]]
-== `agents` Section
+== Agents Section
+
+`agents`
 
 Reference agents defined in a different agent network, or another agent used in your company. Any agent is valid, as long as it supports A2A as its communication protocol.
 
@@ -516,7 +534,9 @@ The `agents` element has these properties.
 |===
 
 [[mcp-servers-section]]
-== `mcpServers` Section
+== McpServers Section
+
+`mcpServers`
 
 This section lists the MCP servers in your agent network. Use these servers to obtain relevant context and generate notifications. To apply governance to an MCP server using the agent network file, it must be in your `agent-network.yml` file or published to Anypoint Exchange as an asset.
 
@@ -566,7 +586,9 @@ The `mcpServers` element has these properties.
 |===
 
 [[llm-providers]]
-== `llmProviders` Section
+== LLMProviders Section
+
+`llmProviders`
 
 Configure the LLMs the brokers use for reasoning. For supported LLMs, see xref:af-agent-networks.adoc[].
 
@@ -609,7 +631,9 @@ The `CustomLLM` object has these properties.
 |===
 
 [[connections-section]]
-== `connections` Section
+== Connections Section
+
+`connections`
 
 The `connections` section defines one or more connections to instances of an agent network asset. For example, if an agent is deployed multiple times across regions and environments, you can define a connection for each deployed agent instance, regardless of whether it's used by a broker or not.
 
