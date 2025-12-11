@@ -63,7 +63,7 @@ The `card` element has these properties.
 |===
 |Parameter |Description |Type |Valid Values |Required
 
-|`protocolVersion` | The version of the A2A protocol this agent supports. | String | A2A protocol version (e.g., "0.3.0") | No
+|`protocolVersion` | The version of the A2A protocol this agent supports. | String | A2A protocol version (for example, "0.3.0") | No
 |`name` | A human-readable name for the agent. | String | Any string value | No
 |`description` | A human-readable description of the agent, assisting users and other agents in understanding its purpose. | String | Any string value | No
 |`url` | The preferred endpoint URL for interacting with the agent. This URL must support the transport specified by 'preferredTransport'. | String (URI) | Valid URI string | No
@@ -71,13 +71,13 @@ The `card` element has these properties.
 |`additionalInterfaces` | A list of additional supported interfaces (transport and URL combinations). | Array | Array of interface objects (See <<additionalinterfaces-properties,AdditionalInterfaces properties>>) | No
 |`iconUrl` | An optional URL to an icon for the agent. | String (URI) | Valid URI string | No
 |`provider` | Information about the agent's service provider. | Object | Object with provider properties (See <<provider-properties,Provider properties>>) | No
-|`version` | The agent's own version number. The format is defined by the provider. | String | Version string (e.g., "1.0.0") | No
+|`version` | The agent's own version number. The format is defined by the provider. | String | Version string (for example, "1.0.0") | No
 |`documentationUrl` | An optional URL to the agent's documentation. | String (URI) | Valid URI string | No
 |`capabilities` | A declaration of optional capabilities supported by the agent. | Object | Object with capability properties (See <<capabilities-properties,Capabilities properties>>) | No
 |`securitySchemes` | A declaration of the security schemes available to authorize requests. | Object | Keys are scheme names; values follow the OpenAPI 3.0 Security Scheme Object | No
 |`security` | A list of security requirement objects that apply to all agent interactions. | Array | Array of security requirement objects | No
-|`defaultInputModes` | Default set of supported input MIME types for all skills, which can be overridden on a per-skill basis. | Array of strings | Array of MIME type strings (e.g., `["application/json", "text/plain"]`) | No
-|`defaultOutputModes` | Default set of supported output MIME types for all skills, which can be overridden on a per-skill basis. | Array of strings | Array of MIME type strings (e.g., `["application/json", "text/plain"]`) | No
+|`defaultInputModes` | Default set of supported input MIME types for all skills, which can be overridden on a per-skill basis. | Array of strings | Array of MIME type strings (for example, `["application/json", "text/plain"]`) | No
+|`defaultOutputModes` | Default set of supported output MIME types for all skills, which can be overridden on a per-skill basis. | Array of strings | Array of MIME type strings (for example, `["application/json", "text/plain"]`) | No
 |`skills` | The set of skills, or distinct capabilities, that the agent can perform. | Array | Array of skill objects (See <<skills-properties,Skills properties>>) | No
 |`supportsAuthenticatedExtendedCard` | Indicates if the agent can provide an extended agent card with additional details to authenticated users. | Boolean | `true` or `false`. Defaults to `false` | No
 |`signatures` | JSON Web Signatures computed for this AgentCard. | Array | Array of signature objects | No
@@ -192,7 +192,7 @@ The `extensions` element has these properties.
 |`uri` |URI identifying the extension. |String (URI) |Valid URI string |No
 |`description` |Description of the extension. |String |Any string value |No
 |`required` |Indicates if this extension is required. |Boolean |`true` or `false` |No
-|`params` |Parameters for the extension. |Object |Any object (e.g., `{"hints": "Hint text"}`) |No
+|`params` |Parameters for the extension. |Object |Any object (for example, `{"hints": "Hint text"}`) |No
 |===
 
 [[spec-section]]
@@ -223,14 +223,14 @@ The `spec` element has these properties.
 
 The value of this section is a reference to one of the LLMs defined in Anypoint Exchange or in the `llmProviders` section of `agent-network.yaml`. Because it's a reference, you can choose to share the same LLM across all the brokers in your agent network. Or, you can have different brokers use different LLMs to better suit their tasks.
 
-Agent Network brokers support OpenAI models. The model you use must support: 
+Agent network brokers support OpenAI models. The model you use must support: 
 
-* The /responses endpoint
+* The `/responses` endpoint
 * Reasoning
 * Native structured output
 * Function and Custom tool calling
 
-GPT-5-mini and GPT-5.1 meet these requirements. We recommend evaluating different models to find the right balance for your needs. For lower latency, consider smaller models like GPT-5-mini.
+GPT-5-mini and GPT-5.1 meet these requirements. GPT-5-mini and GPT-5.1 meet these requirements. Evaluate the different models to find the right balance for your needs. For lower latency, consider smaller models like GPT-5-mini.
 
 The `llm` element has these properties.
 
@@ -272,7 +272,7 @@ instructions:
   - Onboard in HR: Create the new employee record. Fetch the address using available tools. Don't ask for the address unless you're not sure how to get it.
   - Onboard in CRM: Create the employee's CRM profile.
   - Send a Slack status update using SlackMcpServer.send_status_update (include contextId from input).
-  - Request employee laptop in Zendesk and initiate the employee badge request.
+  - Request an employee laptop in Zendesk and initiate the employee badge request.
   - Send another Slack status update using SlackMcpServer.send_status_update (include contextId from input).
   - IT system setup: Provision the ping ID system for the employee.
   ## Final Response
@@ -312,7 +312,7 @@ The `instructions` element has these properties.
 
 Tools provide agents with external capabilities. When a broker needs to access an external service that's not another agent, it reaches out to an MCP server.
 
-By default, the broker has access to all the tools available on the MCP server. However, the most modern LLMs can only handle around 20 to 25 tools per context before starting to hallucinate. Limit the available tools to the minimum needed. You can apply that filtering through the allowed list.
+By default, the broker has access to all the tools available on the MCP server. However, most modern LLMs can only handle around 20 to 25 tools per context before starting to hallucinate. Limit the available tools to the minimum needed. You can apply that filtering through the allowed list.
 
 Example
 
@@ -345,7 +345,7 @@ The `tools` element has these properties.
 [[links-section]]
 ==== `links` Section
 
-The `links` section is the most important part of the spec, as it defines the agents that are available to a broker. Essentially, you define the agent network in the `links` section. It enables interagent communication and orchestration. The broker relies on the agents linked here to execute the appropriate actions to complete a user's goal.
+The `links` section is the most important part of the spec, as it defines the agents that are available to a broker. It enables interagent communication and orchestration. The broker relies on the agents linked here to execute the appropriate actions to complete a user's goal.
 
 Example 1
 
@@ -370,7 +370,7 @@ links:
         name: it-agent
 ----
 
-Keep this section short. Don't add all available agents. Just like `tools`, excess values here leads to drops in agent network accuracy and determinism.
+Keep this section short. Don't add all available agents. Just like `tools`, excess values here lead to drops in agent network accuracy and determinism.
 
 Instead, use a multi-level hierarchical approach. This favors traceability and management and helps keep context sizes in check.
 
@@ -392,7 +392,7 @@ The `links` element has these properties.
 |`links` |Defines the list of agents that this agent connects to. This defines the agent network and enables inter-agent communication and orchestration.|Array|Array of link objects|Yes
 |`links[]` |A link object in the links array.|Object|Object with `agent` property|Yes
 |`links[].agent` |Agent connection configuration.|Object|Object with agent properties|Yes
-|`links[].agent.ref.name` |Exchange asset ID of the linked agent. This references the `assetId` that the agent has in Anypoint Exchange, not the human-friendly name.|String|Asset ID string (e.g., "hr-agent", "crm-agent"). By default, the groupId for this asset is the same as that in exchange.json|Yes
+|`links[].agent.ref.name` |Exchange asset ID of the linked agent. This references the `assetId` that the agent has in Anypoint Exchange, not the human-friendly name.|String|Asset ID string (for example, "hr-agent", "crm-agent"). By default, the groupId for this asset is the same as that in exchange.json|Yes
 |`links[].agent.ref.namespace` |Business group ID (groupId) where the asset is defined. Use this when the asset was defined in a different business group than the current one.|String|Group ID string. To find the groupId, look in the `dependencies` section in `exchange.json`|No
 |`links[].agent.connection.ref` |Connection reference.|String|See <<connections-element,connections element>>. This references a connection defined in the `connections` section|No
 |===
@@ -415,7 +415,7 @@ policies:
       policyConfig1: policyConfig1Value	
 ----
 
-Policies can be applied at the broker or at the connection. Reference the policy definition and apply the configuration that you want to set.
+Apply policies at the broker or at the connection. Reference the policy definition and apply the configuration to set.
 
 The `policies` element has these properties.
 
@@ -429,7 +429,7 @@ The `policies` element has these properties.
 
 [NOTE]
 ====
-When you add governance policies to your project, those policies persist between deployments. However, if you add governance policies at run-time, those policies won't persist.
+When you add governance policies to your project, those policies persist between deployments. However, if you add governance policies at runtime, those policies won't persist.
 ====
 
 [[error-handling]]
@@ -453,13 +453,13 @@ Use these properties to handle error scenarios. Define these properties within t
   ** Each step in an orchestration consumes tokens.
   ** Complex tasks may require more steps.
   ** Simple tasks should complete with fewer steps.
-  ** Default of 25 is suitable for most use cases.
+  ** The default of 25 maximum loops is suitable for most use cases.
 
 * `maxConsecutiveErrors` 
 
   ** Allows the orchestrator to retry failed operations.
   ** Prevents infinite retry loops.
-  ** Default of 3 attempts provides a balance between resilience and failure detection. After reaching this limit, the orchestration returns a failed status.
+  ** Default of `3` attempts provides a balance between resilience and failure detection. After reaching this limit, the orchestration returns a failed status.
 
 * `taskTimeoutSecs` 
 
@@ -518,7 +518,7 @@ The `agents` element has these properties.
 [[mcp-servers-section]]
 == `mcpServers` Section
 
-This section lists the MCP servers in your agent network. Use these servers to obtain relevant context and generate notifications. If you want to apply governance to an MCP server using the agent network file, it must be in your `agent-network.yml` file or published to Anypoint Exchange as an asset.
+This section lists the MCP servers in your agent network. Use these servers to obtain relevant context and generate notifications. To apply governance to an MCP server using the agent network file, it must be in your `agent-network.yml` file or published to Anypoint Exchange as an asset.
 
 Example
 
@@ -545,7 +545,7 @@ mcpServers:
 
 We support both MCP `streamableHttp` and SSE transports, but we recommend `streamableHttp`.
 
-Just like in the `brokers` section, an allowed attribute is available to filter the available tools. The allowed attribute in the brokers section is more granular and applied only to that specific broker. In the `mcpServers` section, this attribute applies to the MCP server as a whole, filtering at the group level.
+Just like in the `brokers` section, an allowed attribute is available to filter the available tools. The allowed attribute in the `brokers` section is more granular and applied only to that specific broker. In the `mcpServers` section, this attribute applies to the MCP server as a whole, filtering at the group level.
 
 The `mcpServers` element has these properties.
 
@@ -558,9 +558,9 @@ The `mcpServers` element has these properties.
 |`metadata` |MCP server metadata configuration. |Object |See <<mcp-servers-element,mcpServers element>> |Yes
 |`metadata.transport` |Communication method configuration for the MCP server. |Object |Object with transport properties |No
 |`metadata.transport.kind` |The transport protocol type. |String |`streamableHttp`, `sse` |Yes
-|`metadata.transport.path` |The path for the `streamableHttp` transport. |String |Any string value (e.g., `/mcp`) |No
-|`metadata.transport.sse.ssePath` |The SSE path for Server-Sent Events transport. |String |Any string value (e.g., `/sse`) |No
-|`metadata.transport.sse.messagesPath` |The messages path for Server-Sent Events transport. |String |Any string value (e.g., `/messages`) |No
+|`metadata.transport.path` |The path for the `streamableHttp` transport. |String |Any string value (for example, `/mcp`) |No
+|`metadata.transport.sse.ssePath` |The SSE path for Server-Sent Events transport. |String |Any string value (for example, `/sse`) |No
+|`metadata.transport.sse.messagesPath` |The messages path for Server-Sent Events transport. |String |Any string value (for example, `/messages`) |No
 |`metadata.tools` |Server-level tool filtering configuration. |Object |Object with `allowed` array property |No
 |`metadata.tools.allowed` |Filters the list of tools advertised by the MCP server to only those in this list. |Array |Array of tool name strings |No
 |===
@@ -801,7 +801,7 @@ Example
 [[authentication-types]]
 === Authentication Types
 
-Connection authentication is always expressed in accordance with link:https://swagger.io/docs/specification/v3_0/authentication/[Open API authentication methods]. For supported authentication types, see xref:af-agent-networks.adoc[].
+Connection authentication is always expressed in accordance with https://swagger.io/docs/specification/v3_0/authentication/[Open API authentication methods]. For supported authentication types, see xref:af-agent-networks.adoc[].
 
 These examples show how to define each type in YAML.
 
