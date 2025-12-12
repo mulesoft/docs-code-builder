@@ -534,7 +534,7 @@ The `agents` element has these properties.
 |===
 
 [[mcp-servers-section]]
-== McpServers Section
+== MCP Servers Section
 
 `mcpServers`
 
@@ -585,7 +585,7 @@ The `mcpServers` element has these properties.
 |`metadata.tools.allowed` |Filters the list of tools advertised by the MCP server to only those in this list. |Array |Array of tool name strings |No
 |===
 
-[[llm-providers]]
+[[llm-providers-section]]
 == LLMProviders Section
 
 `llmProviders`
@@ -763,8 +763,14 @@ The `connections` element has these properties.
 |`spec.authentication.username` |The username for basic authentication. |String |Any string value |Yes (for basic auth)
 |`spec.authentication.password` |The password for basic authentication. |String |Any string value |Yes (for basic auth)
 |`spec.authentication.headerName` |The name of the header in which to set the key. If not specified, 'Authorization' is set by default. |String |Any string value |No
-|`spec.authentication.clientId` |The client ID for OAuth 2.0 or API key client credentials authentication. |String or Object |String value, or object with `value` and optional `name` properties |Yes (for oauth2-client-credentials and apikey-client-credentials)
-|`spec.authentication.clientSecret` |The client secret for OAuth 2.0 or API key client credentials authentication. |String or Object |String value, or object with `value` and optional `name` properties |Yes (for oauth2-client-credentials and apikey-client-credentials)
+|`spec.authentication.clientId` |The client ID for OAuth 2.0 or API key client credentials authentication. |String or Object a|
+* API key client requires an object with `value` and optional `name` properties.
+* OAuth 2.0 requires a string value
+|Yes (for oauth2-client-credentials and apikey-client-credentials)
+|`spec.authentication.clientSecret` |The client secret for OAuth 2.0 or API key client credentials authentication. |String or Object a|
+* API key client requires an object with `value` and optional `name` properties.
+* OAuth 2.0 requires a string value
+|Yes (for oauth2-client-credentials and apikey-client-credentials)
 |`spec.authentication.token` |Configuration on how to fetch the OAuth 2.0 token. |Object |Object with token properties |Yes (for oauth2-client-credentials)
 |`spec.authentication.token.url` |The URL of the token provider. |String |Valid URL string |Yes
 |`spec.authentication.token.timeout` |Time in seconds to wait for the service to return the token. |Number |Any number |No
