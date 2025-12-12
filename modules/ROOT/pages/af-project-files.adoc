@@ -28,7 +28,7 @@ The agent-network.yaml file uses these sections.
 *** <<error-handling,error handling>>
 * <<agents-section,agents>>
 * <<mcp-servers-section,mcpServers>>
-* <<llm-providers-section,llmProviders>>
+* <<llmproviders-section,llmProviders>>
 * <<connections-section,connections>>
 
 [[brokers-section]]
@@ -214,7 +214,7 @@ The `spec` element has these properties.
 |===
 |Parameter |Description |Type |Valid Values |Required |Default
 
-|`llm` |LLM configuration for the broker. |Object |See <<llm-section,LLM properties>> |Yes |-
+|`llm` |LLM configuration for the broker. |Object |See <<llm-section,LLM Section>> |Yes |-
 |`instructions` |Set of custom instructions that will inform the orchestration. |Array of strings |Array of instruction strings |Yes |-
 |`links` |Defines the list of agents that this agent connects to. |Array |Array of link objects (See <<links-section,Links properties>>) |Yes |-
 |`maxNumberOfLoops` |The maximum number of steps that a task can take. Useful for keeping orchestrations from running too long and consuming too many tokens. |Integer |Positive integer |No |25
@@ -349,8 +349,8 @@ The `tools` element has these properties.
 |===
 |Parameter |Description |Type |Valid Values |Required
 
-|`mcp.ref` |The reference to the MCP server that is available to this broker. |String |See <<mcp-servers-section,mcpServers element>> |Yes
-|`mcp.connection.ref` |Connection reference. |String |See <<connections-section,connections element>> |No
+|`mcp.ref` |The reference to the MCP server that is available to this broker. |String |See <<mcp-servers-section,mcpservers>> |Yes
+|`mcp.connection.ref` |Connection reference. |String |See <<connections-section,connections>> |No
 |`mcp.allowed` |Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'. |Array of strings |Array of tool name strings |No
 |===
 
@@ -408,7 +408,7 @@ The `links` element has these properties.
 |`links[].agent` |Agent connection configuration.|Object|Object with agent properties|Yes
 |`links[].agent.ref.name` |Exchange asset ID of the linked agent. This references the `assetId` that the agent has in Anypoint Exchange, not the human-friendly name.|String|Asset ID string (for example, "hr-agent", "crm-agent"). By default, the groupId for this asset is the same as that in exchange.json|Yes
 |`links[].agent.ref.namespace` |Business group ID (groupId) where the asset is defined. Use this when the asset was defined in a different business group than the current one.|String|Group ID string. To find the groupId, look in the `dependencies` section in `exchange.json`|No
-|`links[].agent.connection.ref` |Connection reference.|String|See <<connections-section,connections element>>. This references a connection defined in the `connections` section|No
+|`links[].agent.connection.ref` |Connection reference.|String|See <<connections-section,connections>>. This references a connection defined in the `connections` section|No
 |===
 
 
@@ -439,7 +439,7 @@ The `policies` element has these properties.
 |===
 |Parameter |Description |Type |Valid Values |Required
 
-|`ref` |Policy reference. |String |See <<policies-section,policies element>> |Yes
+|`ref` |Policy reference. |String |See <<policies-section,policies>> |Yes
 |`configuration` |Policy configuration. |Object |Any object |Yes
 |===
 
@@ -525,7 +525,7 @@ The `agents` element has these properties.
 |`label` |A label for this agent. |String |Any string value |No
 |`description` |A description for this agent. |String |Any string value |No
 |`tags` |Tags associated with this agent. |Array |Array of string values |No
-|`card` |Agent card definition. |Object |See <<card-section,card element>> |No
+|`card` |Agent card definition. |Object |See <<card-section,card>> |No
 |`metadata` |Agent metadata configuration. |Object |Object with `protocol` property |Yes
 |`metadata.platform` |The name of the platform running this agent. For example, Bedrock, AgentForce, etc. |String |Any string value |No
 |`metadata.protocol` |The name of the protocol. For example, a2a. |String |`a2a`, `other` |Yes
@@ -575,7 +575,7 @@ The `mcpServers` element has these properties.
 |`label` |A label for this MCP server. |String |Any string value |No
 |`description` |A description for this MCP server. |String |Any string value |No
 |`tags` |Tags associated with this MCP server. |Array |Array of string values |No
-|`metadata` |MCP server metadata configuration. |Object |See <<mcp-servers-section,mcpServers element>> |Yes
+|`metadata` |MCP server metadata configuration. |Object |See <<mcp-servers-section,MCP Servers>> |Yes
 |`metadata.transport` |Communication method configuration for the MCP server. |Object |Object with transport properties |No
 |`metadata.transport.kind` |The transport protocol type. |String |`streamableHttp`, `sse` |Yes
 |`metadata.transport.path` |The path for the `streamableHttp` transport. |String |Any string value (for example, `/mcp`) |No
@@ -627,7 +627,7 @@ The `CustomLLM` object has these properties.
 
 |`platform` |The LLM platform provider name. |String |Any string value |Yes
 |`models` |List of available models for this platform. |Array of strings |Array of model name strings |No
-|`transcoder.ref` |Reference to the transcoder policy. |String |See <<policies-section,policies element>> |No
+|`transcoder.ref` |Reference to the transcoder policy. |String |See <<policies-section,policies>> |No
 |===
 
 [[connections-section]]
@@ -756,9 +756,9 @@ The `connections` element has these properties.
 |`ref` |Reference to the asset this connection is for. |Object |Object with reference properties (See <<ref-element,ref properties>>) |Yes
 |`ref.name` |Exchange asset ID of the connected asset. |String |Asset ID string. For agents, use the same name as in the associated entry in the agents section or use the Exchange asset ID. For LLMs, use the name from llmProviders. For MCP servers, use the name from mcpServers |Yes
 |`ref.namespace` |Business group ID (groupId) where the asset is defined. Use this when the asset was defined in a different business group than the current one. |String |Group ID string. To find the groupId, look in the `dependencies` section in `exchange.json` |No
-|`spec` |Connection specification. Properties vary by connection kind. |Object |Object with spec properties (See <<connections-section,spec properties>>) |Yes
+|`spec` |Connection specification. Properties vary by connection kind. |Object |Object with spec properties (See <<spec-section,spec>>) |Yes
 |`spec.url` |The URL for the connection endpoint. |String |Valid URL string |Yes (for agent and llm), No (for mcp)
-|`spec.authentication` |Authentication configuration for the connection. |Object |Authentication object (See <<authentication-types,Authentication properties>>) |No
+|`spec.authentication` |Authentication configuration for the connection. |Object |Authentication object (See <<authentication-types,Authentication types>>) |No
 |`spec.authentication.kind` |The type of authentication. |String |`basic`, `oauth2-client-credentials`, `apikey-client-credentials`, `apiKey` |Yes (when authentication is specified)
 |`spec.authentication.username` |The username for basic authentication. |String |Any string value |Yes (for basic auth)
 |`spec.authentication.password` |The password for basic authentication. |String |Any string value |Yes (for basic auth)
@@ -778,7 +778,7 @@ The `connections` element has these properties.
 |`spec.authentication.scopes` |An array of scopes to request for OAuth 2.0. |Array |Array of scope strings |No
 |`spec.authentication.apiKey` |The value of the API key for API key authentication. |String |Any string value |Yes (for apiKey)
 |`spec.configuration` |LLM-specific configuration object. |Object |Any object |Yes (for llm connections)
-|`spec.policies` |Policy bindings to be applied to the connection. |Array |Array of PolicyBinding objects (See <<policies-section,PolicyBinding properties>>) |No
+|`spec.policies` |Policy bindings to be applied to the connection. |Array |Array of PolicyBinding objects (See <<policies-section,policies>>) |No
 |`spec.policies[].ref` |Policy reference. |Object |Object with `name` and optional `namespace` properties |Yes
 |`spec.policies[].ref.name` |Exchange asset ID of the policy. By default, the groupId for this asset is the same as that in exchange.json. |String |Asset ID string |Yes
 |`spec.policies[].ref.namespace` |Optional. If the policy was defined in a different business group, set the corresponding groupId here. |String |Group ID string |No
