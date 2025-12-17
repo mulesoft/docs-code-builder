@@ -431,7 +431,18 @@ policies:
       policyConfig1: policyConfig1Value	
 ----
 
-Apply policies at the broker or at the connection. Reference the policy definition and apply the configuration to set.
+Apply policies at the broker or at the connection. Reference the policy definition and apply the configuration.
+
+For more information about applying policies via Flex Gateway in Local Mode, see:
+
+* xref:gateway::flex-agent-secure.adoc[]
+* xref:gateway::flex-gateway-secure-local.adoc[]
+
+
+[NOTE]
+====
+When you add governance policies to your project, those policies persist between deployments. However, if you add governance policies at runtime, those policies won't persist.
+====
 
 The `policies` element has these properties.
 
@@ -442,11 +453,6 @@ The `policies` element has these properties.
 |`ref` |Policy reference. |String |See <<policies-section,Policies>> |Yes
 |`configuration` |Policy configuration. |Object |Any object |Yes
 |===
-
-[NOTE]
-====
-When you add governance policies to your project, those policies persist between deployments. However, if you add governance policies at runtime, those policies won't persist.
-====
 
 [[error-handling]]
 === Error Handling
