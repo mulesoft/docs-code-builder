@@ -60,6 +60,40 @@ These servers will be published to Exchange.
 The asset might also be published to Exchange.
 . An asset that has been added to this agent network project from Exchange.
 
+== A2A Protocol 
+
+Agent networks use the A2A specification 0.3.0. Brokers use the A2A protocol to accept requests to reach other agents.
+
+=== Context and Task ID Scoping in Agent Networks
+
+In the A2A protocol, the server (the agent receiving the request) always generates the `contextId` and `taskId`. These IDs define the state and scope of a specific conversation between two agents.
+
+When an agent acts as a broker, IDs do not pass through from the upstream client. Each "hop" in a multi-agent network establishes its own unique session. 
+
+Consider a network with a client and two agents (A and B).
+
+* The IDs used between the client and Agent A are independent of the IDs used between Agent A and Agent B.
+* When Agent A delegates a task to Agent B, Agent B (acting as aserver) generates its own `contextId` and `taskId`.
+*  Agent A is responsible for maintaining a mapping between its own upstream `taskId` (used to respond to its client) and the downstream `taskId` it is tracking with Agent B.
+* If Agent B requires more information (if it returns `status: input-required`), Agent B provides a `contextId` and `taskId` to Agent A. Agent A uses these IDs to provide the requested input to Agent B. The client never sees Agent B's internal IDs.
+
+[cols="1,1,1", options="header"]
+|===
+| Relationship | Role |  Logic
+| Client -> Agent A | Agent A is server | Generates `contextID_1` and `taskID_1` for the client.
+| Agent A -> Agent B | Agent B is server | Generates `contextID_2` and `taskID_2` for Agent A.
+| Network broker | Agent A | Agent A maps `contextID_1` and `taskID_1` to `contextID_2` and `taskID_2`.
+|===
+
+For more information, see https://a2a-protocol.org/v0.3.0/topics/life-of-a-task/#group-related-interactions[Life of a Task - Group Related Interactions].
+
+=== Non-Supported Features
+
+Agent network doesn't support the following features in the A2A protocol.
+* Task History
+* Push Notifications Config
+* Streaming
+
 == Considerations
 
 Agent networks have these considerations.
@@ -69,11 +103,6 @@ Agent networks have these considerations.
 ** Basic
 ** Client Credentials
 ** Anypoint Client Credentials
-* A2A specification 0.3.0 is supported. Brokers use the A2A protocol to accept requests to reach other agents.
-* These A2A features aren't available.
-** Task History
-** Push Notifications Config
-** Streaming
 * Text-based prompts and responses are supported. Image and binary message/artifact types aren't supported.
 * All LLM models in your agent network project must support structured responses in JSON format. For example, a `gpt4.1` model is supported; a `gpt4` model isn't.
 * These LLMs are supported.
