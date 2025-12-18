@@ -73,7 +73,7 @@ When an agent acts as a broker, IDs do not pass through from the upstream client
 Consider a network with a client and two agents (A and B).
 
 * The IDs used between the client and Agent A are independent of the IDs used between Agent A and Agent B.
-* When Agent A delegates a task to Agent B, Agent B (acting as aserver) generates its own `contextId` and `taskId`.
+* When Agent A delegates a task to Agent B, Agent B (acting as a server) generates its own `contextId` and `taskId`.
 *  Agent A is responsible for maintaining a mapping between its own upstream `taskId` (used to respond to its client) and the downstream `taskId` it is tracking with Agent B.
 * If Agent B requires more information (if it returns `status: input-required`), Agent B provides a `contextId` and `taskId` to Agent A. Agent A uses these IDs to provide the requested input to Agent B. The client never sees Agent B's internal IDs.
 
