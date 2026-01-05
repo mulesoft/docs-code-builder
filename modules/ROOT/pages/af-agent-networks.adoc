@@ -60,6 +60,36 @@ These servers will be published to Exchange.
 The asset might also be published to Exchange.
 . An asset that has been added to this agent network project from Exchange.
 
+== Large Language Models
+
+Agent network brokers support these LLMs.
+
+* Azure OpenAI
+* OpenAI API
+* Gemini API
+
+The following table details the requirements and recommended models. 
+
+|===
+|*Model Provider* |*Required Endpoint* |*Required Capabilities* |*Suggested Models*
+
+|OpenAI |`/responses` a|
+* Reasoning 
+* Native structured output 
+* Function and Custom tool calling 
+a|
+* For lower latency: GPT-5-mini 
+* For complex reasoning: Evaluate models
+
+|Gemini |`/generateContent` (Native API) a|
+* Native Thinking (via thinkingConfig) 
+* Native structured output (responseSchema) 
+* Function and custom tool calling 
+a|
+* For lower latency: Gemini 2.5 Flash, Gemini 2.5 Flash-Lite 
+* For complex reasoning: Gemini 3 Pro (Deep Think capabilities)
+|=== 
+
 == Considerations
 
 Agent networks have these considerations.
