@@ -66,14 +66,14 @@ For orchestration, observability, and governance, agents use the A2A specificati
 
 === Context and Task ID Scoping in Agent Networks
 
-In MuleSoft agent networks, the server (the agent or broker receiving the request) always generates the `contextId` and `taskId`. These IDs define the state and scope of a specific conversation between two agents.
+In MuleSoft agent networks, the servers (the brokers receiving the request) always generate the `contextId` and `taskId`. These IDs define the state and scope of a specific conversation between two agents.
 
-In a multi-agent network, a client sends a request to a broker and the broker generates the necessary IDs. When the broker sends a request to the next broker in line, the broker doesn't send these same IDs. Instead, the broker establishes a unique `contextID` and `taskID` for the request to the next broker. 
+In a multi-agent network, a client sends a request to a broker and the broker generates the necessary IDs. When that broker sends a request to the next broker in line, the broker doesn't send these same IDs. Instead, the broker establishes a unique `contextID` and `taskID` for the request to the next broker. 
 
 Consider a network with a client and two brokers (1 and 2).
 
 * The IDs used between the client and Broker_1 are independent of the IDs used between Broker_1 and Broker_2.
-* When Broker_1 delegates a task to Broker_2, Broker B (acting as a server) generates its own `contextId` and `taskId`.
+* When Broker_1 delegates a task to Broker_2, Broker 2 (acting as a server) generates its own `contextId` and `taskId`.
 *  Broker_1 is responsible for maintaining a mapping between its own upstream `taskId` (used to respond to its client) and the downstream `taskId` it is tracking with Broker_2.
 * If Broker_2 requires more information (if it returns `status: input-required`), it provides a `contextId` and `taskId` to Broker_1. Broker_1 uses these IDs to provide the requested input to Broker_2. The client never sees Broker_2's internal IDs.
 
