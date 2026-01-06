@@ -62,13 +62,13 @@ The asset might also be published to Exchange.
 
 == A2A Protocol 
 
-For orchestration, observability, and governance, agents use the A2A specification 0.3.0.
+The Agent2Agent (A2A) Protocol governs agent-to-agent communication. This protocol powers orchestration, observability, and governance features in agent networks. MuleSoft supports v0.3.0 of the A2A Protocol Specification.
 
 === Context and Task ID Scoping in Agent Networks
 
-In MuleSoft agent networks, the servers (the brokers receiving a request) always generate a `contextId` and `taskId`. These IDs define the state and scope of a specific conversation between two agents. A `taskId` is always matched to a `contextId`, but a `contextId` can exist without a `taskId`.
+In MuleSoft agent networks, the brokers receiving a request always generate a `contextId` and `taskId`. These IDs define the state and scope of a specific conversation between two agents. A `taskId` is always matched to a `contextId`, but a `contextId` can exist without a `taskId`.
 
-In a multi-agent network, a client sends a request to Broker_1 and Broker_1 generates the necessary IDs for that request. When Broker_1 sends a new request to the next broker or non-broker agent in line, Broker_1 establishes a unique `contextID` and `taskID` for that new request. (Note that it's not mandatory for brokers to generate a `contextId` and `taskId` when making requests to non-broker agents.)
+In a multi-agent network, a client sends a request to Broker_1 and Broker_1 generates the necessary IDs for that request. When Broker_1 sends a new request to the next broker or non-broker agent in line, that broker or non-broker agent establishes a unique `contextID` and `taskID` for the new request. (Note that it's not mandatory for non-broker agents to generate a `contextId` and `taskId` when receiving requests from a client.)
 
 Consider a network with a client and two brokers (1 and 2).
 
@@ -89,7 +89,7 @@ For more information, see https://a2a-protocol.org/v0.3.0/topics/life-of-a-task/
 
 === Non-Supported Features
 
-Agent network doesn't support the following features in the A2A protocol.
+Agent network doesn't support streaming with Server-Sent Events (SSE).
 
 * Streaming
 
