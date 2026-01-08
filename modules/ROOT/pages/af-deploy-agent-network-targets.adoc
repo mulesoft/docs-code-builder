@@ -1,3 +1,4 @@
+[[deploy-instances]]
 = Deploy Agent Network Instances
 
 Deploy your agent network instance to a deployment target. You can deploy to a CloudHub 2.0 private space or to a Runtime Fabric (limited availability). When you deploy, Flex Gateway secures your agent network into the ingress gateway. Also, it secures your brokers, agents, and MCP servers into the egress gateway.
@@ -35,12 +36,14 @@ These Flex Gateway policies are applied automatically at deployment.
 
 |===
 
+[[before-you-begin]]
 == Before You Begin 
 
 Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites].
 
 When you deploy your agent network, an instance is deployed for each connection defined in your agent network. If your agent network contains brokers, an instance is deployed per broker.
 
+[[deploy-dev-agent]]
 == Deploy Your Network Using the MuleSoft Dev Agent
 
 MuleSoft Dev Agent can help you deploy your agent network instances. For more information about MuleSoft Dev Agent, see xref:anypoint-code-builder::api-ai-create-spec.adoc[Creating API Specs with MuleSoft Dev Agent].
@@ -55,6 +58,7 @@ To get started try one of these suggested prompts.
 * Deploy agent network project at /path/to/project to dev environment with specific gateways.
 * Deploy my agent network to CloudHub 2.0.
 
+[[deploy-acb]]
 == Deploy Your Network Using Anypoint Code Builder
 
 . If you're not logged in already, log in to your Anypoint Platform account.
@@ -67,6 +71,7 @@ To get started try one of these suggested prompts.
 
 Next, discover your agent network assets in *Agents & Tools* in Exchange, view your agent network in Agent Visualizer, apply a governance policy in API Manager, or monitor your agent network activity in Anypoint Monitoring.
 
+[[deploy-cli]]
 == Deploy a Network Using the Anypoint CLI
 
 If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].

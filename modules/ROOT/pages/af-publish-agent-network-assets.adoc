@@ -1,15 +1,18 @@
+[[publish-assets]]
 = Publish Agent Network Assets
 
 Build and publish your agent network project as Anypoint Exchange assets. When you publish, an asset is created for each broker, agent, and MCP server that's in your agent network. The asset ID is the value of the `name` key in `agent-network.yaml`.
 
 For example, suppose you have an agent name of `badging-agent` in `agent-network.yaml`. After it's published, the Exchange `assetId` is `badging-agent`.
 
+[[before-you-begin]]
 == Before You Begin
 
 Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites].
 
 If you want to publish your project assets to a different business group, update the relevant `groupId` in `exchange.json`.
 
+[[publish-dev-agent]]
 == Publish Your Network Using the MuleSoft Dev Agent
 
 MuleSoft Dev Agent can help you publish your agent network specification to Anypoint Exchange. For more information about MuleSoft Dev Agent, see xref:anypoint-code-builder::api-ai-create-spec.adoc[Creating API Specs with MuleSoft Dev Agent].
@@ -22,9 +25,9 @@ To get started try one of these suggested prompts.
 * Publish my Employee Onboarding project.
 * Publish my agent network project version 1.0.0.
 * Publish the hello-world-network project to Exchange.
-* Publish agent network project at /path/to/project
-*  with version 2.1.0.
+* Publish agent network project at /path/to/project with version 2.1.0.
 
+[[publish-acb]]
 == Publish Your Network Using Anypoint Code Builder
 
 . If you're not logged in already, log in to your Anypoint Platform account.
@@ -37,10 +40,12 @@ To get started try one of these suggested prompts.
 
 Next, discover your agent network assets in *Agents & Tools* in Exchange to get a comprehensive view of your integration, including agent and MCP server assets. Exchange automatically tags brokers for easy identification.
 
+[[publish-cli]]
 == Publish a Network Using the Anypoint CLI
 
 If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
 
+[[see-also]]
 == See Also
 
 * xref:af-deploy-agent-network-targets.adoc[]
