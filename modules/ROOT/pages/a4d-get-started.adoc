@@ -17,6 +17,39 @@ Depending on your configuration, MuleSoft Dev Agent can:
 * Request approval before writing to your files
 * Write automatically if *Auto-approve* is enabled in settings
 
+=== Plan and Act Modes
+
+MuleSoft Dev Agent operates in two modes:
+
+* *Plan Mode*  
+Dev Agent analyzes your prompt and produces a step-by-step plan describing how it will accomplish the task. No actions are executed automatically in this mode.
+
+* *Act Mode*  
+Dev Agent attempts to perform the actions outlined in the plan by using the MuleSoft MCP Server tools to modify files, create resources, or execute changes to your project.
+
+You can switch between modes depending on whether you prefer to review the plan before execution or allow Dev Agent to act directly.
+
+
+=== How Dev Agent Generates Code
+
+MuleSoft Dev Agent uses MuleSoft-optimized AI pipelines to generate high-quality code for API specifications and integration flows.
+
+The pipelines are exposed to Dev Agent through these MCP tools:
+
+* `generate_mule_flow` – Generates Mule integration flows.
+* `generate_api_spec` – Generates API specifications from natural language prompts.
+
+Because these tools run on pipelines optimized specifically for MuleSoft use cases, users typically receive higher-quality code outputs (on average, 60% better) compared to generic generation.
+
+To ensure the best results:
+
+* Verify that the MuleSoft MCP Server is loaded in Dev Agent prior to sending a prompt.
+* Make sure Dev Agent is invoking these specialized tools.
+* Verify that all required prerequisites for Dev Agent and MCP Server are enabled in your environment.
+
+For more information about how MuleSoft’s AI generation pipelines work, see the https://blogs.mulesoft.com/automation/how-mulesoft-turns-generative-output-into-value/[MuleSoft research blog^].
+
+
 == Provide Dev Agent with Context
 
 You can improve the accuracy of MuleSoft Dev Agent’s output by providing additional context files or inputs.  
