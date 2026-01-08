@@ -1,0 +1,41 @@
+= Workflows and Rules 
+
+Rules and Workflows allow developers to customize how MuleSoft Dev Agent operates within their project.
+
+== Add Workflows and Rules
+
+Rules Define natural-language constraints or guidelines for how Dev Agent should generate content.  
+You can use rules to enforce naming conventions, ensure consistent error handling, or maintain coding standards across your workspace.  
+Rules can be defined at two levels:  
+* *Global* – Applies to all prompts sent to Dev Agent.  
+* *Workspace* – Applies only to the active workspace.
+
+Workflows create predefined multi-step tasks that Dev Agent executes automatically.  
+Workflows let you streamline repeated development steps and can be triggered using slash commands (for example, `/workflow-name`) in the Dev Agent panel.
+
+=== Add rules or workflows
+
+. Open MuleSoft Dev Agent in the sidebar.
+. Select *Settings*.
+. In the *Rules and Workflows* section, choose whether you want to add a rule or a workflow.
+. Select *Add Rule* or *Add Workflow*.
+. Provide the required information:
+* For rules, enter the natural-language instruction you want Dev Agent to follow.
+* For workflows, enter a name, an optional description, and the steps the workflow should run.
+. Select *Save*.
+
+You can edit or delete existing rules and workflows from the same section.
+
+== Add Commands
+
+Commands provide quick shortcuts for interacting with MuleSoft Dev Agent.  
+You can invoke any command by typing `/` in the prompt input box.
+
+Dev Agent includes several built-in commands:
+
+* `/newrule` — Create a new rule based on the current conversation.
+* `/newchat` — Start a new chat that carries over context from your current task.
+* `/reportbug` — Report an issue by creating a GitHub ticket with Agentforce Vibes formatting.
+
+Workflows that you define also appear as commands under *Workflow Commands*.  
+You can trigger them the same way by typing `/` followed by the workflow name.
