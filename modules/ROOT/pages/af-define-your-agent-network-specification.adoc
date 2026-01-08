@@ -9,7 +9,7 @@ Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites
 [TIP]
 To help you identify agents that are also brokers on the Anypoint Code Builder canvas, consider appending "Broker" to the end of the name.
 
-== Define a Network Using the MuleSoft Dev Agent
+== Define a Network Using MuleSoft Dev Agent
 
 MuleSoft Dev Agent can help you configure your agent network specification. For more information about MuleSoft Dev Agent, see xref:anypoint-code-builder::api-ai-create-spec.adoc[Creating API Specs with MuleSoft Dev Agent].
 
@@ -35,9 +35,9 @@ Use auto-completion menus in Anypoint Code Builder to speed your development. Fo
 
 == Add Exchange Assets to Your Agent Network Project
 
-If you have existing Exchange assets you want to leverage in your agent network, add them to the dependencies attribute in `exchange.json` in your project. After you add assets, edit agent-network.yaml to indicate which brokers use those assets.
+If you have existing Exchange assets you want to use in your agent network, add them to the dependencies attribute in `exchange.json` in your project. After you add assets, edit the `agent-network.yaml` file to indicate which brokers use those assets.
 
-=== Add Assets Using the MuleSoft Dev Agent
+=== Add Assets Using MuleSoft Dev Agent
 
 . In the Anypoint Code Builder activity bar, click the agent icon image:image3[].
 . Tell the agent that you want to add Exchange assets to your project. MuleSoft Dev Agent does the rest.
@@ -45,7 +45,7 @@ If you have existing Exchange assets you want to leverage in your agent network,
 To get started try one of these suggested prompts.
 
 * Add tools for background check processing in my Employee Onboarding project.
-* To my Employee Onboarding agent network project, add Talent Pool MCP server.
+*  Add a Talent Pool MCP server to my Employee Onboarding agent network project.
 
 === Add Assets Using Anypoint Code Builder
 
@@ -53,15 +53,17 @@ To get started try one of these suggested prompts.
 . In your Anypoint Code Builder project, choose one of the following:
   * In Explorer, right-click a project file and select *Add Exchange Assets to Agent Network Project*.
   * In the Command Palette, run this command: *MuleSoft: Add Agent Network Assets to Agent Network Project*.
-. In Add Exchange Assets to Project, enter information about the assets you want to add.
-. Select *Add to Project*. Assets are added to the dependencies attribute in the `exchange.json` file in your project.
-. Edit agent-network.yml L to indicate which brokers use those assets.
+. In Add Exchange Assets to Project, enter information about the assets to add.
+. Select *Add to Project*. 
++
+Assets are added to the `dependencies` attribute in the `exchange.json` file in your project.
+. Edit the `agent-network.yml` file to indicate which brokers use those assets.
 
-  If you added a dependency that doesn't belong to the same business group as your agent network, then in agent-network.yaml, specify the namespace property at the same level as name. Provide the groupId (business group ID) for the business group that the dependency belongs to. The groupId value is the same as the groupId value of the corresponding dependency in exchange.json.
+  If you added a dependency that doesn't belong to the same business group as your agent network, then in `agent-network.yaml`, specify the `namespace` property at the same level as name. Provide the `groupId` (business group ID) for the business group that the dependency belongs to. The `groupId` value is the same as the `groupId` value of the corresponding dependency in `exchange.json`.
 
-If you don't provide a namespace value, the same groupId as the agent network project is used.
+If you don't provide a namespace value, the same `groupId` as the agent network project is used.
 
-After you add dependencies, they're available as values in auto-completion menus in Anypoint Code Builder. For example, after you add test-agent to exchange.json, the value test-agent is available in auto-completion menus in the code editor in agent-network.yaml when you reference an agent.
+After you add dependencies, they're available as values in auto-completion menus in Anypoint Code Builder. For example, after you add `test-agent` to `exchange.json`, the value `test-agent` is available in auto-completion menus in the code editor in `agent-network.yaml` when you reference an agent.
 
 
 
