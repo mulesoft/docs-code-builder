@@ -1,45 +1,51 @@
+[[publish-assets]]
 = Publish Agent Network Assets
 
 Build and publish your agent network project as Anypoint Exchange assets. When you publish, an asset is created for each broker, agent, and MCP server that's in your agent network. The asset ID is the value of the `name` key in `agent-network.yaml`.
 
 For example, suppose you have an agent name of `badging-agent` in `agent-network.yaml`. After it's published, the Exchange `assetId` is `badging-agent`.
 
-[NOTE]
-====
-If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
-====
+[[before-you-begin]]
+== Before You Begin
 
-== Before You Begin Publishing Agent Networks
-
-Make sure you meet the prerequisites for this task. For prerequisites, see xref:af-get-started.adoc[].
+Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites].
 
 If you want to publish your project assets to a different business group, update the relevant `groupId` in `exchange.json`.
 
-== Publish Your Agent Network Assets to Anypoint Exchange
+[[publish-dev-agent]]
+== Publish Your Network Using MuleSoft Dev Agent
 
-MuleSoft Dev Agent can help you publish your agent network assets. Click the agent icon image:af-acb-dev-agent-icon.png["",18,18] in the Anypoint Code Builder activity bar and tell the agent that you want to publish your agent network. MuleSoft Dev Agent does the rest.  For more information about MuleSoft Dev Agent, see xref:api-ai-create-spec.adoc[].
+MuleSoft Dev Agent can help you publish your agent network specification to Anypoint Exchange. For more information about MuleSoft Dev Agent, see xref:anypoint-code-builder::api-ai-create-spec.adoc[Creating API Specs with MuleSoft Dev Agent].
 
-**Suggested Prompts**
+. In the Anypoint Code Builder activity bar, click the agent icon image:af-acb-dev-agent-icon.png["",18,18].
+. Tell the agent that you want to publish your agent network. MuleSoft Dev Agent does the rest.
+
+To get started try one of these suggested prompts.
 
 * Publish my Employee Onboarding project.
 * Publish my agent network project version 1.0.0.
 * Publish the hello-world-network project to Exchange.
 * Publish agent network project at /path/to/project with version 2.1.0.
 
-If you don't want to use MuleSoft Dev Agent, publish your agent network assets using these steps.
-
-. In your Anypoint Code Builder project, in Explorer, right-click a project file and select **Publish Agent Network Assets**. Or, run the command **MuleSoft: Publish Agent Network Assets** in the xref:start-use-command-palette.adoc[Command Palette].
+[[publish-acb]]
+== Publish Your Network Using Anypoint Code Builder
 
 . If you're not logged in already, log in to your Anypoint Platform account.
-
-. In Publish Agent Network Project Assets, enter a version for the project and review the project metadata. If you want to publish project assets to a different business group, update the `groupId` in `exchange.json`.
-
-. Select **Publish**.
-
+. In your Anypoint Code Builder project, choose one of the following:
+  . In Explorer, right-click a project file and select *Publish Agent Network Assets*.
+  . In the Command Palette, run this command: *MuleSoft: Publish Agent Network Assets*.
+. In Publish Agent Network Project Assets, enter a version for the project and review the project metadata. If you want to publish project assets to a different business group, update the groupId in exchange.json.
+. Select *Publish*.
 . Your agents, MCP servers, and LLM provider definitions are published to Exchange. An Exchange asset is created for each element in your agent network.
 
-Next, discover your agent network assets in **Agents & Tools** in Exchange to get a comprehensive view of your integration, including agent and MCP server assets. Exchange automatically tags brokers for easy identification.
+Next, discover your agent network assets in *Agents & Tools* in Exchange to get a comprehensive view of your integration, including agent and MCP server assets. Exchange automatically tags brokers for easy identification.
 
+[[publish-cli]]
+== Publish a Network Using the Anypoint CLI
+
+If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
+
+[[see-also]]
 == See Also
 
 * xref:af-deploy-agent-network-targets.adoc[]

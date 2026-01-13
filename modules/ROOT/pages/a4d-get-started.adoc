@@ -1,0 +1,83 @@
+= Get Started with MuleSoft Dev Agent
+
+MuleSoft Dev Agent helps you build APIs and integrations using natural language prompts directly in your development environment.
+
+== Use MuleSoft Dev Agent
+
+You can open MuleSoft Dev Agent from the:
+
+* Toolbar icon
+* Top navigation bar
+* *Build with AI* card in the project canvas
+
+When you submit a prompt, MuleSoft Dev Agent processes it using the MuleSoft MCP Server and performs actions such as generating API specifications or integration flows.
+
+Depending on your configuration, MuleSoft Dev Agent can:
+
+* Request approval before writing to your files
+* Write automatically if *Auto-approve* is enabled in settings
+
+=== Plan and Act Modes
+
+MuleSoft Dev Agent operates in two modes:
+
+* *Plan Mode*  
+Dev Agent analyzes your prompt and produces a step-by-step plan describing how it will accomplish the task. No actions are executed automatically in this mode.
+
+* *Act Mode*  
+Dev Agent attempts to perform the actions outlined in the plan by using the MuleSoft MCP Server tools to modify files, create resources, or execute changes to your project.
+
+You can switch between modes depending on whether you prefer to review the plan before execution or allow Dev Agent to act directly.
+
+
+=== How Dev Agent Generates Code
+
+MuleSoft Dev Agent uses MuleSoft-optimized AI pipelines to generate high-quality code for API specifications and integration flows.
+
+The pipelines are exposed to Dev Agent through these MCP tools:
+
+* `generate_mule_flow` – Generates Mule integration flows.
+* `generate_api_spec` – Generates API specifications from natural language prompts.
+
+Because these tools run on pipelines optimized specifically for MuleSoft use cases, users typically receive higher-quality code outputs (on average, 60% better) compared to generic generation.
+
+To ensure the best results:
+
+* Verify that the MuleSoft MCP Server is loaded in Dev Agent prior to sending a prompt.
+* Make sure Dev Agent is invoking these specialized tools.
+* Verify that all required prerequisites for Dev Agent and MCP Server are enabled in your environment.
+
+For more information about how MuleSoft’s AI generation pipelines work, see the https://blogs.mulesoft.com/automation/how-mulesoft-turns-generative-output-into-value/[MuleSoft research blog^].
+
+
+== Provide Dev Agent with Context
+
+You can improve the accuracy of MuleSoft Dev Agent’s output by providing additional context files or inputs.  
+Examples include requirement files (`requirements.txt`), configuration folders, logs, URLs, or terminal output.
+
+To add context:
+
+. In the MuleSoft Dev Agent panel, click the *Add Context* icon in the lower-left corner.
+. Select files or folders to attach, paste the input or output from terminal, or paste a URL.
+. Confirm to add the context to your current task.
+
+You can also add context directly from the prompt input box by typing `@`, which opens the same context selector.
+
+These inputs are used as contextual references during generation.
+
+== Configure MuleSoft Dev Agent Settings
+
+You can customize how MuleSoft Dev Agent interacts with your project through the *Settings* panel.  
+To access this panel, click the *Auto-approve* section at the bottom of the MuleSoft Dev Agent window.
+
+The available options include:
+
+* *Auto-approve*: Automatically apply changes without prompting for confirmation.
+* *Read project files*: Allow MuleSoft Dev Agent to read project files for context.
+* *Edit project files*: Allow MuleSoft Dev Agent to write changes directly to your project.
+* *Read all files*: Allow MuleSoft Dev Agent to read all files on your computer.
+* *Edit all files*: Allow MuleSoft Dev Agent to edit any file on your computer.
+* *Use MCP Servers*: Allow MuleSoft Dev Agent to use connected MCP servers.
+* *Execute safe commands*: Allow MuleSoft Dev Agent to execute safe terminal commands.
+* *Execute all commands*: Allow MuleSoft Dev Agent to execute any terminal command.
+* *Use the browser*: Allow MuleSoft Dev Agent to launch and interact with websites in a browser.
