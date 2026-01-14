@@ -260,13 +260,16 @@ a|
 |`configuration.gemini` |OpenAI specific configuration settings. |Object |Object with OpenAI settings |No
 |`configuration.gemini.thinkingConfig.thinkingBudget` |Sets a token budget for the reasoning phase. (Applies only to Gemini 2.5 series.) |Integer a|
 * `0` (Disabled)
+* `-1` (Automatic)
 * `1024` to `32768` |No
-|`configuration.gemini.thinkingConfig.thinkingLevel` |Controls the depth of the reasoning process. (Applies only to Gemini 3 series.) |String a|
+|`configuration.gemini.thinkingLevel` |Controls the depth of the reasoning process. (Applies only to Gemini 3 series.) |String a|
 * `High` (Default)
 * `Low` |No
 |`configuration.gemini.temperature` |Controls randomness. |Number |For Gemini 3 and Gemini 2.5, Google recommends keeping this at `1.0` (default) to avoid breaking the reasoning chain. |No
 |`configuration.gemini.topP` |Nucleus sampling parameter. |Number |Any number |No
 |`configuration.gemini.responseLogprobs` |Whether to return log probabilities. |Boolean |true or false |No
+|`configuration.gemini.maxOutputTokens` |Maximum number of tokens that can be generated in the response. |Integer | |No
+
 |=== 
 
 [[instructions-section]]
