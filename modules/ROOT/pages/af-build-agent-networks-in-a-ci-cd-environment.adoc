@@ -39,24 +39,9 @@ For more information, see xref:anypoint-cli::auth.adoc[].
 
 === Create a Target Space for Your Environment
 
-To deploy an agent network, you'll need a target space, if you don't have one already. 
+To deploy an agent network, you need a private space on CloudHub 2.0 or a deployment target on Anypoint Runtime Fabric. See xref:af-get-started.adoc#setup-space[].
 
-You can either create a private space for CloudHub 2.0 deployment or a namespace for Runtime Fabric. For more information about Runtime Fabric deployments, see xref:runtime-fabric::create-custom-namespace.adoc[].
-
-==== Create a Private Space for CloudHub 2.0 Deployment
-
-. Open Anypoint Runtime Manager.
-. Select the environment to use.
-. Select **Private Spaces**.
-. Select **Create private space**.
-. Enter `agent-network-space` or another name in the private space.
-. Select **Create**.
-. Select **Create private network**.
-. Associate the space with the business group and environments you need to deploy your agent network to. You must complete this step so that the private space appears as a valid deployment target in Anypoint Code Builder and Anypoint CLI.
-
-After you create a target space, set up the ingress and egress gateways for deployment, if you haven't already done so. For agent networks, at least one small Managed Flex Gateway and one large Managed Flex Gateway is required in your environment. For more information about gateways, see xref:gateway::flex-architecture-basic-deployments.adoc[]. 
-
-Use the `agent-network:setup:gateways` command as specified in the command reference.
+After you create a target space, and haven't already done so, set up the ingress and egress gateways for deployment. See xref:af-get-started.adoc#setup-gateways[].
 
 == CLI for Agent Fabric Plugin Reference
 
