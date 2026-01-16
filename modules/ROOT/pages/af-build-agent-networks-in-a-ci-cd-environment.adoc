@@ -6,8 +6,16 @@ If you run operations within a CI/CD environment, you can use Anypoint CLI's Age
 
 Make sure you meet the prerequisites for this task. For prerequisites, see xref:af-get-started.adoc[].
 
-Install the Anypoint CLI Agent Fabric plugin by running this command in a terminal window: +
-`npm i anypoint-cli-agent-fabric-plugin`
+Install the Anypoint CLI Agent Fabric plugin by running this command in a terminal window:
+
+`npm i mulesoft-anypoint-cli-agent-fabric-plugin`
+
+[NOTE]
+====
+The installation package has been renamed from `anypoint-cli-agent-fabric-plugin` to `mulesoft-anypoint-cli-agent-fabric-plugin`. 
+
+If you have the previous version installed, you may encounter an `npm error EXIST: file already exists` error when updating your installation. This occurs because both versions share the same command alias. To resolve this, use the `--force` flag to overwrite the alias and point it to the new package: `npm i mulesoft-anypoint-cli-agent-fabric-plugin --force`.
+====
 
 === Authentication
 

@@ -60,6 +60,39 @@ These servers will be published to Exchange.
 The asset might also be published to Exchange.
 . An asset that has been added to this agent network project from Exchange.
 
+[[llm-support]]
+== Large Language Models
+
+Agent network brokers support these LLMs.
+
+* Azure OpenAI
+* OpenAI API
+* Gemini API
+
+The following table details the requirements and recommended models. 
+
+|===
+|*Model Provider* |*Required Endpoint* |*Required Capabilities* |*Suggested Models*
+
+|OpenAI |`/responses` a|
+* Reasoning 
+* Native structured output 
+* Function and Custom tool calling 
+a|
+* For lower latency: GPT-5-mini 
+* For complex reasoning: Evaluate models
+
+|Gemini |`/generateContent` (Native API) a|
+* Native Thinking (via thinkingBudget and thinkingLevel) 
+* Native structured output (responseSchema) 
+* Function and custom tool calling 
+a|
+* For lower latency: Gemini 2.5 Flash, Gemini 2.5 Flash-Lite 
+* For complex reasoning: Gemini 3 Pro (Deep Think capabilities)
+|=== 
+
+Agent network supports text-based prompts and responses. Image and binary message types aren't supported.
+
 == A2A Protocol 
 
 The Agent2Agent (A2A) Protocol governs agent-to-agent communication. This protocol powers orchestration, observability, and governance features in agent networks. MuleSoft supports v0.3.0 of the A2A Protocol Specification.
@@ -89,28 +122,8 @@ Consider a network with a client and two brokers (1 and 2).
 
 For more information, see https://a2a-protocol.org/v0.3.0/topics/life-of-a-task/#group-related-interactions[Life of a Task - Group Related Interactions].
 
-=== Non-Supported Features
+NOTE: Agent network doesn't support streaming with Server-Sent Events (SSE).
 
-Agent network doesn't support streaming with Server-Sent Events (SSE).
-
-== Considerations
-
-Agent networks have these considerations.
-
-* An agent network project supports only one domain (one YAML file per project). For multiple domains, create a separate project for each.
-* These authentication types are supported.
-** Basic
-** Client Credentials
-** Anypoint Client Credentials
-* Text-based prompts and responses are supported. Image and binary message/artifact types aren't supported.
-* All LLM models in your agent network project must support structured responses in JSON format. For example, a `gpt4.1` model is supported; a `gpt4` model isn't.
-* These LLMs are supported.
-** Azure OpenAI
-** OpenAI Direct API
-* When you add governance policies to your agent network project YAML file, those policies persist between deployments. However, if you add governance policies at run-time, those policies don't persist. The next time you deploy your agent network, the governance policies used are the ones in the `agent-network.yaml` file.
-* These deployment targets are supported.
-** CloudHub 2.0
-** Runtime Fabric (limited availability)
 
 == See Also
 
