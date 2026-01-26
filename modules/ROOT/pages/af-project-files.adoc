@@ -231,7 +231,7 @@ The `spec` element has these properties.
 
 The value of this section is a reference to one of the LLMs defined in Anypoint Exchange or in the `llmProviders` section of `agent-network.yaml`. Because it's a reference, you can choose to share the same LLM across all the brokers in your agent network. Or, you can have different brokers use different LLMs to better suit their tasks.
 
-For more information on supported LLMs, see xref:af-agent-networks.adoc#llm-support[].
+For more information about supported LLMs, see xref:af-agent-networks.adoc#llm-support[Large Language Models].
 
 The `llm` element has these properties.
 
@@ -257,7 +257,7 @@ a|
 |`configuration.openAI.topP` |Nucleus sampling parameter. Requires GPT-5.1 and `reasoningEffort` set to `NONE`. |Number |Any number |No
 |`configuration.openAI.topLogprobs` |Number of most likely tokens to return at each position. Requires GPT-5.1 and `reasoningEffort` set to `NONE`. |Integer |Any integer |No
 |`configuration.openAI.maxOutputTokens` |Maximum number of tokens to generate. |Integer |Any integer |No
-|`configuration.gemini` |OpenAI specific configuration settings. |Object |Object with OpenAI settings |No
+|`configuration.gemini` |Gemini-specific configuration settings. |Object |Object with Gemini settings |No
 |`configuration.gemini.thinkingBudget` |Sets a token budget for the reasoning phase. (Applies only to Gemini 2.5 series.) |Integer a|
 * `0` (Disabled)
 * `-1` (Automatic)
@@ -602,7 +602,7 @@ The `mcpServers` element has these properties.
 
 `llmProviders`
 
-Configure the LLMs the brokers use for reasoning. For supported LLMs, see xref:af-agent-networks.adoc[].
+Configure the LLMs the brokers use for reasoning. For more information about supported LLMs, see xref:af-agent-networks.adoc#llm-support[Large Language Models].
 
 The `llmProviders` element has these properties.
 
