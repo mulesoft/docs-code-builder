@@ -738,7 +738,7 @@ connections:
     ref:
       name: my-openAI
     spec:
-      url: ${}
+      url: https://api.openai.com/v1/
       configuration:
         apiKey: ${openai.apiKey}
 
@@ -748,6 +748,10 @@ connections:
       name: talent-pool-mcp
     spec:
       url: https://talent-pool-mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/
+      authentication:
+        kind: apiKey
+        apiKey: ${talentPool.apiKey}  # Define variable in exchange.json
+        headerName: X-MCP-API-Key         # Optional, defaults to Authorization
 
   slack-mcp:
     kind: mcp
@@ -755,6 +759,10 @@ connections:
       name: slack-mcp
     spec:
       url: https://slack-mcp-server-inkbh1.paga8m.usa-w1.cloudhub.io/
+      authentication:
+        kind: apiKey
+        apiKey: ${slack.apiKey} # Define variable in exchange.json
+        headerName: X-API-Key
 ----
 
 The `connections` element has these properties.
@@ -847,24 +855,37 @@ Connection authentication is always expressed in accordance with https://swagger
 
 These examples show how to define each type in YAML.
 
+Both agents and MCP servers support the same authentication types with custom header capabilities API Key Authentication and Basic Authentication.
+
+
 [[basic-authentication]]
-==== Basic authentication
+==== Basic Authentication
 
 [source,yaml]
 ----
 authentication:
-  type: basic
+  Kind: basic
   username: "username"
   password: "password"
 ----
 
+Using custom header:
+
+[source,yaml]
+----
+kind: basic
+  username: "username"
+  password: "password"
+  headerName: X-API-Authorization  # Custom header instead of default "Authorization"
+----
+
 [[oauth-client-credentials]]
-==== OAuth 2.0 client credentials
+==== OAuth 2.0 Client Credentials
 
 [source,yaml]
 ----
 authentication:
-  type: oauth2-client-credentials
+  kind: oauth2-client-credentials
   clientId: "client_id"
   clientSecret: "client_secret"
   tokenUrl: "https://oauth.provider.com/token"
@@ -872,14 +893,35 @@ authentication:
 ----
 
 [[anypoint-client-credentials]]
-==== Anypoint client credentials
+==== Anypoint Client Credentials
 
 [source,yaml]
 ----
 authentication:
-  type: apikey-client-credentials
+  kind: apikey-client-credentials
   clientId: "client_id"
   clientSecret: "client_secret"
+----
+
+[[api-key]]
+==== API Key Authentication
+
+[source,yaml]
+----
+authentication:
+  kind: api-key
+  apiKey: ${agent.apiKey}  # Define variable in exchange.json
+  headerName: X-API-Key         # Optional, defaults to Authorization
+----
+
+Using custom header:
+
+[source,yaml]
+----
+authentication:
+  kind: apiKey
+  apiKey: ${agent.apiKey}
+  headerName: X-Custom-Auth-Token  # Custom header name
 ----
 
 [[exchange-json-file-element]]
