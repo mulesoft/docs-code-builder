@@ -15,6 +15,7 @@ Troubleshoot errors and warnings you encounter when using Anypoint Code Builder.
 * xref:troubleshoot-implementation-errors.adoc[]
 * xref:troubleshoot-mule-runtime-errors.adoc[]
 * xref:troubleshoot-loading-errors.adoc[]
+* xref:troubleshoot-mcp-server.adoc[]
 +
 For other issues and workarounds, see xref:acb-release-notes.adoc#known-issues[Known Issues] in the Anypoint Code Builder Release Notes.
 
@@ -140,3 +141,33 @@ The configuration sidebar also displays validation messages at the node level.
 Field-level errors appear inline during component configuration.
 
 Hover over a component with a red dot to view error details in the canvas.
+
+[[clean-reinstall]]
+== Perform a Clean Reinstallation
+
+If you experience persistent issues that other troubleshooting steps don't resolve, perform a clean reinstallation of Anypoint Extension Pack:
+
+. Close VS Code completely.
+. Uninstall Anypoint Extension Pack:
++
+.. Open VS Code.
+.. From the Activity Bar, open the *Extensions* panel.
+.. Find and select *Anypoint Extension Pack*.
+.. Click *Uninstall*.
+.. Close VS Code.
+. Delete the `anypoint-code-builder` folder from your user directory:
++
+* Mac: `~/AnypointCodeBuilder`
+* Windows: `C:\Users\<username>\AnypointCodeBuilder`
+. Optionally, delete cached extension data from the VS Code extensions folder:
++
+* Mac: `~/.vscode/extensions/`
+* Windows: `C:\Users\<username>\.vscode\extensions\`
++
+Remove any folders starting with `salesforce.mule-dx-` or `mulesoftinc.mule-dx-`.
+. Reopen VS Code and reinstall Anypoint Extension Pack from the Extensions Marketplace.
+
+[NOTE]
+--
+This procedure removes downloaded Mule runtimes and Java versions. You can re-download them after reinstalling.
+--

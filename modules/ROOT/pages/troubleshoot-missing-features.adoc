@@ -63,7 +63,7 @@ Workspace: Configure Workspace Trust Settings
 ----
 . Review and adjust the workspace settings, as needed.
 
-== Incomplete Flow
+== Incomplete Flow or Corrupted XML
 
 If a flow lacks a component or contains only a trigger, such as an HTTP Listener operation or the Scheduler, an error similar to the following appears in the *Problems* panel and from the configuration XML: 
 
@@ -78,3 +78,4 @@ To address this issue, add processing components or connector operations to your
 // Pointer to component reference:
 include::partial$acb-component-info.adoc[tags="note-component-ref"]
 
+This error can also occur if XML tags in the configuration file are corrupted or not properly closed. If you've already added components and the error persists, check the configuration XML for unclosed tags. To prevent XML corruption, save your work frequently and use source control management (SCM) to back up your projects.
