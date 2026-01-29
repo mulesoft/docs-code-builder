@@ -2,8 +2,6 @@
 
 Rules and Workflows allow developers to customize how MuleSoft Dev Agent operates within their project.
 
-== Add Workflows and Rules
-
 Rules Define natural-language constraints or guidelines for how Dev Agent should generate content.  
 
 You can use rules to enforce naming conventions, ensure consistent error handling, or maintain coding standards across your workspace.  
@@ -17,7 +15,7 @@ Workflows create predefined multi-step tasks that Dev Agent executes automatical
 
 Workflows let you streamline repeated development steps and can be triggered using slash commands (for example, `/workflow-name`) in the Dev Agent panel.
 
-=== Add rules or workflows
+== Add Workflows or Rules
 
 . Open MuleSoft Dev Agent in the sidebar.
 . Select *Settings*.
@@ -29,6 +27,26 @@ Workflows let you streamline repeated development steps and can be triggered usi
 . Select *Save*.
 
 You can edit or delete existing rules and workflows from the same section.
+
+=== Rule examples
+
+You can use rules to guide how Dev Agent generates or validates content. For example:
+
+* *Naming convention rule*: Instruct Dev Agent to ensure that all API names follow your organization’s naming standards.
+
+* *Validation rule*: Require that every API specification includes version information before generating related files.
+
+* *Security rule*: Ask Dev Agent to flag endpoints that expose sensitive data without authentication.
+
+==== Workflow examples
+
+Workflows define a sequence of steps that Dev Agent executes to complete a task. For example:
+
+* *API design validation workflow*:  Validate an API specification, check naming conventions, verify security requirements, and generate a summary of issues.
+
+* *API creation workflow*: Generate an API specification, apply validation rules, suggest improvements, and save the final version to the workspace.
+
+* *Troubleshooting workflow*: Analyze an error, identify the root cause, propose a fix, and update the configuration if needed.
 
 == Add Commands
 
