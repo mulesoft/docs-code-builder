@@ -1,9 +1,9 @@
-= Creating API Specs with MuleSoft Dev Agent
+= Creating API Specs with MuleSoft Vibes
 :page-deployment-options: cloud-ide, desktop-ide
 
-MuleSoft Dev Agent is a purpose-built assistant for the development lifecycle, available directly in Anypoint Code Builder. It provides a unified panel that lets you interact with AI features using natural language prompts. Dev Agent works with the embedded MuleSoft MCP Server (see xref:mulesoft-mcp-server::index.adoc[Mulesoft MCP Server]) to support capabilities such as deploying applications, managing instances, and creating new projects.
+MuleSoft  Vibes is a purpose-built assistant for the development lifecycle, available directly in Anypoint Code Builder. It provides a unified panel that lets you interact with AI features using natural language prompts. Mulesoft Vibes works with the embedded MuleSoft MCP Server (see xref:mulesoft-mcp-server::index.adoc[Mulesoft MCP Server]) to support capabilities such as deploying applications, managing instances, and creating new projects.
 
-One of these capabilities is AI-powered API specification generation. With Dev Agent, you can generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications.
+One of these capabilities is AI-powered API specification generation. With Mulesoft Vibes, you can generate and mock API specifications from natural language prompts. This feature reduces the time spent on API design by simplifying the creation of syntax-heavy specifications.
 
 [[before-you-begin]]
 == Before You Begin
@@ -12,20 +12,20 @@ Before you start creating your API spec, make sure you meet the following prereq
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].  
 * Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].  
-* Ensure you have the following permissions to use MuleSoft Dev Agent:  
-** *Anypoint Code Builder Developer* (to use Dev Agent in the Cloud IDE)  
+* Ensure you have the following permissions to use  Mulesoft Vibes:  
+** *Anypoint Code Builder Developer* (to use Mulesoft Vibes in the Cloud IDE)  
 ** *Mule Developer Generative AI User*  
 * Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].  
 
-NOTE: Authentication happens through the user logged into Anypoint Code Builder. MuleSoft Dev Agent inherits the same permissions as that user and can only execute actions that the user is authorized to perform in Anypoint Platform.
+NOTE: Authentication happens through the user logged into Anypoint Code Builder. Mulesoft Vibes inherits the same permissions as that user and can only execute actions that the user is authorized to perform in Anypoint Platform.
 
 
 [[design-spec-ai]]
 == Design an API Spec with AI
 
-To design an API spec with MuleSoft Dev Agent:
+To design an API spec with Mulesoft Vibes:
 
-. Open MuleSoft Dev Agent from the toolbar or from the *Build Your Ecosystem with AI* card in the canvas.
+. Open Mulesoft Vibes from the toolbar or from the *Build Your Ecosystem with AI* card in the canvas.
 . Enter a prompt that describes your API specification.
 +
 Include these required details and consider including optional details to generate a more precise spec:
@@ -163,58 +163,59 @@ Optionally, provide a description, format, minimum and maximum length, default v
 Governance isn't included in the validation.
 
 [start=3]
-. Enter your prompt in MuleSoft Dev Agent and submit it.  
+. Enter your prompt in Mulesoft Vibes and submit it.  
 . Review the generated specification.  
-. If *Auto-approve* is enabled, Dev Agent writes the generated API spec directly into your project files.  
-. If *Auto-approve* is disabled, Dev Agent prompts you to approve or reject each file change before applying it.  
+. If *Auto-approve* is enabled, Mulesoft Vibes writes the generated API spec directly into your project files.  
+. If *Auto-approve* is disabled, Mulesoft Vibes prompts you to approve or reject each file change before applying it.  
 . After the API project is generated, you can also:  
-** Ask Dev Agent to publish the API asset to Exchange.  
+** Ask Mulesoft Vibes to publish the API asset to Exchange.  
 ** Add governance rulesets to validate your specification.  
 ** Mock requests to the API directly from the IDE.  
 
 [[rules-workflows]]
 == Define Rules and Workflows
 
-To define reusable rules and workflows for MuleSoft Dev Agent:
+To define reusable rules and workflows for Mulesoft Vibes:
 
-. In the MuleSoft Dev Agent panel, click the *Rules/Workflows* icon in the lower-left corner (next to the *Context* icon).  
+. In the Mulesoft Vibes panel, click the *Rules/Workflows* icon in the lower-left corner (next to the *Context* icon).  
 . Choose one of the following tabs:
 * Rules: Define constraints or guidelines for how the API spec should be generated. +
 For example, enforce naming conventions or require consistent error handling. +
 Rules can be defined at the *Global Rules* or *Workspace Rules* level.  
 
-* Workflows: Create a series of steps that MuleSoft Dev Agent executes as a predefined action. +
-Workflows are invoked using slash commands (for example, `/workflow-name`) in the MuleSoft Dev Agent panel.
+* Workflows: Create a series of steps that Mulesoft Vibes executes as a predefined action. +
+Workflows are invoked using slash commands (for example, `/workflow-name`) in the Mulesoft Vibes panel.
 
 [[context-files]]
 == Provide Additional Context
 
-You can provide additional inputs, such as requirement files (for example, `requirements.txt`), terminal outputs, or project folders, to help Mulesoft Dev Agent generate more accurate API specifications. These files are used as contextual references during API generation.  
+You can provide additional inputs, such as requirement files (for example, `requirements.txt`), terminal outputs, or project folders, to help Mulesoft Vibes generate more accurate API specifications. These files are used as contextual references during API generation.  
 
 To add context:
 
-. In the MuleSoft Dev Agent panel, click the *Add Context* icon in the lower-left corner.  
+. In the Mulesoft Vibes panel, click the *Add Context* icon in the lower-left corner.  
 . Select the file or folder you want to attach, or paste terminal input/output.  
 . Confirm to add the context to your current task.  
 
 [[settings]]
-== MuleSoft Dev Agent Settings
+== MuleSoft Vibes Settings
 
-You can control how MuleSoft Dev Agent interacts with your project through the *Settings* panel.  
-To access this panel, click the *Auto-approve* section at the bottom of the MuleSoft Dev Agent window.
+You can control how Mulesoft Vibes interacts with your project through the *Settings* panel.  
+To access this panel, click the *Auto-approve* section at the bottom of the Mulesoft Vibes window.
 
 Available settings are:
 
 * *Auto-approve*: Enable to apply changes automatically without prompting for confirmation.  +
-If Auto-approve is disabled, Dev Agent will request your approval before making any file changes.
-* *Read project files*: Allow MuleSoft Dev Agent to read project files for context.  
-* *Edit project files*: Allow MuleSoft Dev Agent to write changes directly to your project.  
-* *Read all files*: Allow MuleSoft Dev Agent to read all files on your computer.
-* *Edit all files*: Allow MuleSoft Dev Agent to edit any file on your computer.
-* *Use MCP Servers*: Allow MuleSoft Dev Agent to use connected MCP servers.
-* *Execute safe commands*: Allow MuleSoft Dev Agent to execute safe terminal commands.
-* *Execute all commands*: Allow MuleSoft Dev Agent to execute any terminal command.
-* *Use the browser*: Allow MuleSoft Dev Agent to launch and interact with websites in a browser.
+If Auto-approve is disabled, Mulesoft Vibes will request your approval before making any file changes.
+* *Read project files*: Allow MuleSoft Vibes to read project files for context.  
+* *Edit project files*: Allow Mulesoft Vibes to write changes directly to your project.  
+* *Read all files*: Allow Mulesoft Vibes to read all files on your computer.
+* *Edit all files*: Allow Mulesoft Vibes to edit any file on your computer.
+* *Use MCP Servers*: Allow Mulesoft Vibes to use connected MCP servers.
+
+* *Execute safe commands*: Allow Mulesoft Vibes Agent to execute safe terminal commands.
+* *Execute all commands*: Allow Mulesoft Vibes to execute any terminal command.
+* *Use the browser*: Allow Mulesoft Vibes to launch and interact with websites in a browser.
 
 == See Also
 
