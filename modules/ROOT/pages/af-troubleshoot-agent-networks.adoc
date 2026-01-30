@@ -1,0 +1,117 @@
+= Troubleshoot Agent Networks
+:page-aliases: af-troubleshoot-anypoint-code-builder.adoc
+
+Resolve common agent network errors and connectivity issues by enabling verbose logging, message logging policies, and distributed tracing.
+
+[NOTE]
+Use Agent Visualizer to xref:agent-visualizer::troubleshoot-agent-network.adoc[view metrics, logs, and traces] for your agents and MCP servers in your network
+
+== Enable Logging to Debug Agent Brokers
+
+Enable logging and log levels from CloudHub 2.0 or Runtime Fabric:
+
+. In Runtime Manager, navigate to the application for the agent broker.
+. Choose one of these options to configure logging:
++
+* xref:cloudhub-2::ch2-manage-app-logs.adoc#configure-log-levels-and-categories[CloudHub 2.0]
+* xref:runtime-fabric::deploy-to-runtime-fabric.adoc#configure-logging-and-log-levels[Runtime Fabric]
+. Set the log level to Debug for these classes:
++
+* `com.mulesoft.modules.agent.broker`
+* `org.mule.service.http.impl.service.HttpMessageLogger`
+
+[IMPORTANT]
+HTTP wire logging displays HTTP headers and payload in plain text. Avoid leaving it enabled indefinitely or unsupervised, as it can negatively impact API performance.
+
+[[enable-message-logging]]
+== Enable Message Logging Policy
+
+Use API Manager or manually edit the agent network file to add a message logging policy. 
+
+=== Using API Manager
+
+. In API Manager, select the API, agent, or MCP server instance for which you want to apply the policy. 
+. Follow the steps in xref:gateway::flex-managed-message-log.adoc#configure-message-logging-in-connected-mode[Configure Message Logging in Connected Mode] and add these settings:
++
+* In the Messages field, enter `#[attributes]`.
+* Select the checkboxes for **Before Calling API** and **After Calling API**.
+. Click **Save**.
+
+Afterward, you should see a Message Log option for the API, agent, or MCP server.
+
+[NOTE]
+If you redeploy the network, this policy is deleted.
+
+=== Using the Agent Network File
+
+In the `connection` section of the API, agent, or MCP server instance you want to log, add the following inside `policies`:
+
+[source,yaml]
+----
+
+  policies: ## add the following inside the policy setting
+    - ref:
+        name: message-logging
+        namespace: business_group_UUID
+      configuration:
+        loggingConfiguration:
+          - itemName: "Payload"
+            itemData:
+              message: "#[payload]"
+              firstSection: true
+              secondSection: true
+              level: "INFO"
+          - itemName: "Headers"
+            itemData:
+              message: "#[attributes]"
+              firstSection: true
+              secondSection: true
+              level: "INFO"
+----
+
+[NOTE]
+On non-US control planes, the value for the `namespace` parameter can change. In Exchange, check the group in the policy API Gateway Message Logging Policy Template.
+
+== Troubleshooting Common Issues and Errors
+
+Use the steps in this section to diagnose and fix common problems in agent networks.
+
+=== Issue: Traces Not Shown
+
+If Anypoint Monitoring isn't showing traces for agents and MCP servers, check these settings:
+
+* In API Manager, verify you've enabled the tracing policy for all brokers and agents. 
+* In the managed Flex Gateways, verify that you've enabled Distributed Tracing for ingress and egress.
+
+=== Issue: Agent Visualizer Shows Disconnected Nodes
+
+If Agent Visualizer shows disconnected nodes with no edges, delete the `extensions` from the `spec.capabilities` section in `agent-network.yaml`.
+
+=== Issue: Null Response from Broker
+
+If your agent network broker returns a null response, restart the broker.
+
+=== Issue: No Agent Network Commands in Anypoint Code Builder
+
+If you installed Anypoint Code Builder successfully, but you don’t see agent network commands in the interface, verify that you have the latest version of the Anypoint Extension Pack. Then, restart VS Code.
+
+=== Issue: No Agent Network Deployment Targets
+
+If you attempt to deploy an agent network, but you don’t see any deployment targets in Anypoint Code Builder or Anypoint CLI, then you need to set up your target deployment space and set up gateways. For instructions, see xref:anypoint-code-builder::af-get-started.adoc[Get Started with Agent Networks].
+
+=== Error: "Cannot complete task due to issue accessing reasoning engine"
+
+This is a generic error that the broker issues when the LLM fails. To troubleshoot this error, <<enable-message-logging,enable the message logging policy>> on the LLM instance, and then review the logs to determine the cause of the error.
+
+=== Error: "HTTP error 404: Agent card not found at /.well-known/agent-card.json"
+
+You can encounter this error in two different scenarios:
+
+. The agent card URL is incorrect. In this case:
++
+* Check that the URL you set on the connection ends with a `/`.
+* Use a browser or Postman to ping the URL you configured prefixed with `.well-known/agent-card.json`, for example, https://ping-id-agent-url/pingid/.well-known/agent-card.json
+. The A2A agent is not configured to use A2A protocol version 0.3.0. In this case: 
++
+* If you created the agent with MuleSoft, verify that you are using the A2A connector version 0.4.0 or later. 
+* If you are using an external agent, verify that it uses the A2A protocol version 0.3.0.
