@@ -72,9 +72,24 @@ In the `connection` section of the API, agent, or MCP server you want to log, ad
 [NOTE]
 On non-US control planes, the value for the `namespace` parameter can change. In Exchange, check the group in the policy API Gateway Message Logging Policy Template.
 
-== Troubleshooting Common Errors and Issues
+== Troubleshooting Common Issues and Errors
 
 Use the steps in this section to diagnose and fix common problems in agent networks.
+
+=== Issue: Traces Not Shown
+
+If Anypoint Monitoring isn't showing traces for agents and MCP servers, check these settings:
+
+* In API Manager, verify you've enabled the tracing policy for all brokers and agents. 
+* In the managed Flex Gateways, verify that you've enabled Distributed Tracing for ingress and egress.
+
+=== Issue: Agent Visualizer Shows Disconnected Nodes
+
+If Agent Visualizer shows disconnected nodes with no edges, delete the `extensions` from the `spec.capabilities` section in `agent-network.yaml`.
+
+=== Issue: Null Response from Broker
+
+If your agent network broker returns a null response, restart the broker.
 
 === Issue: No Agent Network Commands in Anypoint Code Builder
 
@@ -100,18 +115,3 @@ You can encounter this error in two different scenarios:
 +
 * If you created the agent with MuleSoft, verify that you are using the A2A connector version 0.4.0 or later. 
 * If you are using an external agent, verify that it uses the A2A protocol version 0.3.0.
-
-=== Issue: Agent Visualizer Shows Disconnected Nodes
-
-If Agent Visualizer shows disconnected nodes with no edges, delete the `extensions` from the `spec.capabilities` section in `agent-network.yaml`.
-
-== Issue: Traces Not Shown
-
-If Anypoint Monitoring isn't showing traces for agents and MCP servers, check these settings:
-
-* In API Manager, verify you've enabled the tracing policy for all brokers and agents. 
-* In the managed Flex Gateways, verify that you've enabled Distributed Tracing for ingress and egress.
-
-== Issue: Null Response from Broker
-
-If your agent network broker returns a null response, restart the broker.
