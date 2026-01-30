@@ -61,3 +61,19 @@ This request is _not_ from MuleSoft or Anypoint Code Builder:
 image::troubleshoot-download-java-notification.png["Notification showing a request to download and install a JDK to compile a project"]
 
 Instead of using this feature, you can use the command *Download Mule Runtime and Java Versions*. See xref:anypoint-code-builder::int-versions.adoc[].
+
+[[reinstall-mule-runtime]]
+== Reinstall Mule Runtime
+
+If your Mule runtime installation becomes corrupted, you can force a reinstallation:
+
+. Close Anypoint Code Builder.
+. Navigate to your Mule runtimes directory: `${user.home}/AnypointCodeBuilder/runtimes`.
+. Remove or rename the folder for the runtime version you want to reinstall (for example, `mule-4.6.0`).
+. Open Anypoint Code Builder.
+. Select the Mule runtime version from *Project Properties*.
++
+The IDE downloads and reinstalls the selected version. For details on selecting versions, see xref:int-versions.adoc#project-version-mule-java[Select Mule and Java Versions for a Project].
+
+[NOTE]
+Your projects and other installed runtimes are not affected.
