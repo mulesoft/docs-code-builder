@@ -1,91 +1,20 @@
 = Configure an MCP Server
 
+Add and manage MCP servers in Anypoint Code Builder to extend MuleSoft Dev Agent with tools for API design, integrations, governance, and agent networks. 
+
+== Use the MuleSoft MCP Server
+
 The MuleSoft MCP Server is integrated within Anypoint Code Builder and provides built-in tools to extend MuleSoft Dev Agent’s capabilities.
 
 You can use these tools to generate API specifications, create and deploy integrations, manage governance rulesets, and build Agent Fabric agent networks. You can also work with DataWeave and gain insights into the performance of your applications and APIs—all directly from Anypoint Code Builder.
 
 MuleSoft MCP Server tools are available in Anypoint Code Builder and are also supported when you use the Anypoint Extension Pack in compatible IDEs such as VS Code, Cursor, and Windsurf. 
 
-For more information about these tools and their parameters, see: xref:mulesoft-mcp-server::reference-mcp-tools.adoc[MuleSoft MCP Server Tool Reference].
-
-== Agent Network Development
-
-* `configure_agent_network_yaml` – Modify agent-network YAML configurations for Agent Fabric projects.
-* `create_agent_network_project` – Create and scaffold agent-network projects.
-* `deploy_agent_network` – Deploy an agent network to a runtime environment.
-* `publish_agent_network_assets` – Publish agent network assets to Anypoint Exchange for reuse.
-
-== Application Development
-
-* `create_and_manage_assets` – Create, update, and delete assets in Anypoint Exchange.
-* `create_and_manage_metadata` – Define, attach, and update metadata for Mule flow components.
-* `create_MCP_server` – Use the MCP Connector in a Mule project to create a MuleSoft MCP server.
-* `create_mule_project` – Create a Mule project structure in a given directory.
-* `generate_api_spec` – Use AI to generate, modify, or enhance an API specification.
-* `generate_mule_flow` – Generate or update Mule flows and integration logic from natural language prompts.
-* `generate_munit_test` - Generates MUnit test cases for Mule flows, one test scenario at a time, with support for mocks, assertions, and dependencies.
-* `get_topics_agent_actions_metadata_instructions` – Retrieve metadata and instructions for enabling topics and agent actions from an OpenAPI spec.
-* `implement_api_spec` - Use APIkit flows to implement an API specification in a new integration project. You can implement a specification from a local project or an Anypoint Exchange asset.
-* `mock_api_spec` – Mock an API specification to test endpoint functionality through a mocking service.
-* `modify_munit_test` - Modify or fix an existing MUnit test case, including updating assertions, mocks, payloads, and test logic.
-* `open_project` – Open or manage an existing API, Mule, or agent-network project.
-* `run_local_mule_application` – Run a Mule application locally, handling build and local runtime setup.
-* `search_asset` – Search for assets in Anypoint Exchange by using flexible filters and criteria.
-* `test_connection` – Validate connector configurations (such as HTTP or Salesforce connectors) in a Mule project.
-* `validate_project` – Validate the current project, such as an API spec or agent network project, before deploying or publishing.
-
-
-== Connector Development
-
-* `uc_create_connector_workflow` – Create a complete LinkWeave connector end-to-end with a guided workflow plan.
-* `uc_generate_api_spec` – Generate an OpenAPI 3.0 spec from use cases and API documentation.
-* `uc_generate_connector` – Generate a complete LinkWeave connector from an existing API spec.
-
-
-== DataWeave Development
-
-* `dataweave_create_documentation` – Generate DataWeave documentation for functions based on descriptions, parameters, and examples.
-* `dataweave_create_project` – Create a new DataWeave project and return the project location.
-* `dataweave_create_sample_data` – Create DataWeave input sample data for a given transformation file.
-* `dataweave_get_module_metadata` – Return functions, parameters, and types for a specific DataWeave module.
-* `dataweave_get_project_metadata` – Return metadata for a DataWeave project, including modules, functions, and supported data formats.
-* `dataweave_open_project` – Open a DataWeave project from a given URL in the current window or a new window.
-* `dataweave_run_script_tool` – Run a DataWeave transformation with sample data to validate the script output.
-
-
-== Application Management
-
-* `create_and_manage_api_instances` – Create and configure API instances in Anypoint API Manager.
-* `deploy_mule_application` – Deploy Mule applications to CloudHub 2.0 or Runtime Fabric with optional HA, security, and performance settings.
-* `list_api_instances` – List API instances in an environment and optionally include applied and available policies.
-* `list_applications` – List Mule applications in an environment and optionally include metrics and logs.
-* `update_mule_application` – Update a Mule application deployment configuration, including runtime version, replicas, and scaling options.
-
-
-=== Governance
-
-* `add_governance_ruleset` – Add a governance ruleset from Anypoint Exchange to your project.
-* `list_governance_rulesets` – List governance rulesets that apply to your project.
-* `validate_api_against_ruleset` – Validate an API spec against governance rulesets and rules.
-
-
-== Policy Management
-
-* `get_flex_gateway_policy_example` – Retrieve Flex Gateway policy examples to configure Rust-based custom policies.
-* `manage_api_instance_policy` – Apply or update policies on an API instance in API Manager.
-* `manage_flex_gateway_policy_project` – Guide the LLM in creating, configuring, building, and publishing Flex Gateway custom policy projects.
-
-
-== Usage and Insights
-
-* `get_platform_insights` – Get usage and operational insights for applications and APIs across your organization.
-* `get_reuse_metrics` – Get reuse metrics for assets across your organization to understand adoption and reduce duplication.
-
+For more information about the MuleSoft MCP Server tools and their parameters, see: xref:mulesoft-mcp-server::reference-mcp-tools.adoc[MuleSoft MCP Server Tool Reference].
 
 == Add and Manage Custom MCP Servers
 
 From the MuleSoft Dev Agent panel, you can add your own MCP server or manage connected MCP servers through the MCP Server settings.
-
 
 == Open MCP Server Settings
 
@@ -102,7 +31,6 @@ This opens the MCP Servers UI with three tabs:
 * *Installed*
 
 With these views, you can install new MCP servers, connect to remote MCP servers, and manage existing MCP servers.
-
 
 == Add an MCP Server
 
@@ -124,7 +52,6 @@ NOTE: Marketplace servers include community-provided MCP servers. Not all server
 . Click *Add Server* to connect to the remote instance.
 . (Optional) Select *Edit Configuration* to manually configure the MCP server by updating the `a4d_mcp_settings.json` file.
 
-
 === Manually Configure the JSON File
 
 If needed, you can configure MCP servers directly by editing the `a4d_mcp_settings.json` file:
@@ -145,7 +72,6 @@ Once an MCP server has been installed, you can manage it from the *Installed* ta
 . Toggle each MCP server on or off.
 . To restart a server, select *Restart Server* from its configuration panel.
 
-
 == Manage Tools for an MCP Server
 
 Each MCP server provides a set of tools that Dev Agent can use. The following steps show you how to work with an MCP server:
@@ -157,14 +83,12 @@ Each MCP server provides a set of tools that Dev Agent can use. The following st
 NOTE: Auto-approval for tools is available only if Auto-approve has been enabled in Dev Agent settings.
 . To auto-approve all tools from a server, scroll to the bottom of the list and enable *Auto-approve all tools*.
 
-
 == Configure Request Timeout
 
 Follow these steps to configure how long Dev Agent waits for a response from an MCP server:
 
 . In the server details panel, locate *Request Timeout*.
 . Select a timeout value.
-
 
 == Delete an MCP Server
 
