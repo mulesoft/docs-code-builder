@@ -1,0 +1,132 @@
+= Working with Workspaces
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Organize your Mule projects, API specifications, and agent networks in workspaces to ensure all Anypoint Code Builder features work correctly. Workspaces help you manage multiple related projects and avoid build-time and design-time issues.
+
+[[valid-setups]]
+== Valid Setups for Anypoint Code Builder
+
+Anypoint Code Builder requires one of the following project configurations to function properly:
+
+* A single Mule project open at the root of your directory
+* A multi-root workspace pointing directly to one or more Mule projects
+
+If your directory structure doesn't meet these requirements, Anypoint Code Builder displays a message with steps to resolve the issue, such as opening a Mule project or creating a workspace.
+
+[[create-project-workspace]]
+== Create a Project in a Workspace
+
+When you create a new project (API specification, integration, or agent network), add it to a workspace. This setup enables you to add more projects later without restructuring your environment.
+
+To create a project in a workspace:
+
+. Start the project creation process using one of the following methods:
++
+** From the *Quick Actions* menu, select the project type 
++
+For example, *Design an API* or *Develop an Integration*.
+** From the Command Palette, run the appropriate command
++
+For example, `MuleSoft: Design an API`.
+** Ask MuleSoft Vibes to create the project using natural language.
+
+. In the project creation form, select *Create in workspace*.
+. Complete the remaining project configuration options.
+. Click *Create Project*.
++
+Anypoint Code Builder creates the project and adds it to a workspace. If no workspace is open, a new workspace is created.
+
+[[import-studio-workspace]]
+== Import an Anypoint Studio Workspace
+
+If you have existing projects in Anypoint Studio, you can import your Studio workspace into Anypoint Code Builder.
+
+To import a Studio workspace:
+
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select the following command:
++
+[source,command]
+----
+MuleSoft: Import Studio Workspace
+----
+. Navigate to the location of your Studio workspace and select it.
+. Choose a location to save the new workspace file.
++
+Anypoint Code Builder creates a workspace that references your existing Studio projects. Changes made to the original Studio workspace are automatically reflected in Anypoint Code Builder.
+
+[[switch-workspaces]]
+== Open and Switch Between Workspaces
+
+You can open or switch between workspaces using the menu, the Command Palette, or MuleSoft Vibes.
+
+=== Open a Workspace Manually
+
+. Open the workspace file using one of these methods:
++
+* From the menu bar, select *File* > *Open Workspace from File...*.
+* From the Command Palette, run the command `File: Open Workspace from File...`.
+. Navigate to your home directory or the location where you saved the `.code-workspace` file, and select it.
++
+The projects open in the Explorer view, and the folder name for the workspace includes *(WORKSPACE)* to indicate that you're working in a multi-root workspace:
++
+image::imp-local-api-open-workspace.png["A multi-root workspace in Explorer view"]
+
+=== Open a Workspace with MuleSoft Vibes
+
+You can ask MuleSoft Vibes to switch workspaces using natural language prompts, such as:
+
+* "Open my American Flights workspace"
+* "Switch to the `<YourWorkspaceName>` workspace"
+
+[[close-workspace]]
+== Close a Workspace
+
+To close the current workspace:
+
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select the following command:
++
+[source,command]
+----
+Workspaces: Close Workspace
+----
+
+[[actions-in-workspaces]]
+== Actions in Workspaces
+
+Anypoint Code Builder organizes actions based on their scope:
+
+[cols="1,2"]
+|===
+| Action Type | Location
+
+| *Global actions*
+| Always available from the Command Palette. These actions don't depend on a specific project, such as creating a new project, importing assets from Exchange, or opening ACB settings.
+
+| *Project-specific actions*
+| Available from the context menu (right-click) in the Explorer view. These actions apply to a specific project, such as running, debugging, deploying, or exporting a project.
+|===
+
+When working with multiple projects in a workspace, select the target project before running project-specific actions. For example, when you run or debug, you must select which project in the workspace to execute.
+
+[[workspace-file]]
+== Workspace File Location
+
+VS Code stores workspace configuration in a file with the `.code-workspace` extension. This file maps the folders for your projects.
+
+[IMPORTANT]
+====
+The `.code-workspace` file must not reside within any of your project folders. Save it in a separate directory, such as your home directory or a dedicated workspaces folder.
+====
+
+== See Also
+
+* xref:imp-implement-local-apis.adoc[Iteratively Design and Implement APIs]
+* xref:int-create-integrations.adoc[Creating Integrations]
+* xref:des-create-api-specs.adoc[Creating and Importing API Specifications]
+* https://code.visualstudio.com/docs/editor/multi-root-workspaces[Multi-root Workspaces^] in the VS Code documentation

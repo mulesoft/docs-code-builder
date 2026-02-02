@@ -36,7 +36,9 @@ For your projects to work properly, the `.code-workspace` file _must not reside_
 
 In addition, Anypoint Code Builder permits only one pair of iterative design and implementation project folders per multi-root workspace.
 
-For more information, see https://code.visualstudio.com/docs/editor/multi-root-workspaces[Multi-root Workspaces^] in the VS Code documentation.
+For general information about using workspaces in Anypoint Code Builder, see xref:start-workspaces.adoc[].
+
+For more information about VS Code workspaces, see https://code.visualstudio.com/docs/editor/multi-root-workspaces[Multi-root Workspaces^] in the VS Code documentation.
 
 
 == Before You Begin 
@@ -120,7 +122,7 @@ which you then implement within a Mule application.
 You can switch between the spec and the implementation project in the Explorer view.
 
 
-To close your multi-root workspace, see <<close-workspace>>. 
+To close or reopen your workspace later, see xref:start-workspaces.adoc[Working with Workspaces]. 
 
 
 [[rescaffold-api-spec]]
@@ -143,42 +145,7 @@ After you see the message that your project was rescaffolded successfully, navig
 //TODO:
 // ADD NOTE ABOUT caveats for rescaffolding AsyncAPI specs?
 
-[[close-workspace]]
-== Close a Multi-Root Workspace
-
-To close the workspace:
-
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Select the following command:
-+
-[source,command]
-----
-Workspaces: Close Workspace
-----
-
-After closing, you can reopen a synchronized project from the workspace that you created when implementing the API.
-See <<open-workspace>>.
-
-[[open-workspace]]
-== Open a Multi-Root Workspace
-
-To open a multi-root workspace from the `.code-workspace` file: 
-
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Select the following command:
-+
-[source,command]
-----
-File: Open Workspace from File...
-----
-. Navigate to your home directory and double-click the `.code-workspace` file for the workspace.
-+
-The projects open in the Explorer view, and the folder name for the multi-root workspace includes *(WORKSPACE)*, for example:
-+
-image::imp-local-api-open-workspace.png["A multi-root workspace in Explorer view"]
-
 == See Also
 
+* xref:start-workspaces.adoc[]
 * xref:tut-local-api-specification.adoc[] Tutorial
