@@ -1,0 +1,100 @@
+= Configure External Libraries for Mule Projects
+:page-deployment-options: cloud-ide, desktop-ide
+
+External libraries are project-level dependencies that Mule applications require to support certain connectors and components, such as Database connectors or Spring-based components.
+Anypoint Code Builder provides a guided interface to add, edit, and remove external libraries, and automatically manages the corresponding entries in the project POM file.
+
+External library configurations apply at the project level. Any change to a configured library affects all components in the project that require that library.
+
+== Before You Begin
+
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:int-create-integrations.adoc[Create an integration project].
+* Add a connector or component that requires an external library, such as a Database or Spring component.
+
+== When You Need to Configure an External Library
+
+Anypoint Code Builder prompts you to configure an external library when you add or configure a component that requires additional dependencies.
+For example, this can occur when you:
+
+* Add a Database connector operation to a flow
+* Configure a Spring-based component
+* Use a custom component that depends on external libraries
+
+You can also manage external libraries from the project-level configuration, independent of a specific component.
+
+== Add an External Library
+
+You can add an external library from the component configuration or from the project-level library configuration interface.
+
+External libraries can be added from one of the following sources:
+
+* Recommended libraries
+* Maven Central dependencies
+* Local files
+
+To open the library configuration interface from a component:
+
+. In the canvas, select a component that requires an external library.
+. In the component configuration panel, locate the *Required libraries* field.
+. Click *Configure library*.
++
+Anypoint Code Builder opens the *Library Configuration* page.
+Changes made on this page apply to the entire project.
+
+=== Add a Recommended Library
+
+Some components provide recommended libraries that match the component requirements.
+
+To add a recommended library:
+
+. Open the *Library Configuration* page.
+. In *Library source*, select *Add Recommended Library*.
++
+The interface displays the library that will be added to the project.
+. Click *Apply*.
++
+Anypoint Code Builder adds the recommended library to the project POM file and applies it to all components that require it.
+
+=== Add a Maven Dependency
+
+You can search Maven Central or manually specify Maven coordinates to add a dependency.
+
+To add a Maven dependency:
+
+. Open the *Library Configuration* page.
+. In *Library source*, select *Add Maven Dependency*.
+. In the *Search Maven Central Repository* field, search for a dependency or enter the required Maven fields manually.
+. Specify values for *Group ID*, *Artifact ID*, and *Version*.
+. (Optional) Configure additional fields such as *Scope*.
+. Click *Apply*.
+
+Only libraries that meet the required criteria appear in component library fields after configuration.
+
+=== Add a Library from a Local File
+
+You can add a dependency from a local file, such as a JAR or an external POM file.
+
+To add a library from a local file:
+
+. Open the *Library Configuration* page.
+. In *Library source*, select *Add from Local File*.
+. Select a file from your system.
++
+Anypoint Code Builder automatically populates the Maven fields based on the selected file.
+. (Optional) Override the populated values if required.
+. Click *Apply*.
+
+If you select an external POM file, it takes precedence over any POM embedded in the artifact file.
+
+== Edit or Delete an External Library
+
+You can edit or remove an existing library configuration from the same interface.
+
+To edit or delete a library:
+
+. Open the *Library Configuration* page.
+. Select the configured library.
+. Use the available actions to update or delete the library.
++
+Deleting a library removes it from the project POM file and affects all components that use the library.
