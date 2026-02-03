@@ -962,7 +962,7 @@ authentication:
   targetType: audience
   targetValue: https://api.example.com/agents/my-agent
   scope: Read #optional, OAuth 2.0 scope to request. Required for Microsoft Entra OBO (for example, api://downstream-client-id/.default). Optional for OAuth 2.0 Token Exchange (RFC 8693).
-  timeout: 50000 #optional, Timeout for token exchange requests in milliseconds. Default: 10000.
+  timeout: 5000 #optional, Timeout for token exchange requests in milliseconds. Default: 5000.
 ----
 
 Using Microsoft Entra ID On-Behalf-Of:
@@ -972,11 +972,11 @@ Using Microsoft Entra ID On-Behalf-Of:
 authentication:
   kind: oauth2-obo
   flow: microsoft-entra-obo
-  timeout: 50000 #optional, Timeout for token exchange requests in milliseconds. Default: 10000.
   tokenEndpoint: https://oauth.provider.com/token
   clientId: clientId
   clientSecret: clientSecret
   scope: api://downstream-client-id/.default
+  timeout: 5000 #optional, Timeout for token exchange requests in milliseconds. Default: 5000.
 ----  
 
 [[exchange-json-file-element]]
