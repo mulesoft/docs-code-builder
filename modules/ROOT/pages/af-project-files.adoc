@@ -779,7 +779,7 @@ The `connections` element has these properties.
 |`spec` |Connection specification. Properties vary by connection kind. |Object |Object with spec properties (See <<spec-section,Spec>>) |Yes
 |`spec.url` |The URL for the connection endpoint. |String |Valid URL string |Yes (for agent and llm), No (for mcp)
 |`spec.authentication` |Authentication configuration for the connection. |Object |Authentication object (See <<authentication-types,Authentication types>>) |No
-|`spec.authentication.kind` |The type of authentication. |String |`basic`, `oauth2-client-credentials`, `apikey-client-credentials`, `apiKey` |Yes (when authentication is specified)
+|`spec.authentication.kind` |The type of authentication. |String |`basic`, `oauth2-client-credentials`, `apikey-client-credentials`, `apiKey`, `in-task-authorization-code`, and `oauth2-obo` |Yes (when authentication is specified)
 |`spec.authentication.username` |The username for basic authentication. |String |Any string value |Yes (for basic auth)
 |`spec.authentication.password` |The password for basic authentication. |String |Any string value |Yes (for basic auth)
 |`spec.authentication.headerName` |The name of the header in which to set the key. If not specified, 'Authorization' is set by default. |String |Any string value |No
