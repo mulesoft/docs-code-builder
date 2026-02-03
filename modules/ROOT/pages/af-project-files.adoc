@@ -924,6 +924,61 @@ authentication:
   headerName: X-Custom-Auth-Token  # Custom header name
 ----
 
+[[in-task-auth]]
+==== In-Task Authorization Code
+
+[source,yaml]
+----
+authentication:
+  kind: in-task-authorization-code
+  secondaryAuthProvider: providerName
+  authorizationEndpoint: https://oauth.provider.com/authorize
+  tokenEndpoint: https://oauth.provider.com/token
+  scopes: Read
+  redirectUri: https://oauth.provider.com/callback
+  responseType: code
+  tokenAudience: https://api.example.com/agents/my-agent
+  codeChallengeMethod: S256
+  bodyEncoding: form
+  challengeResponseStatusCode: 200 #Optional, Status code for challenge response. Default: 200.
+  tokenTimeout: 300  #Optional. Timeout in seconds for token requests. Default: 300.
+----
+
+[[obo-credential-injection]]
+==== OAuth 2.0 OBO Credential Injection
+
+This authentication type supports OAuth 2.0 Token Exchange and Microsoft Entra ID On-Behalf-Of protocols.
+
+Using OAuth 2.0 Token Exchange:
+
+[source,yaml]
+----
+authentication:
+  kind: oauth2-obo
+  flow: oauth2-token-exchange
+  tokenEndpoint: https://oauth.provider.com/token
+  clientId: clientId
+  clientSecret: clientSecret
+  targetType: audience
+  targetValue: https://api.example.com/agents/my-agent
+  scope: Read #optional, OAuth 2.0 scope to request. Required for Microsoft Entra OBO (for example, api://downstream-client-id/.default). Optional for OAuth 2.0 Token Exchange (RFC 8693).
+  timeout: 50000 #optional, Timeout for token exchange requests in milliseconds. Default: 10000.
+----
+
+Using Microsoft Entra ID On-Behalf-Of:
+
+[source,yaml]
+----
+authentication:
+  kind: oauth2-obo
+  flow: microsoft-entra-obo
+  timeout: 50000 #optional, Timeout for token exchange requests in milliseconds. Default: 10000.
+  tokenEndpoint: https://oauth.provider.com/token
+  clientId: clientId
+  clientSecret: clientSecret
+  scope: api://downstream-client-id/.default
+----  
+
 [[exchange-json-file-element]]
 == exchange.json File Element
 
