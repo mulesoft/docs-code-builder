@@ -342,6 +342,9 @@ tools:
         name: talent-pool-mcp         # Exchange asset ID of MCP server. By default, the groupId for this asset is the same as that in exchange.json.
       allowed:                        # Allowlist specific tools
         - TalentPoolMcpServer.match_email_to_address
+      headersToPropagate:             # Optional. Header names to forward when invoking this tool.
+        - Authorization
+        - X-Request-Id
   - mcp:
       ref:
         name: slack-mcp
@@ -358,6 +361,7 @@ The `tools` element has these properties.
 |`mcp.ref` |The reference to the MCP server that is available to this broker. |String |See <<mcp-servers-section,MCP Servers>> |Yes
 |`mcp.connection.ref` |Connection reference. |String |See <<connections-section,Connections>> |No
 |`mcp.allowed` |Filters the list of tools advertised by the MCP server to only those in this list. Mutually exclusive with 'denied'. |Array of strings |Array of tool name strings |No
+|`mcp.headersToPropagate` |The names of the request headers to propagate when the broker invokes this tool. |Array of strings |Array of header name strings (for example, `X-Request-Id`, `Authorization`) |No
 |===
 
 [[links-section]]
@@ -376,6 +380,9 @@ links:
       ref:
         name: hr-agent        # Exchange asset ID of the linked agent. By default, the groupId for this asset is the same as that in exchange.json.
         namespace:            # Optional. If the asset was defined in a different business group, set the corresponding groupId here.
+      headersToPropagate:     # Optional. Header names to forward when invoking this agent.
+        - X-Request-Id
+        - Authorization
   - agent:
       ref:
         name: badging-agent
@@ -415,6 +422,7 @@ The `links` element has these properties.
 |`links[].agent.ref.name` |Exchange asset ID of the linked agent. This references the `assetId` that the agent has in Anypoint Exchange, not the human-friendly name.|String|Asset ID string (for example, "hr-agent", "crm-agent"). By default, the groupId for this asset is the same as that in exchange.json|Yes
 |`links[].agent.ref.namespace` |Business group ID (groupId) where the asset is defined. Use this when the asset was defined in a different business group than the current one.|String|Group ID string. To find the groupId, look in the `dependencies` section in `exchange.json`|No
 |`links[].agent.connection.ref` |Connection reference.|String|See <<connections-section,Connections>>. This references a connection defined in the `connections` section|No
+|`links[].agent.headersToPropagate` |The names of the request headers to propagate when the broker invokes this agent.|Array of strings|Array of header name strings (for example, `X-Request-Id`, `Authorization`)|No
 |===
 
 
