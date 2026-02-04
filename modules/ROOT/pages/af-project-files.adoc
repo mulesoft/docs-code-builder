@@ -864,7 +864,7 @@ Both agents and MCP servers support the same authentication types with custom he
 [source,yaml]
 ----
 authentication:
-  Kind: basic
+  kind: basic
   username: "username"
   password: "password"
 ----
@@ -879,6 +879,18 @@ kind: basic
   headerName: X-API-Authorization  # Custom header instead of default "Authorization"
 ----
 
+The `basic` authentication has these properties.
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`kind` |Authentication type. |String |`basic` |Yes
+|`username` |The username for authentication. |String |Any string |Yes
+|`password` |The password for authentication. |String |Any string |Yes
+|`headerName` |The name of the header in which to set the credentials. If not specified, `Authorization` is used. |String |Any string |No
+|===
+
 [[oauth-client-credentials]]
 ==== OAuth 2.0 Client Credentials
 
@@ -888,9 +900,28 @@ authentication:
   kind: oauth2-client-credentials
   clientId: "client_id"
   clientSecret: "client_secret"
-  tokenUrl: "https://oauth.provider.com/token"
+  token:
+    url: "https://oauth.provider.com/token"
+    bodyEncoding: form
+    timeout: 300
   scopes: ["read", "write"]             # Optional
 ----
+
+The `oauth2-client-credentials` authentication has these properties.
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`kind` |Authentication type. |String |`oauth2-client-credentials` |Yes
+|`clientId` |The client ID. |String |Any string |Yes
+|`clientSecret` |The client secret. |String |Any string |Yes
+|`token` |Configuration for fetching the token. |Object |Object with token properties |Yes
+|`token.url` |The URL of the token provider. |String |Valid URL |Yes
+|`token.timeout` |Time in seconds to wait for the service to return the token. |Number |Any number |No
+|`token.bodyEncoding` |The encoding format for the token request body. |String |`form`, `json` |No
+|`scopes` |An array of scopes to request. |Array |Array of scope strings |No
+|===
 
 [[anypoint-client-credentials]]
 ==== Anypoint Client Credentials
@@ -902,6 +933,17 @@ authentication:
   clientId: "client_id"
   clientSecret: "client_secret"
 ----
+
+The `apikey-client-credentials` authentication has these properties.
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`kind` |Authentication type. |String |`apikey-client-credentials` |Yes
+|`clientId` |The client ID. |Object |Object with `value` and optional `name` (default header name is `client_id`) |Yes
+|`clientSecret` |The client secret. |Object |Object with `value` and optional `name` (default header name is `client_secret`) |Yes
+|===
 
 [[api-key]]
 ==== API Key Authentication
@@ -924,8 +966,21 @@ authentication:
   headerName: X-Custom-Auth-Token  # Custom header name
 ----
 
+The `apiKey` authentication has these properties.
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`kind` |Authentication type. |String |`apiKey` |Yes
+|`apiKey` |The value of the API key. |String |Any string |Yes
+|`headerName` |The name of the header in which to set the key. If not specified, `Authorization` is used. |String |Any string |No
+|===
+
 [[in-task-auth]]
 ==== In-Task Authorization Code
+
+Use `in-task authorization code` when the connection needs secondary credentials obtained during a task using the OAuth 2.0 Authorization Code flow. OAuth2 tokens are extracted from message data and injected into the `Authorization` header for upstream calls. This supports step-up or in-task authentication (for example, when a user must re-authenticate for a sensitive action). For more information about the associated policy, see xref:gateway::policies-outbound-a2a-intask-authorization-code.adoc[].
 
 [source,yaml]
 ----
@@ -944,10 +999,31 @@ authentication:
   tokenTimeout: 300  #Optional. Timeout in seconds for token requests. Default: 300.
 ----
 
+The `in-task-authorization-code` authentication has these properties.
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`kind` |Authentication type. |String |`in-task-authorization-code` |Yes
+|`authorizationEndpoint` |OAuth2 authorization endpoint URL. Used to generate the authentication challenge. |String |Valid URL |Yes
+|`tokenEndpoint` |OAuth2 token endpoint URL. Used to generate the authentication challenge. |String |Valid URL |Yes
+|`scopes` |OAuth2 scopes required for step-up authentication. |String |Space- or comma-separated scope list (e.g. `openid profile email`) |Yes
+|`redirectUri` |OAuth2 redirect URI the client uses in the authorization flow. |String |Valid URI |Yes
+|`secondaryAuthProvider` |Name of the IdP (e.g. `okta`, `auth0`). Informational only, for the authentication card. |String |Any string |No
+|`responseType` |OAuth2 response type. |String |Typically `code`. Default: `code` |No
+|`codeChallengeMethod` |PKCE code challenge method. |String |Typically `S256`. Default: `S256` |No
+|`tokenAudience` |Intended recipient of the token (e.g. agent or API URL). |String |Any string |No
+|`bodyEncoding` |Encoding for the token request body. |String |`form`, `json`. Default: `form` |No
+|`tokenTimeout` |Timeout in seconds for token requests. |Integer |Positive integer. Default: 300 |No
+|`challengeResponseStatusCode` |HTTP status code returned for auth-required challenge responses. Typically 200 for JSON-RPC compatibility. |Integer |HTTP status code. Default: 200 |No
+|===
+
+
 [[obo-credential-injection]]
 ==== OAuth 2.0 OBO Credential Injection
 
-This authentication type supports OAuth 2.0 Token Exchange and Microsoft Entra ID On-Behalf-Of protocols.
+This authentication type supports OAuth 2.0 Token Exchange and Microsoft Entra ID On-Behalf-Of protocols. For more information about the associated policy, see xref:gateway::policies-outbound-oauth-obo.adoc[].
 
 Using OAuth 2.0 Token Exchange:
 
@@ -977,7 +1053,24 @@ authentication:
   clientSecret: clientSecret
   scope: api://downstream-client-id/.default
   timeout: 5000 #optional, Timeout for token exchange requests in milliseconds. Default: 10000.
-----  
+----
+
+The `oauth2-obo` authentication has these properties.
+
+[cols="1,2,1,2,1",options="header"]
+|===
+|Parameter |Description |Type |Valid Values |Required
+
+|`kind` |Authentication type. |String |`oauth2-obo` |Yes
+|`flow` |Token exchange flow type. |String |`oauth2-token-exchange` (RFC 8693), `microsoft-entra-obo` |Yes
+|`clientId` |OAuth2 client ID for token exchange. |String |Any string |Yes
+|`clientSecret` |OAuth2 client secret for token exchange. |String |Any string |Yes
+|`tokenEndpoint` |OAuth2 token endpoint URL for token exchange. |String |Valid URL |Yes
+|`targetType` |Parameter type for specifying the target service (audience for logical name, resource for physical URI). Used for OAuth 2.0 Token Exchange. |String |`audience`, `resource`. Default: `audience` |No
+|`targetValue` |Target audience URI or resource URI for the exchanged token. Required for OAuth 2.0 Token Exchange. |String |Valid URI |Required when using `oauth2-token-exchange` with a target
+|`scope` |OAuth scope to request. Required for Microsoft Entra OBO (e.g. `api://downstream-client-id/.default`). Optional for OAuth 2.0 Token Exchange. |String |Any string |Required for `microsoft-entra-obo`
+|`timeout` |Timeout for token exchange requests in milliseconds. |Integer |Positive integer. Default: 10000 |No
+|===
 
 [[exchange-json-file-element]]
 == exchange.json File Element
