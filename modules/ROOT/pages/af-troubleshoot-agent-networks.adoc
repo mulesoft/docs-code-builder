@@ -33,11 +33,9 @@ Message loging uses the xref:gateway::policies-included-message-logging.adoc[Fle
 [source,yaml]
 ----
 
-  policies: ## add the following inside the policy setting
-    - ref:
-        name: message-logging-flex
-        namespace: business_group_UUID
-      config:
+  - policyRef:
+    name: message-logging-flex
+  config:
     loggingConfiguration:
       - itemName: "Config 1"
         itemData:
