@@ -28,27 +28,29 @@ Enable logging and log levels from CloudHub 2.0 or Runtime Fabric:
 
 Edit agent-network.yaml to set message logging for MCP servers and agents. 
 
-Message loging uses the xref:gateway::policies-included-message-logging.adoc[Flex Gateway Message Logging policy]. In the `connection` section of the agent or MCP server instance you want to log, add the following logging policy inside `policies`:
+Message logging uses the xref:gateway::policies-included-message-logging.adoc[Flex Gateway Message Logging policy]. In the `connection` section of the agent or MCP server instance you want to log, add the following logging policy inside `policies`:
 
 [source,yaml]
 ----
 
-  - policyRef:
-    name: message-logging-flex
-  config:
-    loggingConfiguration:
-      - itemName: "Config 1"
-        itemData:
-          message: "#[payload]"
-          conditional: "#[attributes.queryParams['QueryParam']=='someValue']"
-          level: "ERROR"
-          firstSection: true
-      - itemName: "Config 2"
-        itemData:
-          message: "#['literal string']"
-          level: "WARN"
-          secondSection: true
-          firstSection: true
+policies: ## add the following inside the policy setting
+    - ref:
+        name: message-logging
+        namespace: business_group_UUID
+      configuration:
+        loggingConfiguration:
+          - itemName: "Payload"
+            itemData:
+              message: "#[payload]"
+              firstSection: true
+              secondSection: true
+              level: "INFO"
+          - itemName: "Headers"
+            itemData:
+              message: "#[attributes]"
+              firstSection: true
+              secondSection: true
+              level: "INFO"
 ----
 
 [NOTE]
