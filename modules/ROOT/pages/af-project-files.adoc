@@ -342,9 +342,7 @@ tools:
         name: talent-pool-mcp         # Exchange asset ID of MCP server. By default, the groupId for this asset is the same as that in exchange.json.
       allowed:                        # Allowlist specific tools
         - TalentPoolMcpServer.match_email_to_address
-      headersToPropagate:             # Optional. Header names to forward when invoking this tool.
-        - Authorization
-        - X-Request-Id
+      headersToPropagate: [Authorization, X-Request-Id]           # Optional. Header names to forward when invoking this tool.
   - mcp:
       ref:
         name: slack-mcp
@@ -380,9 +378,7 @@ links:
       ref:
         name: hr-agent        # Exchange asset ID of the linked agent. By default, the groupId for this asset is the same as that in exchange.json.
         namespace:            # Optional. If the asset was defined in a different business group, set the corresponding groupId here.
-      headersToPropagate:     # Optional. Header names to forward when invoking this agent.
-        - X-Request-Id
-        - Authorization
+      headersToPropagate: [Authorization, X-Request-Id]   # Optional. Header names to forward when invoking this agent.
   - agent:
       ref:
         name: badging-agent
