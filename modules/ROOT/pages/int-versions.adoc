@@ -4,18 +4,39 @@ include::reuse::partial$java8-eoss-banner.adoc[tag="java8-eoss"]
 //used in procedures::open-project: Open your implementation or integration project//
 Set Mule runtime engine (Mule), Java, and connector versions to use in your projects.
 
-* <<default-versions, Default versions>>: Set default Mule and Java versions to display in version drop-down menus. 
+Anypoint Code Builder includes bundled Mule runtimes that enable you to open and design projects instantly without mandatory runtime downloads. The IDE uses these bundled runtimes for editing and DataSense. Exact runtime versions are only required when you run or debug your applications.
+
+* <<bundled-runtimes, Bundled runtimes>>: Learn about the runtimes included with Anypoint Code Builder.
+
+* <<default-versions, Default versions>>: Set default Mule and Java versions to show in version dropdown menus. 
 
 * Project-level versions: Set versions to use in a specific project.
 ** For Mule and Java versions, see <<project-version-mule-java>>.
-** For connector versions, see <<project-versions-connectors>>.  
+** For connector versions, see <<project-versions-connectors>>.
+
+* <<install-additional-runtimes, Install additional runtimes>>: Download specific Mule runtime versions when needed for run or debug operations.  
+
+[[bundled-runtimes]]
+== Bundled Mule Runtimes
+
+Anypoint Code Builder includes two bundled Mule runtimes that are available immediately after installation:
+
+* **Mule 4.8 (Java 8 compatible, fallback)**: A minimal runtime bundle compatible with all Java 8-based Mule 4.4 and later projects. This runtime is used for design-time activities with Java 8 projects and serves as the default fallback for legacy applications. You can't use this version to run Mule applications.
+
+* **Latest Runtime (Java 17)**: The most recent supported Mule runtime version (Edge or LTS) at the time of the Anypoint Code Builder release. This runtime supports Java 17 and can be used for both designing and running applications. Projects configured for Mule 4.6, 4.8, 4.9, and 4.10 are compatible with this bundled runtime.
+
+The IDE automatically selects the appropriate bundled runtime based on your project's Java version:
+* Java 8 projects use the bundled 4.8 minimal runtime
+* Java 17 projects use the latest bundled runtime
+
+Projects open instantly using these bundled runtimes to avoid downloading runtimes before you can start designing. Download a specific runtime version if you want to run or debug your application with an exact version that isn't available locally.
 
 [[default-versions]]
 == Select Default Mule and Java Versions
 
 Select the default Mule and Java versions for new implementation and integration projects. The defaults appear in drop-down menus from which you select a version, for example, when creating a project. 
 
-Versions not present in the IDE append a message similar to *downloads upon project creation*. Versions that don't support a feature typically append a message, such as *AsyncAPI implementation unsupported* for Mule 4.4. 
+The runtime dropdown shows only locally available runtimes, including the bundled runtimes. Versions that don't support a feature typically append a message, such as *AsyncAPI implementation unsupported* for Mule 4.4. 
 
 You can set a different version at the project level (see <<project-version-mule-java>>).
 
@@ -35,16 +56,25 @@ include::partial$acb-runtime-java.adoc[tags="runtime-java-version-selection"]
 [[project-version-mule-java]]
 == Select Mule and Java Versions for a Project
 
-Set Mule or Java versions for a specific implementation or integration project from *Project Properties*. You can change versions at any time, but it is important to test your projects with the versions you intend to deploy. 
+Set Mule or Java versions for a specific implementation or integration project from *Project Properties*. You can change versions at any time, but test your projects with the versions you intend to deploy. 
+
+The IDE uses bundled runtimes to open and edit projects immediately. The `minMuleVersion` in your project's `mule-artifact.json` file specifies the minimum compatible Mule runtime version required to open and edit the project. The design service automatically selects any locally available runtime that satisfies this minimum constraint, enabling forward compatibility.
 
 Version settings are important in several scenarios:
 
 * Updating a project to use more current versions
 * Switching to a supported version, for example, for a project that you import into Anypoint Code Builder that uses an unsupported version
-* Adding a version of Mule or Java that is missing from your project
 * Selecting versions of Mule or Java that are compatible with each other
+* Specifying exact runtime versions for run and debug operations
 
-When a Mule or Java version isn't set for a project, the IDE's canvas and notifications provide a *Set version* button that opens the *Project Properties* tab. You can also navigate directly to the *Project Properties* tab. 
+When a Mule or Java version isn't set for a project, the IDE's canvas and notifications provide a *Set version* button that opens the *Project Properties* tab. You can also navigate directly to the *Project Properties* tab.
+
+[NOTE]
+====
+When you run or debug an application, the IDE checks if the exact runtime version specified in your project is available locally. If not, you'll see a warning dialog that allows you to:
+* Continue with the latest compatible local version
+* Open *Project Properties* to select or download the required runtime version
+==== 
 
 
 [[project-versions-from-properties]]
@@ -81,4 +111,33 @@ include::partial$acb-runtime-java.adoc[tags="open-project-properties-menu"]
 +
 image::int-project-properties-connectors.png["Connector versions in Project Properties tab"]
 . Select connector versions. You can update Exchange connector versions for compatibility with your project's Mule runtime and Java versions.
+
+[NOTE]
+====
+Connector compatibility is checked against the selected Mule runtime and Java versions. Compatibility issues appear after you apply changes in *Project Properties*.
+====
+
+[[install-additional-runtimes]]
+== Install Additional Mule Runtime Versions
+
+Bundled runtimes enable instant project opening and design. If you must specific runtime versions for running or debugging your applications, install additional runtime versions.
+
+To install a specific Mule runtime version:
+
+. Open *Command Palette* by pressing Cmd+Shift+P on Mac, or Ctrl+Shift+P on Windows.
+. Run the command:
++
+[source,command]
+----
+MuleSoft: Install Runtime
+----
++
+. Select the runtime version to install.
++
+The IDE downloads the selected runtime version to `${user.home}/AnypointCodeBuilder/runtimes`.
+
+[NOTE]
+====
+The runtime dropdown in project creation and *Project Properties* shows only locally available runtimes. After installing additional runtimes, they appear in these dropdowns for future use.
+====
 

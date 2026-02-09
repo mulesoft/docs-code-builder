@@ -3,7 +3,7 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Anypoint Code Builder bundles a version 4 instance of Mule runtime engine (Mule) to run your integrations and implementations.  
+Anypoint Code Builder includes bundled Mule runtime versions that enable instant project opening and design. When you run or debug applications, the IDE checks for the exact runtime version specified in your project. If the exact version isn't available locally, you'll see error dialogs that help you resolve the issue.
 
 Don't change the default locations of Mule. If you receive an error that Mule isn't found or installed, configure the Mule Home path.
 
@@ -61,6 +61,71 @@ This request is _not_ from MuleSoft or Anypoint Code Builder:
 image::troubleshoot-download-java-notification.png["Notification showing a request to download and install a JDK to compile a project"]
 
 Instead of using this feature, you can use the command *Download Mule Runtime and Java Versions*. See xref:anypoint-code-builder::int-versions.adoc[].
+
+== Mule Runtime Version Not Defined
+
+The error *Mule runtime version not defined* occurs when your project doesn't specify a Mule runtime version in the project's `mule-artifact.json` file.
+
+To resolve this issue:
+
+. Click *Open Project Properties* in the error dialog, or run the command `MuleSoft: Open Mule Project Properties`.
+. In *Project Properties*, select a Mule runtime version.
+. Click *Apply*.
+
+== Java Version Not Defined
+
+The error *Java version not defined* occurs when your project doesn't specify a Java version in the project's `mule-artifact.json` file.
+
+To resolve this issue:
+
+. Click *Open Project Properties* in the error dialog, or run the command `MuleSoft: Open Mule Project Properties`.
+. In *Project Properties*, select a Java version.
+. Click *Apply*.
+
+== Mule Runtime Version Not Found (Compatible Version Available)
+
+The error *Mule runtime [version] not found* occurs when you try to run or debug an application, but the exact Mule runtime version specified in your project isn't available locally. However, a compatible local version is available.
+
+To resolve this issue, you have two options:
+
+* **Continue with compatible version**: Click *Continue* to use the latest local compatible version. The dialog shows which version will be used.
+* **Select a different version**: Click *Open Project Properties* to select a different local Mule runtime version or install the exact version using the `MuleSoft: Install Runtime` command.
+
+== Mule Runtime Version Not Found (No Compatible Version)
+
+The error *Mule runtime [version] not found* occurs when you try to run or debug an application, but the exact Mule runtime version specified in your project isn't available locally, and no compatible version is available.
+
+To resolve this issue:
+
+. Click *Open Project Properties* in the error dialog.
+. In *Project Properties*, either:
+** Select a locally available Mule runtime version from the dropdown, or
+** Use the `MuleSoft: Install Runtime` command to download the required version.
+. Click *Apply*.
+
+== Java Version Not Found
+
+The error *Java [version] not found* occurs when you try to run or debug an application, but the Java version specified in your project isn't available locally.
+
+To resolve this issue:
+
+. Click *Open Project Properties* in the error dialog.
+. In *Project Properties*, either:
+** Select Java 17 (or another available version) from the dropdown, or
+** Use the `MuleSoft: Download Mule Runtime and Java Versions` command to download the required Java version.
+. Click *Apply*.
+
+== Mule Runtime and Java Version Not Found
+
+The error *Mule runtime [version] and Java [version] not found* occurs when you try to run or debug an application, but both the Mule runtime and Java versions specified in your project aren't available locally.
+
+To resolve this issue:
+
+. Click *Open Project Properties* in the error dialog.
+. In *Project Properties*:
+** Select a locally available Mule runtime version and Java 17 (or another compatible version) from the dropdowns, or
+** Use the `MuleSoft: Install Runtime` command to download the required Mule runtime version, and use the `MuleSoft: Download Mule Runtime and Java Versions` command to download the required Java version.
+. Click *Apply*.
 
 [[reinstall-mule-runtime]]
 == Reinstall Mule Runtime
