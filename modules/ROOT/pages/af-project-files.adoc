@@ -344,7 +344,7 @@ tools:
         - TalentPoolMcpServer.match_email_to_address
       headersToPropagate: 
         - Authorization
-        - X-Correlation-Id           # Optional. Header names to forward when invoking this tool.
+        - X-Request-Id  # Optional. Header names to forward when invoking this tool.
   - mcp:
       ref:
         name: slack-mcp
@@ -1171,4 +1171,3 @@ links:
               name: hr-agent
               namespace: <the groupId>
 ----
-
