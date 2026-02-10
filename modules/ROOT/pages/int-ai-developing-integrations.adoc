@@ -1,7 +1,7 @@
-= Developing Integrations Using MuleSoft Dev Agent
+= Developing Integrations Using MuleSoft Vibes
 :page-deployment-options: cloud-ide, desktop-ide
 
-To develop, manage, or maintain your applications, use MuleSoft Dev Agent in Anypoint Code Builder. MuleSoft Dev Agent is a purpose-built assistant for the development lifecycle, available directly in the IDE. It integrates with the xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server] and supports many capabilities, such as:
+To develop, manage, or maintain your applications, use MuleSoft Vibes in Anypoint Code Builder. It is a purpose-built assistant for the development lifecycle, available directly in the IDE. It integrates with the xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server] and supports many capabilities, such as:
 
 * Developing API specifications  
 * Creating and configuring applications  
@@ -10,7 +10,7 @@ To develop, manage, or maintain your applications, use MuleSoft Dev Agent in Any
 
 All of these actions are driven by natural language prompts.  
 
-When you generate an integration, MuleSoft Dev Agent transforms your business logic into a Mule application. The generated application includes:  
+When you generate an integration, MuleSoft Vibes transforms your business logic into a Mule application. The generated application includes:  
 
 * Flows  
 * Connector configurations  
@@ -19,7 +19,7 @@ When you generate an integration, MuleSoft Dev Agent transforms your business lo
 
 These capabilities are powered by large language models (LLMs) that run within the Salesforce Shared Trust Boundary.
 
-NOTE: MuleSoft Dev Agent is available on US, EU, Canada, and Japan cloud hosts.
+NOTE: MuleSoft Vibes is available on US, EU, Canada, and Japan cloud hosts.
 
 [[before-you-begin]]
 == Before You Begin
@@ -28,33 +28,33 @@ Before you start creating your API spec, make sure you meet the following prereq
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].  
 * Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].  
-* Ensure you have the following permissions to use MuleSoft Dev Agent:  
+* Ensure you have the following permissions to use MuleSoft Vibes:  
 ** *Mule Developer Generative AI User*  
 * Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].  
 
-NOTE: MuleSoft Dev Agent always uses the permissions of the Anypoint Platform user who is logged into Anypoint Code Builder, and can only execute actions that the authenticated user has permission to perform in Anypoint Platform.
+NOTE: MuleSoft Vibes always uses the permissions of the Anypoint Platform user who is logged into Anypoint Code Builder, and can only execute actions that the authenticated user has permission to perform in Anypoint Platform.
 
-== Unified Dev Agent Experience
+== Unified MuleSoft Vibes Experience
 
-MuleSoft Dev Agent provides a single panel where you can develop integrations and API specifications. Unlike earlier versions of generative features, Dev Agent does not insert output through a separate panel. Instead, it writes directly into your project files when you grant edit permissions.  
+MuleSoft Vibes provides a single panel where you can develop integrations and API specifications. Unlike earlier versions of generative features, it does not insert output through a separate panel. Instead, it writes directly into your project files when you grant edit permissions.  
 
-Depending on your settings, Dev Agent can:  
+Depending on your settings, MuleSoft Vibes can:  
 
 * Request approval before writing to your files.
-* Write automatically if *Auto-approve* is enabled in the Dev Agent settings.  
+* Write automatically if *Auto-approve* is enabled in the MuleSoft Vibes settings.  
 
 For details on configuring permissions and server connections, see xref:troubleshoot-generative-ai.adoc[].
 
 == Provide Additional Context
 
-You can improve the accuracy of generated outputs by adding extra context to Dev Agent.  
-In addition to prompts, Dev Agent accepts the following types of input:
+You can improve the accuracy of generated outputs by adding extra context to MuleSoft Vibes.  
+In addition to prompts, it accepts the following types of input:
 
 * **Files** – Add a requirements file or other reference documents.  
-* **Folders** – Provide an entire project folder for Dev Agent to consider.  
+* **Folders** – Provide an entire project folder for MuleSoft Vibes to consider.  
 * **Terminal Input** – Share terminal outputs as context for the request.  
 
-This context helps Dev Agent generate flows and API specifications that align more closely with your requirements.
+This context helps MuleSoft Vibes generate flows and API specifications that align more closely with your requirements.
 
 == Trust Layer
 
@@ -63,7 +63,7 @@ The Einstein trust layer bridges Anypoint Platform and the LLMs, as shown in thi
 image::acb-einstein-trust-layer.png["Flow depicting how the trust layer works, including the steps of the flow"]
 
 [calloutlist]
-. You create a message based on your use case and send it to Dev Agent.  
+. You create a message based on your use case and send it to MuleSoft Vibes.  
 . To minimize inaccurate responses, messages are grounded with MuleSoft proprietary data and user context.  
 . To ensure safe data transfer to external LLMs, the message is sent via a secure gateway.  
 . All data remains within Salesforce-managed boundaries.  
@@ -76,5 +76,5 @@ This feature uses AI models that can produce inaccurate or harmful responses. Re
 
 == See Also
 
-* xref:troubleshooting.adoc[Troubleshooting Dev Agent]  
-* xref:api-ai-create-spec.adoc[Creating API Specs with Dev Agent]  
+* xref:troubleshooting.adoc[]  
+* xref:api-ai-create-spec.adoc[]  
