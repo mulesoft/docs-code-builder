@@ -105,7 +105,7 @@ image:int-dw-fx-data-tab.png["Data tab for expression field"]
 image:int-dw-fx-data-tab-attributes.png["Data tab for expression field with mock attributes"]
 |===
 
-Automatically generated strings are displayed as mock values and are used to generate output for previews, such as in the <<tab-preview, Preview>> tab. The attribute metadata keys in the example come from the configuration of an `HTTP Listener` component in the flow.
+The IDE shows the automatically generated strings as mock values and uses them to generate output for previews, such as in the <<tab-preview, Preview>> tab. The attribute metadata keys in the example come from the configuration of an `HTTP Listener` component in the flow.
 
 The *Input/Output* tab shows the structure of data entering (*Input*) and exiting (*Output*) components. For example:
 
@@ -121,7 +121,7 @@ To get a list of available functions from a component *Functions* tab, the *fx* 
 For guidance, see <<open-fx-field>>.
 . List available functions:
 
-* To show a list of DataWeave functions from the Core module from an empty *fx* field, press Ctrl+Space in an _empty_ *fx* field. For example:
+* To show a list of DataWeave functions from the `Core` module from an empty *fx* field, press Ctrl+Space in an _empty_ *fx* field. For example:
 +
 image::int-dw-fx-field-autocomplete.png["DataWeave autocomplete dropdown menu showing available Core module functions like abs, avg, ceil, and floor with their descriptions"]
 * To show functions from all xref:dataweave::dw-functions.adoc#dw_modules[DataWeave modules], such as `String`, `Array`, and `Core` modules:
@@ -314,10 +314,10 @@ If you receive a metadata error:
 * Confirm that data types match between input and output metadata where applicable.
 . Review the metadata source:
 +
-* If metadata is generated from sample data, ensure the sample data structure is correct.
+* If metadata is generated from sample data, verify that the sample data structure is correct.
 * If metadata is imported from an API specification, verify the specification is valid and complete.
 * Refresh metadata by clicking *More Actions* in *Transformation Builder* and selecting *Refresh metadata*.
-. For *Map and Transform with AI*, ensure that:
+. For *Map and Transform with AI*, verify that:
 +
 * Input sample data is provided and valid.
 * Output sample data is provided and valid.
@@ -341,7 +341,7 @@ If you receive a request limit error:
 . Contact your Anypoint Platform organization administrator if:
 +
 * Request limits are consistently reached during normal usage.
-* You need to understand your organization's specific rate limits.
+* You must understand your organization's specific rate limits.
 . Consider alternative approaches:
 +
 * Use *Manually Adding Data Sources and Targets* for straightforward mappings. See <<manually-add-data-sources-targets>>.
