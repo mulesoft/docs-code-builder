@@ -3,7 +3,7 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Organize your Mule projects, API specifications, and agent networks in workspaces to ensure all Anypoint Code Builder features work correctly. Workspaces help you manage multiple related projects and avoid build-time and design-time issues.
+Organize your Mule projects in workspaces to ensure all Anypoint Code Builder features work correctly. Workspaces help you manage multiple related projects and avoid build-time and design-time issues.
 
 [[valid-setups]]
 == Valid Setups for Anypoint Code Builder
@@ -13,12 +13,12 @@ Anypoint Code Builder requires one of the following project configurations to fu
 * A single Mule project open at the root of your directory
 * A multi-root workspace pointing directly to one or more Mule projects
 
-If your directory structure doesn't meet these requirements, Anypoint Code Builder displays a message with steps to resolve the issue, such as opening a Mule project or creating a workspace.
+If your directory structure doesn't meet these requirements, Anypoint Code Builder displays a message with steps to resolve the issue, such as opening a Mule project or creating a workspace. See <<fix-nested-project>>.
 
 [[create-project-workspace]]
 == Create a Project in a Workspace
 
-When you create a new project (API specification, integration, or agent network), add it to a workspace. This setup enables you to add more projects later without restructuring your environment.
+When you create a new project, add it to a workspace. With this setup you can add more projects later without restructuring your environment.
 
 To create a project in a workspace:
 
@@ -69,7 +69,7 @@ You can open or switch between workspaces using the menu, the Command Palette, o
 +
 * From the menu bar, select *File* > *Open Workspace from File...*.
 * From the Command Palette, run the command `File: Open Workspace from File...`.
-. Navigate to your home directory or the location where you saved the `.code-workspace` file, and select it.
+. Navigate to the location where you saved the `.code-workspace` file (for example, your home directory or a dedicated workspaces folder), and select it.
 +
 The projects open in the Explorer view, and the folder name for the workspace includes *(WORKSPACE)* to indicate that you're working in a multi-root workspace:
 +
@@ -106,7 +106,7 @@ Anypoint Code Builder organizes actions based on their scope:
 | Action Type | Location
 
 | *Global actions*
-| Always available from the Command Palette. These actions don't depend on a specific project, such as creating a new project, importing assets from Exchange, or opening ACB settings.
+| Always available from the Command Palette. These actions don't depend on a specific project, such as creating a new project, importing assets from Exchange, or opening Anypoint Code Builder settings.
 
 | *Project-specific actions*
 | Available from the context menu (right-click) in the Explorer view. These actions apply to a specific project, such as running, debugging, deploying, or exporting a project.
@@ -123,6 +123,35 @@ VS Code stores workspace configuration in a file with the `.code-workspace` exte
 ====
 The `.code-workspace` file must not reside within any of your project folders. Save it in a separate directory, such as your home directory or a dedicated workspaces folder.
 ====
+
+[[fix-nested-project]]
+== Fix a Nested Project Error
+
+This error appears when you open a folder that contains your Mule project instead of opening the project directly, and that folder isn't configured as a multi-root workspace.
+
+To fix this issue, open the project folder at the root level or add it to a multi-root workspace.
+
+=== Open the Project at the Root
+
+If you're working with a single project, open it directly so it appears at the top level of the Explorer view.
+
+. From the menu bar, select *File* > *Open Folder...*.
+. Navigate to your Mule project's root folder (the folder containing the `pom.xml` file).
+. Select the folder and click *Open*.
++
+The project now appears at the top level of the Explorer view, and Anypoint Code Builder features are available.
+
+=== Add the Project to a Multi-Root Workspace
+
+If you want to keep your current folder structure or work with multiple projects, create a multi-root workspace that points directly to your Mule project.
+
+. From the menu bar, select *File* > *Add Folder to Workspace...*.
+. Navigate to your Mule project's root folder and select it.
+. When prompted, save the workspace file (`.code-workspace`) to a location outside of your project folders.
++
+The project appears in the Explorer view with the *(WORKSPACE)* indicator, and Anypoint Code Builder features are available.
+
+TIP: If you frequently work with multiple projects, creating a workspace from the start avoids this issue. See <<create-project-workspace>>.
 
 == See Also
 
