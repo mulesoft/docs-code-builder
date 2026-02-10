@@ -7,12 +7,12 @@ Anypoint Code Builder includes bundled Mule runtime versions that enable instant
 
 Don't change the default locations of Mule. If you receive an error that Mule isn't found or installed, configure the Mule Home path.
 
-If configuring your Mule runtime, ensure you're defining the `mule.homeDirectory` property. 
+If configuring your Mule runtime engine, ensure you're defining the `mule.homeDirectory` property. 
 
 [NOTE]
 The `mule.runtime.muleRuntimesDirectory` and `mule.runtime.muleHome` properties are legacy configurations no longer used.
 
-* *Mule runtimes*: The Mule runtimes are located in the `{yourACBHome}/runtimes` directory. 
+* *Mule runtime versions*: The Mule runtime versions are located in the `{yourACBHome}/runtimes` directory. 
 +
 Default value: `/Users/{user}/AnypointCodeBuilder/runtime`.
 
@@ -88,7 +88,7 @@ The error *Mule runtime [version] not found* occurs when you try to run or debug
 
 To resolve this issue, you have two options:
 
-* **Continue with compatible version**: Click *Continue* to use the latest local compatible version. The dialog shows which version will be used.
+* **Continue with compatible version**: Click *Continue* to use the latest local compatible version. The dialog shows which version to use.
 * **Select a different version**: Click *Open Project Properties* to select a different local Mule runtime version or install the exact version using the `MuleSoft: Install Runtime` command.
 
 == Mule Runtime Version Not Found (No Compatible Version)
@@ -133,7 +133,7 @@ To resolve this issue:
 If your Mule runtime installation becomes corrupted, you can force a reinstallation:
 
 . Close Anypoint Code Builder.
-. Navigate to your Mule runtimes directory: `${user.home}/AnypointCodeBuilder/runtimes`.
+. Navigate to your Mule runtime directory: `${user.home}/AnypointCodeBuilder/runtimes`.
 . Remove or rename the folder for the runtime version you want to reinstall (for example, `mule-4.6.0`).
 . Open Anypoint Code Builder.
 . Select the Mule runtime version from *Project Properties*.
@@ -141,4 +141,4 @@ If your Mule runtime installation becomes corrupted, you can force a reinstallat
 The IDE downloads and reinstalls the selected version. For details on selecting versions, see xref:int-versions.adoc#project-version-mule-java[Select Mule and Java Versions for a Project].
 
 [NOTE]
-Your projects and other installed runtimes are not affected.
+Your projects and other installed Mule runtime versions are not affected.
