@@ -60,7 +60,7 @@ Set Mule or Java versions for a specific implementation or integration project f
 
 The IDE uses bundled runtimes to open and edit projects immediately. The design service uses the latest Java-compatible runtime available locally.  Anypoint Code Builder bundles the latest runtime (for example, 4.11) for Java 17 and a reduced 4.8 runtime for Java 8. This guarantees that the design service can always start and serve the canvas and design-time needs without requiring runtime downloads.
 
-The `minMuleVersion` in your project's `mule-artifact.json` file specifies the minimum compatible Mule runtime version required to open and edit the project. The design service automatically selects the latest locally available runtime that is compatible with your project's Java version, enabling forward compatibility.
+Because the bundled runtime is the latest version, you can open and edit any project regardless of its `minMuleVersion` property. The design service uses the latest Java-compatible runtime available locally for design-time activities. The `minMuleVersion` propertyin your project's `mule-artifact.json` file is checked only at deployment time. The `minMuleVersion` property specifies the minimum Mule runtime version required to run or deploy the application.
 
 Version settings are important in several scenarios:
 
