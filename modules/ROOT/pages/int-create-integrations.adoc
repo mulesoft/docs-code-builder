@@ -87,12 +87,13 @@ Partial searches are accepted.
 ====
 . Select a *Mule runtime* and *Java* version. 
 +
+The dropdown shows only the Mule runtime versions that are installed on your local disk, including bundled Mule runtime versions that are available immediately after installation. By default, the latest bundled Mule runtime version (Java 17 compatible) is selected. For Java 8 projects, select Mule runtime version 4.8 (Java 8 compatible, reduced).
++
 //Info about downloads and versioning:
 include::anypoint-code-builder::partial$acb-runtime-java.adoc[tags="runtime-java-download;runtime-version-note;runtime-java-defaults"]
 . Click *Create Project*.
 +
-//Info about download notifications and location:
-include::partial$acb-runtime-java.adoc[tags="runtime-java-notification"]
+Your project opens instantly using the bundled Mule runtime versions. No Mule runtime download is required to start designing your integration. If you need a specific Mule runtime version for running or debugging, you can install it later using the `MuleSoft: Install Runtime` command. See xref:int-versions.adoc#install-additional-runtimes[Install Additional Mule Runtime Versions].
 
 When you create an integration project from scratch or if your project from Exchange does not contain a flow structure (Flow, Subflow, or Error handling component), the canvas provides the option to create one. Otherwise, the canvas generates a graphical representation of the imported asset's components that you can use to start your configuration.
 
