@@ -36,8 +36,8 @@ External libraries can be added from one of the following sources:
 To open the library configuration interface from a component:
 
 . In the canvas, select a component that requires an external library.
-. In the component configuration panel, locate the *Required libraries* field.
-. Click *Configure library*.
+. In the component configuration panel, locate the *Required Libraries* list.
+. Click on *Configure library* icon.
 +
 Anypoint Code Builder opens the *Library Configuration* page.
 Changes made on this page apply to the entire project.
@@ -49,9 +49,9 @@ Some components provide recommended libraries that match the component requireme
 To add a recommended library:
 
 . Open the *Library Configuration* page.
-. In *Library source*, select *Add Recommended Library*.
+. Select *Add Recommended Library*.
 +
-The interface displays the library that will be added to the project.
+The interface shows the library to be added to the project.
 . Click *Apply*.
 +
 Anypoint Code Builder adds the recommended library to the project POM file and applies it to all components that require it.
@@ -63,10 +63,10 @@ You can search Maven Central or manually specify Maven coordinates to add a depe
 To add a Maven dependency:
 
 . Open the *Library Configuration* page.
-. In *Library source*, select *Add Maven Dependency*.
+. Select *Add Maven Dependency*.
 . In the *Search Maven Central Repository* field, search for a dependency or enter the required Maven fields manually.
 . Specify values for *Group ID*, *Artifact ID*, and *Version*.
-. (Optional) Configure additional fields such as *Scope*.
+. Optionally, configure additional fields such as *Scope*.
 . Click *Apply*.
 
 Only libraries that meet the required criteria appear in component library fields after configuration.
@@ -78,11 +78,11 @@ You can add a dependency from a local file, such as a JAR or an external POM fil
 To add a library from a local file:
 
 . Open the *Library Configuration* page.
-. In *Library source*, select *Add from Local File*.
+. Select *Add from Local File*.
 . Select a file from your system.
 +
 Anypoint Code Builder automatically populates the Maven fields based on the selected file.
-. (Optional) Override the populated values if required.
+. Optionally, override the populated values if required.
 . Click *Apply*.
 
 If you select an external POM file, it takes precedence over any POM embedded in the artifact file.
