@@ -1,0 +1,141 @@
+= Designing a gRPC API Specification with Anypoint Code Builder
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Anypoint Code Builder supports designing gRPC API specifications using Protocol Buffers (Protobuf 3). Create and edit `.proto` files, import reusable Protobuf libraries from Anypoint Exchange, and use syntax highlighting and validation. When you design or publish your spec, the IDE generates a binary descriptor (`.protobin`) so Mule runtime can consume the service metadata.
+
+== Overview
+
+Design gRPC APIs using the Protocol Buffers 3 (Protobuf 3) specification language. gRPC uses HTTP/2 and supports four RPC patterns:
+
+* Unary
+* Client streaming
+* Server streaming
+* Bidirectional streaming
+
+You author service and message definitions in `.proto` files and can reuse shared types by importing Protobuf fragments (libraries) from Exchange.
+
+[NOTE]
+--
+gRPC support in Mule runtime is available only on:
+
+* Mule 4.10 or later
+* CloudHub 2.0 and Runtime Fabric (RTF)
+--
+
+== Before You Begin
+
+* xref:start-acb.adoc[].
+* Understand the basics of gRPC and Protocol Buffers (Protobuf 3). See https://grpc.io/docs/what-is-grpc/introduction/[Introduction to gRPC].
+* Have some familiarity with xref:access-management::business-groups.adoc[].
++
+When you publish your API spec to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. See xref:access-management::business-groups.adoc[].
+
+== Create a New gRPC API Specification Project
+
+To create a gRPC API spec project in Anypoint Code Builder:
+
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
+
+. From *Quick Actions*, click *Develop an API*:
+. Complete the *API Specification* form:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Project Name* | Unique name for your project.
+
+This name is used as the API spec title in Exchange, the name of the spec file, and the name of the project's root directory.
+For example, if the project name is _Orders gRPC API_, the main spec file may be named `orders-api.proto`.
+
+include::partial$acb-reusable-steps.adoc[tags="no-project-name-reuse"]
+| *Project Location* | Your home directory or another directory you create.
+
+See xref:start-add-folders.adoc[].
+
+include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
+| *API Type* | The type of API spec to create.
+
+Select *gRPC API* to create a gRPC project.
+
+| *Specification Language* | The language for the API specification.
+
+Select *Protobuf 3* for gRPC API projects.
+|===
+. Click *Create Project*.
++
+If prompted, trust the authors of the files in the folder.
++
+When the project is ready, the API project opens with a default `.proto` file in the Editor view.
++
+. Continue designing your gRPC API spec.
++
+As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context.
+
+== Project Structure
+
+A new gRPC API project includes:
+
+* A root `.proto` file (for example, `main.proto` or a file named after your project) that defines your service and messages.
+* A `protobuf-libraries` directory (or equivalent) for storing and organizing Protobuf fragments (reusable libraries) that you add as dependencies.
+
+You edit the main `.proto` file to define `service`, `rpc`, and `message` blocks. Dependencies from Exchange or local fragments are resolved from the `protobuf-libraries` area so you can reference shared message types and services across specs.
+
+== Using Protobuf Libraries and Fragments
+
+You can import reusable Protobuf libraries (fragments) from Anypoint Exchange and add them as dependencies to your gRPC API project. You can reuse message and service across multiple specifications.
+
+=== Import a Protobuf Library from Anypoint Exchange
+
+To use a Protobuf fragment published to Exchange:
+
+. Ensure you're logged in to Anypoint Platform.
+. Open your gRPC API project.
+. Add the Protobuf library as a dependency to the project.
+. In Exchange or the dependency panel, search for the Protobuf library you need and add it to the project.
+. After the dependency is added, the library is available under the project.
+. In your main `.proto` file, use `import` to reference the library's package and message or service definitions. For example:
++
+[source,protobuf]
+----
+syntax = "proto3";
+
+import "path/to/library.proto";
+
+service MyService {
+  rpc GetOrder(OrderRequest) returns (OrderResponse);
+}
+----
+. Save the spec. Anypoint Code Builder resolves the dependency and validates references. You can reuse messages and services from the imported library across your gRPC specs.
+
+== Technical Specification Details
+
+=== Supported RPC Patterns
+
+Anypoint Code Builder and Mule runtime support all four gRPC RPC patterns:
+
+* **Unary** – Single request, single response.
+* **Client streaming** – Client sends a stream of messages; server returns a single response.
+* **Server streaming** – Client sends a single request; server returns a stream of messages.
+* **Bidirectional streaming** – Both client and server send and receive streams of messages.
+
+Define these in your `.proto` file using the appropriate `rpc` declarations and stream modifiers.
+
+=== Syntax Highlighting and Validation
+
+Anypoint Code Builder provides syntax highlighting and validation for Protobuf 3 specifications. Validation is performed using the API Modeling Framework (AMF) parser, so you get inline feedback and error reporting as you edit your `.proto` files. Use the editor and the xref:start-open-output-panel.adoc[output panel] to track validation and scaffolding status.
+
+== Protobin Generation
+
+During the design or publish process, Anypoint Code Builder generates a binary descriptor file (`.protobin`) from your Protobuf specification. With this descriptor, Mule runtime can understand the gRPC service metadata (services, methods, and message types) so you can implement and run the API. The generation typically occurs when you save, build, or publish the API spec. Don't create the `.protobin` file manually.
+
+== See Also
+
+* xref:start-acb.adoc[]
+* xref:des-designing-api-specs.adoc[]
+* xref:des-create-api-specs.adoc[]
+* xref:des-create-api-fragments.adoc[]
+* xref:des-publish-api-spec-to-exchange.adoc[]
+* xref:start-discover-ui.adoc#use-autocomplete[Use Auto-Complete in the Editors]
