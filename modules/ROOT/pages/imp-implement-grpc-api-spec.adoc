@@ -55,11 +55,15 @@ Use xref:imp-filter-search-results.adoc[search filters] and select the *Type* th
 | *Mule runtime* | Mule runtime version 4.10 or later (required for gRPC).
 
 | *Java Version* | Java version compatible with your Mule runtime.
+
+| *Add to workspace* | Optionally select or deselect to add the new project to the current workspace. Deselect to create the project in the chosen location without opening it in the current workspace.
 |===
 . Search for the gRPC API spec, select it, and click *Add Asset* (or equivalent) to add the selected spec to the form.
 . Click *Create Project*.
 +
 If prompted, trust the authors of the files in the folder.
++
+The scaffolding engine runs and generates the Mule project from the gRPC API specification. A binary descriptor (`.protobin`) is generated from the selected gRPC spec so the project can serve the gRPC service. Once scaffolding completes, Anypoint Code Builder shows a notification such as *Scaffolding finished successfully* and the project reloads.
 +
 When you create the project, Anypoint Code Builder:
 
@@ -68,6 +72,15 @@ When you create the project, Anypoint Code Builder:
 * Scaffolds the gRPC specification into the new Mule project and opens the configuration XML file.
 
 The configuration XML file includes the interface for your implementation project, with a flow for each RPC method in the spec, a gRPC listener configuration, and error handlers. Add your business logic to each flow and run or deploy the application.
+
+=== Generate Project Structure
+
+After scaffolding finishes, the new Mule project contains:
+
+* *`flows.xml`* (in `src/main/mule/`)–Contains a flow for each RPC method defined in the gRPC service. Each flow includes a gRPC listener source, a logger, and error handlers. Update the logic in these flows to implement your use case.
+* *`global-configs.xml`* (in `src/main/mule/`)–Defines the HTTP Listener configuration and the gRPC server configuration (`grpc-server-config`). The gRPC server config references the generated Protobin descriptor so the run-time can serve the gRPC API.
+* *`grpc-properties.properties`* (in `src/main/resources/`)–Properties for the gRPC server, such as `grpc.server.host`, `grpc.server.port`, and `grpc.server.descriptorFile`.
+* *`src/main/resources/grpc/`*–Folder containing the generated `.protobin` file used by the gRPC connector at run time.
 
 [[import-grpc-spec-into-project]]
 == Import a gRPC API Spec into an Existing Project
