@@ -22,7 +22,7 @@ After scaffolding, implement the business logic in each flow, then run and deplo
 
 == Before You Begin
 
-* xref:des-design-grpc-api-spec.adoc[Design a gRPC API specification] in Anypoint Code Builder, or have a gRPC API spec already published to Anypoint Exchange.
+* xref:des-design-grpc-api-spec.adoc[Design a gRPC API specification] in Anypoint Code Builder, or have a gRPC API spec already published to Anypoint Exchange as a *gRPC API* asset. The specification must be available in Exchange before you import it into a project.
 * xref:start-acb.adoc[Set up and access the IDE].
 * Verify that your Mule runtime supports gRPC. gRPC uses HTTP/2; Mule runtime 4.10 or later is required. See xref:int-versions.adoc[].
 
@@ -80,16 +80,18 @@ After scaffolding finishes, the new Mule project contains:
 * *`flows.xml`* (in `src/main/mule/`)–Contains a flow for each RPC method defined in the gRPC service. Each flow includes a gRPC listener source, a logger, and error handlers. Update the logic in these flows to implement your use case.
 * *`global-configs.xml`* (in `src/main/mule/`)–Defines the HTTP Listener configuration and the gRPC server configuration (`grpc-server-config`). The gRPC server config references the generated Protobin descriptor so the run-time can serve the gRPC API.
 * *`grpc-properties.properties`* (in `src/main/resources/`)–Properties for the gRPC server, such as `grpc.server.host`, `grpc.server.port`, and `grpc.server.descriptorFile`.
-* *`src/main/resources/grpc/`*–Folder containing the generated `.protobin` file used by the gRPC connector at run time.
+* *`src/main/resources/grpc/`*–Folder containing the generated `.protobin` descriptor file used by the gRPC connector at run time. The descriptor is stored in a subfolder organized by the asset's unique ID and version (for example, `src/main/resources/grpc/<id>/<version>/<name>.protobin`). You can confirm successful generation by opening this folder in the project explorer.
 
 [[import-grpc-spec-into-project]]
 == Import a gRPC API Spec into an Existing Project
 
-If you xref:int-create-integrations.adoc[created an integration project], you can scaffold a gRPC API specification from Exchange into that project. Anypoint Code Builder creates a separate configuration XML file for the gRPC interface in your integration project.
+If you xref:int-create-integrations.adoc[created an integration project], you can scaffold a gRPC API specification from Exchange into that project using the same *MuleSoft: Import Asset from Exchange* command. For gRPC API assets, Anypoint Code Builder automatically generates the Protobuf descriptor file (`.protobin`) as part of the import and scaffolding flow. Anypoint Code Builder creates a separate configuration XML file for the gRPC interface in your integration project.
 
 . In Anypoint Code Builder, open your integration project in the Explorer view.
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 include::partial$acb-reusable-steps.adoc[tags="import-api-exchange"]
++
+. From the list of asset types, select *gRPC API*.
 +
 image::imp-assets-from-exchange.png["Assets from Exchange dropdown"]
 . Select the gRPC API specification to import.
@@ -124,6 +126,8 @@ Re-scaffolding updates your implementation or integration project with the lates
 . In Anypoint Code Builder, open your implementation or integration project in the Explorer view.
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 include::partial$acb-reusable-steps.adoc[tags="import-api-exchange"]
++
+. From the list of asset types, select *gRPC API*.
 +
 image::imp-assets-from-exchange-multiversion.png["Assets from Exchange dropdown"]
 . Select the same gRPC API specification (or the updated asset).
