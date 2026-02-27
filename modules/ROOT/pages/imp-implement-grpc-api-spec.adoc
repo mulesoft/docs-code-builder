@@ -19,6 +19,7 @@ You can scaffold a gRPC API specification into a new project or into an existing
 * To update your project with the latest changes to a gRPC spec in Exchange, see <<re-scaffold-grpc-spec>>.
 
 After scaffolding, implement the business logic in each flow, then run and deploy your Mule app as described in xref:int-developing-integrations.adoc[].
+// TODO: Include a link to gRPC Connector docs.
 
 == Before You Begin
 
@@ -81,6 +82,7 @@ After scaffolding finishes, the new Mule project contains:
 * *`global-configs.xml`* (in `src/main/mule/`)–Defines the HTTP Listener configuration and the gRPC server configuration (`grpc-server-config`). The gRPC server config references the generated Protobin descriptor so the run-time can serve the gRPC API.
 * *`grpc-properties.properties`* (in `src/main/resources/`)–Properties for the gRPC server, such as `grpc.server.host`, `grpc.server.port`, and `grpc.server.descriptorFile`.
 * *`src/main/resources/grpc/`*–Folder containing the generated `.protobin` descriptor file used by the gRPC connector at run time. The descriptor is stored in a subfolder organized by the asset's unique ID and version (for example, `src/main/resources/grpc/<id>/<version>/<name>.protobin`). You can confirm successful generation by opening this folder in the project explorer.
+// TODO: Include a link to gRPC Connector docs. 
 
 [[import-grpc-spec-into-project]]
 == Import a gRPC API Spec into an Existing Project
@@ -138,6 +140,7 @@ Anypoint Code Builder updates the project with the new flows and configuration. 
 
 == See Also
 
+// TODO: Include a link to gRPC Connector docs.
 * xref:des-design-grpc-api-spec.adoc[]
 * xref:des-publish-grpc-api-to-exchange.adoc[]
 * xref:imp-implementing-apis.adoc[]
