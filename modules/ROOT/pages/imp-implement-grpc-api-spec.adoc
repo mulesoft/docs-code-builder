@@ -74,8 +74,9 @@ When you create the project, Anypoint Code Builder:
 * Adds the Mule and Java versions to the project's `mule-artifact.json` file.
 * Scaffolds the gRPC specification into the new Mule project and opens the configuration XML file.
 
-The configuration XML file includes the interface for your implementation project, with a flow for each RPC method in the spec, a gRPC listener configuration, and error handlers. Add your business logic to each flow and run or deploy the application.
+The configuration XML file includes the interface for your implementation project, with a flow for each RPC method in the spec, a gRPC listener configuration, and error handlers. For streaming RPC patterns (server streaming or bidirectional streaming), additional server-side operations such as *Respond Server Stream* and *End Stream* are available to control how messages are sent and when the stream is closed.
 
+Add your business logic to each flow and run or deploy the application.
 === Generate Project Structure
 
 After scaffolding finishes, the new Mule project contains:
