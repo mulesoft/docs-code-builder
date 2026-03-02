@@ -102,14 +102,15 @@ To use the fragment in another gRPC API specification:
 
 == Import a Protobuf Library from Anypoint Exchange
 
-You can import reusable Protobuf libraries (fragments) from Anypoint Exchange and add them as dependencies to your gRPC API project. You can reuse message and service across multiple specifications.
+You can import reusable Protobuf libraries (fragments) from Anypoint Exchange and add them as dependencies to your gRPC API project. You can reuse messages and services across multiple specifications.
 
 To use a Protobuf fragment published to Exchange:
 
 . Ensure you're logged in to Anypoint Platform.
 . Open your gRPC API project.
-. Add the Protobuf library as a dependency to the project.
-. In Exchange or the dependency panel, search for the Protobuf library you need and add it to the project.
+. Open the Command Palette (Cmd+Shift+P on macOS or Ctrl+Shift+P on Windows).
+. Select *MuleSoft: Add Fragment dependency from Exchange*.
+. Search for the Protobuf fragment you need and select the version to add.
 . After the dependency is added, the library is available under the project.
 . In your main `.proto` file, use `import` to reference the library's package and message or service definitions. For example:
 +
