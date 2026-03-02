@@ -64,7 +64,9 @@ Use xref:imp-filter-search-results.adoc[search filters] and select the *Type* th
 +
 If prompted, trust the authors of the files in the folder.
 +
-The scaffolding engine runs and generates the Mule project from the gRPC API specification. A binary descriptor (`.protobin`) is generated from the selected gRPC spec so the project can serve the gRPC service. Once scaffolding completes, Anypoint Code Builder shows a notification such as *Scaffolding finished successfully* and the project reloads.
+The scaffolding engine runs and generates the Mule project from the gRPC API specification. During this process, Anypoint Code Builder downloads and generates the compiled Protobuf descriptor file (`.protobin`) from the selected gRPC spec. The descriptor is stored in the `src/main/resources/grpc/` directory and is referenced by the gRPC server configuration and RPC operations in the Mule project.
+
+Once scaffolding completes, Anypoint Code Builder shows a notification such as *Scaffolding finished successfully* and the project reloads.
 +
 When you create the project, Anypoint Code Builder:
 
