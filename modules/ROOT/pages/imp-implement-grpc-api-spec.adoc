@@ -25,7 +25,7 @@ After scaffolding, implement the business logic in each flow, then run and deplo
 
 * xref:des-design-grpc-api-spec.adoc[Design a gRPC API specification] in Anypoint Code Builder, or have a gRPC API spec already published to Anypoint Exchange as a *gRPC API* asset. The specification must be available in Exchange before you import it into a project.
 * xref:start-acb.adoc[Set up and access the IDE].
-* Verify that your Mule runtime supports gRPC. gRPC uses HTTP/2; Mule runtime 4.10 or later is required. See xref:int-versions.adoc[].
+* Verify that your Mule runtime supports gRPC. gRPC uses HTTP/2; Mule runtime 4.11 or later is required. See xref:int-versions.adoc[].
 
 include::partial$acb-reusable-steps.adoc[tags="prereqs-implementation"]
 
@@ -53,7 +53,7 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 
 Use xref:imp-filter-search-results.adoc[search filters] and select the *Type* that corresponds to gRPC API to narrow results to gRPC specifications.
 
-| *Mule runtime* | Mule runtime version 4.10 or later (required for gRPC).
+| *Mule runtime* | Mule runtime version 4.11 or later (required for gRPC).
 
 | *Java Version* | Java version compatible with your Mule runtime.
 
@@ -114,7 +114,7 @@ You can scaffold a gRPC API specification from a local design project without pu
 
 . In Anypoint Code Builder, open your gRPC API design project (the project that contains your `.proto` file).
 . In the activity bar or from the project context, use the option to implement or scaffold the local API.
-. In the form, specify a name and location for the new implementation project, select the Mule runtime (4.10 or later) and Java version, then confirm.
+. In the form, specify a name and location for the new implementation project, select the Mule runtime (4.11 or later) and Java version, then confirm.
 +
 Anypoint Code Builder scaffolds the gRPC specification into a new Mule project. When the process completes, the IDE opens the configuration XML file with a flow for each RPC method, the gRPC listener configuration, and error handlers. Add your business logic to each flow.
 
