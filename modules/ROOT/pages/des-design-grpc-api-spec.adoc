@@ -72,6 +72,34 @@ A new gRPC API project includes:
 
 You edit the main `.proto` file to define `service`, `rpc`, and `message` blocks. Dependencies from Exchange or local fragments are resolved from the `protobuf-libraries` area so you can reference shared message types and services across specs.
 
+== Publish a gRPC Fragment to Exchange
+
+You can publish reusable `.proto` definitions as a fragment to Anypoint Exchange so other gRPC API specifications can import them as dependencies.
+
+A fragment contains shared definitions such as `message`, `enum`, or `service` blocks.
+
+=== Publish the Fragment
+
+To publish a gRPC fragment to Exchange:
+
+. Ensure that you're logged in to Anypoint Platform.
+. Open the project that contains your reusable `.proto` files.
+. From the IDE, select the publish action.
+. When prompted:
++
+* Select the business group.
+* Provide the asset name and version.
+* Add any required metadata.
+. Confirm the publication.
+
+After publishing, the fragment appears in Exchange as an API Fragment asset and can be added as a dependency to other gRPC API specification projects.
+
+To use the fragment in another gRPC API specification:
+
+. Add the fragment as a dependency from Exchange.
+. Import the corresponding `.proto` file in your main specification.
+. Validate that all references resolve correctly.
+
 == Import a Protobuf Library from Anypoint Exchange
 
 You can import reusable Protobuf libraries (fragments) from Anypoint Exchange and add them as dependencies to your gRPC API project. You can reuse message and service across multiple specifications.
