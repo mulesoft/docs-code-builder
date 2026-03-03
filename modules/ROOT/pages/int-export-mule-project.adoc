@@ -9,134 +9,86 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 A Mule application is an integration or implementation application that runs on Mule runtime engine. To share the application across different teams, or to deploy the application elsewhere, you can export and package a snapshot of Mule application resources. Additionally, you can publish a Mule project to Exchange as either a template or an example.
 
-* A <<shareable, shareable JAR file>> is lightweight, packaging only the source code of the application.
-The source code includes configuration files but not libraries or other dependencies required for your application to run and deploy successfully.
-+
-The IDEs generate the dependencies automatically based on the settings in the POM file (`pom.xml`). 
-+
-You or your teammates can import the JAR file and continue developing in Anypoint Code Builder or Anypoint Studio (Studio).
+[[shareable]]
+== Shareable JAR
 
-* A <<deployable, deployable JAR file>> contains the compiled code and all dependencies.
-+
-You can deploy the JAR file to any supported environment, such as CloudHub or on-premises.
-+
-To deploy a JAR file to CloudHub, see
-xref:cloudhub::deploying-to-cloudhub.adoc[].
-+
-You don't need to create a deployable JAR file to deploy to CloudHub.
-To deploy an app directly from Anypoint Code Builder, see
-xref:int-deploy-mule-apps.adoc[].
+A shareable JAR file is lightweight, packaging only the source code of the application. The source code includes configuration files but not libraries or other dependencies required for your application to run and deploy successfully.
 
-* A <<publishable, publishable Mule project template or example>> contains resources to share the project via Anypoint Exchange.
-+
-You or your teammates can import the Mule project from Exchange and continue developing in Anypoint Code Builder or Studio.
+The shareable JAR includes:
+
+* The configuration XML and other files in the `src` folder, including resource files
+* `mule-artifact.json`
+* `pom.xml`
+
+The IDEs generate the dependencies automatically based on the settings in the POM file (`pom.xml`). You or your teammates can import the JAR file and continue developing in Anypoint Code Builder or Anypoint Studio (Studio). 
+
+To import a shareable JAR, see xref:int-import-mule-project.adoc#desktop-project-package[Import a Shareable Project JAR File into the Desktop IDE] and xref:int-import-mule-project.adoc#web-project-package[Import a Shareable Project JAR File into the Cloud IDE].
+
+[[deployable]]
+== Deployable JAR
+
+A deployable JAR file contains the compiled code and all dependencies. For a deployable JAR, you can select *Include project sources* while exporting the project so the JAR can be opened in Anypoint Code Builder or Studio and also used for deployment. When this option is selected, the JAR also includes the configuration XML and other files in the `src` folder (including resource files), `mule-artifact.json`, and `pom.xml`, the same project sources as in a shareable JAR. 
+
+You can deploy the JAR file to any supported environment, such as CloudHub or on-premises. You don't need to create a deployable JAR file to deploy to CloudHub. 
+* To deploy an app directly from Anypoint Code Builder, see xref:int-deploy-mule-apps.adoc[].
+* To deploy a JAR file to CloudHub, see xref:cloudhub::deploying-to-cloudhub.adoc[].
+
+For more information on deployment options, see xref:hosting-home::index.adoc#runtime-plane-hosting-options.adoc[Runtime Plane Hosting Options] and xref:mule-runtime::deploying.adoc[Deploy Mule Applications].
 
 == Before You Begin
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
 
+[[export-mule-project]]
+== Export Mule Project
 
-[[shareable]]
-== Export to a Shareable JAR File
+To create a deployable or shareable JAR file from your project:
 
-When you export a Mule project, the shareable JAR file includes these files:
-
-* The configuration XML and other files in the `src` folder, including resource files
-* `mule-artifact.json`
-* `pom.xml`
-
-To generate a shareable JAR file:
-
-. Open and place your cursor in the configuration XML file in a project for the Mule application to export.
-// Pointer to Command Palette
+. Open the configuration XML file in a project for the Mule application to export.
+//. Right-click the configuration XML file in the Explorer and select *Export Mule Project*, or open the Command Palette and select `MuleSoft: Export Mule Project`.
++
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Select the following command:
+. Select the following command: 
 +
 [source,command]
 ----
-MuleSoft: Export Shareable JAR
+MuleSoft: Export Mule Project
 ----
 +
-This command is equivalent to the command sequence `Task: Run Task` > `mule` > `mule: Package Only Sources`.
+. Alternatively, right-click the configuration XML file in the Explorer and select *Export Mule Project*.
+. In the Export Mule Project dialog, under *Select an Export Type* choose *Deployable JAR* or *Shareable JAR*. 
 +
-The terminal window in the IDE opens automatically to provide the status of the packaging process, which includes execution of the export command, a scan for the project to export, and the packaging of the project snapshot into a JAR file.
-. Find or download the JAR file by following the prompts that appear in the IDE after the packaging process completes successfully:
-+
-** In the desktop IDE, click *Open Folder* to open the directory that contains the JAR file in the Explorer view.
-// +
-// The file name for the JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application-light-package.jar`, for example, `my-app-example-1.0.0-SNAPSHOT-mule-application-light-package.jar`.
+For *Deployable JAR*, you can select *Include project sources*. 
+. Set the file name and location for the exported file.
+. Click *Export*.
+. The terminal window in the IDE opens automatically to provide the status of the packaging process, which includes execution of the export command, a scan for the project to export, and the packaging of the project snapshot into a JAR file.
 
-** In the cloud IDE, click *Download File* to download the JAR file to a directory on your local machine:
+[[find-download-jar]]
+=== Find or download the JAR
+
+When packaging completes, find or download the JAR file by following the prompts that appear in the IDE:
+
+* In the desktop IDE, click *Open Folder* to open the directory that contains the JAR file in the Explorer view.
+* In the cloud IDE, click *Download File* to download the JAR file to a directory on your local machine:
 +
 --
-** For a JAR file that is 32 MB or smaller, the IDE automatically downloads the file to your Downloads folder. 
+** For a JAR file that is 32 MB or smaller, the IDE automatically downloads the file to your Downloads folder.
 ** For a JAR file that is larger than 32 MB, the IDE disallows downloads to built-in folders that contain system files, such as the Downloads, Desktop, or Documents folder.
 +
 ... Select a folder for the download.
 ... At the prompt, click *View files* to allow the site to view the files in the folder you select.
 ... Click *Save Changes*.
 --
-// +
-// The file name for the downloaded shareable JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-shareable-mule-application.jar`, for example, `my-app-example-1.0.0-SNAPSHOT-shareable-mule-application.jar`.
-+
-The terminal window in the IDE also provides the path to the JAR, in the `/target` directory under your project folder.
-// but good luck finding it!
 
-The file name for the downloaded shareable JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application-light-package.jar`, for example, `my-app-example-1.0.0-SNAPSHOT-mule-application-light-package.jar`.
+The terminal window in the IDE also provides the path to the JAR, in the `/target` directory under your project folder. In the desktop IDE, you can find the JAR file in the Explorer, under Java Projects:
 
-To open a shareable JAR file in a project workspace within Anypoint Code Builder, see xref:int-import-mule-project.adoc#desktop-project-package[Import a Shareable Project JAR File into the Desktop IDE] and xref:int-import-mule-project.adoc#web-project-package[Import a Shareable Project JAR File into the Cloud IDE].
-// To import to Anypoint Studio, see xref:studio::import-export-packages.adoc[].
-
-
-[[deployable]]
-== Export to a Deployable JAR File
-
-When you export a Mule project, Anypoint Code Builder packages the compiled code and all dependencies into a distributable JAR.
-
-Deployment procedures vary by Mule runtime host and deployment mechanism.
-For example, you can deploy to CloudHub through the Runtime Manager UI or REST API.
-For more information, see xref:hosting-home::index.adoc#runtime-plane-hosting-options.adoc[Runtime Plane Hosting Options] and xref:mule-runtime::deploying.adoc[Deploy Mule Applications]. 
-
-To generate a deployable JAR file:
-
-. Open and place your cursor in the configuration XML file in a project for the Mule application to export.
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Select the following command:
-+
-[source,command]
-----
-MuleSoft: Export Project to Mule Deployable Jar
-----
-+
-This command is equivalent to the command sequence `Task: Run Task` > `mule` > `mule: Package`.
-+
-The terminal window in the IDE opens automatically to provide the status of the packaging process, which includes the execution of the export command, a scan for the project to export, and the packaging of the project snapshot into a JAR file.
-+
-. Find or download the JAR file by following the prompts that appear in the IDE after the packaging process completes successfully:
-+
-** *In the desktop IDE*, click *Open Folder* to open the directory that contains the JAR file in the Explorer view.
-// +
-// The file name for the JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application.jar`, for example: `my-app-example-1.0.0-SNAPSHOT-mule-application.jar`.
-+
-The terminal window in the IDE also provides the path to the JAR, in the `/target` directory under your project folder.
-In the Desktop IDE, you can find the JAR file in the Explorer, under Java Projects:
-+
 image::int-export-deployable.png["Deployable JAR file in the Java Projects folder"]
 
-* *In the cloud IDE*, click *Download File* to download the JAR file to a directory on your local machine.
-+
---
-** For a JAR file that is 32 MB or smaller, the IDE automatically downloads the file to your Downloads folder. 
-** For a JAR file that is larger than 32 MB, the IDE disallows downloads to built-in folders that contain system files, such as the Downloads, Desktop, or Documents folder.
-+
-... Select a folder for the download.
-... At the prompt, click *View files* to allow the site to view the files in the folder you select.
-... Click *Save Changes*.
---
+File name patterns:
 
-The file name for the downloaded deployable JAR file follows the pattern `_application_name_-_version_-SNAPSHOT-mule-application.jar`, for example: `my-app-example-1.0.0-SNAPSHOT-mule-application.jar`.
+* Shareable JAR: `_application_name_-_version_-SNAPSHOT-mule-application-light-package.jar`
+* Deployable JAR: `_application_name_-_version_-SNAPSHOT-mule-application.jar`
 
 [[publishable]]
 == Publish a Mule Project to Exchange
@@ -199,4 +151,3 @@ The publication of your project as a new asset begins. After publication succeed
 * xref:mule-runtime::package-a-mule-application.adoc[Package a Mule Application]
 * xref:cloudhub::deploying-to-cloudhub.adoc[]
 * xref:int-deploy-mule-apps.adoc[]
-
