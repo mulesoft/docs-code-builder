@@ -3,19 +3,19 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-After you design or publish your gRPC API specification, use Anypoint Code Builder to scaffold it into a Mule implementation project. Scaffolding generates the routing logic and a flow for each RPC method defined in your `.proto` file so you can implement and run the gRPC service in a Mule application.
+After you publish your gRPC API specification to Anypoint Exchange, use Anypoint Code Builder to scaffold it into a Mule implementation project. Scaffolding generates the routing logic and a flow for each RPC method defined in your `.proto` file so you can implement and run the gRPC service in a Mule application.
+
+Scaffolding is supported for gRPC API specifications that are published to Anypoint Exchange.
 
 Anypoint Code Builder uses the service and method definitions in your Protobuf specification to autogenerate an interface that includes:
 
 * A flow for each RPC method (unary, client streaming, server streaming, or bidirectional streaming)
 * A gRPC listener configuration for incoming requests
-* Error handlers you can customize
 
-You can scaffold a gRPC API specification into a new project or into an existing integration project. The process depends on whether the spec is published to Anypoint Exchange or only in a local design project:
+You can scaffold a gRPC API specification from Exchange into a new project or into an existing integration project:
 
 * To scaffold a gRPC spec from Exchange into a new project, see <<scaffold-new-grpc-project>>.
 * To scaffold a gRPC spec from Exchange into an existing project, see <<import-grpc-spec-into-project>>.
-* To scaffold a gRPC spec from a local design project without publishing to Exchange, see <<scaffold-local-grpc-spec>>.
 * To update your project with the latest changes to a gRPC spec in Exchange, see <<re-scaffold-grpc-spec>>.
 
 After scaffolding, implement the business logic in each flow, then run and deploy your Mule app as described in xref:int-developing-integrations.adoc[].
@@ -23,7 +23,7 @@ After scaffolding, implement the business logic in each flow, then run and deplo
 
 == Before You Begin
 
-* xref:des-design-grpc-api-spec.adoc[Design a gRPC API specification] in Anypoint Code Builder, or have a gRPC API spec already published to Anypoint Exchange as a *gRPC API* asset. The specification must be available in Exchange before you import it into a project.
+* xref:des-design-grpc-api-spec.adoc[Design a gRPC API specification] in Anypoint Code Builder, then xref:des-publish-grpc-api-to-exchange.adoc[publish it to Exchange]. Scaffolding is supported only for gRPC API specs published to Anypoint Exchange as a *gRPC API* asset. The specification must be available in Exchange before you can scaffold it into a project.
 * xref:start-acb.adoc[Set up and access the IDE].
 * Verify that your Mule runtime supports gRPC. gRPC uses HTTP/2; Mule runtime 4.11 or later is required. See xref:int-versions.adoc[].
 
@@ -74,14 +74,15 @@ When you create the project, Anypoint Code Builder:
 * Adds the Mule and Java versions to the project's `mule-artifact.json` file.
 * Scaffolds the gRPC specification into the new Mule project and opens the configuration XML file.
 
-The configuration XML file includes the interface for your implementation project, with a flow for each RPC method in the spec, a gRPC listener configuration, and error handlers. For streaming RPC patterns (server streaming or bidirectional streaming), additional server-side operations such as *Respond Server Stream* and *End Stream* are available to control how messages are sent and when the stream is closed.
+The configuration XML file includes the interface for your implementation project. It also has a flow for each RPC method in the spec and a gRPC listener configuration. For streaming RPC patterns (server streaming or bidirectional streaming), additional server-side operations such as *Respond Server Stream* and *End Stream* are available to control how messages are sent and when the stream is closed.
 
 Add your business logic to each flow and run or deploy the application.
+
 === Generate Project Structure
 
 After scaffolding finishes, the new Mule project contains:
 
-* *`flows.xml`* (in `src/main/mule/`)–Contains a flow for each RPC method defined in the gRPC service. Each flow includes a gRPC listener source, a logger, and error handlers. Update the logic in these flows to implement your use case.
+* *`flows.xml`* (in `src/main/mule/`)–Contains a flow for each RPC method defined in the gRPC service. Each flow includes a gRPC listener source and a logger. Update the logic in these flows to implement your use case.
 * *`global-configs.xml`* (in `src/main/mule/`)–Defines the HTTP Listener configuration and the gRPC server configuration (`grpc-server-config`). The gRPC server config references the generated Protobin descriptor so the run-time can serve the gRPC API.
 * *`grpc-properties.properties`* (in `src/main/resources/`)–Properties for the gRPC server, such as `grpc.server.host`, `grpc.server.port`, and `grpc.server.descriptorFile`.
 * *`src/main/resources/grpc/`*–Folder containing the generated `.protobin` descriptor file used by the gRPC connector at run time. The descriptor is stored in a subfolder organized by the asset's unique ID and version (for example, `src/main/resources/grpc/<id>/<version>/<name>.protobin`). You can confirm successful generation by opening this folder in the project explorer.
@@ -108,20 +109,7 @@ When you scaffold the gRPC API dependency, Anypoint Code Builder:
 * Adds the gRPC API spec as a dependency in your project's `pom.xml` file.
 * Adds a new configuration XML file for the gRPC interface to the project.
 
-The new configuration XML file includes flows for each RPC method in the spec, a gRPC listener configuration, and error handlers. Implement the business logic in each flow within the Mule app.
-
-[[scaffold-local-grpc-spec]]
-== Scaffold a Local gRPC API Spec into a New Project
-
-You can scaffold a gRPC API specification from a local design project without publishing it to Anypoint Exchange. This supports an iterative design-and-implement workflow: you change the `.proto` file in your design project, then re-scaffold to update the implementation project.
-
-. In Anypoint Code Builder, open your gRPC API design project (the project that contains your `.proto` file).
-. In the activity bar or from the project context, use the option to implement or scaffold the local API.
-. In the form, specify a name and location for the new implementation project, select the Mule runtime (4.11 or later) and Java version, then confirm.
-+
-Anypoint Code Builder scaffolds the gRPC specification into a new Mule project. When the process completes, the IDE opens the configuration XML file with a flow for each RPC method, the gRPC listener configuration, and error handlers. Add your business logic to each flow.
-
-After you change the `.proto` file, re-scaffold the spec so the implementation project is updated. Use the re-scaffold command or action provided for local API projects in the IDE.
+The new configuration XML file includes flows for each RPC method in the spec and a gRPC listener configuration. Implement the business logic in each flow within the Mule app.
 
 [[re-scaffold-grpc-spec]]
 == Re-scaffold a gRPC API Specification into a Project
