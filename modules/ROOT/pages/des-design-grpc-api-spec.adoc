@@ -3,7 +3,7 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-Anypoint Code Builder supports designing gRPC API specifications using Protocol Buffers (Protobuf 3). Create and edit `.proto` files, import reusable Protobuf libraries from Anypoint Exchange, and use syntax highlighting and validation. When you design or publish your spec, the IDE generates a binary descriptor (`.protobin`) so Mule runtime can consume the service metadata while building the Mule application.
+Anypoint Code Builder supports designing gRPC API specifications using Protocol Buffers (Protobuf 3). Create and edit `.proto` files, import reusable Protobuf libraries from Anypoint Exchange, and use syntax highlighting and validation.
 
 Use the Protocol Buffers 3 (Protobuf 3) specification language to design gRPC APIs. gRPC uses HTTP/2 and supports four RPC patterns:
 
@@ -17,10 +17,8 @@ You author service and message definitions in `.proto` files and can reuse share
 == Before You Begin
 
 * xref:start-acb.adoc[].
-* Understand the basics of gRPC and Protocol Buffers (Protobuf 3). See https://grpc.io/docs/what-is-grpc/introduction/[Introduction to gRPC].
+* Understand the basics of gRPC and Protocol Buffers (Protobuf 3). See https://grpc.io/docs/what-is-grpc/introduction/[Introduction to gRPC] and the https://protobuf.dev/programming-guide/proto3/[Protocol Buffers 3 Language Guide].
 * Have some familiarity with xref:access-management::business-groups.adoc[].
-+
-When you publish your API spec to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. See xref:access-management::business-groups.adoc[].
 
 == Create a New gRPC API Specification Project
 
@@ -49,7 +47,7 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 
 Select *gRPC API* to create a gRPC project.
 
-| *Specification Language* | The language for the API specification.
+| *API Specification Language* | The language for the API specification.
 
 Select *Protobuf 3* for gRPC API projects.
 |===
@@ -65,18 +63,15 @@ As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-comple
 
 == Organize gRPC API Projects and Dependencies
 
-A new gRPC API project includes:
+A new gRPC API project includes a root `.proto` file (for example, `main.proto` or a file named after your project) that defines your service and messages.
 
-* A root `.proto` file (for example, `main.proto` or a file named after your project) that defines your service and messages.
-* A `protobuf-libraries` directory (or equivalent) for storing and organizing Protobuf fragments (reusable libraries) that you add as dependencies.
-
-You edit the main `.proto` file to define `service`, `rpc`, and `message` blocks. Dependencies from Exchange or local fragments are resolved from the `protobuf-libraries` area so you can reference shared message types and services across specs.
+You edit the main `.proto` file to define `service`, `rpc`, and `message` blocks. To reuse shared types, add new `.proto` files in the same project and import them. You can also add a Protobuf fragment as a dependency from Exchange and import it in your specification.
 
 == Publish a gRPC Fragment to Exchange
 
 You can publish reusable `.proto` definitions as a fragment to Anypoint Exchange so other gRPC API specifications can import them as dependencies.
 
-A fragment contains shared definitions such as `message`, `enum`, or `service` blocks.
+A fragment contains shared definitions such as `message` or `enum` blocks.
 
 === Publish the Fragment
 
@@ -142,10 +137,6 @@ Define these in your `.proto` file using the appropriate `rpc` declarations and 
 === Verify Specification Accuracy with Syntax Validation
 
 Anypoint Code Builder provides syntax highlighting and validation for Protobuf 3 specifications. Validation is performed using the API Modeling Framework (AMF) parser, so you get inline feedback and error reporting as you edit your `.proto` files. Use the editor and the xref:start-open-output-panel.adoc[output panel] to track validation and scaffolding status.
-
-== Generate Binary Descriptors for Implementation
-
-During the design or publish process, Anypoint Code Builder generates a binary descriptor file (`.protobin`) from your Protobuf specification. With this descriptor, Mule runtime can understand the gRPC service metadata (services, methods, and message types) so you can implement and run the API. The generation typically occurs when you save, build, or publish the API spec. Don't create the `.protobin` file manually.
 
 == See Also
 
