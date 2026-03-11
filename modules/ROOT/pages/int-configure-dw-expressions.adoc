@@ -18,6 +18,7 @@ Anypoint Code Builder integrates DataWeave expressions and transformations into 
 * Object-to-object and array-to-array transformations
 * Concatenation of strings, numbers, and booleans
 * Type conversions
+* Custom metadata for inputs and outputs
 
 Anypoint Code Builder supports these transform mapping use cases:
 
@@ -79,7 +80,7 @@ The markup `#[]` in the *fx* field also appears in the XML to indicate that the 
 +
 image::int-dw-fx-expression-builder.png["*Expression Builder* interface shows the *Data*, *Functions*, and *Preview* tabs for building DataWeave expressions in the `Set Variable` component"]
 +
-Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of expressions in your components. Preview the expression output without running your Mule app with data from external sources:
+Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of expressions in your components. Select custom metadata for the payload, attributes, and Mule variables. Preview the expression output without running your Mule app with data from external sources:
 
 * <<tab-data>>
 * <<tab-functions>>
@@ -93,7 +94,7 @@ Use the *Data*, *Functions*, and *Preview* tabs to ease configuration of express
 [[tab-data]]
 === Check the Data Structure
 
-To review the data structure of the Mule event, including the payload, attributes, and Mule variables, use the *Data* tab. The tab includes any sample data and is part of *Expression Builder* for a component *fx* field. For example:
+To review the data structure of the Mule event, including the payload, attributes, and Mule variables, use the *Data* tab. The tab includes any sample data and custom metadata and is part of *Expression Builder* for a component *fx* field. For example:
 
 [%header,cols="1a,1a"]
 |===
@@ -107,9 +108,23 @@ image:int-dw-fx-data-tab-attributes.png["Data tab for expression field with mock
 
 The IDE shows the automatically generated strings as mock values and uses them to generate output for previews, such as in the <<tab-preview, Preview>> tab. The attribute metadata keys in the example come from the configuration of an `HTTP Listener` component in the flow.
 
-The *Input/Output* tab shows the structure of data entering (*Input*) and exiting (*Output*) components. For example:
+[[set-component-custom-metadata-on-metadata-or-data-tab]]
+=== Set Component Custom Metadata on the Metadata or Data Tab
 
-image:int-dw-fx-input-output-sample.png["Input/Output tab for a component"]
+The *Metadata* tab shows the structure of data entering (*Input*) and exiting (*Output*) components. For example:
+
+image:int-dw-fx-input-output-sample.png["Metadata tab for a component"]
+
+From the *Metadata* tab or the *Data* tab of *Expression Builder*, manage component metadata by setting, clearing, or editing custom definitions for inputs and outputs. Each payload, attribute, or variable supports only one custom metadata assignment at a time.
+
+To set custom metadata from the *Metadata* tab or the *Data* tab of *Expression Builder*:
+
+. Click *No metadata selected* if metadata isn't already set or click the name of the custom metadata.  If default metadata is being used, click *Default*.
+. Click *Set Custom Metadata*.
+. Select, edit, or preview existing custom metadata or create new custom metadata. See xref:int-manage-custom-metadata.adoc#create-custom-metadata[Create Custom Metadata] for more information about creating custom metadata. See xref:int-manage-custom-metadata.adoc#edit-custom-metadata[Edit Custom Metadata] for more information about editing custom metadata.
+. Click *Apply and Close*.
+
+To clear custom metadata, click the name of the custom metadata and then click *Clear Custom Metadata*. The metadata is cleared from the component.
 
 [[tab-functions]]
 === List DataWeave Functions and Get Documentation
@@ -373,6 +388,20 @@ If needed, map multiple source field to a target field, and then the Transform B
 +
 You can select the generated sample or provide your own <<sample-data, sample data>>.
 
+[[set-custom-metadata-in-transformation-builder]]
+=== Set Custom Metadata in Transformation Builder
+
+In Transformation Builder, you can manage component metadata by setting, clearing, or editing custom definitions for inputs and outputs. Each payload, attribute, or variable supports only one custom metadata assignment at a time.
+
+To set custom metadata:
+
+. Click *No metadata selected* if metadata isn't already set or click the name of the custom metadata. If default metadata is being used, click *Default*.
+. Click *Set Custom Metadata*.
+. Select, edit, or preview existing custom metadata or create new custom metadata. See xref:int-manage-custom-metadata.adoc#create-custom-metadata[Create Custom Metadata] for more information about creating custom metadata. See xref:int-manage-custom-metadata.adoc#edit-custom-metadata[Edit Custom Metadata] for more information about editing custom metadata.
+. Click *Apply and Close*.
+
+To clear custom metadata, click the name of the custom metadata and then click *Clear Custom Metadata*. The metadata is cleared from the component.
+
 [[sample-data]]
 == Provide Sample Data for a DataWeave Expression
 
@@ -549,4 +578,3 @@ When complete, Anypoint Code Builder shows a message that the dependency was suc
 * xref:troubleshoot-dataweave.adoc[]
 * xref:int-create-integrations.adoc#add-components[Add a Component to Your Project]
 * xref:acb-reference.adoc[]
-
