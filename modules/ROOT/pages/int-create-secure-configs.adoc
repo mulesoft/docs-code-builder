@@ -391,11 +391,9 @@ The POM file includes dependencies for the components in the configuration XML.
 
 To use an encrypted value in a Mule application: 
 
-. Before the `<flow/>` element in the configuration XML, add the Secure Configuration Properties _snippet_ (`<secure-properties:config/>`) by pressing Cmd+Space (Mac) or Ctrl+Space (Windows), typing the initial letters of the element name, such as `secu`, and then selecting the snippet:
+. Before the `<flow/>` element in the configuration XML, add the following Secure Configuration Properties configuration (`<secure-properties:config/>`):
 +
-image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties Snippet"]
-+
-The XML for an unmodified snippet looks like this before a `<flow/>` element:
+// image::acb-snippet-secure-config-prop.png["Selecting Secure Configuration Properties"]
 +
 [source,xml]
 ----
@@ -409,12 +407,10 @@ The XML for an unmodified snippet looks like this before a `<flow/>` element:
 ...
 ----
 +
-The snippet preconfigures parts of the element that the basic XML configuration does not, so be sure to select the _snippet_ and _not_ the basic XML for this element, which has the same name but a different icon. Like all snippets, this snippet is identified by a two-dimensional box icon, while the basic XML for this element has a three-dimensional box icon. 
-+
-When you _first_ add the `<secure-properties:config/>` snippet to the configuration XML, you can tab to the `algorithm` attribute to select another algorithm, or you can change the value manually:
+. Optionally change the `algorithm` attribute to select another algorithm:
 +
 image::int-secure-config-algorithms.png["List of supported algorithms in Secure Configuration Properties module."]
-. Configure the snippet with values for the `file`, `key`, and `algorithm` attributes, for example:
+. Configure the element with values for the `file`, `key`, and `algorithm` attributes, for example:
 +
 [source,xml]
 ----
@@ -431,7 +427,7 @@ If you want to use the variable `$\{env}` in your filename configuration, see <<
 * `name`: A name of your choice for the encryption key (defaults to `${encryption.key}`) 
 +
 This name serves as the key for the encryption value (password) used to encrypt your secure properties with the Secure Properties Tool.
-* `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the snippet). Other <<algorithms, algorithms>> are available.
+* `algorithm`: Algorithm you used to encrypt your secure properties (defaults to Blowfish in the previous example). Other <<algorithms, algorithms>> are available.
 . In the connector or component XML, add the key of an encrypted property as the value of an XML attribute, for example:
 +
 [source,xml]
@@ -510,7 +506,7 @@ Before you begin:
 
 To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub or CloudHub 2.0: 
 
-. In the `mule-artifact.json` file for your application, provide the _name_ of the encryption key (`encryption.key` by default) that you provided in the global `<secure-properties:config/>` snippet within your configuration XML, for example:
+. In the `mule-artifact.json` file for your application, provide the _name_ of the encryption key (`encryption.key` by default) that you provided in the global `<secure-properties:config/>` element within your configuration XML, for example:
 +
 ----
 {

@@ -37,34 +37,50 @@ email:
 slack:
  token: "yourSlackToken"
 --
-. Navigate to your `new-case-salesforce.xml` file, add a new line before the `</mule>` tag, type `configuration` and select *mule:configurationProperties*:
+. Navigate to your `new-case-salesforce.xml` file, add a new line before the `</mule>` tag, and paste this line:
 +
-image::select-mule-config-properties-contacts-sync.png["Code snippet with *mule:configurationProperties* highlighted in search results"]
+[source,XML]
+--
+<configuration-properties file="config.yaml" doc:name="Configuration properties" />
+--
+// image::select-mule-config-properties-contacts-sync.png["Code snippet with *mule:configurationProperties* highlighted in search results"]
+
+////
 . Scroll through the attributes and set the value of `file` to `config.yaml`:
 +
 [source,XML]
 --
 <configuration-properties file="config.yaml" doc:name="Configuration properties" />
 --
+////
 
 == Configure Your Salesforce Connector
 
 Use the values in your `config.yaml` file to connect the Salesforce Connector to your Salesforce environment:
 
-. In your `new-case-salesforce.xml` file, create a new line after the `<configuration-properties/>` element, type `salesforce`, and select *salesforce:sfdc-config*:
+. In your `new-case-salesforce.xml` file, create a new line after the `<configuration-properties/>` element, and paste the following code:
 +
-image::sync-api-select-sfdc-config.png["Code snippet with *Salesforce:sfdc-config* highlighted in search results"]
-. Set the *name* field to `Salesforce-Config`.
-. Create a new line, type `basic` and select *Salesforce:Basic*:
+[source,XML]
+--
+<salesforce:sfdc-config name="Salesforce-Config" doc:name="Config">
+ <salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" />
+</salesforce:sfdc-config>
+--
+
+// image::sync-api-select-sfdc-config.png["Code snippet with *Salesforce:sfdc-config* highlighted in search results"]
+// . Set the *name* field to `Salesforce-Config`.
+// . Create a new line, type `basic` and select *Salesforce:Basic*:
+//+
+// image::basic-auth-sfdc-connector.png["Code snippet with *Salesforce:basic* highlighted in search results"]
+//. Configure the `username` and `password` properties to use your configuration file values:
 +
-image::basic-auth-sfdc-connector.png["Code snippet with *Salesforce:basic* highlighted in search results"]
-. Configure the `username` and `password` properties to use your configuration file values:
-+
+////
 [source,XML]
 --
 <salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
 --
 +
+////
 [NOTE]
 --
 When you move your cursor over the `${salesforce.username}` and `${salesforce.password}` elements, Anypoint Code Builder shows the values from the configuration file.
@@ -95,7 +111,7 @@ If you get an error, verify the error message to troubleshoot further.
 * `objectType`: *Case*
 * `config-ref`: *Salesforce-Config*
 * `name`: *On New Case*
-. In the `<salesforce:new-object-listener/>` element, replace `<scheduling-strategy/>` with the following snippet:
+. In the `<salesforce:new-object-listener/>` element, replace `<scheduling-strategy/>` with the following XML:
 +
 [source,XML]
 --
@@ -112,7 +128,7 @@ image::add-logger-end-flow-canvas.png["The flow canvas with the *Add Flow* plus 
 +
 image::drag-logger-canvas.png["A workflow with the *Logger* component added"]
 +
-A `logger` component is added to the `flow` snippet in the code editor. 
+A `logger` component is added to the flow in the code editor. 
 +
 . Replace the `logger` component in the code editor with the following:
 +
