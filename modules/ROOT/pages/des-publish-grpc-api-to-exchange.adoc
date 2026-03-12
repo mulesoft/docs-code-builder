@@ -1,0 +1,71 @@
+= Publishing Your gRPC API to Exchange
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Publish your gRPC API specification or Protobuf library (fragment) to Anypoint Exchange so that other team members can discover, reuse, and implement it.
+
+In Exchange, published gRPC API projects appear as assets of type *gRPC API*. Published Protobuf libraries (reusable fragments) appear as assets of type *API Fragment*.
+
+[[prereqs]]
+== Before You Begin
+
+* xref:des-design-grpc-api-spec.adoc[Design a gRPC API specification] in Anypoint Code Builder, or create a Protobuf library project for reusable types and services.
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* Have familiarity with xref:access-management::business-groups.adoc[business groups]. When you publish to Exchange from the IDE, you select or confirm the business group for the asset.
+
+include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
+
+[[publish-grpc-spec]]
+== Publish a gRPC API Project to Exchange
+
+To publish your gRPC API project (or Protobuf library project) to Exchange:
+
+. Log in to your Anypoint Platform account.
+. In *Explorer*, open your gRPC API project and click the *Publish API Project to Exchange* icon.
++
+image::icon-publish-to-exchange.png["Publish API Project to Exchange icon"]
++
+You can also right-click the API project in Explorer and select *API* > *Publish API Project to Exchange*.
++
+Alternatively, open the xref:start-use-command-palette.adoc[Command Palette] and run:
++
+[source,command]
+----
+MuleSoft: Publish API Project to Exchange
+----
+. If prompted, click *Allow* and follow the prompts to sign in to Anypoint Platform.
+. Confirm or change each item in *Publish API Project to Exchange*:
+** *Asset Version* – For example, `1.0.0` for a first publish.
+** *API Version* – Optional for API fragments (Protobuf libraries).
+** *Business Group* – The business group where the asset is published.
+. Optionally, expand *Project Metadata* and update asset name, tags, categories, or other metadata. Click *Apply* after making changes.
+. Optionally, in the banner click *Sync centralized governance rulesets and run validation* to validate the project against applied rulesets. You must be logged in and have a business group defined in the project metadata.
++
+image::des-publish-api-project.png["Publish API Project to Exchange form with banner to sync centralized rulesets"]
+. Click *Publish*.
++
+The IDE builds the project and publishes the asset to Exchange. When publishing is complete, you see a message that the API specification (or fragment) successfully published to Exchange.
++
+If the project has validation or build errors, fix them before publishing. Check the *Problems* tab and the xref:start-open-output-panel.adoc[output panel] for details.
+. Click *View Asset* to open the published asset in Exchange.
+. When prompted to implement the API, choose *Yes* to scaffold the gRPC specification into a new project, or *No* to skip. See xref:imp-implement-grpc-api-spec.adoc[] for implementing a gRPC API spec.
+
+[[locate-grpc-asset]]
+== Locate Your gRPC API in Exchange
+
+After publishing, find your gRPC API or Protobuf library in Anypoint Exchange:
+
+. Log in to Anypoint Platform and open Anypoint Exchange (see xref:des-publish-api-spec-to-exchange.adoc#locate-api[Locate Your API in Exchange] for links).
+. Search or browse for the asset by name. gRPC API projects appear as assets of type *gRPC API*. Protobuf library projects appear under the appropriate fragment type.
+
+Other developers can discover the asset, add it as a dependency for implementation, or import it as a Protobuf library into their gRPC API design projects.
+
+== See Also
+
+// TODO: Include a link to gRPC Connector docs.
+* xref:des-design-grpc-api-spec.adoc[]
+* xref:des-publish-api-spec-to-exchange.adoc[]
+* xref:imp-implement-grpc-api-spec.adoc[]
+* xref:des-govern-api.adoc[]
+* xref:access-management::business-groups.adoc[]
