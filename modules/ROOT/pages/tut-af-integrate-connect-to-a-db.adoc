@@ -70,13 +70,8 @@ image::add-mysql-driver-dependency.png["pom.xml with new dependency highlighted"
 == Add a Database Connector Configuration
 
 . In Anypoint Code Builder, open `american-ws-anypoint-code-builder.xml`.
-. In the configuration XML, add the global `<db:config/>` snippet.
-.. Place your cursor before the opening <flow> tag.
-.. Press Ctrl+Spacebar (Mac) or Cmd+Spacebar (Windows).
-.. Type `mysql` to search for the snippet.
-.. Select the snippet `db:mysql-config`.
+. In the configuration XML, add the following global `<db:config/>` configuration before the opening <flow> tag:
 +
-.Snippet XML before the opening <flow> tag:
 [source,xml]
 ----
 <db:config name="Mysql_Database_Config" >
@@ -131,7 +126,7 @@ NOTE: The `getFlights` flow contains an expected error: `The content of element 
 . Add the *Select* operation for Anypoint Connector for Database (Database Connector).
 +
 Either search for *Select* or navigate to the operation from *Connectors* > *Database* > *Select*.
-. Provide this configuration for the snippet:
+. Provide this configuration for the Select operation:
 +
 [tabs]
 ====
