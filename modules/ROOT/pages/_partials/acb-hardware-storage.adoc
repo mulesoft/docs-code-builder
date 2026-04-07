@@ -64,30 +64,26 @@ Use the checklist with your security team. Adjust paths for your environment.
 *Processes (executables)*
 
 * [ ] Windows: `java.exe` or `javaw.exe` — Java runtime used by Mule and tooling
-* [ ] macOS and Linux: `java` — same as on Windows, using the resolved path from your JDK install
+* [ ] macOS: `java` — same as on Windows, using the resolved path from your JDK install
 * [ ] Windows: `node.exe` — Node.js used by VS Code extensions and scripts
-* [ ] macOS and Linux: `node` — same as on Windows
+* [ ] macOS: `node` — same as on Windows
 * [ ] Windows: `Code.exe` — Visual Studio Code
 * [ ] macOS: Visual Studio Code application bundle — for example, `Visual Studio Code.app`
-* [ ] Linux: VS Code binary — for example, the `code` executable from your package or archive install
 
 *Directories*
 
-Unless noted, paths for macOS also apply on Linux.
-
 * [ ] User profile Anypoint Code Builder data: +
 Windows: `%USERPROFILE%\AnypointCodeBuilder` +
-macOS and Linux: `~/AnypointCodeBuilder`
+macOS: `~/AnypointCodeBuilder`
 * [ ] VS Code user data: +
 Windows: `%USERPROFILE%\.vscode` +
-macOS and Linux: `~/.vscode`
+macOS: `~/.vscode`
 * [ ] Local Maven repository: +
 Windows: `%USERPROFILE%\.m2` +
-macOS and Linux: `~/.m2`
+macOS: `~/.m2`
 * [ ] System temporary directory used by the IDE and build tools: +
 Windows: `%USERPROFILE%\AppData\Local\Temp` +
-macOS: `$TMPDIR` (or `/tmp` when that is your temp location) +
-Linux: `/tmp` or the directory in `TMPDIR` (often `/tmp`)
+macOS: `$TMPDIR` (or `/tmp` when that is your temp location)
 * [ ] *Projects directory* — the root folder where you clone or store Mule and API projects (your `ProjectsDirectory`); exclude the entire tree, not single files
 
 === Power Settings
@@ -96,4 +92,3 @@ Power management can throttle CPU and disk performance during long builds or loc
 
 * Windows: Prefer a *High performance* or *Balanced* power plan while you work; avoid battery saver or aggressive power saving when the machine is on AC power.
 * macOS: On notebooks, reduce battery-focused throttling where your org allows it—for example, adjust *System Settings* under *Battery* or *Energy* when plugged in.
-* Linux: Avoid CPU governors or profiles that aggressively downclock the CPU during intensive IDE and Maven activity; use a performance-oriented governor if your distribution supports it.
