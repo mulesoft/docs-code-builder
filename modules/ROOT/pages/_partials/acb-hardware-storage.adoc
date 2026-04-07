@@ -1,0 +1,101 @@
+= Hardware and Storage Requirements
+
+Anypoint Code Builder for Desktop relies on Visual Studio Code, Java, Node.js, Maven, and local build artifacts. Meeting the following minimum specifications helps avoid timeouts, slow dependency resolution, and poor IDE responsiveness. Values marked recommended improve performance for larger workspaces and frequent local runs.
+
+For supported operating systems and extension compatibility, see xref:acb-release-notes.adoc#compatibility[Anypoint Code Builder Release Notes].
+
+== Hardware Requirements
+
+[cols="1,2,2",options="header"]
+|===
+| Component | Minimum | Recommended
+
+| CPU
+| 8 cores / 8 vCPUs
+| More cores for parallel builds and multiple large projects
+
+| RAM
+| 32 GB
+| Additional memory for multiple VS Code windows and heavy local testing
+
+| Primary storage type
+| NVMe SSD (PCIe 3.0 or higher)
+| Same; avoid network-only or heavily virtualized disks for the OS, user profile, and project roots
+
+| Free disk space
+| 50 GB
+| 100 GB
+
+| Network
+| 1 Gbps
+| 10 Gbps (for large dependency downloads and corporate artifact repositories)
+|===
+
+== Storage Performance
+
+Local disks that can't sustain the following metrics often show slow indexing, Maven repository access, and Mule application startup. 
+
+Confirm values with your storage vendor or disk benchmark tooling on the volume that hosts your user profile, local Maven repository, VS Code data, and project directories.
+
+[NOTE]
+====
+For better storage performance, consider the number of input and output operations per second (IOPS) the storage can complete.
+====
+
+[cols="2,1",options="header"]
+|===
+| Metric | Minimum requirement
+
+| Random read IOPS (4 KB)
+| 10,000 IOPS
+
+| Random write IOPS (4 KB)
+| 8,000 IOPS
+
+| Sequential read
+| 1,250 MB/s
+
+| Sequential write
+| 1,000 MB/s
+|===
+
+[NOTE]
+====
+Antivirus, endpoint detection, and real-time scanning can reduce effective IOPS below these targets. Apply the exclusions in <<antivirus-exclusions, Configure antivirus and endpoint protection exclusions>>.
+====
+
+[[antivirus-exclusions]]
+=== Configure Antivirus and Endpoint Protection Exclusions
+
+On managed devices, add exclusions for the processes and directories that Anypoint Code Builder and its toolchain use most intensively. Exclusions reduce file locking, false positives, and severe I/O latency during builds.
+
+Use the checklist with your security team. Adjust paths for your environment.
+
+*Processes (executables)*
+
+* [ ] `java.exe` / `javaw.exe` (Windows) — Java runtime used by Mule and tooling
+* [ ] `java` (macOS/Linux) — same, using the resolved path from your JDK install
+* [ ] `node.exe` (Windows) / `node` (macOS/Linux) — Node.js used by VS Code extensions and scripts
+* [ ] `Code.exe` (Windows) — Visual Studio Code
+* [ ] Visual Studio Code application bundle (macOS) — for example, `Visual Studio Code.app`
+
+*Directories*
+
+* [ ] User profile Anypoint Code Builder data: +
+`%USERPROFILE%\AnypointCodeBuilder` (Windows) / `~/AnypointCodeBuilder` (macOS)
+* [ ] VS Code user data: +
+`%USERPROFILE%\.vscode` (Windows) / `~/.vscode` (macOS)
+* [ ] Local Maven repository: +
+`%USERPROFILE%\.m2` (Windows) / `~/.m2` (macOS)
+* [ ] System temporary directory used by the IDE and build tools: +
+`%USERPROFILE%\AppData\Local\Temp` (Windows) / system temp (for example, `$TMPDIR` or `/tmp` on macOS)
+* [ ] *Projects directory* — the root folder where you clone or store Mule and API projects (your `ProjectsDirectory`); exclude the entire tree, not single files
+
+[NOTE]
+====
+Exclusions reduce the scan surface for specific paths and processes. Your organization's security policy decides whether exclusions are allowed and how they're deployed.
+====
+
+=== Power Settings
+
+Select the power settings that best suit your organization's hardware requirements.
