@@ -1,0 +1,25 @@
+= Use Skills with MuleSoft Vibes
+:page-deployment-options: cloud-ide, desktop-ide
+
+Skills are reusable instruction sets that Agentforce activates only when they apply to your task. Each skill packages guidance and optional resources so MuleSoft Vibes can follow a consistent workflow without loading that material for unrelated prompts.
+
+When your request matches a skill's description, Agentforce uses the `use_skill` tool to load the full instructions and run them for that task. Unlike workspace rules that stay active across conversations, skills load as needed, which leaves more context available for other work.
+
+MuleSoft Vibes supports the same skills model as Agentforce Vibes in compatible Salesforce development tools. For conceptual details, progressive loading, authoring `SKILL.md` files, and optional `references/`, `assets/`, and `scripts/` folders, see https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/skills.html[Skills in Agentforce Vibes] in the Salesforce Developers documentation.
+
+== Skills and MCP Tools
+
+Model Context Protocol (MCP) servers expose *tools* that perform actions, such as generating a flow or calling an API. *Skills* supply structured instructions and workflows the assistant follows when a task matches the skill. You typically use both: tools carry out operations, while skills guide how and when to apply them for specific scenarios.
+
+For configuring MCP servers in Anypoint Code Builder, see xref:vibes-mcp-server.adoc[].
+
+== Turn Skills On or Off
+
+By default, skills are on where the feature is available. To enable or disable them, open *Settings* for MuleSoft Vibes and use the option that controls skills.
+
+== See Also
+
+* xref:mulesoft-vibes.adoc[]
+* xref:vibes-get-started.adoc[]
+* xref:vibes-mcp-server.adoc[]
+* xref:troubleshoot-generative-ai.adoc[]
