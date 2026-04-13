@@ -1095,7 +1095,7 @@ The `oauth2-obo` authentication has these properties.
 |`enableCIBA` |Enables OAuth 2.0 Token Exchange with CIBA flow. Available only for OAuth 2.0 Token Exchange. |Boolean |`true` | No
 |`CIBABackchannelEndpoint`` |The backchannel authentication endpoint (`bc-authorize`) used to initiate the CIBA flow.  |String | `https://oauth.provider.com/bc-authorize` | Required when *enableCIBA* is `true`.
 |`loginHintClaim` |JWT claim from the incoming subject token to send as `login_hint` in the CIBA request. If no hint is specified, `email` is used. |String |`preferred_username` |No
-|`indingMessage` |Human-readable message sent as `binding_message` in the CIBA request and displayed on the authentication device. |String |`Please approve the transaction on your device` |No
+|`bindingMessage` |Human-readable message sent as `binding_message` in the CIBA request and displayed on the authentication device. |String |`Please approve the transaction on your device` |No
 |===
 
 [[exchange-json-file-element]]
