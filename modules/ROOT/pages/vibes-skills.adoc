@@ -1,15 +1,18 @@
 = Use Skills with MuleSoft Vibes
 :page-deployment-options: cloud-ide, desktop-ide
 
-Skills are reusable instruction sets that Agentforce activates only when they apply to your task. Each skill packages guidance and optional resources so MuleSoft Vibes can follow a consistent workflow without loading that material for unrelated prompts.
+Skills are reusable instruction sets that MuleSoft Vibes activates only when they apply to your task. Each skill packages guidance and optional resources so MuleSoft Vibes can follow a consistent workflow without loading that material for unrelated prompts.
 
-When your request matches a skill's description, Agentforce uses the `use_skill` tool to load the full instructions and run them for that task. Unlike workspace rules that stay active across conversations, skills load as needed, which leaves more context available for other work.
+When your request matches a skill's description, MuleSoft Vibes uses the `use_skill` tool to load the full instructions and run them for that task. Unlike workspace rules that stay active across conversations, skills load as needed, which leaves more context available for other work.
+
+*Workspace skills* are available only in the workspace or project where they're defined.
+*Global skills* are available in every project and workspace.
 
 Skills are always available in MuleSoft Vibes where the feature is supported. You can't turn it on or off.
 
 == Set Up Skills in Your Project
 
-Add skills under `.a4drules/skills/` in your workspace. Each skill is a directory whose name matches the skill. The directory contains a `SKILL.md` file with the instructions (and optional YAML frontmatter for metadata). You can add supporting material in subfolders such as `references/`, `assets/`, or `scripts/` inside that skill directory.
+To add *workspace skills* to a project, add skills under `.a4drules/skills/` in your workspace. Each skill is a directory whose name matches the skill. The directory contains a `SKILL.md` file with the instructions (and optional YAML frontmatter for metadata). You can add supporting material in subfolders such as `references/`, `assets/`, or `scripts/` inside that skill directory.
 
 Commit `.a4drules/skills/` with your project so everyone who uses the repository gets the same skills.
 
