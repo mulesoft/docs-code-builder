@@ -1,5 +1,5 @@
 = Integrating American Flights Processes
-//ACB UI links to ui-tut-integrate.adoc (DO NOT REMOVE)
+//ACB UI links to ui-tut-integrate.adoc (DO NOT REMOVE WITHOUT UX/DEV ALIGNMENT)
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: ui-tut-integrate.adoc, create-basic-integration.adoc, develop-integration.adoc
 :page-pagination:
@@ -23,7 +23,7 @@ Start an integration application for the American Flights example.
 include::partial$acb-reusable-steps.adoc[tags="open-ide"]
 +
 image::acb-mulesoft-in-activity-bar.png["MuleSoft icon in the VS Code Activity Bar"]
-. From *Quick Actions*, click *Develop an Integration*:
+. From *Create*, click *Develop an Integration*:
 +
 image::develop-integration-option-mat.png["Develop an Integration link highlighted in the Getting started section"]
 . Provide integration project properties to the *Develop an Integration* form:
@@ -109,20 +109,15 @@ The configuration XML file adds the XML for the HTTP Listener into the `<flow/>`
   
 </flow>
 ----
-. In the configuration XML, place your cursor before the opening <flow> tag, and type `http`.
-. Select the built-in `<http:listener-config/>` snippet:
+. In the configuration XML, place your cursor before the opening <flow> tag, and copy the following code: 
 +
-image::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu"]
-+
-.Snippet XML example:
 [source,xml]
 ----
 <http:listener-config name="HTTP_Listener_config" >
   <http:listener-connection host="0.0.0.0" port="8081" />
 </http:listener-config>
 ----
-+
-In the menu, the snippet is a partially configured Mule component that is represented by a _two-dimensional_ box icon. Three-dimensional box icons are reserved for basic component XML that is not preconfigured. For information about code snippets, see xref:int-work-with-code-snippets.adoc[].
+
 . In the configuration XML, configure the attributes for the HTTP Listener configuration `<http:listener-config/>`:
 +
 [source,xml]

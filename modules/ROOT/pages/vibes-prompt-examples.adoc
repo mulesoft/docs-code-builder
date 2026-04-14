@@ -424,3 +424,11 @@ components:
 .. *Initiates password reset*: `POST /reset-password` sends a reset email if the user exists.  
 .. *Secures endpoints*: All protected routes use JWT bearer authentication.  
 .. *Defines schemas*: `UserRegistration` and `UserLogin` schemas include input validation like `minLength` and `format: email`.
+
+== MUnit tests for Mule flows
+
+Your Mule application exposes APIs and orchestrates calls to backend services. To improve reliability, create MUnit tests for a flow that processes requests, transforms payloads, and returns responses under different conditions.
+
+To generate tests for this task, enter a message like:
+
+`Create MUnit tests for the <flow-name> flow. Add one test for the happy path, one test for invalid input, and one test for a downstream service failure. Mock the external dependencies, use sample event payloads, and verify the expected response payload and status code in each case.`
