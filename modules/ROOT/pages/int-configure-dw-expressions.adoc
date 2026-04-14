@@ -19,6 +19,7 @@ Anypoint Code Builder integrates DataWeave expressions and transformations into 
 * Concatenation of strings, numbers, and booleans
 * Type conversions
 * Custom metadata for inputs and outputs
+* <<namespaces-in-generated-dataweave, Namespace-aware generated scripts>> when metadata defines namespaces (for example, qualified XML from a schema or sample)
 
 Anypoint Code Builder supports these transform mapping use cases:
 
@@ -213,6 +214,17 @@ On *Transformation Builder*, select the option that best suits your needs:
 
 * <<map-with-ai, Map with AI>>
 * <<map-and-transform-with-ai, Map and Transform with AI>>
+
+[[namespaces-in-generated-dataweave]]
+=== Namespaces in Generated DataWeave Scripts
+
+If your input or output metadata includes namespace URIs, Anypoint Code Builder updates the generated DataWeave script for visual mapping to XML and similar targets. The IDE adds `ns` directives to the script header for each URI that needs a declaration and maps fields using qualified names with a generated prefix. Prefixes are unique in the script (such as `ns0`, `ns1`), and Anypoint Code Builder reuses any existing `ns` line if it binds the same URI.
+
+Namespace handling applies to AI-assisted mapping and manual drag mapping in *Transformation Builder*. It also applies to other flows that generate scripts from metadata, for MIME types where the type system exposes namespaces. Provide accurate xref:int-manage-custom-metadata.adoc[custom metadata] or sample data so element namespaces are present in the structure the builder uses.
+
+If you declared namespaces in the header, the tooling preserves those declarations when it updates the output section of the script where supported.
+
+For the DataWeave language rules that govern `ns` directives and qualified keys, see xref:dataweave::dataweave-formats.adoc[DataWeave formats] and xref:dataweave::index.adoc[DataWeave documentation].
 
 [[considerations-for-transformation-builder-with-ai]]
 === Considerations for AI-Assisted Transformations
