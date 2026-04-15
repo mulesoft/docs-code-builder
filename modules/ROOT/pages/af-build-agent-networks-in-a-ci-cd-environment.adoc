@@ -1,10 +1,12 @@
 = Build Agent Networks in a CI/CD Environment
 
-If you run operations within a CI/CD environment, you can use Anypoint CLI's Agent Fabric plugin to set up, create, build, publish, and deploy agent networks. For more information, see link:https://www.npmjs.com/package/anypoint-cli-agent-fabric-plugin[Anypoint CLI Agent Fabric Plugin].
+Use the Anypoint CLI Agent Fabric plugin in CI/CD pipelines to configure agent network gateways, create and build projects, and publish and deploy networks from the command line, matching the lifecycle you can drive from Anypoint Code Builder. Automating these steps keeps environments aligned, lets you embed approvals, secrets, and quality gates in the pipeline, and avoids one-off scripts when you promote from development to staging and production.
+
+For installation, package updates, and release details, see https://www.npmjs.com/package/mulesoft-anypoint-cli-agent-fabric-plugin[Anypoint CLI Agent Fabric Plugin on npm].
 
 == Before You Begin
 
-Make sure you meet the prerequisites for this task. For prerequisites, see xref:af-get-started.adoc[].
+Make sure you meet the xref:af-get-started.adoc#before-you-begin[prerequisites] for this task.
 
 Install the Anypoint CLI Agent Fabric plugin by running this command in a terminal window:
 
@@ -12,7 +14,7 @@ Install the Anypoint CLI Agent Fabric plugin by running this command in a termin
 
 [NOTE]
 ====
-The installation package has been renamed from `anypoint-cli-agent-fabric-plugin` to `mulesoft-anypoint-cli-agent-fabric-plugin`. 
+The installation package has been renamed from `anypoint-cli-agent-fabric-plugin` to `mulesoft-anypoint-cli-agent-fabric-plugin`.
 
 If you have the previous version installed, you may encounter an `npm error EXIST: file already exists` error when updating your installation. This occurs because both versions share the same command alias. To resolve this, use the `--force` flag to overwrite the alias and point it to the new package: `npm i mulesoft-anypoint-cli-agent-fabric-plugin --force`.
 ====
@@ -41,7 +43,7 @@ For more information, see xref:anypoint-cli::auth.adoc[].
 
 To deploy an agent network, you need a private space on CloudHub 2.0 or a deployment target on Anypoint Runtime Fabric. See xref:af-get-started.adoc#setup-space[Set Up the Private Space or Deployment Target for Your Environment].
 
-After you create a target space, and haven't already done so, set up the ingress and egress gateways for deployment. See xref:af-get-started.adoc#setup-gateways[Set Up Agent Network Gateways for the Private Space or Deployment Target].
+After you create a target space, set up the ingress and egress gateways for deployment if you haven't already done so. See xref:af-get-started.adoc#setup-gateways[Set Up Agent Network Gateways for the Private Space or Deployment Target].
 
 == CLI for Agent Fabric Plugin Reference
 
