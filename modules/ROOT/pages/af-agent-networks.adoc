@@ -2,9 +2,9 @@
 
 An agent network is a coordinated group of agents, brokers, LLMs, and MCP servers that acts as a central hub for defining, validating, and executing agentic processes across your enterprise.
 
-An agent network provides the building blocks of your agentic deployment while MuleSoft Agent Fabric helps you maximize the potential of every AI agent with centralized discovery, orchestration across agents and tools, cross-ecosystem governance, and full transparency into agentic interactions. 
+An agent network provides the building blocks of your agentic deployment while MuleSoft Agent Fabric helps you maximize the potential of every AI agent with centralized discovery, orchestration across agents and tools, cross-ecosystem governance, and full transparency into agentic interactions.
 
-You define your agent network in a simple, human-readable YAML file in Anypoint Code Builder. This approach abstracts away the underlying technical complexities, allowing you to focus on the business constraints and context of your process without needing to understand the inner workings of the orchestration engine. 
+You define your agent network in a simple, human-readable YAML file in Anypoint Code Builder. This approach abstracts away the underlying technical complexities, allowing you to focus on the business constraints and context of your process without needing to understand the inner workings of the orchestration engine.
 
 At the start of a new agent network project, we provide a YAML template to give you a head start. You can use MuleSoft Vibes to configure your network, publish the assets to Anypoint Exchange, and deploy your agent network instance.
 
@@ -18,10 +18,10 @@ Create robust, automated agent networks with these key benefits.
 Define your agent processes in an intentional way using a simple YAML file, which is easier and faster than writing complex code.
 * Safety and Governance
 +
-Ensure control and compliance across every agent and tool interaction with enterprise-grade governance. 
+Ensure control and compliance across every agent and tool interaction with enterprise-grade governance.
 * Observability
 +
-Gain insight into agent actions with a visual trace of their decision-making. 
+Gain insight into agent actions with a visual trace of their decision-making.
 * Flexibility
 +
 Coordinate any type of agent and tool, regardless of where it’s built and deployed so you can build a diverse network of agents.
@@ -85,7 +85,7 @@ Your agent network can use both locally defined and externally defined MCP serve
 [[agent-networks-code-builder]]
 === Agent Networks in Anypoint Code Builder
 
-When you create agent networks, the Anypoint Code Builder canvas shows the brokers, agents, and MCP servers you've configured. 
+When you create agent networks, the Anypoint Code Builder canvas shows the brokers, agents, and MCP servers you've configured.
 
 image::af-agent-network-canvas.png["Anypoint Code Builder canvas showing brokers, agents, and MCP servers"]
 
@@ -121,16 +121,16 @@ image::agent-fabric-architecture.png[Agent Fabric showing agents and MCP servers
 [calloutlist]
 . Publish the agentic assets to Anypoint Exchange for discovery and reuse after you define the agent network (brokers, agents, MCP servers) in the agent network YAML in Anypoint Code Builder.
 . Deploy the agentic assets to CloudHub 2.0 (managed in Runtime Manager).
-. Enforce policies on incoming traffic to the network with an ingress Flex Gateway, which sits in front of broker and API endpoints.
+. Enforce policies on incoming traffic to the network with an ingress Flex Gateway, which sits in front of brokers and API endpoints.
 . Enforce policies, manage connections, and emit telemetry data with an egress Flex Gateway, which sits on outbound paths from brokers and agents to external agents and services.
 . Collect logs, metrics, and traces from Flex Gateway and runtimes in Anypoint Monitoring.
 
 [[llm-support]]
 == Large Language Models
 
-Agent network brokers support the latest Gemini and OpenAI models. 
+Agent network brokers support the latest Gemini and OpenAI models.
 
-* Azure OpenAI and OpenAI API: 
+* Azure OpenAI and OpenAI API:
 +
 ** GPT-5.2
 ** GPT-5.2 Pro
@@ -143,37 +143,37 @@ Agent network brokers support the latest Gemini and OpenAI models.
 ** Gemini 2.5 Pro
 ** Gemini 2.5 Flash-Lite
 ** Gemini 2.5 Flash
-** Gemini 3 Flash 
+** Gemini 3 Flash
 ** Gemini 3 Pro
 
-For more information about these models, see the https://developers.openai.com/api/docs/models[OpenAI] and https://ai.google.dev/gemini-api/docs/models[Gemini] documentation. 
+For more information about these models, see the https://developers.openai.com/api/docs/models[OpenAI] and https://ai.google.dev/gemini-api/docs/models[Gemini] documentation.
 
-The following table details the requirements and recommended models. 
+The following table details the requirements and recommended models.
 
 |===
 |*Model Provider* |*Required Endpoint* |*Required Capabilities* |*Suggested Models*
 
 |OpenAI |`/responses` a|
-* Reasoning 
-* Native structured output 
-* Function and Custom tool calling 
+* Reasoning
+* Native structured output
+* Function and custom tool calling
 a|
-* For lower latency: GPT-5-mini 
+* For lower latency: GPT-5-mini
 * For complex reasoning: Evaluate models
 
 |Gemini |`/generateContent` (Native API) a|
-* Native Thinking (via thinkingBudget and thinkingLevel) 
-* Native structured output (responseSchema) 
-* Function and custom tool calling 
+* Native Thinking (via thinkingBudget and thinkingLevel)
+* Native structured output (responseSchema)
+* Function and custom tool calling
 a|
-* For lower latency: Gemini 2.5 Flash, Gemini 2.5 Flash-Lite 
+* For lower latency: Gemini 2.5 Flash, Gemini 2.5 Flash-Lite
 * For complex reasoning: Gemini 3 Pro (Deep Think capabilities)
-|=== 
+|===
 
 Agent networks support text-based prompts and responses. Image and binary message types aren't supported.
 
 [[a2a-protocol]]
-== A2A Protocol 
+== A2A Protocol
 
 The Agent2Agent (A2A) Protocol governs agent-to-agent communication. This protocol powers orchestration, observability, and governance features in agent networks. MuleSoft supports v0.3.0 of the A2A Protocol Specification.
 
@@ -181,7 +181,7 @@ The Agent2Agent (A2A) Protocol governs agent-to-agent communication. This protoc
 
 In MuleSoft agent networks, the brokers receiving a request always generate a `contextId` and `taskId`. These IDs define the state and scope of a specific conversation between two agents. A `taskId` is always matched to a `contextId`, but a `contextId` can exist without a `taskId`.
 
-In a multi-agent network, a client sends a request to Broker_1 and Broker_1 generates the necessary IDs for that request. When Broker_1 sends a new request to the next broker or non-broker agent in line, that broker or non-broker agent establishes a unique `contextId` and `taskId` for the new request. 
+In a multi-agent network, a client sends a request to Broker_1 and Broker_1 generates the necessary IDs for that request. When Broker_1 sends a new request to the next broker or non-broker agent in line, that broker or non-broker agent establishes a unique `contextId` and `taskId` for the new request.
 
 NOTE: It is not mandatory for non-broker agents to generate a `contextId` and `taskId` when receiving requests from a client.
 
@@ -202,8 +202,7 @@ Consider a network with a client and two brokers (1 and 2).
 
 For more information, see https://a2a-protocol.org/v0.3.0/topics/life-of-a-task/#group-related-interactions[Life of a Task - Group Related Interactions].
 
-NOTE: Agent network doesn't support streaming with Server-Sent Events (SSE).
-
+NOTE: Agent networks don't support streaming with Server-Sent Events (SSE).
 
 == See Also
 
