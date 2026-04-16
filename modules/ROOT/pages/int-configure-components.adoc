@@ -41,6 +41,72 @@ To set custom metadata for a component, add or open the component in the canvas 
 
 image::int-set-component-custom-metadata.png["Set Custom Metadata for a component"]
 
+[[canvas-actions]]
+== Refactor Flows Using Canvas Actions
+
+Reorganize and refactor your flows directly from the canvas. Move, copy, and extract components without manually updating the underlying XML.
+
+These actions help you reduce rework, maintain clean flow structures, and safely evolve your implementations as complexity grows.
+
+You can use canvas actions to:
+
+* Move components within a flow or across files
+* Copy and reuse components in the same or different projects
+* Extract components into a new flow or subflow
+
+When you perform these actions, Anypoint Code Builder automatically updates references, connections, and configurations to prevent broken flows.
+
+[NOTE]
+Some components can't be extracted or moved. If a selection includes unsupported components, the available actions are limited to prevent invalid configurations. In some cases, the *Extract to Flow* option is displayed but no extraction is performed, for example when extraction across scopes isn't supported.
+
+=== Extract Components to a Flow
+
+Extract one or more components into a new flow or subflow. This is useful for simplifying large flows or reusing logic.
+
+To extract components:
+
+. Select one or more components in the canvas.
+. Right-click the selection and select *Extract to Flow*.
+. Enter a name for the new flow.
+. Select the target Mule configuration file.
+. Configure metadata preferences if needed.
+. Click *Extract*.
+
+Anypoint Code Builder creates the new flow and replaces the selected components with a Flow Reference in the original flow.
+
+By default, the current file is selected as the target configuration file.
+
+[NOTE]
+Some components can't be extracted or moved. If a selection includes unsupported components, the available actions are limited to prevent invalid configurations. In some cases, the *Extract to Flow* option is displayed but no extraction is performed, for example when extraction across scopes isn't supported.
+
+=== Metadata Preferences
+
+When extracting components, you can define metadata preferences for the new flow.
+
+You can configure:
+
+* Payload metadata
+* Attributes metadata
+* Variables metadata
+
+These settings help ensure that the extracted flow has the correct input structure.
+
+=== Multi-Selection Behavior
+
+You can select multiple components by holding Shift and clicking components in the canvas.
+
+=== Validation and Safeguards
+
+Canvas actions include built-in validation to prevent invalid operations.
+
+For example:
+
+* Extraction is blocked until required metadata is loaded
+* Unsupported components can't be extracted
+* Actions are disabled while the canvas is loading
+
+These safeguards help ensure that your flows remain valid and executable after refactoring.
+
 [[copy-components]]
 == Copy Components
 
