@@ -52,7 +52,7 @@ For reference documentation on specific connector and component configurations, 
 
 //
 // tag::note-component-add-config[]
-When adding components, you can start from xref:int-work-with-code-snippets.adoc[code snippets], the canvas, or the configuration XML for your app.
+When adding components, you can start from the canvas or the configuration XML for your app.
 You can configure components from their configuration panels in the canvas or from the XML.
 // end::note-component-add-config[]
 //
@@ -97,11 +97,11 @@ To find information about more connectors, see xref:connectors::introduction/int
 
 Use the Connection Management Configuration Panel to easily configure connections to third-party systems directly from the UI. 
 
-In this panel, you can create, edit, delete, and test connections directly within the ACB interface, automatically populate connection fields using metadata provided by the connector, and save and manage connection configurations without switching to the XML view. 
+In this panel, you can create, edit, delete, and test connections directly within the IDE interface, automatically populate connection fields using metadata provided by the connector, and save and manage connection configurations without switching to the XML view. 
 
 To open the configuration panel: 
 
-* Click on an existing component, or add a new one.
+* Select an existing component, or add a new one.
 * Click the *+* icon.
 +
 This action displays the configuration panel, for example:
@@ -234,21 +234,11 @@ The configuration XML file now includes the XML for the HTTP Listener within the
 
 </flow>
 ----
-. Add another component, this time using the XML configuration menu.
+. Add another component, this time using the configuration XML.
 +
-For example, add the `<http:listener-config/>` component from a snippet.
+In the configuration XML, place your cursor before the opening `<flow>` tag. Ensure that the cursor is not inside the `<flow/>` element. Add the following code:
 +
-For more information about snippets, see xref:anypoint-code-builder::int-work-with-code-snippets.adoc[].
-+
-.. In the configuration XML, place your cursor before the opening `<flow>` tag, and type `http`.
-+
-Ensure that the cursor is not inside the `<flow/>` element.
-+
-.. Type `http`, and select the `http:listener-config` snippet:
-+
-image::anypoint-code-builder::add-http-config-snippet.png["http:listener-config snippet highlighted in the configuration XML menu"]
-+
-The snippet adds the following code:
+// image::anypoint-code-builder::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu"]
 +
 [source,xml]
 ----
