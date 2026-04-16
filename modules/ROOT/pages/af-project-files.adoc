@@ -1040,10 +1040,10 @@ authentication:
   tokenEndpoint: https://oauth.provider.com/token
   clientId: clientId
   clientSecret: clientSecret
-  targetType: audience
+  targetType: audience  # Optional. Logical identifier (audience) or physical URI (resource). Default: audience.
   targetValue: https://api.example.com/agents/my-agent
-  scope: Read #optional, OAuth 2.0 scope to request. Required for Microsoft Entra OBO (for example, api://downstream-client-id/.default). Optional for OAuth 2.0 Token Exchange (RFC 8693).
-  timeout: 5000 #optional, Timeout for token exchange requests in milliseconds. Default: 10000.
+  scope: Read  # Optional for OAuth 2.0 Token Exchange (RFC 8693). Required for Microsoft Entra OBO and CIBA.
+  timeout: 5000  # Optional. Timeout for token exchange requests in milliseconds. Default: 10000.
 ----
 
 Using Microsoft Entra ID On-Behalf-Of:
@@ -1053,11 +1053,29 @@ Using Microsoft Entra ID On-Behalf-Of:
 authentication:
   kind: oauth2-obo
   flow: microsoft-entra-obo
+  tokenEndpoint: https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token
+  clientId: clientId
+  clientSecret: clientSecret
+  scope: api://downstream-client-id/.default  # Required for Microsoft Entra OBO flows.
+  timeout: 8000  # Optional. Timeout for token exchange requests in milliseconds. Default: 10000.
+----
+
+Using OAuth 2.0 Token Exchange with CIBA (client-initiated backchannel authentication):
+
+[source,yaml]
+----
+authentication:
+  kind: oauth2-obo
+  flow: oauth2-token-exchange
   tokenEndpoint: https://oauth.provider.com/token
   clientId: clientId
   clientSecret: clientSecret
-  scope: api://downstream-client-id/.default
-  timeout: 5000 #optional, Timeout for token exchange requests in milliseconds. Default: 10000.
+  scope: openid  # Required for CIBA flow.
+  enableCIBA: true  # Optional. Enables OAuth 2.0 Token Exchange with CIBA flow. Available only for OAuth 2.0 Token Exchange.
+  CIBABackchannelEndpoint: https://oauth.provider.com/bc-authorize  # Required when enableCIBA is true. The backchannel authentication endpoint.
+  loginHintClaim: email  # Optional. JWT claim from incoming subject token to send as login_hint in CIBA request. Default: email.
+  bindingMessage: "Please approve this request on your device"  # Optional. Human-readable message displayed on authentication device.
+  timeout: 10000  # Optional. Timeout for token exchange requests in milliseconds. Default: 10000.
 ----
 
 The `oauth2-obo` authentication has these properties.
@@ -1075,6 +1093,10 @@ The `oauth2-obo` authentication has these properties.
 |`targetValue` |Target audience URI or resource URI for the exchanged token. Required for OAuth 2.0 Token Exchange. |String |Valid URI |Required when using `oauth2-token-exchange` with a target
 |`scope` |OAuth scope to request. Required for Microsoft Entra OBO (e.g. `api://downstream-client-id/.default`). Optional for OAuth 2.0 Token Exchange. |String |Any string |Required for `microsoft-entra-obo`
 |`timeout` |Timeout for token exchange requests in milliseconds. |Integer |Positive integer. Default: 10000 |No
+|`enableCIBA` |Enables OAuth 2.0 Token Exchange with CIBA flow. Available only for OAuth 2.0 Token Exchange. |Boolean |`true` | No
+|`CIBABackchannelEndpoint`` |The backchannel authentication endpoint (`bc-authorize`) used to initiate the CIBA flow.  |String | `https://oauth.provider.com/bc-authorize` | Required when *enableCIBA* is `true`.
+|`loginHintClaim` |JWT claim from the incoming subject token to send as `login_hint` in the CIBA request. If no hint is specified, `email` is used. |String |`preferred_username` |No
+|`bindingMessage` |Human-readable message sent as `binding_message` in the CIBA request and displayed on the authentication device. |String |`Please approve the transaction on your device` |No
 |===
 
 [[exchange-json-file-element]]
