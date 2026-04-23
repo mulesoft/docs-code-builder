@@ -8,14 +8,15 @@ Use Anypoint Code Builder to create, import, and test API specs before publishin
 
 . Create a API spec project in Anypoint Code Builder from the IDE or by importing the spec from MuleSoft VCS:
 
-* <<design-new-api-spec, Create an API spec project from the IDE>>
+* <<design-new-api-spec, Create an API spec project from the IDE>> (example uses OAS 3.0 (YAML))
+* <<create-raml-rest-api-spec, Create an API spec project using RAML 1.0>>
 * <<import-spec, Import an API spec from MuleSoft VCS>>
 
 . <<open-output-panel, Track progress in the output panel>>.
 . <<review-spec-console, Review your spec in the API console>>.
 . <<test-spec, Test your spec using the mocking service>>.
 
-Use the <<example-oas-api-spec,`oas-example`>> API spec to explore the functionality of Anypoint Code Builder. 
+Use the <<example-oas-api-spec,`oas-example`>> API spec to explore the functionality of Anypoint Code Builder with OAS, or follow <<create-raml-rest-api-spec,RAML 1.0>> for a RAML-first project. 
 
 
 == Before You Begin
@@ -78,6 +79,67 @@ image::des-oas-create.png[New OAS 3.0 (YAML) API project]
 . Continue designing your API spec. 
 +
 As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (or press Ctrl+Space) to display available options within the context. 
+
+[[create-raml-rest-api-spec]]
+== Create a REST API Specification Using RAML 1.0
+
+To create a REST API specification project that uses RAML 1.0:
+
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
++
+image::anypoint-code-builder-view.png["Anypoint Code Builder icon highlighted in the activity bar"]
+. From *Create*, click *Design an API*:
++
+image::design-api-1.png["*Design an API* link highlighted in the *Create* section"]
+
+. Complete the *API Specification* form:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Project Name* | Unique name for your project.
+
+This name is used as the API spec title in Exchange, the name of the spec file, and the name of the project's root directory.
+
+include::partial$acb-reusable-steps.adoc[tags=no-project-name-reuse]
+| *Project Location* | Your home directory or another directory you create.
+
+See xref:start-add-folders.adoc[].
+
+include::partial$acb-reusable-steps.adoc[tags=proj-directory-warn]
+| *API Type* | *REST API*
+
+| *API Specification Language* | *RAML 1.0* +
+Anypoint Code Builder also supports *RAML 0.8* and OAS formats. For the full list, see xref:des-designing-api-specs.adoc#supported-spec-languages[Supported OAS and RAML Versions].
+|===
+. Click *Create Project*.
++
+If prompted, trust the authors of the files in the folder.
++
+When the project is ready for editing, the API project opens your root RAML file in the Editor view. The file name matches the project name you provided (for example, `my-inventory-api.raml`).
+. Continue designing your RAML spec in the Editor view.
++
+Use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space or Cmd+Space) to add resources, methods, traits, and other RAML constructs in context.
++
+To add reusable data types and examples from Anypoint Exchange, add fragment dependencies to the project and reference them with `!include` directives in RAML. For step-by-step procedures, see xref:des-create-api-fragments.adoc[].
++
+When you want to try requests against your examples, <<review-spec-console, open the API Console>> and <<test-spec, use the mocking service>> the same way you do for OAS projects.
+
+.Optional starter RAML for a `/items` resource
+[%collapsible]
+====
+[source,raml,linenums]
+----
+#%RAML 1.0
+title: Example Items API
+
+/items:
+  get:
+    description: List items
+----
+====
 
 [[import-spec]]
 == Import an API Specification from MuleSoft VCS
@@ -288,6 +350,6 @@ If you created an OAS 3.0 (YAML) project, you can replace the initial spec with 
 * xref:tutorials.adoc[]
 * xref:access-management::business-groups.adoc[]
 * xref:start-discover-ui.adoc#use-autocomplete[Use Auto-Complete in the Editors]
-* xref:tut-af-design-am-flights-api.adoc[] Tutorial
+* xref:des-create-api-fragments.adoc[]
 * xref:des-delete-api-projects.adoc[]
 * xref:start-workspaces.adoc[]
