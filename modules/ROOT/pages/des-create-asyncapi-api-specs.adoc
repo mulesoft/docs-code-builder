@@ -72,7 +72,7 @@ When the project is ready for editing, the API project opens the spec in the Edi
 image::des-asyncapi-create.png[New AsyncAPI 2.6 (YAML) API project]
 . Continue designing your API spec.
 +
-As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context.
+As you enter elements, use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within the context, or use enhanced auto-completion by placing your cursor where you need suggestions and pressing Tab, Space, or starting to type.
 
 [[import-spec]]
 == Import an AsyncAPI Specification from MuleSoft VCS
@@ -96,7 +96,7 @@ MuleSoft: Import API Specification from MuleSoft VCS
 If you receive an error that the import failed (*Importing project _a_project_name_ has failed*), check your target folder for a project with the same name. To address a duplicate naming issue before importing, you can import the design project to a different target folder or delete the project from your IDE (see xref:des-delete-api-projects.adoc[]).
 . Edit or continue designing your spec, as needed.
 +
-As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-complete] (Ctrl+Space) to display available options within the context.
+As you enter elements, use xref:start-discover-ui.adoc#use-autocomplete[auto-complete] (Ctrl+Space) to display available options within the context, or use enhanced auto-completion by placing your cursor where you need suggestions and pressing Tab, Space, or starting to type.
 . Optionally, sync your changes by using MuleSoft VCS.
 +
 This feature is available only for API projects that you import from MuleSoft VCS. You can also store your work in another SCM. For SCM options, see xref:start-scm.adoc[].
@@ -134,6 +134,11 @@ image::des-asyncapi-api-console.png["AsyncAPI spec in the API Console"]
 For example, click *PUBLISH*:
 +
 image::des-asyncapi-api-console-detail.png["API Console with Publish details"]
+
+[[supported-protocols-bindings]]
+== Supported Protocols and Bindings for Implementation
+
+While you can design AsyncAPI specs with any protocol and binding, only certain message brokers are supported for implementation through the APIkit for AsyncAPI module. For the list of supported message brokers, protocols, and configuration details, see xref:apikit::apikit-asyncapi-module-reference.adoc#supported-message-brokers[Supported Message Brokers].
 
 [[example-asyncapi-api-spec]]
 == Example AsyncAPI (YAML) API Specification
