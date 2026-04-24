@@ -21,8 +21,6 @@ Breakpoints are markers that you add on line numbers in a configuration XML file
 +
 For example, trigger an HTTP Listener or configure a Scheduler component.
 . When the execution stops at a breakpoint, use the <<debug-toolbar, debug toolbar>> to navigate, inspect, and fix issues.
-+
-To compare payload media type before and after a Transform Message component, see <<watch-payload-mediatype>>.
 . After addressing an issue at a breakpoint, redeploy (<<hot-deploy, hot deploy>>) the running instance of your application.
 . Execute your flow again, and continue debugging until you address all issues.
 . <<stop-debug, Stop the debug session>>.
@@ -54,33 +52,6 @@ Keyboard shortcut: Cmd+Shift+d (Mac) or Ctrl+Shift+d (Windows)
 . *Terminal* console: Displays the output of the Maven build process and the results of the deployment to the embedded Mule Runtime engine.
 . *Breakpoint* icon: Identifies a line in the configuration XML to pause execution of the flow so that you can check for and fix any issues.
 . *Breakpoint* icon: Identifies a component that contains one or more breakpoints.
-
-[[watch-payload-mediatype]]
-== Watch the Payload Media Type Around a Transform
-
-When a *Transform Message* component (`<ee:transform/>`) converts the Mule message payload, the effective media type string often changes. For example, data coming from a Java-based connector can appear as `application/java` before the transform and as `application/json` after you set `output application/json` in DataWeave.
-
-The DataWeave metadata accessor `^mediaType` on `payload` exposes that type string while you debug.
-
-To watch the value change:
-
-. <<run-debug-mode, Run your application in debug mode>>, and trigger a flow that includes a Transform Message component after a connector or other operation that produces a payload you transform.
-. Pause execution on a breakpoint *before* the Transform Message component (for example, on a database Select or Set Variable component that precedes the transform in the same flow).
-. In the *Run and Debug* sidebar, open the *Watch* panel.
-. Click the *+* icon and add this expression:
-+
-[source,text]
-----
-payload.^mediaType
-----
-+
-image::tut-debug-mediatype-java.png["The Watch panel displaying a payload type of application/java"]
-. On the <<debug-toolbar, debug toolbar>>, click *Step Over* until execution advances to or through the Transform Message component.
-. Notice how the watch expression updates after the transform sets the new output format, for example:
-+
-image::tut-debug-mediatype-json.png["The Watch panel displaying a payload type of application/json"]
-
-For DataWeave transformations and expressions, see xref:int-configure-dw-expressions.adoc[].
 
 [[add-breakpoint]]
 == Add a Breakpoint
