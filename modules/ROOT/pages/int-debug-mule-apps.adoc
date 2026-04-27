@@ -31,7 +31,8 @@ For example, trigger an HTTP Listener or configure a Scheduler component.
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
 
-== Debug Console Overview 
+[[debugger-view-overview]]
+== Debugger View Overview
 
 image::debugger-view.png["Elements of the debugger view"]
 
@@ -46,12 +47,14 @@ The Mule event includes message payload and attribute details, as well as Mule v
 . *Run and Debug* (MuleSoft) icon: Opens the *Run and Debug* panel, where you can click *Start Debugging (F5)* and find debugging information.
 +
 Keyboard shortcut: Cmd+Shift+d (Mac) or Ctrl+Shift+d (Windows) 
-. *Watch* panel: Helps you evaluate variables and expressions.
+. *Watch* panel: Pin <<evaluate-dw-watch,DataWeave expressions>> that re-evaluate whenever execution pauses.
 . *Call Stack* panel: Identifies the functions or procedures that are currently in the stack.
-. *Breakpoints* panel: Lists all breakpoints in your Mule application.
+. *Breakpoints* panel: Lists breakpoints by file and line, and includes <<exception-breakpoints,*All Exceptions*>> to stop when any exception is thrown.
 . *Terminal* console: Displays the output of the Maven build process and the results of the deployment to the embedded Mule Runtime engine.
 . *Breakpoint* icon: Identifies a line in the configuration XML to pause execution of the flow so that you can check for and fix any issues.
 . *Breakpoint* icon: Identifies a component that contains one or more breakpoints.
+
+Open the *Debug Console* tab in the panel area to <<evaluate-dw-debug-console,evaluate DataWeave>> while execution is paused. See <<evaluate-dw-while-debugging>>.
 
 
 [[add-breakpoint]]
@@ -116,7 +119,33 @@ A breakpoint icon appears on the component and in the configuration XML for that
 +
 When execution reaches the breakpoint, processing pauses so you can inspect variables, payloads, and the execution state in the Debug panel.
 
-NOTE: Batch execution is concurrent. Multiple record blocks can be processed in parallel, so breakpoints can trigger on different threads. The Debug panel displays each thread context separately so you can inspect each execution path.
+NOTE: Batch execution is concurrent. Multiple record blocks can be processed in parallel, so breakpoints can trigger on different threads. The Debug panel displays each thread context so you can inspect each execution path.
+
+[[conditional-breakpoint]]
+== Set a Conditional Breakpoint
+
+A conditional breakpoint uses a DataWeave expression, so execution pauses at that line only when the expression evaluates to `true`.
+
+To set or change a breakpoint condition:
+
+. Add a breakpoint in the configuration XML. See <<add-breakpoint>>.
+. Right-click the breakpoint indicator in the gutter for that line.
+. Select *Edit Breakpoint*.
+. In the breakpoint editor, enter a DataWeave expression that uses the current Mule event.
+
+The gutter context menu for a breakpoint also includes *Remove Breakpoint*, *Disable Breakpoint*, and *Run to Line*.
+
+To review a condition later, hover over the breakpoint in the gutter. A tooltip shows the configured expression in the form `Condition:` followed by your DataWeave expression.
+
+[[exception-breakpoints]]
+== Stop When an Exception Is Thrown
+
+You can configure the debugger to pause whenever any exception is thrown, which helps you inspect failures without adding breakpoints to every path.
+
+. Open *Run and Debug*.
+. In the *BREAKPOINTS* section, enable *All Exceptions*.
++
+If you enable *All Exceptions*, the debugger pauses as soon as an exception is thrown during a debug session.
 
 [[run-debug-mode]]
 == Run Your Application in Debug Mode
@@ -211,6 +240,34 @@ Stop and restart the application without packaging new dependencies, such as new
 +
 Stop execution of the application. The next debugging session that you start packages the application with any new dependencies.
 
+[[evaluate-dw-while-debugging]]
+== Evaluate DataWeave While Debugging
+
+While execution is paused, you can run DataWeave against the current Mule event from the *Debug Console* or from pinned entries in the *Watch* panel. For the variables available in those expressions, see xref:dataweave::dataweave-variables-context.adoc[Predefined Mule event variables].
+
+[[evaluate-dw-debug-console]]
+=== Use the Debug Console
+
+. Start a debug session and pause execution at a breakpoint or after a step. See <<run-debug-mode>> and <<debug-toolbar>>.
+. Open the *Debug Console* tab, or choose *View* > *Debug Console*.
+. Ensure the input is set to *Expression*. Type a DataWeave expression and press Enter to evaluate it against the current message, attributes, variables, and other values visible to the debugger at the pause.
++
+The console shows each expression you run and its evaluated result for the current pause.
+
+The *Debug Console* is suited to check if needed as you step through a flow.
+
+[[evaluate-dw-watch]]
+=== Use the Watch Panel
+
+. Open the *Watch* panel in the *Run and Debug* sidebar.
+. Add an entry with *+* and enter a DataWeave expression.
++
+Whenever execution pauses, the debugger reevaluates each watch expression and shows the result next to the expression, similar to the *Debug Console*.
++
+Watch expressions typically persist for later debug sessions in the same workspace, so you can keep inspecting the same values across runs.
+
+The *Watch* panel is suited to values you want to track on every pause without retyping them.
+
 [[hot-deploy]]
 == Perform a Hot Deploy When Debugging
 
@@ -232,3 +289,8 @@ image::deb-hot-deploy.png["Hot-deploy (lightning) icon in a running Mule applica
 To stop your debug session, in the *Run and Debug* panel, click the image:icon-stop.png["",15,15] (*Stop*) icon. 
 
 The status bar no longer indicates that the application is running.
+
+== See Also
+
+* xref:dataweave::dataweave-variables-context.adoc[]
+* xref:int-configure-dw-expressions.adoc[]
