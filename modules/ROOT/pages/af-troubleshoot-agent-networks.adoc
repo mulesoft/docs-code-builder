@@ -1,10 +1,10 @@
 = Troubleshoot Agent Networks
 :page-aliases: af-troubleshoot-anypoint-code-builder.adoc
 
-Resolve common agent network errors and connectivity issues by enabling verbose logging, message logging policies, and distributed tracing.
+Resolve common agent network errors and connectivity issues by enabling verbose logging, message logging policies, and distributed tracing. Using logs and distributed traces, you can observe agents and MCP servers and see how requests flow through brokers, which tools and policies apply, and where failures or latency originate.
 
 [NOTE]
-Use Agent Visualizer to xref:agent-visualizer::troubleshoot-agent-network.adoc[view metrics, logs, and traces] for your agents and MCP servers in your network
+Use Agent Visualizer to xref:agent-visualizer::troubleshoot-agent-network.adoc[view metrics, logs, and traces] for agents and MCP servers in your network.
 
 == Enable Logging to Debug Agent Brokers
 
@@ -26,7 +26,7 @@ Enable logging and log levels from CloudHub 2.0 or Runtime Fabric:
 [[enable-message-logging]]
 == Enable Message Logging Policy
 
-Edit `agent-network.yaml` to set message logging for MCP servers and agents. 
+Edit `agent-network.yaml` to set message logging for MCP servers and agents.
 
 Message logging uses the xref:gateway::policies-included-message-logging.adoc[Flex Gateway Message Logging policy]. In the `connection` section of the agent or MCP server instance you want to log, add the following logging policy inside `policies`:
 
@@ -54,7 +54,7 @@ policies: ## add the following inside the policy setting
 ----
 
 [NOTE]
-On non-US control planes, the value for the `namespace` parameter can change. In Exchange, check the group in the policy API Gateway Message Logging Policy Template.
+On non-US control planes, the value for the `namespace` parameter can change. In Exchange, check the business group in the API Gateway Message Logging Policy Template.
 
 == Troubleshooting Common Issues and Errors
 
@@ -64,7 +64,7 @@ Use the steps in this section to diagnose and fix common problems in agent netwo
 
 If Anypoint Monitoring isn't showing traces for agents and MCP servers, check these settings:
 
-* In API Manager, verify you've enabled the tracing policy for all brokers and agents. 
+* In API Manager, verify you've enabled the tracing policy for all brokers and agents.
 * In the managed Flex Gateways, verify that you've enabled Distributed Tracing for ingress and egress.
 
 === Issue: No Agent Network Commands in Anypoint Code Builder
@@ -86,8 +86,8 @@ You can encounter this error in two different scenarios:
 . The agent card URL is incorrect. In this case:
 +
 * Check that the URL you set on the connection ends with a `/`.
-* Use a browser or Postman to ping the URL you configured prefixed with `.well-known/agent-card.json`, for example, https://ping-id-agent-url/pingid/.well-known/agent-card.json
-. The A2A agent is not configured to use A2A protocol version 0.3.0. In this case: 
+* Use a browser or Postman to request the agent card URL by appending `.well-known/agent-card.json` to the connection URL, for example, `https://ping-id-agent-url/pingid/.well-known/agent-card.json`.
+. The A2A agent is not configured to use A2A protocol version 0.3.0. In this case:
 +
-* If you created the agent with MuleSoft, verify that you are using the A2A connector version 0.4.0 or later. 
+* If you created the agent with MuleSoft, verify that you are using the latest version of the Anypoint Connector for A2A (A2A Connector).
 * If you are using an external agent, verify that it uses the A2A protocol version 0.3.0.

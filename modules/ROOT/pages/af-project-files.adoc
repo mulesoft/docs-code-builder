@@ -1,6 +1,6 @@
 = Agent Network Project File Reference
 
-Configure and publish your agent network using two key files: `agent-network.yaml` and `exchange.json`. 
+Configure and publish your agent network using two key files: `agent-network.yaml` and `exchange.json`.
 The `agent-network.yaml` file defines agent behaviors, tools, and inter-agent communication, while `exchange.json` contains metadata for Anypoint Exchange publication. Understanding these files enables you to orchestrate multi-agent systems with external services and manage asset dependencies across your organization.
 
 * <<agent-network-yaml,agent-network.yaml>>
@@ -15,7 +15,7 @@ For example, think of the YAML as your organizational chart for digital labor. E
 
 Just like with human labor, digital agents require coordination. We call these coordinators "brokers". These are special types of agents in your agent network capable of receiving a user prompt, identifying the goal, determining the necessary steps to be carried out, and delegating each step to the proper agent, even if the agent is part of a different broker.
 
-The agent-network.yaml file uses these sections. 
+The `agent-network.yaml` file uses these sections.
 
 * <<brokers-section,Brokers>>
 ** <<card-section,Card>>
@@ -45,14 +45,14 @@ This section defines the AI assets in your agent network. A broker is an intelli
 |`brokers` |The list of brokers defined in your agent network. |Object |Object with property names matching this pattern: `^[a-zA-Z_][a-zA-Z0-9_.-]*$`. The name must start with a letter or an underscore and can contain letters, numbers, underscores, dots, or hyphens. The name cannot be: `default`, `defaults`, `system`, `local`, `null`
 |===
 
-The `broker` element has these properties. 
+The `broker` element has these properties.
 
 [cols="1,2,1,1,1",options="header"]
 |===
 |Parameter |Description |Type |Valid Values |Required
 
 |`card` |Agent card definition. |Object |Refer to the `card` object properties. |Yes
-|`spec` |Broker specification. |Object |Refer to the `spec` object properties.  |Yes
+|`spec` |Broker specification. |Object |Refer to the `spec` object properties. |Yes
 |===
 
 [[card-section]]
@@ -62,7 +62,8 @@ The `broker` element has these properties.
 
 This section adheres to the Agent-to-Agent (A2A) specification v0.3.0 and describes the broker's contract, skills, and capabilities. This is a standard A2A agent card link:https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure[as defined in the Agent2Agent (A2A) Protocol specification.].
 
-The `card` element has these properties. 
+The `card` element has these properties.
+
 [cols="1,2,1,1,1",options="header"]
 |===
 |Parameter |Description |Type |Valid Values |Required
@@ -161,10 +162,10 @@ brokers:
         - text/plain
       defaultOutputModes:        # Supported media types for output
         - application/json
-      skills:                            
+      skills:
         - id: onboarding-agent
           name: Onboarding Agent
-          description: This agent acts as a broker. It orchestrates the use of specialized tools and agents, including MCP (Model Context Protocol) servers, to manage employee onboarding. 
+          description: This agent acts as a broker. It orchestrates the use of specialized tools and agents, including MCP (Model Context Protocol) servers, to manage employee onboarding.
           examples:                # Usage examples
             - Onboard a new sales employee. Employee name is 'Alex Smith', email is 'alex.smith@example.com', and phone number is '555-123-4567'.
           inputModes:
@@ -187,7 +188,7 @@ brokers:
       version: 1.0.0		          # Agent (broker) version
 ----
 
-The `extensions` element has these properties. 
+The `extensions` element has these properties.
 
 [cols="1,2,1,1,1",options="header"]
 |===
@@ -243,14 +244,14 @@ The `llm` element has these properties.
 |`connection.ref` |Connection reference. |String |See <<connections-section,Connections>> |No
 |`configuration.model` |The name of the model to use. |String |Model name string |Yes
 |`configuration.openAI` |OpenAI specific configuration settings. |Object |Object with OpenAI settings |No
-|`configuration.openAI.reasoningEffort` |Constrains reasoning effort for reasoning models. Useful for managing performance and reason-token usage. |String 
-a| 
+|`configuration.openAI.reasoningEffort` |Constrains reasoning effort for reasoning models. Useful for managing performance and reason-token usage. |String
+a|
 
 * `NONE` (default for GPT-5.1)
 * `MINIMAL`
 * `LOW`
 * `MEDIUM` (default for versions previous to GPT-5.1)
-* `HIGH` 
+* `HIGH`
 |No
 
 |`configuration.openAI.temperature` |Controls randomness in the output. Requires GPT-5.1 and `reasoningEffort` set to `NONE`. |Number |Any number |No
@@ -270,7 +271,7 @@ a|
 |`configuration.gemini.responseLogprobs` |Whether to return log probabilities. |Boolean |true or false |No
 |`configuration.gemini.maxOutputTokens` |Maximum number of tokens that can be generated in the response. |Integer |Any integer |No
 
-|=== 
+|===
 
 [[instructions-section]]
 ==== Instructions Section
@@ -338,7 +339,7 @@ Example
 ----
 tools:
   - mcp:
-      ref: 
+      ref:
         name: talent-pool-mcp         # Exchange asset ID of MCP server. By default, the groupId for this asset is the same as that in exchange.json.
       allowed:                        # Allowlist specific tools
         - TalentPoolMcpServer.match_email_to_address
@@ -434,11 +435,11 @@ Example
 [source,yaml]
 ----
 policies:
-  - ref: 
+  - ref:
       name:          		# Exchange asset ID of the policy. By default, the groupId for this asset is the same as that in exchange.json.
       namespace:     		# Optional. If the policy was defined in a different business group, set the corresponding groupId here.
     configuration:
-      policyConfig1: policyConfig1Value	
+      policyConfig1: policyConfig1Value
 ----
 
 Apply policies at the broker or at the connection. Reference the policy definition and apply the configuration.
@@ -480,20 +481,20 @@ Use these properties to handle error scenarios. Define these properties within t
 
 ==== Error Handling Considerations
 
-* `maxNumberOfLoops` 
+* `maxNumberOfLoops`
 
   ** Each step in an orchestration consumes tokens.
   ** Complex tasks may require more steps.
   ** Simple tasks should complete with fewer steps.
   ** The default of 25 maximum loops is suitable for most use cases.
 
-* `maxConsecutiveErrors` 
+* `maxConsecutiveErrors`
 
   ** Allows the orchestrator to retry failed operations.
   ** Prevents infinite retry loops.
   ** Default of `3` attempts provides a balance between resilience and failure detection. After reaching this limit, the orchestration returns a failed status.
 
-* `taskTimeoutSecs` 
+* `taskTimeoutSecs`
 
  ** Applies to each individual orchestration task.
  ** Accounts for network latency and external service response times.
@@ -554,7 +555,7 @@ The `agents` element has these properties.
 
 `mcpServers`
 
-This section lists the MCP servers in your agent network. Use these servers to obtain relevant context and generate notifications. To apply governance to an MCP server using the agent network file, it must be in your `agent-network.yml` file or published to Anypoint Exchange as an asset.
+This section lists the MCP servers in your agent network. Use these servers to obtain relevant context and generate notifications. To apply governance to an MCP server using the agent network file, it must be in your `agent-network.yaml` file or published to Anypoint Exchange as an asset.
 
 Example
 
@@ -571,7 +572,7 @@ mcpServers:
           ssePath: /sse
           messagesPath: /messages
       tools:                          # Server-level tool filtering
-        allowed: [tool1, tool2]       
+        allowed: [tool1, tool2]
   slack-mcp:
     metadata:
       transport:
@@ -667,7 +668,7 @@ connections:
     ref:
       name: hr-agent                # Use the same name as in the associated entry in the agents section or use the Exchange asset ID.
     spec:
-      url: https://hr-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/hr-agent/  
+      url: https://hr-a2a-agent-inkbh1.paga8m.usa-w1.cloudhub.io/hr-agent/
       authentication:
         kind: oauth2-client-credentials
         token:
@@ -849,7 +850,7 @@ Example
 
            ref:
 
-             name: weather-agent           
+             name: weather-agent
 ----
 
 [[authentication-types]]
@@ -1039,10 +1040,10 @@ authentication:
   tokenEndpoint: https://oauth.provider.com/token
   clientId: clientId
   clientSecret: clientSecret
-  targetType: audience
+  targetType: audience  # Optional. Logical identifier (audience) or physical URI (resource). Default: audience.
   targetValue: https://api.example.com/agents/my-agent
-  scope: Read #optional, OAuth 2.0 scope to request. Required for Microsoft Entra OBO (for example, api://downstream-client-id/.default). Optional for OAuth 2.0 Token Exchange (RFC 8693).
-  timeout: 5000 #optional, Timeout for token exchange requests in milliseconds. Default: 10000.
+  scope: Read  # Optional for OAuth 2.0 Token Exchange (RFC 8693). Required for Microsoft Entra OBO and CIBA.
+  timeout: 5000  # Optional. Timeout for token exchange requests in milliseconds. Default: 10000.
 ----
 
 Using Microsoft Entra ID On-Behalf-Of:
@@ -1052,11 +1053,29 @@ Using Microsoft Entra ID On-Behalf-Of:
 authentication:
   kind: oauth2-obo
   flow: microsoft-entra-obo
+  tokenEndpoint: https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token
+  clientId: clientId
+  clientSecret: clientSecret
+  scope: api://downstream-client-id/.default  # Required for Microsoft Entra OBO flows.
+  timeout: 8000  # Optional. Timeout for token exchange requests in milliseconds. Default: 10000.
+----
+
+Using OAuth 2.0 Token Exchange with CIBA (client-initiated backchannel authentication):
+
+[source,yaml]
+----
+authentication:
+  kind: oauth2-obo
+  flow: oauth2-token-exchange
   tokenEndpoint: https://oauth.provider.com/token
   clientId: clientId
   clientSecret: clientSecret
-  scope: api://downstream-client-id/.default
-  timeout: 5000 #optional, Timeout for token exchange requests in milliseconds. Default: 10000.
+  scope: openid  # Required for CIBA flow.
+  enableCIBA: true  # Optional. Enables OAuth 2.0 Token Exchange with CIBA flow. Available only for OAuth 2.0 Token Exchange.
+  CIBABackchannelEndpoint: https://oauth.provider.com/bc-authorize  # Required when enableCIBA is true. The backchannel authentication endpoint.
+  loginHintClaim: email  # Optional. JWT claim from incoming subject token to send as login_hint in CIBA request. Default: email.
+  bindingMessage: "Please approve this request on your device"  # Optional. Human-readable message displayed on authentication device.
+  timeout: 10000  # Optional. Timeout for token exchange requests in milliseconds. Default: 10000.
 ----
 
 The `oauth2-obo` authentication has these properties.
@@ -1074,6 +1093,10 @@ The `oauth2-obo` authentication has these properties.
 |`targetValue` |Target audience URI or resource URI for the exchanged token. Required for OAuth 2.0 Token Exchange. |String |Valid URI |Required when using `oauth2-token-exchange` with a target
 |`scope` |OAuth scope to request. Required for Microsoft Entra OBO (e.g. `api://downstream-client-id/.default`). Optional for OAuth 2.0 Token Exchange. |String |Any string |Required for `microsoft-entra-obo`
 |`timeout` |Timeout for token exchange requests in milliseconds. |Integer |Positive integer. Default: 10000 |No
+|`enableCIBA` |Enables OAuth 2.0 Token Exchange with CIBA flow. Available only for OAuth 2.0 Token Exchange. |Boolean |`true` | No
+|`CIBABackchannelEndpoint`` |The backchannel authentication endpoint (`bc-authorize`) used to initiate the CIBA flow.  |String | `https://oauth.provider.com/bc-authorize` | Required when *enableCIBA* is `true`.
+|`loginHintClaim` |JWT claim from the incoming subject token to send as `login_hint` in the CIBA request. If no hint is specified, `email` is used. |String |`preferred_username` |No
+|`bindingMessage` |Human-readable message sent as `binding_message` in the CIBA request and displayed on the authentication device. |String |`Please approve the transaction on your device` |No
 |===
 
 [[exchange-json-file-element]]
@@ -1081,7 +1104,7 @@ The `oauth2-obo` authentication has these properties.
 
 All agent network projects have an `exchange.json` file. This file contains asset metadata available in Anypoint Exchange after publishing your agent network assets.
 
-Example 
+Example
 
 [source,json]
 ----
@@ -1136,8 +1159,6 @@ variables:: Nested in the metadata section, defines all the variables whose valu
 
 When the agent network is published, all the assets derived from it share the same `groupId` (business group) defined in the `exchange.json` file.
 
-
-
 [[ref-element]]
 === Ref Element
 
@@ -1157,7 +1178,7 @@ This example represents a link to an HR agent. The `name` attribute doesn't poin
 
 The `hr-agent` asset can either exist already, or can be defined in this same YAML. In either case, the Exchange `assetId` is the key to this reference.
 
-In some cases, the `ref` element needs to point to an asset that's defined in a different business group. For this, the `ref#namespace` attribute can be used to reference the asset's `groupId`.  To find the `groupId`, look in the `dependencies` section in the `exchange.json` file.
+In some cases, the `ref` element needs to point to an asset that's defined in a different business group. For this, the `ref#namespace` attribute can be used to reference the asset's `groupId`. To find the `groupId`, look in the `dependencies` section in the `exchange.json` file.
 
 [source,yaml]
 ----

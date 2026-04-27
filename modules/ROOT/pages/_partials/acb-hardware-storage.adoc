@@ -1,0 +1,94 @@
+Anypoint Code Builder for Desktop relies on Visual Studio Code (VS Code), Java, Node.js, Maven, and local build artifacts. To avoid timeouts, slow dependency resolution, and poor IDE responsiveness, your environment must meet the following minimum specifications. Recommended values improve performance for larger workspaces and frequent local runs.
+
+For supported operating systems and extension compatibility, see xref:acb-release-notes.adoc#compatibility[Anypoint Code Builder Release Notes].
+
+== Hardware Requirements
+
+[cols="1,2,2",options="header"]
+|===
+| Component | Minimum | Recommended
+
+| CPU
+| 8 cores or 8 vCPUs
+| More cores for parallel builds and multiple large projects
+
+| RAM
+| 32 GB
+| Additional memory for multiple VS Code windows and heavy local testing
+
+| Primary storage type
+| NVMe SSD (PCIe 3.0 or higher)
+| Same; avoid network-only or heavily virtualized disks for the OS, user profile, and project roots
+
+| Free disk space
+| 50 GB
+| 100 GB
+
+| Network
+| 1 Gbps
+| 10 Gbps (for large dependency downloads and corporate artifact repositories)
+|===
+
+== Storage Performance
+
+Local disks that can't sustain the following metrics often show slow indexing, Maven repository access, and Mule application startup.
+
+Confirm values with your storage vendor or disk benchmark tooling on the volume that hosts your user profile, local Maven repository, VS Code data, and project directories. Consider input/output operations per second (IOPS) as well; higher IOPS generally improve responsiveness for random small-file access.
+
+Antivirus, endpoint detection, and real-time scanning can reduce effective IOPS below these targets. Apply the exclusions in <<antivirus-exclusions, Configure Antivirus and Endpoint Protection Exclusions>>.
+
+[cols="2,1",options="header"]
+|===
+| Metric | Minimum Requirement
+
+| Random read IOPS (4 KB)
+| 10,000 IOPS
+
+| Random write IOPS (4 KB)
+| 8,000 IOPS
+
+| Sequential read
+| 1,250 MB/s
+
+| Sequential write
+| 1,000 MB/s
+|===
+
+[[antivirus-exclusions]]
+=== Configure Antivirus and Endpoint Protection Exclusions
+
+On managed devices, add exclusions for the processes and directories that Anypoint Code Builder and its toolchain use most intensively. Exclusions reduce file locking, false positives, and severe I/O latency during builds. They also reduce the scan surface for specific paths and processes, but your organization's security policy decides whether exclusions are allowed and how they're deployed.
+
+Use the checklist with your security team. Adjust paths for your environment.
+
+*Processes (executables)*
+
+* [ ] Windows: `java.exe` or `javaw.exe` — Java runtime used by Mule and tooling
+* [ ] macOS: `java` — same as on Windows, using the resolved path from your JDK install
+* [ ] Windows: `node.exe` — Node.js used by VS Code extensions and scripts
+* [ ] macOS: `node` — same as on Windows
+* [ ] Windows: `Code.exe` — Visual Studio Code
+* [ ] macOS: Visual Studio Code application bundle — for example, `Visual Studio Code.app`
+
+*Directories*
+
+* [ ] User profile Anypoint Code Builder data: +
+Windows: `%USERPROFILE%\AnypointCodeBuilder` +
+macOS: `~/AnypointCodeBuilder`
+* [ ] VS Code user data: +
+Windows: `%USERPROFILE%\.vscode` +
+macOS: `~/.vscode`
+* [ ] Local Maven repository: +
+Windows: `%USERPROFILE%\.m2` +
+macOS: `~/.m2`
+* [ ] System temporary directory used by the IDE and build tools: +
+Windows: `%USERPROFILE%\AppData\Local\Temp` +
+macOS: `$TMPDIR` (or `/tmp` when that is your temp location)
+* [ ] *Projects directory* — the root folder where you clone or store Mule and API projects (your `ProjectsDirectory`); exclude the entire tree, not single files
+
+=== Power Settings
+
+Power management can throttle CPU and disk performance during long builds or local runs.
+
+* Windows: Prefer a *High performance* or *Balanced* power plan while you work; avoid battery saver or aggressive power saving when the machine is on AC power.
+* macOS: On notebooks, reduce battery-focused throttling where your org allows it—for example, adjust *System Settings* under *Battery* or *Energy* when plugged in.
