@@ -52,8 +52,8 @@ For reference documentation on specific connector and component configurations, 
 
 //
 // tag::note-component-add-config[]
-When adding components, you can start from the canvas or the configuration XML for your app.
-You can configure components from their configuration panels in the canvas or from the XML.
+When adding components, you can start from the canvas or the code editor for your app.
+You can configure components from their configuration panels in the canvas or from the code editor.
 // end::note-component-add-config[]
 //
 
@@ -64,7 +64,7 @@ In Anypoint Code Builder, both integrations and implementations are Mule applica
 
 include::reuse::partial$connectors/connectors-mule-apps.adoc[]
 
-Built-in Anypoint connectors are available from the canvas and configuration XML for integration and implementation projects. These connectors include:
+Built-in Anypoint connectors are available from the canvas and code editor for integration and implementation projects. These connectors include:
 
 * xref:a2a-connector::index.adoc[Anypoint Connector for Agent2Agent (A2A) (Beta) (<a2a:/>)] (A2A Connector)
 * xref:agentforce-connector::index.adoc[Anypoint Connector for Agentforce (<ms-agentforce:/>)] (Agentforce Connector)
@@ -97,7 +97,7 @@ To find information about more connectors, see xref:connectors::introduction/int
 
 Use the Connection Management Configuration Panel to easily configure connections to third-party systems directly from the UI. 
 
-In this panel, you can create, edit, delete, and test connections directly within the IDE interface, automatically populate connection fields using metadata provided by the connector, and save and manage connection configurations without switching to the XML view. 
+In this panel, you can create, edit, delete, and test connections directly within the IDE interface, automatically populate connection fields using metadata provided by the connector, and save and manage connection configurations without switching to the code editor. 
 
 To open the configuration panel: 
 
@@ -182,7 +182,7 @@ Includes On-Error Continue (`<on-error-continue/>`) and On-Error Propagate (`<on
 //
 // tag::add-components[]
 
-The following example illustrates basic configurations for adding components to your project from the canvas, and the configuration XML. The example assumes you are beginning with an empty integration project.
+The following example illustrates basic configurations for adding components to your project from the canvas and the code editor. The example assumes you are beginning with an empty integration project.
 
 . {open-config-xml}, such as `my-project-name.xml`. 
 +
@@ -190,9 +190,9 @@ image::anypoint-code-builder::int-empty-canvas.png["Canvas showing visual repres
 +
 [calloutlist]
 .. The canvas provides space for a visual representation of your Mule flows or subflows.
-.. The configuration XML editor displays the configuration file for your Mule application.
+.. The code editor displays the configuration file for your Mule application.
 . Select *Build a Flow* from the canvas to create an empty flow within a Mule integration application.
-. Change the default name of the flow from the canvas or from the configuration XML.
+. Change the default name of the flow from the canvas or from the code editor.
 +
 [tabs]
 ====
@@ -203,7 +203,7 @@ Click *Flow name1* to open the configuration panel for the Flow component, chang
 
 image::anypoint-code-builder::int-flow-name-ui.png["Change name of flow through canvas."]
 --
-From the configuration XML::
+From the code editor::
 +
 --
 Replace the default name of the flow (`name1`) with your flow name, such as `getFlights`, for example:
@@ -234,9 +234,9 @@ The configuration XML file now includes the XML for the HTTP Listener within the
 
 </flow>
 ----
-. Add another component, this time using the configuration XML.
+. Add another component, this time using the code editor.
 +
-In the configuration XML, place your cursor before the opening `<flow>` tag. Ensure that the cursor is not inside the `<flow/>` element. Add the following code:
+In the code editor, place your cursor before the opening `<flow>` tag. Ensure that the cursor is not inside the `<flow/>` element. Add the following code:
 +
 // image::anypoint-code-builder::add-http-config-snippet.png["http:listener-config highlighted in the configuration XML menu"]
 +
@@ -252,7 +252,7 @@ image::anypoint-code-builder::int-canvas-error.png["Listener error in the canvas
 +
 .. To determine where the error is, select the processor in the canvas.
 +
-Anypoint Code Builder highlights its location within the configuration XML, and you can mouse over the issue for more information, for example:
+Anypoint Code Builder highlights its location in the code editor, and you can mouse over the issue for more information, for example:
 +
 image::anypoint-code-builder::int-select-listener-config.png["Selecting configuration reference from configuration panel"]
 .. To fix the error, change the value of the `name` attribute in `http:listener-config` to match the name of the `config-ref` value in your `http:listener` configuration:
@@ -327,11 +327,11 @@ The status bar shows the progress:
 * *Invalid Connection Got status code: 500 when trying to resolve a Mule Runtime operation* indicates a connection error.
 
 
-== Test Connection from the Configuration XML
+== Test Connection from the Code Editor
 
-You can test the connection from the configuration XML. For example, to test an HTTP Listener connection, click *Test Connection* in the configuration XML:
+You can test the connection from the code editor. For example, to test an HTTP Listener connection, click *Test Connection* in the code editor:
 
-image::http-listener-test-connection.png["HTTP Listener Test Connection link in the configuration XML"]
+image::http-listener-test-connection.png["HTTP Listener Test Connection link in the code editor"]
 
 The status bar shows the progress:
 
@@ -426,14 +426,14 @@ xref:exchange::index.adoc[].
 //
 // tag::open-component-from-xml[]
 
-You can open a component and its configuration panel in the canvas from the XML editor. This feature is helpful, for example, if you want to configure the component from the UI, if a component is in another flow than the flow currently displayed in the canvas, or if the canvas is not open.  
+You can open a component and its configuration panel in the canvas from the code editor. This feature is helpful, for example, if you want to configure the component from the UI, if a component is in another flow than the flow currently displayed in the canvas, or if the canvas is not open.  
  
-. From the configuration XML, place your cursor within the component's XML.
+. From the code editor, place your cursor within the component's XML.
 . Right-click and select *Configure Component in UI*. 
 +
 This action displays the component in the canvas and opens its configuration panel, for example:
 +
-image::anypoint-code-builder::acb-open-component-ui-from-xml.png["Opening a component in the canvas from the XML"]
+image::anypoint-code-builder::acb-open-component-ui-from-xml.png["Opening a component in the canvas from the code editor"]
 
 // end::open-component-from-xml[]
 //
