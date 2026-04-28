@@ -1,9 +1,7 @@
 = MuleSoft Vibes for Anypoint Code Builder
 :page-article-style: learning-map
 
-MuleSoft Vibes is the natural-language assistant in Anypoint Code Builder for API specifications, integrations, and related tasks through optional MCP servers. Use this map to open MuleSoft Vibes topics in the order that matches your goal, from first launch through customization, generation, and troubleshooting.
-
-The end-to-end journey for MuleSoft Vibes consists of various tasks, each with links to relevant content to assist you in completing them.
+MuleSoft Vibes is the natural-language assistant in Anypoint Code Builder for API specifications, integrations, and related tasks through optional MCP servers. Use the columns in order for a typical journey from discovery through design, build, session recovery and prompting, to MCP configuration—or jump to the section that matches your goal.
 
 [.lm-table, cols="1a,1a,1a", grid="none"]
 |===
@@ -14,9 +12,11 @@ The end-to-end journey for MuleSoft Vibes consists of various tasks, each with l
 MuleSoft Vibes is a purpose-built assistant for the development lifecycle, available directly in Anypoint Code Builder. Build, deploy, and manage your projects using natural language prompts.
 
 - xref:general::learning-map-mulesoft-ai.adoc[Explore MuleSoft AI]
-- xref:learn-about-mulesoft-vibes.adoc#capabilities[Understand capabilities in your workspace ]
+- xref:learn-about-mulesoft-vibes.adoc#capabilities[Understand capabilities in your workspace]
 - xref:learn-about-mulesoft-vibes.adoc#related-ai[Compare with broader MuleSoft AI in related resources]
 - xref:mulesoft-mcp-server::index.adoc[Review MuleSoft MCP Server]
+- xref:vibes-checkpoints.adoc[Track workspace changes with checkpoints]
+- xref:vibes-conversation-history.adoc#browse-conversation-history[Browse conversation history]
 
 | image::reuse::lm_analyze_1.png[Get started with MuleSoft Vibes]
 
@@ -28,19 +28,6 @@ Set up the IDE, confirm permissions, then open MuleSoft Vibes and start promptin
 - xref:start-configure-permissions.adoc#permissions[Configure Anypoint Code Builder permissions]
 - xref:vibes-get-started.adoc#use-mulesoft-vibes[Use MuleSoft Vibes]
 
-| image::reuse::lm_code_1.png[Checkpoints, conversation, and troubleshooting]
-
-[.lm-bold]##Checkpoints, Conversation, and Troubleshooting##
-
-Save workspace states, reopen past work, and fix common access, permission, and output issues.
-
-- xref:vibes-checkpoints.adoc[Track file and task states]
-- xref:vibes-conversation-history.adoc#browse-conversation-history[Reopen tasks from browse conversation history]
-- xref:vibes-conversation-history.adoc#delete-history[Clear tasks selectively or entirely in Delete History]
-- xref:troubleshoot-generative-ai.adoc#_unexpected_results_when_using_mulesoft_vibes[Improve inconsistent output]
-- xref:troubleshoot-generative-ai.adoc#_troubleshoot_mulesoft_vibes_access_errors[Troubleshoot MuleSoft Vibes access and login issues]
-- xref:troubleshoot-generative-ai.adoc#required-permissions[Verify tool permissions]
-
 | image::reuse::lm_develop_1.png[Design APIs, rules, and automation]
 
 [.lm-bold]##Design APIs, Rules, and Automation##
@@ -48,21 +35,30 @@ Save workspace states, reopen past work, and fix common access, permission, and 
 Shape API specs with AI, attach context, tune Vibes settings, and standardize output with rules, workflows, and commands.
 
 - xref:vibes-api-ai-create-spec.adoc#design-spec-ai[Generate and refine specs]
-- xref:vibes-api-ai-create-spec.adoc#rules-workflows[ Define rules and workflows]
+- xref:vibes-api-ai-create-spec.adoc#rules-workflows[Define rules and workflows]
 - xref:vibes-api-ai-create-spec.adoc#context-files[Attach requirements and outputs]
 - xref:vibes-api-ai-create-spec.adoc#settings[Control confirmations and file access]
 - xref:vibes-workflows-commands.adoc#add-workflows-or-rules[Add workflows and rules]
 - xref:vibes-workflows-commands.adoc#add-commands[Invoke slash shortcuts]
 
-| image::reuse::lm_build_1.png[Build integrations and example prompts]
+| image::reuse::lm_build_1.png[Build integration projects]
 
-[.lm-bold]##Build Integrations and Example Prompts##
+[.lm-bold]##Build Integration Projects##
 
-Stand up integration projects from prompts, finish the flow, and borrow proven patterns for real scenarios.
+Attach context to MuleSoft Vibes, open the assistant for integrations, and scaffold an integration project.
 
 - xref:vibes-get-started.adoc#provide-mulesoft-vibes-with-context[Attach folders and files]
-- xref:vibes-create-integrations.adoc#access-dev-agent[Open the assistant in Access Mulesoft Vibes on Creating Integrations with MuleSoft Vibes]
+- xref:vibes-create-integrations.adoc#access-dev-agent[Open the assistant for creating integrations]
 - xref:vibes-create-integrations.adoc#create-integration-project[Scaffold a project]
+
+| image::reuse::lm_code_1.png[Resume work, prompt, and improve output]
+
+[.lm-bold]##Resume Work, Prompt, and Improve Output##
+
+Pick up tasks from conversation history, write and verify prompts, reuse example patterns, and improve output when results are inconsistent.
+
+- xref:vibes-conversation-history.adoc#browse-conversation-history[Reopen tasks from browse conversation history]
+- xref:troubleshoot-generative-ai.adoc#_unexpected_results_when_using_mulesoft_vibes[Improve inconsistent output]
 - xref:vibes-create-integrations.adoc#craft-ai-prompt[Write your prompt]
 - xref:vibes-create-integrations.adoc#complete-gen-flow[Apply and verify results]
 - xref:vibes-prompt-examples.adoc#_order_management[Use example prompts]
@@ -74,11 +70,11 @@ Stand up integration projects from prompts, finish the flow, and borrow proven p
 Install and tune MCP servers so MuleSoft Vibes can call the right tools with the right approvals.
 
 - xref:vibes-mcp-server.adoc[Configure MCP server]
-- xref:vibes-mcp-server.adoc#add-and-manage-custom-mcp-servers[ Add and manage custom MCP servers]
-- xref:vibes-mcp-server.adoc#open-mcp-server-settings[Open the MCP Server settings UI in Open MCP Server Settings]
-- xref:vibes-mcp-server.adoc#_add_an_mcp_server[Install or register servers in Add an MCP Server]
-- xref:vibes-mcp-server.adoc#_manage_installed_mcp_servers[Review servers in Manage Installed MCP Servers]
-- xref:vibes-mcp-server.adoc#_delete_an_mcp_server[Remove a server in Delete an MCP Server]
+- xref:vibes-mcp-server.adoc#add-and-manage-custom-mcp-servers[Add and manage custom MCP servers]
+- xref:vibes-mcp-server.adoc#open-mcp-server-settings[Open MCP Server settings]
+- xref:vibes-mcp-server.adoc#_add_an_mcp_server[Add an MCP server]
+- xref:vibes-mcp-server.adoc#_manage_installed_mcp_servers[Manage installed MCP servers]
+- xref:vibes-mcp-server.adoc#_delete_an_mcp_server[Delete an MCP server]
 
 |===
 
@@ -86,3 +82,5 @@ Install and tune MCP servers so MuleSoft Vibes can call the right tools with the
 
 * xref:learn-about-mulesoft-vibes.adoc[]
 * xref:mulesoft-vibes.adoc[]
+* xref:vibes-conversation-history.adoc[]
+* xref:troubleshoot-generative-ai.adoc[]
