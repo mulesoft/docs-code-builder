@@ -65,7 +65,7 @@ For more resources, see xref:dataweave::index.adoc[].
 [[open-fx-field]]
 == Open the Expression Field 
 
-Most connector operations and components provide at least one field that accepts DataWeave expressions and scripts. In the configuration panel for a component, the *fx* button indicates that the field accepts an expression. In the XML, these fields have the `#[]` markup. Expression fields accept DataWeave expressions, including DataWeave functions and Mule event data, such as `payload`, `attributes`, and `vars`. 
+Most connector operations and components provide at least one field that accepts DataWeave expressions and scripts. In the configuration panel for a component, the *fx* button indicates that the field accepts an expression. In the code editor, these fields have the `#[]` markup. Expression fields accept DataWeave expressions, including DataWeave functions and Mule event data, such as `payload`, `attributes`, and `vars`. 
 
 To open a component expression field (*fx*): 
 
@@ -75,7 +75,7 @@ To open a component expression field (*fx*):
 +
 image::int-dw-fx-field-set-variable.png["Set Variable component configuration panel with the *fx* button highlighted next to the *Value* field"]
 +
-The markup `#[]` in the *fx* field also appears in the XML to indicate that the field is for an expression.
+The markup `#[]` in the *fx* field also appears in the code editor to indicate that the field is for an expression.
 +
 ----
 <set-variable variableName="variableName" value="#[]" 
@@ -167,7 +167,7 @@ image:int-dw-fx-functions-tab-details.png["Function details popup showing comple
 [[tab-preview]]
 === Preview Output of DataWeave Expressions 
 
-Preview output of DataWeave expressions from the canvas or from the code editor. The preview feature acts on sample data that you provide from the configuration XML for the payload (`payload`) or Mule variables (for example, `vars.somevar`) in your *fx* (expression) field. 
+Preview output of DataWeave expressions from the canvas or from the code editor. The preview feature acts on sample data that you provide in the *fx* (expression) field in the code editor for the payload (`payload`) or Mule variables (for example, `vars.somevar`). 
 
 To provide your own sample data, see <<sample-data>>.
 
