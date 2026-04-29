@@ -1,5 +1,6 @@
 = Implementing OAS, RAML, AsyncAPI, and GraphQL APIs
 :page-deployment-options: cloud-ide, desktop-ide
+:page-aliases: ui-tut-implement.adoc, implement-api-specification.adoc, implement-an-api-specification.adoc, tut-af-implement-am-flights-api.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -288,7 +289,7 @@ image::get-flights-select-listener.png["HTTP listener highlighted in the impleme
                 ---
                 payload map ( payload01 , indexOfPayload01 ) -> {
                   ID: payload01.ID,
-                  code: (payload01.code1 default "") ++ (payload01.code2 default ""),
+                  code: (payload01.code1 as String default "") ++ (payload01.code2 as String default ""),
                   price: payload01.price default 0,
                   departureDate: payload01.takeOffDate as String default "",
                   origin: payload01.fromAirport default "",
@@ -307,6 +308,9 @@ image::get-flights-select-listener.png["HTTP listener highlighted in the impleme
 </flow>
 --
 ====
++ 
+NOTE: The `++` operator concatenates `String` values. The database connector can infer `code1` and `code2` as a non-`String` type (or as nullable). Use `as String` with `default ""` for each part so the transform matches the `departureDate` line in the same object, nulls are handled, and the `++` expression type-checks in the editor.
++
 . In Anypoint Code Builder, open your `interface.xml` file.
 . Locate the `get:\flights:american-flights-api-config` flow: 
 +
