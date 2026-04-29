@@ -344,24 +344,20 @@ For more information about *Transform Message*, see xref:anypoint-code-builder::
 --
 * *Connection config*: The global Salesforce configuration name (for example, `Salesforce_Config`).
 * *Type*: `Account`.
++
+If *Type* stays empty until you establish a working Salesforce connection, set `type="Account"` on `<salesforce:create/>` in the code editor.
 * *Records*: A DataWeave expression that resolves to the records to create.
 +
 If the incoming payload uses different property names than Salesforce expects, map those properties in *Records*, as shown in the configuration XML example that follows.
 If the payload is already an array of Java objects with Salesforce field names (`output application/java`), you can use `#[payload]`.
 --
 +
-[TIP]
-====
-If *Type* stays empty until you establish a working Salesforce connection, set `type="Account"` on `<salesforce:create/>` in the configuration XML.
 For more information about connector fields for this operation, see xref:salesforce-connector::index.adoc[].
-====
 +
 [NOTE]
-====
 Picklist fields such as *Industry* must use values that exist in your Salesforce organization.
-====
 +
-This configuration XML listens on `/accounts`, builds a JSON payload, maps it to Account fields inside `<salesforce:records/>`, and calls *Create*.
+This configuration listens on `/accounts`, builds a JSON payload, maps it to Account fields inside `<salesforce:records/>`, and calls *Create*.
 Align `config-ref` on `<http:listener/>` with the `name` of your `<http:listener-config/>` (for example, `config-ref` from the earlier steps in this topic).
 +
 [source,xml]
