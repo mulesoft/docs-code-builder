@@ -182,7 +182,11 @@ Includes On-Error Continue (`<on-error-continue/>`) and On-Error Propagate (`<on
 //
 // tag::add-components[]
 
+
 The following example illustrates basic configurations for adding components to your project from the canvas and the code editor. The example assumes you are beginning with an empty integration project.
+
+These examples illustrate basic configurations for adding components to your project from the canvas, and the code editor. The examples assume you are beginning with an empty integration project.
+
 
 . {open-config-xml}, such as `my-project-name.xml`. 
 +
@@ -267,8 +271,9 @@ image::anypoint-code-builder::int-select-listener-config.png["Selecting configur
 The HTTP listener within your flow now references the HTTP listener configuration, a global connection configuration that resides outside of the flow. For more information about debugging, see xref:anypoint-code-builder::debugging-mule-apps.adoc[]. 
 . Add another component to your flow.
 +
+--
 For example, add a Set Payload component to your HTTP Listener operation:
-+
+
 .. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon.
 .. In the *Add Component* panel, search for and select *Set payload* from the *Transformer* results.
 .. In the canvas, click *Set payload* to open its configuration panel, and add a string value, DataWeave expression, Mule variable, or configuration property.
@@ -279,7 +284,7 @@ image::anypoint-code-builder::int-set-payload-config-string.png["Adding string t
 * To add a DataWeave expression or a Mule variable as a value, such as `payload`, click *fx* (located before the field), and provide the value, for example:
 +
 image::anypoint-code-builder::int-set-payload-config-fx.png["Adding expression to Set Payload"]
-+
+
 For more information about configuring DataWeave expressions, see xref:anypoint-code-builder::int-configure-dw-expressions.adoc[].
 
 * To add a configuration property as a value, type a value such as `${secure::mysensitiveprop}`. For example:
@@ -287,9 +292,10 @@ For more information about configuring DataWeave expressions, see xref:anypoint-
 image::anypoint-code-builder::int-set-payload-config-property.png["Adding configuration property to Set Payload"]
 +
 For more information about configuration properties, see xref:anypoint-code-builder::int-create-secure-configs.adoc[].
-
+--
++
 Your configuration XML file now looks similar to the following:
-
++
 [source,xml]
 ----
 <http:listener-config name="config-ref" >
@@ -302,6 +308,100 @@ Your configuration XML file now looks similar to the following:
     
 </flow>
 ----
+
+. Add another component to your flow.
++
+For example, add the *Create* operation from Anypoint Connector for Salesforce to insert an Account record.
++
+Use this pattern when your flow receives data through an HTTP Listener and must create Salesforce records.
+If you completed the earlier steps that add *Set payload* with a fixed string, remove or replace that processor so you can shape the payload before *Create*.
++
+For more information about using *Create* with Account records, see xref:salesforce-connector::salesforce-connector-examples.adoc[].
++
+.. In the configuration XML, add a global Salesforce connection element above your `<flow>` element (not inside the flow).
++
+Use configuration properties for credentials instead of literals; for example:
++
+[source,xml]
+----
+<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config">
+  <salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
+</salesforce:sfdc-config>
+----
++
+For more information about connection types and authentication fields, see xref:salesforce-connector::index.adoc[].
++
+.. In the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon after *HTTP Listener*.
+.. In the *Add Component* panel, search for *Set payload*, and add the component.
+.. Configure *Set payload* with a DataWeave expression that builds a JSON object whose fields match your HTTP API (they need not match Salesforce field names yet).
++
+For example, use *fx* to enter DataWeave with `output application/json` and sample fields such as `companyName`, `industry`, and `phoneNumber`.
++
+Alternatively, add *Transform Message* and use the same DataWeave in `<ee:set-payload/>`.
++
+For more information about *Transform Message*, see xref:anypoint-code-builder::acb-component-transform.adoc[].
++
+.. From the canvas, click the image:icon-plus.png["",15,15] (*Add component*) icon after *Set payload* (or *Transform Message*).
+.. In the *Add Component* panel, click *Connectors*, select *Salesforce*, and select *Create*.
+.. In the configuration panel for *Create*, set:
++
+--
+* *Connection config*: The global Salesforce configuration name (for example, `Salesforce_Config`).
+* *Type*: `Account`.
++
+If *Type* stays empty until you establish a working Salesforce connection, set `type="Account"` on `<salesforce:create/>` in the code editor.
+* *Records*: A DataWeave expression that resolves to the records to create.
++
+If the incoming payload uses different property names than Salesforce expects, map those properties in *Records*, as shown in the configuration XML example that follows.
+If the payload is already an array of Java objects with Salesforce field names (`output application/java`), you can use `#[payload]`.
+--
++
+For more information about connector fields for this operation, see xref:salesforce-connector::index.adoc[].
++
+[NOTE]
+Picklist fields such as *Industry* must use values that exist in your Salesforce organization.
++
+This configuration listens on `/accounts`, builds a JSON payload, maps it to Account fields inside `<salesforce:records/>`, and calls *Create*.
+Align `config-ref` on `<http:listener/>` with the `name` of your `<http:listener-config/>` (for example, `config-ref` from the earlier steps in this topic).
++
+[source,xml]
+----
+<http:listener-config name="config-ref" >
+  <http:listener-connection host="0.0.0.0" port="8081" />
+</http:listener-config>
+
+<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config">
+  <salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.token}" />
+</salesforce:sfdc-config>
+
+<flow name="createSalesforceAccountFlow" >
+  <http:listener path="/accounts" config-ref="config-ref" doc:name="Listener" doc:id="rrjiqa" />
+  <set-payload doc:name="Set Payload" value="#[%dw 2.0
+output application/json
+---
+{
+  companyName: 'Anypoint Inc.',
+  industry: 'Technology',
+  phoneNumber: '415-229-2000'
+}]" />
+  <salesforce:create doc:name="Create" type="Account" config-ref="Salesforce_Config">
+    <salesforce:records>#[%dw 2.0
+output application/java
+---
+[{
+  Name: payload.companyName,
+  Industry: payload.industry,
+  Phone: payload.phoneNumber
+}]]
+    </salesforce:records>
+  </salesforce:create>
+
+</flow>
+----
++
+If the message payload is already an array of Java objects with Salesforce field names, you can omit `<salesforce:records/>` and set *Records* to `#[payload]`, or use a self-closing `<salesforce:create/>` element with that default.
++
+You can achieve the same result by adding *Transform Message* with `output application/java` followed by `<salesforce:create type="Account" config-ref="Salesforce_Config"/>` with *Records* set to `#[payload]`.
 // end::add-components[]
 //
 
