@@ -51,7 +51,7 @@ The *Debug Console* tab in the lower panel area lets you <<evaluate-dw-debug-con
 Breakpoints appear in the XML editor and on canvas processors. For more information about adding breakpoints from the editor or the canvas, see <<add-breakpoint>>.
 
 [[canvas-execution-indicators]]
-=== Canvas behavior while debugging
+=== Canvas Behavior While Debugging
 
 When execution pauses at a breakpoint or after a step, the flow canvas shows which processor is active. The paused processor is outlined so you can see where the runtime stopped. The canvas view scrolls as needed to keep that processor in view when a pause occurs so you can follow execution without searching the diagram manually.
 
@@ -112,16 +112,16 @@ Add a breakpoint to a batch component in the canvas UI or in a configuration XML
 // Pointer to Run and Debug
 include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 
-. In the canvas UI or XML editor, select the batch component where you want to pause execution.  
+. In the canvas UI or code editor, select the batch component where you want to pause execution.  
 +
 You can add breakpoints to these components:
 * Batch Job (`<batch:job/>`)
 * Batch Step (`<batch:step/>`)
 * Batch Aggregator (`<batch:aggregator/>`)
 
-. Right-click the component in the canvas UI and select *Add Breakpoint*, or click the line number in the XML editor.  
+. Right-click the component in the canvas UI and select *Add Breakpoint*, or click the line number in the code editor.  
 +
-A breakpoint icon appears on the component and in the configuration XML for that component.
+A breakpoint icon appears on the component and in the code editor for that component.
 
 . Run the application in debug mode.  
 +
@@ -136,7 +136,7 @@ A conditional breakpoint uses a DataWeave expression, so execution pauses at tha
 
 To set or change a breakpoint condition:
 
-. Add a breakpoint in the configuration XML. See <<add-breakpoint>>.
+. Add a breakpoint in the code editor. See <<add-breakpoint>>.
 . Right-click the breakpoint indicator in the gutter for that line.
 . Select *Edit Breakpoint*.
 . In the breakpoint editor, enter a DataWeave expression that uses the current Mule event.
