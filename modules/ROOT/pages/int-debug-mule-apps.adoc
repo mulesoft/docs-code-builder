@@ -8,10 +8,11 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Debug your Mule application using the embedded debugger in Anypoint Code Builder. 
+In Anypoint Code Builder, the embedded debugger pauses Mule flows so you can inspect payloads and variables, evaluate DataWeave expressions, and step through processors in the XML editor or on the canvas.
+Set breakpoints in configuration files or on components, run in debug mode, step through execution with the debug toolbar, and hot deploy updates while the runtime stays up.
+The result is faster diagnosis: you confirm event state and processor behavior before you ship your integration.
 
-
-The process for debugging a Mule app is:
+Complete these steps:
 
 .  <<add-breakpoint, Set breakpoints>> to pause the execution of a flow at lines that you want to inspect or fix.
 +
@@ -246,7 +247,7 @@ While execution is paused, you can run DataWeave against the current Mule event 
 +
 The console shows each expression you run and its evaluated result for the current pause.
 
-The *Debug Console* is suited to check if needed as you step through a flow.
+Use the *Debug Console* for checking the steps as you debug through a flow.
 
 [[evaluate-dw-watch]]
 === Use the Watch Panel
@@ -258,7 +259,7 @@ Whenever execution pauses, the debugger reevaluates each watch expression and sh
 +
 Watch expressions typically persist for later debug sessions in the same workspace, so you can keep inspecting the same values across runs.
 
-The *Watch* panel is suited to values you want to track on every pause without retyping them.
+Use the *Watch* panel for values you want to track on every pause without retyping them.
 
 [[hot-deploy]]
 == Perform a Hot Deploy When Debugging
