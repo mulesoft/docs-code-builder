@@ -5,7 +5,7 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-Configure connectors and processors within your implementation and integration projects from the canvas or configuration XML. 
+Configure connectors and processors within your implementation and integration projects from the canvas or the code editor. 
 
 Common tasks include the following: 
 
@@ -122,14 +122,14 @@ To copy a component:
 Some components, like an HTTP Listener, can't be pasted to certain locations. An error message shows if a component can't be pasted to the location.
 
 == Disable Components
-You can temporarily remove components from your flow without deleting them by disabling them directly from the canvas. This action is equivalent to commenting out code in the XML editor.
+You can temporarily remove components from your flow without deleting them by disabling them directly from the canvas. This action is equivalent to commenting out code in the code editor.
 
 To disable a component:
 
 . Right-click a component in the canvas.
 . Select *Disable Component*.
 
-Disabled components appear with a dashed outline and a disabled icon. In the XML editor, the component is wrapped in an XML comment (<!-- ... -->), preserving the code but preventing it from executing.
+Disabled components appear with a dashed outline and a disabled icon. In the code editor, the component is wrapped in an XML comment (<!-- ... -->), preserving the code but preventing it from executing.
 Disabled components appear greyed out in the canvas and are ignored at runtime.
 
 === Re-enable a Disabled Component
@@ -138,7 +138,7 @@ To restore a component:
 . Right-click the disabled component.
 . Select *Enable Component*.
 
-This also removes the comment from the XML view.
+This also removes the comment from the code editor.
 
 If you previously set a breakpoint on a component and then disable it, the breakpoint remains associated with the component but is inactive. +
 You can't add new breakpoints to a disabled component until it's re-enabled.
@@ -173,7 +173,7 @@ include::partial$acb-component-info.adoc[tags="import-connector-exchange"]
 include::partial$acb-component-info.adoc[tags="check-connection"]
 
 [[open-component-from-xml]]
-== Open a Component in the Canvas from the XML Editor
+== Open a Component in the Canvas from the Code Editor
 
 //open from xml
 include::partial$acb-component-info.adoc[tags="open-component-from-xml"]

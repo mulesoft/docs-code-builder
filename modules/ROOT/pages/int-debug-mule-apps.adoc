@@ -51,7 +51,7 @@ Keyboard shortcut: Cmd+Shift+d (Mac) or Ctrl+Shift+d (Windows)
 . *Call Stack* panel: Identifies the functions or procedures that are currently in the stack.
 . *Breakpoints* panel: Lists breakpoints by file and line, and includes <<exception-breakpoints,*All Exceptions*>> to stop when any exception is thrown.
 . *Terminal* console: Displays the output of the Maven build process and the results of the deployment to the embedded Mule Runtime engine.
-. *Breakpoint* icon: Identifies a line in the configuration XML to pause execution of the flow so that you can check for and fix any issues.
+. *Breakpoint* icon: Identifies a line in the code editor to pause execution of the flow so that you can check for and fix any issues.
 . *Breakpoint* icon: Identifies a component that contains one or more breakpoints.
 
 Open the *Debug Console* tab in the panel area to <<evaluate-dw-debug-console,evaluate DataWeave>> while execution is paused. See <<evaluate-dw-while-debugging>>.
@@ -93,7 +93,7 @@ image::debug-add-breakpoint-canvas.png["Add breakpoint to a component in the can
 
 . Select *Add Breakpoint*.
 +
-A breakpoint icon appears on the component and in the configuration XML for that component.
+A breakpoint icon appears on the component and in the code editor for that component.
 
 === Add a Breakpoint to a Batch Component
 
@@ -103,16 +103,16 @@ Add a breakpoint to a batch component in the canvas UI or in a configuration XML
 // Pointer to Run and Debug
 include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 
-. In the canvas UI or XML editor, select the batch component where you want to pause execution.  
+. In the canvas UI or code editor, select the batch component where you want to pause execution.  
 +
 You can add breakpoints to these components:
 * Batch Job (`<batch:job/>`)
 * Batch Step (`<batch:step/>`)
 * Batch Aggregator (`<batch:aggregator/>`)
 
-. Right-click the component in the canvas UI and select *Add Breakpoint*, or click the line number in the XML editor.  
+. Right-click the component in the canvas UI and select *Add Breakpoint*, or click the line number in the code editor.  
 +
-A breakpoint icon appears on the component and in the configuration XML for that component.
+A breakpoint icon appears on the component and in the code editor for that component.
 
 . Run the application in debug mode.  
 +
@@ -127,7 +127,7 @@ A conditional breakpoint uses a DataWeave expression, so execution pauses at tha
 
 To set or change a breakpoint condition:
 
-. Add a breakpoint in the configuration XML. See <<add-breakpoint>>.
+. Add a breakpoint in the code editor. See <<add-breakpoint>>.
 . Right-click the breakpoint indicator in the gutter for that line.
 . Select *Edit Breakpoint*.
 . In the breakpoint editor, enter a DataWeave expression that uses the current Mule event.
