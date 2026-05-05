@@ -44,7 +44,7 @@ Publish existing agents and tools (HRIS, Identity, ITSM, Payroll, Facilities, LM
 An agent broker decomposes the task of onboarding the new hire (create HR record, provision identity, assign hardware, grant app access, enroll in benefits and training), calling MCP and A2A agents as needed, with human‑in‑the‑loop approvals where required.
 * Govern
 +
-Flex Gateway enforces authentication, least‑privilege access, and guardrails. API Manager policies ensure consistent controls across all calls and data exchanges.
+Omni Gateway enforces authentication, least‑privilege access, and guardrails. API Manager policies ensure consistent controls across all calls and data exchanges.
 * Observe
 +
 Monitoring and traces (beta) give end‑to‑end visibility into progress, failures, and latency. Visualization shows which agents interacted and where bottlenecks occurred.
@@ -114,16 +114,16 @@ The asset might also be published to Exchange.
 [[agent-network-architecture]]
 == Agent Network Architecture
 
-This diagram shows an agent network with agents and MCP servers, traffic through Flex Gateway, governed by API Manager, and observed in Anypoint Monitoring and Agent Visualizer.
+This diagram shows an agent network with agents and MCP servers, traffic through Omni Gateway, governed by API Manager, and observed in Anypoint Monitoring and Agent Visualizer.
 
-image::agent-fabric-architecture.png[Agent Fabric showing agents and MCP servers defined in YAML and published to Exchange, with traffic through Flex Gateway, governed by API Manager, and observed in Anypoint Monitoring and Agent Visualizer]
+image::agent-fabric-architecture.png[Agent Fabric showing agents and MCP servers defined in YAML and published to Exchange, with traffic through Omni Gateway, governed by API Manager, and observed in Anypoint Monitoring and Agent Visualizer]
 
 [calloutlist]
 . Publish the agentic assets to Anypoint Exchange for discovery and reuse after you define the agent network (brokers, agents, MCP servers) in the agent network YAML in Anypoint Code Builder.
 . Deploy the agentic assets to CloudHub 2.0 (managed in Runtime Manager).
-. Enforce policies on incoming traffic to the network with an ingress Flex Gateway, which sits in front of brokers and API endpoints.
-. Enforce policies, manage connections, and emit telemetry data with an egress Flex Gateway, which sits on outbound paths from brokers and agents to external agents and services.
-. Collect logs, metrics, and traces from Flex Gateway and runtimes in Anypoint Monitoring.
+. Enforce policies on incoming traffic to the network with an ingress Omni Gateway, which sits in front of brokers and API endpoints.
+. Enforce policies, manage connections, and emit telemetry data with an egress Omni Gateway, which sits on outbound paths from brokers and agents to external agents and services.
+. Collect logs, metrics, and traces from Omni Gateway and runtimes in Anypoint Monitoring.
 
 [[llm-support]]
 == Large Language Models
