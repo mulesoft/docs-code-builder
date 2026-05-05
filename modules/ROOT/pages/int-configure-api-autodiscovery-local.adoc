@@ -1,0 +1,67 @@
+= Configure API Autodiscovery for Local Testing
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
+
+Configure *API Autodiscovery* to connect your local Mule application to an API instance in xref:api-manager::latest-overview-concept.adoc[API Manager]. This setup enables local policy testing before you deploy the application.
+
+== Before You Begin
+
+Ensure you have:
+
+* An active API instance in API Manager
+* The xref:access-management::environments.adoc#to-view-the-client-id-and-client-secret-for-an-environment[client ID and client secret from Access Management]
+
+== Get the API ID
+
+. In Anypoint Platform, open *API Manager*.
+. In *API Administration*, select your API instance.
+. On the API summary page, copy the *API Instance ID*.
+
+== Add the Autodiscovery Element
+
+In your Mule app, add the autodiscovery element in your flow definitions:
+
+[source,xml]
+----
+<api-gateway:autodiscovery apiId="<YOUR_API_ID>" flowRef="<YOUR_MAIN_FLOW_NAME>" />
+----
+
+== Configure Local Credentials
+
+For local execution in Anypoint Code Builder, provide your environment credentials through `config.yaml` or through your debug launch configuration. Avoid hardcoding secrets in Mule XML files.
+
+Set these properties:
+
+* `anypoint.platform.client_id`
+* `anypoint.platform.client_secret`
+
+Example `config.yaml`:
+
+[source,yaml]
+----
+anypoint.platform.client_id: "<YOUR_ENV_CLIENT_ID>"
+anypoint.platform.client_secret: "<YOUR_ENV_CLIENT_SECRET>"
+----
+
+Example `launch.json` configuration:
+
+[source,json]
+----
+{
+  "configurations": [
+    {
+      "name": "Debug Mule App",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "org.mule.runtime.module.launcher.MuleContainer",
+      "args": [
+        "-M-Danypoint.platform.client_id=<YOUR_ENV_CLIENT_ID>",
+        "-M-Danypoint.platform.client_secret=<YOUR_ENV_CLIENT_SECRET>"
+      ]
+    }
+  ]
+}
+----
+
+You can also place the same values in the `env` section of `launch.json` if you prefer environment-variable-based credential handling. Keeping credentials in launch configuration helps prevent secrets from being committed to source files.
