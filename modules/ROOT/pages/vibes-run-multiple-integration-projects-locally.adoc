@@ -1,0 +1,52 @@
+= Run Multiple Integration Projects Locally with MuleSoft Vibes
+:page-deployment-options: cloud-ide, desktop-ide
+
+Run multiple integration projects locally in one runtime to validate service-to-service behavior before deployment. Use MuleSoft Vibes to create a reusable run configuration automatically, start related projects together, and test end-to-end behavior. Update and reuse the same configuration as your local integration scope changes.
+
+When an integration depends on multiple local Mule projects, starting each project manually can slow down validation and increase setup errors. MuleSoft Vibes can create a run configuration from your prompt and execute all selected projects together in the same local runtime instance.
+
+== Before You Begin
+
+* xref:start-workspaces.adoc[Work in a multi-root workspace] that contains the related Mule projects.
+* xref:mulesoft-vibes.adoc[Set up MuleSoft Vibes] and confirm you have required permissions.
+* Verify that each project can run locally in your IDE environment.
+
+== Run Related Projects Together Locally
+
+Use MuleSoft Vibes to create and run a reusable local run configuration for the projects that participate in your flow.
+
+. Open MuleSoft Vibes.
+. Enter a prompt that identifies the projects to run together.
++
+Example prompts:
+* `Create and run a local configuration for main-project, project-one, and project-two.`
+* `Run all projects in this workspace.`
+. Review the plan if you are working in Plan mode, and then run the task.
+. Wait for MuleSoft Vibes to create the run configuration and start the selected projects.
+. Confirm that the projects are running in the same local runtime instance.
+
+== Verify End-to-End Integration Behavior
+
+After MuleSoft Vibes starts the projects, validate the integration behavior from the entry-point project.
+
+. Call an endpoint in your main project.
+. Confirm that downstream project responses are returned as expected.
+. Verify that the final response includes the combined or orchestrated output for your flow.
+
+== Update and Reuse a Saved Configuration
+
+When your integration scenario changes, ask MuleSoft Vibes to update the existing configuration instead of recreating setup steps manually.
+
+. In MuleSoft Vibes, request an update to the saved configuration.
++
+Example prompts:
+* `Update my local run configuration to include only project-one and project-two.`
+* `Rename this local run configuration to project-one-two flow validation.`
+. Run the saved configuration again for the next validation cycle.
+. Repeat updates as your project set changes.
+
+== See Also
+
+* xref:vibes-get-started.adoc[]
+* xref:start-workspaces.adoc[]
+* xref:int-debug-mule-apps.adoc[]
