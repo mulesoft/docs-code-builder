@@ -28,7 +28,7 @@ Enable logging and log levels from CloudHub 2.0 or Runtime Fabric:
 
 Edit `agent-network.yaml` to set message logging for MCP servers and agents.
 
-Message logging uses the xref:gateway::policies-included-message-logging.adoc[Flex Gateway Message Logging policy]. In the `connection` section of the agent or MCP server instance you want to log, add the following logging policy inside `policies`:
+Message logging uses the xref:gateway::policies-included-message-logging.adoc[Omni Gateway Message Logging policy]. In the `connection` section of the agent or MCP server instance you want to log, add the following logging policy inside `policies`:
 
 [source,yaml]
 ----
@@ -65,7 +65,7 @@ Use the steps in this section to diagnose and fix common problems in agent netwo
 If Anypoint Monitoring isn't showing traces for agents and MCP servers, check these settings:
 
 * In API Manager, verify you've enabled the tracing policy for all brokers and agents.
-* In the managed Flex Gateways, verify that you've enabled Distributed Tracing for ingress and egress.
+* In the managed Omni Gateways, verify that you've enabled Distributed Tracing for ingress and egress.
 
 === Issue: No Agent Network Commands in Anypoint Code Builder
 
