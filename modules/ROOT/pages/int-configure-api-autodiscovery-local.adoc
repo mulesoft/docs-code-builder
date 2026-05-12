@@ -29,7 +29,7 @@ In your Mule app, add the autodiscovery element in your flow definitions:
 
 == Configure Local Credentials
 
-For local execution in Anypoint Code Builder, provide your environment credentials through `config.yaml` or through your debug launch configuration. Avoid hardcoding secrets in Mule XML files.
+For local execution in Anypoint Code Builder, provide your environment credentials through `config.yaml` or through Mule runtime arguments in VS Code settings. Avoid hardcoding secrets in Mule XML files.
 
 Set these properties:
 
@@ -44,24 +44,18 @@ anypoint.platform.client_id: "<YOUR_ENV_CLIENT_ID>"
 anypoint.platform.client_secret: "<YOUR_ENV_CLIENT_SECRET>"
 ----
 
-Example `launch.json` configuration:
+Example Mule runtime arguments:
 
-[source,json]
+[source,text]
 ----
-{
-  "configurations": [
-    {
-      "name": "Debug Mule App",
-      "type": "java",
-      "request": "launch",
-      "mainClass": "org.mule.runtime.module.launcher.MuleContainer",
-      "args": [
-        "-M-Danypoint.platform.client_id=<YOUR_ENV_CLIENT_ID>",
-        "-M-Danypoint.platform.client_secret=<YOUR_ENV_CLIENT_SECRET>"
-      ]
-    }
-  ]
-}
+-M-Danypoint.platform.client_id=<YOUR_ENV_CLIENT_ID> -M-Danypoint.platform.client_secret=<YOUR_ENV_CLIENT_SECRET>
 ----
 
-You can also place the same values in the `env` section of `launch.json` if you prefer environment-variable-based credential handling. Keeping credentials in launch configuration helps prevent secrets from being committed to source files.
+To add these values in Anypoint Code Builder:
+
+. Open the *Settings* tab.
+include::reuse::partial$acb-reusable-steps.adoc[tags="mule-settings-nav-options"]
+. In the *Settings* tab, find *Mule › Runtime: Default Arguments*.
+. Append the client ID and client secret arguments to the end of the existing arguments.
+
+Replace the placeholder values with your client ID and client secret.
