@@ -230,7 +230,7 @@ The `spec` element has these properties.
 
 `llm`
 
-The value of this section is a reference to one of the LLMs defined in Anypoint Exchange or in the `llmProviders` section of `agent-network.yaml`. Because it's a reference, you can choose to share the same LLM across all the brokers in your agent network. Or, you can have different brokers use different LLMs to better suit their tasks.
+The value of this section is a reference to one of the LLMs defined in Anypoint Exchange or in the `llmProviders` section of `agent-network.yaml`. Because it's a reference, you can choose to share the same LLM across all the brokers in your agent network. Or, you can have different brokers use different LLMs to better suit their tasks. If using an LLM Proxy, configure the LLM Proxy as either an OpenAI or Gemini LLM depending on the proxy's format.
 
 For more information about supported LLMs, see xref:af-agent-networks.adoc#llm-support[Large Language Models].
 
@@ -745,7 +745,7 @@ connections:
     spec:
       url: https://api.openai.com/v1/
       configuration:
-        apiKey: ${openai.apiKey}
+        apiKey: ${openai.apiKey} # Define an LLM Proxy API key as <<clientId>>:<<clientSecret>>
 
   talent-pool-mcp:
     kind: mcp
