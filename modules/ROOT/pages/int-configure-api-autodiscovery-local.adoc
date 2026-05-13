@@ -20,11 +20,11 @@ Ensure you have:
 
 == Add the Autodiscovery Element
 
-In your Mule app, add the autodiscovery element in your flow definitions:
+In your Mule app, add the autodiscovery element in your flow definitions. Use a property reference for `apiId` so you can load the value through configuration:
 
 [source,xml]
 ----
-<api-gateway:autodiscovery apiId="<YOUR_API_ID>" flowRef="<YOUR_MAIN_FLOW_NAME>" />
+<api-gateway:autodiscovery apiId="${api.instance.id}" flowRef="<YOUR_MAIN_FLOW_NAME>" />
 ----
 
 == Configure Local Credentials
@@ -40,6 +40,7 @@ Example `config.yaml`:
 
 [source,yaml]
 ----
+api.instance.id: "<YOUR_API_ID>"
 anypoint.platform.client_id: "<YOUR_ENV_CLIENT_ID>"
 anypoint.platform.client_secret: "<YOUR_ENV_CLIENT_SECRET>"
 ----
@@ -58,4 +59,4 @@ include::reuse::partial$acb-reusable-steps.adoc[tags="mule-settings-nav-options"
 . In the *Settings* tab, find *Mule › Runtime: Default Arguments*.
 . Append the client ID and client secret arguments to the end of the existing arguments.
 
-Replace the placeholder values with your client ID and client secret.
+Append the placeholder values with your client ID and client secret.
