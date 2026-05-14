@@ -1,15 +1,22 @@
 = Using Skills with MuleSoft Vibes
 :page-deployment-options: cloud-ide, desktop-ide
 
-Skills are reusable instruction sets that MuleSoft Vibes activates only when they apply to your task. Each skill packages guidance and optional resources so MuleSoft Vibes can follow a consistent workflow without loading that material for unrelated prompts.
+Skills are reusable instruction sets that MuleSoft Vibes activates only when they apply to your task. Each skill packages guidance and optional resources so MuleSoft Vibes can follow a consistent workflow without loading that material for unrelated messages.
 
 When your request matches a skill's description, MuleSoft Vibes uses the `use_skill` tool to load the full instructions and run them for that task. Unlike workspace rules that stay active across conversations, skills load as needed, which leaves more context available for other work.
 
+*Default skills* are preloaded in MuleSoft Vibes and enabled by default. You can turn on and off each default skill individually.
 *Workspace skills* are available only in the workspace or project where they're defined.
 *Global skills* are available in every project and workspace.
 
-Skills are always available in MuleSoft Vibes where the feature is supported. You can't turn it on or off.
+[[manage-default-skills]]
+== Manage Default Skills in MuleSoft Vibes
 
+Default skills are available automatically when you use MuleSoft Vibes where the feature is supported.
+
+Use MuleSoft Vibes settings to turn on and off each default skill based on your workflow.
+
+[[set-up-skills-in-your-project]]
 == Set Up Skills in Your Project
 
 To add *workspace skills* to a project, add skills under `.a4drules/skills/` in your workspace. Each skill is a directory whose name matches the skill. The directory contains a `SKILL.md` file with the instructions (and optional YAML frontmatter for metadata). You can add supporting material in subfolders such as `references/`, `assets/`, or `scripts/` inside that skill directory.
