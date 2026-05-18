@@ -122,7 +122,7 @@ image::agent-fabric-architecture.png[Agent Fabric showing agents and MCP servers
 . Publish the agentic assets to Anypoint Exchange for discovery and reuse after you define the agent network (brokers, agents, MCP servers) in the agent network YAML in Anypoint Code Builder.
 . Deploy the agentic assets to CloudHub 2.0 (managed in Runtime Manager).
 . Enforce policies on incoming traffic to the network with an ingress Omni Gateway, which sits in front of brokers and API endpoints.
-. Enforce policies, manage connections, and emit telemetry data with an egress Omni Gateway, which sits on outbound paths from brokers and agents to external agents and services.
+. Enforce policies, manage connections, and emit telemetry data with an egress Omni Gateway, which sits on outbound paths from brokers and agents to external agents and services. In a shared space, or in a private space using a single-gateway configuration, callouts policies, traffic, and data are handled by one Omni Gateway.
 . Collect logs, metrics, and traces from Omni Gateway and runtimes in Anypoint Monitoring.
 
 [[llm-support]]
