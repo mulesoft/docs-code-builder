@@ -4,7 +4,7 @@
 
 MuleSoft Vibes is a purpose-built assistant for the development lifecycle, available directly in Anypoint Code Builder.
 
-MuleSoft Vibes enables you to build, deploy, and manage your projects using natural language prompts.
+MuleSoft Vibes enables you to build, deploy, and manage your projects using natural language messages.
 
 MuleSoft Vibes integrates with the xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server], which provides a set of agentic tools that connect MuleSoft Vibes directly to your MuleSoft environment. Through this integration, MuleSoft Vibes can perform actions and retrieve data on your behalf, enabling capabilities such as:
 
@@ -20,19 +20,23 @@ You can also use xref:vibes-skills.adoc[skills], reusable instruction sets that 
 *Workspace skills* are available only in the workspace or project where they are defined.
 *Global skills* are available in every project and workspace.
 
-These features are powered by large language models (LLMs) that operate within the Salesforce Shared Trust Boundary.
+Large language models (LLMs) power these features and operate within the Salesforce Shared Trust Boundary.
 
-MuleSoft Vibes is part of the broader MuleSoft AI ecosystem, which also includes capabilities such as Map with AI and Map and Transform with AI. For an overview of all MuleSoft AI features, see the xref:general::learning-map-mulesoft-ai.adoc[Learning Map: MuleSoft AI].
+MuleSoft Vibes is part of the broader MuleSoft AI ecosystem, which also includes capabilities such as Map with AI and Map and Transform with AI. For an overview of all MuleSoft AI features, see the xref:general::learning-map-mulesoft-ai.adoc[].
 
 NOTE: MuleSoft Vibes is available on US, EU, Canada, and Japan cloud hosts.
 
+[[before-you-begin-vibes]]
 == Before You Begin
 
-Before using MuleSoft Vibes, make sure that you meet these prerequisites:
+To use MuleSoft Vibes, make sure that you meet these prerequisites:
 
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].  
 * Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].  
-* Ensure you have the following permissions to use MuleSoft Vibes:  
+* Install Node.js 20 LTS or later.
+* Install the latest version of `jq`.
+* On Windows, install *Git Bash* to use skills that run prepackaged shell-based steps.
+* Ensure you have the following permissions:  
 ** *Anypoint Code Builder Developer* (to use MuleSoft Vibes in the Cloud IDE)  
 ** *Mule Developer Generative AI User*  
 * Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].  

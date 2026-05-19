@@ -13,7 +13,7 @@ The agent network YAML file defines a structured configuration for multi-agent s
 
 For example, think of the YAML as your organizational chart for digital labor. Each internal organization (for example, HR, IT, Sales, or Engineering) has a hierarchical structure through which actors collaborate. Jobs are split into tasks and assigned.
 
-Just like with human labor, digital agents require coordination. We call these coordinators "brokers". These are special types of agents in your agent network capable of receiving a user prompt, identifying the goal, determining the necessary steps to be carried out, and delegating each step to the proper agent, even if the agent is part of a different broker.
+Just like with human labor, digital agents require coordination. We call these coordinators "brokers". These are special types of agents in your agent network capable of receiving a user message, identifying the goal, determining the necessary steps to be carried out, and delegating each step to the proper agent, even if the agent is part of a different broker.
 
 The `agent-network.yaml` file uses these sections.
 
@@ -311,7 +311,7 @@ Here's another example of instructions for a customer service broker. This broke
             5. Summarize actions: Provide a clear, human-readable summary of the steps performed, including information about the created Slack channel and the on-call engineer assigned.
 ----
 
-You don't have to provide instructions like "split the prompt into tasks", or "select the best tool". The broker does that on its own.
+You don't have to provide instructions like "split the message into tasks", or "select the best tool". The broker does that on its own.
 
 The `instructions` element has these properties.
 
