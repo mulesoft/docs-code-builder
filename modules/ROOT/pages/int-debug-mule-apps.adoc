@@ -1,6 +1,6 @@
 = Debugging Mule Applications
 :page-deployment-options: cloud-ide, desktop-ide
-:page-aliases: debug-add-breakpoint.adoc, debug-add-components.adoc, debug-run-debug-sessions.adoc, debug-a-mule-application.adoc, debugging-mule-apps.adoc
+:page-aliases: debug-add-breakpoint.adoc, debug-add-components.adoc, debug-add-logger-set-variables.adoc, debug-run-debug-sessions.adoc, debug-a-mule-application.adoc, debugging-mule-apps.adoc, tut-af-debug-am-flights.adoc
 
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
@@ -8,10 +8,11 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Debug your Mule application using the embedded debugger in Anypoint Code Builder. 
+In Anypoint Code Builder, the embedded debugger pauses Mule flows so you can inspect payloads and variables, evaluate DataWeave expressions, and step through processors in the XML editor or on the canvas.
+Set breakpoints in configuration files or on components, run in debug mode, step through execution with the debug toolbar, and hot deploy updates while the runtime stays up.
+The result is faster diagnosis: you confirm event state and processor behavior before you ship your integration.
 
-
-The process for debugging a Mule app is:
+Complete these steps:
 
 .  <<add-breakpoint, Set breakpoints>> to pause the execution of a flow at lines that you want to inspect or fix.
 +
@@ -31,28 +32,47 @@ For example, trigger an HTTP Listener or configure a Scheduler component.
 * xref:start-acb.adoc[Set up and access the web or desktop IDE].
 * xref:int-create-integrations.adoc[Create an integration].
 
-== Debug Console Overview 
+[[debugger-view-overview]]
+== Debugger View Overview
 
-image::debugger-view.png["Elements of the debugger view"]
+Use *Run and Debug* to open the view. Start a Mule debug session (*Start Debugging*, F5), inspect runtime state, and manage breakpoints. Keyboard shortcut to open the view: Cmd+Shift+D (Mac) or Ctrl+Shift+D (Windows).
 
-[calloutlist]
-. *Start Debugging*: Starts an instance of a Mule application in debugging mode.
-. *Debug Toolbar*: Controls debugging of Mule applications.
-+
-See <<debug-toolbar>>.
-. *Variables* panel: Provides Mule event and parameter data.
-+
-The Mule event includes message payload and attribute details, as well as Mule variable data. The parameters include component data, such as the component name.
-. *Run and Debug* (MuleSoft) icon: Opens the *Run and Debug* panel, where you can click *Start Debugging (F5)* and find debugging information.
-+
-Keyboard shortcut: Cmd+Shift+d (Mac) or Ctrl+Shift+d (Windows) 
-. *Watch* panel: Helps you evaluate variables and expressions.
-. *Call Stack* panel: Identifies the functions or procedures that are currently in the stack.
-. *Breakpoints* panel: Lists all breakpoints in your Mule application.
-. *Terminal* console: Displays the output of the Maven build process and the results of the deployment to the embedded Mule Runtime engine.
-. *Breakpoint* icon: Identifies a line in the configuration XML to pause execution of the flow so that you can check for and fix any issues.
-. *Breakpoint* icon: Identifies a component that contains one or more breakpoints.
+The *Debug Console* tab in the lower panel area lets you <<evaluate-dw-debug-console,evaluate DataWeave>> while execution is paused. See <<evaluate-dw-while-debugging>>.
 
+[[debugger-layout-panels]]
+=== Panels and Tools
+
+* *Debug toolbar* — Appears when a session is active. See <<debug-toolbar>> for *Continue*, *Step Over*, *Step Into*, *Step Out*, *Restart*, and *Stop*.
+* *Variables* — Tree of the current Mule event: payload, attributes, variables, and component parameters (such as the current processor name). See <<inspect-mule-event-variables>> for how errors, MIME types, copying, and editing appear in this release.
+* *Watch* — Pin <<evaluate-dw-watch,DataWeave expressions>> that reevaluate whenever execution pauses.
+* *Call Stack* — Frames for the current execution context (including multiple threads when applicable).
+* *Breakpoints* — Breakpoints listed by file and line, including <<exception-breakpoints,*All Exceptions*>> when you want to stop on any thrown exception.
+* *Terminal* — Maven build output and deployment messages for the embedded Mule runtime.
+
+Breakpoints appear in the XML editor and on canvas processors. For more information about adding breakpoints from the editor or the canvas, see <<add-breakpoint>>.
+
+[[canvas-execution-indicators]]
+=== Canvas Behavior While Debugging
+
+When execution pauses at a breakpoint or after a step, the flow canvas shows which processor is active. The paused processor is outlined so you can see where the runtime stopped. The canvas view scrolls as needed to keep that processor in view when a pause occurs so you can follow execution without searching the diagram manually.
+
+[[source-editor-focus]]
+=== Source Editor and Multiple Configuration Files
+
+Projects can split flows across several Mule configuration XML files. When a breakpoint is hit or you step, the editor opens or switches focus to the XML file that contains the flow and processor that is actually executing, and the canvas shows that configuration. Stepping through a `<flow-ref>` into a referenced flow opens the file that declares that referenced flow and updates the canvas accordingly.
+
+[[inspect-mule-event-variables]]
+== Inspect Variables and the Mule Event
+
+While execution is paused, use the *Variables* tree to inspect payload, attributes, `vars`, and related values.
+
+When the Mule event has an error in scope, the *Variables* view includes error information so you can diagnose failures without hunting through unrelated nodes. When no error is present, that error-specific presentation is omitted.
+
+Payloads and values that use common text-based MIME types (such as `application/json`, `text/xml`, and `text/plain`) appear as readable text in the tree. Values that are truly binary are shown with a compact placeholder instead of a long byte dump.
+
+To reuse a value elsewhere, copy it from the tree using the context menu action that copies the value as JSON. Copied JSON is valid for typical parsers. The string escaping matches what you paste into external tools.
+
+Change some variable values during a pause. Use the variable context menu to edit the value inline where the debugger allows it. After resuming, the running application uses the updated value.
 
 [[add-breakpoint]]
 == Add a Breakpoint
@@ -66,16 +86,12 @@ To add a breakpoint in a configuration XML file:
 . In Anypoint Code Builder, on the Explorer view, open your configuration XML file, for example, `my-project-name.xml`.
 // Pointer to Run and Debug
 include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
-. Click the line number in your `<flow-ref>` component to add a breakpoint on that component:
+. In the XML editor, click the gutter beside the line number for the component where you want the execution to pause.
 +
-image::deb-add-breakpoint.png["Add breakpoint on a line number"]
+The gutter shows a breakpoint indicator for that line. You can also move the caret to the line and press F9 to toggle a breakpoint.
+. Add more breakpoints on other lines as needed.
 +
-You can also use F9 to add a breakpoint to the current line.
-. In your configuration XML file, add two more breakpoints for the `<db:select>` and the `<set-variable>` components.
-+
-All breakpoints appear in the *Breakpoints* panel:
-+
-image::int-breakpoints-panel.png["Breakpoints panel"]
+Registered breakpoints appear in the *Run and Debug* view under *Breakpoints*, grouped by file and line, with checkboxes to enable or disable each one.
 
 === Add a Breakpoint to a Component in the Canvas UI
 
@@ -85,13 +101,9 @@ To add a breakpoint to a component in the canvas UI:
 // Pointer to Run and Debug
 include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 
-. In the canvas UI, right-click on the component you want to add a breakpoint to:
+. In the canvas, right-click the processor where you want to pause and choose *Add Breakpoint*.
 +
-image::debug-add-breakpoint-canvas.png["Add breakpoint to a component in the canvas UI"]
-
-. Select *Add Breakpoint*.
-+
-A breakpoint icon appears on the component and in the configuration XML for that component.
+A breakpoint indicator appears on that processor in the canvas and at the corresponding line in the configuration XML.
 
 === Add a Breakpoint to a Batch Component
 
@@ -101,22 +113,48 @@ Add a breakpoint to a batch component in the canvas UI or in a configuration XML
 // Pointer to Run and Debug
 include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
 
-. In the canvas UI or XML editor, select the batch component where you want to pause execution.  
+. In the canvas UI or code editor, select the batch component where you want to pause execution.  
 +
 You can add breakpoints to these components:
 * Batch Job (`<batch:job/>`)
 * Batch Step (`<batch:step/>`)
 * Batch Aggregator (`<batch:aggregator/>`)
 
-. Right-click the component in the canvas UI and select *Add Breakpoint*, or click the line number in the XML editor.  
+. Right-click the component in the canvas UI and select *Add Breakpoint*, or click the line number in the code editor.  
 +
-A breakpoint icon appears on the component and in the configuration XML for that component.
+A breakpoint icon appears on the component and in the code editor for that component.
 
 . Run the application in debug mode.  
 +
 When execution reaches the breakpoint, processing pauses so you can inspect variables, payloads, and the execution state in the Debug panel.
 
-NOTE: Batch execution is concurrent. Multiple record blocks can be processed in parallel, so breakpoints can trigger on different threads. The Debug panel displays each thread context separately so you can inspect each execution path.
+NOTE: Batch execution is concurrent. Multiple record blocks can be processed in parallel, so breakpoints can trigger on different threads. The Debug panel displays each thread context so you can inspect each execution path.
+
+[[conditional-breakpoint]]
+== Set a Conditional Breakpoint
+
+A conditional breakpoint uses a DataWeave expression, so execution pauses at that line only when the expression evaluates to `true`.
+
+To set or change a breakpoint condition:
+
+. Add a breakpoint in the code editor. See <<add-breakpoint>>.
+. Right-click the breakpoint indicator in the gutter for that line.
+. Select *Edit Breakpoint*.
+. In the breakpoint editor, enter a DataWeave expression that uses the current Mule event.
+
+The gutter context menu for a breakpoint also includes *Remove Breakpoint*, *Disable Breakpoint*, and *Run to Line*.
+
+To review a condition later, hover over the breakpoint in the gutter. A tooltip shows the configured expression in the form `Condition:` followed by your DataWeave expression.
+
+[[exception-breakpoints]]
+== Stop When an Exception Is Thrown
+
+You can configure the debugger to pause whenever any exception is thrown, which helps you inspect failures without adding breakpoints to every path.
+
+. Open *Run and Debug*.
+. In the *BREAKPOINTS* section, enable *All Exceptions*.
++
+When *All Exceptions* is enabled, the debugger pauses as soon as an exception is thrown during a debug session. The error type and a readable message are surfaced in the *Variables* area so you can see what failed without expanding deep trees first. Use <<inspect-mule-event-variables>> together with <<canvas-execution-indicators>> to relate the exception to the processor on the canvas.
 
 [[run-debug-mode]]
 == Run Your Application in Debug Mode
@@ -130,28 +168,19 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-loc
 NOTE: Selecting *Run* > *Start without Debugging* produces an error.
 
 Anypoint Code Builder packages your application and deploys the application to the embedded Mule runtime engine.
-A terminal opens so you can view the status:
+The integrated terminal shows Maven and deployment progress, and the status bar indicates that the application is running.
 
-image::deb-terminal-running.png["Debugging status in a terminal window"]
-
-The terminal displays a message and the status bar turns red to indicate that the application is running.
-
-Use buttons on the <<debug-toolbar, debug toolbar>> to control debugging of Mule applications.
+Use the controls on the <<debug-toolbar, debug toolbar>> to drive the session after you trigger your flow.
 
 [[debug-toolbar]]
 == Debug Toolbar
 
-image::debugger-toolbar.png["Debug toolbar"]
+When a Mule debug session is active, the debug toolbar provides:
 
-[calloutlist]
-. *Continue* F5
+. *Continue* (F5) — Runs until the next breakpoint or the end of the application.
+. *Step Over* (F10) — Runs to the next processor in the current flow and pauses there.
 +
-Proceeds to the next breakpoint, if present, and pauses execution of the application.
-Otherwise, continues to the end of the application.
-. *Step Over* F10
-+
-Proceeds to the next component in the flow, where execution pauses.
-At a Flow Ref component (`<flow-ref/>`), clicking *Step Over* proceeds to the next component in the flow but _does not_ follow the Flow Ref logic to a referenced flow or proceed to another flow. 
+At a *Flow Ref* component (`<flow-ref/>`), *Step Over* doesn't enter the referenced flow. It moves to the next processor after the reference in the same flow instead.
 +
 .Step Over Details
 [%collapsible]
@@ -165,7 +194,7 @@ At a Flow Ref component (`<flow-ref/>`), clicking *Step Over* proceeds to the ne
   <logger doc:name="Logger1" message="test1"/> <!--2-->
 </flow>
 
-<flow name="flow2" doc:name="Flow" >
+<flow name="myNewFlow" doc:name="Flow" >
   <logger doc:name="Logger2" message="test2"/>
 </flow>
 ----
@@ -174,10 +203,9 @@ At a Flow Ref component (`<flow-ref/>`), clicking *Step Over* proceeds to the ne
 . Skips `<flow-ref/>` logic
 . Reaches `<logger/>` named `Logger1`
 ====
-. *Step Into* F11
+. *Step Into* (F11) — Enters the next processor, including following a `<flow-ref/>` into the referenced flow.
 +
-Proceeds to the next component in the flow, where execution pauses.
-At a Flow Ref component (`<flow-ref/>`), clicking *Step Into* follows the logic of the component and proceeds to the first component in the referenced flow. If a component in a flow follows a Flow Ref component, *Step Into* returns to that component after the last component in the referenced flow (or flows).
+When you step into a flow reference, the IDE opens the Mule configuration file that declares that referenced flow, moves the canvas to that flow, and pauses on the first processor inside it. After you step through the referenced flow, stepping continues in the caller flow where appropriate.
 +
 .Step Into Details
 [%collapsible]
@@ -201,15 +229,37 @@ At a Flow Ref component (`<flow-ref/>`), clicking *Step Into* follows the logic 
 . Reaches `Logger2` in next flow, `myNewFlow`
 . Returns to flow `flow1` to reach `Logger1`
 ====
-. *Step Out* Shift+F11
+. *Step Out* (Shift+F11) — Leaves the current flow and returns toward the caller when possible; if there is no caller frame, behaves like *Continue*.
+. *Restart* (Shift+Cmd+F5 on Mac, Shift+Ctrl+F5 on Windows) — Stops and restarts without picking up new Maven dependencies from `pom.xml`.
+. *Stop* (Shift+F5) — Ends the application. The next debug session repackages the app if you added connector or dependency changes.
+
+[[evaluate-dw-while-debugging]]
+== Evaluate DataWeave While Debugging
+
+While execution is paused, you can run DataWeave against the current Mule event from the *Debug Console* or from pinned entries in the *Watch* panel. For the variables available in those expressions, see xref:dataweave::dataweave-variables-context.adoc[Predefined Mule event variables].
+
+[[evaluate-dw-debug-console]]
+=== Use the Debug Console
+
+. Start a debug session and pause execution at a breakpoint or after a step. See <<run-debug-mode>> and <<debug-toolbar>>.
+. Open the *Debug Console* tab, or choose *View* > *Debug Console*.
+. Ensure the input is set to *Expression*. Type a DataWeave expression and press Enter to evaluate it against the current message, attributes, variables, and other values visible to the debugger at the pause.
 +
-Exits the current flow and attempts to return to a previous flow. If a previous flow doesn't exist, the debugger behaves like *Continue*.
-. *Restart* Shift+Cmd+F5 (Mac) or Shift+Ctrl+F5 (Windows)
-+ 
-Stop and restart the application without packaging new dependencies, such as new connector dependencies in your `pom.xml` file. 
-. *Stop* Shift+F5
+The console shows each expression you run and its evaluated result for the current pause.
+
+Use the *Debug Console* for checking the steps as you debug through a flow.
+
+[[evaluate-dw-watch]]
+=== Use the Watch Panel
+
+. Open the *Watch* panel in the *Run and Debug* sidebar.
+. Add an entry with *+* and enter a DataWeave expression.
 +
-Stop execution of the application. The next debugging session that you start packages the application with any new dependencies.
+Whenever execution pauses, the debugger reevaluates each watch expression and shows the result next to the expression, similar to the *Debug Console*.
++
+Watch expressions typically persist for later debug sessions in the same workspace, so you can keep inspecting the same values across runs.
+
+Use the *Watch* panel for values you want to track on every pause without retyping them.
 
 [[hot-deploy]]
 == Perform a Hot Deploy When Debugging
@@ -221,14 +271,16 @@ To perform a hot deploy:
 
 . Ensure your Mule application is running in the IDE.
 . Make an update to your application.
-. Click the *Save and Hot-deploy to Mule Runtime* (lightning) icon to deploy the application with the change:
-+
-image::deb-hot-deploy.png["Hot-deploy (lightning) icon in a running Mule application"]
-
+. In the editor toolbar for the running Mule application, click *Save and Hot-deploy to Mule Runtime* (lightning bolt icon) to push the change to the running runtime without a full stop and dependency resolution cycle.
 
 [[stop-debug]]
 == Stop a Debug Session
 
-To stop your debug session, in the *Run and Debug* panel, click the image:icon-stop.png["",15,15] (*Stop*) icon. 
+To stop your debug session, use *Stop* on the debug toolbar (Shift+F5), or open *Run and Debug* and choose the stop action for the active Mule session.
 
 The status bar no longer indicates that the application is running.
+
+== See Also
+
+* xref:dataweave::dataweave-variables-context.adoc[]
+* xref:int-configure-dw-expressions.adoc[]

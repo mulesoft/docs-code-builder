@@ -1,10 +1,10 @@
-= Troubleshoot AI Features in Anypoint Code Builder
+= Troubleshooting AI Features in Anypoint Code Builder
 
 The following errors sometimes occur when you use MuleSoft Vibes in Anypoint Code Builder.
 
 == Unexpected Results When Using Mulesoft Vibes
 
-If the generated flow doesn't return accurate or useful results for your prompt, try rewriting your prompt and follow the guidelines to xref:vibes-create-integrations.adoc#craft-ai-prompt[write an effective prompt].
+If the generated flow doesn't return accurate or useful results for your message, try rewriting your message and follow the guidelines to xref:vibes-create-integrations.adoc#craft-ai-prompt[write an effective message].
 
 If results are still inconsistent, verify that your project context and Mulesoft Vibes settings are correctly configured.
 
@@ -69,6 +69,54 @@ If you receive an authorization error, contact your Anypoint Platform organizati
 
 * The user has the required Anypoint Code Builder permissions.
 * Your Anypoint Platform organization is current and active.
+
+== Vibes Features are Unresponsive or Fail to Load
+
+If MuleSoft Vibes features aren't working as expected, verify that your system points to the JDK used by Anypoint Code Builder.
+
+=== Configure JAVA_HOME on macOS
+
+. Identify the path where Anypoint Code Builder has installed the JDK. It typically follows this pattern:
++
++/Users/<your_username>/AnypointCodeBuilder/java/<jdk_version>/Contents/Home+
+. Open your shell profile (usually `~/.zshrc` for Zsh or `~/.bash_profile` for Bash) in a text editor:
++
+[source,bash]
+----
+nano ~/.zshrc
+----
+. Add these lines, replacing `<path_to_jdk>` with the path identified in the previous step:
++
+[source,bash]
+----
+export JAVA_HOME="<path_to_jdk>"
+export PATH="$JAVA_HOME/bin:$PATH"
+----
+. Save the file and reload the profile:
++
+[source,bash]
+----
+source ~/.zshrc
+----
+. Verify the configuration by running `echo $JAVA_HOME` and `java -version`.
+
+=== Configure JAVA_HOME on Windows
+
+. Identify the path where Anypoint Code Builder has installed the JDK. It typically follows this pattern:
++
++C:\Users\<your_username>\AnypointCodeBuilder\java\<jdk_version>+
+. Open Windows Search, enter `Edit the system environment variables`, and then select *Environment Variables*.
+. In *User variables* or *System variables*, create or update `JAVA_HOME` with your JDK path.
+. Update the `Path` variable and add this line:
++
++%JAVA_HOME%\bin+
+. Open a new Command Prompt and verify the configuration:
++
+[source,bash]
+----
+echo %JAVA_HOME%
+java -version
+----
 
 == See Also
 

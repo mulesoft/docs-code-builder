@@ -1,18 +1,18 @@
-= Get Started with MuleSoft Vibes
+= Getting Started with MuleSoft Vibes
 :page-aliases: a4d-get-started.adoc
 
-MuleSoft Vibes helps you build APIs and integrations using natural language prompts directly in your development environment.
+MuleSoft Vibes helps you build APIs and integrations by sending natural language messages directly in your development environment.
 
 [[use-mulesoft-vibes]]
 == Use MuleSoft Vibes
 
-You can open MuleSoft Vibes from the:
+Ensure you meet the xref:mulesoft-vibes.adoc#before-you-begin-vibes[prerequisites] before you begin. You can open MuleSoft Vibes from the:
 
 * Toolbar icon
 * Top navigation bar
 * *Build with AI* card in the project canvas
 
-When you submit a prompt, MuleSoft Vibes processes it using the MuleSoft MCP Server and performs actions such as generating API specifications or integration flows.
+When you send a message, MuleSoft Vibes processes it using the MuleSoft MCP Server and performs actions such as generating API specifications or integration flows.
 
 Depending on your configuration, MuleSoft Vibes can:
 
@@ -25,28 +25,44 @@ Depending on your configuration, MuleSoft Vibes can:
 MuleSoft Vibes operates in two modes:
 
 * *Plan Mode*  
-MuleSoft Vibes analyzes your prompt and produces a step-by-step plan describing how it will accomplish the task. No actions are executed automatically in this mode.
+MuleSoft Vibes analyzes your message and produces a step-by-step plan describing how it will accomplish the task. No actions are executed automatically in this mode.
 
 * *Act Mode*  
 MuleSoft Vibes attempts to perform the actions outlined in the plan by using the MuleSoft MCP Server tools to modify files, create resources, or execute changes to your project.
 
 You can switch between modes depending on whether you prefer to review the plan before execution or allow MuleSoft Vibes to act directly.
 
+[[vibes-descriptive-ui]]
+=== Modernize Flows with Descriptive UI
+
+Descriptive UI is a different canvas experience in MuleSoft Vibes starting with Anypoint Code Builder v1.19. It modernizes flow development with a vertical, recipe-style layout that makes integrations easier to read and update.
+
+The canvas uses AI to generate human-readable descriptions for each component in your flow.
+For example, instead of decoding a technical component first, you can understand what that step does in business terms.
+
+Visual indentation highlights branching and nested logic, such as choice routers and error handling paths, so you can scan complex flows faster. This structure helps you understand overall flow behavior before opening detailed configuration panels.
+
+You can build and refine flows through agent-led and direct UI interactions. Use natural language commands in MuleSoft Vibes to add, modify, delete, and reorder components, or hover over the canvas to reveal inline *+* controls for quick edits.
+
+Descriptions are generated on demand with your approval, which helps you document legacy and newly created flows without interrupting development.
+
+If you prefer the previous experience, you can switch back to the *Classic* canvas view at any time from canvas controls or Anypoint Code Builder settings.
+
 [[how-mulesoft-vibes-generates-code]]
-=== Code Generation in MuleSoft Vibes
+=== Generate Code in MuleSoft Vibes
 
 MuleSoft Vibes uses MuleSoft-optimized AI pipelines to generate high-quality code for API specifications and integration flows.
 
 The pipelines are exposed to MuleSoft Vibes through these MCP tools:
 
 * `generate_mule_flow` – Generates Mule integration flows.
-* `generate_api_spec` – Generates API specifications from natural language prompts.
+* `generate_api_spec` – Generates API specifications from natural language.
 
 Because these tools run on pipelines optimized specifically for MuleSoft use cases, users typically receive higher-quality code outputs (on average, 60% better) compared to generic generation.
 
 To ensure the best results:
 
-* Verify that the MuleSoft MCP Server is loaded in MuleSoft Vibes prior to sending a prompt.
+* Verify that the MuleSoft MCP Server is loaded in MuleSoft Vibes before you send a message.
 * Make sure MuleSoft Vibes is invoking these specialized tools.
 * Verify that all required prerequisites for MuleSoft Vibes and MCP Server are enabled in your environment.
 
@@ -64,9 +80,16 @@ To add context:
 . Select files or folders to attach, paste the input or output from terminal, or paste a URL.
 . Confirm to add the context to your current task.
 
-You can also add context directly from the prompt input box by typing `@`, which opens the same context selector.
+You can also add context directly from the message input box by typing `@`, which opens the same context selector.
 
 These inputs are used as contextual references during generation.
+
+[[vibes-multimodal-file-prompts]]
+=== Add Files to Messages with Multi-Modal Support
+
+MuleSoft Vibes supports multi-modal context in the message area. Drag images directly into a conversation to provide visual context alongside text inputs.
+
+Attach up to 10 files per conversation to help MuleSoft Vibes interpret requirements that are easier to explain through screenshots or supporting files.
 
 [[configure-mulesoft-vibes-settings]]
 == Configure MuleSoft Vibes Settings
@@ -86,7 +109,15 @@ The available options include:
 * *Execute safe commands*: Allow MuleSoft Vibes to execute safe terminal commands.
 * *Execute all commands*: Allow MuleSoft Vibes to execute any terminal command.
 * *Use the browser*: Allow MuleSoft Vibes to launch and interact with websites in a browser.
+* *Default skills*: Enable or disable preloaded skills individually.
+
+[[vibes-token-consumption-monitoring]]
+=== Monitor Token Consumption in MuleSoft Vibes
+
+View token consumption for individual requests and tasks directly in MuleSoft Vibes. 
+
+This visibility helps you understand the resource cost of generation activities and manage usage across sessions.
 
 == Skills in MuleSoft Vibes
 
-xref:vibes-skills.adoc[Skills] are reusable instruction sets that load when your prompt matches a skill's description. For information about skills and MCP tools, see xref:vibes-skills.adoc[].
+xref:vibes-skills.adoc[Skills] are reusable instruction sets that load when your message matches a skill's description. For information about skills and MCP tools, see xref:vibes-skills.adoc[].
