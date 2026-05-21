@@ -5,15 +5,18 @@
 include::partial$af-shared.adoc[tags=get-started]
 
 [[setup-space]]
-== Set Up the Private Space or Deployment Target for Your Environment
+== Set Up the Space or Deployment Target for Your Environment
 
-To deploy an agent network, you need a private space on CloudHub 2.0 or a deployment target on Anypoint Runtime Fabric.
+To deploy an agent network, you need a space on CloudHub 2.0 or a deployment target on Anypoint Runtime Fabric. On CloudHub 2.0, you can deploy to a shared space or a private space.
 
-If you already have a private space configured in CloudHub 2.0, you can associate it with the business groups and environments where you'll deploy your agent network.
+Use a shared space if you don't require dedicated infrastructure. Use a private space if you need workload isolation or have other requirements that a shared space doesn't satisfy.
 
 Depending on your deployment target:
 
-* CloudHub 2.0:
+* CloudHub 2.0 shared space:
++
+No setup is required. Every Anypoint Platform organization includes a shared space that's available to all business groups and environments.
+* CloudHub 2.0 private space:
 +
 . Create a private space in CloudHub 2.0 or verify that you can access an existing private space.
 +
@@ -29,27 +32,33 @@ Create a target space for Runtime Fabric.
 For information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Omni Gateway on Runtime Fabric].
 
 [[setup-gateways]]
-== Set Up Agent Network Gateways for the Private Space or Deployment Target
+== Set Up Agent Network Gateways for the Space or Deployment Target
 
-After you have a target space, use the `MuleSoft: Set Up Agent Network Gateways` command to create the ingress and egress gateways required for deployment in either CloudHub 2.0 or Runtime Fabric.
+After you have a target space, use the `MuleSoft: Set Up Agent Network Gateways` command to create the gateways required for deployment in either CloudHub 2.0 or Runtime Fabric.
 
-For agent networks, you must have at least one small Managed Omni Gateway and one large Managed Omni Gateway in your environment.
+or agent networks, you need at least one Managed Omni Gateway in your environment. A single gateway can handle both ingress and egress traffic, which is the recommended configuration. You can also use separate gateways for ingress and egress traffic in a private space.
+
 For more information about gateways, see xref:gateway::flex-architecture-basic-deployments.adoc[].
 
 For more information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Omni Gateway on Runtime Fabric].
 
 . In Anypoint Code Builder, from the Command Palette, run the command *MuleSoft: Set Up Agent Network Gateways*.
+. If you're not logged in, log in to your Anypoint Platform account.
+. Select the business group and environment.
+. Select the deployment target:
++
+* *Shared Space*: The command creates one gateway named `agent-network-shared-gw` that handles both ingress and egress traffic.
+* *Private Space*: Select the target space, then choose a gateway configuration:
++
+** *Single Gateway* (recommended): The command creates one gateway named `agent-network-gw` that handles both ingress and egress traffic.
+** *Separate Ingress & Egress*: The command creates two gateways:
++
+*** `agent-network-ingress-gw` (with public and internal endpoint)
+*** `agent-network-egress-gw` (with internal endpoint only)
 +
 If you didn't associate the private space with the business group and environment, you see an error.
-. If you're not logged in, log in to your Anypoint Platform account.
-. Select the business group, environment, and private or target space.
-+
-The `MuleSoft: Set Up Agent Network Gateways` command creates these gateways in the private or target space you select:
-+
-* agent-network-ingress-gw (with public and internal endpoint)
-* agent-network-egress-gw (with internal endpoint only)
 
-If the gateways already exist in the selected private or target space, the command doesn’t recreate them.
+If a gateway with the expected name already exists in the selected space, the command doesn't recreate it.
 
 [[see-also]]
 == See Also

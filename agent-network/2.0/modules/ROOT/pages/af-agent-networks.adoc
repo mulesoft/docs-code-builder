@@ -7,7 +7,7 @@ An agent network provides the building blocks of your agentic deployment while M
 
 You define your agent network in a simple, human-readable YAML file in Anypoint Code Builder. This approach abstracts away the underlying technical complexities, allowing you to focus on the business constraints and context of your process without needing to understand the inner workings of the orchestration engine.
 
-At the start of a new agent network project, we provide a YAML template to give you a head start. You can use MuleSoft Vibes to configure your network, publish the assets to Anypoint Exchange, and deploy your agent network instance.
+At the start of a new agent network project, we provide a YAML template and Agent Script file to give you a head start. You can use MuleSoft Vibes to configure your network, publish the assets to Anypoint Exchange, and deploy your agent network instance.
 
 [[key-benefits]]
 == Key Benefits of Agent Networks
@@ -25,38 +25,20 @@ Ensure control and compliance across every agent and tool interaction with enter
 Gain insight into agent actions with a visual trace of their decision-making.
 * Flexibility
 +
-Coordinate any type of agent and tool, regardless of where it’s built and deployed so you can build a diverse network of agents.
+Coordinate any type of agent and tool, regardless of where it's built and deployed so you can build a diverse network of agents.
 * Tool and Agent Invocation
 +
 Manage the invocation of both deterministic (tool-based) and probabilistic (LLM-based) actions.
 
-[[example-use-case]]
-== Example Use Case: Employee Onboarding
+[[hybrid-determinism]]
+== The Hybrid Determinism Pattern
 
-In this example, the goal is to seamlessly activate a new hire across HR, IT, Security, and Facilities with a single, policy‑governed experience.
+Brokers in Agent Network 2.0 architecture leverage a hybrid deterministic approach by separating steps requiring probabilistic LLM reasoning from those requiring deterministic control-flow logic.
 
-Here’s how it works:
+* Probabilistic (LLM-based) nodes handle complex, open-ended decisions that require nuanced judgment, such as classification or AI-powered thinking.
+* Deterministic nodes manage all remaining predefined execution paths, ensuring a fixed and guaranteed workflow once a key probabilistic judgment has been finalized.
 
-* Discover
-+
-Publish existing agents and tools (HRIS, Identity, ITSM, Payroll, Facilities, LMS) in Anypoint Exchange for reuse.
-* Orchestrate
-+
-An agent broker decomposes the task of onboarding the new hire (create HR record, provision identity, assign hardware, grant app access, enroll in benefits and training), calling MCP and A2A agents as needed, with human‑in‑the‑loop approvals where required.
-* Govern
-+
-Omni Gateway enforces authentication, least‑privilege access, and guardrails. API Manager policies ensure consistent controls across all calls and data exchanges.
-* Observe
-+
-Monitoring and traces (beta) give end‑to‑end visibility into progress, failures, and latency. Visualization shows which agents interacted and where bottlenecks occurred.
-* Reuse
-+
-The onboarding definition (YAML) is versioned and shareable, enabling rapid adaptation for roles, regions, or subsidiaries without rebuilding flows.
-* Trust and Compliance
-+
-Centralized credentials, audit trails, and policy inheritance support security, privacy, and regulatory requirements (PII handling, approvals, and separation of duties).
-
-With this experience, you get faster time‑to‑productivity, fewer handoffs, lower error rates, and a consistent new‑hire experience across the enterprise.
+This structure allows brokers to apply high-level LLM intelligence where complex judgment is needed, while the overall agent graph maintains reliable, rule-based predictability across the operational flow.
 
 [[agent-network-components]]
 == Agent Network Components
@@ -64,11 +46,22 @@ With this experience, you get faster time‑to‑productivity, fewer handoffs, l
 An agent network is a collection of agents, brokers, LLMs, and MCP servers that are connected to each other. Agent networks use LLMs for reasoning and planning capabilities and integrate with Anypoint Connector for MCP (Model Context Protocol) and Anypoint Connector for Agent2Agent (A2A) communication.
 
 Broker::
-An intelligent routing service that coordinates task delegation across specialized A2A-compliant agents in your enterprise.
-A broker is defined by the agents and MCP servers it can leverage to accomplish tasks.
-Brokers originate from MuleSoft and are referenced in the agent network YAML.
+An intelligent routing service that coordinates task delegation across A2A-compliant agents in your enterprise.
+You define a broker and its nodes in Agent Script.
+Nodes are connected in a graph that encapsulates all steps that describe the orchestration of agents, tools, and large language models.
+A graph-based approach to agent brokers ensures that connected paths guarantee a specific order of operations and enable more complex orchestration that combines deterministic and non-deterministic elements.
 +
 After you publish your agent network, brokers appear as specialized agents in Anypoint Exchange and can be reused by other brokers.
++
+A broker graph is composed of these elements:
++
+Nodes:::
+Each "step" within a graph. Nodes can be used to orchestrate actions with LLM-powered reasoning or perform deterministic actions like routing.
+Trigger:::
+An entry point into a graph. Triggers specify events, calls, or messages that execute workflows. All graphs must start on an A2A trigger.
+Edges:::
+Transitions from node to node. Input data enters the node and output data exits the node.
+
 Agent::
 An autonomous software component that uses goals, context, and available tools, often via a large language model (LLM), to decide and execute actions on behalf of a user or system.
 +
@@ -83,34 +76,33 @@ A service that implements the Model Context Protocol (MCP) to expose tools and d
 MCP servers can be defined either locally in the agent network or externally in a different agent network or elsewhere in your company.
 Your agent network can use both locally defined and externally defined MCP servers to complete tasks.
 
-[[agent-networks-code-builder]]
-=== Agent Networks in Anypoint Code Builder
+Registry::
+A section within an agent network project that defines the assets, connections, and policies necessary to build, execute, and govern a broker.
+Assets defined in this section of an agent network file are published to Exchange and become reusable.
+You can also reference existing assets from Exchange in a graph without needing to define them in the registry section.
 
-When you create agent networks, the Anypoint Code Builder canvas shows the brokers, agents, and MCP servers you've configured.
+[[yaml-and-agent-script]]
+== Agent Network YAML and Agent Script
 
-image::af-agent-network-canvas.png["Anypoint Code Builder canvas showing brokers, agents, and MCP servers"]
+An agent network project defines a structured configuration for multi-agent systems, enabling orchestration of AI agents with external services, tools, and inter-agent communication. This format provides a declarative way to define agent capabilities, dependencies, and service integrations.
 
-[calloutlist]
-. The *Brokers* component groups brokers defined locally in your agent network YAML.
-It can include assets defined locally within the project and assets previously published to Anypoint Exchange, either by your organization or third parties.
-+
-Brokers can reference other brokers defined within the project.
-+
-Agent network projects don't require brokers.
-They can contain only agents and MCP servers defined within the agent network project.
+An agent network project includes these files:
 
-. The *Agents* component groups agents defined locally in your agent network YAML.
-+
-These agents will be published to Exchange.
+----
+/my-agent-network-project
+  - exchange.json
+  - agent-network.yaml
+  /brokers
+    - broker1.agent
+----
 
-. The *MCP Servers* component groups MCP servers defined locally in your agent network YAML.
-+
-These servers will be published to Exchange.
+* `exchange.json`: Contains asset metadata available in Anypoint Exchange after publishing your agent network assets.
+* `agent-network.yaml`: Contains a registry section that defines Exchange assets used in your project and a context section that defines connections and policies for the project.
+* `.agent` files: Contain broker and node definitions and configurations that enable multi-agent orchestration in your project.
 
-. An asset that has been defined within this agent network project.
-+
-The asset might also be published to Exchange.
-. An asset that has been added to this agent network project from Exchange.
+For more information, see xref:af-project-files.adoc[].
+
+NOTE: For a complete, working example you can use as a starting point for your own agent network project, see the IT Broker example[link tkADD LINK]. The example walks through a fully configured `agent-network.yaml`, `exchange.json`, and `/brokers` directory that you can adapt to your own project.
 
 [[agent-network-architecture]]
 == Agent Network Architecture
@@ -124,7 +116,29 @@ image::agent-fabric-architecture.png[Agent Fabric showing agents and MCP servers
 . Deploy the agentic assets to CloudHub 2.0 (managed in Runtime Manager).
 . Enforce policies on incoming traffic to the network with an ingress Omni Gateway, which sits in front of brokers and API endpoints.
 . Enforce policies, manage connections, and emit telemetry data with an egress Omni Gateway, which sits on outbound paths from brokers and agents to external agents and services.
++
+NOTE: In a shared space, or in a private space using a single-gateway configuration, callouts policies, traffic, and data are handled by one Omni Gateway.
+
 . Collect logs, metrics, and traces from Omni Gateway and runtimes in Anypoint Monitoring.
+
+[[exchange-assets]]
+== Agent Network Assets in Anypoint Exchange
+
+The following agent network asset types are supported in Exchange:
+
+Agent Network::
+An agent network project is published in Exchange as an Agent Network asset. The asset is a .zip file that contains all project files. To learn more, see <<yaml-and-agent-script,Agent Network YAML and Agent Script>> or xref:af-project-files.adoc[].
+
+Agents::
+Programs that perform tasks autonomously or semiautonomously. AI agents use the Agent2Agent (A2A) protocol to communicate and collaborate with each other to perform tasks.
++
+When you publish agent network projects to Exchange, the individual agentic assets defined in the agent network project file are registered as either agents or MCP servers. Brokers are published with the agent asset type and are automatically tagged as brokers for easy identification.
+
+LLMs (Large Language Models)::
+AI assets for processing, understanding, and generating human-readable language. Agent network projects support <<llm-support,various LLMs>>. The LLM asset type defines only the provider and contract information. You define the model and connectivity details in the agent network file.
+
+MCP Servers::
+Applications or APIs exposed through the Model Context Protocol (MCP). MCP is an open protocol designed to standardize how applications provide context and capabilities to LLMs and AI agents. In the agent network file, MCP server assets are defined as `Tools`.
 
 [[llm-support]]
 == Large Language Models
@@ -181,7 +195,7 @@ Agent networks support text-based messages and responses. Image and binary messa
 [[a2a-protocol]]
 == A2A Protocol
 
-The Agent2Agent (A2A) Protocol governs agent-to-agent communication. This protocol powers orchestration, observability, and governance features in agent networks. MuleSoft supports v0.3.0 of the A2A Protocol Specification.
+The Agent2Agent (A2A) Protocol governs agent-to-agent communication. This protocol powers orchestration, observability, and governance features in agent networks. MuleSoft supports v1.0 of the A2A Protocol Specification.
 
 === Context and Task ID Scoping in Agent Networks
 
@@ -206,7 +220,7 @@ Consider a network with a client and two brokers (1 and 2).
 | Network broker | Broker_1 | Broker_1 maps `contextId_1` and `taskId_1` to `contextId_2` and `taskId_2`.
 |===
 
-For more information, see https://a2a-protocol.org/v0.3.0/topics/life-of-a-task/#group-related-interactions[Life of a Task - Group Related Interactions].
+For more information, see https://a2a-protocol.org/latest/topics/life-of-a-task/[Life of a Task - Group Related Interactions].
 
 NOTE: Agent networks don't support streaming with Server-Sent Events (SSE).
 

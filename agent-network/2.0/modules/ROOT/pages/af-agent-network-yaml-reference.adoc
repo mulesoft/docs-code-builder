@@ -1,0 +1,1752 @@
+[[agent-network-2-0-yaml-reference]]
+= Agent Network (2.0) YAML Reference
+
+The agent-network.yaml details the required structure and properties that define your project's assets, connections, and policies.
+
+* <<agent-network-section,Agent Network Section>>
+* <<info-section,Info Section>>
+* <<registry-section,Registry Section>>
+* <<context-section,Context Section>>
+* <<brokers-section,Brokers Section>>
+* <<expressions-format,Expressions Format>>
+* <<exchange-json-file,Exchange JSON File>>
+
+[[agent-network-section]]
+== Agent Network Section
+
+This is the root section of the agent network. Must include at least one of `registry`, `context`, or `brokers` must be present.
+
+This section has these properties. 
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|info
+|Provides metadata about the graphs.
+|<<info-section,info Object>>
+|No
+
+|agentNetwork
+|This string must be the <<versions,version number>> of the agent network specification used by the agent network document. This is not related to the document's `info.version` property.
+|String
+|Yes
+
+|registry
+|Definitions of agents, agents, and MCPs, LLMs.
+|<<registry-section,registry>> Object
+|No
+
+|context
+|Reusable entities scoped to the graphs defined in this file (for example, connections and policies).
+|Object
+|No
+
+|brokers
+|A mapping of runtime Agent Script definitions that can be executed by the platform.
+|<<brokers-section,brokers Object>>
+|No
+
+|===
+
+[[info-section]]
+== Info Section
+
+This section contains basic metadata about the agent network document itself.
+
+*Example*
+
+[source,yaml]
+----
+info:
+   label: Employee Onboarding Workflow
+   description:
+A multi-agent network for employee onboarding. Orchestrates HR system setup,     Salesforce profile creation, laptop and badge requests, and Slack notifications     for new hires.
+   version: 1.0.0
+   tags:
+     - employee-onboarding
+     - multi-agent
+     - hr
+     - production
+----
+
+The section has these properties. 
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|label
+|The human-readable name of the agent network.
+|String
+|Yes
+
+|version
+|The version number of the `agent-network.yaml` file.
+|String
+|Yes
+
+|description
+|A human readable summary of what the agent network does.  Accepts CommonMark syntax.
+|String
+|No
+
+|tags
+|Categorization tags for this agent network document.
+|Array of Strings
+|No
+
+|`summary`
+|A short summary of the purpose of the agent network.
+|String
+|No
+
+|`termsOfService`
+|A URI for the Terms of Service for the API. This must be in the form of a URI.
+|String
+|No
+
+|`contact`
+|The contact information for the agent network.
+|Object
+|No
+
+|`contact.name`
+|The identifying name of the contact person/organization.
+|String
+|No
+
+|`contact.url`
+|The URI for the contact information. This must be in the form of a URI.
+|String
+|No
+
+|`contact.email`
+|The email address of the contact person/organization. This must be in the form of an email address.
+|String
+|No
+
+|`license`
+|The license information for the agent network.
+|Object
+|No
+
+|`license.name`
+|The license name used for the agent network.
+|String
+|Yes (if license present)
+
+|`license.identifier`
+|An SPDX license expression. Mutually exclusive with `license.url`.
+|String
+|No
+
+|`license.url`
+|A URI for the license. This must be in the form of a URI. Mutually exclusive with `license.identifier`.
+|String
+|No
+
+|===
+
+[[registry-section]]
+== Registry Section
+
+Use this section to organize and reference reusable agents, LLMs, and MCP tools. The registry section defined in the file is considered the "local registry". Assets defined in the registry are published to Exchange. 
+
+*Example* 
+
+[source,yaml]
+----
+registry:
+   agents:
+     hr-system-agent:
+       info:
+         label: HR System Agent
+         description: Agent that creates new-hire records and manages HR system setup.
+       metadata:
+         platform: AgentForce
+         protocol: a2a
+         card:
+           a2a:
+             protocolVersion: "0.3.0"
+             name: hr-system-agent
+             description: Creates and manages employee records in the HR system.
+             url: https://hr-agent.example.com/a2a
+             defaultInputModes: [application/json, text/plain]
+             defaultOutputModes: [application/json, text/plain]
+         tools:
+           - mcp:
+               ref:
+                 name: slack-mcp
+               allowed: [sendMessage, listChannels]
+         llm:
+           ref:
+             name: Open-AI-LLM
+     salesforce-agent:
+       info:
+         label: Salesforce Onboarding Agent
+         description: Agent that provisions Salesforce profiles for new hires.
+       metadata:
+         platform: AgentForce
+         protocol: a2a
+         card:
+           a2a:
+             protocolVersion: "0.3.0"
+             name: salesforce-agent
+             description: Onboards new employees to Salesforce.
+             url: https://sfdc-agent.example.com/a2a
+             defaultInputModes: [application/json]
+             defaultOutputModes: [application/json]
+         llm:
+           ref:
+             name: Open-AI-LLM
+   mcps:
+     slack-mcp:
+       info:
+         label: Slack MCP Server
+         description: MCP server for sending messages and listing Slack channels.
+       metadata:
+         protocolVersion: "2024-11-05"
+         transport:
+           kind: sse
+           ssePath: /mcp
+         tools:
+           - name: sendMessage
+             description: Send a message to a Slack channel.
+             inputSchema:
+               type: object
+               properties:
+                 text: { type: string }
+                 channelId: { type: string }
+           - name: listChannels
+             description: List available Slack channels.
+             inputSchema:
+               type: object
+   llms:
+     Open-AI-LLM:
+       info:
+         label: OpenAI LLM
+         description: OpenAI provider for orchestration and generation nodes.
+       metadata:
+         platform: OpenAI
+         models:
+           - gpt-4o
+           - gpt-4o-mini
+           - gpt5-mini
+     Azure-OpenAI-LLM:
+       info:
+         label: Azure OpenAI LLM
+         description: Azure OpenAI for orchestration nodes.
+       metadata:
+         platform: AzureOpenai
+         models:
+           - gpt-4o
+----
+
+The `registry` section has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+|Values
+
+|`agents`
+|The list of agents defined as part of this network.
+|Object
+|No
+|Keys: identifiers matching ^[a-zA-Z_][a-zA-Z0-9_.-]*$. Values: AgentEntity
+
+|`mcps`
+|The list of MCP servers defined as part of this network.
+|Object
+|No
+|Keys: identifiers. Values: MCPServerEntity
+
+|`llms`
+|The list of LLM providers defined as part of this network.
+|Object
+|No
+|Keys: identifiers. Values: LLMEntityEach `LLMEntity` requires `metadata.platform`: `Gemini`, `OpenAI`, or `AzureOpenai`.
+
+|===
+
+=== Info
+
+All nodes in this section share these properties. 
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`label`
+|The human readable short text.
+|String
+|No
+
+|`description`
+|A human readable text of what this element does. Accepts CommonMark syntax.
+|String
+|No
+
+|`tags`
+|Optional tags.
+|Array of Strings
+|No
+
+|===
+
+=== Agents
+
+Each registry agent is an `AgentEntity`. The schema requires a `metadata` object. The A2A agent card, tools, and LLM reference are nested under `metadata`, not at the root of the agent.
+
+The agents section has these properties.
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`agents.info`
+|Metadata for the agent.
+|InfoObject
+|No
+
+|`agents.metadata`
+|Platform, protocol, card, tools, and LLM wiring for the agent.
+|Object
+|Yes
+
+|`agents.metadata.platform`
+|Host platform for the agent (for example, AgentForce or Bedrock).
+|String
+|Yes
+
+|`agents.metadata.protocol`
+|Integration protocol for the agent; use values such as a2a or other as defined by the platform.
+|String
+|Yes
+
+|`agents.metadata.card`
+|Agent card payload. Include a2a for an A2A card, or other for other card types.
+|Object
+|No
+
+|`agents.metadata.card.a2a`
+|The A2A agent card. See A2A Card.
+|AgentCard
+|Yes (when using the a2a card branch)
+
+|`agents.urls`
+|Named URLs for the agent.
+|Array
+|No
+
+|`agents.metadata.tools`
+|The list of tool providers (MCP or A2A)
+|Array[Object]
+|No
+
+|`agents.metadata.llm`
+|Reference to the LLM used by this agent (ref to a declared LLM)
+|Object
+|No
+
+|===
+
+Authentication for outbound calls is configured on <<connections,`connections`>> (and related policies), not on registry `AgentEntity` definitions.
+
+[[a2a-card]]
+==== A2A Card
+
+This section adheres to the Agent-to-Agent (A2A) specification v1.0 and describes an agent's contract, skills, and capabilities. This is a standard A2A agent card https://a2a-protocol.org/latest/specification/#441-agentcard[as defined in the Agent2Agent (A2A) Protocol specification].
+
+The A2A card section has these properties. 
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+|Values
+
+|`name`
+|Human-readable name for the agent.
+|string
+|Yes
+|--
+
+|`description`
+|Human-readable description of the agent's purpose.
+|string
+|Yes
+|--
+
+|`url`
+|Preferred endpoint URL for interacting with the agent. Must support preferredTransport.
+|string
+|Yes
+|e.g. https://api.example.com/a2a/v1
+
+|`version`
+|Agent's own version number (format defined by provider).
+|String
+|Yes
+|e.g. 1.0.0
+
+|`protocolVersion`
+|Version of the A2A protocol this agent supports.
+|String
+|Yes
+|Default: 0.3.0
+
+|`capabilities`
+|Optional capabilities supported by the agent.
+|AgentCapabilities
+|Yes
+|See below
+
+|`defaultInputModes`
+|Default supported input MIME types for all skills (overridable per skill).
+|Array of string
+|Yes
+|--
+
+|`defaultOutputModes`
+|Default supported output MIME types for all skills (overridable per skill).
+|Array of string
+|Yes
+|--
+
+|`skills`
+|The set of skills or distinct capabilities the agent can perform.
+|Array of AgentSkills
+|Yes
+|See below
+
+|`preferredTransport`
+|Transport for the main url. Must be available at that URL.
+|String
+|No
+|JSONRPC, GRPC, HTTP+JSON (default: JSONRPC)
+
+|`additionalInterfaces`
+|Additional transport+URL combinations for the same agent.
+|Array of AgentInterface
+|No
+|Each: { transport: string, url: string }
+
+|`additionalInterfaces.transport`
+|The transport protocol for this interface.
+|String
+|Yes
+|`JSONRPC, GRPC, HTTP+JSON)`
+
+|`additionalInterfaces.url`
+|The URL for this additional interface.
+|String (URI)
+|Yes
+|Valid URI string
+
+|`provider`
+|Agent's service provider.
+|AgentProvider
+|No
+|{ organization: string, url: string }
+
+|`documentationUrl`
+|Optional URL to the agent's documentation.
+|String
+|No
+|--
+
+|`iconUrl`
+|Optional URL to an icon for the agent.
+|String
+|No
+|--
+
+|`security`
+|Security requirement objects for all interactions (OpenAPI 3.0 style; OR of ANDs).
+|Array of object
+|No
+|Each object: scheme names -> array of scope strings
+
+|`securitySchemes`
+|Declared security schemes (key \= scheme name). OpenAPI 3.0 Security Scheme Object.
+|Object
+|No
+|apiKey, http, oauth2, openIdConnect, mutualTLS
+
+|`signatures`
+|JSON Web Signatures for this AgentCard (RFC 7515 JWS).
+|Array of AgentCardSignature
+|No
+|{ protected, signature, header? }
+
+|`supportsAuthenticatedExtendedCard`
+|If true, the agent can return an extended card to authenticated users.
+|Boolean
+|No
+|Default: false
+
+|===
+
+===== Skills Properties
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|`id`
+|Unique identifier for the skill.
+|String
+|Any string value
+|No
+
+|`name`
+|A human-readable name for the skill.
+|String
+|Any string value
+|No
+
+|`description`
+|A description of what this skill does.
+|String
+|Any string value
+|No
+
+|`examples`
+|Usage examples demonstrating how to use this skill.
+|Array of strings
+|Array of example strings
+|No
+
+|`inputModes`
+|Supported input MIME types for this skill (overrides defaultInputModes).
+|Array of strings
+|Array of MIME type strings
+|No
+
+|`outputModes`
+|Supported output MIME types for this skill (overrides defaultOutputModes).
+|Array of strings
+|Array of MIME type strings
+|No
+
+|`tags`
+|Categorization tags for this skill.
+|Array of strings
+|Array of tag strings
+|No
+
+|===
+
+===== Capabilities Properties
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|`streaming`
+|Indicates if the agent supports streaming responses.
+|Boolean
+|`true` or `false`
+|No
+
+|`pushNotifications`
+|Indicates if the agent supports push notifications.
+|Boolean
+|`true` or `false`
+|No
+
+|`stateTransitionHistory`
+|Indicates if the agent maintains state transition history.
+|Boolean
+|`true` or `false`
+|No
+
+|`extensions`
+|List of extension capabilities supported by the agent.
+|Array
+|Array of extension objects
+|No
+
+|===
+
+=== MCP
+
+The MCP Server section has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+|Values
+
+|`info`
+|Metadata for the MCP Server
+|`InfoObject`
+|No
+|--
+
+|`urls`
+|Named URLs for the agent. array No
+|Array
+|No
+|--
+
+|`metadata`
+|MCP server descriptor (how to connect and what it exposes).
+|Object
+|Yes
+|--
+
+|`metadata.protocolVersion`
+|Version of the MCP protocol.
+|String
+|No
+|"2024-11-05", "2025-03-26", "2025-06-18", "2025-11-25"
+
+|`metadata.transport`
+|Transport used for communication.
+|MCPTransport
+|Yes
+|SseTransport, StreamableHttpTransport, or StdioTransport
+
+|`metadata.provider`
+|Service provider of the MCP server.
+|Object
+|No
+|{ organization: string, url: string }
+
+|`metadata.capabilities`
+|Server capabilities.
+|ServerCapabilities
+|No
+|completions, experimental, tasks, logging, prompts, resources, tools
+
+|`metadata.tools`
+|List of tools.
+|Array
+|No
+|action definitions
+
+|`metadata.resources`
+|List of resources.
+|Array
+|No
+|Resource definitions
+
+|`metadata.resourceTemplates`
+|List of resource templates.
+|Array
+|No
+|ResourceTemplate definitions
+
+|`metadata.prompts`
+|List of prompts.
+|Array
+|No
+|Prompt definitions
+
+|`metadata.platform`
+|Platform the MCP server runs on.
+|String
+|No
+|--
+
+|`metadata.securitySchemes`
+|Security schemes for authentication.
+|Object
+|No
+|SecurityScheme by key
+
+|===
+
+==== MCP Transport types
+
+*Example*
+
+[source,yaml]
+----
+registry:
+   mcps:
+     weather-mcp:
+       metadata:
+         protocolVersion: "2025-06-18"
+         transport:
+           kind: streamableHttp
+           path: /weather/mcp
+         provider:
+           organization: Acme Inc.
+           url: https://www.acme.com
+     my-mcp-sse:
+       metadata:
+         transport:
+           kind: sse
+           ssePath: /mcp/sse
+           messagesPath: /mcp
+----
+
+===== SseTransport
+
+Sse Transport has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+|Values
+
+|`kind`
+|Transport type.
+|String
+|Yes
+|`"sse"`
+
+|`ssePath`
+|Path to the SSE endpoint.
+|String
+|Yes
+|--
+
+|`messagesPath`
+|Path to the messages endpoint.
+|String
+|No
+|Agent Graph Expression Optional
+
+|===
+
+===== StreamableHttpTransport
+
+StreamableHttpTransport has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+|Values
+
+|`kind`
+|Transport type.
+|String
+|Yes
+|"streamableHttp"
+
+|`path`
+|Path to the MCP endpoint.
+|String
+|No
+|--
+
+|===
+
+===== StdioTransport
+
+StdioTransport has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+|Values
+
+|`kind`
+|Transport type.
+|String
+|Yes
+|`"stdio"`
+
+|`instructions`
+|Instructions to run the MCP server.
+|String
+|No
+|--
+
+|===
+
+=== Reference Types
+
+*Example*
+
+[source,yaml]
+----
+registry:
+   agents:
+     myEvaluationAgent:
+       type: a2a_agent
+       protocol: a2a
+       platform: agentforce
+       kind: evaluation
+       connections:
+         - kind: mcp
+           ref:
+             assetId: my-mcp-server
+             version: 1.0.0
+           allowed:
+             - tool-name-1
+       provenance:
+         kind: exchange
+         metadata:
+           organizationId: my-org
+----
+
+Reference types used in the Registry section have these properties. 
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Reference
+|Description
+|Type
+|Required
+|Values
+
+|`AgentRef`
+|Reference to an agent.
+|Object
+|No
+|`{ name: string, namespace?: string }`
+
+|`MCPRef`
+|Reference to an MCP server.
+|Object
+|No
+|`{ name: string, namespace?: string }`
+
+|`LLMRef`
+|Reference to an LLM provider.
+|Object
+|No
+|`{ name: string, namespace?: string }`
+
+|`ConnectionRef`
+|Reference to a connection.
+|Object
+|No
+|`{ name: string }`
+
+|`PolicyRef`
+|Reference to a policy.
+|Object
+|No
+|`{ name: string, namespace?: string }`
+
+|===
+
+[[context-section]]
+== Context Section
+
+This section is for reusable entities scoped to the graphs defined in the `agent-network.yaml` file. It holds definitions that are used by the document (for example, connections, policies) but are not published to the agent registry. 
+
+*Example*
+
+[source,yaml]
+----
+context:
+   connections:
+     hr-system-agent:
+       kind: a2a
+       ref:
+         name: hr-system-agent
+       url: https://hr-agent.example.com/a2a
+     salesforce-agent:
+       kind: a2a
+       ref:
+         name: salesforce-agent
+       url: https://sfdc-agent.example.com/a2a
+     slack-mcp:
+       kind: mcp
+       ref:
+         name: slack-mcp
+       url: https://mcp.example.com/slack
+     Open-AI-LLM:
+       kind: llm
+       ref:
+         name: Open-AI-LLM
+       url: https://api.openai.com/v1
+       authentication:
+         kind: apiKey
+         apiKey: "${env.OPENAI_API_KEY}"
+         # optional: headerName (default Authorization)
+       # optional: policies
+   policies:
+     retry-policy:
+       ref:
+         name: retry-policy
+       configuration:
+         maxAttempts: 3
+         backoffMs: 1000
+----
+
+The `context` section has these properties. 
+
+[%header,cols="1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+
+|connections
+|The list of connections defined as part of this network.
+|Connection Objects
+
+|policies
+|Policy definitions that govern connection behavior, access, and execution.
+|Policies Object
+
+|===
+
+[[connections]]
+=== Connections
+
+Connection definitions live in the `context` object. Each `connections` object has a kind field that determines its connection type: either `a2a`, `llm`, or mcp. 
+
+Connection objects have these properties.
+
+[%header,cols="1,1,1,1"]
+|===
+|Field Name
+|Description
+|Type
+|Required
+
+|`kind`
+|Connection type
+|`mcp`, `a2a`, `or llm`
+|Yes
+
+|`ref`
+|A reference to an asset representing the target system.
+|Reference Object
+|Yes
+
+|`url`
+|The base URL of the target system.
+|String
+|Yes
+
+|`authentication`
+|The authentication method to use when connecting to the target system.
+|Authentication Object
+|No
+
+|`policies`
+|Array of policy identifiers to apply to this connection.
+|Array[String]
+|No
+
+|===
+
+You can attach policies to connection objects by referencing their policy identifier. See the <<policies,policies object>> for field definitions.
+
+[[policies]]
+=== Policies
+
+This section describes reusable, composable policy bindings and definitions that govern specific behaviors or constraints related to connections. You must reference the policy identifier to attach a policy. 
+
+For more information about applying policies via Flex Gateway in Local Mode, see:
+
+* https://docs.mulesoft.com/gateway/latest/flex-agent-secure[Securing Agent Interactions with Flex Gateway]
+* https://docs.mulesoft.com/gateway/latest/flex-gateway-secure-local[Applying Policies in Local Mode]
+
+*Example*
+
+[source,yaml]
+----
+context:
+   policies:
+     myRateLimitPolicy:
+       ref:
+         name: myReferenceObject
+       configuration:
+         - rate: 100
+           unit: minute
+----
+
+This section has these properties.
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|ref
+|Reference to a specific policy definition.
+|Object
+|Yes
+
+|ref.name
+|Name of the reference definition
+|String
+|Yes
+
+|configuration
+|Policy-specific configuration (structure defined by the referenced policy definition).
+|Object
+|Yes
+
+|===
+
+=== Authentication
+
+This section defines the authentication schemes used by the agent network for authenticating when making outbound requests.
+
+==== Basic Client Authentication
+
+HTTP Basic authentication with username and password.
+
+*Example*
+
+[source,yaml]
+----
+kind: basic username: my-username password: my-password headerName: Authorization
+----
+
+The basic object has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|kind
+|The authentication method type.
+|String
+|basic
+|Yes
+
+|username
+|Username for authentication.
+|String
+|String
+|Yes
+
+|password
+|Password for authentication.
+|String
+|String
+|Yes
+
+|headerName
+|The name of the HTTP used for basic credentials. If not specified, Authorization is used.
+|String
+|String. Defaults to Authorization.
+|No
+
+|===
+
+==== API Key Client Authentication
+
+*Example*
+
+[source,yaml]
+----
+kind: apiKey apiKey: my-api-key-123 headerName: Authorization
+----
+
+An API key passed in a header has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|kind
+|The authentication method type.
+|String
+|apiKey
+|Yes
+
+|headerName
+|The name of the HTTP header that carries the API key. If not specified, Authorization is used.
+|String
+|String. Defaults to Authorization.
+|Yes
+
+|apiKey
+|The header or parameter name for the API key.
+|String
+|String
+|No
+
+|===
+
+==== API Key Client Credentials Client Authentication
+
+API key client credentials with client ID and client secret objects.
+
+*Example*
+
+[source,yaml]
+----
+type: apikey-client-credentials client-id:
+   value: my-client-id
+   name: client_id client-secret:
+   value: my-client-secret
+   name: client_secret
+----
+
+The API key client credentials object has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|kind
+|The authentication method type.
+|String
+|apikey-client-credentials
+|Yes
+
+|clientId
+|Description of the client ID to be used.
+|Object
+|Object with value and optional name (default header name is client_id).
+|Yes
+
+|clientId.value
+|The value for the client ID.
+|String
+|String
+|Yes
+
+|clientId.name
+|The header or parameter name.
+|String
+|String
+|No
+
+|clientSecret
+|Description of the client secret to be used.
+|Object
+|Object with value and optional name (default header name is client_secret).
+|No
+
+|clientSecret.value
+|The value for the client secret.
+|String
+|String
+|Yes
+
+|clientSecret.name
+|The header or parameter name.
+|String
+|String
+|No
+
+|===
+
+==== OAuth 2.0 Client Credentials Grant Client Authentication
+
+OAuth 2.0 authentication using the Client Credentials Grant Type. Allows agents to obtain access tokens using a client ID and client secret from the token provider.
+
+*Example*
+
+[source,yaml]
+----
+kind: oauth2-client-credentials clientId: my-client-id clientSecret: my-client-secret token:
+   url: https://my-oauth2-provider.com/token
+   timeout: 15
+   bodyEncoding: form scopes:
+   - my.custom.scope
+   - another.scope
+----
+
+The oauth2-client-credentials object has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|kind
+|The authentication method type.
+|String
+|oauth2-client-credentials
+|Yes
+
+|clientId
+|The client ID to authenticate with the OAuth2 provider.
+|String
+|String
+|Yes
+
+|clientSecret
+|The client secret used with client ID.
+|String
+|String
+|Yes
+
+|token
+|Configuration for how to fetch the token.
+|Object
+|Token object
+|Yes
+
+|token.url
+|The URL of the token provider (token endpoint).
+|String
+|Valid URL string
+|Yes
+
+|token.timeout
+|Time in seconds to wait for the token service to respond.
+|Number
+|Any number
+|No
+
+|token.bodyEncoding
+|Content encoding for the request body. (`form = application/x-www-form-urlencoded`, `json = application/json`)
+|String
+|`form` or `json`
+|No
+
+|scopes
+|Array of scopes to request during token retrieval.
+|Array
+|Array of scope strings. Defaults to []
+|No
+
+|===
+
+==== In-Task Authorization Code
+
+Use in-task authorization code when the connection needs secondary credentials obtained during a task using the OAuth 2.0 Authorization Code flow. OAuth2 tokens are extracted from message data and injected into the Authorization header for upstream calls. This supports step-up or in-task authentication (for example, when a user must re-authenticate for a sensitive action). For more information about the associated policy, see xref:gateway::policies-outbound-a2a-intask-authorization-code.adoc[].
+
+*Example*
+
+[source,yaml]
+----
+authentication:
+   kind: in-task-authorization-code
+   secondaryAuthProvider: providerName
+   authorizationEndpoint: https://oauth.provider.com/authorize
+   tokenEndpoint: https://oauth.provider.com/token
+   scopes: Read
+   redirectUri: https://oauth.provider.com/callback
+   responseType: code
+   tokenAudience: https://api.example.com/agents/my-agent
+   codeChallengeMethod: S256
+   bodyEncoding: form
+   challengeResponseStatusCode: 200
+    tokenTimeout: 300
+----
+
+The in-task-authorization-code authentication has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|kind
+|Authentication type.
+|String
+|in-task-authorization-code
+|Yes
+
+|authorizationEndpoint
+|OAuth2 authorization endpoint URL. Used to generate the authentication challenge.
+|String
+|Valid URL
+|Yes
+
+|tokenEndpoint
+|OAuth2 token endpoint URL. Used to generate the authentication challenge.
+|String
+|Valid URL
+|Yes
+
+|scopes
+|OAuth2 scopes required for step-up authentication.
+|String
+|Space- or comma-separated scope list (for example, openid profile email)
+|Yes
+
+|redirectUri
+|OAuth2 redirect URI the client uses in the authorization flow.
+|String
+|Valid URI
+|Yes
+
+|secondaryAuthProvider
+|Name of the IdP (for example, okta, auth0). Informational only, for the authentication card.
+|String
+|Any string
+|No
+
+|responseType
+|OAuth2 response type.
+|String
+|Typically code. Default: code
+|No
+
+|codeChallengeMethod
+|PKCE code challenge method.
+|String
+|Typically S256. Default: S256
+|No
+
+|tokenAudience
+|Intended recipient of the token (for example, agent1 or API URL).
+|String
+|Any string
+|No
+
+|bodyEncoding
+|Encoding for the token request body.
+|String
+|form, json. Default: form
+|No
+
+|tokenTimeout
+|Timeout in seconds for token requests.
+|Integer
+|Positive integer. Default: 300
+|No
+
+|challengeResponseStatusCode
+|HTTP status code returned for auth-required challenge responses. Typically 200 for JSON-RPC compatibility.
+|Integer
+|HTTP status code. Default: 200
+|No
+
+|===
+
+==== OAuth 2.0 OBO Credential Injection
+
+This authentication type supports OAuth 2.0 Token Exchange and Microsoft Entra ID On-Behalf-Of protocols. For more information about the associated policy, see xref:gateway::policies-outbound-oauth-obo.adoc[].
+
+*Using OAuth 2.0 Token Exchange*
+
+[source,yaml]
+----
+authentication:
+   kind: oauth2-obo
+   flow: oauth2-token-exchange
+   tokenEndpoint: https://oauth.provider.com/token
+   clientId: clientId
+   clientSecret: clientSecret
+   targetType: audience
+   targetValue: https://api.example.com/agents/my-agent
+   scope: Read #optional, OAuth 2.0 scope to request. Required for Microsoft Entra OBO (for example, api://downstream-client-id/.default). Optional for OAuth 2.0 Token Exchange (RFC 8693).
+   timeout: 5000
+----
+
+*Using Microsoft Entra ID On-Behalf-Of*
+
+[source,yaml]
+----
+authentication:
+   kind: oauth2-obo
+   flow: microsoft-entra-obo
+   tokenEndpoint: https://oauth.provider.com/token
+   clientId: clientId
+   clientSecret: clientSecret
+   scope: api://downstream-client-id/.default
+   timeout: 5000
+----
+
+The `oauth2-obo` authentication has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|kind
+|Authentication type.
+|String
+|oauth2-obo
+|Yes
+
+|flow
+|Token exchange flow type.
+|String
+|oauth2-token-exchange, microsoft-entra-obo
+|Yes
+
+|clientId
+|OAuth2 client ID for token exchange.
+|String
+|String
+|Yes
+
+|clientSecret
+|OAuth2 client secret for token exchange.
+|String
+|String
+|Yes
+
+|tokenEndpoint
+|OAuth2 token endpoint URL for token exchange.
+|String
+|Valid URL
+|Yes
+
+|targetType
+|Parameter type for specifying the target service (audience for logical name, resource for physical URI). Used for OAuth 2.0 Token Exchange.
+|String
+|audience, resource. Default: audience
+|No
+
+|targetValue
+|Target audience URI or resource URI for the exchanged token. Required for OAuth 2.0 Token Exchange.
+|String
+|Valid URI
+|Required when using oauth2-token-exchange with a target
+
+|scope
+|OAuth scope to request. Required for Microsoft Entra OBO (for example, api://downstream-client-id/.default). Optional for OAuth 2.0 Token Exchange.
+|String
+|String
+|Required for microsoft-entra-obo
+
+|timeout
+|Timeout for token exchange requests in milliseconds.
+|Integer
+|Positive integer. Default: 10000
+|No
+
+|cibaEnabled
+|When `true`, it uses Client Initiated Backchannel Authentication (CIBA) instead of standard OBO token exchange. Only valid when `flow` is `oauth2-token-exchange`.
+|Boolean
+|`true` or `false`. Default: `false`
+|No
+
+|cibaEndpoint
+|Backchannel authorization (`bc-authorize`) endpoint URL for CIBA.
+|String
+|Valid URL
+|No
+
+|cibaLoginHintClaim
+|JWT claim from the subject token to send as the CIBA `login_hint` (for example, `email,` `sub`).
+|String
+|String. Default: `email`
+|No
+
+|cibaBindingMessage
+|Optional message shown on the user's authentication device during CIBA approval.
+|String
+|String
+|No
+
+|===
+
+[[brokers-section]]
+== Brokers Section
+
+Use this section to define brokers that orchestrate and control the flow of agent and tool invocations. Each broker object maps to an `.agent` file. You can have multiple Agent Script files  in your Brokers folder.
+
+*Example*
+
+[source,yaml]
+----
+brokers:
+   customerServiceAgent:
+     kind: AgentScript
+     implementation: ./brokers/customer-service.agent
+     interfaces:
+       a2a:
+         card:             ...
+         policies:
+           inbound:
+             - ref:
+                 name: rate-limit-policy
+   billingAgent:
+     kind: AgentScript
+     implementation: ./brokers/billing-handler.agent
+     interfaces:
+       a2a:
+         card:           ....
+----
+
+The `brokers` section has these properties.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+|Values
+
+|`_(broker id)_`
+|Named broker definition.
+|Object
+|No
+|Keys: identifiers matching ^[a-zA-Z_][a-zA-Z0-9_.-]*$. Values: broker entity (BrokerEntity in agent_network_v2.json)
+
+|`kind`
+|The type of agent implementation.
+|String
+|Yes
+|`AgentScript`
+
+|`implementation`
+|The path to the Agent Script implementation file.
+|String
+|Yes
+|--
+
+|`interfaces`
+|Exposed interfaces for this broker.
+|Object
+|Yes
+|`a2a`
+
+|===
+
+=== interfaces.a2a
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`card`
+|The A2A agent card. See <<a2a-card,A2A Card>>.
+|AgentCard
+|No
+
+|`policies`
+|Inbound and outbound policy binding lists for this interface.
+|Object
+|No
+
+|`policies.inbound`
+|Policy bindings for inbound traffic.
+|Array
+|No
+
+|`policies.outbound`
+|Policy bindings for outbound traffic.
+|Array
+|No
+
+|===
+
+Each inbound or outbound policy requires either a reference or inline policy binding.
+
+==== Policy Binding Reference
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`ref.name`
+|Name of the declared policy binding. See <<policies,Policies>>.
+|String
+|Yes
+
+|===
+
+==== Inline Policy Binding
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`policy`
+|The policy to be applied.
+|Object
+|Yes
+
+|`policy.ref`
+|Reference to the policy definition.
+|PolicyRef See <<policies,Policies>>.
+|Yes
+
+|`policy.configuration`
+|Policy-specific configuration.
+|Object
+|Yes
+
+|===
+
+[[expressions-format]]
+== Expressions Format
+
+Use Python expressions to resolve or calculate values that are only available at runtime.
+
+Enclose expressions using the {{}} evaluation wrapper. You can also use multiline statements using the https://yaml.org/spec/1.2.2/#54-line-break-characters[appropriate YAML syntax].
+
+*Example* 
+
+[source,yaml]
+----
+- reasoning:
+     id: welcome-message
+     description: "Send a welcome message to the candidate."
+     llm: my-primary-llm
+     prompt: "Extract the email from {{input}} and send a greeting email to the user saying their onboarding process has started"
+     tools:
+       - ref: my-email-tool
+----
+
+Expressions have these properties. 
+
+[%header,cols="1,1,1,1"]
+|===
+|Variable Name
+|Description
+|Type
+|Required
+
+|input
+|Payload or parameters provided as input to the node.
+|Type defined by Graph
+|Yes
+
+|variables
+|A mutable key-value store for variables scoped to the execution of the graph instance.
+|Dict[string, any]
+|Yes
+
+|{node-ids}
+|Read-only mapping of all node definitions available in the current graph, indexed by node id.
+|Dict[string, Object]
+|Yes
+
+|===
+
+{node-ids} have these properties. 
+
+[%header,cols="1,1,1,1"]
+|===
+|Variable Name
+|Type
+|Description
+|Required
+
+|input
+|Type defined by Graph
+|Input to the node as it happened.
+|Yes
+
+|output
+|Type defined by Graph
+|Output provided by the node as it happened
+|Yes
+
+|===
+
+[[exchange-json-file]]
+== Exchange.JSON File
+
+All agent network projects have an `exchange.json` file. This file contains asset metadata available in Anypoint Exchange after publishing your agent network assets.
+
+*Example* 
+
+[source,json]
+----
+{
+  "main": "agent-network.yaml",
+  "name": "Employee Onboarding Network",
+  "classifier": "agentic-network",
+  "organizationId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+  "descriptorVersion": "1.0.0",
+  "tags": [],
+  "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+  "assetId": "employee-onboarding-network",
+  "version": "1.0.5",
+  "dependencies": [
+    {
+      "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+      "assetId": "hr-agent",
+      "version": "1.0.21",
+      "classifier": "agent-metadata",
+      "packaging": "zip"
+    }
+  ],
+  "metadata": {
+    "variables": {
+      "openai": {
+        "clientId": {
+          "description": "OpenAI LLM Client ID",
+          "default": ""
+        },
+        "clientSecret": {
+          "description": "OpenAI LLM Client Secret",
+          "default": "",
+          "secret": true
+        },
+        "url": {
+          "description": "OpenAI URL",
+          "default": "",
+          "secret": false
+        }
+      }
+    }
+  }
+}
+----
+
+These key-value pairs are important for your agent network configuration:
+
+* groupId: ID of the Anypoint business group that owns your agent network and all the assets derived from it.
+* assetId: Unique identifier for the agent network project.
+* dependencies: Existing assets that this network needs to reference.
+* variables: Nested in the metadata section, defines all the variables whose values shouldn't be hardcoded in the `agent-network.yaml` file. Enter these values when publishing the agent network. Each variable has a description value, a default value, and a secret value that indicates whether it's treated as sensitive or not.
