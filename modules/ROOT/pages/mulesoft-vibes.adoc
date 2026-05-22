@@ -1,5 +1,5 @@
 = MuleSoft Vibes Overview
-:page-aliases: api-ai-design-spec.adoc
+:page-aliases: api-ai-design-spec.adoc, learn-about-mulesoft-vibes.adoc
 :page-deployment-options: cloud-ide, desktop-ide
 
 MuleSoft Vibes is a purpose-built assistant for the development lifecycle, available directly in Anypoint Code Builder.
@@ -22,9 +22,28 @@ You can also use xref:vibes-skills.adoc[skills], reusable instruction sets that 
 
 Large language models (LLMs) power these features and operate within the Salesforce Shared Trust Boundary.
 
-MuleSoft Vibes is part of the broader MuleSoft AI ecosystem, which also includes capabilities such as Map with AI and Map and Transform with AI. For an overview of all MuleSoft AI features, see the xref:general::learning-map-mulesoft-ai.adoc[].
+MuleSoft Vibes is part of the broader MuleSoft AI ecosystem, which also includes capabilities such as Map with AI and Map and Transform with AI. For an overview of all MuleSoft AI features, see the xref:general::learning-map-mulesoft-ai.adoc[Learning Map: MuleSoft AI]. For a high-level overview that guides you through a curated set of MuleSoft Vibes topics in Anypoint Code Builder, see xref:learning-map-mulesoft-vibes.adoc[Learning Map: MuleSoft Vibes for Anypoint Code Builder].
 
 NOTE: MuleSoft Vibes is available on US, EU, Canada, and Japan cloud hosts.
+
+[[capabilities]]
+== Capabilities in Your Workspace
+
+MuleSoft Vibes helps you describe outcomes in plain language so the assistant can plan changes, generate artifacts, and run permitted actions against your connected MuleSoft environment. Generated work stays in your project and is subject to the same governance as code you write manually.
+
+Models run within the Salesforce Shared Trust Boundary, and the assistant inherits the permissions of the user signed in to Anypoint Code Builder. For supported regions, prerequisites, and a full capability list, see <<Before You Begin>>.
+
+[[mcp-integration]]
+== MCP Servers and Agentic Tools
+
+The MuleSoft MCP Server supplies tools that connect MuleSoft Vibes to Exchange, Runtime Manager, and other services so prompts can search assets, inspect deployments, and perform other allowed operations. You enable or restrict that behavior by which servers and tools you install.
+
+For product-level MCP documentation, see xref:mulesoft-mcp-server::index.adoc[]. When you are ready to add or tune servers inside the IDE, continue with xref:vibes-mcp-server.adoc[].
+
+[[related-ai]]
+== Related MuleSoft AI Resources
+
+MuleSoft Vibes is part of the broader MuleSoft AI story alongside experiences such as Map with AI and Map and Transform with AI. For a platform-wide learning path across those capabilities, see xref:general::learning-map-mulesoft-ai.adoc[].
 
 [[before-you-begin-vibes]]
 == Before You Begin
@@ -39,13 +58,14 @@ To use MuleSoft Vibes, make sure that you meet these prerequisites:
 * Ensure you have the following permissions:  
 ** *Anypoint Code Builder Developer* (to use MuleSoft Vibes in the Cloud IDE)  
 ** *Mule Developer Generative AI User*  
-* Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].  
+* Make sure Einstein is enabled in Access Management. For more information, see xref:access-management::enabling-einstein.adoc[].  
 
 NOTE: Authentication happens through the user logged in to Anypoint Code Builder. MuleSoft Vibes inherits the same permissions as that user and can only execute actions that the user is authorized to perform in Anypoint Platform.
 
 == See Also
 
+* xref:vibes-get-started.adoc[]
 * xref:vibes-skills.adoc[]
 * xref:troubleshoot-generative-ai.adoc[]
 * xref:mulesoft-mcp-server::index.adoc[]
-* xref:int-manage-custom-metadata.adoc#custom-metadata-vibes[Custom metadata in MuleSoft Vibes]
+* xref:learning-map-mulesoft-vibes.adoc[]
