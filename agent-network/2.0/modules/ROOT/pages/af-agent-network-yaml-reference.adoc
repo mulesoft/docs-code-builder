@@ -508,6 +508,8 @@ The A2A card section has these properties.
 
 ===== Skills Properties
 
+Skills describe the distinct capabilities the agent can perform and have these properties.
+
 [%header,cols="1,1,1,1,1"]
 |===
 |Parameter
@@ -561,6 +563,8 @@ The A2A card section has these properties.
 |===
 
 ===== Capabilities Properties
+
+Capabilities describe optional features supported by the agent and have these properties.
 
 [%header,cols="1,1,1,1,1"]
 |===
@@ -690,6 +694,8 @@ The MCP Server section has these properties.
 
 ==== MCP Transport types
 
+The `metadata.transport` object describes how clients connect to the MCP server. The supported transport kinds are `sse`, `streamableHttp`, and `stdio`.
+
 *Example*
 
 [source,yaml]
@@ -798,6 +804,8 @@ StdioTransport has these properties.
 |===
 
 === Reference Types
+
+Reference types are reusable objects that point to other entities defined in the registry, such as agents, MCP servers, LLMs, connections, and policies.
 
 *Example*
 
@@ -1073,6 +1081,8 @@ The basic object has these properties.
 |===
 
 ==== API Key Client Authentication
+
+Authenticates outbound requests by including an API key in a configurable HTTP header.
 
 *Example*
 
@@ -1553,6 +1563,8 @@ The `brokers` section has these properties.
 
 === interfaces.a2a
 
+The `a2a` interface defines how external clients interact with a broker through the Agent2Agent protocol. It contains the broker's agent card and any inbound or outbound policy bindings.
+
 [%header,cols="1,1,1,1"]
 |===
 |Parameter
@@ -1586,6 +1598,8 @@ Each inbound or outbound policy requires either a reference or inline policy bin
 
 ==== Policy Binding Reference
 
+Use a policy binding reference to attach a previously declared policy to a broker interface by name.
+
 [%header,cols="1,1,1,1"]
 |===
 |Parameter
@@ -1601,6 +1615,8 @@ Each inbound or outbound policy requires either a reference or inline policy bin
 |===
 
 ==== Inline Policy Binding
+
+Use an inline policy binding to define a policy directly on the broker interface without declaring it elsewhere first.
 
 [%header,cols="1,1,1,1"]
 |===
