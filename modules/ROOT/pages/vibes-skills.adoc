@@ -31,6 +31,7 @@ Commit `.a4drules/skills/` with your project so everyone who uses the repository
 To install MuleSoft skills in Claude Code:
 
 . Make sure Node.js is installed.
+. Install the `anypoint-cli-dx-mule-plugin`.
 . Run:
 +
 `npx skills add mulesoft/mulesoft-dx/skills/mule-development`
@@ -76,7 +77,7 @@ The default MuleSoft skills set includes:
 | Run or debug a Mule application by using an existing Anypoint Code Builder run configuration.
 
 | `build-mule-integration`
-| Create, update, or fix a Mule flow, subflow, or component.
+| Create, update, or fix a Mule flow, subflow, or component. This skill runs a validation script at startup to check whether `anypoint-cli-dx-mule-plugin` is installed.
 
 | `create-project-template`
 | Generate MuleSoft projects from Exchange templates or from scratch.
