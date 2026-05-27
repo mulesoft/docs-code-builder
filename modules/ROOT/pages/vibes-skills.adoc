@@ -28,7 +28,9 @@ Commit `.a4drules/skills/` with your project so everyone who uses the repository
 [[install-mulesoft-skills-in-claude-code]]
 == Install MuleSoft Skills in Claude Code
 
-To install MuleSoft skills in Claude Code:
+These steps are written for Claude Code and also apply to other supported agents that use the same installer flow.
+
+To install MuleSoft skills:
 
 . Make sure Node.js is installed.
 . Install the `anypoint-cli-dx-mule-plugin`.
@@ -36,13 +38,15 @@ To install MuleSoft skills in Claude Code:
 +
 `npx skills add mulesoft/mulesoft-dx/skills/mule-development`
 . Select the skills you want to install.
-. Select the agent targets for the installation.
+. Select the agent targets for the installation:
+* Keep *Universal (`.agents/skills`)* selected. It is always included by the installer.
+* Select *Claude Code (`.claude/skills`)* under *Additional agents*.
 . Select a scope:
+* *Project* installs in the current directory so you can commit the skills with your project.
 * *Global* makes the skills available to all instances of supported agents.
-* *Local* makes the skills available only in the current project directory.
 . Select an installation method:
-* Install one shared copy for all agent types.
-* Install separate copies for each agent type.
+* *Symlink (Recommended)* installs one shared copy for all selected agent types.
+* *Copy to all agents* installs independent copies for each selected agent type.
 . Confirm the installation by typing `yes`.
 
 NOTE: Use `mulesoft/mulesoft-dx/skills/mule-development` in the `install` command. The shorter `mulesoft/mulesoft-dx` path doesn't resolve the nested skills directory.
