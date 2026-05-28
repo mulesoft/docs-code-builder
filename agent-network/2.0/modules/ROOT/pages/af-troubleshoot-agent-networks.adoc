@@ -6,23 +6,6 @@ Resolve common agent network errors and connectivity issues by enabling verbose 
 [NOTE]
 Use Agent Visualizer to xref:agent-visualizer::troubleshoot-agent-network.adoc[view metrics, logs, and traces] for agents and MCP servers in your network.
 
-== Enable Logging to Debug Agent Brokers
-
-Enable logging and log levels from CloudHub 2.0 or Runtime Fabric:
-
-. In Runtime Manager, navigate to the application for the agent broker.
-. Choose one of these options to configure logging:
-+
-* xref:cloudhub-2::ch2-manage-app-logs.adoc#configure-log-levels-and-categories[CloudHub 2.0]
-* xref:runtime-fabric::deploy-to-runtime-fabric.adoc#configure-logging-and-log-levels[Runtime Fabric]
-. Set the log level to Debug for these classes:
-+
-* `com.mulesoft.modules.agent.broker` (For agent broker)
-* `INSECURE-LOGGING` (For content that can potentially contain sensitive information, such as LLM reasoning, and inputs and outputs from agents and assets defined in `tools` and `links`)
-
-[IMPORTANT]
-`INSECURE-LOGGING` is very likely to contain sensitive information, such as personally identifiable information (PII). Make sure to disable it after troubleshooting is completed.
-
 [[enable-message-logging]]
 == Enable Message Logging Policy
 
@@ -87,7 +70,7 @@ You can encounter this error in two different scenarios:
 +
 * Check that the URL you set on the connection ends with a `/`.
 * Use a browser or Postman to request the agent card URL by appending `.well-known/agent-card.json` to the connection URL, for example, `https://ping-id-agent-url/pingid/.well-known/agent-card.json`.
-. The A2A agent is not configured to use A2A protocol version 0.3.0. In this case:
+. The A2A agent is not configured to use A2A protocol version 1.0.0. In this case:
 +
 * If you created the agent with MuleSoft, verify that you are using the latest version of the Anypoint Connector for A2A (A2A Connector).
-* If you are using an external agent, verify that it uses the A2A protocol version 0.3.0.
+* If you are using an external agent, verify that it uses the A2A protocol version 1.0.0.
