@@ -2,13 +2,13 @@
 :page-aliases: a4d-workflows-commands.adoc
 
 
-Rules and Workflows allow developers to customize how Mulesoft Vibes operates within their project.
+Use workflows and rules to customize how MuleSoft Vibes operates within your project.
 
 Rules define natural-language constraints that MuleSoft Vibes follows when generating content.
 
 Use rules to enforce organizational conventions, ensure consistent error handling, and maintain coding standards across your workspace.
 
-Rules can be defined at two levels:  
+You can define rules at two levels:
 
 * *Global* – Applies to all messages sent to Mulesoft Vibes.  
 
@@ -21,13 +21,13 @@ Workflows let you streamline repeated development steps and can be triggered usi
 [[add-workflows-or-rules]]
 == Add Workflows or Rules
 
-. Open MuleSoft Mulesoft Vibes in the sidebar.
+. Open MuleSoft Vibes in the sidebar.
 . Select *Settings*.
-. In the *Rules and Workflows* section, choose whether you want to add a rule or a workflow.
+. In the *Rules and Workflows* section, add a rule or a workflow.
 . Select *Add Rule* or *Add Workflow*.
 . Provide the required information:
-* For rules, enter the natural-language instruction you want Mulesoft Vibes to follow.
-* For workflows, enter a name, an optional description, and the steps the workflow should run.
+* For rules, enter the natural-language instruction to follow.
+* For workflows, enter a name, an optional description, and the steps the workflow must run.
 . Select *Save*.
 
 You can edit or delete existing rules and workflows from the same section.
@@ -35,17 +35,26 @@ You can edit or delete existing rules and workflows from the same section.
 [[rule-examples]]
 === Rule Examples
 
-You can use rules to guide how Mulesoft Vibes generates or validates content. For example:
+You can use rules to guide how MuleSoft Vibes generates or validates content. For example:
 
-* *Naming convention rule*: Instruct Mulesoft Vibes to ensure that all API names follow your organization’s naming standards.
+* *Naming convention rule*: Instruct MuleSoft Vibes to ensure that all API names follow your organization's naming standards.
 
 * *Validation rule*: Require that every API specification includes version information before generating related files.
 
-* *Security rule*: Ask Mulesoft Vibes to flag endpoints that expose sensitive data without authentication.
+* *Security rule*: Ask MuleSoft Vibes to flag endpoints that expose sensitive data without authentication.
 
-==== Workflow examples
+Example rule text to enter in *Add Rule*:
 
-Workflows define a sequence of steps that Mulesoft Vibes executes to complete a task. For example:
+[source,text]
+----
+When generating RAML files, enforce this naming pattern:
+<domain>-<capability>-api.
+If the API title or baseUri doesn't follow the pattern, return a warning and suggest a corrected value.
+----
+
+==== Workflow Examples
+
+Workflows define a sequence of steps that MuleSoft Vibes executes to complete a task. For example:
 
 * *API design validation workflow*: Validate an API specification, check naming conventions, verify security requirements, and generate a summary of issues.
 
@@ -53,20 +62,50 @@ Workflows define a sequence of steps that Mulesoft Vibes executes to complete a 
 
 * *Troubleshooting workflow*: Analyze an error, identify the root cause, propose a fix, and update the configuration if needed.
 
+Example workflow definition to enter in *Add Workflow*:
+
+[source,text]
+----
+Name: api-design-review
+Description: Run governance checks before publishing a RAML spec.
+Steps:
+1. Validate RAML syntax and required metadata.
+2. Check naming conventions from workspace rules.
+3. Check for unsecured endpoints that expose sensitive fields.
+4. Summarize findings with required fixes and suggested improvements.
+----
+
 [[add-commands]]
 == Add Commands
 
-Commands provide quick shortcuts for interacting with Mulesoft Vibes.  
+Commands provide quick shortcuts for interacting with MuleSoft Vibes.  
 You can invoke any command by typing `/` in the message input box.
 
-Mulesoft Vibes includes several built-in commands:
+MuleSoft Vibes includes several built-in commands.
 
-* `/newrule` — Create a new rule based on the current conversation.
-* `/newchat` — Start a new chat that carries over context from your current task.
-* `/reportbug` — Report an issue by creating a GitHub ticket with Agentforce Vibes formatting.
+[cols="1,3",options="header"]
+|===
+| Command | Description
+
+| `/newrule`
+| Create a new rule based on the current conversation.
+
+| `/newchat`
+| Start a new chat that carries over context from your current task.
+
+| `/reportbug`
+| Report a malfunctioning output by creating a GitHub issue with the MuleSoft Vibes format.
+|===
 
 Workflows that you define also appear as commands under *Workflow Commands*.  
 You can trigger them the same way by typing `/` followed by the workflow name.
+
+Example command usage:
++
+[source,command]
+----
+/api-design-review
+----
 
 == Enforce Organizational Conventions with Rulesets
 
