@@ -40,7 +40,9 @@ Use auto-completion menus in Anypoint Code Builder to speed your development. Fo
 [[add-exchange-assets]]
 == Add Exchange Assets to Your Agent Network Project
 
-If you have existing Exchange assets to use in your agent network, add them to the `dependencies` attribute in `exchange.json` in your project. After you add assets, edit the `agent-network.yaml` file to indicate which brokers use those assets.
+If you have existing Exchange assets to use in your agent network, add them to the `dependencies` attribute in `exchange.json` in your project. After you add assets, edit the `agent-network.yaml` file to indicate which brokers use those assets. This applies to both assets your own business group owns and public assets from a different business group.
+
+For a complete example, see <<exchange-assets-example,Example: Reference an Exchange Asset from Your Agent Network>>.
 
 === Add Assets Using MuleSoft Vibes
 
@@ -55,6 +57,8 @@ To get started, try one of these suggested messages.
 [[add-assets-acb]]
 === Add Assets Using Anypoint Code Builder
 
+To reference existing Exchange assets in your agent network project, follow these steps. This procedure applies whether the asset belongs to your own business group or to a different business group (for example, a public Exchange asset).
+
 . If you're not logged in already, log in to your Anypoint Platform account.
 . In your Anypoint Code Builder project, choose one of the following:
   * In Explorer, right-click a project file and select *Add Exchange Assets to Agent Network Project*.
@@ -63,11 +67,99 @@ To get started, try one of these suggested messages.
 . Select *Add to Project*.
 +
 Assets are added to the `dependencies` attribute in the `exchange.json` file in your project.
-. Edit the `agent-network.yaml` file to indicate which brokers use those assets.
-
-  If you added a dependency that doesn't belong to the same business group as your agent network, then in `agent-network.yaml`, specify the `namespace` property at the same level as `name`. Provide the `groupId` (business group ID) for the business group that the dependency belongs to. The `groupId` value is the same as the `groupId` value of the corresponding dependency in `exchange.json`.
-
-If you don't provide a namespace value, the same `groupId` as the agent network project is used.
+. Edit the `agent-network.yaml` file to indicate which brokers use those assets:
++
+.. Add a connection entry for each asset in the `context.connections` section. Set `kind` to match the asset type (`a2a`, `mcp`, or `llm`), and set `ref.name` to the asset's `assetId` from `exchange.json`.
+.. Reference the connection from one or more brokers (for example, from a broker's `llm`, `links`, or `tools` section).
+.. If the asset belongs to a different business group than your agent network, specify the `namespace` property at the same level as `name`. Provide the `groupId` (business group ID) for the business group that the dependency belongs to. The `groupId` value is the same as the `groupId` value of the corresponding dependency in `exchange.json`. If you don't provide a `namespace` value, the same `groupId` as the agent network project is used.
 
 After you add dependencies, they're available as values in auto-completion menus in Anypoint Code Builder. For example, after you add `test-agent` to `exchange.json`, the value `test-agent` is available in auto-completion menus in the code editor in `agent-network.yaml` when you reference an agent.
+
+[[exchange-assets-example]]
+=== Example: Reference an Exchange Asset from Your Agent Network
+
+This example shows a complete `exchange.json` and `agent-network.yaml` for a project that consumes an A2A agent (`helpCenterAgentTestV3`) from Anypoint Exchange. The same pattern applies to MCP servers and LLMs: change the connection `kind` to `mcp` or `llm`, and adjust the `dependencies` classifier in `exchange.json` accordingly.
+
+In `exchange.json`, the asset is listed in the `dependencies` array. The `groupId` value identifies the business group that owns the asset. If the asset belongs to a different business group than your project, use that asset's `groupId` in the connection's `namespace` value in `agent-network.yaml`.
+
+[source,json]
+----
+{
+  "main": "agent-network.yaml",
+  "name": "brokerV2-template",
+  "classifier": "agentic-network",
+  "organizationId": "b4c12f0a-c376-4561-878c-f4f0540c5407",
+  "descriptorVersion": "1.0.0",
+  "tags": [],
+  "metadata": {
+    "variables": {
+      "myAgent": {
+        "url": {
+          "description": "My External Agent URL",
+          "default": "",
+          "secret": false
+        }
+      }
+    }
+  },
+  "dependencies": [
+    {
+      "classifier": "agent-metadata",
+      "packaging": "zip",
+      "groupId": "b4c12f0a-c376-4561-878c-f4f0540c5407",
+      "assetId": "helpCenterAgentTestV3",
+      "version": "1.0.2"
+    }
+  ],
+  "groupId": "b4c12f0a-c376-4561-878c-f4f0540c5407",
+  "assetId": "brokerv2-template",
+  "version": "1.0.0"
+}
+----
+
+In `agent-network.yaml`, the asset is declared as a connection in `context.connections`. The connection `kind` matches the asset type (`a2a` for an agent, `mcp` for an MCP server, or `llm` for an LLM), and `ref.name` matches the `assetId` from `exchange.json`. The `ref.namespace` value matches the asset's `groupId`. URL and credential values are typically supplied through variables defined in `exchange.json`. After defining the connection, brokers reference it by name from their `llm`, `links`, or `tools` sections.
+
+[source,yaml]
+----
+agentNetwork: 2.0.0
+info:
+    label: brokerV2-template
+    version: v1
+registry: {}
+context:
+    connections:
+        helpCenterAgentTestV3:
+            kind: a2a
+            ref:
+                name: helpCenterAgentTestV3
+                namespace: b4c12f0a-c376-4561-878c-f4f0540c5407
+            url: ${myAgent.url}
+brokers:
+    broker1:
+        kind: AgentScript
+        implementation: ./brokers/broker1.agent
+        interfaces:
+            a2a:
+                card:
+                    name: Broker 1
+                    description: Describe what your broker does.
+                    url: http://localhost:8081/broker1
+                    version: 1.0.0
+                    protocolVersion: 0.3.0
+                    capabilities:
+                        streaming: true
+                        pushNotifications: false
+                    defaultInputModes:
+                        - text/plain
+                    defaultOutputModes:
+                        - text/plain
+                    skills:
+                        - id: my-skill
+                          name: My Skill
+                          description: Describe what this skill does.
+                          tags:
+                              - general
+----
+
+Because the connection in this example uses an explicit `namespace`, this same configuration works whether the asset belongs to the project's business group or to a different one (such as a public Exchange asset). To consume a public asset, copy the asset's `groupId` from Anypoint Exchange into both the `dependencies` entry in `exchange.json` and the connection's `namespace` value in `agent-network.yaml`.
 
