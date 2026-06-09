@@ -115,14 +115,6 @@ In the broker's system instructions:
 * Add a hard directive, such as `MUST delegate IMMEDIATELY` and `NEVER answer yourself`.
 * Map every intent to a specific named action.
 
-=== Issue: Broker Returns Classifier Output Instead of Calling MCP Tool
-
-If the broker returns the classifier's output (for example, `{"intent":"get_weather","city":"London"}`) as the final response when the task state requires input, the MCP tool was never invoked. The `classify -> router -> executor` pattern can fail for MCP tool calls.
-
-Instead, try the direct pattern: `trigger -> executor (MCP tool) -> generator -> echo`
-
-Reserve the `classify -> router` pattern for multi-agent routing scenarios.
-
 === Error: "HTTP error 404: Agent card not found at /.well-known/agent-card.json"
 
 You can encounter this error in two different scenarios:
