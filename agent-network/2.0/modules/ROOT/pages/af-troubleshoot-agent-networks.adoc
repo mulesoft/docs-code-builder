@@ -6,6 +6,20 @@ Resolve common agent network errors and connectivity issues by enabling verbose 
 [NOTE]
 Use Agent Visualizer to xref:agent-visualizer::troubleshoot-agent-network.adoc[view metrics, logs, and traces] for agents and MCP servers in your network.
 
+== Enable Logging to Debug Agent Brokers
+
+Enable logging and log levels from CloudHub 2.0 or Runtime Fabric:
+
+. In Runtime Manager, navigate to the application for the agent broker.
+. Choose one of these options to configure logging:
++
+* xref:cloudhub-2::ch2-manage-app-logs.adoc#configure-log-levels-and-categories[CloudHub 2.0]
+* xref:runtime-fabric::deploy-to-runtime-fabric.adoc#configure-logging-and-log-levels[Runtime Fabric]
+. For `INSECURE-LOGGING` set the log level to `DEBUG`.
+
+[IMPORTANT]
+`INSECURE-LOGGING` is for content that can potentially contain sensitive information, such as LLM reasoning, and inputs and outputs from agents and assets defined in your agent network. This is very likely to contain sensitive information, such as personally identifiable information (PII). Make sure to disable `INSECURE-LOGGING` after you finish troubleshooting.
+
 [[enable-message-logging]]
 == Enable Message Logging Policy
 
