@@ -72,9 +72,56 @@ If you installed Anypoint Code Builder successfully, but you don’t see agent n
 
 If you attempt to deploy an agent network, but you don’t see any deployment targets in Anypoint Code Builder or Anypoint CLI, then you need to set up your target deployment space and set up gateways. For instructions, see xref:af-get-started.adoc[Get Started with Agent Networks].
 
+=== Issue: Changes Don't Take Effect After Redeployment
+
+If you update `agent-network.yaml` or any `.agent` files but changes aren't reflected after you redeploy, the deployment used the last compiled `target/` directory. Every source change requires a full rebuild.
+
+After any source file change, run the full pipeline:
+
+. Build
+. Publish
+. Deploy
+
+=== Error: "Asset belongs to another project" (Error 2006)
+
+If the project build succeeds but it fails to publish with error `2006`, your registry keys conflict with another project in the org. Registry keys are unique across an org, so you can't copy a project and rename only the broker. This leaves the original registry key prefixes, and the first project owns those Exchange asset IDs.
+
+To resolve this conflict:
+
+* Prefix every registry key with a unique network short ID (for example, `myNetRegistry` instead of `registry`).
+* If you own the conflicting project, remove or delete it before you publish the new project.
+
+=== Error: CrashLoopBackOff or Exit 139 with No Clear Error
+
+If your deployment keeps restarting without a clear error, the broker is most likely crashing on a bad upstream connection before your agent network configuration is parsed. Common causes include:
+
+* An expired API key
+* An incorrect MCP server URL
+* An MCP server returning JSON instead of SSE
+* A missing A2A agent card
+
+Before you deploy, validate every connection with live probes. Don't troubleshoot your agent network configuration until you confirm all upstream connections are healthy.
+
 === Error: "Cannot complete task due to issue accessing reasoning engine"
 
 This is a generic error that the broker issues when the LLM fails. To troubleshoot this error, <<enable-message-logging,enable the message logging policy>> on the LLM instance, and then review the logs to determine the cause of the error.
+
+=== Issue: LLM Responds Without Calling the Agent or Tool
+
+If the broker responds with information from the LLM's training data instead of delegating to your agent or calling an MCP tool, the LLM's instructions aren't explicit enough about delegation. This is especially common with Gemini on widely-known topics.
+
+In the broker's system instructions:
+
+* Add a hard directive, such as `MUST delegate IMMEDIATELY` and `NEVER answer yourself`.
+* Map every intent to a specific named action.
+
+=== Issue: Broker Returns Classifier Output Instead of Calling MCP Tool
+
+If the broker returns the classifier's output (for example, `{"intent":"get_weather","city":"London"}`) as the final response when the task state requires input, the MCP tool was never invoked. The `classify -> router -> executor` pattern can fail for MCP tool calls.
+
+Instead, try the direct pattern: `trigger -> executor (MCP tool) -> generator -> echo`
+
+Reserve the `classify -> router` pattern for multi-agent routing scenarios.
 
 === Error: "HTTP error 404: Agent card not found at /.well-known/agent-card.json"
 
