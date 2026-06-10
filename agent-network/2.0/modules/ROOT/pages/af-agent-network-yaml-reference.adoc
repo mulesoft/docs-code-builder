@@ -63,8 +63,10 @@ This section contains basic metadata about the agent network document itself.
 ----
 info:
    label: Employee Onboarding Workflow
-   description:
-A multi-agent network for employee onboarding. Orchestrates HR system setup,     Salesforce profile creation, laptop and badge requests, and Slack notifications     for new hires.
+   description: >-
+     A multi-agent network for employee onboarding. Orchestrates HR system setup,
+     Salesforce profile creation, laptop and badge requests, and Slack notifications
+     for new hires.
    version: 1.0.0
    tags:
      - employee-onboarding
@@ -1500,7 +1502,7 @@ The `oauth2-obo` authentication has these properties.
 [[brokers-section]]
 == Brokers Section
 
-Use this section to define brokers that orchestrate and control the flow of agent and tool invocations. Each broker object maps to an `.agent` file. You can have multiple Agent Script files  in your Brokers folder.
+Use this section to define brokers that orchestrate and control the flow of agent and tool invocations. Each broker object maps to an `.agent` file. You can have multiple Agent Script files in your `/brokers` directory.
 
 *Example*
 
@@ -1522,7 +1524,7 @@ brokers:
      implementation: ./brokers/billing-handler.agent
      interfaces:
        a2a:
-         card:           ....
+        card:           ...
 ----
 
 The `brokers` section has these properties.

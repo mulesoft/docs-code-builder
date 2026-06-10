@@ -13,11 +13,11 @@ After you configure the assets and other elements of your agent network project,
 [[agent-script-structure]]
 == Agent Script Structure
 
-The following explains settings and configurations specific to MuleSoft agent network projects. To learn more about Agent Script, see the https://developer.salesforce.com/docs/ai/agentforce/guide/agent-script.html[Agent Script documentation]. 
+The following sections explain settings and configurations specific to MuleSoft agent network projects. To learn more about Agent Script, see the https://developer.salesforce.com/docs/ai/agentforce/guide/agent-script.html[Agent Script documentation].
 
 === Dialect Referencing and Versioning
 
-AgentScript files contain a header specifying the dialect and a version binding. SEMVER Major and minor are used for fixing to a specific dialect version.
+Agent Script files contain a header specifying the dialect and a version binding. SEMVER major and minor are used for fixing to a specific dialect version.
 
 The dialect header specifies that the script is strictly bound to a specific version or later of the AGENTFABRIC dialect. Deploying an agent to a runtime that doesn't support this version results in an error.
 
@@ -84,17 +84,17 @@ The config section has these parameters.
 
 |`agent_name`
 |The name identifier for the agent.
-|string
+|String
 |-
 
 |`label`
 |A human-readable display name for the agent.
-|string
+|String
 |-
 
 |`description`
 |A description of what the agent does.
-|string
+|String
 |-
 
 |`default_llm`
@@ -398,7 +398,7 @@ This node defines a generic agent loop node, made of a prompt and a set of actio
 - subagent profile-extractor:
      description: "Extracts structured user profile data from text"
      reasoning:
-       instructions: ->          Extract the following information from the user's message: {!@request.payload.message.parts[0].text}
+       instructions: -> Extract the following information from the user's message: {!@request.payload.message.parts[0].text}
        outputs:
          properties:
            name:
@@ -436,7 +436,7 @@ This node defines a generic agent loop node, made of a prompt and a set of actio
                type: "string"
              minItems: 1
              maxItems: 10
-     on_exit: ->        transition to @orchestrator.process_profile
+     on_exit: -> transition to @orchestrator.process_profile
 ----
 
 The subagent node has these properties.
@@ -516,14 +516,13 @@ The orchestrator node is a specialization of the subagent node used for orchestr
 orchestrator flight-booking-agent:
      description: books flights by looking for the best offer across approved partners
      system:
-       instructions:
-                 You are a flight booking agent. The process for flight booking is: 1. Ask the user for a destination and travel dates and present them with matching alternatives using available actions. 2. Allow the user to change or refine the search 3. Once the user selects a flight, book it using the concur agent tool
+       instructions: "You are a flight booking agent. The process for flight booking is: 1. Ask the user for a destination and travel dates and present them with matching alternatives using available actions. 2. Allow the user to change or refine the search. 3. Once the user selects a flight, book it using the concur agent tool."
      reasoning:
-       instructions: ->          @request.payload.message.parts[0].text
+       instructions: -> @request.payload.message.parts[0].text
        actions:
-         search-flight: @actions.search-flight           with companyId = @variables.companyId
-              get-flight-info: @actions.get-flight-info
-              concur: @actions.concur-agent           with http_headers = {"Authorization": @request.headers["Authorization"]}
+         search-flight: @actions.search-flight with companyId = @variables.companyId
+         get-flight-info: @actions.get-flight-info
+         concur: @actions.concur-agent with http_headers = {"Authorization": @request.headers["Authorization"]}
      outputs:
        properties:
          flightNumber:
@@ -532,9 +531,9 @@ orchestrator flight-booking-agent:
          airline:
            type: "string"
            description: "The airline name"
-      max_number_of_loops: 10
-      task_timeout_secs: 60
-          on_exit: ->        transition to @executor.send_summary
+     max_number_of_loops: 10
+     task_timeout_secs: 60
+     on_exit: -> transition to @executor.send_summary
 ----
 
 The orchestrator node has these properties.
@@ -677,8 +676,8 @@ The executor node is used to execute a set of Agent Script statements, primarily
 [source,yaml]
 ----
 executor sendHrSlackUpdate:
-   do: ->     run @actions.send_slack_message     with text= @generator.generate-hr-slack-update-message.output     with channel_id= "my-onboarding-channel-id"
-   on_exit: ->      transition to @router.countrySwitch
+   do: -> run @actions.send_slack_message with text=@generator.generate-hr-slack-update-message.output with channel_id="my-onboarding-channel-id"
+   on_exit: -> transition to @router.countrySwitch
 ----
 
 The executor node has these properties. 
@@ -785,11 +784,13 @@ echo a2a_response:
    kind: "a2a:response"
    task: a2a.task({
      state: "completed",
-     message: a2a.message(           {
-             messageId: uuid(),
-             parts:[ a2a.textPart("You have been onboarded!your employee ID is" +@orchestrator.hrSystemOnboard.output.employeeId)] }),
+     message: a2a.message({
+       messageId: uuid(),
+       parts: [a2a.textPart("You have been onboarded! Your employee ID is " + @orchestrator.hrSystemOnboard.output.employeeId)]
+     }),
      artifacts: a2a.parts(*@variables.artifacts),
-     metadata:None  })
+     metadata: None
+   })
 ----
 
 [%header,cols="1,1,1,1"]
@@ -890,7 +891,7 @@ The `a2a` namespace provides a set of functions that support A2A Task object cre
 
 Usage notes:
 
-* Functions are designed to be composed: `a2a.task` accepts `messages` created by `a2a.message`, which accepts `parts` created by `a2a.textPart`/`a2a.dataPart`/`a2a.filePart.`
+* Functions are designed to be composed: `a2a.task` accepts `message` created by `a2a.message`, which accepts `parts` created by `a2a.textPart`/`a2a.dataPart`/`a2a.filePart`.
 * `a2a.filePart` requires either `uri` OR `bytes` (base64-encoded), but not both
 * `a2a.artifact` auto-generates `artifactId` if it's not provided.
 * Use `a2a.parts` with the `*` operator to unpack arrays, for example, `a2a.parts(*@variables.artifacts)`.
@@ -1056,13 +1057,14 @@ Every node has `.output` (the value it produced) and `.input` (the output of whi
 *Example*
 
 ----
-@orchestrator.hrSystemOnboard.output.employeeId       # returns the `employeeId` property of the object returned by the `hrSystemOnboard` node    @generator.writeEmailContent.output     # returns the string generated by the `writeEmailContent` node
+@orchestrator.hrSystemOnboard.output.employeeId  # returns the `employeeId` property of the object returned by the `hrSystemOnboard` node
+@generator.writeEmailContent.output              # returns the string generated by the `writeEmailContent` node
 ----
 
 * Use `.output` when you know exactly which upstream node you're referencing.
 * Use `.input` when multiple nodes transition into the current one and you want to decouple it from the specific path taken.
 
-In this example, `@generate.generate_email.input` returns whichever of node_a/b/c actually transitioned into it.
+In this example, `@generator.generate_email.input` returns whichever of `node_a`, `node_b`, or `node_c` actually transitioned into it.
 
 ----
 node_a ──┐             

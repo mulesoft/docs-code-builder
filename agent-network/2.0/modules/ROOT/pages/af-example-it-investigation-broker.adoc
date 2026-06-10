@@ -3,19 +3,27 @@
 
 In this example, the goal is to use MuleSoft Vibes to build an IT Investigation agent that triages incoming support tickets, escalates critical issues, resolves common problems through cross-platform investigation, and handles licensing requests.
 
-In each phase you interact with MuleSoft Vibes as it builds your agent network project. Here's how it works.
+In each phase, you interact with MuleSoft Vibes as it builds your agent network project. Here's how it works.
 
 == Phase 1: Input Functional Requirements
 
-In this first phase, you define the functionality of the IT Investigation agent, which is to triage, investigate, and resolve support tickets. The agent must read incoming ticket descriptions (received via an A2A message with a Jira ticket ID), classify severity (High, Low, or too vague to classify) using an LLM's judgment, and then take the correct action. If the ticket is too vague, the agent first asks the user for clarification. High-severity tickets must be immediately routed for escalation using an Escalation MCP tool. Low-severity tickets require multi-agent investigation, using a Help Center agent and a License Procurement agent. This investigation path results in one of three deterministic outcomes: "Help Given," "License Given," or "Unresolved," the latter of which requires escalation to a human agent. Crucially, the severity classification and cross-platform investigation are open-ended, but the routing based on that classification and the final resolution must be deterministic.
+In this first phase, you define the functionality of the IT Investigation agent, which is to triage, investigate, and resolve support tickets. The agent must read incoming ticket descriptions (received via an A2A message with a Jira ticket ID), classify severity (High, Low, or too vague to classify) using an LLM's judgment, and then take the correct action. If the ticket is too vague, the agent first asks the user for clarification. 
+
+High-severity tickets must be immediately routed for escalation using an Escalation MCP tool. Low-severity tickets require multi-agent investigation, using a Help Center agent and a License Procurement agent. 
+
+This investigation path results in one of three deterministic outcomes: "Help Given," "License Given," or "Unresolved," the latter of which requires escalation to a human agent. Crucially, the severity classification and cross-platform investigation are open-ended, but the routing based on that classification and the final resolution must be deterministic.
 
 == Phase 2: Asset Registration
 
-In this phase, you work with MuleSoft Vibes to identify and register the necessary external tools and LLMs to support the agent's requirements. Since the investigation and resolution actions require four external assets, you select two A2A agents: the Help Center Agent for searching the knowledge base and the License Procurement Agent for checking software licenses. You also select two MCP tools: the Escalation MCP Server for handling high-severity cases and the Jira MCP Server for updating ticket status. For the LLMs, you select OpenAI GPT-5.4 for reasoning and orchestration tasks, such as cross-platform triage. You register Gemini 2.5 Flash for fast, one-shot summaries and response message generation.
+In this phase, you work with MuleSoft Vibes to identify and register the necessary external tools and LLMs to support the agent's requirements. Since the investigation and resolution actions require four external assets, you select two A2A agents: the Help Center Agent for searching the knowledge base and the License Procurement Agent for checking software licenses. 
+
+You also select two MCP tools: the Escalation MCP Server for handling high-severity cases and the Jira MCP Server for updating ticket status. 
+
+For the LLMs, you select OpenAI GPT-5.4 for reasoning and orchestration tasks, such as cross-platform triage. You register Gemini 2.5 Flash for fast, one-shot summaries and response message generation.
 
 == Phase 3: Define the Broker (Agent Script)
 
-In this phase, MuleSoft Vibes establishes the logical workflow for the IT Investigation agent by defining a series of interconnected nodes. The graph begins with an A2A Trigger node (`ticketTrigger`) that receives the incoming ticket and Jira ID. This immediately flows into a generator node (`classifySeverity`), which uses LLM reasoning to classify the ticket as High or Low , and produces a structured output.
+In this phase, MuleSoft Vibes establishes the logical workflow for the IT Investigation agent by defining a series of interconnected nodes. The graph begins with an A2A trigger node (`ticketTrigger`) that receives the incoming ticket and Jira ID. This immediately flows into a generator node (`classifySeverity`), which uses LLM reasoning to classify the ticket as High or Low, and produces a structured output.
 
 The deterministic `severityRouter` node then directs the process into two paths based on the classification output:
 
@@ -24,7 +32,7 @@ The deterministic `severityRouter` node then directs the process into two paths 
 
 == Phase 4: Asset Assignment to Graph
 
-In this phase, MuleSoft Vibes assigns the registered assets to the specific nodes in the graph while adhering to the Principle of Least Privilege. 
+In this phase, MuleSoft Vibes assigns the registered assets to the specific nodes in the graph while adhering to the principle of least privilege.
 
 This table shows which assets and LLMs MuleSoft Vibes mapped to which nodes. 
 
@@ -90,21 +98,27 @@ This table shows which assets and LLMs MuleSoft Vibes mapped to which nodes.
 
 == Phase 5: Instruction Refinement
 
-In this phase, MuleSoft Vibes writes and validates (with you) the precise natural language instructions for the LLM-powered nodes. The instructions for the `classifySeverity` node clearly define what constitutes High and Low severity, such as classifying a system outage as High severity. The `crossPlatformTriage` node instructions outline the required investigation steps: searching the Help Center, checking the License Procurement agent, and updating the Jira ticket. Furthermore, this instruction defines the two structured resolution outcomes the node must produce: `help_given` or `license_give`n. A rigorous Contradiction Test is executed to ensure that no node's instruction accidentally overrides the deterministic routing logic defined in the graph. All instructions are verified to align with the overall graph structure and pass the cross-node checks.
+In this phase, MuleSoft Vibes writes and validates (with you) the precise natural language instructions for the LLM-powered nodes. The instructions for the `classifySeverity` node clearly define what constitutes High and Low severity, such as classifying a system outage as High severity. 
+
+The `crossPlatformTriage` node instructions outline the required investigation steps: searching the Help Center, checking the License Procurement agent, and updating the Jira ticket. 
+
+Furthermore, these instructions define the two structured resolution outcomes the node must produce: `help_given` or `license_given`. A rigorous contradiction test is executed to ensure that no node's instructions accidentally override the deterministic routing logic defined in the graph. All instructions are verified to align with the overall graph structure and pass the cross-node checks.
 
 == Phase 6: Final Topology Review
 
-In this final phase, MuleSoft Vibes provides a comprehensive validation of the fully defined and instructed agent topology before deployment. The review confirms the crucial separation of concerns, ensuring LLM reasoning is used only for classification, with all subsequent routing being deterministic. The complete separation of the three severity paths--escalation, investigation, and asking for more info--is fully validated. The topology confirms that all possible paths terminate correctly at an echo response node to communicate the outcome to the original caller. Key operational parameters were also finalized, including setting maximum loop limits (5 for orchestration, 3 for classification) to prevent infinite loops. An edge case is defined, specifying that if the orchestration node cannot determine a resolution, the outcome defaults to `help_given`.
+In this final phase, MuleSoft Vibes provides a comprehensive validation of the fully defined and instructed agent topology before deployment. The review confirms the crucial separation of concerns, ensuring LLM reasoning is used only for classification, with all subsequent routing being deterministic. 
+
+The complete separation of the three severity paths - escalation, investigation, and asking for more info - is fully validated. The topology confirms that all possible paths terminate correctly at an echo response node to communicate the outcome to the original caller. Key operational parameters are also finalized, including maximum loop limits (5 for orchestration, 3 for classification) to prevent infinite loops. An edge case is defined, specifying that if the orchestration node cannot determine a resolution, the outcome defaults to `help_given`.
 
 == IT Agent Broker Diagram
 
-The following diagram shows the workflow of the graph. 
+The following diagram shows the workflow.
 
 image::af-it-broker-escalation-flow.png[Workflow diagram of the IT agent broker showing severity classification branching into escalation, investigation, and ask-for-more-info paths, each terminating in an echo response node.]
 
 == IT Agent Project Reference
 
-The following shows the project files for the IT agent. 
+The following shows the project files for the IT agent.
 
 *Project structure*
 
@@ -434,7 +448,7 @@ brokers:
                  - help-desk
 ----
 
-*It-help-investigation.agent file:*
+*`it-help-investigation.agent` file:*
 
 [source,yaml]
 ----
