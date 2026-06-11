@@ -1,0 +1,175 @@
+= Managing Global Configuration Elements
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Use the Global Configurations view to manage the configurations your Mule application depends on, including HTTP Listener configurations, database connections, properties files, TLS contexts, and error handlers.
+
+* <<open-global-elements-panel>>
+* <<add-global-config>>
+* <<edit-global-config>>
+* <<remove-global-config>>
+* <<manage-properties-files>>
+* <<multi-environment>>
+* <<secure-properties>>
+* <<global-element-types>>
+* <<vibes-manage-global-configs>>
+
+== Before You Begin
+
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:int-create-integrations.adoc[Create an integration project].
+
+[[open-global-elements-panel]]
+== Open the Global Elements Panel
+
+Access the Global Elements panel from *Project Properties* to view and manage the global configurations defined in your project.
+
+To open it:
+
+. In the Explorer, right-click your project and select *Project Properties*, or click the *Project Properties* icon in the canvas toolbar.
+. Select *Global Elements* from the left menu.
+
+The panel shows a searchable table with the *Type*, *Name*, and *Notes* for each element. Use the *Selected File* dropdown to filter elements by configuration file, or leave it set to `global-configs.xml` to display elements from all configuration files. +
+The table updates in real time as you make changes.
+
+[[add-global-config]]
+== Add a Global Configuration
+
+You can add global configurations through MuleSoft Vibes using natural language. The element is created with the correct structure and placed in the right file automatically.
+
+From the Global Elements panel, use the MuleSoft Vibes chat to describe what you need, for example:
+
+* _"Add a Salesforce connector config"_
+* _"Register a new properties file"_
+* _"Create an HTTP Listener global config on port 8081"_
+
+For more details on using Vibes to manage global elements, see <<vibes-manage-global-configs>>.
+
+[[edit-global-config]]
+== Edit a Global Configuration
+
+To edit an existing element, use one of the following methods:
+
+* *Form editor* — For connector configurations like HTTP Listener or Salesforce, click the *More actions* (*...*) menu next to the element and select *Edit*. A form-driven editor opens with field validation so you can update connection details visually.
+* *Source editor* — Click *More actions* (*...*) > *Go to Source* to jump directly to the element's location in the XML file and edit it in context.
+* *MuleSoft Vibes* — Describe your change conversationally and Vibes applies it for you.
+
+[[remove-global-config]]
+== Remove a Global Configuration
+
+To remove an element, click the *More actions* (*...*) menu next to it and follow the prompts.
+
+Before removing an element, ACB identifies any flows that reference it. If other components depend on the configuration, ACB displays a warning before deleting the element.
+
+[[manage-properties-files]]
+== Manage Configuration Properties Files
+
+When you create a new project, ACB automatically generates a `global-configs.xml` file for storing configuration properties separately from flow definitions. If you open a project migrated from Studio, ACB preserves the existing project structure.
+
+=== Register a Properties File
+
+To register a `.yaml` or `.properties` file as a configuration source:
+
+. In the Global Elements panel, click *More actions* (*...*) > *Add Configuration Properties*.
+. Create a new file or select an existing one from `src/main/resources`.
+
+ACB adds a `<configuration-properties>` element to your global config XML and the file appears in the panel under *Configuration Properties*.
+
+=== Add Inline Global Properties
+
+To add `<global-property>` key-value pairs directly from the UI:
+
+. In the Global Elements panel, click *More actions* (*...*) > *Add Global Property*.
+. Enter the property name and value.
+
+All inline properties are stored in `global-configs.xml` instead of individual application XML files.
+
+[[multi-environment]]
+== Set Up Multi-Environment Configuration
+
+ACB supports the `${env}.yaml` file pattern for environment-specific property files.
+
+If your project contains files such as `dev.yaml`, `qa.yaml`, and `prod.yaml`, they appear in the *Environments* section of the Global Elements panel.
+
+To set the default environment:
+
+. In the *Environments* section, select an environment from the dropdown list.
+. ACB adds . ACB adds a corresponding `<global-property>` element to the global configuration file. For example: `<global-property name="env" value="dev"/>`.
+
+Use *Preview Mode* to switch the active environment and verify that property placeholders resolve for each environment.
+
+[[secure-properties]]
+== Work with Secure Properties
+
+ACB supports the Mule Secure Properties module:
+
+* Generate encrypted property values from the IDE.
+* ACB warns you when a properties file contains unencrypted credentials.
+
+For information about encrypting values and referencing them in your Mule application, see xref:int-create-secure-configs.adoc[].
+
+[[global-element-types]]
+== Global Element Types
+
+In addition to connector configurations, the Global Elements panel supports the following component configuration types:
+
+[%header,cols="20a,60a"]
+|===
+| Component | What It Does
+
+| *Global Error Handler*
+| Set any error handler as the application-wide default. You can also reference handlers from imported projects for consistent exception management across teams.
+
+| *API AutoDiscovery*
+| Configure your Mule application for API Manager auto-discovery at deployment time. Select from the flows defined in your application when configuring the auto-discovery settings.
+
+| *TLS Context*
+| Set up Trust Store and Key Store configurations once, then reference them from any connector that supports TLS.
+
+| *Import Project Reference*
+| Import a JAR containing a shared Mule project. Use its flows, error handlers, and connection configurations. ACB handles POM dependency management.
+
+| *Caching Strategy & Object Store*
+| Define centralized caching strategies and object stores that can be referenced across all flows in the project.
+
+|===
+
+For API AutoDiscovery configuration details, see xref:int-configure-api-autodiscovery-local.adoc[] and xref:int-autodiscovery-config.adoc[].
+
+[[vibes-manage-global-configs]]
+== Use MuleSoft Vibes to Manage Global Configurations
+
+You can use MuleSoft Vibes to create and update global elements by using natural language prompts.
+
+=== Automatic Generation
+
+When Vibes generates a flow that uses a connector, it also generates the corresponding global configuration element. Credentials are stored as property placeholders, and a sample properties file is created for the generated configuration.
+
+=== Natural Language Examples
+
+You can ask Vibes things like:
+
+* _"Create an HTTP Listener global config on port 8081"_
+* _"Set up multi-environment configuration for dev, QA, and prod"_
+* _"Centralize all global configs into the global-config.xml file"_
+* _"What global elements are defined in this project?"_
+* _"Validate my property placeholders"_
+
+=== Centralize Configurations from Studio Projects
+
+If your project has global elements scattered across multiple config files (common in projects migrated from Studio), ask Vibes to consolidate them:
+
+_"Move all global configs into global-config.xml"_
+
+Vibes identifies every global element across your config files, moves them to `global-config.xml`, and updates all flow file references automatically.
+
+The `manage-global-configurations` skill powers these operations. For more on skills in MuleSoft Vibes, see xref:vibes-skills.adoc[].
+
+== See Also
+
+* xref:int-configure-components.adoc[]
+* xref:int-create-secure-configs.adoc[]
+* xref:int-configure-api-autodiscovery-local.adoc[]
+* xref:int-autodiscovery-config.adoc[]
+* xref:mulesoft-vibes.adoc[]
