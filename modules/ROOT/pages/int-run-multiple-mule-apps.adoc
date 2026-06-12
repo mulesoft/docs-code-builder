@@ -1,0 +1,108 @@
+= Running Multiple Mule Applications Concurrently
+:page-deployment-options: desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Run multiple Mule applications concurrently in the same local runtime instance by creating a custom run or debug configuration in your workspace. 
+Use this approach to test service-to-service interaction and verify end-to-end integration behavior without deploying to remote environments.
+
+To run related projects together, configure a workspace-level launch configuration that includes all target projects. After you create the configuration, you can reuse it for both run and debug sessions.
+
+== Before You Begin
+
+* xref:start-workspaces.adoc[Create a multi-root workspace] that contains all the Mule projects you want to run concurrently.
+* Open the configuration XML files for each project to verify there are no port conflicts between the projects.
++
+For example, if two projects both use port `8081` for an HTTP Listener, change one project to use a different port such as `8082`.
+
+[[create-run-config]]
+== Create a Run Configuration for Multiple Projects
+
+To create a workspace-level run configuration:
+
+. Open the configuration XML files for the projects you want to run.
++
+This step ensures the projects are loaded and available in the workspace.
+// Pointer to Run and Debug
+include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
+. In the *Run and Debug* panel, open the launch configuration dropdown and select *Add Config (workspace)*.
++
+If you don't see this option, ensure all projects are in the same workspace and the workspace is open.
+. Select *Mule XML Debugger* from the list of available debuggers.
++
+Anypoint Code Builder creates a new launch configuration entry in your `.code-workspace` file and opens it for editing.
+. In the configuration editor, update the `name` field for the *Run* configuration to describe the set of projects you are running.
+. Update the `mule.projects` field to include all project folders you want to run concurrently.
++
+Use this format `"${workspaceFolder:project1FolderName}", "${workspaceFolder:project2FolderName}"`
++
+Replace `project1FolderName` and `project2FolderName` with the actual folder names of your projects. Add additional project folders separated by commas as needed.
++
+. Copy the `mule.projects` values and paste them into the `mule.projects` field inside the *Debug* configuration.
++
+This step ensures the same projects are available when you run in debug mode.
++
+Example configuration:
++
+[source,json]
+----
+"version": "0.2.0",
+    "configurations": [
+      
+      {
+        "type": "mule-xml-debugger",
+        "request": "launch",
+        "name": "Run Multiple Applications",
+        "noDebug": true,
+        "mule.projects": [
+          "${workspaceFolder:first-project}",
+          "${workspaceFolder:second-project}"
+        ],
+        "mule.runtime.args": "${config:mule.runtime.defaultArguments}"
+      },
+      {
+        "type": "mule-xml-debugger",
+        "request": "launch",
+        "name": "Debug Multiple Applications",
+        "mule.projects": [
+          "${workspaceFolder:first-project}",
+          "${workspaceFolder:second-project}"
+        ],
+        "mule.runtime.args": "${config:mule.runtime.defaultArguments}"
+      }
+    ]
+----
+. Save the `.code-workspace` file.
++
+The new configuration now appears in the launch configuration dropdown in the *Run and Debug* panel.
+
+[[run-config]]
+== Run the Configuration
+
+After you create the configuration, run it to start all included projects in the same local runtime instance:
+
+// Pointer to Run and Debug
+include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
+. In the launch configuration dropdown, select the run configuration you created.
+. Click *Start Debugging* (F5) or *Run Without Debugging* (Ctrl+F5 on Windows, Cmd+F5 on Mac).
++
+Anypoint Code Builder packages and deploys all projects to the embedded Mule runtime engine. The integrated terminal shows Maven and deployment progress for each project, and the status bar indicates that the applications are running.
+
+[[update-config]]
+== Update an Existing Configuration
+
+To modify which projects run in the configuration:
+
+. Open your `.code-workspace` file.
+. Locate the launch configuration by name.
+. Update the `mule.projects` array to add, remove, or reorder projects.
+. Save the file.
++
+The updated configuration is immediately available in the *Run and Debug* panel.
+
+== See Also
+
+* xref:start-workspaces.adoc[]
+* xref:int-debug-mule-apps.adoc[]
+* xref:vibes-run-multiple-integration-projects-locally.adoc[]
+* xref:int-create-integrations.adoc[]
