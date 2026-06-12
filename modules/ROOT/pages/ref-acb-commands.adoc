@@ -1,57 +1,68 @@
 = Command Reference
 :rulesets-xref: For information about rulesets, see xref:des-govern-api.adoc[].
 
-Anypoint Code Builder provides a set of commands through the Command Palette. 
+Anypoint Code Builder provides a set of commands through the Command Palette.
 
 == MuleSoft Commands
 
-// recommended change-> Add Fragment Dependency from Exchange
-* Add an API spec fragment from Exchange to the project directory so that you can include the fragment in your spec. For a procedure that uses this command, see xref:des-create-api-fragments.adoc#add-fragment-to-project[Add a Fragment from Exchange to Your Project].
+=== Platform Commands
+
+* Open MuleSoft Vibes from the Command Palette.
 +
 [source,command]
 ----
-MuleSoft: Add Fragment dependency from Exchange
+MuleSoft: Open MuleSoft Vibes
 ----
 
-//
-//TESTED: 5/20/24 - HIDING: command not in palette for des project
-//* `MuleSoft: Add Governance Ruleset Version`
-//
-
-* Open the API Console from an API design project. See xref:des-create-api-specs.adoc[].
+* Export troubleshooting information, including logs and workspace details. See xref:troubleshooting.adoc#export-troubleshooting-info[Export Troubleshooting Information].
 +
 [source,command]
 ----
-MuleSoft: API Console
+MuleSoft: Export Troubleshooting Information
 ----
 
-* Change the version of an API governance ruleset in an API design project. Select from rulesets in your project, and change the version. 
-//xref to API gov page: 
-{rulesets-xref}
+* Import an existing Studio workspace into Anypoint Code Builder.
 +
 [source,command]
 ----
-MuleSoft: Change Ruleset Version
+MuleSoft: Import Studio Workspace
 ----
 
+* Log in to Anypoint Platform from the IDE. See xref:start-acb.adoc#login-ide[Log in from the IDE through the Command Palette].
++
+[source,command]
+----
+MuleSoft: Login to Anypoint Platform
+----
+
+* Open the *Settings* page for Anypoint Code Builder settings, which include settings for the Anypoint Platform host (EU or US). For an example, see xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud].
++
+[source,command]
+----
+MuleSoft: Open ACB Settings
+----
+
+* Open the *Welcome* tab for Anypoint Code Builder. See an example in xref:start-discover-ui.adoc[].
++
+[source,command]
+----
+MuleSoft: Show Welcome
+----
+
+* Open project dependencies in the Explorer view.
++
+[source,command]
+----
+MuleSoft: Show Project dependencies
+----
+
+=== Integration Commands
 
 * Deploy an integration or implementation to CloudHub. See xref:int-deploy-mule-apps.adoc#deploy-an-app-to-cloudhub[Deploy an App to CloudHub].
 +
 [source,command]
 ----
-MuleSoft: Deploy to CloudHub
-----
-
-//
-//TESTED: 5/20/24 - HIDING: command resulted in an error
-//* `MuleSoft: Delete`
-//
-
-* Start an API design project. You can also start the project from the UI. See xref:des-create-api-specs.adoc[].
-+
-[source,command]
-----
-MuleSoft: Design an API
+MuleSoft: Deploy Mule Project to CloudHub
 ----
 
 * Start an integration project. You can also start an integration project from the UI. See xref:int-create-integrations.adoc[].
@@ -61,21 +72,6 @@ MuleSoft: Design an API
 MuleSoft: Develop an Integration
 ----
 
-[[download-mule-java]]
-* Download a supported version of Mule runtime engine and Java from Anypoint Code Builder. See also, xref:int-versions.adoc[].
-+
-[source,command]
-----
-MuleSoft: Download Mule Runtime and Java Versions
-----
-
-* Install a specific Mule runtime version for use with your projects. This command queries available Mule runtime versions and downloads the selected version to your local Mule runtime directory. See also, xref:int-versions.adoc#install-additional-runtimes[Install Additional Mule Runtime Versions].
-+
-[source,command]
-----
-MuleSoft: Install Runtime
-----
-
 * Create a shareable or deployable JAR from your project. See xref:int-export-mule-project.adoc#export-mule-project[Export Mule Project].
 +
 [source,command]
@@ -83,53 +79,25 @@ MuleSoft: Install Runtime
 MuleSoft: Export Mule Project
 ----
 
-* Export a compressed file that contains your project’s workspace folders, logs, and information about environment variables, CPU, operating system, and system properties. See xref:troubleshooting.adoc#export-troubleshooting-info[Export Troubleshooting Information].
+* Download a supported Java Development Kit version for local development.
 +
 [source,command]
 ----
-MuleSoft: Export Troubleshooting Information
+MuleSoft: Download JDK
 ----
 
-//
-//TESTED: 5/20/24 - HIDING: command not in command palette of int project
-//* `MuleSoft: Get a Runtime`
-//
+* Download a Mule runtime version for local development.
++
+[source,command]
+----
+MuleSoft: Download Mule Runtime
+----
 
-* Import a supported API spec from Anypoint Exchange, and scaffold the spec into an implementation project in the IDE. See xref:imp-implement-api-specs.adoc#scaffold-new-integration[Scaffold an API and Create an Integration Project].
+* Import an API spec from Exchange and scaffold it into an implementation project. See xref:imp-implement-api-specs.adoc#scaffold-new-integration[Scaffold an API and Create an Integration Project].
 +
 [source,command]
 ----
 MuleSoft: Implement an API Specification
-----
-
-// recommended change-> Implement This Local API
-* Scaffold an API spec project located within the IDE into an implementation project. See xref:imp-implement-local-apis.adoc[Scaffold an API Spec into a New Implementation Project]. 
-+
-[source,command]
-----
-MuleSoft: Implement this local API
-----
-
-* Import a JAR file for a Mule project and load the unpacked project into a workspace in the IDE. A Mule project is an integration or implementation project. See xref:int-import-mule-project.adoc#desktop-project-package[Import a Shareable Project JAR File into the Desktop IDE] or xref:int-import-mule-project.adoc#web-project-package[Import a Shareable Project JAR File into the Cloud IDE].
-+
-[source,command]
-----
-MuleSoft: Import a Mule Project
-----
-
-//TODO: "runnable Mule application" ok? 
-* Import a design, integration, or implementation project. Import API specs or fragments from Anypoint Exchange, or a JAR file for a runnable Mule application (integration or implementation) in your IDE directory. See xref:int-import-mule-project.adoc[].
-+
-[source,command]
-----
-MuleSoft: Import a Project
-----
-
-* Import an API spec associated with one of your business groups from MuleSoft VCS. See xref:des-create-api-specs.adoc#import-spec[Import an API Specification from MuleSoft VCS].
-+
-[source,command]
-----
-MuleSoft: Import API Specification from MuleSoft VCS
 ----
 
 * Import a connector, REST or GraphQL library, or DataWeave library from Anypoint Exchange. See examples in xref:int-create-integrations.adoc#import-connectors-from-exchange[Import a Connector from Exchange], xref:imp-implement-api-specs.adoc#import-spec-into-project[Import an API Spec into an Existing Implementation Project], and xref:int-configure-dw-expressions.adoc#import-a-dataweave-library[Import a DataWeave Library].
@@ -139,92 +107,39 @@ MuleSoft: Import API Specification from MuleSoft VCS
 MuleSoft: Import Asset from Exchange
 ----
 
-// "Login" is a noun. "Log in" is a verb.
-// recommended change-> Log In to Anypoint Platform
-* Log in to Anypoint Platform from the IDE. See xref:start-acb.adoc#login-ide[Log in from the IDE through the Command Palette].
+* Import a JAR file for a Mule project and load it into a workspace in the IDE. See xref:int-import-mule-project.adoc[].
 +
 [source,command]
 ----
-MuleSoft: Login to Anypoint Platform
+MuleSoft: Import a Mule Project
 ----
 
-//
-// TESTED: 5/20/24 - HIDING: NO LONGER AVAILABLE from command palette
-//* `MuleSoft: New Mule Configuration File`
-//+
-//Add a configuration XML file to your integration or implementation project. See xref:int-create-integrations.adoc#create-new-config[Create an Additional Configuration XML File].
-//
-
-//TODO: supplemental info in PR: https://github.com/mulesoft/docs-code-builder/pull/256/files (settings doc, questions remain)
-// recommended change-> Open Anypoint Code Builder Settings
-* Open the *Settings* page for Anypoint Code Builder settings, which include settings for the Anypoint Platform host (EU or US). For an example that uses the command, see xref:start-acb.adoc#change-clouds[Set the Desktop IDE to the EU or US Cloud].
+* Open custom metadata management for a Mule project.
 +
 [source,command]
 ----
-MuleSoft: Open ACB Settings
+MuleSoft: Manage Custom Metadata
 ----
 
-//
-// TESTED: 5/20/24 - HIDING: NO LONGER AVAILABLE from command palette
-//* `MuleSoft: Project Properties`
-//
-
-//
-//NOT YET:
-//* `MuleSoft: Open Einstein`
-//
-
-//
-//TESTED: 05/20/24 - HIDING: THROWS AN ERROR IN INT PROJECT, seemed to work in des proj
-// reported on ACB Slack channel 01/19/24 
-// recommended change-> "text editor" -> "Text Editor"
-//* `MuleSoft: Open in text editor`
-//+
-//Opens an edit view for a project.
-//
-
-* Publish an API spec or fragment from the IDE to Anypoint Exchange. See xref:des-publish-api-spec-to-exchange.adoc##publish-spec[Publish an API spec to Exchange].
+* Publish an integration project to Anypoint Exchange.
 +
 [source,command]
 ----
-MuleSoft: Publish API Project to Exchange
+MuleSoft: Publish Mule Project to Exchange
 ----
 
-//
-//TESTED: 05/20/24 - HIDING: not obvious if anything happens when you try it
-//* `MuleSoft: Refresh DataSense Results`
-//
-
-//
-//TESTED: 05/20/24 - - HIDING: not obvious if anything happens when you try it
-//* `MuleSoft: Refresh Projects`
-//
-
-* Select a ruleset to remove from an API design project. 
-//xref to API gov page: 
-{rulesets-xref}
+* Save and hot-deploy to a local Mule runtime.
 +
 [source,command]
 ----
-MuleSoft: Remove Governance Ruleset...
+MuleSoft: Save and Hot-deploy to Local Runtime
 ----
 
-
-// recommended change-> "this local" -> "This Local"
-* After scaffolding an API design project from the IDE into an interface within an implementation project and making subsequent changes to the _design_ project, use this command from the design project to re-scaffold your changes into your interface. See xref:imp-implement-local-apis.adoc#rescaffold-api-spec[Re-Scaffold the API Spec].
+* Run a Mule application locally.
 +
 [source,command]
 ----
-MuleSoft: Re-scaffold this local API
-----
-
-* Validate your API specification against rules in all rulesets added to a design project. 
-//xref to API gov page: 
-{rulesets-xref}
-+
-[source,command]
-----
-MuleSoft: Run Governance Validation with all Rulesets and Rules
+MuleSoft: Run Mule Application
 ----
 
 * Run a saved multi-project launch configuration from your workspace. See xref:vibes-run-multiple-integration-projects-locally.adoc[].
@@ -234,27 +149,79 @@ MuleSoft: Run Governance Validation with all Rulesets and Rules
 MuleSoft: Run Multi-Project Configuration
 ----
 
-
-//
-//TESTED: 05/20/24 - HIDING: don't see it in command palette
-//* `MuleSoft: Save and Hot-deploy to Local Runtime`
-//
-
-// recommended change-> Search in Anypoint Exchange
-* Search for an asset by its name in Anypoint Exchange.
+* Open Mule project properties.
 +
 [source,command]
 ----
-MuleSoft: Search in exchange
+MuleSoft: Open Mule Project Properties
 ----
 
-//
-//TESTED: 5/20/24 - HIDING: COMMAND didn't see in command palette (int project)
-//* `MuleSoft: Set Mule Runtime location`
-//
+* Toggle the canvas layout between classic and descriptive views.
++
+[source,command]
+----
+MuleSoft: Toggle Canvas Layout (Classic/Descriptive)
+----
 
-* Expand the Governance Rulesets panel from an open API design project. 
-//xref to API gov page: 
+=== API and Governance Commands
+
+* Add an API spec fragment from Exchange to the project directory to include the fragment in your spec. See xref:des-create-api-fragments.adoc#add-fragment-to-project[Add a Fragment from Exchange to Your Project].
++
+[source,command]
+----
+MuleSoft: Add Fragment dependency from Exchange
+----
+
+* Open the API Console from an API design project. See xref:des-create-api-specs.adoc[].
++
+[source,command]
+----
+MuleSoft: Show API Console
+----
+
+* Start an API design project. You can also start the project from the UI. See xref:des-create-api-specs.adoc[].
++
+[source,command]
+----
+MuleSoft: Design an API
+----
+
+* Scaffold an API spec project located in the IDE into an implementation project. See xref:imp-implement-local-apis.adoc[Scaffold an API Spec into a New Implementation Project].
++
+[source,command]
+----
+MuleSoft: Implement this local API
+----
+
+* Import an API spec from MuleSoft VCS. See xref:des-create-api-specs.adoc#import-spec[Import an API Specification from MuleSoft VCS].
++
+[source,command]
+----
+MuleSoft: Import API Specification from MuleSoft VCS
+----
+
+* Open API project properties.
++
+[source,command]
+----
+MuleSoft: Open API Project Properties
+----
+
+* Publish an API project to Anypoint Exchange. See xref:des-publish-api-spec-to-exchange.adoc#publish-spec[Publish an API spec to Exchange].
++
+[source,command]
+----
+MuleSoft: Publish API Project to Exchange
+----
+
+* Re-scaffold an API after updating a local API spec. See xref:imp-implement-local-apis.adoc#rescaffold-api-spec[Re-Scaffold the API Spec].
++
+[source,command]
+----
+MuleSoft: Re-scaffold this local API
+----
+
+* Open the API Governance panel in an API design project.
 {rulesets-xref}
 +
 [source,command]
@@ -262,60 +229,103 @@ MuleSoft: Search in exchange
 MuleSoft: Show API Governance
 ----
 
-//
-//TESTED: 5/20/24 - HIDING: NOT AVAILABLE (checked int proj with only XML open)
-//* `MuleSoft: Show canvas UI`
-//
-//TESTED: 5/20/24 - HIDING: THROWS ERROR (in popup error msg.)
-//* `MuleSoft: Show Component in Canvas UI`
-//
-//TESTED: 5/20/24 - HIDING: Doesn't show up in command palette
-//* `MuleSoft: Show Mule Graphical Mode`
-//
-//TESTED: 5/20/24  - HIDING: Doesn't show up in command palette from int proj
-//recommended change-> Show Project Dependencies
-//* `MuleSoft: Show Project dependencies`
-//+
-//Open the *Project Dependencies* area of the Explorer view for a project. All types of projects can have dependencies. Integration and implementation projects list Java packages in the area. API specification projects list any API fragment dependencies in the area, for example: 
-//+
-//image::des-api-frag-dependencies.png["Example of API fragments listed in the Project Dependencies area"] 
-//+
-//The command `Explorer: Focus on Project Dependencies View` also opens this area. 
-//
-
-* Open the *Welcome* tab for Anypoint Code Builder. See an example of the tab in xref:start-discover-ui.adoc[].
+* Change a governance ruleset version in an API design project.
+{rulesets-xref}
 +
 [source,command]
 ----
-MuleSoft: Show Welcome
+MuleSoft: Change Ruleset Version
 ----
 
-//
-//TESTED: 5/20/24 - DID NOT appear in command palette from API design project
-//* `MuleSoft: View API Conformance Status on Exchange`
-//
-
-* Open the *Project Properties* page for a project.
+* Remove a governance ruleset from an API design project.
+{rulesets-xref}
 +
 [source,command]
 ----
-MuleSoft: Open Mule Project Properties
+MuleSoft: Remove Governance Ruleset
 ----
 
+* Run governance validation across all rulesets and rules in the project.
+{rulesets-xref}
++
+[source,command]
+----
+MuleSoft: Run Governance Validation with all Rulesets and Rules
+----
+
+* Sync centralized governance rulesets.
+{rulesets-xref}
++
+[source,command]
+----
+MuleSoft: Sync Centralized Rulesets
+----
+
+* Sync centralized rulesets and run governance validation.
+{rulesets-xref}
++
+[source,command]
+----
+MuleSoft: Sync and Run Validation
+----
+
+* View API conformance status in Exchange.
+{rulesets-xref}
++
+[source,command]
+----
+MuleSoft: View API Conformance Status on Exchange
+----
+
+=== Agent Network Commands
+
+* Create an Agent Network project.
++
+[source,command]
+----
+MuleSoft: Create an Agent Network Project
+----
+
+* Add Exchange assets to an Agent Network project.
++
+[source,command]
+----
+MuleSoft: Add Exchange Assets to Agent Network Project
+----
+
+* Deploy an Agent Network project.
++
+[source,command]
+----
+MuleSoft: Deploy Agent Network
+----
+
+* Publish Agent Network assets.
++
+[source,command]
+----
+MuleSoft: Publish Agent Network Assets
+----
+
+* Set up Agent Network gateways.
++
+[source,command]
+----
+MuleSoft: Set Up Agent Network Gateways
+----
 
 == Other Commands
 
 Other helpful commands include the following:
 
-* Open a project folder from the Command Palette. For examples that use this command, see xref:start-add-folders.adoc[].
+* Open a project folder from the Command Palette. For examples, see xref:start-add-folders.adoc[].
 +
 [source,command]
 ----
 File: Open Folder
 ----
 
-
-* Open the Anypoint Code Builder panel from the IDE. The panel provides links to the most frequent actions. See an example of the panel in xref:start-discover-ui.adoc[].
+* Open the Anypoint Code Builder panel from the IDE. The panel provides links to frequent actions. See an example in xref:start-discover-ui.adoc[].
 +
 [source,command]
 ----
