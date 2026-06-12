@@ -27,11 +27,12 @@ Access the Global Elements panel from *Project Properties* to view and manage th
 
 To open it:
 
-. In the Explorer, right-click your project and select *Project Properties*, or click the *Project Properties* icon in the canvas toolbar.
-. Select *Global Elements* from the left menu.
+. Use one of the following options:
++
+* In the canvas toolbar, click the *Manage Global Elements* icon to open *Project Properties* with the *Global Elements* tab already selected.
+* In the Explorer, right-click your project and select *Project Properties*, then select *Global Elements* from the left menu.
 
-The panel shows a searchable table with the *Type*, *Name*, and *Notes* for each element. Use the *Selected File* dropdown to filter elements by configuration file, or leave it set to `global-configs.xml` to display elements from all configuration files. +
-The table updates in real time as you make changes.
+The panel shows a searchable table with the *Type*, *Name*, and *Notes* for each element. Use the *Selected File* dropdown to select a configuration file and view its elements. The table updates in real time as you make changes.
 
 [[add-global-config]]
 == Add a Global Configuration
@@ -58,9 +59,12 @@ To edit an existing element, use one of the following methods:
 [[remove-global-config]]
 == Remove a Global Configuration
 
-To remove an element, click the *More actions* (*...*) menu next to it and follow the prompts.
+To remove a global configuration element, use MuleSoft Vibes. For example:
 
-Before removing an element, ACB identifies any flows that reference it. If other components depend on the configuration, ACB displays a warning before deleting the element.
+* _"Remove the Salesforce connector config"_
+* _"Delete the HTTP Listener global config"_
+
+Before removing an element, Vibes identifies any flows that reference it and warns you of the impact before making any changes.
 
 [[manage-properties-files]]
 == Manage Configuration Properties Files
@@ -69,19 +73,18 @@ When you create a new project, ACB automatically generates a `global-configs.xml
 
 === Register a Properties File
 
-To register a `.yaml` or `.properties` file as a configuration source:
+To register a `.yaml` or `.properties` file as a configuration source, use MuleSoft Vibes. For example:
 
-. In the Global Elements panel, click *More actions* (*...*) > *Add Configuration Properties*.
-. Create a new file or select an existing one from `src/main/resources`.
+* _"Register a new properties file"_
+* _"Add config.yaml as a configuration properties file"_
 
 ACB adds a `<configuration-properties>` element to your global config XML and the file appears in the panel under *Configuration Properties*.
 
 === Add Inline Global Properties
 
-To add `<global-property>` key-value pairs directly from the UI:
+To add `<global-property>` key-value pairs, use MuleSoft Vibes. For example:
 
-. In the Global Elements panel, click *More actions* (*...*) > *Add Global Property*.
-. Enter the property name and value.
+* _"Add a global property named env with value dev"_
 
 All inline properties are stored in `global-configs.xml` instead of individual application XML files.
 
