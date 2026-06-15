@@ -173,15 +173,18 @@ registry:
          description: Agent that creates new-hire records and manages HR system setup.
        metadata:
          platform: AgentForce
-         protocol: a2a
-         card:
+         interfaces:
            a2a:
-             protocolVersion: "0.3.0"
-             name: hr-system-agent
-             description: Creates and manages employee records in the HR system.
-             url: https://hr-agent.example.com/a2a
-             defaultInputModes: [application/json, text/plain]
-             defaultOutputModes: [application/json, text/plain]
+             card:
+               name: hr-system-agent
+               description: Creates and manages employee records in the HR system.
+               url: https://hr-agent.example.com/a2a
+               version: "1.0.0"
+               protocolVersion: "0.3.0"
+               capabilities: {}
+               defaultInputModes: [application/json, text/plain]
+               defaultOutputModes: [application/json, text/plain]
+               skills: []
          tools:
            - mcp:
                ref:
@@ -196,15 +199,18 @@ registry:
          description: Agent that provisions Salesforce profiles for new hires.
        metadata:
          platform: AgentForce
-         protocol: a2a
-         card:
+         interfaces:
            a2a:
-             protocolVersion: "0.3.0"
-             name: salesforce-agent
-             description: Onboards new employees to Salesforce.
-             url: https://sfdc-agent.example.com/a2a
-             defaultInputModes: [application/json]
-             defaultOutputModes: [application/json]
+             card:
+               name: salesforce-agent
+               description: Onboards new employees to Salesforce.
+               url: https://sfdc-agent.example.com/a2a
+               version: "1.0.0"
+               protocolVersion: "0.3.0"
+               capabilities: {}
+               defaultInputModes: [application/json]
+               defaultOutputModes: [application/json]
+               skills: []
          llm:
            ref:
              name: Open-AI-LLM
@@ -311,7 +317,7 @@ All nodes in this section share these properties.
 
 === Agents
 
-Each registry agent is an `AgentEntity`. The schema requires a `metadata` object. The A2A agent card, tools, and LLM reference are nested under `metadata`, not at the root of the agent.
+Each registry agent is an `AgentEntity`. The schema requires a `metadata` object. The interfaces, tools, and LLM reference are nested under `metadata`, not at the root of the agent.
 
 The agents section has these properties.
 
@@ -328,7 +334,7 @@ The agents section has these properties.
 |No
 
 |`agents.metadata`
-|Platform, protocol, card, tools, and LLM wiring for the agent.
+|Platform, interfaces, tools, and LLM wiring for the agent.
 |Object
 |Yes
 
@@ -337,20 +343,45 @@ The agents section has these properties.
 |String
 |Yes
 
-|`agents.metadata.protocol`
-|Integration protocol for the agent; use values such as a2a or other as defined by the platform.
-|String
+|`agents.metadata.interfaces`
+|The interfaces that this agent supports. At least one of `a2a`, `a2a_v03`, or `other` must be present.
+|Object
 |Yes
 
-|`agents.metadata.card`
-|Agent card payload. Include a2a for an A2A card, or other for other card types.
+|`agents.metadata.interfaces.a2a`
+|A2A protocol version 1.x interface definition. Contains the agent card.
 |Object
+|No (at least one interface required)
+
+|`agents.metadata.interfaces.a2a.card`
+|The A2A v1 agent card. See <<a2a-card,A2A Card>>.
+|AgentCard
 |No
 
-|`agents.metadata.card.a2a`
-|The A2A agent card. See A2A Card.
+|`agents.metadata.interfaces.a2a_v03`
+|A2A protocol version 0.3.x interface definition (legacy).
+|Object
+|No (at least one interface required)
+
+|`agents.metadata.interfaces.a2a_v03.card`
+|The A2A v0.3 agent card.
 |AgentCard
-|Yes (when using the a2a card branch)
+|No
+
+|`agents.metadata.interfaces.other`
+|Other protocol interface definition.
+|Object
+|No (at least one interface required)
+
+|`agents.metadata.interfaces.other.protocol`
+|The protocol name for this interface.
+|String
+|Yes (when using other)
+
+|`agents.metadata.interfaces.other.card`
+|The card for this protocol.
+|Object
+|No
 
 |`agents.urls`
 |Named URLs for the agent.
@@ -891,6 +922,10 @@ context:
        ref:
          name: hr-system-agent
        url: https://hr-agent.example.com/a2a
+       policies:
+         outbound:
+           - ref:
+               name: retry-policy
      salesforce-agent:
        kind: a2a
        ref:
@@ -909,8 +944,6 @@ context:
        authentication:
          kind: apiKey
          apiKey: "${env.OPENAI_API_KEY}"
-         # optional: headerName (default Authorization)
-       # optional: policies
    policies:
      retry-policy:
        ref:
@@ -941,7 +974,7 @@ The `context` section has these properties.
 [[connections]]
 === Connections
 
-Connection definitions live in the `context` object. Each `connections` object has a kind field that determines its connection type: either `a2a`, `llm`, or mcp. 
+Connection definitions live in the `context` object. Each `connections` object has a kind field that determines its connection type: either `a2a`, `llm`, or `mcp`.
 
 Connection objects have these properties.
 
@@ -954,7 +987,7 @@ Connection objects have these properties.
 
 |`kind`
 |Connection type
-|`mcp`, `a2a`, `or llm`
+|`mcp`, `a2a`, or `llm`
 |Yes
 
 |`ref`
@@ -965,21 +998,31 @@ Connection objects have these properties.
 |`url`
 |The base URL of the target system.
 |String
-|Yes
+|No
 
 |`authentication`
 |The authentication method to use when connecting to the target system.
 |Authentication Object
-|No
+|No (Yes for `llm` connections)
 
 |`policies`
-|Array of policy identifiers to apply to this connection.
-|Array[String]
+|Policy bindings to apply to this connection, organized by traffic direction.
+|Object
+|No
+
+|`policies.inbound`
+|Policy bindings applied to inbound traffic.
+|Array
+|No
+
+|`policies.outbound`
+|Policy bindings applied to outbound traffic.
+|Array
 |No
 
 |===
 
-You can attach policies to connection objects by referencing their policy identifier. See the <<policies,policies object>> for field definitions.
+You can attach policies to connection objects by referencing their policy identifier or by defining an inline policy binding. See the <<policies,policies object>> for field definitions.
 
 [[policies]]
 === Policies
@@ -1373,6 +1416,24 @@ The in-task-authorization-code authentication has these properties.
 |HTTP status code. Default: 200
 |No
 
+|distributed
+|Share token cache across replicas. Required for fully managed gateway or any multi-replica deployment.
+|Boolean
+|`true` or `false`. Default: `false`
+|No
+
+|subjectTokenType
+|The token type identifier for the subject token.
+|String
+|Default: `urn:ietf:params:oauth:token-type:access_token`
+|No
+
+|requestedTokenType
+|The desired token type for the issued token.
+|String
+|Any string
+|No
+
 |===
 
 ==== OAuth 2.0 OBO Credential Injection
@@ -1495,6 +1556,12 @@ The `oauth2-obo` authentication has these properties.
 |Optional message shown on the user's authentication device during CIBA approval.
 |String
 |String
+|No
+
+|distributed
+|Share token cache across replicas. Required for fully managed gateway or any multi-replica deployment.
+|Boolean
+|`true` or `false`. Default: `false`
 |No
 
 |===
