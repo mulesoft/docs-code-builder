@@ -22,11 +22,13 @@ When you open a MuleSoft project that uses dependencies from the MuleSoft Enterp
 To configure authentication:
 
 . If you don't already have Nexus enterprise credentials, contact https://help.mulesoft.com[MuleSoft Support^] to request them.
-. Configure your Maven `settings.xml` file with the credentials in the `<servers>` section.
-
+. Optionally, encrypt your credentials. 
++
+For instructions on encrypting your credentials to avoid storing passwords in plain text, see https://maven.apache.org/guides/mini/guide-encryption.html[Password Encryption^] in the Apache Maven documentation.
+. Add your credentials in the `<servers>` section of your Maven `settings.xml` file.
++
 For detailed instructions on configuring the `settings.xml` file, see xref:mule-runtime::maven-reference.adoc#configure-maven-to-access-mulesoft-enterprise-repository[Configure Maven to Access MuleSoft Enterprise Repository].
 
-For instructions on encrypting your credentials to avoid storing passwords in plain text (recommended), see xref:mule-runtime::deploy-to-cloudhub.adoc#encrypt-credentials[Encrypt Credentials].
 
 == See Also
 
