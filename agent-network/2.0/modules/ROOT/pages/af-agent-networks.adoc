@@ -7,7 +7,7 @@ An agent network provides the building blocks of your agentic deployment while M
 
 You define your agent network in a simple, human-readable YAML file in Anypoint Code Builder. This approach abstracts away the underlying technical complexities, allowing you to focus on the business constraints and context of your process without needing to understand the inner workings of the orchestration engine.
 
-At the start of a new agent network project, we provide a YAML template and Agent Script file to give you a head start. You can use MuleSoft Vibes to configure your network, publish the assets to Anypoint Exchange, and deploy your agent network instance.
+At the start of a new agent network project, MuleSoft provides a YAML template and Agent Script file to give you a head start. You can use MuleSoft Vibes to configure your network, publish the assets to Anypoint Exchange, and deploy your agent network instance.
 
 [[key-benefits]]
 == Key Benefits of Agent Networks
@@ -36,19 +36,19 @@ Manage the invocation of both deterministic (tool-based) and probabilistic (LLM-
 Brokers in Agent Network 2.0 architecture leverage a guided deterministic approach by separating steps requiring probabilistic LLM reasoning from those requiring deterministic control-flow logic.
 
 * Probabilistic (LLM-based) nodes handle complex, open-ended decisions that require nuanced judgment, such as classification or AI-powered thinking.
-* Deterministic nodes manage all remaining predefined execution paths, ensuring a fixed and guaranteed workflow once a key probabilistic judgment has been finalized.
+* Deterministic nodes manage all remaining predefined execution paths, ensuring a fixed and guaranteed workflow after a key probabilistic judgment has been finalized.  
 
 This structure allows brokers to apply high-level LLM intelligence where complex judgment is needed, while the overall agent graph maintains reliable, rule-based predictability across the operational flow.
 
 [[agent-network-components]]
 == Agent Network Components
 
-An agent network is a collection of agents, brokers, LLMs, and MCP servers that are connected to each other. Agent networks use LLMs for reasoning and planning capabilities and integrate with Anypoint Connector for MCP (Model Context Protocol) and Anypoint Connector for Agent2Agent (A2A) communication.
+Agent networks use LLMs for reasoning and planning capabilities and integrate with Anypoint Connector for MCP (Model Context Protocol) and Anypoint Connector for Agent2Agent (A2A) communication.
 
 Broker::
 An intelligent routing service that coordinates task delegation across A2A-compliant agents in your enterprise.
 You define a broker and its nodes in Agent Script.
-Nodes are connected in a graph that encapsulates all steps that describe the orchestration of agents, tools, and large language models.
+Nodes are connected in a graph that encapsulates all steps that describe the orchestration of agents, tools, and LLMs.  
 A graph-based approach to agent brokers ensures that connected paths guarantee a specific order of operations and enable more complex orchestration that combines deterministic and non-deterministic elements.
 +
 After you publish your agent network, brokers appear as specialized agents in Anypoint Exchange and can be reused by other brokers.
@@ -63,7 +63,7 @@ Edges:::
 Transitions from node to node. Input data enters the node and output data exits the node.
 
 Agent::
-An autonomous software component that uses goals, context, and available tools, often via a large language model (LLM), to decide and execute actions on behalf of a user or system.
+An autonomous software component that uses goals, context, and available tools, often via a LLM, to decide and execute actions on behalf of a user or system.
 +
 Agents can be defined either locally in the agent network or externally in a different agent network or elsewhere in your company.
 Your agent network can use both locally defined and externally defined agents to complete tasks.
@@ -107,7 +107,7 @@ NOTE: For a complete, working example you can use as a starting point for your o
 [[agent-network-architecture]]
 == Agent Network Architecture
 
-This diagram shows an agent network deployed to a shared space in CloudHub 2 using a single mni Gateway for ingress and egress. The network includes agents and MCP servers and is observed in Anypoint Monitoring.
+This diagram shows an agent network deployed to a shared space in CloudHub 2.0 using a single Omni Gateway for ingress and egress. The network includes agents and MCP servers and is observed in Anypoint Monitoring.
 
 image::agent-fabric-architecture-v2-shared-space.png[an agent network deployed to a shared space in CloudHub 2 using a single mni Gateway for ingress and egress. The network includes agents and MCP servers and is observed in Anypoint Monitoring]
 
@@ -123,7 +123,7 @@ NOTE: In a private space using a two-gateway configuration, policies, traffic, a
 [[exchange-assets]]
 == Agent Network Assets in Anypoint Exchange
 
-The following agent network asset types are supported in Exchange:
+Agent network projects support these asset types in Exchange:
 
 Agent Network::
 An agent network project is published in Exchange as an Agent Network asset. The asset is a .zip file that contains all project files. To learn more, see <<yaml-and-agent-script,Agent Network YAML and Agent Script>> or xref:af-project-files.adoc[].
@@ -204,7 +204,7 @@ In MuleSoft agent networks, the brokers receiving a request always generate a `c
 
 In a multi-agent network, a client sends a request to Broker_1 and Broker_1 generates the necessary IDs for that request. When Broker_1 sends a new request to the next broker or non-broker agent in line, that broker or non-broker agent establishes a unique `contextId` and `taskId` for the new request.
 
-NOTE: It is not mandatory for non-broker agents to generate a `contextId` and `taskId` when receiving requests from a client.
+NOTE: Non-broker agents don't have to generate a `contextId` and `taskId` when receiving requests from a client.
 
 Consider a network with a client and two brokers (1 and 2).
 
@@ -228,3 +228,6 @@ NOTE: Agent networks don't support streaming with Server-Sent Events (SSE).
 == See Also
 
 * xref:af-get-started.adoc[]
+* xref:af-create-agent-network.adoc[]
+* xref:af-project-files.adoc[]
+* xref:general::agent-fabric-overview.adoc[Agent Fabric Overview]

@@ -33,7 +33,7 @@ The dialect header specifies that the script is strictly bound to a specific ver
 
 === System Section
 
-This section defines the `instructions` attribute, which acts as a default system prompt that will be used whenever an agentic node doesn't define a `system.instructions` of its own.
+This section defines the `instructions` attribute, which acts as a default system prompt used whenever an agentic node doesn't define its own `system.instructions`.
 
 *Example*
 
@@ -718,7 +718,7 @@ The executor node has these properties.
 
 === Router Node
 
-The router node performs dynamic transitions based on deterministic conditions. This node does not support transition to in its on_exit attribute. Use this node for branching based on structured output from a previous node.
+The router node performs dynamic transitions based on deterministic conditions. This node doesn't support `transition to` in its `on_exit` attribute. Use this node for branching based on structured output from a previous node.
 
 *Example*
 
@@ -913,7 +913,7 @@ The following table describes echo node behavior based on the A2A operation used
 [[a2a-namespace-functions]]
 == A2A Namespace Functions
 
-The `a2a` namespace provides a set of functions that support A2A Task object creation. Do not prefix these functions with `@` as it's  reserved for references such as `@variables`, `@actions`, `@request`, and `@orchestrator.<nodeId>`.
+The `a2a` namespace provides a set of functions that support A2A Task object creation. Do not prefix these functions with `@` as it's reserved for references such as `@variables`, `@actions`, `@request`, and `@orchestrator.<nodeId>`.
 
 [%header,cols="1,1,1,1,1"]
 |===
@@ -1037,7 +1037,7 @@ Use these functions in expressions alongside references and interpolations. They
 
 Use the `outputs` field to define the expected shape of the agent's response using a schema notation similar to a JSON schema. When provided, the agent produces output matching the defined structure for downstream parsing and processing.
 
-Each property maps to a field in the agent's output. The following types are supported.
+Each property maps to a field in the agent's output. These types are supported.
 
 *Note:* Advanced JSON schema features are not supported, so do not copy patterns from generic JSON Schema tutorials unless they match what is documented here.
 
@@ -1069,7 +1069,7 @@ Each property definition can include:
 * `description`: A human-readable explanation of the property's purpose.
 * `default`: A default value if the property is omitted.
 
-The `outputs` definition does not support the following:
+The `outputs` definition doesn't support:
 
 * `additionalProperties` or similar JSON Schema extensibility flags
 * Combinators such as `anyOf`, `oneOf`, or `allOf`
@@ -1081,7 +1081,7 @@ The `outputs` definition does not support the following:
 
 Nodes access data from other parts of the workflow using expressions.
 
-The following references are used.
+These references are used.
 
 [%header,cols="1,1,1"]
 |===

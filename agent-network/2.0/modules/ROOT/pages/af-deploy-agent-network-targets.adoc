@@ -4,8 +4,7 @@
 
 Deploy your agent network instance to a deployment target. You can deploy to a CloudHub 2.0 shared space, a CloudHub 2.0 private space, or to a Runtime Fabric. When you deploy, Omni Gateway secures inbound traffic to your agent network and outbound traffic from your brokers, agents, and MCP servers.
 
-These Omni Gateway policies are applied automatically at deployment.
-
+Omni Gateway applies these policies automatically at deployment.
 
 [%header,cols="20,40a"]
 |===
@@ -42,12 +41,12 @@ These Omni Gateway policies are applied automatically at deployment.
 
 Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites].
 
-When you deploy your agent network, an instance is deployed for each connection defined in your agent network. If your agent network contains brokers, an instance is deployed per broker.
+When you deploy your agent network, the system deploys one instance for each connection defined in your agent network. If your agent network contains brokers, the system deploys one instance per broker.
 
 [[deploy-dev-agent]]
 == Deploy Your Network Using MuleSoft Vibes
 
-MuleSoft Vibes can help you deploy your agent network instances. For more information, see xref:anypoint-code-builder::api-ai-create-spec.adoc[].
+Use MuleSoft Vibes to deploy your agent network instances. For more information, see xref:anypoint-code-builder::api-ai-create-spec.adoc[].
 
 . In the Anypoint Code Builder activity bar, click the agent icon image:af-acb-dev-agent-icon.png["",18,18].
 . Tell the agent that you want to deploy your agent network. MuleSoft Vibes does the rest.
@@ -70,11 +69,16 @@ Deploy your agent network instance to a CloudHub 2.0 space or Runtime Fabric tar
   . From the Command Palette, run this command: *MuleSoft: Deploy Agent Network*.
 . In Deploy Agent Network, specify the environment, target space, gateways, and other deployment information. If you don't see any deployment targets to select, then you need to set up your target deployment space and set up gateways. For instructions, see xref:af-get-started.adoc[Get Started with Agent Networks].
 . Select *Deploy*.
-. Your instances are deployed and ready to be tested. An instance is deployed for each connection defined in your agent network. If your agent network contains brokers, one instance is deployed per broker.
+. Your instances are now deployed and ready to test. The system deploys one instance for each connection defined in your agent network. If your agent network contains brokers, the system deploys one instance per broker.
 
 Next, discover your agent network assets in *Agents & Tools* in Exchange, view your agent network in Agent Visualizer, apply a governance policy in API Manager, or monitor your agent network activity in Anypoint Monitoring.
 
 [[deploy-cli]]
 == Deploy a Network Using the Anypoint CLI
 
-If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
+If you run operations within a CI/CD environment, use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
+
+== See Also
+
+* xref:af-project-files.adoc[]
+* xref:general::agent-fabric-overview.adoc[Agent Fabric Overview]

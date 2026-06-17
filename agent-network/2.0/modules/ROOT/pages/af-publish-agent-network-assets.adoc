@@ -2,22 +2,22 @@
 = Publish Agent Network Assets
 :page-aliases: anypoint-code-builder::af-publish-agent-network-assets.adoc
 
-Build and publish your agent network project as Anypoint Exchange assets. When you publish, an asset is created for each broker, agent, and MCP server that's in your agent network. The asset ID is the value of the `name` key in `agent-network.yaml`.
+Build and publish your agent network project as Anypoint Exchange assets. When you publish, Exchange creates an asset for each broker, agent, and MCP server in your agent network. The asset ID is the value of the `name` key in `agent-network.yaml`.
 
-For example, suppose you have an agent name of `badging-agent` in `agent-network.yaml`. After it's published, the Exchange `assetId` is `badging-agent`.
+For example, suppose you have an agent named `badging-agent` in `agent-network.yaml`. After you publish, the Exchange `assetId` is `badging-agent`.
 
 [[before-you-begin]]
 == Before You Begin
 
 Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites].
 
-If you want to publish your project assets to a different business group, update the relevant `groupId` in `exchange.json`.
+To publish your project assets to a different business group, update the relevant `groupId` in `exchange.json`.
 
 == Versioning Assets
 
-Do not specify a semantic version (for example, `1.0.1`) each time you publish your project. Instead, enter a version group (for example, `V1` or `V2`) that represents the high-level version of your agent network project. Exchange handles the semantic versioning and automatically increments the version when there are changes.
+Don't specify a semantic version (for example, `1.0.1`) each time you publish your project. Instead, enter a version group (for example, `V1` or `V2`) that represents the high-level version of your agent network project. Exchange handles the semantic versioning and automatically increments the version when there are changes.
 
-For existing projects, specify the same version group you were previously using. Specifying a different version group triggers a major semantic version upgrade (for example, `1.x.x` to `2.x.x`) for all associated assets.
+For existing projects, specify the same version group you were previously using. If you specify a different version group, then Exchange triggers a major semantic version upgrade (for example, `1.x.x` to `2.x.x`) for all associated assets.
 
 [[publish-dev-agent]]
 == Publish Your Network Using MuleSoft Vibes
@@ -25,7 +25,7 @@ For existing projects, specify the same version group you were previously using.
 Use MuleSoft Vibes to publish your agent network specification to Anypoint Exchange. For more information, see xref:anypoint-code-builder::api-ai-create-spec.adoc[].
 
 . In the Anypoint Code Builder activity bar, click the agent icon image:af-acb-dev-agent-icon.png["",18,18].
-. Tell the agent that you want to publish your agent network. MuleSoft Vibes does the rest.
+. Tell MuleSoft Vibes that you want to publish your agent network. MuleSoft Vibes does the rest.
 
 To get started, try one of these suggested messages.
 
@@ -45,14 +45,14 @@ Use Anypoint Code Builder to publish your agent network assets directly from you
   . In the Command Palette, run this command: *MuleSoft: Publish Agent Network Assets*.
 . In *Publish Agent Network Project Assets*, enter a version group for the project and review the project metadata. If you want to publish project assets to a different business group, update the `groupId` in `exchange.json`.
 . Select *Publish*.
-. Your agents, MCP servers, and LLM provider definitions are published to Exchange. An Exchange asset is created for each element in your agent network.
+. Anypoint Code Builder publishes your agents, MCP servers, and LLM provider definitions to Exchange and creates an asset for each element in your agent network.
 
 Next, discover your agent network assets in *Agents & Tools* in Exchange to get a comprehensive view of your integration, including agent and MCP server assets. Exchange automatically tags brokers for easy identification.
 
 [[publish-cli]]
 == Publish a Network Using the Anypoint CLI
 
-If you run operations within a CI/CD environment, you can use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
+To set up, create, build, publish, and deploy agent networks in a CI/CD environment, use the Anypoint CLI plugin. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
 
 [[see-also]]
 == See Also

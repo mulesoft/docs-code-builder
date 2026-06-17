@@ -15,7 +15,7 @@ Enable logging and log levels from CloudHub 2.0 or Runtime Fabric:
 +
 * xref:cloudhub-2::ch2-manage-app-logs.adoc#configure-log-levels-and-categories[CloudHub 2.0]
 * xref:runtime-fabric::deploy-to-runtime-fabric.adoc#configure-logging-and-log-levels[Runtime Fabric]
-. For `INSECURE-LOGGING` set the log level to `DEBUG`.
+. For `INSECURE-LOGGING`, set the log level to `DEBUG`.
 
 [IMPORTANT]
 `INSECURE-LOGGING` is for content that can potentially contain sensitive information, such as LLM reasoning, and inputs and outputs from agents and assets defined in your agent network. This is very likely to contain sensitive information, such as personally identifiable information (PII). Make sure to disable `INSECURE-LOGGING` after you finish troubleshooting.
@@ -25,7 +25,7 @@ Enable logging and log levels from CloudHub 2.0 or Runtime Fabric:
 
 Edit `agent-network.yaml` to set message logging for MCP servers and agents.
 
-Message logging uses the xref:gateway::policies-included-message-logging.adoc[Omni Gateway Message Logging policy]. In the `connection` section of the agent or MCP server instance you want to log, add the following logging policy inside `policies`:
+Message logging uses the xref:gateway::policies-included-message-logging.adoc[Omni Gateway Message Logging policy]. In the `connection` section of the agent or MCP server instance you want to log, add this logging policy inside `policies`:
 
 [source,yaml]
 ----
@@ -84,7 +84,7 @@ After any source file change, run the full pipeline:
 
 === Error: "Asset belongs to another project" (Error 2006)
 
-If the project build succeeds but it fails to publish with error `2006`, your registry keys conflict with another project in the org. Registry keys are unique across an org, so you can't copy a project and rename only the broker. This leaves the original registry key prefixes, and the first project owns those Exchange asset IDs.
+If the project build succeeds but it fails to publish with error `2006`, your registry keys conflict with another project in the org. Registry keys are unique across an org, so you can't copy a project and rename only the broker. Renaming only the broker leaves the original registry key prefixes, and the first project owns those Exchange asset IDs.
 
 To resolve this conflict:
 
@@ -108,7 +108,7 @@ This is a generic error that the broker issues when the LLM fails. To troublesho
 
 === Issue: LLM Responds Without Calling the Agent or Tool
 
-If the broker responds with information from the LLM's training data instead of delegating to your agent or calling an MCP tool, the LLM's instructions aren't explicit enough about delegation. This is especially common with Gemini on widely-known topics.
+If the broker responds with information from the LLM's training data instead of the LLM delegating to your agent or calling an MCP tool, the LLM's instructions aren't explicit enough about delegation. This is especially common with Gemini on widely-known topics.
 
 In the broker's system instructions:
 
@@ -123,7 +123,7 @@ You can encounter this error in two different scenarios:
 +
 * Check that the URL you set on the connection ends with a `/`.
 * Use a browser or Postman to request the agent card URL by appending `.well-known/agent-card.json` to the connection URL, for example, `https://ping-id-agent-url/pingid/.well-known/agent-card.json`.
-. The A2A agent is not configured to use A2A protocol version 1.0.0. In this case:
+. The A2A agent doesn't use A2A protocol version 1.0.0. In this case:
 +
 * If you created the agent with MuleSoft, verify that you are using the latest version of the Anypoint Connector for A2A (A2A Connector).
 * If you are using an external agent, verify that it uses the A2A protocol version 1.0.0.
