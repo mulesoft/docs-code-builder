@@ -1659,7 +1659,11 @@ The `a2a` interface defines how external clients interact with a broker through 
 
 |===
 
-Each inbound or outbound policy requires either a reference or inline policy binding.
+==== User Identity and Task Security
+
+The broker derives a `userId` from the authentication context of the security policy applied at the broker's ingress. This `userId` secures A2A task management operations, ensuring that only the authenticated user who created a task can query or modify it.
+
+If no authentication policy is configured at the broker's ingress, or if a `userId` cannot be determined from the authentication context, the broker continues to orchestrate normally. However, A2A task management operations (such as querying task status or canceling a task) are not available for tasks created without an associated `userId`.
 
 ==== Policy Binding Reference
 
