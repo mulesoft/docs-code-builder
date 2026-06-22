@@ -28,7 +28,7 @@ The dialect header specifies that the script is strictly bound to a specific ver
 
 [source,yaml]
 ----
-# @dialect: AGENTFABRIC=1.0
+# @dialect: AGENTFABRIC=0.1
 ----
 
 === System Section
@@ -796,7 +796,7 @@ echo addArtifact:
 
 echo setStatus:
   kind: "a2a:status_update_event"
-  state: "completed",
+  state: "TASK_STATE_COMPLETED",
   message: a2a.message({
     messageId: uuid(),
     parts: [
