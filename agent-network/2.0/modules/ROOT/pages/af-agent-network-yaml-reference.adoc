@@ -1661,9 +1661,9 @@ The `a2a` interface defines how external clients interact with a broker through 
 
 ==== User Identity and Task Security
 
-The broker derives a `userId` from the authentication context of the security policy applied at the broker's ingress. This `userId` secures A2A task management operations, ensuring that only the authenticated user who created a task can query or modify it.
+The broker derives a `userId` from the authentication context of the security policy applied at the broker's ingress. This `userId` secures xref:af-agent-script-reference.adoc#a2a-trigger[A2A task management operations], ensuring that only the authenticated user who owns a task can query or modify it. This includes `SendMessage` and `SendStreamingMessage` operations that target an existing task.
 
-If no authentication policy is configured at the broker's ingress, or if a `userId` cannot be determined from the authentication context, the broker continues to orchestrate normally. However, A2A task management operations (such as querying task status or canceling a task) are not available for tasks created without an associated `userId`.
+If no authentication policy is configured at the broker's ingress, or if a `userId` cannot be determined from the authentication context, the broker continues to orchestrate normally. However, A2A task management operations (such as querying task status, canceling a task, or sending messages to an existing task) are not available for tasks created without an associated `userId`.
 
 ==== Policy Binding Reference
 
