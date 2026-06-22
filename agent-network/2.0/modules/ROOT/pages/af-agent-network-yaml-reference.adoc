@@ -36,7 +36,7 @@ This section has these properties.
 |Yes
 
 |registry
-|Definitions of agents, agents, and MCPs, LLMs.
+|Definitions of agents, MCPs, and LLMs.
 |<<registry-section,registry>> Object
 |No
 
@@ -180,7 +180,7 @@ registry:
                description: Creates and manages employee records in the HR system.
                url: https://hr-agent.example.com/a2a
                version: "1.0.0"
-               protocolVersion: "0.3.0"
+               protocolVersion: "1.0"
                capabilities: {}
                defaultInputModes: [application/json, text/plain]
                defaultOutputModes: [application/json, text/plain]
@@ -206,7 +206,7 @@ registry:
                description: Onboards new employees to Salesforce.
                url: https://sfdc-agent.example.com/a2a
                version: "1.0.0"
-               protocolVersion: "0.3.0"
+               protocolVersion: "1.0"
                capabilities: {}
                defaultInputModes: [application/json]
                defaultOutputModes: [application/json]
@@ -402,6 +402,8 @@ The agents section has these properties.
 
 Authentication for outbound calls is configured on <<connections,`connections`>> (and related policies), not on registry `AgentEntity` definitions.
 
+NOTE: If you are connecting to an agent that uses A2A protocol version 0.3.x, use the `a2a_v03` interface key instead of `a2a`. The `a2a` key targets A2A protocol version 1.x.
+
 [[a2a-card]]
 ==== A2A Card
 
@@ -433,19 +435,19 @@ The A2A card section has these properties.
 |Preferred endpoint URL for interacting with the agent. Must support preferredTransport.
 |string
 |Yes
-|e.g. https://api.example.com/a2a/v1
+|for example, https://api.example.com/a2a/v1
 
 |`version`
 |Agent's own version number (format defined by provider).
 |String
 |Yes
-|e.g. 1.0.0
+|for example, 1.0.0
 
 |`protocolVersion`
 |Version of the A2A protocol this agent supports.
 |String
 |Yes
-|Default: 0.3.0
+|for example, 1.0
 
 |`capabilities`
 |Optional capabilities supported by the agent.
@@ -531,12 +533,6 @@ The A2A card section has these properties.
 |No
 |{ protected, signature, header? }
 
-|`supportsAuthenticatedExtendedCard`
-|If true, the agent can return an extended card to authenticated users.
-|Boolean
-|No
-|Default: false
-
 |===
 
 ===== Skills Properties
@@ -619,14 +615,14 @@ Capabilities describe optional features supported by the agent and have these pr
 |`true` or `false`
 |No
 
-|`stateTransitionHistory`
-|Indicates if the agent maintains state transition history.
+|`extendedAgentCard`
+|Indicates if the agent supports providing an extended agent card when authenticated.
 |Boolean
 |`true` or `false`
 |No
 
 |`extensions`
-|List of extension capabilities supported by the agent.
+|List of protocol extensions supported by the agent.
 |Array
 |Array of extension objects
 |No
@@ -652,7 +648,7 @@ The MCP Server section has these properties.
 |--
 
 |`urls`
-|Named URLs for the agent. array No
+|Named URLs for the MCP server.
 |Array
 |No
 |--
@@ -1156,7 +1152,7 @@ An API key passed in a header has these properties.
 |The name of the HTTP header that carries the API key. If not specified, Authorization is used.
 |String
 |String. Defaults to Authorization.
-|Yes
+|No
 
 |apiKey
 |The header or parameter name for the API key.
