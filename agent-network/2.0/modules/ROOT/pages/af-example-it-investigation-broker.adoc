@@ -113,7 +113,7 @@ The complete separation of the three severity paths - escalation, investigation,
 
 This diagram shows the workflow.  
 
-image::af-it-broker-escalation-flow.png[Workflow diagram of the IT agent broker showing severity classification branching into escalation, investigation, and ask-for-more-info paths, each terminating in an echo response node.]
+image::af-it-broker-escalation-flow.png[Visual canvas showing the IT agent broker showing severity classification branching into escalation, investigation, and ask-for-more-info paths, each terminating in an echo response node.]
 
 == IT Agent Project Reference
 
@@ -124,102 +124,9 @@ These are the project files for the IT agent.
 ----
 it-help-network/
   agent-network.yaml
-  exchange.json
   brokers/
     it-help-investigation.agent
-----
-
-*exchange.json*
-
-[source,json]
-----
-{
-  "main": "agent-network.yaml",
-  "name": "IT Help Investigation Agent Network",
-  "classifier": "agentic-network",
-  "groupId": "${organizationId}",
-  "assetId": "it-help-investigation-network",
-  "version": "1.0.0",
-  "descriptorVersion": "1.0.0",
-  "apiVersion": "v1.0",
-  "description": "Triages IT support tickets, escalates critical issues, and resolves common problems through cross-platform investigation with Help Center and License Procurement agents.",
-  "tags": [],
-  "dependencies": [],
-  "metadata": {
-    "variables": {
-      "helpCenterAgent": {
-        "url": {
-          "description": "Help Center Agent A2A URL",
-          "default": "",
-          "secret": false
-        }
-      },
-      "licenseProcurementAgent": {
-        "url": {
-          "description": "License Procurement Agent A2A URL",
-          "default": "",
-          "secret": false
-        },
-        "tokenUrl": {
-          "description": "OAuth2 token endpoint for the License Procurement agent (client credentials grant)",
-          "default": "",
-          "secret": false
-        },
-        "clientId": {
-          "description": "OAuth2 client ID the broker presents to the License Procurement agent",
-          "default": "",
-          "secret": false
-        },
-        "clientSecret": {
-          "description": "OAuth2 client secret -- inject at deploy time via --property, never commit a default value",
-          "default": "",
-          "secret": true
-        }
-      },
-      "escalationMcp": {
-        "url": {
-          "description": "Escalation MCP Server URL",
-          "default": "",
-          "secret": false
-        },
-        "apiKey": {
-          "description": "API key for the Escalation MCP server -- inject at deploy time, never commit a default value",
-          "default": "",
-          "secret": true
-        }
-      },
-      "jiraMcp": {
-        "url": {
-          "description": "Jira MCP Server URL (called on-behalf-of the inbound user)",
-          "default": "",
-          "secret": false
-        },
-        "tokenUrl": {
-          "description": "OAuth2 token endpoint Jira accepts for the OBO token exchange",
-          "default": "",
-          "secret": false
-        },
-        "clientId": {
-          "description": "OAuth2 client ID the broker uses to perform the OBO exchange with Jira",
-          "default": "",
-          "secret": false
-        },
-        "clientSecret": {
-          "description": "OAuth2 client secret for the Jira OBO exchange -- inject at deploy time, never commit a default value",
-          "default": "",
-          "secret": true
-        }
-      },
-      "openai": {
-        "apiKey": {
-          "description": "OpenAI API key -- inject at deploy time, never commit a default value",
-          "default": "",
-          "secret": true
-        }
-      }
-    }
-  }
-}
+  exchange.json
 ----
 
 *agent-network.yaml*
@@ -602,6 +509,99 @@ echo unresolvedResponse:
   kind: "a2a:status_update_event"
   state: "TASK_STATE_COMPLETED"
   message: a2a.message({messageId: uuid(), parts: [a2a.textPart("Ticket " + @generator.classifySeverity.output.ticket_id + " could not be resolved automatically and has been escalated to a human agent. Summary: " + @orchestrator.crossPlatformTriage.output.summary)]})
+----
+
+*exchange.json*
+
+[source,json]
+----
+{
+  "main": "agent-network.yaml",
+  "name": "IT Help Investigation Agent Network",
+  "classifier": "agentic-network",
+  "groupId": "${organizationId}",
+  "assetId": "it-help-investigation-network",
+  "version": "1.0.0",
+  "descriptorVersion": "1.0.0",
+  "apiVersion": "v1.0",
+  "description": "Triages IT support tickets, escalates critical issues, and resolves common problems through cross-platform investigation with Help Center and License Procurement agents.",
+  "tags": [],
+  "dependencies": [],
+  "metadata": {
+    "variables": {
+      "helpCenterAgent": {
+        "url": {
+          "description": "Help Center Agent A2A URL",
+          "default": "",
+          "secret": false
+        }
+      },
+      "licenseProcurementAgent": {
+        "url": {
+          "description": "License Procurement Agent A2A URL",
+          "default": "",
+          "secret": false
+        },
+        "tokenUrl": {
+          "description": "OAuth2 token endpoint for the License Procurement agent (client credentials grant)",
+          "default": "",
+          "secret": false
+        },
+        "clientId": {
+          "description": "OAuth2 client ID the broker presents to the License Procurement agent",
+          "default": "",
+          "secret": false
+        },
+        "clientSecret": {
+          "description": "OAuth2 client secret -- inject at deploy time via --property, never commit a default value",
+          "default": "",
+          "secret": true
+        }
+      },
+      "escalationMcp": {
+        "url": {
+          "description": "Escalation MCP Server URL",
+          "default": "",
+          "secret": false
+        },
+        "apiKey": {
+          "description": "API key for the Escalation MCP server -- inject at deploy time, never commit a default value",
+          "default": "",
+          "secret": true
+        }
+      },
+      "jiraMcp": {
+        "url": {
+          "description": "Jira MCP Server URL (called on-behalf-of the inbound user)",
+          "default": "",
+          "secret": false
+        },
+        "tokenUrl": {
+          "description": "OAuth2 token endpoint Jira accepts for the OBO token exchange",
+          "default": "",
+          "secret": false
+        },
+        "clientId": {
+          "description": "OAuth2 client ID the broker uses to perform the OBO exchange with Jira",
+          "default": "",
+          "secret": false
+        },
+        "clientSecret": {
+          "description": "OAuth2 client secret for the Jira OBO exchange -- inject at deploy time, never commit a default value",
+          "default": "",
+          "secret": true
+        }
+      },
+      "openai": {
+        "apiKey": {
+          "description": "OpenAI API key -- inject at deploy time, never commit a default value",
+          "default": "",
+          "secret": true
+        }
+      }
+    }
+  }
+}
 ----
 
 == See Also
