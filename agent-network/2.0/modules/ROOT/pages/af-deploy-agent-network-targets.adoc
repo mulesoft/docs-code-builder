@@ -41,6 +41,11 @@ Omni Gateway applies these policies automatically at deployment.
 
 Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites].
 
+[IMPORTANT]
+====
+Redeploying an agent network to a different target or gateway (for example, switching between a shared space and a private space, or changing to a different gateway) is not supported and fails with a Runtime Manager error. To deploy to a different target or gateway, first manually delete the existing Runtime Manager application, then redeploy.
+====
+
 When you deploy your agent network, the system deploys one instance for each connection defined in your agent network. If your agent network contains brokers, the system deploys one instance per broker.
 
 [[deploy-dev-agent]]
