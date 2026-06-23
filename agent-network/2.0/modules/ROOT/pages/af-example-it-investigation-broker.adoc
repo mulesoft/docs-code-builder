@@ -250,9 +250,10 @@ context:
       url: ${licenseProcurementAgent.url}
       authentication:
         kind: oauth2-client-credentials
-        tokenUrl: ${licenseProcurementAgent.tokenUrl}
         clientId: ${licenseProcurementAgent.clientId}
         clientSecret: ${licenseProcurementAgent.clientSecret}
+        token:
+          url: ${licenseProcurementAgent.tokenUrl}
     escalationMcpConnection:
       kind: mcp
       ref:
@@ -268,10 +269,10 @@ context:
       url: ${jiraMcp.url}
       authentication:
         kind: oauth2-obo
-        tokenUrl: ${jiraMcp.tokenUrl}
+        flow: oauth2-token-exchange
         clientId: ${jiraMcp.clientId}
         clientSecret: ${jiraMcp.clientSecret}
-        distributed: true
+        tokenEndpoint: ${jiraMcp.tokenUrl}
     openAiMiniConnection:
       kind: llm
       ref:
@@ -344,8 +345,6 @@ actions:
     target: "mcp://jiraMcpConnection"
     kind: "mcp:tool"
     tool_name: "updateIssue"
-    http_headers:
-      Authorization: @request.headers["Authorization"]
 
 # -- TRIGGER -------------------------------------------------------------------
 trigger ticketTrigger:
@@ -439,6 +438,7 @@ orchestrator crossPlatformTriage:
       search_help: @actions.help_center_agent
       check_license: @actions.license_procurement_agent
       update_ticket: @actions.updateIssue
+        with http_headers = {"Authorization": @request.headers["Authorization"]}
     outputs:
       properties:
         resolution:
