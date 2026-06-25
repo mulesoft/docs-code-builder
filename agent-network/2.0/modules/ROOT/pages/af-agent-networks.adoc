@@ -142,32 +142,20 @@ Applications or APIs exposed through the Model Context Protocol (MCP). MCP is an
 [[llm-support]]
 == Large Language Models
 
-Agent network brokers support the latest Gemini and OpenAI models and LLM Proxies.
+Agent network brokers support the latest models from OpenAI, Azure OpenAI, Bedrock OpenAI, and Gemini, as well as LLM Proxies.
 
-* Azure OpenAI and OpenAI API:
+* https://developers.openai.com/api/docs/models[OpenAI]
+* https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models[Azure OpenAI]
+* https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html[Bedrock OpenAI]
 +
-** GPT-5.2
-** GPT-5.2 Pro
-** GPT-5-mini
-** GPT-5 nano
-** GPT-5
-+
-For more information about these models, see the https://developers.openai.com/api/docs/models[OpenAI] documentation.
-* Gemini API:
-+
-** Gemini 2.5 Pro
-** Gemini 2.5 Flash-Lite
-** Gemini 2.5 Flash
-** Gemini 3 Flash
-** Gemini 3 Pro
-+
-For more information about these models, see the https://ai.google.dev/gemini-api/docs/models[Gemini] documentation.
+NOTE: Bedrock OpenAI uses the `openai.` prefix for model names (for example, `openai.gpt-5.5`), which differs from the model names used with OpenAI and Azure OpenAI.
+* https://ai.google.dev/gemini-api/docs/models[Gemini]
 
-* LLM Proxy:
+* LLM Proxy
 +
-xref:gateway::flex-gateway-llm-proxy.adoc[Omni Gateway LLM Proxy] provides a unified endpoint for multiple LLM providers including Gemini, OpenAI, Bedrock (Anthropic Claude models), and NVIDIA Nemotron. However, agent networks only supports direct access to OpenAI and Gemini through LLM Proxy. Transcoding other models to OpenAI format to use in agent networks is also not supported.
+Agent network brokers only support access to OpenAI and Gemini through xref:gateway::flex-gateway-llm-proxy.adoc[Omni Gateway LLM Proxy]. Transcoding other models to OpenAI format to use in agent networks is not supported.
 
-This table details the requirements and recommended models.
+This table details requirements and recommended models.
 
 |===
 |*Model Provider* |*Required Endpoint* |*Required Capabilities* |*Suggested Models*
