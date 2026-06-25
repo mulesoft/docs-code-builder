@@ -15,6 +15,7 @@ Troubleshoot errors and warnings you encounter when using Anypoint Code Builder.
 * xref:troubleshoot-implementation-errors.adoc[]
 * xref:troubleshoot-mule-runtime-errors.adoc[]
 * xref:troubleshoot-loading-errors.adoc[]
+* xref:troubleshoot-cloud-ide-disk.adoc[]
 * xref:troubleshoot-mcp-server.adoc[]
 +
 For other issues and workarounds, see xref:acb-release-notes.adoc#known-issues[Known Issues] in the Anypoint Code Builder Release Notes.
@@ -96,6 +97,13 @@ To find this icon, see xref:start-discover-ui.adoc[].
 * If the extension pack is _not_ installed, follow the installation steps at xref:start-acb.adoc#set-up-desktop[Set up the Desktop IDE].
 * If the extension pack is installed but the MuleSoft icon is not present in the Activity Bar, see xref:troubleshoot-missing-features.adoc#missing-mulesoft-icon[MuleSoft Icon Missing from Activity Bar] to display the icon.
 
+[[maven-401-error]]
+== Maven 401 Unauthorized Error
+
+If Maven fails to download dependencies with a 401 Unauthorized error when opening or building a MuleSoft project, configure authentication for the MuleSoft Enterprise Repository.
+
+See xref:ref-acb-maven.adoc#authenticating-to-mulesoft-repositories[Authenticating to MuleSoft Repositories] for instructions on configuring your credentials.
+
 [[folder-permission]]
 == Folder Permission Error
 
@@ -126,7 +134,7 @@ To disable a component:
 
 . Select *Disable Component*.
 
-Disabled components are unavailable in the canvas and are ignored at runtime. In the XML editor, the block is wrapped in an XML comment.
+Disabled components are unavailable in the canvas and are ignored at runtime. In the code editor, the block is wrapped in an XML comment.
 
 Once the issue is resolved, you can re-enable the component or use Delete to remove disabled items.
 

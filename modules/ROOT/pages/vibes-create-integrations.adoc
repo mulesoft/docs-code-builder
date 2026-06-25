@@ -2,7 +2,7 @@
 :page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: int-ai-enable-einstein.adoc int-ai-create-integrations.adoc
 
-MuleSoft Vibes is a purpose-built assistant for the development lifecycle, available right in Anypoint Code Builder. MuleSoft Vibes supports many capabilities through the xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Server], such as deploying applications, managing instances, and more. One such capability is transforming your business logic into a Mule application. 
+MuleSoft Vibes is a purpose-built assistant for the development lifecycle, available right in Anypoint Code Builder. MuleSoft Vibes supports many capabilities through the xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Servers], such as deploying applications, managing instances, and more. One such capability is transforming your business logic into a Mule application. 
 
 The generated application includes the integration, connector configurations, a sample properties file, and the dependencies required for connectors. These artifacts ensure that the generated integration is runnable and can be deployed directly from Anypoint Code Builder.
 
@@ -58,19 +58,40 @@ The integration builder canvas appears with starting cards.
 To generate an integration with AI, click *Use Mulesoft Vibes* in the *Build an Ecosystem with AI* card.  
 
 [[craft-ai-prompt]]
-== Write Your Prompt
+== Write Your Message
 
-Before you create an integration, define what you want to achieve with the integration, for example, optimizing a business process. In the Mulesoft Vibes panel, enter your prompt using natural language. The clearer and more specific your prompt, the more accurate the generated integration. 
+Before you create an integration, define what you want to achieve with the integration, for example, optimizing a business process. In the Mulesoft Vibes panel, describe what you need using natural language. The clearer and more specific your message, the more accurate the generated integration.
 
-Best practices for prompts:
+Best practices for messages:
 
 * Be clear and precise.  
 * Include triggering events (for example, sending an email when a new case is created).  
 * Emphasize key MuleSoft components and connector operations (for example, HTTP Connector *Listener* and Email Connector *Send*).  
 * Specify the data objects (for example, *Salesforce Account object*).  
-* Review your prompt before submitting it.  
+* Review your message before you submit it.  
 
 After Mulesoft Vibes generates the initial integration, the code is written directly into your project. You can further customize it to fit your requirements.
+
+[[vibes-generate-apps-from-templates]]
+=== Generate Applications from Exchange Templates
+
+You can generate applications in MuleSoft Vibes by using local templates from Anypoint Exchange as a starting point. This helps you align generated integrations with established implementation patterns and internal standards.
+
+Template-based generation supports consistent project structure and reduces the effort required to apply organizational conventions after generation.
+
+[[vibes-custom-connectors-generated-apps]]
+=== Include Custom Connectors in Generated Applications
+
+You can include custom connectors published to your private Anypoint Exchange when generating applications with MuleSoft Vibes. Use integrations to target internal or specialized systems your organization supports.
+
+By reusing private Exchange assets during generation, you can apply approved connector implementations from the beginning of the project lifecycle.
+
+[[vibes-exchange-apis-rest-connectors]]
+=== Invoke Exchange APIs Using REST Connectors
+
+Use MuleSoft Vibes to generate applications that invoke APIs published to Anypoint Exchange by using REST connectors. This capability helps you reuse existing API assets directly in generated integration implementations.
+
+Using Exchange APIs as generation targets improves consistency across your API and integration landscape while accelerating delivery.
 
 [[complete-gen-flow]]
 == Complete Your Integration
@@ -78,7 +99,7 @@ After Mulesoft Vibes generates the initial integration, the code is written dire
 After Mulesoft Vibes builds the integration, complete the configuration as needed.  
 
 Components that require further configuration display the error icon.  
-Select the component in the canvas to determine where the error is. Anypoint Code Builder highlights the location of the error within the configuration XML.  
+Select the component in the canvas to determine where the error is. Anypoint Code Builder highlights the location of the error in the code editor.  
 
 == See Also
 
