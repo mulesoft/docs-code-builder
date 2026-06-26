@@ -13,11 +13,13 @@ image::int-secure-properties-overview-diagram.png[Diagram showing secure propert
 [[setup-from-scratch]]
 == Set Up Secure Properties from Scratch
 
-To set up secure properties, send this message to MuleSoft Vibes:
+To set up secure properties, send a message to MuleSoft Vibes that asks to configure secure properties for your credentials and specifies the encryption algorithm to use.
 
-====
-"Set up secure properties for my Salesforce credentials using AES/CBC encryption"
-====
+For example:
+
+----
+Set up secure properties for my Salesforce credentials using AES/CBC encryption
+----
 
 MuleSoft Vibes:
 
@@ -30,22 +32,26 @@ MuleSoft Vibes:
 [[encrypt-value]]
 == Encrypt a Value
 
-To encrypt a specific value, send this message to MuleSoft Vibes:
+To encrypt a specific value, send a message to MuleSoft Vibes that includes the value to encrypt, your encryption key, and the algorithm to use.
 
-====
-"Encrypt the value 'MyPassword123' using my encryption key MuleSecureKey024 with AES CBC"
-====
+For example:
+
+----
+Encrypt the value 'MyPassword123' using my encryption key MuleSecureKey024 with AES CBC
+----
 
 MuleSoft Vibes runs the secure-properties-tool and returns the encrypted value ready to paste into your properties file.
 
 [[add-credential]]
 == Add a New Credential to an Existing Setup
 
-To add a new encrypted property, send this message to MuleSoft Vibes:
+To add a new encrypted property, send a message to MuleSoft Vibes that specifies the property name and value to encrypt.
 
-====
-"Add a new secure property called 'netsuite.password' with the value 'NS-Prod-Pass!' to my secure properties files"
-====
+For example:
+
+----
+Add a new secure property called 'netsuite.password' with the value 'NS-Prod-Pass!' to my secure properties files
+----
 
 MuleSoft Vibes encrypts the value and adds it to the appropriate `.secure.properties` file.
 
@@ -54,9 +60,9 @@ MuleSoft Vibes encrypts the value and adds it to the appropriate `.secure.proper
 
 To convert existing plaintext credentials to secure properties, send this message to MuleSoft Vibes:
 
-====
-"Convert all the plaintext Salesforce credentials in my project to use secure properties"
-====
+----
+Convert all the plaintext Salesforce credentials in my project to use secure properties
+----
 
 MuleSoft Vibes:
 
@@ -68,11 +74,13 @@ MuleSoft Vibes:
 [[multi-environment-setup]]
 == Set Up Multi-Environment Secure Properties
 
-To create environment-specific secure properties files, send this message to MuleSoft Vibes:
+To create environment-specific secure properties files, send a message to MuleSoft Vibes that specifies the environment name and requests the `${env}.secure.properties` pattern.
 
-====
-"Create a secure properties file for prod with the ${env}.secure.properties pattern"
-====
+For example:
+
+----
+Create a secure properties file for prod with the ${env}.secure.properties pattern
+----
 
 MuleSoft Vibes creates the environment-specific file and configures the dynamic file reference in `global-configs.xml`.
 
@@ -83,9 +91,9 @@ For more information about multi-environment configuration, see xref:int-create-
 
 To check if your secure properties are configured correctly, send this message to MuleSoft Vibes:
 
-====
-"Check if my secure properties are configured correctly"
-====
+----
+Check if my secure properties are configured correctly
+----
 
 MuleSoft Vibes validates:
 
@@ -97,11 +105,13 @@ MuleSoft Vibes validates:
 [[rotate-key]]
 == Rotate the Encryption Key
 
-To change your encryption key and re-encrypt all values, send this message to MuleSoft Vibes:
+To change your encryption key and re-encrypt all values, send a message to MuleSoft Vibes that specifies the old key, the new key, and asks to re-encrypt all values.
 
-====
-"Rotate my encryption key from MuleSecureKey024 to NewSecureKey2025 and re-encrypt all values"
-====
+For example:
+
+----
+Rotate my encryption key from MuleSecureKey024 to NewSecureKey2025 and re-encrypt all values
+----
 
 MuleSoft Vibes:
 
