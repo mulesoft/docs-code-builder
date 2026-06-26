@@ -112,6 +112,13 @@ For guidance with Git setup in Anypoint Code Builder, see xref:start-scm.adoc[].
 
 See VS Code documentation on https://code.visualstudio.com/docs/sourcecontrol/overview[Git support^] and https://code.visualstudio.com/docs/sourcecontrol/overview#_scm-providers[extensions for other SCM providers^]. For extension authors only, VS Code also provides a https://code.visualstudio.com/api/extension-guides/scm-provider[VS Code source control API^].
 
+[[acb-startup]]
+== Anypoint Code Builder Startup
+
+Anypoint Code Builder optimizes Maven bookkeeping and bundle-loading operations during initialization. This behavior reduces startup overhead so workspaces can become available with less wait time.
+
+It also reads extension bundle directories directly from the extension path when loading workspace assets. This initialization path reduces delays before projects are ready for development tasks.
+
 == Feedback
 
 To provide feedback about Anypoint Code Builder, complete the https://www.surveymonkey.com/r/acb_feedback[feedback survey^]. 
