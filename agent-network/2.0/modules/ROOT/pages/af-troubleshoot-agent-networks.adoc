@@ -123,6 +123,19 @@ In the broker's system instructions:
 * Add a hard directive, such as `MUST delegate IMMEDIATELY` and `NEVER answer yourself`.
 * Map every intent to a specific named action.
 
+=== Error: Runtime System Limit Exceeded
+
+If your agent network encounters errors related to exceeding iteration limits, tool call limits, or state size limits, you can configure runtime system limits in your `exchange.json` file. These variables control graph execution behavior and help prevent infinite loops or excessive resource usage.
+
+Common limit-related errors include:
+
+* Maximum handoff iterations exceeded
+* Maximum reasoning iterations exceeded
+* Maximum tool call count exceeded
+* State size limit exceeded
+
+To adjust these limits, add runtime system limit variables to the `metadata.variables` section of your `exchange.json` file. For detailed information about configuring these limits, see xref:af-agent-network-yaml-reference.adoc#runtime-system-limits[Runtime System Limits Configuration].
+
 === Error: "HTTP error 404: Agent card not found at /.well-known/agent-card.json"
 
 You can encounter this error in two different scenarios:

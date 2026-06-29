@@ -10,6 +10,7 @@ The `agent-network.yaml` file details the required structure and properties that
 * <<brokers-section,Brokers Section>>
 * <<expressions-format,Expressions Format>>
 * <<exchange-json-file,Exchange JSON File>>
+** <<runtime-system-limits,Runtime System Limits Configuration>>
 
 [[agent-network-section]]
 == Agent Network Section
@@ -1835,3 +1836,106 @@ These key-value pairs are important for your agent network configuration:
 * assetId: Unique identifier for the agent network project.
 * dependencies: Existing assets that this network needs to reference.
 * variables: Nested in the metadata section, defines all the variables whose values shouldn't be hardcoded in the `agent-network.yaml` file. Enter these values when publishing the agent network. Each variable has a description value, a default value, and a secret value that indicates whether it's treated as sensitive or not.
+
+[[runtime-system-limits]]
+=== Runtime System Limits Configuration
+
+You can configure runtime system limits for your agent network by adding specific variables to the `metadata.variables` section of your `exchange.json` file. These variables control graph execution behavior and help prevent infinite loops or excessive resource usage.
+
+*Example*
+
+[source,json]
+----
+{
+  "main": "agent-network.yaml",
+  "name": "it-investigation-GA-version",
+  "classifier": "agentic-network",
+  "organizationId": "{YOUR ORG ID}",
+  "descriptorVersion": "1.0.0",
+  "tags": [],
+  "metadata": {
+    "variables": {
+      "openai": {
+        "apiKey": {
+          "description": "openaikey",
+          "default": "",
+          "secret": true
+        }
+      },
+      "MODULE_GRAPH_ERROR_SETTINGS_MAX_HANDOFF_ITERATIONS": {
+        "description": "max node-to-node transitions per turn",
+        "secret": false,
+        "default": "30"
+      },
+      "MODULE_GRAPH_ERROR_SETTINGS_MAX_REASONING_ITERATIONS": {
+        "description": "max LLM reasoning loops within a single node",
+        "secret": false,
+        "default": "20"
+      },
+      "MODULE_GRAPH_ERROR_SETTINGS_MAX_SUBGRAPH_DEPTH": {
+        "description": "max subgraph nesting depth",
+        "secret": false,
+        "default": "10"
+      },
+      "MODULE_GRAPH_ERROR_SETTINGS_MAX_NODE_TOOL_CALL_ITERATIONS": {
+        "description": "max tool_executor runs per node",
+        "secret": false,
+        "default": "20"
+      },
+      "MODULE_GRAPH_ERROR_SETTINGS_MAX_TURN_TOOL_CALL_COUNTS": {
+        "description": "total tool invocations across all nodes per turn",
+        "secret": false,
+        "default": "50"
+      },
+      "MODULE_GRAPH_ERROR_SETTINGS_MAX_STATE_SIZE_BYTES": {
+        "description": "max accumulated state size in bytes (10 MB)",
+        "secret": false,
+        "default": "10485760"
+      }
+    }
+  },
+  "apiVersion": "v1.0",
+  "dependencies": [],
+  "groupId": "{YOUR ORG ID}",
+  "assetId": "it-investigation-GA-version",
+  "version": "1.0.0"
+}
+----
+
+==== Runtime System Limit Variables
+
+The following table describes the runtime system limit variables you can configure:
+
+[%header,cols="3,4,1"]
+|===
+|Variable Name
+|Description
+|Default Value
+
+|MODULE_GRAPH_ERROR_SETTINGS_MAX_HANDOFF_ITERATIONS
+|Maximum number of node-to-node transitions allowed per turn. Controls how many times execution can move between nodes in the agent network graph during a single conversation turn.
+|30
+
+|MODULE_GRAPH_ERROR_SETTINGS_MAX_REASONING_ITERATIONS
+|Maximum number of LLM reasoning loops allowed within a single node. Limits how many times the LLM can iterate on its reasoning before producing a result.
+|20
+
+|MODULE_GRAPH_ERROR_SETTINGS_MAX_SUBGRAPH_DEPTH
+|Maximum nesting depth for subgraphs. Controls how deeply agent networks can be nested within other agent networks.
+|10
+
+|MODULE_GRAPH_ERROR_SETTINGS_MAX_NODE_TOOL_CALL_ITERATIONS
+|Maximum number of tool executor runs allowed per node. Limits how many times a node can invoke tool execution during its processing.
+|20
+
+|MODULE_GRAPH_ERROR_SETTINGS_MAX_TURN_TOOL_CALL_COUNTS
+|Total number of tool invocations allowed across all nodes per turn. Provides a global limit on tool usage during a single conversation turn.
+|50
+
+|MODULE_GRAPH_ERROR_SETTINGS_MAX_STATE_SIZE_BYTES
+|Maximum accumulated state size in bytes. Limits the total amount of state data that can be accumulated during graph execution. Default is 10 MB (10485760 bytes).
+|10485760
+
+|===
+
+All runtime system limit variables are non-sensitive (`secret: false`) and should be specified as string values in the `exchange.json` file.
