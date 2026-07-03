@@ -560,7 +560,7 @@ If running a test fails with an error similar to `NoClassDefFoundError: org/apac
 .. Confirm the versions that your project declares in `pom.xml`.
 .. If needed, align dependency and plugin versions with the versions recommended in xref:munit::index.adoc[].
 . Clean and rebuild the project, and then rerun the test.
-+. From the terminal, run `mvn clean test` to confirm whether the issue reproduces outside the IDE test runner.
+.. From the terminal, run `mvn clean test` to confirm whether the issue reproduces outside the IDE test runner.
 . Review dependency declarations in `pom.xml` for conflicts in test dependencies, including direct overrides for `commons-io`.
 . If the error persists, isolate the issue in a new minimal project and compare the project dependencies and plugin versions.
 . Capture the full terminal stack trace and contact support if the runtime class error continues after version and dependency checks.
