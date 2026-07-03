@@ -554,6 +554,20 @@ For example, the failing test case in the example must return `"yes"` instead of
 
 For guidance with MUnit XML configurations, see xref:munit::munit-test-concept.adoc[] and xref:munit::event-processors.adoc[].
 
+[[troubleshoot-munit-runtime-errors]]
+=== Troubleshoot Runtime Class Errors
+
+If running a test fails with an error similar to `NoClassDefFoundError: org/apache/commons/io/output/ByteArrayOutputStream`, check your project and runtime setup before changing test logic.
+
+. Verify compatibility among Mule runtime, MUnit dependencies, and the Anypoint Code Builder extensions that you are using.
+.. Confirm the versions that your project declares in `pom.xml`.
+.. If needed, align dependency and plugin versions with the versions recommended in xref:munit::index.adoc[].
+. Clean and rebuild the project, and then rerun the test.
+.. From the terminal, run `mvn clean test` to confirm whether the issue reproduces outside the IDE test runner.
+. Review dependency declarations in `pom.xml` for conflicts in test dependencies, including direct overrides for `commons-io`.
+. If the error persists, isolate the issue in a new minimal project and compare the project dependencies and plugin versions.
+. Capture the full terminal stack trace and contact support if the runtime class error continues after version and dependency checks.
+
 //local variable to clear results:
 {clear-results}
 
