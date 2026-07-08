@@ -5,7 +5,7 @@ Run multiple integration projects locally in one runtime to validate service-to-
 
 When an integration depends on multiple local Mule projects, starting each project manually can slow down validation and increase setup errors. MuleSoft Vibes can create a run configuration from your prompt and execute all selected projects together in the same local runtime instance.
 
-Multi-project configurations use the default runtime arguments defined in Anypoint Code Builder settings (`Mule > Runtime: Default Arguments`).
+When MuleSoft Vibes creates a multi-project configuration, it uses the default runtime arguments defined in Anypoint Code Builder settings (xref:ref-mule-settings.adoc#setting-mule-args[Mule > Runtime: Default Arguments]) to keep the configuration simple. You can override these defaults by adding `mule.runtime.args` directly to the launch configuration.
 
 == Before You Begin
 
@@ -99,6 +99,84 @@ For example:
   "mule.jdk.version": "17"
 }
 ----
+
+== Multi-Project Configuration Fields Reference
+
+When MuleSoft Vibes generates a multi-project launch configuration in your `.code-workspace` file, it includes fields that control execution mode and runtime behavior. Understanding these fields lets you update configurations without re-creating them from scratch.
+
+=== Execution Mode
+
+The `noDebug` field controls whether the configuration runs in run mode or debug mode:
+
+* `noDebug: true` — starts all projects without attaching the debugger (run mode).
+* `noDebug: false` or omitted — attaches the debugger to all projects (debug mode).
+
+[source,json]
+----
+{
+  "type": "mule-xml-debugger",
+  "request": "launch",
+  "name": "Run All Projects",
+  "noDebug": true, <1>
+  "mule.projects": [
+    "${workspaceFolder:main-project}",
+    "${workspaceFolder:project-one}"
+  ]
+}
+----
+<1> Set to `false` or remove this field to switch to debug mode.
+
+To switch modes, ask MuleSoft Vibes to update the configuration, or edit `noDebug` directly in your `.code-workspace` file.
+
+=== Runtime Arguments
+
+MuleSoft Vibes doesn't include runtime arguments in the generated launch configuration to keep the setup simple. By default, configurations inherit the arguments from the `Mule > Runtime: Default Arguments` setting in Anypoint Code Builder.
+
+To customize runtime arguments for a specific configuration, add the `mule.runtime.args` field directly to the launch configuration in your `.code-workspace` file:
+
+[source,json]
+----
+{
+  "type": "mule-xml-debugger",
+  "request": "launch",
+  "name": "Run Multiple Projects",
+  "noDebug": true,
+  "mule.projects": [
+    "${workspaceFolder:test-run-config}",
+    "${workspaceFolder:test-project2}",
+    "${workspaceFolder:test-project1}"
+  ],
+  "mule.runtime.args": "-M-Dmule.testingMode -M-XX:+UseStringDeduplication" <1>
+}
+----
+<1> All projects in the configuration use the same runtime arguments.
+
+Alternatively, update the global default:
+
+. Open *Settings* in your IDE.
+. Search for `Mule > Runtime: Default Arguments`.
+. Add or update your arguments, for example `-M-Dencryption.key=my-key` or `-M-Denv=dev`.
+
+For common runtime argument use cases, see xref:ref-mule-settings.adoc#setting-mule-args[Mule › Runtime: Default Arguments] and xref:int-create-secure-configs.adoc[].
+
+=== Edit a Generated Configuration
+
+[cols="1,2",options="header"]
+|===
+|To change |Do this
+
+|Execution mode (run or debug)
+|Edit `noDebug` in the `.code-workspace` file, or ask MuleSoft Vibes to update the configuration.
+
+|Runtime arguments
+|Add `mule.runtime.args` to the launch configuration in your `.code-workspace` file, or update `Mule > Runtime: Default Arguments` in IDE settings.
+
+|Mule runtime or JDK version
+|Edit `mule.runtime.version` or `mule.jdk.version` in the `.code-workspace` file. See <<Set Explicit Mule and JDK Versions>>.
+
+|Projects included in the run
+|Ask MuleSoft Vibes to update the configuration, or edit `mule.projects` directly in the `.code-workspace` file.
+|===
 
 == See Also
 
