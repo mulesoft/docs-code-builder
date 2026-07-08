@@ -1,0 +1,284 @@
+= launch.json Configuration Properties Reference
+:page-deployment-options: desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Configure how Mule applications run and debug locally in Anypoint Code Builder by editing the `launch.json` file in your project's `.vscode` folder. Use launch configurations to pass runtime arguments, change debug ports, switch between environments, and run multiple applications concurrently.
+
+Use `launch.json` configurations to:
+
+* Pass runtime arguments (encryption keys, environment variables, JVM properties)
+* Change the debug port to avoid conflicts when running multiple applications
+* Create multiple run profiles for different environments (Development, QA, Production)
+* Run multiple Mule applications concurrently in the same workspace
+* Test the same application with different property values without editing code
+
+[[property-reference]]
+== Configuration Properties Reference
+
+This table lists some common properties for launch configurations.
+
+[%header,cols="20a,15a,65a"]
+|===
+| Property | Required | Description
+
+| `type`
+| Yes
+| Specifies the debugger type. Must be `"mule-xml-debugger"` for Mule applications or `"munit-xml-debugger"` for MUnit tests.
+
+| `request`
+| Yes
+| Specifies the launch type. Must be `"launch"` to start a new debug session.
+
+| `name`
+| Yes
+| Display name for this configuration. Appears in the Run and Debug view dropdown menu. Use descriptive names like `"Debug - Development"` or `"Run QA Environment"`.
+
+| `mule.project`
+| No^1^
+| Path to a single Mule project. Use `"${workspaceFolder}"` for the current project. For multiple projects, use `mule.projects` instead.
+
+| `mule.projects`
+| No^1^
+| Array of project paths for running multiple Mule applications concurrently. Example: `["${workspaceFolder:project1}", "${workspaceFolder:project2}"]`. See xref:int-run-multiple-mule-apps.adoc[].
+
+| `mule.home`
+| No
+| Path to the Mule runtime home directory. Use `"${config:mule.homeDirectory}"` to reference the configured Mule installation. Typically not needed as it defaults to the configured runtime.
+
+| `mule.runtime.args`
+| No
+| Command-line arguments passed to the Mule runtime JVM. Use the `-M-D` prefix for system properties. +
+ +
+Examples: +
+`-M-Dencryption.key=myKey` (encryption key) +
+`-M-Denv=dev` (environment selector) +
+`-M-Dhttp.port=8082` (HTTP listener port) +
+ +
+For more information, see xref:int-run-mule-apps-with-properties.adoc[] and xref:int-create-secure-configs.adoc[].
+
+| `mule.debug.port`
+| No
+| Port number for the Mule debugger. Default: `6666`. Change this value when running multiple applications concurrently to avoid port conflicts. Example: `6667`, `6668`.
+
+| `noDebug`
+| No
+| Set to `true` to run the application without attaching the debugger. Useful for performance testing or when you don't need breakpoint debugging. Default: `false`.
+
+|===
+
+^1^ Either `mule.project` or `mule.projects` must be specified, but not both.
+
+[[multiple-configs]]
+== Creating Multiple Configuration Profiles
+
+Create multiple launch configurations to test different environments without modifying your application code. Each configuration can have different runtime arguments, debug ports, and environment settings.
+
+The following example shows three configurations for Local Development, QA, and a Mocked environment:
+
+[source,json,linenums]
+----
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug - Local Dev",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Denv=dev -M-Dencryption.key=devKey123",
+      "mule.debug.port": 6666
+    },
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug - QA Environment",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Denv=qa -M-Dencryption.key=qaKey456",
+      "mule.debug.port": 6667
+    },
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Run - Mocked Services",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Denv=mock -M-Dmock.services=true",
+      "mule.debug.port": 6666,
+      "noDebug": true
+    }
+  ]
+}
+----
+
+=== Switch Between Configurations
+
+To switch between run configurations:
+
+. Open the *Run and Debug* view from the activity bar (image:icon-run-debug.png["",18,18]).
+. Click the configuration dropdown in the debug panel.
+. Select the configuration to use 
++
+(for example, *Debug - QA Environment*).
+. Click *Start* (image:icon-start-debug.png["",18,18]) or press *F5* to launch.
+
+The selected configuration remains active until you select a different one.
+
+[[debug-port]]
+== Configuring the Debug Port
+
+The default debug port for Anypoint Code Builder is `6666`. Change this port when:
+
+* Running multiple Mule applications concurrently in the same workspace
+* The default port conflicts with another service on your system
+* Testing port-specific debugging scenarios
+
+=== Change the Debug Port
+
+Add or modify the `mule.debug.port` property in your launch configuration:
+
+[source,json]
+----
+{
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug on Port 6667",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments}",
+      "mule.debug.port": 6667
+    }
+  ]
+}
+----
+
+Each concurrent application must use a unique debug port. For example, if running three applications simultaneously, configure them with ports `6666`, `6667`, and `6668`.
+
+[[common-examples]]
+== Common Configuration Examples
+
+These are some configuration examples for common scenarios. 
+
+=== Pass Encryption Keys for Secure Properties
+
+[source,json]
+----
+{
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug with Encryption Key",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dencryption.key=mySecretKey"
+    }
+  ]
+}
+----
+
+For more information, see xref:int-create-secure-configs.adoc[].
+
+=== Switch Between Environment Property Files
+
+[source,json]
+----
+{
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Development Environment",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Denv=dev"
+    },
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Production Environment",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Denv=prod"
+    }
+  ]
+}
+----
+
+This configuration works with property files named `dev.secure.yaml` and `prod.secure.yaml` that use the `${env}` variable in your Mule configuration XML.
+
+=== Run Multiple Applications Concurrently
+
+[source,json]
+----
+{
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Run Multiple Apps",
+      "noDebug": true,
+      "mule.projects": [
+        "${workspaceFolder:salesforce-integration}",
+        "${workspaceFolder:database-service}",
+        "${workspaceFolder:api-gateway}"
+      ],
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments}"
+    }
+  ]
+}
+----
+
+For more information, see xref:int-run-multiple-mule-apps.adoc[].
+
+=== Use Environment Variables
+
+Reference OS environment variables using the `${env:VARIABLE_NAME}` syntax:
+
+[source,json]
+----
+{
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug with Env Variables",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dencryption.key=${env:MULE_ENCRYPTION_KEY} -M-Denv=${env:MULE_ENV}"
+    }
+  ]
+}
+----
+
+[[create-launch-json]]
+== Create or Open launch.json
+
+To create or open the `launch.json` file:
+
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+
+. Enter and select `Open 'launch.json'`.
++
+If the file doesn't exist, Anypoint Code Builder creates it in the `.vscode` folder of your project.
+
+. Edit the configuration properties as needed.
+
+. Save the file.
+
+The new or updated configuration appears in the *Run and Debug* view dropdown.
+
+[[see-also]]
+== See Also
+
+* xref:int-run-mule-apps-with-properties.adoc[]
+* xref:int-create-secure-configs.adoc[]
+* xref:int-run-multiple-mule-apps.adoc[]
+* xref:int-debug-mule-apps.adoc[]
+* xref:int-test-munit.adoc[]
+* xref:int-migrate-studio-to-acb.adoc[]
+* xref:ref-mule-settings.adoc[]

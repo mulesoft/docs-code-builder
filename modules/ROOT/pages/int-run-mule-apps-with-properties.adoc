@@ -1,0 +1,271 @@
+= Pass Runtime Properties and Arguments to Mule Applications
+:page-deployment-options: desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Configure runtime behavior, secure sensitive data, and test different environments by passing properties and arguments to Mule applications running locally in Anypoint Code Builder. 
+
+Use command-line properties to switch between development, sandbox, and production configurations, provide encryption keys for secure properties, and override default values without modifying application code.
+
+You can pass properties when running Mule applications locally through different methods.
+
+* <<mule-settings-method,Global default arguments>>: Apply the same arguments to all Mule applications
+* <<launch-json-method,Project-specific launch configurations>>: Configure arguments for individual projects or create multiple configurations with different settings
+
+For a reference of `launch.json` configuration properties, see xref:ref-launch-json-properties.adoc[].
+
+[[mule-settings-method]]
+== Configure Global Default Arguments
+
+Configure arguments that apply to all Mule application runs in Anypoint Code Builder. Use this approach when you consistently need the same encryption key or environment setting across all projects during local development.
+
+To configure global default arguments:
+
+. Open Mule settings:
++
+include::partial$acb-reusable-steps.adoc[tags="open-mule-settings"]
+
+. Find the *Mule › Runtime: Default Arguments* setting.
+
+. In the *Runtime: Default Arguments* field, append your arguments using the `-M-D` prefix followed by the property name and value:
++
+[source,text]
+----
+-M-Dencryption.key=myEncryptionKey123
+----
++
+To add multiple arguments, separate them with spaces:
++
+[source,text]
+----
+-M-Dencryption.key=myEncryptionKey123 -M-Denv=dev -M-Dhttp.port=8082
+----
+
+. Run or debug your Mule application:
++
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
++
+Select *View: Show Run and Debug*, then click *Run and Debug*.
++
+Mule Runtime engine receives the configured arguments each time you run any application.
+
+=== Understand Property Syntax
+
+The `-M-D` prefix passes system properties to the Java Virtual Machine (JVM) that runs Mule Runtime engine. These properties become available throughout your Mule application and can be referenced in configuration XML files.
+
+When configuring properties in the *Runtime: Default Arguments* field:
+
+* Use the `-M-D` prefix followed by the property name and value: `-M-Dname=value`
+* Separate multiple properties with spaces
+* Avoid quotes around values unless the value contains spaces
+* Property names are case-sensitive
+
+.Common examples:
+[source,text]
+----
+-M-Dencryption.key=mySecretKey
+-M-Denv=dev
+-M-Dhttp.port=8081
+-M-Ddatabase.host=localhost
+-M-Dmule.env=development
+----
+
+[[launch-json-method]]
+== Configure Project-Specific Launch Configurations
+
+Configure arguments for individual projects or create multiple run configurations with different settings for the same project. Use this approach when different projects require different configurations, or to test the same project with different property values.
+
+Launch configurations reside in the `.vscode/launch.json` file in your project directory and apply only to that project.
+
+=== Create or Modify a Launch Configuration
+
+To configure project-specific arguments:
+
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+
+. Enter and select *Open 'launch.json'*.
++
+If the file doesn't exist, VS Code creates it in the `.vscode` folder of your project.
+
+. In the `launch.json` file, locate or create a configuration object within the `configurations` array.
+
+. Add or modify the `mule.runtime.args` property to include your arguments:
++
+[source,json]
+----
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug Mule Application",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dencryption.key=myKey -M-Denv=dev"
+    }
+  ]
+}
+----
+
+. Save the `launch.json` file.
+
+. Run or debug your application by selecting the configuration from the *Run and Debug* view.
+
+=== Test the Same Project with Different Property Values
+
+Create multiple launch configurations with different property values to test various environments without editing the configuration file each time. For conceptual information about creating and managing launch configurations, see xref:int-run-multiple-mule-apps.adoc[].
+
+The key difference when configuring properties is to vary the `mule.runtime.args` values for each configuration:
+
+[source,json]
+----
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug - Development",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Denv=dev -M-Dhttp.port=8081"
+    },
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug - Sandbox",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Denv=sandbox -M-Dhttp.port=8082"
+    }
+  ]
+}
+----
+
+Switch between configurations using the dropdown in the *Run and Debug* view.
+
+=== Use Environment Variables in Launch Configurations
+
+Reference environment variables defined on your system to avoid hardcoding sensitive values in `launch.json`:
+
+[source,json]
+----
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug with Environment Variables",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dencryption.key=${env:ENCRYPTION_KEY} -M-Denv=${env:MULE_ENV}"
+    }
+  ]
+}
+----
+
+Reference environment variables using the `${env:VARIABLE_NAME}` syntax. The example configuration references `ENCRYPTION_KEY` and `MULE_ENV` from your system environment.
+
+[[common-use-cases]]
+== Common Use Cases and Examples
+
+These examples demonstrate common scenarios for passing runtime properties and arguments, such as configuring HTTP listener ports and database connection parameters.
+
+For examples of passing encryption keys and switching between environment-specific property files, see xref:int-create-secure-configs.adoc[].
+
+=== Example: Set HTTP Listener Port Dynamically
+
+Set the HTTP listener port at runtime without modifying your configuration XML:
+
+.Global default arguments:
+[source,text]
+----
+-M-Dhttp.port=8082
+----
+
+.Launch configuration:
+[source,json]
+----
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug on Port 8082",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dhttp.port=8082"
+    }
+  ]
+}
+----
+
+Reference the property in your HTTP listener configuration:
+
+[source,xml]
+----
+<http:listener-config name="HTTP_Listener_config" >
+  <http:listener-connection host="0.0.0.0" port="${http.port}" />
+</http:listener-config>
+----
+
+=== Example: Provide Database Connection Parameters
+
+Provide database connection parameters at runtime to switch between local and remote databases:
+
+.Global default arguments:
+[source,text]
+----
+-M-Ddb.host=localhost -M-Ddb.port=3306 -M-Ddb.name=mydb
+----
+
+.Launch configurations for different databases:
+[source,json]
+----
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug with Local Database",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Ddb.host=localhost -M-Ddb.port=3306 -M-Ddb.name=mydb"
+    },
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug with Remote Database",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Ddb.host=remote-db.example.com -M-Ddb.port=3306 -M-Ddb.name=proddb"
+    }
+  ]
+}
+----
+
+Reference these properties in your database configuration:
+
+[source,xml]
+----
+<db:config name="Database_Config" >
+  <db:my-sql-connection
+    host="${db.host}"
+    port="${db.port}"
+    database="${db.name}"
+    user="${db.user}"
+    password="${secure::db.password}" />
+</db:config>
+----
+
+== See Also
+
+* xref:int-create-secure-configs.adoc[]
+* xref:int-run-multiple-mule-apps.adoc[]
+* xref:ref-mule-settings.adoc#setting-mule-args[]
+* xref:int-global-config-elements.adoc[]
+* xref:mule-runtime::configuring-properties.adoc[]
