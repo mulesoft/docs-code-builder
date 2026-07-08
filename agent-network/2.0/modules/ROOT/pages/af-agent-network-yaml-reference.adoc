@@ -914,7 +914,7 @@ This section is for reusable entities scoped to the graphs defined in the `agent
 ----
 context:
    connections:
-     hr-system-agent:
+     hr_system_agent:
        kind: a2a
        ref:
          name: hr-system-agent
@@ -923,17 +923,17 @@ context:
          outbound:
            - ref:
                name: retry-policy
-     salesforce-agent:
+     salesforce_agent:
        kind: a2a
        ref:
          name: salesforce-agent
        url: https://sfdc-agent.example.com/a2a
-     slack-mcp:
+     slack_mcp:
        kind: mcp
        ref:
          name: slack-mcp
        url: https://mcp.example.com/slack
-     Open-AI-LLM:
+     openai_llm:
        kind: llm
        ref:
          name: Open-AI-LLM
@@ -972,6 +972,17 @@ The `context` section has these properties.
 === Connections
 
 Connection definitions live in the `context` object. Each `connections` object has a kind field that determines its connection type: either `a2a`, `llm`, or `mcp`.
+
+[[connection-id-format]]
+==== Connection ID Format
+
+Each connection key (ID) must use only:
+
+* Lowercase letters (`a`–`z`)
+* Numeric characters (`0`–`9`)
+* Underscores (`_`), non-trailing
+
+For example, `hr_system_agent` and `slack_mcp` are valid, but `HR-System-Agent` and `my_connection_` are not.
 
 Connection objects have these properties.
 
@@ -1568,12 +1579,23 @@ The `oauth2-obo` authentication has these properties.
 
 Use this section to define brokers that orchestrate and control the flow of agent and tool invocations. Each broker object maps to an `.agent` file. You can have multiple Agent Script files in your `/brokers` directory.
 
+[[broker-id-format]]
+=== Broker ID Format
+
+Each broker key (ID) must use only:
+
+* Lowercase letters (`a`–`z`)
+* Numeric characters (`0`–`9`)
+* Underscores (`_`), non-trailing
+
+For example, `customer_service_agent` and `billing_agent` are valid, but `customerServiceAgent` and `my_broker_` are not.
+
 *Example*
 
 [source,yaml]
 ----
 brokers:
-   customerServiceAgent:
+   customer_service_agent:
      kind: AgentScript
      implementation: ./brokers/customer-service.agent
      interfaces:
@@ -1583,7 +1605,7 @@ brokers:
            inbound:
              - ref:
                  name: rate-limit-policy
-   billingAgent:
+   billing_agent:
      kind: AgentScript
      implementation: ./brokers/billing-handler.agent
      interfaces:
@@ -1602,10 +1624,10 @@ The `brokers` section has these properties.
 |Values
 
 |`_(broker id)_`
-|Named broker definition.
+|Named broker definition. See <<broker-id-format>>.
 |Object
 |No
-|Keys: identifiers matching ^[a-zA-Z_][a-zA-Z0-9_.-]*$. Values: broker entity (BrokerEntity in agent_network_v2.json)
+|Keys: identifiers using only lowercase `a`–`z`, `0`–`9`, and non-trailing underscores (`_`). Values: broker entity (BrokerEntity in agent_network_v2.json)
 
 |`kind`
 |The type of agent implementation.

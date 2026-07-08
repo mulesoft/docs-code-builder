@@ -238,12 +238,12 @@ registry:
         platform: OpenAI
 context:
   connections:
-    helpCenterAgentConnection:
+    help_center_agent_connection:
       kind: a2a
       ref:
         name: helpCenterAgent
       url: ${helpCenterAgent.url}
-    licenseProcurementAgentConnection:
+    license_procurement_agent_connection:
       kind: a2a
       ref:
         name: licenseProcurementAgent
@@ -254,7 +254,7 @@ context:
         clientSecret: ${licenseProcurementAgent.clientSecret}
         token:
           url: ${licenseProcurementAgent.tokenUrl}
-    escalationMcpConnection:
+    escalation_mcp_connection:
       kind: mcp
       ref:
         name: escalationMcp
@@ -262,7 +262,7 @@ context:
       authentication:
         kind: apiKey
         apiKey: ${escalationMcp.apiKey}
-    jiraMcpConnection:
+    jira_mcp_connection:
       kind: mcp
       ref:
         name: jiraMcp
@@ -273,7 +273,7 @@ context:
         clientId: ${jiraMcp.clientId}
         clientSecret: ${jiraMcp.clientSecret}
         tokenEndpoint: ${jiraMcp.tokenUrl}
-    openAiMiniConnection:
+    openai_mini_connection:
       kind: llm
       ref:
         name: openAiMini
@@ -282,7 +282,7 @@ context:
         kind: apiKey
         apiKey: ${openai.apiKey}
 brokers:
-  it-help-investigation:
+  it_help_investigation:
     kind: AgentScript
     implementation: ./brokers/it-help-investigation.agent
     interfaces:
@@ -321,34 +321,34 @@ config:
 
 llm:
   openai_mini:
-    target: "llm://openAiMiniConnection"
+    target: "llm://openai_mini_connection"
     kind: "OpenAI"
     model: "gpt-5-mini"
 
 # -- ACTION DEFINITIONS -------------------------------------------------------
 actions:
   help_center_agent:
-    target: "a2a://helpCenterAgentConnection"
+    target: "a2a://help_center_agent_connection"
     kind: "a2a:send_message"
 
   license_procurement_agent:
-    target: "a2a://licenseProcurementAgentConnection"
+    target: "a2a://license_procurement_agent_connection"
     kind: "a2a:send_message"
 
   escalate:
-    target: "mcp://escalationMcpConnection"
+    target: "mcp://escalation_mcp_connection"
     kind: "mcp:tool"
     tool_name: "escalate"
 
   updateIssue:
-    target: "mcp://jiraMcpConnection"
+    target: "mcp://jira_mcp_connection"
     kind: "mcp:tool"
     tool_name: "updateIssue"
 
 # -- TRIGGER -------------------------------------------------------------------
 trigger ticketTrigger:
   kind: "a2a"
-  target: "brokers://it-help-investigation/a2a"
+  target: "brokers://it_help_investigation/a2a"
   on_message: ->
     transition to @generator.classifySeverity
 
