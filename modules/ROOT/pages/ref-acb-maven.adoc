@@ -14,6 +14,21 @@ include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag="maven-setti
 
 include::anypoint-code-builder::partial$acb-maven-settings.adoc[tag="maven-acb-settings-file"]
 
+[[authenticating-to-mulesoft-repositories]]
+== Authenticating to MuleSoft Repositories
+
+When you open a MuleSoft project that uses dependencies from the MuleSoft Enterprise Repository, Maven requires authentication to download the artifacts. If authentication is not configured, you receive a 401 Unauthorized error.
+
+To configure authentication:
+
+. If you don't already have Nexus enterprise credentials, contact https://help.mulesoft.com[MuleSoft Support^] to request them.
+. Optionally, encrypt your credentials. 
++
+For instructions on encrypting your credentials to avoid storing passwords in plain text, see https://maven.apache.org/guides/mini/guide-encryption.html[Password Encryption^] in the Apache Maven documentation.
+. Add your credentials in the `<servers>` section of your Maven `settings.xml` file.
++
+For detailed instructions on configuring the `settings.xml` file, see xref:mule-runtime::maven-reference.adoc#configure-maven-to-access-mulesoft-enterprise-repository[Configure Maven to Access MuleSoft Enterprise Repository].
+
 
 == See Also
 
