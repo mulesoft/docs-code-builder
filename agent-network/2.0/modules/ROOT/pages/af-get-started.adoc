@@ -1,0 +1,64 @@
+[[get-started]]
+= Get Started with Agent Networks
+:page-aliases: anypoint-code-builder::af-get-started.adoc
+
+include::partial$af-shared.adoc[tags=get-started]
+
+[[setup-space]]
+== Set Up the Target Space for Your Environment
+
+To deploy an agent network, you need a space on CloudHub 2.0. CloudHub 2.0 supports shared spaces and private spaces.
+
+Use a shared space if you don't require dedicated infrastructure. Use a private space if you need workload isolation or have other requirements that a shared space doesn't satisfy.
+
+Depending on your deployment target:
+
+* CloudHub 2.0 shared space:
++
+No setup is required. Every Anypoint Platform organization includes a shared space that's available to all business groups and environments.
+* CloudHub 2.0 private space:
++
+. Create a private space in CloudHub 2.0 or verify that you can access an existing private space.
++
+To create a private space, see xref:cloudhub-2::ps-create-configure.adoc[].
+We recommend naming the private space `agent-network-space`.
+. xref:cloudhub-2::ps-config-env.adoc[Associate the new or existing private space with the business groups and environments] where you plan to deploy your agent network.
++
+You must complete this step so that the private space appears as a valid deployment target in Anypoint Code Builder and Anypoint CLI.
+
+[[setup-gateways]]
+== Set Up Agent Network Gateways for the Target Space
+
+After you set up a target space, use the `MuleSoft: Set Up Agent Network Gateways` command to create the gateways required for deployment in CloudHub 2.0.
+
+For agent networks, you need at least one Managed Omni Gateway in your environment. A single gateway can handle both ingress and egress traffic, which is the recommended configuration. You can also use separate gateways for ingress and egress traffic in a private space.
+
+For more information about gateways, see xref:gateway::flex-architecture-basic-deployments.adoc[].
+
+. In Anypoint Code Builder, from the Command Palette, run the command *MuleSoft: Set Up Agent Network Gateways*.
+. If you're not logged in, log in to your Anypoint Platform account.
+. Select the business group and environment.
+. Select the deployment target:
++
+* *Shared Space*: The command creates one gateway named `agent-network-shared-gw` that handles both ingress and egress traffic.
+* *Private Space*: Select the target space, then choose a gateway configuration:
++
+** *Single Gateway* (recommended): The command creates one gateway named `agent-network-gw` that handles both ingress and egress traffic.
+** *Separate Ingress & Egress*: The command creates two gateways:
++
+*** `agent-network-ingress-gw` (with public and internal endpoint)
+*** `agent-network-egress-gw` (with internal endpoint only)
++
+If you didn't associate the private space with the business group and environment, you see an error.
+
+If a gateway with the expected name already exists in the selected space, the command doesn't recreate it.
+
+[IMPORTANT]
+====
+After you deploy an agent network, you cannot redeploy it to a different target or gateway (for example, switching between a shared space and a private space, or changing to a different gateway). Attempting to do so fails with a Runtime Manager error. To deploy to a different target or gateway, first manually delete the existing Runtime Manager application, then redeploy.
+====
+
+[[see-also]]
+== See Also
+
+* xref:af-create-agent-network.adoc[]

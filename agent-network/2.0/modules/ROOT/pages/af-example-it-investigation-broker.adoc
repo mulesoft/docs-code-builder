@@ -1,0 +1,610 @@
+= Example: Building an IT Investigation Broker
+
+Use MuleSoft Vibes to build an IT Investigation agent that triages incoming support tickets, escalates critical issues, resolves common problems through cross-platform investigation, and handles licensing requests.  
+
+In each phase, you interact with MuleSoft Vibes as it builds your agent network project. Here's how it works.
+
+== Phase 1: Input Functional Requirements
+
+In this first phase, you define the functionality of the IT Investigation agent, which is to triage, investigate, and resolve support tickets. The agent reads incoming ticket descriptions (received via an A2A message with a Jira ticket ID), classifies severity (High, Low, or too vague to classify) using an LLM's judgment, and then takes the correct action. If the ticket is too vague, the agent first asks the user for clarification. 
+
+High-severity tickets are immediately routed for escalation using an Escalation MCP tool. Low-severity tickets require multi-agent investigation, using a Help Center agent and a License Procurement agent. 
+
+This investigation path results in one of three deterministic outcomes: "Help Given," "License Given," or "Unresolved," the latter of which requires escalation to a human. Crucially, the severity classification and cross-platform investigation are open-ended, but the routing based on that classification and the final resolution must be deterministic.
+
+== Phase 2: Asset Registration
+
+In this phase, you work with MuleSoft Vibes to identify and register the necessary external tools and LLMs to support the agent's requirements. Since the investigation and resolution actions require four external assets, you select two A2A agents: the Help Center Agent for searching the knowledge base and the License Procurement Agent for checking software licenses. 
+
+You also select two MCP tools: the Escalation MCP Server for handling high-severity cases and the Jira MCP Server for updating ticket status. 
+
+For the LLMs, you select OpenAI GPT-5.4 for reasoning and orchestration tasks, such as cross-platform triage. You register Gemini 2.5 Flash for fast, one-shot summaries and response message generation.
+
+== Phase 3: Define the Broker (Agent Script)
+
+In this phase, MuleSoft Vibes establishes the logical workflow for the IT Investigation agent by defining a series of interconnected nodes. The graph begins with an A2A trigger node (`ticketTrigger`) that receives the incoming ticket and Jira ID. This immediately flows into a generator node (`classifySeverity`), which uses LLM reasoning to classify the ticket as High or Low, and produces a structured output.
+
+The deterministic `severityRouter` node then directs the process into two paths based on the classification output:
+
+* High: An executor node calls the Escalation MCP tool. +
+* Low: An orchestrator node coordinates agents and tools to investigate, producing a structured outcome (for example, `help_given`). A second router then directs the flow based on this outcome, with all paths concluding via an Echo node.
+
+== Phase 4: Asset Assignment to Graph
+
+In this phase, MuleSoft Vibes assigns the registered assets to the specific nodes in the graph while adhering to the principle of least privilege.
+
+This table shows which assets and LLMs MuleSoft Vibes mapped to which nodes. 
+
+[%header,cols="1,1,1,1,1,1"]
+|===
+|Node
+|Type
+|Assets
+|LLM
+|Total Assets
+|Notes
+
+|`classifySeverity`
+|generator
+|(none)
+|Gemini 2.5 Flash (default)
+|0
+|Pure LLM classification (needs deep reasoning to classify ambiguous tickets). Constraint: Can only read the ticket and classify, has no actions.
+
+|`crossPlatformTriage`
+|orchestrator
+|Help Center A2A, License Procurement A2A, Jira MCP
+|OpenAI GPT 5.4
+|3
+|Coordinates multi-agent investigation (needs deep reasoning). Constraint: Can investigate and update tickets, but cannot escalate.
+
+|`helpSummary`
+|generator
+|--
+|Gemini 2.5 Flash (default)
+|--
+|One-shot summary generation.
+
+|`licenseSummary`
+|generator
+|--
+|Gemini 2.5 Flash (default)
+|--
+|One-shot summary generation.
+
+|`escalateTicket`
+|executor
+|Escalation MCP
+|--
+|1
+|Deterministic action call (no LLM). Constraint: Can only escalate, not investigate or resolve.
+
+|`escalateUnresolved`
+|executor
+|Escalation MCP
+|--
+|1
+|Deterministic escalation for unresolved tickets (no LLM). Constraint: Can only escalate unresolved tickets after investigation has been exhausted.
+
+|`All echo nodes`
+|echo
+|--
+|--
+|--
+|Deterministic response formatting (no LLM).
+
+|===
+
+== Phase 5: Instruction Refinement
+
+In this phase, MuleSoft Vibes writes and validates (with you) the precise natural language instructions for the LLM-powered nodes. The instructions for the `classifySeverity` node clearly define what constitutes High and Low severity, such as classifying a system outage as High severity. 
+
+The `crossPlatformTriage` node instructions outline the required investigation steps: searching the Help Center, checking the License Procurement agent, and updating the Jira ticket. 
+
+Furthermore, these instructions define the two structured resolution outcomes the node produces: `help_given` or `license_given`. MuleSoft Vibes runs a rigorous contradiction test to make sure that no node's instructions accidentally override the deterministic routing logic defined in the graph. MuleSoft Vibes verifies all instructions against the overall graph structure and cross-node checks.
+
+== Phase 6: Final Topology Review
+
+In this final phase, MuleSoft Vibes provides a comprehensive validation of the fully defined and instructed agent topology before deployment. The review confirms the crucial separation of concerns, ensuring LLM reasoning is used only for classification, with all subsequent routing being deterministic. 
+
+The complete separation of the three severity paths - escalation, investigation, and asking for more info - is fully validated. The topology confirms that all possible paths terminate correctly at an echo response node to communicate the outcome to the original caller. Key operational parameters are also finalized, including maximum loop limits (5 for orchestration, 3 for classification) to prevent infinite loops. An edge case is defined, specifying that if the orchestration node cannot determine a resolution, the outcome defaults to `help_given`.
+
+== IT Agent Broker Diagram
+
+This diagram shows the workflow.  
+
+image::af-it-broker-escalation-flow.png[Visual canvas showing the IT agent broker showing severity classification branching into escalation, investigation, and ask-for-more-info paths, each terminating in an echo response node.]
+
+== IT Agent Project Reference
+
+These are the project files for the IT agent. 
+
+*Project structure*
+
+----
+it-help-network/
+  agent-network.yaml
+  brokers/
+    it-help-investigation.agent
+  exchange.json
+----
+
+*agent-network.yaml*
+
+[source,yaml]
+----
+agentNetwork: 2.0.0
+info:
+  label: "IT Help Investigation Agent Network"
+  version: v1
+registry:
+  agents:
+    helpCenterAgent:
+      info:
+        label: Help Center Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              name: Help Center Agent
+              description: Searches the IT knowledge base for answers to common issues. Returns relevant articles with step-by-step instructions.
+              url: ${helpCenterAgent.url}
+              protocolVersion: 0.3.0
+              version: 1.0.0
+              capabilities:
+                pushNotifications: false
+              defaultInputModes:
+                - application/json
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: knowledge-search
+                  name: Knowledge Base Search
+                  description: Search for IT help articles and known solutions.
+                  tags:
+                    - knowledge-base
+                    - it-support
+                  examples:
+                    - How do I reset my VPN password?
+                    - My email is not syncing
+                    - How do I set up two-factor authentication?
+                  inputModes:
+                    - application/json
+                    - text/plain
+                  outputModes:
+                    - application/json
+                    - text/plain
+    licenseProcurementAgent:
+      info:
+        label: License Procurement Agent
+      metadata:
+        platform: Other
+        interfaces:
+          a2a_v03:
+            card:
+              name: License Procurement Agent
+              description: Checks software license availability and provisions licenses for employees.
+              url: ${licenseProcurementAgent.url}
+              protocolVersion: 0.3.0
+              version: 1.0.0
+              capabilities:
+                pushNotifications: false
+              defaultInputModes:
+                - application/json
+                - text/plain
+              defaultOutputModes:
+                - application/json
+                - text/plain
+              skills:
+                - id: license-check
+                  name: License Check and Provision
+                  description: Check license availability and provision for a user.
+                  tags:
+                    - licensing
+                    - provisioning
+                  examples:
+                    - Provision a Figma license for jane.doe@company.com
+                    - Check if we have available GitHub Enterprise seats
+                    - I need access to Jira
+                  inputModes:
+                    - application/json
+                    - text/plain
+                  outputModes:
+                    - application/json
+                    - text/plain
+  mcps:
+    escalationMcp:
+      info:
+        label: Escalation MCP Server
+      metadata:
+        transport:
+          kind: streamableHttp
+          path: /mcp
+    jiraMcp:
+      info:
+        label: Jira MCP Server
+      metadata:
+        transport:
+          kind: streamableHttp
+          path: /mcp
+  llms:
+    openAiMini:
+      info:
+        label: GPT Mini
+      metadata:
+        platform: OpenAI
+context:
+  connections:
+    help_center_agent_connection:
+      kind: a2a
+      ref:
+        name: helpCenterAgent
+      url: ${helpCenterAgent.url}
+    license_procurement_agent_connection:
+      kind: a2a
+      ref:
+        name: licenseProcurementAgent
+      url: ${licenseProcurementAgent.url}
+      authentication:
+        kind: oauth2-client-credentials
+        clientId: ${licenseProcurementAgent.clientId}
+        clientSecret: ${licenseProcurementAgent.clientSecret}
+        token:
+          url: ${licenseProcurementAgent.tokenUrl}
+    escalation_mcp_connection:
+      kind: mcp
+      ref:
+        name: escalationMcp
+      url: ${escalationMcp.url}
+      authentication:
+        kind: apiKey
+        apiKey: ${escalationMcp.apiKey}
+    jira_mcp_connection:
+      kind: mcp
+      ref:
+        name: jiraMcp
+      url: ${jiraMcp.url}
+      authentication:
+        kind: oauth2-obo
+        flow: oauth2-token-exchange
+        clientId: ${jiraMcp.clientId}
+        clientSecret: ${jiraMcp.clientSecret}
+        tokenEndpoint: ${jiraMcp.tokenUrl}
+    openai_mini_connection:
+      kind: llm
+      ref:
+        name: openAiMini
+      url: https://api.openai.com/v1
+      authentication:
+        kind: apiKey
+        apiKey: ${openai.apiKey}
+brokers:
+  it_help_investigation:
+    kind: AgentScript
+    implementation: ./brokers/it-help-investigation.agent
+    interfaces:
+      a2a:
+        card:
+          name: IT Help Desk Broker
+          description: Triages IT support tickets, escalates critical issues, and resolves common problems through cross-platform investigation.
+          version: 1.0.0
+          capabilities:
+            streaming: false
+            pushNotifications: true
+          defaultInputModes:
+            - text/plain
+          defaultOutputModes:
+            - text/plain
+          skills:
+            - id: ticket-triage
+              name: IT Ticket Triage
+              description: Classifies and resolves IT support tickets.
+              tags:
+                - it-support
+                - help-desk
+----
+
+*`it-help-investigation.agent` file:*
+
+[source,yaml]
+----
+# @dialect: AGENTFABRIC=1.0
+system:
+  instructions: "You are an IT Help Desk agent. You triage incoming support tickets, classify their severity, and either escalate, investigate, or request more information."
+
+config:
+  agent_name: "it-help-investigation"
+  default_llm: @llm.openai_mini
+
+llm:
+  openai_mini:
+    target: "llm://openai_mini_connection"
+    kind: "OpenAI"
+    model: "gpt-5-mini"
+
+# -- ACTION DEFINITIONS -------------------------------------------------------
+actions:
+  help_center_agent:
+    target: "a2a://help_center_agent_connection"
+    kind: "a2a:send_message"
+
+  license_procurement_agent:
+    target: "a2a://license_procurement_agent_connection"
+    kind: "a2a:send_message"
+
+  escalate:
+    target: "mcp://escalation_mcp_connection"
+    kind: "mcp:tool"
+    tool_name: "escalate"
+
+  updateIssue:
+    target: "mcp://jira_mcp_connection"
+    kind: "mcp:tool"
+    tool_name: "updateIssue"
+
+# -- TRIGGER -------------------------------------------------------------------
+trigger ticketTrigger:
+  kind: "a2a"
+  target: "brokers://it_help_investigation/a2a"
+  on_message: ->
+    transition to @generator.classifySeverity
+
+# -- SEVERITY CLASSIFICATION ---------------------------------------------------
+generator classifySeverity:
+  description: "Classifies the severity of the support ticket."
+  label: "Classify Severity"
+  llm: @llm.openai_mini
+  system:
+    instructions: |
+      Classify the severity of the incoming IT support ticket and extract the Jira ticket ID.
+
+      Classify as HIGH:
+      - System outages affecting multiple users (e.g. "VPN is down for the entire office", "Nobody in Building 3 can connect")
+      - Security incidents involving unauthorized access or suspicious activity (e.g. "unauthorized login attempts from an IP in another country")
+      - Any blocking issue impacting a team, building, or department
+
+      Classify as LOW:
+      - Password resets or connectivity help (e.g. "I forgot my VPN password")
+      - Software license or access requests (e.g. "rate limited on my Figma MCP server", "I need access to Tableau")
+      - Single-user issues with a clear description
+
+      The ticket_id must always be a string value.
+      If no Jira ticket ID is provided in the input, default ticket_id to "JIRA001".
+  prompt: ->
+    | {!@request.payload.message.parts[0].text}
+  outputs:
+    properties:
+      ticket_id:
+        type: "string"
+        description: "The Jira ticket ID extracted from the input (e.g. '001' from 'Jira ticket ID 001')"
+      severity:
+        type: "string"
+        description: "The severity level"
+        enum:
+          - "high"
+          - "low"
+      reason:
+        type: "string"
+        description: "Brief explanation of the classification"
+  on_exit: ->
+    transition to @router.severityRouter
+
+# -- SEVERITY ROUTING ----------------------------------------------------------
+router severityRouter:
+  description: "Routes based on the classified severity."
+  routes:
+    - target: @executor.escalateTicket
+      when: @generator.classifySeverity.output.severity == "high"
+      label: "High"
+  otherwise:
+    target: @orchestrator.crossPlatformTriage
+
+# -- HIGH: ESCALATION ---------------------------------------------------------
+executor escalateTicket:
+  description: "Escalates the ticket using the Escalation MCP tool."
+  do: ->
+    run @actions.escalate
+  on_exit: ->
+    transition to @echo.escalationResponse
+
+echo escalationResponse:
+  kind: "a2a:status_update_event"
+  state: "TASK_STATE_COMPLETED"
+  message: a2a.message({messageId: uuid(), parts: [a2a.textPart("Ticket " + @generator.classifySeverity.output.ticket_id + " has been escalated to the on-call team due to high severity: " + @generator.classifySeverity.output.reason)]})
+
+# -- LOW: CROSS-PLATFORM TRIAGE -----------------------------------------------
+orchestrator crossPlatformTriage:
+  description: "Investigates the ticket using Help Center and License Procurement agents."
+  label: "Cross-Platform Triage"
+  llm: @llm.openai_mini
+  system:
+    instructions: |
+      Investigate this low-severity IT support ticket.
+      Step 1: Search the Help Center agent for relevant articles or known solutions.
+      Step 2: If the issue involves software licensing, check with the License Procurement agent.
+      Step 3: Update the Jira ticket with your findings and resolution.
+      If you found an answer from the Help Center, set resolution to "help_given".
+      If you resolved a licensing issue, set resolution to "license_given".
+      If you could not find a solution or the issue requires human intervention, set resolution to "unresolved".
+      Always update the Jira ticket with resolution notes.
+  reasoning:
+    instructions: ->
+      | {!@request.payload.message.parts[0].text}
+    actions:
+      search_help: @actions.help_center_agent
+      check_license: @actions.license_procurement_agent
+      update_ticket: @actions.updateIssue
+        with http_headers = {"Authorization": @request.headers["Authorization"]}
+    outputs:
+      properties:
+        resolution:
+          type: "string"
+          description: "The resolution type"
+          enum:
+            - "help_given"
+            - "license_given"
+            - "unresolved"
+        summary:
+          type: "string"
+          description: "Summary of the resolution and actions taken"
+  on_exit: ->
+    transition to @router.resolutionRouter
+
+# -- RESOLUTION ROUTING --------------------------------------------------------
+router resolutionRouter:
+  description: "Routes based on the resolution type from triage."
+  routes:
+    - target: @generator.licenseSummary
+      when: @orchestrator.crossPlatformTriage.output.resolution == "license_given"
+      label: "License Given"
+    - target: @executor.escalateUnresolved
+      when: @orchestrator.crossPlatformTriage.output.resolution == "unresolved"
+      label: "Unresolved"
+  otherwise:
+    target: @generator.helpSummary
+
+# -- HELP GIVEN PATH ----------------------------------------------------------
+generator helpSummary:
+  description: "Generates a summary of the help resolution."
+  system:
+    instructions: "You generate clear, friendly summaries of IT help desk resolutions."
+  prompt: ->
+    | Generate a resolution summary for the user. Original request: {!@request.payload.message.parts[0].text}. Resolution and actions taken: {!@orchestrator.crossPlatformTriage.output.summary}
+  on_exit: ->
+    transition to @echo.helpResponse
+
+echo helpResponse:
+  kind: "a2a:status_update_event"
+  state: "TASK_STATE_COMPLETED"
+  message: a2a.message({messageId: uuid(), parts: [a2a.textPart(@generator.helpSummary.output)]})
+
+# -- LICENSE GIVEN PATH --------------------------------------------------------
+generator licenseSummary:
+  description: "Generates a summary of the license provisioning."
+  system:
+    instructions: "You generate clear, friendly summaries of license provisioning actions."
+  prompt: ->
+    | Generate a license provisioning summary for the user. Original request: {!@request.payload.message.parts[0].text}. Resolution and actions taken: {!@orchestrator.crossPlatformTriage.output.summary}
+  on_exit: ->
+    transition to @echo.licenseResponse
+
+echo licenseResponse:
+  kind: "a2a:status_update_event"
+  state: "TASK_STATE_COMPLETED"
+  message: a2a.message({messageId: uuid(), parts: [a2a.textPart(@generator.licenseSummary.output)]})
+
+# -- UNRESOLVED PATH -----------------------------------------------------------
+executor escalateUnresolved:
+  description: "Escalates an unresolved low-severity ticket to a human agent."
+  do: ->
+    run @actions.escalate
+  on_exit: ->
+    transition to @echo.unresolvedResponse
+
+echo unresolvedResponse:
+  kind: "a2a:status_update_event"
+  state: "TASK_STATE_COMPLETED"
+  message: a2a.message({messageId: uuid(), parts: [a2a.textPart("Ticket " + @generator.classifySeverity.output.ticket_id + " could not be resolved automatically and has been escalated to a human agent. Summary: " + @orchestrator.crossPlatformTriage.output.summary)]})
+----
+
+*exchange.json*
+
+[source,json]
+----
+{
+  "main": "agent-network.yaml",
+  "name": "IT Help Investigation Agent Network",
+  "classifier": "agentic-network",
+  "groupId": "${organizationId}",
+  "assetId": "it-help-investigation-network",
+  "version": "1.0.0",
+  "descriptorVersion": "1.0.0",
+  "apiVersion": "v1.0",
+  "description": "Triages IT support tickets, escalates critical issues, and resolves common problems through cross-platform investigation with Help Center and License Procurement agents.",
+  "tags": [],
+  "dependencies": [],
+  "metadata": {
+    "variables": {
+      "helpCenterAgent": {
+        "url": {
+          "description": "Help Center Agent A2A URL",
+          "default": "",
+          "secret": false
+        }
+      },
+      "licenseProcurementAgent": {
+        "url": {
+          "description": "License Procurement Agent A2A URL",
+          "default": "",
+          "secret": false
+        },
+        "tokenUrl": {
+          "description": "OAuth2 token endpoint for the License Procurement agent (client credentials grant)",
+          "default": "",
+          "secret": false
+        },
+        "clientId": {
+          "description": "OAuth2 client ID the broker presents to the License Procurement agent",
+          "default": "",
+          "secret": false
+        },
+        "clientSecret": {
+          "description": "OAuth2 client secret -- inject at deploy time via --property, never commit a default value",
+          "default": "",
+          "secret": true
+        }
+      },
+      "escalationMcp": {
+        "url": {
+          "description": "Escalation MCP Server URL",
+          "default": "",
+          "secret": false
+        },
+        "apiKey": {
+          "description": "API key for the Escalation MCP server -- inject at deploy time, never commit a default value",
+          "default": "",
+          "secret": true
+        }
+      },
+      "jiraMcp": {
+        "url": {
+          "description": "Jira MCP Server URL (called on-behalf-of the inbound user)",
+          "default": "",
+          "secret": false
+        },
+        "tokenUrl": {
+          "description": "OAuth2 token endpoint Jira accepts for the OBO token exchange",
+          "default": "",
+          "secret": false
+        },
+        "clientId": {
+          "description": "OAuth2 client ID the broker uses to perform the OBO exchange with Jira",
+          "default": "",
+          "secret": false
+        },
+        "clientSecret": {
+          "description": "OAuth2 client secret for the Jira OBO exchange -- inject at deploy time, never commit a default value",
+          "default": "",
+          "secret": true
+        }
+      },
+      "openai": {
+        "apiKey": {
+          "description": "OpenAI API key -- inject at deploy time, never commit a default value",
+          "default": "",
+          "secret": true
+        }
+      }
+    }
+  }
+}
+----
+
+== See Also
+
+* xref:af-get-started.adoc[]
+* xref:af-create-agent-network.adoc[]
+* xref:af-project-files.adoc[]

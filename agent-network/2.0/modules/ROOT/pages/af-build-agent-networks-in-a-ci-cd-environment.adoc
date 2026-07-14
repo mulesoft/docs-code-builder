@@ -1,0 +1,55 @@
+= Build Agent Networks in a CI/CD Environment
+:page-aliases: anypoint-code-builder::af-build-agent-networks-in-a-ci-cd-environment.adoc
+
+Use the Anypoint CLI Agent Fabric plugin in CI/CD pipelines to configure agent network gateways, create and build projects, and publish and deploy networks from the command line, matching the lifecycle you can drive from Anypoint Code Builder. Automating these steps keeps environments aligned, lets you embed approvals, secrets, and quality gates in the pipeline, and avoids one-off scripts when you promote from development to staging and production.
+
+For installation, package updates, and release details, see https://www.npmjs.com/package/mulesoft-anypoint-cli-agent-fabric-plugin[Anypoint CLI Agent Fabric Plugin on npm].
+
+== Before You Begin
+
+Make sure you meet the xref:af-get-started.adoc#before-you-begin[prerequisites] for this task.
+
+Install the Anypoint CLI Agent Fabric plugin by running this command in a terminal window:
+
+`npm install mulesoft-anypoint-cli-agent-fabric-plugin`
+
+[NOTE]
+====
+The installation package has been renamed from `anypoint-cli-agent-fabric-plugin` to `mulesoft-anypoint-cli-agent-fabric-plugin`.
+
+If you have the previous version installed, you may encounter an `npm error EXIST: file already exists` error when updating your installation. This occurs because both versions share the same command alias. To resolve this, use the `--force` flag to overwrite the alias and point it to the new package: `npm i mulesoft-anypoint-cli-agent-fabric-plugin --force`.
+====
+
+=== Authentication
+
+You can authenticate to Anypoint Platform through the command line by running the `anypoint-cli-agent-fabric-plugin` command with a combination of parameters.
+
+Or, you can set a combination of environment variables before running the `anypoint-cli-agent-fabric-plugin` command. For more information, see https://docs.mulesoft.com/anypoint-cli/latest/auth#command-line-parameters[Command-Line Parameters and Environment Variables].
+
+Set configuration file authentication using a client ID and client secret from your connected app.
+
+Add authentication values to the configuration file using these commands.
+
+----
+$ anypoint-cli-agent-fabric-plugin conf client_id myClientID
+
+$ anypoint-cli-agent-fabric-plugin conf client_secret myClientSecret
+
+$ anypoint-cli-agent-fabric-plugin conf organization myOrgId
+----
+
+For more information, see xref:anypoint-cli::auth.adoc[].
+
+=== Create a Target Space for Your Environment
+
+To deploy an agent network, you need a space on CloudHub 2.0. See xref:af-get-started.adoc#setup-space[Set Up the Space for Your Environment].
+
+After you create a target space, set up the ingress and egress gateways for deployment if you haven't already done so. See xref:af-get-started.adoc#setup-gateways[Set Up Agent Network Gateways for the Target Space].
+
+== CLI for Agent Fabric Plugin Reference
+
+Use these commands to set up gateways and author, publish, and deploy agent network projects.
+
+include::anypoint-cli::partial$agent-fabric.adoc[tag=summary]
+
+include::anypoint-cli::partial$agent-fabric.adoc[tag=commands]

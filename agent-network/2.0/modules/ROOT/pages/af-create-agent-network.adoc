@@ -1,0 +1,98 @@
+[[create-networks]]
+= Create Agent Networks
+:page-aliases: anypoint-code-builder::af-create-agent-network.adoc
+
+Create an agent network to connect brokers, agents, MCP servers, and LLMs into a coordinated workflow. Choose from MuleSoft Vibes, the visual canvas and code editor in Anypoint Code Builder, or the Anypoint CLI for CI/CD environments.
+
+[[before-you-begin]]
+== Before You Begin
+
+Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites].
+
+[[create-dev-agent]]
+== Create a Network Using MuleSoft Vibes
+
+Use natural language prompts in MuleSoft Vibes to create your project. For more information, see xref:anypoint-code-builder::api-ai-create-spec.adoc[].
+
+. In the Anypoint Code Builder activity bar, click the agent icon image:af-acb-dev-agent-icon.png["",18,18].
+. Describe your agent network, including the brokers, agents, MCP servers, and LLMs you want to connect. MuleSoft Vibes generates the `agent-network.yaml` file, the `exchange.json` file, and the corresponding `.agent` files in the `/brokers` directory.
+
+To get started, try one of these suggested prompts:
+
+* Create a new agent network project called "Employee Onboarding." Add a broker that coordinates an HR agent and a CRM agent, and use OpenAI as the LLM.
+* Build a Travel Planner broker that plans multi-city trips, calls a Flights MCP server for booking, and uses an LLM to generate itineraries.
+* Generate an agent network project for incident management. Include a broker that coordinates the resolution of incidents reported by customers, with subagent and orchestrator nodes.
+
+== Create a Network Using a Coding Agent
+
+Use a coding agent of your choice, like Claude or Cursor, with these publicly available MuleSoft skills on https://dev-portal.mulesoft.com/index.html?filter=skill[MuleSoft Developer Hub].
+
+* https://dev-portal.mulesoft.com/skills/build-agent-broker-project.html[Build an agent broker project].
+* https://dev-portal.mulesoft.com/skills/translate-agent-broker-old-to-new-project.html[Translate an agent network] 1.0 project to an agent network 2.0 project.
+
+[[create-acb]]
+== Create a Network Using Anypoint Code Builder
+
+If you prefer not to use MuleSoft Vibes, create a new agent network project directly from the Anypoint Code Builder UI.
+
+. If you're not logged in, log in to your Anypoint Platform account.
+. In Anypoint Code Builder, choose one of the following:
+  * In Create, select *Create an Agent Network*.
+  * From the Command Palette, run this command: *MuleSoft: Create an Agent Network Project*.
+. Enter a name for the project and select the location to create the project.
+. Select the business group associated with the target space you created in xref:af-get-started.adoc[Get Started with Agent Networks]. The business group you select must be the same business group you selected when you created the target space.
+. Select *Create Project*.
+
+When the project opens, the `agent-network.yaml` file opens in the code view editor. Open the graph canvas from the action bar. For more information, see xref:af-define-your-agent-network-specification.adoc[Define Your Agent Network].
+
+== Convert an Agent Network 1.0 Project to a 2.0 Project
+If you have an existing agent network 1.0 project, use natural language prompts in MuleSoft Vibes to convert it to a 2.0 project. Agent network 2.0 projects use guided determinism to separate workflow steps requiring probabilistic LLM reasoning from those requiring deterministic control-flow logic. 
+
+To get started, try this suggested prompts:
+
+* Help me convert my V1 agent network project in this folder to a new V2 agent network project as one orchestrator node. 
+
+
+[[project-files]]
+== Agent Network Project Files
+
+Anypoint Code Builder creates these files and directories as part of your agent network project. Together, these files define the brokers, nodes, assets, connections, and policies that make up your agent network. For full schema details, see xref:af-project-files.adoc[Agent Network Project File Reference]. 
+
+----
+/my-agent-network-project
+├── agent-network.yaml
+├── exchange.json
+└── /brokers
+    ├── broker1.agent
+    └── broker2.agent
+----
+
+* `agent-network.yaml`
++
+The top-level configuration file for the project. This file contains:
++
+** A *registry* section that declares the assets (LLMs, MCP servers, agents) used by the project, including assets created locally and assets imported from Anypoint Exchange.
+** A *context* section that defines the connections (URLs, authentication) and policies that apply to those assets.
+
+* `exchange.json`
++
+The Anypoint Exchange manifest for the project. This file lists the project's metadata and the Exchange assets added as dependencies. When you publish your project, Exchange uses this file to register the assets. When you add an Exchange asset to your project, its asset ID and version are recorded in this file.
+
+* `/brokers` directory
++
+Contains one `.agent` file per broker in your network. Each `.agent` file is an Agent Script file that defines one broker and the nodes inside it (for example, trigger, subagent, orchestrator, generator, executor, echo, and router nodes), along with the transitions between those nodes. A project can contain multiple `.agent` files. Each file appears as its own graph on the visual canvas.
+
+[NOTE]
+====
+For a complete, working example you can use as a starting point for your own agent network project, see xref:af-example-it-investigation-broker.adoc[Example: Building an IT Investigation Broker]. The example walks through a fully configured `agent-network.yaml`, `exchange.json`, and `/brokers` directory that you can adapt to your own brokers, agents, MCP servers, and LLMs.
+====
+
+[[create-cli]]
+== Create a Network Using the Anypoint CLI
+
+If you run operations within a CI/CD environment, use Anypoint CLI's plugin to set up, create, build, publish, and deploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
+
+[[whats-next]]
+== What's Next?
+
+* xref:af-define-your-agent-network-specification.adoc[]

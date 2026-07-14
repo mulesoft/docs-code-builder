@@ -1,0 +1,149 @@
+= Troubleshoot Agent Networks
+:page-aliases: anypoint-code-builder::af-troubleshoot-agent-networks.adoc, anypoint-code-builder::af-troubleshoot-anypoint-code-builder.adoc
+
+Resolve common agent network errors and connectivity issues by enabling verbose logging, message logging policies, and distributed tracing. Using logs and distributed traces, you can observe agents and MCP servers and see how requests flow through brokers, which tools and policies apply, and where failures or latency originate.
+
+[NOTE]
+Use Agent Visualizer to xref:agent-visualizer::troubleshoot-agent-network.adoc[view metrics, logs, and traces] for agents and MCP servers in your network.
+
+== Enable Logging to Debug Agent Brokers
+
+Enable logging and log levels from CloudHub 2.0.
+
+Agent brokers provide two levels of logging detail:
+
+* *INFO*: Logs node transitions, MCP tool discovery, agent card retrieval, and related operational events. INFO-level logs don't use the `INSECURE-LOGGING` level.
+* *DEBUG*: Logs LLM reasoning, LLM input and output, tools invoked, and all external calls made by the broker. All DEBUG-level logs use the `INSECURE-LOGGING` level.
+
+To enable logging:
+
+. In Runtime Manager, navigate to the application for the agent broker.
+. Choose one of these options to configure logging:
++
+* xref:cloudhub-2::ch2-manage-app-logs.adoc#configure-log-levels-and-categories[CloudHub 2.0]
+. To view operational logs, set the log level to `INFO`.
+. To view detailed LLM and tool execution logs, set the log level for `INSECURE-LOGGING` to `DEBUG`.
+
+[IMPORTANT]
+`INSECURE-LOGGING` logs content that can contain sensitive information, such as LLM reasoning, and inputs and outputs from agents and assets defined in your agent network. This content is very likely to contain personally identifiable information (PII). Disable `INSECURE-LOGGING` after you finish troubleshooting.
+
+[[enable-message-logging]]
+== Enable Message Logging Policy
+
+Edit `agent-network.yaml` to set message logging for MCP servers and agents.
+
+Message logging uses the xref:gateway::policies-included-message-logging.adoc[Omni Gateway Message Logging policy]. In the `connection` section of the agent or MCP server instance you want to log, add this logging policy inside `policies`:
+
+[source,yaml]
+----
+
+policies: ## add the following inside the policy setting
+    - ref:
+        name: message-logging
+        namespace: business_group_UUID
+      configuration:
+        loggingConfiguration:
+          - itemName: "Payload"
+            itemData:
+              message: "#[payload]"
+              firstSection: true
+              secondSection: true
+              level: "INFO"
+          - itemName: "Headers"
+            itemData:
+              message: "#[attributes]"
+              firstSection: true
+              secondSection: true
+              level: "INFO"
+----
+
+[NOTE]
+On non-US control planes, the value for the `namespace` parameter can change. In Exchange, check the business group in the API Gateway Message Logging Policy Template.
+
+== Troubleshooting Common Issues and Errors
+
+Use the steps in this section to diagnose and fix common problems in agent networks.
+
+=== Issue: Traces Not Shown
+
+If Anypoint Monitoring isn't showing traces for agents and MCP servers, check these settings:
+
+* In API Manager, verify you've enabled the tracing policy for all brokers and agents.
+* In the managed Omni Gateways, verify that you've enabled Distributed Tracing for ingress and egress.
+
+=== Issue: No Agent Network Commands in Anypoint Code Builder
+
+If you installed Anypoint Code Builder successfully, but you don’t see agent network commands in the interface, verify that you have the latest version of the Anypoint Extension Pack. Then, restart VS Code.
+
+=== Issue: No Agent Network Deployment Targets
+
+If you attempt to deploy an agent network, but you don’t see any deployment targets in Anypoint Code Builder or Anypoint CLI, then you need to set up your target deployment space and set up gateways. For instructions, see xref:af-get-started.adoc[Get Started with Agent Networks].
+
+=== Issue: Changes Don't Take Effect After Redeployment
+
+If you update `agent-network.yaml` or any `.agent` files but changes aren't reflected after you redeploy, the deployment used the last compiled `target/` directory. Every source change requires a full rebuild.
+
+After any source file change, run the full pipeline:
+
+. Build
+. Publish
+. Deploy
+
+=== Error: "Asset belongs to another project" (Error 2006)
+
+If the project build succeeds but it fails to publish with error `2006`, your registry keys conflict with another project in the org. Registry keys are unique across an org, so you can't copy a project and rename only the broker. Renaming only the broker leaves the original registry key prefixes, and the first project owns those Exchange asset IDs.
+
+To resolve this conflict:
+
+* Prefix every registry key with a unique network short ID (for example, `myNetRegistry` instead of `registry`).
+* If you own the conflicting project, remove or delete it before you publish the new project.
+
+=== Error: CrashLoopBackOff or Exit 139 with No Clear Error
+
+If your deployment keeps restarting without a clear error, the broker is most likely crashing on a bad upstream connection before your agent network configuration is parsed. Common causes include:
+
+* An expired API key
+* An incorrect MCP server URL
+* An MCP server returning JSON instead of SSE
+* A missing A2A agent card
+
+Before you deploy, validate every connection with live probes. Don't troubleshoot your agent network configuration until you confirm all upstream connections are healthy.
+
+=== Error: "Cannot complete task due to issue accessing reasoning engine"
+
+This is a generic error that the broker issues when the LLM fails. To troubleshoot this error, <<enable-message-logging,enable the message logging policy>> on the LLM instance, and then review the logs to determine the cause of the error.
+
+=== Issue: LLM Responds Without Calling the Agent or Tool
+
+If the broker responds with information from the LLM's training data instead of the LLM delegating to your agent or calling an MCP tool, the LLM's instructions aren't explicit enough about delegation. This is especially common with Gemini on widely-known topics.
+
+In the broker's system instructions:
+
+* Add a hard directive, such as `MUST delegate IMMEDIATELY` and `NEVER answer yourself`.
+* Map every intent to a specific named action.
+
+=== Error: Runtime System Limit Exceeded
+
+If your agent network encounters errors related to exceeding iteration limits, tool call limits, or state size limits, you can configure runtime system limits in your `exchange.json` file. These variables control graph execution behavior and help prevent infinite loops or excessive resource usage.
+
+Common limit-related errors include:
+
+* Maximum handoff iterations exceeded
+* Maximum reasoning iterations exceeded
+* Maximum tool call count exceeded
+* State size limit exceeded
+
+To adjust these limits, add runtime system limit variables to the `metadata.variables` section of your `exchange.json` file. For detailed information about configuring these limits, see xref:af-agent-network-yaml-reference.adoc#runtime-system-limits[Runtime System Limits Configuration].
+
+=== Error: "HTTP error 404: Agent card not found at /.well-known/agent-card.json"
+
+You can encounter this error in two different scenarios:
+
+. The agent card URL is incorrect. In this case:
++
+* Check that the URL you set on the connection ends with a `/`.
+* Use a browser or Postman to request the agent card URL by appending `.well-known/agent-card.json` to the connection URL, for example, `https://ping-id-agent-url/pingid/.well-known/agent-card.json`.
+. The A2A agent doesn't use A2A protocol version 1.0.0. In this case:
++
+* If you created the agent with MuleSoft, verify that you are using the latest version of the Anypoint Connector for A2A (A2A Connector).
+* If you are using an external agent, verify that it uses the A2A protocol version 1.0.0.

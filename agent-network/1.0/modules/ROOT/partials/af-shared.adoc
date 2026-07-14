@@ -1,0 +1,130 @@
+//
+// tag::agent-support[]
+Agent assets must be A2A-compliant.
+// end::agent-support[]
+//
+
+//
+// tag::get-started[]
+Creating agent networks is a multi-step process. Review these prerequisites and task overviews to make sure you can create agent networks efficiently.
+
+[[before-you-begin]]
+== Before You Begin
+
+Before you get started, review these prerequisites.
+
+[[platform-requirements]]
+=== Anypoint Platform Requirements and Permissions
+
+[cols="1,1"]
+|===
+|Anypoint Platform Component |Required Permissions
+
+|Runtime Manager
+a|
+
+* Manage Servers
+* Create Applications
+* Read Servers
+
+|Anypoint Code Builder
+a|
+
+* Anypoint Code Builder
+* Mule Developer Generative AI User
+
+|Anypoint Design Center
+|Design Center Developer
+
+|API Manager
+a|
+
+* Deploy API Proxies
+* Manage Policies
+
+|Exchange
+|Exchange Contributor
+
+|Usage
+|Usage Viewer
+
+|CloudHub 2.0 or Runtime Fabric
+|xref:runtime-fabric::limitations-self.adoc[Runtime Fabric permissions] xref:cloudhub-2::ps-assign-permissions.adoc[CloudHub 2.0 permissions]
+|===
+
+See xref:access-management::permissions-by-product.adoc[] for a list of all Anypoint Platform permissions. 
+
+[[additional-reqs]]
+=== Additional Requirements
+
+To complete these tasks, you also need: 
+
+* Your Anypoint Platform credentials
+* xref:anypoint-code-builder::start-acb.adoc[Anypoint Code Builder desktop]
++
+Allowlist Anypoint Code Builder URLs. For more information, see xref:anypoint-code-builder::urls-to-allow.adoc[Allow URLs for Anypoint Code Builder].
+* xref:gateway::flex-gateway-managed-ingress-egress.adoc[Omni Gateway Ingress and Egress gateways]
+
+=== MuleSoft Vibes Requirements (Optional)
+
+If you plan to use MuleSoft Vibes to create agent network projects, make sure you meet xref:anypoint-code-builder::mulesoft-vibes.adoc#before-you-begin[the requirements].
+
+[[cli-requirements]]
+=== CLI Requirements (Optional)
+
+If you're using the Anypoint CLI to create agent network projects, ensure you meet these requirements.
+
+* Node 20 (v20.19.4) or later. See https://nodejs.org/en[Nodejs.org].
+* Java 17 or later. Set the `JAVA_HOME` environment variable.
+* xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[Anypoint CLI Fabric Plugin]
+
+[[overview]]
+== Task Overview
+
+[[step-1-setup]]
+=== Step 1: Set Up Your Agent Network
+
+. Use Anypoint Runtime Manager to set up a space in CloudHub 2.0 or deployment target in Runtime Fabric.
++
+See xref:anypoint-code-builder::af-get-started.adoc#setup-space[Set Up the Space or Deployment Target for Your Environment].
+. Set up Omni Gateways for the space or deployment target.
++
+  * If using Anypoint Code Builder, see xref:anypoint-code-builder::af-get-started.adoc#setup-gateways[Set Up Agent Network Gateways for the Space or Deployment Target].
+  * If using the Anypoint CLI, see the xref:anypoint-code-builder::af-build-agent-networks-in-a-ci-cd-environment.adoc#agent-network-setup-gateways[setup gateways command reference].
+
+[[step-2-create]]
+=== Step 2: Create a Project
+
+Now you're ready to create an agent network project. Choose one of these methods.
+
+* xref:af-create-agent-network.adoc#create-dev-agent[Create a Network Using MuleSoft Vibes]
+* xref:af-create-agent-network.adoc#create-acb[Create a Network Using Anypoint Code Builder]
+* xref:af-create-agent-network.adoc#create-cli[Create a Network Using the Anypoint CLI]
+
+[[step-3-define]]
+=== Step 3: Define Your Agent Network Specification
+
+After you create your agent network project, configure `agent-network.yaml` and `exchange.json` to reflect the structure of your network.
+
+* xref:af-define-your-agent-network-specification.adoc#define-dev-agent[Define a Network Using MuleSoft Vibes]
+* xref:af-define-your-agent-network-specification.adoc#define-acb-ide[Define a Network Using Anypoint Code Builder or IDE]
+
+[[step-4-publish]]
+=== Step 4: Publish Your Agent Network Assets
+
+Build and publish your agent network project as Anypoint Exchange assets. When you publish the agent network, an asset is created in Exchange for each broker, agent, and MCP server that's in your agent network.
+
+* xref:af-publish-agent-network-assets.adoc#publish-dev-agent[Publish Your Network Using MuleSoft Vibes]
+* xref:af-publish-agent-network-assets.adoc#publish-acb[Publish Your Network Using Anypoint Code Builder]
+* xref:af-build-agent-networks-in-a-ci-cd-environment.adoc#agent-network-project-publish[Publish Your Network Using the Anypoint CLI]
+
+[[step-5-deploy]]
+=== Step 5: Deploy Your Agent Network Instances
+
+Deploy your agent network instance to a deployment target. You can deploy to a CloudHub 2.0 shared space, a CloudHub 2.0 private space, or to a Runtime Fabric.
+
+* xref:af-deploy-agent-network-targets.adoc#deploy-dev-agent[Deploy Your Network Using MuleSoft Vibes]
+* xref:af-deploy-agent-network-targets.adoc#deploy-acb[Deploy Your Network Using Anypoint Code Builder]
+* xref:af-build-agent-networks-in-a-ci-cd-environment.adoc#agent-network-project-deploy[Deploy Your Network Using the Anypoint CLI]
+// end::get-started[]
+//

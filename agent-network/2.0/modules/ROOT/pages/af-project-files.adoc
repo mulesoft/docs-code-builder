@@ -1,0 +1,25 @@
+= Agent Network 2.0 Project File Reference
+:page-aliases: anypoint-code-builder::af-project-files.adoc
+
+An agent network project defines a structured configuration for multi-agent systems, enabling orchestration of AI agents with external services, tools, and inter-agent communication. This project file format provides a declarative way to define agent capabilities, dependencies, and service integrations.
+
+An agent network project includes these files:
+
+----
+/my-agent-network-project
+├── agent-network.yaml
+├── exchange.json
+└── /brokers
+    └── broker1.agent
+----
+
+* `exchange.json`: Contains asset metadata available in Anypoint Exchange after publishing your agent network assets.
+* `agent-network.yaml`: Contains a registry section that defines Exchange assets used in your project and a context section that defines connections and policies for the project.
+* `.agent` files: Contain broker and node definitions and configurations that enable multi-agent orchestration in your project.
+
+For complete schema details, see:
+
+* xref:af-agent-network-yaml-reference.adoc[]
+* xref:af-agent-script-reference.adoc[]
+
+NOTE: For a complete, working example you can use as a starting point for your own agent network project, see xref:af-example-it-investigation-broker.adoc[Example: Building an IT Investigation Broker]. The example walks through a fully configured `agent-network.yaml`, `exchange.json`, and `/brokers` directory that you can adapt to your own project.
