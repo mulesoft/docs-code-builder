@@ -13,6 +13,10 @@ Define configuration properties to secure and customize your Mule application co
 * Define and use variables instead of literal strings when setting values in the configuration XML.
 * Configure a variable for selecting different property files for a specific deployment environment, such as development, sandbox, or production.
 
+.How secure properties work
+image::int-secure-properties-overview-diagram.png[Diagram showing secure properties flow from runtime argument to global-configs.xml to encrypted properties file to flow references]
+
+For a guided, conversational approach to setting up secure properties, use MuleSoft Vibes. For additional information, see xref:vibes-secure-properties.adoc[].
 
 == Before You Begin
 
@@ -241,6 +245,19 @@ my-key-value \
 ----
 +
 IMPORTANT: Store your encryption key value (password) in a secure location. You'll need your key value later, when you deploy your application.
++
+TIP: To verify an encrypted value, decrypt it using the same tool with the `decrypt` command instead of `encrypt`:
++
+[source,terminal]
+----
+$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
+string \
+decrypt \
+Blowfish \
+CBC \
+my-key-value \
+"/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5"
+----
 . In your properties file, add each encrypted property value within `![]` brackets.
 +
 .Example that replaces the unencrypted value `"mysensitivevalue"` with the encrypted value `"![/MU0/xB/zoMPjxBA7/9X44Ad2H8O8AY5]"`:
@@ -441,6 +458,55 @@ This name serves as the key for the encryption value (password) used to encrypt 
 ----
 +
 Notice the `secure::` prefix to the key.
+
+[[edit-via-ui]]
+== Edit Secure Properties Configuration via Global Elements
+
+Instead of manually editing your project's XML, you can configure secure properties through Global Elements.
+
+To edit the secure properties configuration:
+
+. Open *Project Properties* > *Global Elements*.
++
+image:int-global-elements-panel-list.png["Global Elements panel with list of configurations including Secure Properties Config."]
++
+. Select *global-configs.xml* from the *Selected File* dropdown.
+. Find *Secure Properties Config* in the list.
+. Click the *...* menu (three dots) next to the configuration name.
+. Click *Edit*.
+
+The editor opens and you can modify these fields.
+
+image::int-secure-properties-form-editor.png["Form editor showing configurable fields for Secure Properties Config.", 75%, 75%]
+
+[%header,cols="20a,30a,50a"]
+|===
+| Field | Example Value | What It Controls
+
+| *Name*
+| Secure_Properties_Config
+| Element name referenced internally
+
+| *File*
+| ${env}.secure.properties
+| Which encrypted file to load (resolves per environment)
+
+| *Key*
+| ${encryption.key}
+| The decryption key placeholder (resolved from system property)
+
+| *Algorithm*
+| AES
+| Encryption algorithm (AES, Blowfish, DES, DESede, RC2)
+
+| *Mode*
+| CBC
+| Cipher mode (CBC, CFB, ECB, OFB)
+|===
+
+Changes you make in the editor automatically update the XML in `global-configs.xml`.
+
+The editor manages the configuration element. To change the actual encrypted values in `.secure.properties` files, use the secure-properties-tool JAR, edit the file directly, or ask MuleSoft Vibes to re-encrypt values. See xref:vibes-secure-properties.adoc[].
 
 [[test-deploy]]
 == Test Encrypted Properties in Your IDE
@@ -669,8 +735,46 @@ image::deploy-to-cloudhub-icon-with-deploy-json.png["Deploy to CloudHub rocket i
 +
 You can create properties or change the value of existing properties, for example, to fix some deployment errors.
 
+[[quick-reference]]
+== Quick Reference
+
+Use this table for quick access to common secure properties tasks and commands:
+
+[%header,cols="30a,70a"]
+|===
+| Task | Command / Location
+
+| Encrypt a value
+| `java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool string encrypt AES CBC <key> <value>`
+
+| Decrypt a value
+| `java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool string decrypt AES CBC <key> <encrypted-value>`
+
+| Reference encrypted property in XML
+| `${secure::property.name}`
+
+| Reference non-encrypted property in XML
+| `${property.name}`
+
+| Secure properties config element
+| `<secure-properties:config file="${env}.secure.properties" key="${encryption.key}">`
+
+| Pass encryption key locally
+| Add `-M-Dencryption.key=YourKey` to `mule.runtime.args` in `launch.json`
+
+| Pass encryption key in CloudHub
+| Add to Properties tab in Runtime Manager: `encryption.key=YourKey`
+
+| Switch environment
+| Pass `-M-Denv=qa` or `-M-Denv=prod` as runtime argument
+
+| Hide encryption key in CloudHub
+| Add encryption key name to `secureProperties` array in `mule-artifact.json`
+|===
+
 == See Also
 
+* xref:vibes-secure-properties.adoc[]
 * xref:int-global-config-elements.adoc[]
-* xref:mule-runtime::secure-configuration-properties.adoc[]
 * xref:int-run-mule-apps-with-properties.adoc[]
+* xref:mule-runtime::secure-configuration-properties.adoc[]

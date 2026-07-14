@@ -260,10 +260,163 @@ Reference these properties in your database configuration:
 </db:config>
 ----
 
+[[shared-encryption-keys-workspace]]
+== Configure Shared Encryption Keys Across a Workspace
+
+When you have multiple Mule projects in the same workspace that use the same encryption key, configure it once at the workspace level instead of duplicating it in each project's launch.json.
+
+Use the approach that better applies to your workflow and security requirements.
+
+* <<workspace-settings-approach,Workspace Settings>>: Configure the encryption key in 
+  your workspace settings.json. All projects inherit the setting 
+  automatically.
+
+* <<environment-variable-approach,Environment Variable>>: Store the key as an OS environment variable 
+  in your shell profile. Use this method to keep 
+  encryption keys completely out of version-controlled files or if you need 
+  machine-specific configuration.
+
+* <<multi-root-workspace-approach,Multi-Root Workspace>>: Configure the encryption key directly in a 
+  .code-workspace file. Use this approach when working with 
+  multiple Mule projects open simultaneously in a multi-root 
+  workspace.
+
+[[workspace-settings-approach]]
+=== Use Workspace Settings
+
+Add the encryption key to your workspace `settings.json` so all projects inherit it.
+
+. In your `.code-workspace` file or `.vscode/settings.json` at the workspace root, add the key.
++
+[source,json]
+----
+{
+  "settings": {
+    "mule.runtime.defaultArguments": "-M-Dencryption.key=MuleSecureKey024"
+  }
+}
+----
++
+. Reference the shared setting in each project's `launch.json`.
++
+[source,json]
+----
+{
+  "mule.runtime.args": "${config:mule.runtime.defaultArguments}"
+}
+----
+
+[[environment-variable-approach]]
+=== Use an Environment Variable
+
+Set the key as an OS environment variable in your shell profile (`~/.zshrc` or `~/.bash_profile`)
+
+. Run this command. 
++
+[source,bash]
+----
+export MULE_ENCRYPTION_KEY="MuleSecureKey024"
+----
++
+. Reference the key in the workspace `launch.json`:
++
+[source,json]
+----
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug with Environment Variable",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dencryption.key=${env:MULE_ENCRYPTION_KEY}"
+    }
+  ]
+}
+----
+
+[[multi-root-workspace-approach]]
+=== Use a Shared Launch Configuration in Multi-Root Workspaces
+
+To configure a shared encryption key in a multi-root workspace:
+
+. Open or create your `.code-workspace` file.
+. Add a `launch` section to the workspace configuration with the 
+   encryption key:
++
+[source,json]
+----
+{
+  "folders": [  // <1>
+    { "path": "salesforce-sync" },
+    { "path": "netsuite-integration" },
+    { "path": "slack-notifications" }
+  ],
+  "launch": {  // <2>
+    "configurations": [
+      {
+        "type": "mule-xml-debugger",
+        "request": "launch",
+        "name": "Run Mule App (Shared Key)",  // <3>
+        "noDebug": true,
+        "mule.projects": ["${workspaceFolder}"],
+        "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dencryption.key=MuleSecureKey024"  // <4>
+      }
+    ]
+  }
+}
+----
+<1> List the relative paths to each Mule project in your workspace
+<2> Add the launch configuration section with the shared encryption key
+<3> Name that appears in the Run and Debug dropdown
+<4> Replace `MuleSecureKey024` with your encryption key
++
+. Save the workspace file.
+
+When you select *Run Mule App (Shared Key)* from the Run and Debug 
+dropdown, Code Builder applies the shared encryption key to whichever 
+project is active.
+
+=== Protect Workspace Configuration in .gitignore
+
+If your workspace settings contain sensitive values, add them to `.gitignore`:
+
+[source,gitignore]
+----
+# Workspace config (may contain encryption key)
+*.code-workspace
+.vscode/settings.json
+----
+
+[[key-rotation-workspace]]
+=== Re-encrypt All Projects After Key Rotation
+
+When you rotate the shared key, re-encrypt every secure properties file across all projects:
+
+[source,bash]
+----
+NEW_KEY="NewSharedKey2025!"
+
+# For each project in the workspace:
+for project in salesforce-sync netsuite-integration slack-notifications; do
+  FILE="$project/src/main/resources/prod.secure.properties"
+  if [ -f "$FILE" ]; then
+    echo "Re-encrypting: $FILE"
+    # Decrypt each value with old key, re-encrypt with new key
+    # (or use a local backup file with plaintext to re-encrypt)
+  fi
+done
+----
+
+Then update the single workspace-level key reference and all projects work immediately.
+
 == See Also
 
 * xref:int-create-secure-configs.adoc[]
 * xref:int-run-multiple-mule-apps.adoc[]
-* xref:ref-mule-settings.adoc#setting-mule-args[]
+* xref:ref-mule-settings.adoc#setting-mule-args[Mule › Runtime: Default Arguments]
 * xref:int-global-config-elements.adoc[]
+* xref:start-workspaces.adoc[]
 * xref:mule-runtime::configuring-properties.adoc[]
