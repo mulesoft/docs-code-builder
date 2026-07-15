@@ -6,6 +6,29 @@ With Anypoint Code Builder, you unlock a modern development experience with adva
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
+== Set Run and Debug Configurations
+
+In Anypoint Studio, you configure run and debug settings through the UI with tabs for arguments, environment, and other settings. In Anypoint Code Builder, you manage these configurations by editing the `launch.json` file in your project's `.vscode` folder.
+
+[%header,cols="40a,60a"]
+|===
+| Studio UI | Anypoint Code Builder
+
+| *Run Configurations* > *Arguments* tab > *VM arguments*
+| `mule.runtime.args` property in launch.json
+
+| *Run Configurations* > *Environment* tab
+| Environment variables passed via `mule.runtime.args` (e.g., `-M-Denv=dev`)
+
+| *Run Configurations* > *Port* settings (if available)
+| `mule.debug.port` property in launch.json
+
+| Configuration dropdown in toolbar
+| Configuration dropdown in *Run and Debug* view
+|===
+
+For a reference of `launch.json` properties, see xref:ref-launch-json-properties.adoc[].
+
 == Export Your Mule Project to a Sharable JAR File in Anypoint Studio
 
 include::partial$acb-project-migration.adoc[tag="export-mule-projects-from-studio"]
