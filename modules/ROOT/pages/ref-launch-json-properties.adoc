@@ -35,12 +35,14 @@ This table lists some common properties for launch configurations.
 | Display name for this configuration. Appears in the Run and Debug view dropdown menu. Use descriptive names like `"Debug - Development"` or `"Run QA Environment"`.
 
 | `mule.project`
-| No^1^
-| Path to a single Mule project. Use `"${workspaceFolder}"` for the current project. For multiple projects, use `mule.projects` instead.
+| No
+| Path to a single Mule project. Use `"${workspaceFolder}"` for the current project. For multiple projects, use `mule.projects` instead. +
+Either `mule.project` or `mule.projects` must be specified, but not both.
 
 | `mule.projects`
-| No^1^
-| Array of project paths for running multiple Mule applications concurrently. Example: `["${workspaceFolder:project1}", "${workspaceFolder:project2}"]`. See xref:int-run-multiple-mule-apps.adoc[].
+| No
+| Array of project paths for running multiple Mule applications concurrently. Example: `["${workspaceFolder:project1}", "${workspaceFolder:project2}"]`. See xref:int-run-multiple-mule-apps.adoc[]. +
+Either `mule.project` or `mule.projects` must be specified, but not both.
 
 | `mule.home`
 | No
@@ -67,7 +69,7 @@ For more information, see xref:int-run-mule-apps-with-properties.adoc[] and xref
 
 |===
 
-^1^ Either `mule.project` or `mule.projects` must be specified, but not both.
+Either `mule.project` or `mule.projects` must be specified, but not both.
 
 [[multiple-configs]]
 == Creating Multiple Configuration Profiles
