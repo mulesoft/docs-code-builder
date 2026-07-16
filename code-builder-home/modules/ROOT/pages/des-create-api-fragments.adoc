@@ -7,8 +7,6 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-// TODO: How does this work in OAS?
-
 Using Anypoint Code Builder, you can create your own API fragments and publish them to Anypoint Exchange to share with other people,
 add fragments from Exchange to your API specification,
 or create fragments in your project to add directly to your API specification.
@@ -184,6 +182,8 @@ To add an API spec fragment to a spec:
 ** OAS and AsyncAPI specs: Use the `$ref` directive.
 ** RAML specs: Use the `!include` directive.
 --
++
+For OAS 3.0 APIs, scaffolding supports `$ref` API fragments from Exchange, including fragments with transitive dependencies. DataSense also resolves types defined in fragment files when you scaffold into a Mule project that uses a supported Mule runime version.
 +
 [tabs]
 ====
