@@ -19,16 +19,20 @@ Exclude the following directories and executables from real-time antivirus scann
 Windows::
 +
 --
-Add the following directories to your antivirus exclusion list:
+As a first step, add the following high-I/O directories to your antivirus exclusion list:
+
+* `%userprofile%\.m2`
+* `%userprofile%\AnypointCodeBuilder`
+* `%userprofile%\.vscode\extensions\salesforce.*`
+
+If performance issues persist, also exclude the following directories:
 
 * `%appdata%\Code`
 * `%userprofile%\.vscode`
-* `%userprofile%\AnypointCodeBuilder`
-* `%userprofile%\.m2`
 * `%appdata%\Local\Temp`
 * The directory where you store your Mule projects
 
-Add the following executables to your antivirus exclusion list:
+And the following executables:
 
 * `java.exe`
 * `javaw.exe`
