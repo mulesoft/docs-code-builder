@@ -179,12 +179,14 @@ registry:
              card:
                name: hr-system-agent
                description: Creates and manages employee records in the HR system.
-               url: https://hr-agent.example.com/a2a
                version: "1.0.0"
-               protocolVersion: "1.0"
                capabilities: {}
                defaultInputModes: [application/json, text/plain]
                defaultOutputModes: [application/json, text/plain]
+               supportedInterfaces:
+                 - url: https://hr-agent.example.com/a2a
+                   protocolBinding: JSONRPC
+                   protocolVersion: "1.0"
                skills: []
          tools:
            - mcp:
@@ -205,12 +207,14 @@ registry:
              card:
                name: salesforce-agent
                description: Onboards new employees to Salesforce.
-               url: https://sfdc-agent.example.com/a2a
                version: "1.0.0"
-               protocolVersion: "1.0"
                capabilities: {}
                defaultInputModes: [application/json]
                defaultOutputModes: [application/json]
+               supportedInterfaces:
+                 - url: https://sfdc-agent.example.com/a2a
+                   protocolBinding: JSONRPC
+                   protocolVersion: "1.0"
                skills: []
          llm:
            ref:
@@ -410,7 +414,7 @@ NOTE: If you are connecting to an agent that uses A2A protocol version 0.3.x, us
 
 This section adheres to the Agent-to-Agent (A2A) specification v1.0 and describes an agent's contract, skills, and capabilities. This is a standard A2A agent card https://a2a-protocol.org/latest/specification/#441-agentcard[as defined in the Agent2Agent (A2A) Protocol specification].
 
-The A2A card section has these properties. 
+The A2A card section has these properties.
 
 [%header,cols="1,1,1,1,1"]
 |===
@@ -421,104 +425,74 @@ The A2A card section has these properties.
 |Values
 
 |`name`
-|Human-readable name for the agent.
-|string
-|Yes
+|A human-readable name for the agent.
+|String
+|No
 |--
 
 |`description`
-|Human-readable description of the agent's purpose.
-|string
-|Yes
+|A human-readable description of the agent.
+|String
+|No
 |--
 
-|`url`
-|Preferred endpoint URL for interacting with the agent. Must support preferredTransport.
-|string
-|Yes
-|for example, https://api.example.com/a2a/v1
-
 |`version`
-|Agent's own version number (format defined by provider).
+|The version of the agent (format defined by provider).
 |String
-|Yes
+|No
 |for example, 1.0.0
-
-|`protocolVersion`
-|Version of the A2A protocol this agent supports.
-|String
-|Yes
-|for example, 1.0
 
 |`capabilities`
 |Optional capabilities supported by the agent.
 |AgentCapabilities
-|Yes
-|See below
+|No
+|See <<capabilities-properties,Capabilities Properties>>
 
 |`defaultInputModes`
-|Default supported input MIME types for all skills (overridable per skill).
-|Array of string
-|Yes
+|Interaction modes the agent supports across all skills (media types).
+|Array of String
+|No
 |--
 
 |`defaultOutputModes`
-|Default supported output MIME types for all skills (overridable per skill).
-|Array of string
-|Yes
+|Media types supported as outputs from this agent.
+|Array of String
+|No
 |--
 
 |`skills`
 |The set of skills or distinct capabilities the agent can perform.
-|Array of AgentSkills
-|Yes
-|See below
-
-|`preferredTransport`
-|Transport for the main url. Must be available at that URL.
-|String
+|Array of AgentSkill
 |No
-|JSON-RPC, GRPC, HTTP JSON (default: JSON-RPC)
+|See <<skills-properties,Skills Properties>>
 
-|`additionalInterfaces`
-|Additional transport+URL combinations for the same agent.
+|`supportedInterfaces`
+|Transport and URL combinations for interacting with the agent.
 |Array of AgentInterface
 |No
-|Each: { transport: string, url: string }
-
-|`additionalInterfaces.transport`
-|The transport protocol for this interface.
-|String
-|Yes
-|`JSONRPC, GRPC, HTTP+JSON)`
-
-|`additionalInterfaces.url`
-|The URL for this additional interface.
-|String (URI)
-|Yes
-|Valid URI string
+|See <<agent-interface-properties,Agent Interface Properties>>
 
 |`provider`
-|Agent's service provider.
+|The service provider of the agent.
 |AgentProvider
 |No
 |{ organization: string, url: string }
 
 |`documentationUrl`
-|Optional URL to the agent's documentation.
+|A URL providing additional documentation about the agent.
 |String
 |No
 |--
 
 |`iconUrl`
-|Optional URL to an icon for the agent.
+|A URL to an icon for the agent.
 |String
 |No
 |--
 
 |`security`
 |Security requirement objects for all interactions (OpenAPI 3.0 style; OR of ANDs).
-|Array of object
+|Array of Object
 |No
 |Each object: scheme names -> array of scope strings
 
@@ -536,6 +510,7 @@ The A2A card section has these properties.
 
 |===
 
+[[skills-properties]]
 ===== Skills Properties
 
 Skills describe the distinct capabilities the agent can perform and have these properties.
@@ -590,8 +565,15 @@ Skills describe the distinct capabilities the agent can perform and have these p
 |Array of tag strings
 |No
 
+|`securityRequirements`
+|Security requirements specific to this skill.
+|Array of SecurityRequirement
+|Array of security requirement objects
+|No
+
 |===
 
+[[capabilities-properties]]
 ===== Capabilities Properties
 
 Capabilities describe optional features supported by the agent and have these properties.
@@ -624,8 +606,85 @@ Capabilities describe optional features supported by the agent and have these pr
 
 |`extensions`
 |List of protocol extensions supported by the agent.
-|Array
-|Array of extension objects
+|Array of AgentExtension
+|See below
+|No
+
+|===
+
+===== Agent Extension Properties
+
+Each extension object describes a protocol extension supported by the agent.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|`uri`
+|The unique URI identifying the extension.
+|String
+|Any URI string
+|No
+
+|`description`
+|Human-readable description of how this agent uses the extension.
+|String
+|Any string value
+|No
+
+|`required`
+|If true, the client must understand and comply with the extension's requirements.
+|Boolean
+|`true` or `false` (default: `false`)
+|No
+
+|`params`
+|Extension-specific configuration parameters.
+|Object
+|Any JSON object
+|No
+
+|===
+
+[[agent-interface-properties]]
+===== Agent Interface Properties
+
+Each interface object declares a transport and URL combination for interacting with the agent.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Valid Values
+|Required
+
+|`url`
+|The URL where this interface is available.
+|String
+|Valid URI string
+|No
+
+|`protocolBinding`
+|The protocol binding for this interface.
+|String
+|`JSONRPC`, `GRPC`, `HTTP+JSON`
+|No
+
+|`protocolVersion`
+|The A2A protocol version for this interface.
+|String
+|For example, 1.0
+|No
+
+|`tenant`
+|Tenant ID to be used in the request when calling the agent.
+|String
+|Any string value
 |No
 
 |===
