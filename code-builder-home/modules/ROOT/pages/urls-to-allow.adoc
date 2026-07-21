@@ -1,6 +1,6 @@
 = Allow URLs for Anypoint Code Builder
 
-Configure your firewall, antivirus, and proxy settings to allow Anypoint Code Builder URLs. Allowing these URLs ensures Anypoint Code Builder can connect to Anypoint Platform services, download dependencies, and access Maven repositories. This configuration prevents connection issues and improves performance if working with external hosts and Anypoint Platform services.
+Configure your firewall, antivirus, and proxy settings to allow Anypoint Code Builder URLs. Allowing these URLs ensures Anypoint Code Builder can connect to Anypoint Platform services, download dependencies, and access Maven repositories. This configuration prevents connection issues and improves performance if working with external hosts and Anypoint Platform services. These URLs apply to both the Desktop IDE and Cloud IDE versions of Anypoint Code Builder.
 
 == Allow Anypoint Code Builder URLs
 
@@ -8,11 +8,49 @@ Allow URLs to ensure the best performance in Anypoint Code Builder.
 
 === Security and Antivirus Software
 
-If you have security and antivirus software, add Anypoint Code Builder to the allowlist. Running real-time antivirus protection software on your operating system can have a negative impact on Anypoint Code Builder performance. Steps to solving these performance issues vary depending on your antivirus software.
+If you have security and antivirus software, add Anypoint Code Builder to the allowlist. Running real-time antivirus protection software on your operating system can have a negative impact on Anypoint Code Builder performance, particularly during canvas loading and extension initialization. Continuous disk I/O from real-time scanning causes delays when Mule applications perform intense disk operations. Steps to solving these performance issues vary depending on your antivirus software.
 
-==== Allowlist Recommendation
+==== Antivirus Exclusion Paths
 
-Allow or exclude from your antivirus software Anypoint Code Builder, its Java executables, and the Anypoint Code Builder installation and workspace file locations.
+Exclude the following directories and executables from real-time antivirus scanning. The paths vary by operating system.
+
+[tabs]
+====
+Windows::
++
+--
+As a first step, add the following high-I/O directories to your antivirus exclusion list:
+
+* `%userprofile%\.m2`
+* `%userprofile%\AnypointCodeBuilder`
+* `%userprofile%\.vscode\extensions\salesforce.*`
+
+If performance issues persist, also exclude the following directories:
+
+* `%appdata%\Code`
+* `%userprofile%\.vscode`
+* `%appdata%\Local\Temp`
+* The directory where you store your Mule projects
+
+And the following executables:
+
+* `java.exe`
+* `javaw.exe`
+* `node.exe`
+* `Code.exe`
+--
+macOS::
++
+--
+Add the following directories to your antivirus exclusion list:
+
+* `~/Library/Application Support/Code`
+* `~/.vscode`
+* `~/AnypointCodeBuilder`
+* `~/.m2/repository`
+* The directory where you store your Mule projects
+--
+====
 
 === Anypoint Code Builder Directories
 
@@ -34,14 +72,14 @@ Some entries use a wildcard (*) to indicate that all subdomains must be allowed.
 * MuleSoft Maven repositories and connectors update site 
 ** \https://repository.mulesoft.org
 ** \https://*.repository.mulesoft.org
-* Anypoint Code Builder update sites
+* Anypoint Code Builder update sites (Desktop IDE and Cloud IDE)
 ** \https://anypoint.code-builder.platform.salesforce.com
 ** \https://*.anypoint.code-builder.platform.salesforce.com
 * Anypoint Platform services: CloudHub, Exchange, Core Services [Commcloud / Hyperforce]
 ** \https://anypoint.mulesoft.com
 ** \https://*.anypoint.mulesoft.com
-** \http://platform.mulesoft.com
-** \http://*.platform.mulesoft.com
+** \https://platform.mulesoft.com
+** \https://*.platform.mulesoft.com
 * Nexus
 ** \https://nexus.build.msap.io
 ** \https://*.nexus.build.msap.io

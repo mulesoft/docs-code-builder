@@ -120,4 +120,32 @@ Set the time in milliseconds to wait before displaying auto-completion options. 
 
 Avoid setting a long delay. If you activate the auto-completion menu but initiate other actions in your project before the delay period ends, the IDE automatically returns focus to the editor and opens the menu where you activated auto-completion. Such actions include opening the command palette or using the command terminal after activating the menu.
 
-If you move your cursor to a new location or use the up or down arrow keys in the editor before the trigger delay expires, the request to open the auto-completion menu is cancelled. 
+If you move your cursor to a new location or use the up or down arrow keys in the editor before the trigger delay expires, the request to open the auto-completion menu is cancelled.
+
+[[setting-fips-enabled]]
+== Mule > Runtime: Fips Enabled
+
+Enable FIPS compliance mode for your Mule applications. When enabled, the embedded JVM uses Bouncy Castle FIPS (BCFIPS) modules for all cryptographic operations. Required for regulated PCE and GIA2H environments.
+
+Enabling this setting automatically configures BCFIPS libraries, generates a custom `java.security` file, creates a BCFKS-format keystore, and updates each Mule application run configuration with the required FIPS parameters.
+
+For more information, see xref:start-fips-compliance.adoc[].
+
+[[setting-fips-mode]]
+== Mule > Runtime: Fips Mode
+
+Select the FIPS compliance level. This setting only applies when <<setting-fips-enabled, Fips Enabled>> is selected.
+
+Available options:
+
+* *FIPS 140-2*
+* *FIPS 140-3*
+
+For more information, see xref:start-fips-compliance.adoc[].
+
+[[setting-fips-cacerts-path]]
+== Mule > Runtime: Fips Custom Cacerts Path
+
+Optional path to a custom `cacerts` file. If not specified, the default `cacerts` from the JDK is used. When FIPS mode is enabled, this file is automatically converted to BCFKS format.
+
+For more information, see xref:start-fips-compliance.adoc[].
