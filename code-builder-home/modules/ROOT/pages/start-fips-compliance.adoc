@@ -1,0 +1,62 @@
+= Configuring FIPS Compliance in Anypoint Code Builder
+:page-deployment-options: desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Configure Anypoint Code Builder to run in FIPS 140-2 or FIPS 140-3 compliant environments. When FIPS mode is enabled, Anypoint Code Builder configures the embedded JVM to use Bouncy Castle FIPS (BCFIPS) cryptographic modules and generates a FIPS-compliant keystore for your Mule applications.
+
+FIPS support in Anypoint Code Builder is functionally equivalent to FIPS support in Anypoint Studio. The configuration experience reflects the VS Code settings interface.
+
+== Before You Begin
+
+* xref:start-acb-desktop.adoc[Install and set up the Anypoint Code Builder desktop IDE].
+* Make sure the Mule runtime you use is FIPS 140-3 compliant. Mule runtime 4.9 (LTS) or 4.10 and later supports FIPS 140-3 compliance.
+* Use Java 17 when running Mule runtime 4.9.
+
+== Configure FIPS Compliance
+
+Enable FIPS mode in Anypoint Code Builder settings:
+
+. Open MuleSoft Settings:
++
+include::partial$acb-reusable-steps.adoc[tags="mule-settings-nav-options"]
+
+. Find the *Mule > Runtime: Fips Enabled* setting.
+
+. Select the checkbox to enable FIPS compliance mode.
++
+When enabled, the embedded JVM is configured to use Bouncy Castle FIPS modules. This setting is required for regulated PCE and GIA2H environments.
+
+. In the *Mule > Runtime: Fips Mode* dropdown, select the FIPS compliance level:
++
+* *FIPS 140-2*
+* *FIPS 140-3*
++
+This setting only applies when FIPS compliance mode is enabled.
+
+. Optionally, set a path in *Mule > Runtime: Fips Custom Cacerts Path* if you need to use a custom `cacerts` file.
++
+If not specified, the default `cacerts` from the JDK is used. When FIPS mode is enabled, this file is automatically converted to BCFKS format.
+
+== FIPS Mode Effects
+
+When you enable FIPS mode, Anypoint Code Builder automatically configures the following:
+
+* BCFIPS libraries 
++
+Bouncy Castle FIPS JARs are included in the Mule runtime boot classpath to provide FIPS-validated cryptographic implementations.
+* Custom `java.security` file
++
+A `java.security` file is dynamically generated to configure the JVM to use BCFIPS providers for all security operations. The file supports both FIPS 140-2 and FIPS 140-3.
+* BCFKS keystore 
++
+A keystore in Bouncy Castle FIPS KeyStore (BCFKS) format is created based on your existing or default keystore. BCFKS is the recommended FIPS-compliant format for storing keys and certificates.
+* Run configuration 
++
+Each Mule application run configuration is updated with the required FIPS parameters.
+
+
+== See Also
+
+* xref:ref-mule-settings.adoc[MuleSoft Settings]
+* xref:int-run-mule-apps-with-properties.adoc[Pass Runtime Properties and Arguments to Mule Applications]
