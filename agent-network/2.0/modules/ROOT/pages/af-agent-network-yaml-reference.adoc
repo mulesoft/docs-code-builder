@@ -1993,29 +1993,33 @@ The following table describes the runtime system limit variables you can configu
 |Description
 |Default Value
 
-|MODULE_GRAPH_ERROR_SETTINGS_MAX_HANDOFF_ITERATIONS
+|`MODULE_GRAPH_ERROR_SETTINGS_MAX_HANDOFF_ITERATIONS`
 |Maximum number of node-to-node transitions allowed per turn. Controls how many times execution can move between nodes in the agent network graph during a single conversation turn.
 |30
 
-|MODULE_GRAPH_ERROR_SETTINGS_MAX_REASONING_ITERATIONS
+|`MODULE_GRAPH_ERROR_SETTINGS_MAX_REASONING_ITERATIONS`
 |Maximum number of LLM reasoning loops allowed within a single node. Limits how many times the LLM can iterate on its reasoning before producing a result.
 |20
 
-|MODULE_GRAPH_ERROR_SETTINGS_MAX_SUBGRAPH_DEPTH
+|`MODULE_GRAPH_ERROR_SETTINGS_MAX_SUBGRAPH_DEPTH`
 |Maximum nesting depth for subgraphs. Controls how deeply agent networks can be nested within other agent networks.
 |10
 
-|MODULE_GRAPH_ERROR_SETTINGS_MAX_NODE_TOOL_CALL_ITERATIONS
+|`MODULE_GRAPH_ERROR_SETTINGS_MAX_NODE_TOOL_CALL_ITERATIONS`
 |Maximum number of tool executor runs allowed per node. Limits how many times a node can invoke tool execution during its processing.
 |20
 
-|MODULE_GRAPH_ERROR_SETTINGS_MAX_TURN_TOOL_CALL_COUNTS
+|`MODULE_GRAPH_ERROR_SETTINGS_MAX_TURN_TOOL_CALL_COUNTS`
 |Total number of tool invocations allowed across all nodes per turn. Provides a global limit on tool usage during a single conversation turn.
 |50
 
-|MODULE_GRAPH_ERROR_SETTINGS_MAX_STATE_SIZE_BYTES
+|`MODULE_GRAPH_ERROR_SETTINGS_MAX_STATE_SIZE_BYTES`
 |Maximum accumulated state size in bytes. Limits the total amount of state data that can be accumulated during graph execution. Default is 10 MB (10485760 bytes).
 |10485760
+
+|`OBJECT_STORE_DEFAULT_TTL_MS`
+|Maximum amount of time, in milliseconds, for data persistence. The default is 24 hours (86,400,000 ms).
+|30 days (2,592,000,000 ms)
 
 |===
 
