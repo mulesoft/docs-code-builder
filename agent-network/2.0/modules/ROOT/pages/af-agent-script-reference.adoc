@@ -409,10 +409,10 @@ Use this table to decide which node type fits your use case.
 |No
 
 |*Calls actions (A2A/MCP)*
-|Yes -- LLM chooses when and how
-|Yes -- LLM coordinates multiple agents/tools
+|Yes--LLM chooses when and how
+|Yes--LLM coordinates multiple agents/tools
 |No
-|Yes -- deterministic, fully-bound arguments
+|Yes--deterministic, fully-bound arguments
 
 |*Number of LLM iterations*
 |Multiple (configurable loop)
@@ -442,13 +442,13 @@ Use this table to decide which node type fits your use case.
 
 ==== Orchestrator vs. Subagent: When to Use Which
 
-Both the orchestrator and subagent nodes run an LLM reasoning loop with access to actions. The key differences are:
+Both the orchestrator and subagent nodes run an LLM reasoning loop with access to actions. These are the key differences.
 
 * *Orchestrator* is optimized for workflows where the LLM must coordinate multiple external agents and tools to achieve a goal. The LLM decides which agents to call, in what order, and how to combine their results. Use it when the node needs access to two or more actions and the sequencing between them requires judgment.
 
 * *Subagent* is a general-purpose reasoning node ideal for single-task work: classifying input, extracting structured data, making a routing decision, or interacting with one tool. It also supports human-in-the-loop patterns where the LLM can request clarification.
 
-*Rule of thumb:* If the node coordinates multiple agents or tools toward a shared goal, use `orchestrator`. If it reasons about a single task (even if it uses one action), use `subagent`.
+TIP: If the node coordinates multiple agents or tools toward a shared goal, use `orchestrator`. If it reasons about a single task (even if it uses one action), use `subagent`.
 
 === Subagent Node
 
@@ -835,17 +835,7 @@ The `do` block accepts a procedure (`->`) containing one or more of these statem
 |`set @variables.<name> = <expression>`
 |Store a value in a workflow variable for use in downstream nodes.
 |`set @variables.ticketStatus = "escalated"`
-
 |===
-
-==== Executor Node Constraints
-
-Because the executor has no LLM, these constraints apply:
-
-* *No slot filling* -- You cannot use `...` to let an LLM decide an argument value. Every value must come from a literal, a `@variables` reference, a `@request` reference, or a previous node's `.output`.
-* *No reasoning loop* -- The `do` block runs exactly once. There is no `max_number_of_loops` or retry behavior.
-* *No `outputs` schema* -- The executor does not produce structured LLM output. Downstream nodes access the action's raw response if needed.
-* *No `system.instructions`* -- Not applicable since no LLM is called.
 
 === Router Node
 
