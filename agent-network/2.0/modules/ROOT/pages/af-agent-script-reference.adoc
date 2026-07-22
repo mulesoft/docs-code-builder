@@ -388,7 +388,67 @@ The A2A trigger has these properties.
 [[node-types]]
 == Node Types
 
-Agent network and Agent Script support these node types. 
+Agent network and Agent Script support these node types.
+
+=== Choosing the Right Node Type
+
+Use this table to decide which node type fits your use case.
+
+[%header,cols="1,1,1,1,1"]
+|===
+|
+|Subagent
+|Orchestrator
+|Generator
+|Executor
+
+|*Uses an LLM*
+|Yes (reasoning loop)
+|Yes (reasoning loop)
+|Yes (single call)
+|No
+
+|*Calls actions (A2A/MCP)*
+|Yes--LLM chooses when and how
+|Yes--LLM coordinates multiple agents/tools
+|No
+|Yes--deterministic, fully-bound arguments
+
+|*Number of LLM iterations*
+|Multiple (configurable loop)
+|Multiple (configurable loop)
+|Exactly one
+|Zero
+
+|*Slot filling (`...`)*
+|Yes
+|Yes
+|No
+|No
+
+|*Structured output schema*
+|Yes
+|Yes
+|Yes
+|No
+
+|*Best for*
+|Single-task reasoning: classification, extraction, semantic routing, human-in-the-loop decisions
+|Multi-agent coordination: delegating to several agents/tools to achieve a complex goal
+|One-shot text generation: summaries, formatting, templated responses
+|Deterministic execution: calling actions with known arguments, setting variables, no LLM judgment needed
+
+|===
+
+==== Orchestrator vs. Subagent: When to Use Which
+
+Both the orchestrator and subagent nodes run an LLM reasoning loop with access to actions. These are the key differences.
+
+* *Orchestrator* is optimized for workflows where the LLM must coordinate multiple external agents and tools to achieve a goal. The LLM decides which agents to call, in what order, and how to combine their results. Use it when the node needs access to two or more actions and the sequencing between them requires judgment.
+
+* *Subagent* is a general-purpose reasoning node ideal for single-task work: classifying input, extracting structured data, making a routing decision, or interacting with one tool. It also supports human-in-the-loop patterns where the LLM can request clarification.
+
+TIP: If the node coordinates multiple agents or tools toward a shared goal, use `orchestrator`. If it reasons about a single task (even if it uses one action), use `subagent`.
 
 === Subagent Node
 
@@ -696,7 +756,7 @@ The generator node has these properties.
 
 === Executor Node
 
-The executor node is used to execute a set of Agent Script statements, primarily for setting variables or deterministic tool invocations. Use this node to set variables or call actions with known or fixed arguments.
+The executor node executes Agent Script statements deterministically and no LLM is involved. Because there is no LLM reasoning loop, every action argument must be fully resolved at execution time (you cannot use slot filling `...` in an executor). Use this node when you need to call an action with known arguments, store a computed value in a variable, or chain multiple deterministic steps before transitioning.
 
 *Example*
 
@@ -707,7 +767,21 @@ executor sendHrSlackUpdate:
    on_exit: -> transition to @router.countrySwitch
 ----
 
-The executor node has these properties. 
+*Example with multiple statements:*
+
+[source,yaml]
+----
+executor prepareAndNotify:
+  description: "Sets the ticket status variable and sends a Slack notification."
+  do: ->
+    set @variables.ticketStatus = "resolved"
+    run @actions.send_slack_message
+      with text="Ticket " + @generator.classifySeverity.output.ticket_id + " resolved"
+      with channel_id=@variables.notificationChannel
+  on_exit: -> transition to @echo.finalResponse
+----
+
+The executor node has these properties.
 
 [%header,cols="1,1,1,1"]
 |===
@@ -737,10 +811,30 @@ The executor node has these properties.
 |No
 
 |`do`
-|Agent Script statements to execute
-|procedure
+|A procedure containing one or more Agent Script statements to execute deterministically. See <<executor-supported-statements>>.
+|Procedure
 |Yes
 
+|===
+
+[[executor-supported-statements]]
+==== Supported Statements in `do`
+
+The `do` block accepts a procedure (`->`) containing one or more of these statements:
+
+[%header,cols="1,2,2"]
+|===
+|Statement
+|Description
+|Example
+
+|`run @actions.<name>`
+|Invoke a defined action. Use `with` to bind arguments from variables, node outputs, or literal values. All arguments must be fully resolved (no slot filling). Multiple `with` clauses can be chained.
+|`run @actions.escalate` or `run @actions.send_slack_message with text=@generator.summary.output with channel_id="my-channel"`
+
+|`set @variables.<name> = <expression>`
+|Store a value in a workflow variable for use in downstream nodes.
+|`set @variables.ticketStatus = "escalated"`
 |===
 
 === Router Node
