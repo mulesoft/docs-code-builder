@@ -3,8 +3,9 @@ The desktop-based IDE extensions in Anypoint Extension Pack are available from t
 * <<prereqs>>
 * <<hardware-storage-requirements>>
 * <<install-pack>>
+* <<install-other-ides>>
 * <<update-pack>>
-* <<uninstall-pack>> 
+* <<uninstall-pack>>
 
 [[prereqs]]
 == Before You Begin Desktop IDE Setup
@@ -28,6 +29,7 @@ For more information about hardware and storage requirements, see xref:ref-hardw
 Use of Anypoint Code Builder in VS Code on your computer requires the Anypoint Extension Pack. 
 
 * <<install-pack>>
+* <<install-other-ides>>
 * <<update-pack>>
 * <<uninstall-pack>>
 
@@ -91,8 +93,63 @@ For guidance, see xref:anypoint-code-builder::start-acb.adoc#change-clouds[Set t
 NOTE::
 If an Anypoint Platform session is active in any of your browsers when you install Anypoint Extension Pack, the extension pack uses that session to sign in to Anypoint Platform from the IDE. You can xref:anypoint-code-builder::start-acb.adoc#logout-status-bar[log out] or  xref:anypoint-code-builder::start-acb.adoc#logout-status-bar[sign in] from the status bar in the IDE. 
 
+[[install-other-ides]]
+=== Install Anypoint Extension Pack in Cursor, Trae, or Devin
+
+Cursor, Trae, and Devin use the OpenVSX marketplace by default. Before you can search for and install Anypoint Extension Pack in these IDEs, configure the Visual Studio Marketplace as the gallery service URL.
+
+[tabs]
+====
+Cursor::
++
+--
+. Open Cursor.
+. Go to *Cursor* > *Preferences* > *VS Code Settings*.
+. Search for *Extensions › Gallery: Service Url*.
+. Replace the existing value with the following URL:
++
+[source]
+----
+https://marketplace.visualstudio.com/_apis/public/gallery
+----
+. When Cursor prompts you to restart, click *Restart*.
+. After restarting, search for *Anypoint Extension Pack* in the Extensions panel and install it.
+--
+
+Trae::
++
+--
+. Open Trae.
+. Go to *TRAE* > *Settings*.
+. Search for *Extension Market Url*.
+. Replace the existing value with the following URL:
++
+[source]
+----
+https://marketplace.visualstudio.com/_apis/public/gallery
+----
+. Restart Trae to apply the change.
+. After restarting, search for *Anypoint Extension Pack* in the Extensions panel and install it.
+--
+
+Devin::
++
+--
+. Open Devin.
+. Go to *Devin* > *Devin Settings* > *Plugins*.
+. In the *Marketplace extension gallery service URL* field, replace the existing value with the following URL:
++
+[source]
+----
+https://marketplace.visualstudio.com/_apis/public/gallery
+----
+. Restart Devin to apply the change.
+. After restarting, search for *Anypoint Extension Pack* in the Extensions panel and install it.
+--
+====
+
 [[update-pack]]
-=== Update Anypoint Extension Pack 
+=== Update Anypoint Extension Pack
 
 If Anypoint Extension Pack is installed on your desktop IDE, update to the latest version of the extension pack by following VS Code instructions in https://code.visualstudio.com/docs/configure/extensions/extension-marketplace#_update-an-extension-manually[Update an extension manually^].
 
