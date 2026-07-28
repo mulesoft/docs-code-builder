@@ -1,0 +1,115 @@
+[[local-deploy-and-test]]
+= Deploy and Test Agent Networks Locally
+:page-aliases: anypoint-code-builder::af-local-deploy-and-test.adoc
+
+Deploy your agent network locally and test each broker through an A2A chat interface directly from Anypoint Code Builder. Local deployments let you iterate quickly on your agent network without publishing or deploying to CloudHub 2.0.
+
+When you deploy locally, the system deploys the entire project, including all brokers. You can then chat with each broker, inspect request and response details, and debug issues before deploying to a remote target.
+
+[[before-you-begin]]
+== Before You Begin
+
+Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites].
+
+[[deploy-locally]]
+== Deploy Your Agent Network Locally
+
+You can trigger a local deployment from the activity bar, the context menu, or the Command Palette.
+
+. In Anypoint Code Builder, choose one of the following:
+* In the activity bar, click the *Deploy and test locally* icon (play icon).
+* In Explorer, right-click your agent network project and select *Deploy and Test Locally*.
+* From the Command Palette, run the command: *MuleSoft: Deploy and Test Locally*.
+. On the first run, the terminal prompts you to enter values for the variables defined in your `exchange.json` file. Required variables are marked with an asterisk (*). Secret variables are masked by default, with a show/hide toggle.
++
+[NOTE]
+====
+Variables and secrets are stored in plain text on your local machine.
+====
+. Enter your variable values in the terminal and confirm to start the deployment, or select *Cancel* to close without deploying.
++
+On subsequent runs, your saved variable values are reused automatically and you are not prompted again.
+
+[[deploy-results]]
+=== Deployment Results
+
+* *Success*: The Local Deployment and Testing panel opens side-by-side, and a success notification appears.
+* *Failure*: An error notification appears with a *Try again* button. Check the error details and retry.
+
+[[test-brokers]]
+== Test Your Brokers
+
+After a successful local deployment, the testing panel lets you chat with your brokers using the A2A protocol.
+
+[[select-broker]]
+=== Select a Broker
+
+Use the inline dropdown in the panel header to select a broker. If your project contains multiple brokers, you can switch between them without stopping the deployment. Each broker's chat history is preserved while the runtime is running.
+
+[[agent-card]]
+=== View the Agent Card
+
+When you select a broker, the panel displays the A2A Agent Card, which includes:
+
+* Name and version
+* Protocol and capability tags
+* Description and skills
+* Localhost endpoint URL (with a copy action)
+
+The Agent Card collapses to a header strip after you send the first message.
+
+[[chat-with-broker]]
+=== Chat with a Broker
+
+Type a message in the composer to send a request to the selected broker. The broker processes the request and returns a response in the chat view.
+
+Each chat session uses a single Context ID. To start a fresh session, click *New Chat* in the panel header.
+
+[[inspect-responses]]
+=== Inspect Response Details
+
+Expand any response by clicking *Details* to view:
+
+* State
+* Time Used
+* Timestamp
+* Message ID
+* Context ID
+* Task ID
+* Request (raw JSON, collapsible)
+* Response (raw JSON, collapsible)
+
+Multi-part responses render each part individually in raw JSON.
+
+[[panel-actions]]
+== Panel Actions
+
+The testing panel header provides these actions:
+
+[%header,cols="20,60"]
+|===
+|Action |Description
+
+|*New Chat*
+|Starts a fresh chat session with a new Context ID. Clears the current conversation.
+
+|*Re-deploy*
+|Restarts the local deployment and clears all chat history.
+
+|*...* (overflow menu)
+|Contains *Export logs* and *Stop*. Stop kills the local runtime. Chat history remains visible but the composer is disabled until the next run.
+|===
+
+Destructive actions (Stop, Re-deploy) show a confirmation dialog before executing.
+
+[[runtime-logs]]
+== View Runtime Logs
+
+Runtime logs stream to the standard VS Code Output panel and Debug Console, attached to the run configuration. Use these logs to debug issues with your brokers, agents, and MCP servers during local testing.
+
+[[see-also]]
+== See Also
+
+* xref:af-deploy-agent-network-targets.adoc[]
+* xref:af-troubleshoot-agent-networks.adoc[]
+* xref:af-project-files.adoc[]
