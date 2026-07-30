@@ -31,7 +31,7 @@ For tasks that support the troubleshooting process, see:
 
 The Anypoint Code Builder cloud IDE is a managed, hosted environment. Your workspace is a dedicated directory assigned to you at `/home/_your-user-name_/`, and you have full control to create, edit, and manage files within it.
 
-Unlike a local development environment, you don't have access to underlying server system folders, and you don't need to. All troubleshooting steps in this guide provide solutions you can perform directly from the IDE without requiring server access or file system permission changes.
+Unlike a local development environment, you don't have access to underlying server system folders, and you don't need to. All troubleshooting steps provide solutions you can perform directly from the IDE without requiring server access or file system permission changes.
 
 [[check-logs]]
 == Check for Problems and Issues
@@ -119,7 +119,7 @@ See xref:ref-acb-maven.adoc#authenticating-to-mulesoft-repositories[Authenticati
 EACCES: permission denied, mkdir '/home/XXXX/.vscode'
 ----
 
-*Cause:* In the Anypoint Code Builder cloud IDE, your work must be saved within your designated workspace folder to keep your projects secure and accessible. This error occurs when you attempt to create or save a project outside of that workspace, in a system-level folder such as `/home`, `/`, or `.config`.
+*Cause:* In the Anypoint Code Builder cloud IDE, you must save your work in your designated workspace folder to keep your projects secure and accessible. This error occurs when you attempt to create or save a project outside of that workspace, in a system-level folder such as `/home`, `/`, or `.config`.
 
 *Solution:* Create and import your projects within your `/home/_your-user-name_/` folder or a subdirectory under it. The cloud IDE automatically provides this folder with your username. Also avoid `/home/AnypointCodeBuilder`, which is reserved for Mule and Java downloads.
 
