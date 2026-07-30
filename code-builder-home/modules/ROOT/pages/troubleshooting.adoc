@@ -115,7 +115,27 @@ EACCES: permission denied, mkdir '/home/XXXX/.vscode'
 
 To avoid this error, create and import your projects within your `/home/_your-user-name_/` folder or in a subdirectory that you create under this folder. The cloud IDE automatically provides the folder with your username.
 
-Also avoid creating your projects under `/home/AnypointCodeBuilder`, which is intended for downloads of Mule and Java versions. 
+Also avoid creating your projects under `/home/AnypointCodeBuilder`, which is intended for downloads of Mule and Java versions.
+
+[[settings-sync-home-directory]]
+== Settings Sync Overwrites Home Directory on a New Computer
+
+When you sync your VS Code profile to a new computer, all profile settings are transferred, including the *Mule: Home Directory* setting. If the username on the new computer differs from the one on the original computer, the synced path is invalid, and the extension fails to load with an error like the following:
+
+----
+Error: EPERM: operation not permitted, mkdir 'C:\Users\<original-username>\AnypointCodeBuilder\java\jdk-17.0.13+11'
+----
+
+To fix this issue, update the *Mule: Home Directory* setting on the new computer to the correct path for that machine. See xref:ref-mule-settings.adoc#setting-home-dir[Mule: Home Directory].
+
+To prevent this issue when syncing profiles across computers with different usernames, exclude the `mule.homeDirectory` setting from VS Code Settings Sync by adding the following to your `settings.json`:
+
+[source,json]
+----
+"settingsSync.ignoredSettings": [
+  "mule.homeDirectory"
+]
+----
 
 == Disable Components to Isolate Issues
 
