@@ -210,6 +210,41 @@ Reference the property in your HTTP listener configuration:
 </http:listener-config>
 ----
 
+=== Example: Increase JVM Heap Size
+
+Increase the maximum JVM heap size when running memory-intensive Mule applications locally. Use the `-M-Xmx` flag to set the maximum heap and `-M-Xms` to set the initial heap.
+
+.Global default arguments:
+[source,text]
+----
+-M-Xms512m -M-Xmx2g
+----
+
+.Launch configuration:
+[source,json]
+----
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "mule-xml-debugger",
+      "request": "launch",
+      "name": "Debug with Increased Heap",
+      "mule.project": "${workspaceFolder}",
+      "mule.home": "${config:mule.homeDirectory}",
+      "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Xms512m -M-Xmx2g"
+    }
+  ]
+}
+----
+
+You can combine heap size flags with other arguments, such as environment properties or encryption keys:
+
+[source,text]
+----
+-M-Xmx2g -M-Denv=dev -M-Dencryption.key=myKey
+----
+
 === Example: Provide Database Connection Parameters
 
 Provide database connection parameters at runtime to switch between local and remote databases:

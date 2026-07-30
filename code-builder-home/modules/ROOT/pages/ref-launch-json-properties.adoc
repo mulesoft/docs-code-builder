@@ -50,12 +50,14 @@ Either `mule.project` or `mule.projects` must be specified, but not both.
 
 | `mule.runtime.args`
 | No
-| Command-line arguments passed to the Mule runtime JVM. Use the `-M-D` prefix for system properties. +
+| Command-line arguments passed to the Mule runtime JVM. Use the `-M-D` prefix for system properties and the `-M-X` prefix for JVM tuning flags. +
  +
 Examples: +
 `-M-Dencryption.key=myKey` (encryption key) +
 `-M-Denv=dev` (environment selector) +
 `-M-Dhttp.port=8082` (HTTP listener port) +
+`-M-Xmx2g` (maximum JVM heap size) +
+`-M-Xms512m -M-Xmx2g` (initial and maximum JVM heap size) +
  +
 For more information, see xref:int-run-mule-apps-with-properties.adoc[] and xref:int-create-secure-configs.adoc[].
 
