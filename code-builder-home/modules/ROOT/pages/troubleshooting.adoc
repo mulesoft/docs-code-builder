@@ -114,14 +114,14 @@ See xref:ref-acb-maven.adoc#authenticating-to-mulesoft-repositories[Authenticati
 [[folder-permission]]
 == Folder Permission Error
 
-*Error:*
+Error:
 ----
 EACCES: permission denied, mkdir '/home/XXXX/.vscode'
 ----
 
-*Cause:* In the Anypoint Code Builder cloud IDE, you must save your work in your designated workspace folder to keep your projects secure and accessible. This error occurs when you attempt to create or save a project outside of that workspace, in a system-level folder such as `/home`, `/`, or `.config`.
+Cause: In the Anypoint Code Builder cloud IDE, you must save your work in your designated workspace folder to keep your projects secure and accessible. This error occurs when you attempt to create or save a project outside of that workspace, in a system-level folder such as `/home`, `/`, or `.config`.
 
-*Solution:* Create and import your projects within your `/home/_your-user-name_/` folder or a subdirectory under it. The cloud IDE automatically provides this folder with your username. Also avoid `/home/AnypointCodeBuilder`, which is reserved for Mule and Java downloads.
+Solution: Create and import your projects within your `/home/_your-user-name_/` folder or a subdirectory under it. The cloud IDE automatically provides this folder with your username. Also avoid `/home/AnypointCodeBuilder`, which is reserved for Mule and Java downloads.
 
 [[settings-sync-home-directory]]
 == Settings Sync Overwrites Home Directory on a New Computer
