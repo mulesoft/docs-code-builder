@@ -16,7 +16,7 @@ Use the Anypoint Code Builder integrated development environment (IDE) for your 
 
 The desktop and cloud IDEs offer the same Anypoint Code Builder functionality. Use the IDE that works better for your needs. You can share project snapshots between IDEs or with members of your team by using import and export features or by using a <<scm, source control management (SCM) system>> of your choice.
 
-For an introduction to Anypoint Code Builder, see our Trailhead badge, https://trailhead.salesforce.com/content/learn/modules/mulesoft-anypoint-code-builder-quick-look[Anypoint Code Builder: Quick Look^] (login required). Sign up if you don't have a Trailhead account. 
+For an introduction to Anypoint Code Builder, see our Trailhead badge, https://trailhead.salesforce.com/content/learn/modules/mulesoft-anypoint-code-builder-quick-look[Anypoint Code Builder: Quick Look^] (login required). Sign up if you don't have a Trailhead account.
 
 //extensions info
 [[extension-pack]]
@@ -27,7 +27,7 @@ Get the Anypoint Code Builder experience through the Anypoint Extension Pack for
 [[us-eu-clouds]]
 == Cloud Hosts
 
-Anypoint Code Builder is available through Anypoint Platform from US, EU, Canada (desktop IDE only), Japan (desktop IDE only), and India (desktop IDE only) cloud hosts. To help your organization meet emerging regulatory requirements that differ by region, Anypoint Platform does not share organization information, permissions, account data, or projects between hosts.
+Anypoint Code Builder is available through Anypoint Platform from US, EU, Canada (desktop IDE only), Japan (desktop IDE only), India (desktop IDE only), and Australia (desktop IDE only) cloud hosts. To help your organization meet emerging regulatory requirements that differ by region, Anypoint Platform does not share organization information, permissions, account data, or projects between hosts.
 
 [%header,cols="1,1,2"]
 |===
@@ -52,15 +52,19 @@ Anypoint Code Builder is available through Anypoint Platform from US, EU, Canada
 |India Cloud (desktop IDE only)
 |https://in1.platform.mulesoft.com/login/[in1.platform.mulesoft.com^]
 |MuleSoft hosts this control plane within India (APAC) data centers.
+
+|Australia Cloud (desktop IDE only)
+|https://au1.platform.mulesoft.com/login/[au1.platform.mulesoft.com^]
+|MuleSoft hosts this control plane within Australia (APAC) data centers.
 |===
 
 Anypoint Platform hosts deployment targets for managed Mule runtime versions and related data, including data and metadata about your Mule implementations.
 
 To change the host from the default (US), see xref:start-acb.adoc#change-clouds[Set the Desktop IDE to a Different Control Plane].
 
-Use of Anypoint Code Builder in the desktop and cloud IDEs requires an Anypoint Platform user account. Access to the cloud IDE and use of some features in both IDEs require permissions set by an organization administrator (see xref:start-configure-permissions.adoc[]). 
+Use of Anypoint Code Builder in the desktop and cloud IDEs requires an Anypoint Platform user account. Access to the cloud IDE and use of some features in both IDEs require permissions set by an organization administrator (see xref:start-configure-permissions.adoc[]).
 
-To open Anypoint Code Builder from Anypoint Platform, see xref:start-acb.adoc#set-up-web[Launch the Cloud IDE]. If you do not have an Anypoint Platform account through your organization, you can sign up in the US or EU cloud host for Anypoint Platform. 
+To open Anypoint Code Builder from Anypoint Platform, see xref:start-acb.adoc#set-up-web[Launch the Cloud IDE]. If you do not have an Anypoint Platform account through your organization, you can sign up in the US or EU cloud host for Anypoint Platform.
 
 See xref:hosting-home::index.adoc[] for more information.
 
@@ -80,11 +84,11 @@ It's also useful to be familiar with these products and features:
 
 * A flow is a block of components, including any connector operations, that Mule runtime engine (Mule) executes sequentially on an event and the message it contains. A flow can also contain an operation that triggers the creation of the event and initiates the execution of the flow.
 +
-A subflow is similar to a flow but does not support the configuration of triggers (sometimes called message sources), which are exclusive to flows. 
+A subflow is similar to a flow but does not support the configuration of triggers (sometimes called message sources), which are exclusive to flows.
 +
 A flow reference enables you to trigger execution of a flow or subflow from another flow.
 
-* A Mule application contains one or more XML-based configuration files for your connectors, components, secure configuration properties, scaffolded API specifications, and other parts of your integrations and implementations. The application runs on Mule and is part of a project that contains the resources needed to configure, build, run, test, and deploy the application. 
+* A Mule application contains one or more XML-based configuration files for your connectors, components, secure configuration properties, scaffolded API specifications, and other parts of your integrations and implementations. The application runs on Mule and is part of a project that contains the resources needed to configure, build, run, test, and deploy the application.
 
 //Mule application development requires some understanding of the Mule message model, predefined Mule variables (`payload`, `attributes`, `vars`, `errors`), and execution of the Mule event within Mule flows.
 //TODO: POINT TO helpful areas of the Mule docs (below)
@@ -95,10 +99,10 @@ A flow reference enables you to trigger execution of a flow or subflow from anot
 == Anypoint Platform Product Integrations
 
 //relationships to our other products
-Both the web and desktop Anypoint Code Builder IDEs integrate with key Anypoint Platform products and features: 
+Both the web and desktop Anypoint Code Builder IDEs integrate with key Anypoint Platform products and features:
 
 * Anypoint Exchange for publishing the API specifications that you create and importing API specifications and development resources (such as connectors, integration project templates and examples) into your projects
-* CloudHub and CloudHub 2.0 for deploying the implementations and integrations that you build 
+* CloudHub and CloudHub 2.0 for deploying the implementations and integrations that you build
 * MuleSoft VCS for importing API specification projects into Anypoint Code Builder and optionally, synchronizing imported projects by using the Anypoint source control management (SCM) system
 
 The use of features provided by Anypoint Platform products through the cloud and desktop IDEs requires a connection from the IDE to Anypoint Platform. You establish this connection by logging in to your Anypoint Platform account from the IDE. For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform from the IDE].
@@ -108,7 +112,7 @@ The use of features provided by Anypoint Platform products through the cloud and
 
 Use any supported source control management (SCM) system. VS Code supports Git out-of-the-box in addition to several extensions for popular version control and SCM systems.
 
-For guidance with Git setup in Anypoint Code Builder, see xref:start-scm.adoc[]. 
+For guidance with Git setup in Anypoint Code Builder, see xref:start-scm.adoc[].
 
 See VS Code documentation on https://code.visualstudio.com/docs/sourcecontrol/overview[Git support^] and https://code.visualstudio.com/docs/sourcecontrol/overview#_scm-providers[extensions for other SCM providers^]. For extension authors only, VS Code also provides a https://code.visualstudio.com/api/extension-guides/scm-provider[VS Code source control API^].
 
@@ -121,7 +125,7 @@ It also reads extension bundle directories directly from the extension path when
 
 == Feedback
 
-To provide feedback about Anypoint Code Builder, complete the https://www.surveymonkey.com/r/acb_feedback[feedback survey^]. 
+To provide feedback about Anypoint Code Builder, complete the https://www.surveymonkey.com/r/acb_feedback[feedback survey^].
 
 For questions or general discussion about Anypoint Code Builder, see https://trailhead.salesforce.com/trailblazer-community/topics/mulesoftanypointcodebuilder?sort=LAST_MODIFIED_DATE_DESC[Trailblazer Discussion Topic^].
 
@@ -132,7 +136,7 @@ For questions or general discussion about Anypoint Code Builder, see https://tra
 * xref:connectors::index.adoc[]
 * xref:dataweave::index.adoc[]
 * xref:mule-runtime::index.adoc[]
-//* xref:design-center::index.adoc[] 
+//* xref:design-center::index.adoc[]
 //* xref:studio::index.adoc[]
 //* xref:configure-permissions.adoc[Configure Permissions]
 //* xref:load-acb-web-ide.adoc[Load Anypoint Code Builder]
