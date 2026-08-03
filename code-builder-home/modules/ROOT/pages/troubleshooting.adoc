@@ -26,6 +26,13 @@ For tasks that support the troubleshooting process, see:
 * <<export-troubleshooting-info>>
 * <<manage-cloud>>
 
+[[cloud-ide-environment]]
+== About the Cloud IDE Environment
+
+The Anypoint Code Builder cloud IDE is a managed, hosted environment. Your workspace is a dedicated directory assigned to you at `/home/_your-user-name_/`, and you have full control to create, edit, and manage files within it.
+
+Unlike a local development environment, you don't have access to underlying server system folders, and you don't need to. All troubleshooting steps provide solutions you can perform directly from the IDE without requiring server access or file system permission changes.
+
 [[check-logs]]
 == Check for Problems and Issues
 
@@ -107,15 +114,14 @@ See xref:ref-acb-maven.adoc#authenticating-to-mulesoft-repositories[Authenticati
 [[folder-permission]]
 == Folder Permission Error
 
-Some high-level folders in the cloud IDE are protected and not available for your projects. Examples include `/home`, `/`, and `.config`. Attempts to create an integration, implementation, or design project in a protected folder produces the following error:
-
+Error:
 ----
 EACCES: permission denied, mkdir '/home/XXXX/.vscode'
 ----
 
-To avoid this error, create and import your projects within your `/home/_your-user-name_/` folder or in a subdirectory that you create under this folder. The cloud IDE automatically provides the folder with your username.
+Cause: In the Anypoint Code Builder cloud IDE, you must save your work in your designated workspace folder to keep your projects secure and accessible. This error occurs when you attempt to create or save a project outside of that workspace, in a system-level folder such as `/home`, `/`, or `.config`.
 
-Also avoid creating your projects under `/home/AnypointCodeBuilder`, which is intended for downloads of Mule and Java versions.
+Solution: Create and import your projects within your `/home/_your-user-name_/` folder or a subdirectory under it. The cloud IDE automatically provides this folder with your username. Also avoid `/home/AnypointCodeBuilder`, which is reserved for Mule and Java downloads.
 
 [[settings-sync-home-directory]]
 == Settings Sync Overwrites Home Directory on a New Computer
