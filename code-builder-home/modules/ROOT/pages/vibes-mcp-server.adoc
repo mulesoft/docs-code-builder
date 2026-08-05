@@ -14,13 +14,24 @@ For more information about MuleSoft MCP Servers, see: xref:mulesoft-mcp-server::
 [[use-mcp-tools-copilot]]
 == Use MuleSoft MCP Server Tools with GitHub Copilot
 
-When you install Anypoint Code Builder, the MuleSoft MCP Server tools are automatically registered in VS Code through the Language Model API. No additional configuration is required in VS Code.
+When you install Anypoint Code Builder, the MuleSoft MCP Server tools are automatically registered in VS Code through the Language Model API.
 
-To invoke the tools using natural language commands, you need GitHub Copilot.
+IMPORTANT: The MuleSoft MCP Server is included with Anypoint Code Builder. You do not need to install or configure it separately.
+
+To invoke the tools using natural language commands, you need GitHub Copilot. The MuleSoft MCP Server tools work with *GitHub Copilot Chat* in Agent mode. They are not available in the Agentforce or MuleSoft Vibes AI chat interfaces.
 
 === Before You Begin
 
-Set up and log in to GitHub Copilot in VS Code. For instructions, see https://code.visualstudio.com/docs/copilot/setup[Set up GitHub Copilot in VS Code^].
+. Set up and log in to GitHub Copilot in VS Code. For instructions, see https://code.visualstudio.com/docs/copilot/setup[Set up GitHub Copilot in VS Code^].
+. Enable Agent mode in VS Code settings:
+.. Open *Settings* by pressing *Ctrl+,* (Windows/Linux) or *Cmd+,* (Mac).
+.. Search for `chat`.
+.. Enable the following settings:
++
+* *Chat > Agent: Enabled* -- Enables agent mode for Copilot Chat.
+* *Chat > Extension Tools: Enabled* -- Enables tools contributed by third-party extensions, including MuleSoft MCP tools.
+* *Chat > Mcp: Enabled* -- Enables integration with MCP servers.
+.. Restart Anypoint Code Builder if needed.
 
 === Invoke MCP Tools in Agent Mode
 
@@ -28,6 +39,10 @@ Set up and log in to GitHub Copilot in VS Code. For instructions, see https://co
 . In the Copilot Chat panel, set the chat mode to *Agent*.
 +
 IMPORTANT: The MuleSoft MCP Server tools are only available in *Agent* mode. They are not available in *Ask* mode.
+. Select *Add Context* > *Tools* to add MuleSoft MCP tools to your session.
+. Scroll through the list and select one or more MuleSoft MCP tools.
++
+NOTE: You may need to re-add the context at the start of each session if it is not retained.
 . Enter a natural language prompt to invoke a MuleSoft MCP Server tool.
 +
 For a list of available tools and example prompts, see xref:mulesoft-mcp-server::index.adoc[MuleSoft MCP Servers].
