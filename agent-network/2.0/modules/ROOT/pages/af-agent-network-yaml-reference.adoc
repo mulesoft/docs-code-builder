@@ -1032,17 +1032,6 @@ The `context` section has these properties.
 
 Connection definitions live in the `context` object. Each `connections` object has a kind field that determines its connection type: either `a2a`, `llm`, or `mcp`.
 
-[[connection-id-format]]
-==== Connection ID Format
-
-Each connection key (ID) must use only:
-
-* Lowercase letters (`a`–`z`)
-* Numeric characters (`0`–`9`)
-* Underscores (`_`), non-trailing
-
-For example, `hr_system_agent` and `slack_mcp` are valid, but `HR-System-Agent` and `my_connection_` are not.
-
 Connection objects have these properties.
 
 [%header,cols="1,1,1,1"]
@@ -1642,17 +1631,6 @@ The `oauth2-obo` authentication has these properties.
 == Brokers Section
 
 Use this section to define brokers that orchestrate and control the flow of agent and tool invocations. Each broker object maps to an `.agent` file. You can have multiple Agent Script files in your `/brokers` directory.
-
-[[broker-id-format]]
-=== Broker ID Format
-
-Each broker key (ID) must use only:
-
-* Lowercase letters (`a`–`z`)
-* Numeric characters (`0`–`9`)
-* Underscores (`_`), non-trailing
-
-For example, `customer_service_agent` and `billing_agent` are valid, but `customerServiceAgent` and `my_broker_` are not.
 
 *Example*
 
