@@ -223,19 +223,22 @@ mysensitiveprop : "mysensitivevalue"
 +
 For more guidance, see <<properties>>.
 . Encrypt sensitive properties:
-.. Download the https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[Secure Properties Tool], an executable JAR file for encrypting properties.
+.. Download the Secure Properties Tool, an executable JAR file for encrypting properties:
++
+* For Java 8 and 11, use https://docs.mulesoft.com/mule-runtime/4.4/_attachments/secure-properties-tool.jar[secure-properties-tool.jar^]
+* For Java 17, use https://docs.mulesoft.com/mule-runtime/latest/_attachments/secure-properties-tool-j17.jar[secure-properties-tool-j17.jar^]
 .. From the command line, run the Secure Properties Tool on the values you intend to secure.
 +
 .Example that encrypts `"mysensitivevalue"` using Blowfish and `my-key-value` for an encryption key password:
 [source,terminal]
 ----
-$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
+$ java -cp secure-properties-tool-j17.jar com.mulesoft.tools.SecurePropertiesTool \
 string \
 encrypt \
 Blowfish \
 CBC \
 my-key-value \
-"mysensitivevalue" 
+"mysensitivevalue"
 ----
 +
 .Encrypted Output:
@@ -250,7 +253,7 @@ TIP: To verify an encrypted value, decrypt it using the same tool with the `decr
 +
 [source,terminal]
 ----
-$ java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool \
+$ java -cp secure-properties-tool-j17.jar com.mulesoft.tools.SecurePropertiesTool \
 string \
 decrypt \
 Blowfish \
@@ -745,10 +748,10 @@ Use this table for quick access to common secure properties tasks and commands:
 | Task | Command / Location
 
 | Encrypt a value
-| `java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool string encrypt AES CBC <key> <value>`
+| `java -cp secure-properties-tool-j17.jar com.mulesoft.tools.SecurePropertiesTool string encrypt AES CBC <key> <value>`
 
 | Decrypt a value
-| `java -cp secure-properties-tool.jar com.mulesoft.tools.SecurePropertiesTool string decrypt AES CBC <key> <encrypted-value>`
+| `java -cp secure-properties-tool-j17.jar com.mulesoft.tools.SecurePropertiesTool string decrypt AES CBC <key> <encrypted-value>`
 
 | Reference encrypted property in XML
 | `${secure::property.name}`
