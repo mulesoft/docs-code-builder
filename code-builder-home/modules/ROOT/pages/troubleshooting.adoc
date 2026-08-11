@@ -23,6 +23,7 @@ For other issues and workarounds, see xref:acb-release-notes.adoc#known-issues[K
 For tasks that support the troubleshooting process, see:
 
 * <<check-logs>>
+* <<check-console-logs>>
 * <<export-troubleshooting-info>>
 * <<manage-cloud>>
 
@@ -40,7 +41,30 @@ When you don't know how to resolve an issue, the first step is to check for and 
 
 * To view centralized errors and warnings, open the *ACB Logs* panel. See xref:start-open-output-panel.adoc#acb-logs[View Errors and Warnings in ACB Logs].
 * To view detailed logs for in-depth investigation, use the *Output* panel. See xref:start-open-output-panel.adoc#output-panel[View Detailed Logs in the Output Panel].
-* To view problems, open the *Problems* tab by pressing Cmd+Shift+m (Mac) or Ctrl+Shift+m (Windows). 
+* To view problems, open the *Problems* tab by pressing Cmd+Shift+m (Mac) or Ctrl+Shift+m (Windows).
+
+[[check-console-logs]]
+== Check Console Logs for Extension Issues
+
+If you encounter an issue with an Anypoint Code Builder extension, capture the console logs from the IDE's developer tools and share them with the MuleSoft support team.
+
+. Open the Developer Tools:
++
+** Select *Help* > *Toggle Developer Tools*.
+** Alternatively, open the Command Palette and provide this command:
++
+[source,command]
+----
+Developer: Toggle Developer Tools
+----
+. In the Developer Tools window, click the *Console* tab.
+. Reproduce the issue to capture the relevant log entries in the console.
+. After the issue occurs, save or copy the logs:
++
+* Right-click anywhere inside the console output and select *Save as...* to save the logs directly to a file.
+* Alternatively, click inside the console, press Ctrl+A (Cmd+A on Mac) to select all, then press Ctrl+C (Cmd+C on Mac) to copy the logs and paste them into a text file.
+. Save the logs as a `.txt` file, for example, `ACB_ConsoleLogs.txt`.
+. Attach the log file to your MuleSoft Support case.
 
 [[export-troubleshooting-info]]
 == Export Troubleshooting Information
