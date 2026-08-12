@@ -1,10 +1,27 @@
 = Migrating Mule Projects from Anypoint Studio to Anypoint Code Builder
 :page-deployment-options: cloud-ide, desktop-ide
 
-Migrate your Mule project from Anypoint Studio to Anypoint Code Builder by creating a deployable Mule application archive (JAR file). 
-With Anypoint Code Builder, you unlock a modern development experience with advantages like faster startup times, streamlined collaboration, and the integration of MuleSoft for Agentforce: Topic Center to enable API specifications for topics and agents.
+Migrate your Mule projects from Anypoint Studio to Anypoint Code Builder to unlock a modern development experience with advantages like faster startup times, streamlined collaboration, and the integration of MuleSoft for Agentforce: Topic Center to enable API specifications for topics and agents.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+== Choose a Migration Approach
+
+Anypoint Code Builder provides three ways to bring your Studio projects over.
+
+[%header,cols="30a,70a"]
+|===
+| Approach | When to Use It
+
+| Import a Studio workspace
+| Bring over an existing Studio workspace and keep working against the same project files. Anypoint Code Builder creates a workspace that references your Studio projects, and changes stay in sync. See xref:start-workspaces.adoc#import-studio-workspace[Import an Anypoint Studio Workspace].
+
+| Export and import a JAR file
+| Package a single Mule project as a sharable JAR file in Studio and import it into Anypoint Code Builder by following the steps on this page.
+
+| Open the project folder directly
+| Open an existing Studio project folder in Anypoint Code Builder without packaging it, which is the fastest path when the project is already on your machine. See xref:int-import-mule-project.adoc[Importing Projects into the IDE].
+|===
 
 == Set Run and Debug Configurations
 
@@ -41,8 +58,15 @@ include::partial$acb-project-migration.adoc[tag="exporting-considerations-from-s
 
 include::partial$acb-project-migration.adoc[tag="import-mule-project-into-acb"]
 
+== Set Up Your Development Environment
+
+After your project is in Anypoint Code Builder, set up your development environment:
+
+* Organize your projects in a workspace so that all Anypoint Code Builder features work correctly. See xref:start-workspaces.adoc[].
+* Manage the folders that store your projects. See xref:start-add-folders.adoc[].
+* Connect your project to a Git repository for source control. See xref:start-scm.adoc[].
+
 == See Also
 
-* xref:start-workspaces.adoc[]
 * xref:int-import-mule-project.adoc[]
-* xref:ref-launch-json-properties.adoc[] 
+* xref:ref-launch-json-properties.adoc[]
