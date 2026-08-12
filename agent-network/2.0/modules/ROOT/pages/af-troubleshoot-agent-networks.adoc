@@ -109,6 +109,20 @@ If your deployment keeps restarting without a clear error, the broker is most li
 
 Before you deploy, validate every connection with live probes. Don't troubleshoot your agent network configuration until you confirm all upstream connections are healthy.
 
+=== Issue: Broker Cannot Reach Downstream Agents (Last-Mile Security Enabled)
+
+If your broker deploys successfully and answers general questions, but fails whenever it routes a request to a downstream agent or MCP server, check if *Last-Mile Security* is enabled on the Omni Gateway used for outbound (egress) traffic.
+
+Agent networks route outbound traffic directly to the pod through the egress gateway (port 8082), which bypasses the ingress-to-pod hop that Last-Mile Security protects. As a result, agent networks are not compatible with
+Last-Mile Security on the egress gateway.
+
+To resolve:
+
+* In Runtime Manager, go to *Omni Gateways* > <the gateway in use> > *Settings*, and disable *Last-Mile Security*.
+* If Last-Mile Security is required for other applications on that gateway, deploy your agent network to a separate egress gateway that has Last-Mile Security disabled.
+
+NOTE: This is a behavior change from Agent Network version 1.0, which routed outbound traffic through the CloudHub ingress gateway (port 8081) and was therefore unaffected by Last-Mile Security. A gateway that worked under version 1.0 with Last-Mile Security enabled will fail under version 2.0.
+
 === Error: "Cannot complete task due to issue accessing reasoning engine"
 
 This is a generic error that the broker issues when the LLM fails. To troubleshoot this error, <<enable-message-logging,enable the message logging policy>> on the LLM instance, and then review the logs to determine the cause of the error.
