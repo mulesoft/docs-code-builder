@@ -678,7 +678,9 @@ Each interface object declares a transport and URL combination for interacting w
 |`protocolVersion`
 |The A2A protocol version for this interface.
 |String
-|For example, 1.0
+|For example, 1.0 +
+ +
+IMPORTANT: The A2A protocol version you declare for a connection must match the deployed agent's actual runtime protocol version. A mismatch causes the platform to apply the wrong Agent Card policy, which prevents the agent card URL from being rewritten to the egress proxy and results in a `401 Unauthorized` error at runtime rather than a version error.
 |No
 
 |`tenant`
