@@ -59,7 +59,7 @@ When execution pauses at a breakpoint or after a step, the flow canvas shows whi
 [[source-editor-focus]]
 === Source Editor and Multiple Configuration Files
 
-Projects can split flows across several Mule configuration XML files. When a breakpoint is hit or you step, the editor opens or switches focus to the XML file that contains the flow and processor that is actually executing, and the canvas shows that configuration. Stepping through a `<flow-ref>` into a referenced flow opens the file that declares that referenced flow and updates the canvas accordingly.
+Projects can split flows across several Mule configuration XML files. When a breakpoint is hit or you step, the editor opens or switches focus to the XML file that contains the flow and processor that is actually executing, and the canvas shows that configuration. Stepping through a `<flow-ref>` into a referenced flow opens the file that declares that referenced flow and updates the canvas accordingly. If the referenced flow is in an imported Mule project dependency, it opens in a read-only canvas and XML view.
 
 [[inspect-mule-event-variables]]
 == Inspect Variables and the Mule Event
@@ -209,7 +209,7 @@ At a *Flow Ref* component (`<flow-ref/>`), *Step Over* doesn't enter the referen
 ====
 . *Step Into* (F11) — Enters the next processor, including following a `<flow-ref/>` into the referenced flow.
 +
-When you step into a flow reference, the IDE opens the Mule configuration file that declares that referenced flow, moves the canvas to that flow, and pauses on the first processor inside it. After you step through the referenced flow, stepping continues in the caller flow where appropriate.
+When you step into a flow reference, the IDE opens the Mule configuration file that declares that referenced flow, moves the canvas to that flow, and pauses on the first processor inside it. If the referenced flow is in an imported Mule project dependency, the dependency flow opens in a read-only canvas and XML view. You can step through its processors, and stepping continues in the caller flow where appropriate after you step through the referenced flow.
 +
 .Step Into Details
 [%collapsible]
