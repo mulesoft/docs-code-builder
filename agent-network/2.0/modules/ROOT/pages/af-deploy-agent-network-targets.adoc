@@ -2,9 +2,11 @@
 = Deploy Agent Network Instances
 :page-aliases: anypoint-code-builder::af-deploy-agent-network-targets.adoc
 
-Deploy your agent network instance to a deployment target. You can deploy to a CloudHub 2.0 shared space or a CloudHub 2.0 private space. When you deploy, Omni Gateway secures inbound traffic to your agent network and outbound traffic from your brokers, agents, and MCP servers.
+Deploy your agent network instance to a deployment target. You can deploy to a CloudHub 2.0 shared space or a CloudHub 2.0 private space. Agent network deployments are available on US Cloud and EU Cloud hosts only. For more information, see xref:hosting-home::index.adoc#control-plane-hosting-options[Control Plane Hosting Options].
 
-NOTE: Agent network deployments are available on US Cloud and EU Cloud hosts only. For more information, see xref:hosting-home::index.adoc#control-plane-hosting-options[Control Plane Hosting Options].
+== Agent Network Deployments and Omni Gateway
+
+When you deploy, Omni Gateway secures inbound traffic to your agent network and outbound traffic from your brokers, agents, and MCP servers.
 
 Omni Gateway applies these policies automatically at deployment.
 
@@ -37,6 +39,17 @@ Omni Gateway applies these policies automatically at deployment.
 ** Agent Connection Telemetry policy
 
 |===
+
+=== Last-Mile Security Considerations for Agent Networks
+
+Agent networks in version 2.0 don't support Last-Mile Security for outbound (egress) traffic on the Omni Gateway. If you have enabled Last-Mile Security, the agent network deploys and the broker can answer general questions, but it can't route requests to downstream agents or MCP servers.
+
+Agent networks route outbound traffic through the egress gateway (on port 8082, cluster endpoint). Last-Mile Security enforces TLS on the ingress-gateway-to-pod hop. The outbound path bypasses this hop, so the
+connections can't be established.
+
+If your deployment requires Last-Mile Security for other applications, deploy your agent network to a separate egress gateway that has Last-Mile Security disabled.
+
+The broker's `egressgw.url` resolving to the cluster endpoint is expected behavior, regardless of the Last-Mile Security setting.
 
 [[before-you-begin]]
 == Before You Begin
