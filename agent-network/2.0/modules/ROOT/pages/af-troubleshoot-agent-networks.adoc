@@ -150,10 +150,10 @@ You can encounter this error in two different scenarios:
 
 === Error: "401 Unauthorized" When a Broker Calls an Agent
 
-If the broker returns *401 Unauthorized* error when it routes a request to a downstream A2A agent, the A2A protocol version declared for that agent in `agent-network.yaml` most likely doesn't match the agent's actual
+If the broker returns *401 Unauthorized* error when it routes a request to a downstream A2A agent, the A2A protocol version declared for that agent in `agent-network.yaml` might not match the agent's actual
 runtime protocol version.
 
-When the declared version does not match the real version, the platform applies the wrong A2A Agent Card policy. That policy does not rewrite the agent card's `url` field to the egress proxy URL, so the A2A SDK posts `send_message`
+When the declared version doesn't match the real version, the platform applies the wrong A2A Agent Card policy. That policy doesn't rewrite the agent card's `url` field to the egress proxy URL, so the A2A SDK posts `send_message`
 directly to the external gateway URL and bypasses the egress proxy. Because the egress proxy is what injects the `client_id` and `client_secret` headers required by the Client-ID-Enforcement policy, the request arrives without
 credentials and is rejected with a `401` error.
 
