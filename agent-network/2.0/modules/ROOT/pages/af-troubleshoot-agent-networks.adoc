@@ -162,6 +162,24 @@ You can encounter this error in two different scenarios:
 * If you created the agent with MuleSoft, verify that you are using the latest version of the Anypoint Connector for A2A (A2A Connector).
 * If you are using an external agent, verify that it uses the A2A protocol version 1.0.0.
 
+=== Error: "401 Unauthorized" When a Broker Calls an Agent
+
+If the broker returns *401 Unauthorized* error when it routes a request to a downstream A2A agent, the A2A protocol version declared for that agent in `agent-network.yaml` might not match the agent's actual
+runtime protocol version.
+
+When the declared version doesn't match the real version, the platform applies the wrong A2A Agent Card policy. That policy doesn't rewrite the agent card's `url` field to the egress proxy URL, so the A2A SDK posts `send_message`
+directly to the external gateway URL and bypasses the egress proxy. Because the egress proxy is what injects the `client_id` and `client_secret` headers required by the Client-ID-Enforcement policy, the request arrives without
+credentials and is rejected with a `401` error.
+
+To resolve this error:
+
+. Confirm the agent's real A2A protocol version. Request the agent card in a browser or Postman by appending `.well-known/agent-card.json` to the connection URL, and check the `protocolVersion` field.
+. Update the connection definition in `agent-network.yaml` so the declared protocol version matches the agent's real version.
+. Rebuild, republish, and redeploy the agent network.
+
+NOTE: A protocol version mismatch surfaces as an authentication (401) error, not as a version error. Verify the protocol version whenever a downstream agent call fails with `401` even if you've correctly configured the the egress auth policy.
+
+
 == See Also
 
 include::release-notes::partial$release-notes/rn-known-issues.adoc[tag=knownIssuesSeeAlsoLink]
