@@ -1,0 +1,227 @@
+= Using A2A Protocol in Agent Networks
+
+The Agent2Agent (A2A) Protocol governs agent-to-agent communication. This protocol powers orchestration, observability, and governance features in agent networks. MuleSoft supports v1.0 of the https://a2a-protocol.org/latest[A2A Protocol^].
+
+Review the following about using A2A interactions in agent networks. 
+
+[[context-and-task-id-scoping]]
+== Context and Task ID Scoping
+
+In a multi-broker network, each broker generates its own `contextId` and `taskId` for the requests it receives. These IDs define the state and scope of a specific conversation between two agents. A `taskId` is always matched to a `contextId`, but a `contextId` can exist without a `taskId`.
+
+When a client sends a request to Broker_1, Broker_1 generates the necessary IDs for that request. When Broker_1 sends a new request to the next broker or non-broker agent in line, that broker or non-broker agent establishes a unique `contextId` and `taskId` for the new request.
+
+NOTE: Non-broker agents don't have to generate a `contextId` and `taskId` when receiving requests from a client.
+
+Consider a network with a client and two brokers (1 and 2):
+
+* The IDs used between the client and Broker_1 are independent of the IDs used between Broker_1 and Broker_2.
+* When Broker_1 delegates a task to Broker_2, Broker_2 (acting as a server) generates its own `contextId` and `taskId`.
+* Broker_1 maintains a mapping between its own upstream `taskId` (used to respond to its client) and the downstream `taskId` it tracks with Broker_2.
+* If Broker_2 requires more information (returns `status: input-required`), it provides a `contextId` and `taskId` to Broker_1. Broker_1 uses these IDs to provide the requested input to Broker_2. The client never sees Broker_2's internal IDs.
+
+[cols="1,1,1", options="header"]
+|===
+| Relationship | Role | Logic
+| Client -> Broker_1 | Broker_1 is server | Generates `contextId_1` and `taskId_1` for the client.
+| Agent A -> Broker_2 | Broker_2 is server | Generates `contextId_2` and `taskId_2` for Broker_1.
+| Network broker | Broker_1 | Broker_1 maps `contextId_1` and `taskId_1` to `contextId_2` and `taskId_2`.
+|===
+
+For more information, see https://a2a-protocol.org/latest/topics/life-of-a-task/[Life of a Task - Group Related Interactions].
+
+[[conversational-memory]]
+== Creating Conversational Memory with `contextId`
+
+Configure your broker to remember earlier turns in a conversation by reusing a `contextId` across requests. When a caller reuses a `contextId`, the broker seeds each new task with the prior conversation history so the agent remembers what was said earlier.
+
+To enable conversational memory, you need an agent network with:
+* A broker configured with an ingress authentication policy that resolves a stable user identity
+* A client that supports the A2A v1.0 wire contract
+
+[[how-contextid-works]]
+=== How `contextId` Works
+
+A `contextId` identifies one logical conversation. A `taskId` identifies one turn within that conversation. Every turn produces a new `taskId`, but all turns that share a `contextId` belong to the same conversation.
+
+----
+Request 1  (no contextId)   ──►  broker mints contextId=C, taskId=T1  ──►  returns C
+Request 2  (contextId=C)     ──►  new taskId=T2, seeded with T1's conversation
+Request 3  (contextId=C)     ──►  new taskId=T3, seeded with T1+T2
+----
+
+IMPORTANT: Reuse the `contextId`, not the `taskId`. The prior task is already in a terminal state (`TASK_STATE_COMPLETED`). Sending a message to a completed `taskId` returns an error.
+
+[[requirements]]
+=== Requirements
+
+All three requirements must be met for conversational memory to work.
+
+. The broker resolves a stable user identity for the caller.
+. The caller reuses the `contextId` across turns.
+. The caller sends the correct A2A wire contract.
+
+==== User Identity
+
+Conversational memory is scoped to a user identity derived from the caller's authentication at the broker's ingress. Configure the broker with an ingress authentication policy that yields this identity. Without this policy, tasks are created without an owner and memory doesn't engage.
+
+The same authenticated caller must be presented on every request in a conversation. That identity is the key the broker's memory is stored under.
+
+[[wire-contract]]
+=== A2A Wire Contract
+
+The following values must be exact in every request:
+
+[cols="1,1,2", options="header"]
+|===
+| Requirement | Value | Error if incorrect
+| Version header | `A2A-Version: 1.0` | `-32009 Unsupported A2A version: missing`
+| Method | `SendMessage` | `-32601 Method not found`
+| Role | `ROLE_USER` (enum, not `"user"`) | `-32602 Invalid enum value user`
+|===
+
+[[start-conversation]]
+=== Starting a Conversation
+
+To start a new conversation, send a request without a `contextId`. The broker generates and returns a `contextId` in the response.
+
+[source,bash]
+----
+curl -s -X POST "https://<host>/<broker-path>/" \
+  -H "Content-Type: application/json" \
+  -H "A2A-Version: 1.0" \
+  <auth headers for your ingress policy> \
+  -d '{
+    "jsonrpc": "2.0", "id": "1", "method": "SendMessage",
+    "params": { "message": {
+      "role": "ROLE_USER",
+      "parts": [{ "text": "My favorite fruit is DRAGONFRUIT and my order number is ORD-4521. Please remember both." }],
+      "messageId": "g1"
+    }}
+  }'
+----
+
+The response includes a `contextId` in `result.task.contextId`. Save this value for subsequent requests:
+
+[source,json]
+----
+{ "result": { "task": {
+  "id": "…T1…",
+  "contextId": "c740ccdf-b70a-4e81-b9e4-395845b4c6ab",
+  "status": { "state": "TASK_STATE_COMPLETED", "message": {
+    "parts": [{ "text": "Acknowledged — I have recorded your favorite fruit (DRAGONFRUIT) and your order number (ORD-4521)…" }] } }
+}}}
+----
+
+[[continue-conversation]]
+=== Continuing a Conversation
+
+To continue an existing conversation, include the `contextId` from the first turn in subsequent requests:
+
+[source,bash]
+----
+curl -s -X POST "https://<host>/<broker-path>/" \
+  -H "Content-Type: application/json" \
+  -H "A2A-Version: 1.0" \
+  <auth headers for your ingress policy> \
+  -d '{
+    "jsonrpc": "2.0", "id": "2", "method": "SendMessage",
+    "params": { "message": {
+      "role": "ROLE_USER",
+      "contextId": "c740ccdf-b70a-4e81-b9e4-395845b4c6ab",
+      "parts": [{ "text": "What is my favorite fruit and my order number?" }],
+      "messageId": "g2"
+    }}
+  }'
+----
+
+The broker recalls facts from prior turns:
+
+[source,json]
+----
+{ "result": { "task": {
+  "contextId": "c740ccdf-b70a-4e81-b9e4-395845b4c6ab",
+  "status": { "message": { "parts": [{ "text": "Favorite fruit: DRAGONFRUIT. Order number: ORD-4521." }] } }
+}}}
+----
+
+[[reference-task-ids]]
+=== Referencing Work from Another Conversation
+
+Reusing `contextId` handles continuity within one conversation. To bring in work from a different conversation, add `referenceTaskIds` to the message. This field accepts a list of prior task IDs whose conversation is seeded into the current turn.
+
+[source,json]
+----
+{
+  "jsonrpc": "2.0", "id": "3", "method": "SendMessage",
+  "params": { "message": {
+    "role": "ROLE_USER",
+    "contextId": "<this-conversation>",
+    "referenceTaskIds": ["<task-id-from-another-conversation>"],
+    "parts": [{ "text": "Reuse the itinerary from my earlier booking." }],
+    "messageId": "g3"
+  }}
+}
+----
+
+When using `referenceTaskIds`:
+
+* Each referenced task must belong to the same authenticated user (`userId`). If a referenced task is missing or owned by another user, the request is rejected.
+* Referencing a task already part of the current conversation doesn't duplicate its content.
+* Use `referenceTaskIds` only to cross conversation boundaries. Same-conversation continuity comes from reusing the `contextId`.
+
+[[memory-scope-and-limits]]
+=== Memory Scope and Limits
+
+Conversational memory includes user and assistant messages (the text exchanged between the user and the agent)
+
+Conversational memory does not include tool calls and tool results. The agent remembers what was discussed, not the intermediate tool invocations it made.
+
+Additional limits include:
+
+* Memory is capped at approximately the most recent 200 messages per conversation. Older turns roll off.
+* Retention is bounded by the configured TTL. After the TTL expires, recall stops.
+* Memory is shared across broker instances. Continuity does not depend on requests landing on the same replica, so sticky sessions or session affinity on your load balancer are not required.
+
+==== Orchestrator Brokers
+
+If a broker calls downstream A2A agents while handling a conversation, it keeps those downstream conversations continuous automatically. For a given inbound `contextId`, the broker reuses the same downstream conversation with each child agent across turns so the downstream agents recover their own context on follow-ups. No extra caller action is required beyond reusing the inbound `contextId`.
+
+[[configure-retention]]
+=== Configuring Memory Retention
+
+Set the following variable in `exchange.json` under `metadata.variables` to control how long conversational memory persists:
+
+[cols="1,2,1,2", options="header"]
+|===
+| Variable | Description | Default | Notes
+| `OBJECT_STORE_DEFAULT_TTL_MS` | How long a `contextId` memory persists | 24 hours (`86400000`) | Maximum 30 days (`2592000000`). After the TTL expires, recall stops.
+|===
+
+[[verify-setup]]
+=== Verifying Your Setup
+
+To confirm the ingress policy is active, send an unauthenticated request. A `401` response confirms that identity is required:
+
+[source,bash]
+----
+curl -s -o /dev/null -w "%{http_code}\n" -X POST "https://<host>/<broker-path>/" \
+  -H "Content-Type: application/json" -H "A2A-Version: 1.0" \
+  -d '{"jsonrpc":"2.0","id":"0","method":"SendMessage","params":{"message":{"role":"ROLE_USER","parts":[{"text":"ping"}],"messageId":"p0"}}}'
+----
+
+After completing your first turn, use `ListTasks` to verify that memory is active. An empty result means no user identity was resolved:
+
+[source,bash]
+----
+curl -s -X POST "https://<host>/<broker-path>/" \
+  -H "Content-Type: application/json" -H "A2A-Version: 1.0" \
+  <auth headers for your ingress policy> \
+  -d '{"jsonrpc":"2.0","id":"l","method":"ListTasks","params":{"contextId":"<contextId>"}}'
+----
+
+== See Also
+
+* xref:af-agent-networks.adoc[]
+* xref:af-project-files.adoc[]
+* https://a2a-protocol.org/latest[A2A Protocol Specification^]
