@@ -67,6 +67,17 @@ Conversational memory is scoped to a user identity derived from the caller's aut
 
 The same authenticated caller must be presented on every request in a conversation. That identity is the key the broker's memory is stored under.
 
+===== Example: Client ID Enforcement with User Context Propagation
+
+A common way to produce this identity is a pair of inbound API Manager policies applied to the broker:
+
+. Client ID enforcement authenticates the caller's `client_id` and `client_secret`.
+. User context propagation derives the user identity from the authenticated client, using the expression `#[authentication.clientId]`.
+
+Apply client ID enforcement before user context propagation. User context propagation reads `#[authentication.clientId]`, which is populated only after Client ID enforcement authenticates the request. If the policies are reversed, the identity resolves empty, tasks are created without an owner, and conversational memory does not engage. No error is returned to the caller; a `ListTasks` request for the context returns an empty result. Use reorder policies on the broker's inbound policy list to set the order.
+
+Other authentication schemes can supply the user identity as well. This ordering requirement is specific to the Client ID enforcement and user context propagation pairing.
+
 [[wire-contract]]
 === A2A Wire Contract
 
@@ -210,7 +221,7 @@ curl -s -o /dev/null -w "%{http_code}\n" -X POST "https://<host>/<broker-path>/"
   -d '{"jsonrpc":"2.0","id":"0","method":"SendMessage","params":{"message":{"role":"ROLE_USER","parts":[{"text":"ping"}],"messageId":"p0"}}}'
 ----
 
-After completing your first turn, use `ListTasks` to verify that memory is active. An empty result means no user identity was resolved:
+After completing your first turn, use `ListTasks` to verify that memory is active. An empty result means no user identity was resolved. If you use Client ID enforcement with user context propagation, confirm that the policies are applied in that order:
 
 [source,bash]
 ----
