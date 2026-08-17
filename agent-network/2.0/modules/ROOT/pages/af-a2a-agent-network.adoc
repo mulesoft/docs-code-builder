@@ -63,9 +63,9 @@ All three requirements must be met for conversational memory to work.
 
 ==== User Identity
 
-Conversational memory is scoped to a user identity derived from the caller's authentication at the broker's ingress. Configure the broker with an ingress authentication policy that yields this identity. Without this policy, tasks are created without an owner and memory doesn't engage.
+Conversational memory is scoped to a user identity derived from authentication at the broker's ingress. Configure the broker with an ingress authentication policy that yields this identity. Without this policy, tasks are created without an owner and memory doesn't engage.
 
-The same authenticated caller must be presented on every request in a conversation. That identity is the key the broker's memory is stored under.
+The same authenticated caller must be present on every request in a conversation. That identity is the key the broker's memory is stored under.
 
 ===== Example: Client ID Enforcement with User Context Propagation
 
