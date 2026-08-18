@@ -150,7 +150,7 @@ Use `localhost` instead of `0.0.0.0`, and add the listener `path` for before the
 
 A Scheduler component waits for its configured fixed frequency or cron expression to elapse before triggering a flow. Instead of waiting for that interval during local testing, you can trigger a Scheduler on demand while your Mule application is running, whether or not you're in a debug session.
 
-This feature immediately invokes the Scheduler's own trigger; it doesn't bypass the Scheduler or create a temporary schedule. The flow runs exactly as it would on a natural tick, so breakpoints and interceptors behave the same way.
+This feature invokes the Scheduler's own trigger, it doesn't bypass the Scheduler or create a temporary schedule. The flow runs exactly as it would on a natural tick, so breakpoints and interceptors behave the same way.
 
 The on-demand trigger is for local testing only. It's not available for applications deployed to a remote environment. In a multi-project workspace, the trigger is scoped to the app that owns the Scheduler, so triggering a Scheduler in one app doesn't affect Schedulers in other running apps.
 
