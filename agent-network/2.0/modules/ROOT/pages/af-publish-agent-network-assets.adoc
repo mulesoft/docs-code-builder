@@ -75,6 +75,10 @@ Unpublish your agent network assets from Anypoint Exchange directly from Anypoin
 . In the confirmation dialog, select *Unpublish*.
 . Anypoint Code Builder removes the asset versions from Exchange. For details, check the Agent Fabric CLI output logs.
 
+== Unpublish Behavior in Exchange
+
+When you unpublish an asset, Exchange performs a soft delete of the asset by default. Exchange waits 7 days before it permanently removes (hard deletes) the asset. If you republish an asset before the hard delete, Exchange uses the next available patch version (for example, `1.0.x`).
+
 [[publish-cli]]
 == Publish or Unpublish a Network Using the Anypoint CLI
 
