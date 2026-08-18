@@ -31,7 +31,7 @@ To get started, try one of these suggested messages.
 
 * Publish my Employee Onboarding project.
 * Publish my agent network project version 1.0.0.
-* Publish the hello-world-network project to Exchange.
+* Publish the [project-name] project to Exchange.
 * Publish agent network project at /path/to/project with version 2.1.0.
 
 [[publish-acb]]
@@ -49,10 +49,40 @@ Use Anypoint Code Builder to publish your agent network assets directly from you
 
 Next, discover your agent network assets in *Agents & Tools* in Exchange to get a comprehensive view of your integration, including agent and MCP server assets. Exchange automatically tags brokers for easy identification.
 
-[[publish-cli]]
-== Publish a Network Using the Anypoint CLI
+[[unpublish-dev-agent]]
+== Unpublish Your Network Using MuleSoft Vibes
 
-To set up, create, build, publish, and deploy agent networks in a CI/CD environment, use the Anypoint CLI plugin. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
+Use MuleSoft Vibes to unpublish your agent network assets from Anypoint Exchange. For more information, see xref:anypoint-code-builder::vibes-api-ai-create-spec.adoc[].
+
+. In the Anypoint Code Builder activity bar, click the agent icon image:af-acb-dev-agent-icon.png["",18,18].
+. Tell MuleSoft Vibes to unpublish your agent network. MuleSoft Vibes does the rest.
+
+To get started, try one of these suggested messages.
+
+* Unpublish my Employee Onboarding project from Exchange.
+* Unpublish my agent network project.
+* Unpublish the [project-name] project from Exchange.
+
+[[unpublish-acb]]
+== Unpublish Your Network Using Anypoint Code Builder
+
+Unpublish your agent network assets from Anypoint Exchange directly from Anypoint Code Builder. When you unpublish, the asset versions are removed from Exchange. To prevent orphaned runtime references, undeploy your agent network before unpublishing.
+
+. If you're not logged in already, log in to your Anypoint Platform account.
+. In Anypoint Code Builder, choose one of the following:
+  . In the Explorer view, right-click a project file and select *Unpublish Agent Network*.
+  . From the Command Palette, run this command: *MuleSoft: Unpublish Agent Network*.
+. In the confirmation dialog, select *Unpublish*.
+. Anypoint Code Builder removes the asset versions from Exchange. For details, check the Agent Fabric CLI output logs.
+
+== Unpublish Behavior in Exchange
+
+When you unpublish an asset, Exchange performs a soft delete of the asset by default. Exchange waits 7 days before it permanently removes (hard deletes) the asset. If you republish an asset before the hard delete, Exchange uses the next available patch version (for example, `1.0.x`).
+
+[[publish-cli]]
+== Publish or Unpublish a Network Using the Anypoint CLI
+
+To set up, create, build, publish, unpublish, deploy, and undeploy agent networks in a CI/CD environment, use the Anypoint CLI plugin. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
 
 [[see-also]]
 == See Also
