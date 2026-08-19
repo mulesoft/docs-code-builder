@@ -152,13 +152,11 @@ The new flow is named `[flow name] copy`. You can change the name in the configu
 [[navigate-to-referenced-flows]]
 == Navigate to Referenced Flows
 
-If a component references another flow (for example, via a Flow Reference connector), you can quickly access the target flow in the canvas. Right-click the Flow Reference component and select *Go to Flow*. You can also press Ctrl+Alt+g (Windows) or Cmd+Option+g (macOS).
+If a component references another flow (for example, via a Flow Reference), you can open the target flow without switching views manually. Right-click the *Flow Reference* component and select *Go to Flow*. You can also press Ctrl+Alt+g (Windows) or Cmd+Option+g (macOS).
 
-Anypoint Code Builder opens the target flow either in the application canvas or the MUnit canvas, depending on the context. If the target flow is in an imported Mule project dependency, you can open it in a read-only canvas and view its read-only XML. You can inspect the flow and go to other flows in the dependency, but you can't modify the dependency flow or its XML.
-In the MUnit canvas, you can use Flow Reference components to invoke or simulate execution of other flows. To help you trace and validate the logic, navigate to the referenced flow from within the test by pressing Ctrl+Alt+g (Windows) or Cmd+Option+g (macOS).
+Anypoint Code Builder opens the target flow in the application canvas or, from a test, in the MUnit canvas. In MUnit, you can use this navigation to trace and validate the logic that a Flow Reference invokes or simulates.
 
-Anypoint Code Builder opens the target flow in the application canvas (or in another MUnit test flow if that's the target).
-Right-click a Flow Reference in the MUnit canvas to navigate to its target flow.
+If the target flow is in an imported Mule project dependency, you can open it in a read-only canvas and view its read-only XML. You can inspect the flow and go to other flows in the dependency, but you can't modify the dependency flow or its XML.
 
 [[import-connectors-from-exchange]]
 == Import a Connector from Exchange
