@@ -144,3 +144,34 @@ $ curl http://localhost:8081/api/mypath2
 ----
 +
 Use `localhost` instead of `0.0.0.0`, and add the listener `path` for before the router (such as `api` for most scaffolded interfaces) and the endpoint (such as `mypath2`) to the URL. Get <<trigger-url-interface, more information>> about triggering the endpoint.
+
+[[trigger-scheduler-on-demand]]
+== Trigger a Scheduler Component On Demand
+
+A Scheduler component waits for its configured fixed frequency or cron expression to elapse before triggering a flow. Instead of waiting for that interval during local testing, you can trigger a Scheduler on demand while your Mule application is running, whether or not you're in a debug session.
+
+This feature invokes the Scheduler's own trigger, it doesn't bypass the Scheduler or create a temporary schedule. The flow runs exactly as it would on a natural tick, so breakpoints and interceptors behave the same way.
+
+The on-demand trigger is for local testing only. It's not available for applications deployed to a remote environment. In a multi-project workspace, the trigger is scoped to the app that owns the Scheduler, so triggering a Scheduler in one app doesn't affect Schedulers in other running apps.
+
+=== Trigger a Single Scheduler
+
+To trigger one Scheduler on demand from the canvas:
+
+// Pointer to Run and Debug
+include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
+. Click image:anypoint-code-builder::icon-start-debug.png["",15,15] (*Start Debugging* (F5)) to start your application, either in Run or Debug mode.
+. Open the configuration XML file that contains the Scheduler, and switch to the canvas view.
+. On the Scheduler component, click the *Trigger* (image:icon-trigger-scheduler-play.svg["",15,15]) button.
++
+After triggering the Scheduler, the button changes to *Re-trigger* (image:icon-trigger-scheduler-retrigger.svg["",15,15]) so you can fire the Scheduler again.
+
+The flow runs exactly as it does when the Scheduler triggers naturally. If you set a breakpoint on a processor in the flow, execution pauses there just as it does for a scheduled run.
+
+[TIP] 
+To trigger every Scheduler in the running application at once, use the *Trigger All Schedulers* button on the *Run and Debug* toolbar instead of triggering each Scheduler individually.
+
+== See Also 
+
+* xref:int-debug-mule-apps.adoc#add-breakpoint[Add a Breakpoint]
+* xref:acb-component-scheduler.adoc[Scheduler Component]
