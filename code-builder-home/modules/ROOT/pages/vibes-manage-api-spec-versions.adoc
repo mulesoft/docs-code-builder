@@ -1,0 +1,54 @@
+= Managing API Spec Versions with MuleSoft Vibes
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+Use MuleSoft Vibes to view and change the version of an API specification in your Mule project using natural language. MuleSoft Vibes reads your project's `pom.xml` file to identify API spec dependencies, retrieves available versions from Anypoint Exchange, and applies the version change by updating `pom.xml` and re-scaffolding the project.
+
+To manage API spec versions using the *Project Properties* UI instead, see xref:imp-manage-api-spec-versions.adoc[].
+
+== Before You Begin
+
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:mulesoft-vibes.adoc[Set up MuleSoft Vibes] and confirm you have the required permissions.
+* Have an implementation or integration project that includes an API spec dependency published to Anypoint Exchange.
+* Open the project folder in the IDE so that the `pom.xml` file is accessible.
+
+[[change-version-vibes]]
+== Change an API Spec Version
+
+To change the version of an API spec using MuleSoft Vibes:
+
+. Open MuleSoft Vibes.
+. Enter a prompt that describes the version change you want to make.
++
+Example prompts:
++
+* `I want to change the API version in my project.`
+* `Update the API spec to the latest version.`
+* `Check if there are newer API spec versions available.`
++
+MuleSoft Vibes loads the `manage-api-version` skill and reads the `pom.xml` file to identify API spec dependencies.
+. Review the dependency information that MuleSoft Vibes returns, including the asset ID and current version.
+. Wait while MuleSoft Vibes fetches the available versions for the spec from Anypoint Exchange.
+. Select a version from the options MuleSoft Vibes presents.
++
+If your project has multiple API spec dependencies, MuleSoft Vibes handles each one separately and prompts you for each version.
+. Confirm the change when prompted.
++
+MuleSoft Vibes updates the version property in the `pom.xml` file and re-scaffolds the project by running a build.
++
+When the process completes, MuleSoft Vibes returns a summary, for example:
++
+----
+API version updated and project rescaffolded successfully.
+
+Updated in pom.xml:
+  covid19-data-tracking-api.version: 1.0.0 → 3.0.0
+
+Build result: BUILD SUCCESS — APIkit pulled in the updated spec version 3.0.0 and
+the project packaged cleanly.
+----
++
+New endpoints introduced in the selected version are added as flows. Existing flows are not modified.
+. Optionally, click *View Changes* to review the updated `pom.xml` in the editor.
