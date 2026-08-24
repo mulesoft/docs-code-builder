@@ -1,0 +1,62 @@
+= Managing API Spec Versions
+:page-deployment-options: cloud-ide, desktop-ide
+
+include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
+
+View and change the version of an API specification linked to your Mule project from the *API Specs* tab in *Project Properties*. When you apply a version change, Anypoint Code Builder fetches the selected spec version from Anypoint Exchange, updates the `pom.xml` file, and re-scaffolds the project. New endpoints from the updated spec are added as flows. Existing flows are not modified.
+
+You can also manage API spec versions using MuleSoft Vibes. See xref:vibes-manage-api-spec-versions.adoc[].
+
+== Before You Begin
+
+* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* Make sure you have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions].
+* Have an implementation or integration project that includes an API spec dependency published to Anypoint Exchange.
+
+[[view-api-spec]]
+== View Your API Spec Details
+
+Access *Project Properties* to see the API specs linked to your project and their current versions:
+
+. In the *Explorer*, right-click the Mule configuration XML file for your project.
+. Select *Mule* > *Manage API Specs*.
++
+Alternatively, select *Mule* > *Open Mule Project Properties* and then click *API Specs* in the left menu.
++
+The *API Specs* tab opens and lists each API spec linked to the project. For each spec, the tab shows:
++
+* *Asset Version*: The version currently set in the project's `pom.xml` file.
+* *API Type*: The API format, such as REST.
+* *Asset ID*: The identifier for the API spec asset in Anypoint Exchange.
+* *Business Group*: The business group that owns the asset in Anypoint Exchange.
+
+[[change-api-spec-version]]
+== Change the API Spec Version
+
+Change the version of an API spec to update your project with a different published version from Anypoint Exchange:
+
+. Open *Project Properties* > *API Specs*. See <<view-api-spec>>.
+. Expand the API spec you want to update.
+. Click the *Asset Version* dropdown and select a version.
++
+The dropdown lists all published versions available for that asset in Anypoint Exchange.
++
+[NOTE]
+A message below the dropdown indicates that applying changes triggers a re-scaffold of the project. New endpoints are added as flows. No changes are applied to existing flows.
+. Click *Apply*.
++
+When you apply the version change, Anypoint Code Builder:
++
+** Updates the version property for the API spec in the `pom.xml` file.
++
+For example, changing from version 1.0.0 to 3.0.0 updates:
++
+[source,XML]
+----
+<covid19-data-tracking-api.version>3.0.0</covid19-data-tracking-api.version>
+----
+** Re-scaffolds the project using the selected version of the spec fetched from Anypoint Exchange.
+** Adds flows for any new endpoints introduced in the selected version.
+
+[NOTE]
+If you manually edit the version in `pom.xml` to a value that does not correspond to a published Exchange asset, re-scaffolding fails. Use the *Asset Version* dropdown to select only valid published versions.
