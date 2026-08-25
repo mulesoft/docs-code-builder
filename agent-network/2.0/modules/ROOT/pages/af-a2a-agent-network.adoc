@@ -30,6 +30,11 @@ Consider a network with a client and two brokers (1 and 2):
 
 For more information, see https://a2a-protocol.org/latest/topics/life-of-a-task/[Life of a Task - Group Related Interactions].
 
+[[concurrent-request-handling]]
+== How Agent Brokers Handle Concurrent Requests
+
+ In an agent network, most of a request's time is spent waiting on an LLM, an MCP tool, or another agent to respond. Rather than holding a thread idle during that wait, agent brokers use a non-blocking execution engine that frees the broker to make progress on other in-flight requests. Each request resumes as soon as its response arrives. As a result, a broker processes many requests concurrently rather than one at a time.
+
 [[conversational-memory]]
 == Creating Conversational Memory with `contextId`
 
