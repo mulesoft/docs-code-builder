@@ -5,9 +5,9 @@
 include::partial$af-shared.adoc[tags=get-started]
 
 [[setup-space]]
-== Set Up the Target Space for Your Environment
+== Set Up the Space or Deployment Target for Your Environment
 
-To deploy an agent network, you need a space on CloudHub 2.0. CloudHub 2.0 supports shared spaces and private spaces.
+To deploy an agent network, you need a space on CloudHub 2.0 or a deployment target on Anypoint Runtime Fabric. CloudHub 2.0 supports shared spaces and private spaces.
 
 Use a shared space if you don't require dedicated infrastructure. Use a private space if you need workload isolation or have other requirements that a shared space doesn't satisfy.
 
@@ -25,15 +25,27 @@ We recommend naming the private space `agent-network-space`.
 . xref:cloudhub-2::ps-config-env.adoc[Associate the new or existing private space with the business groups and environments] where you plan to deploy your agent network.
 +
 You must complete this step so that the private space appears as a valid deployment target in Anypoint Code Builder and Anypoint CLI.
+* Runtime Fabric:
++
+Create a deployment target for Runtime Fabric.
++
+For information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Omni Gateway on Runtime Fabric].
++
+Agent networks on Runtime Fabric use Object Store in one of two modes:
++
+** *Non-persistent* (default): No additional setup required.
+** *Persistent*: Requires a persistence gateway. For setup instructions, see xref:runtime-fabric::persistence-gateway.adoc[Persistence Gateway].
 
 [[setup-gateways]]
-== Set Up Agent Network Gateways for the Target Space
+== Set Up Agent Network Gateways for the Space or Deployment Target
 
-After you set up a target space, use the `MuleSoft: Set Up Agent Network Gateways` command to create the gateways required for deployment in CloudHub 2.0.
+After you set up a target space, use the `MuleSoft: Set Up Agent Network Gateways` command to create the gateways required for deployment in either CloudHub 2.0 or Runtime Fabric.
 
 For agent networks, you need at least one Managed Omni Gateway in your environment. A single gateway can handle both ingress and egress traffic, which is the recommended configuration. You can also use separate gateways for ingress and egress traffic in a private space.
 
 For more information about gateways, see xref:gateway::flex-architecture-basic-deployments.adoc[].
+
+For more information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Omni Gateway on Runtime Fabric].
 
 . In Anypoint Code Builder, from the Command Palette, run the command *MuleSoft: Set Up Agent Network Gateways*.
 . If you're not logged in, log in to your Anypoint Platform account.
