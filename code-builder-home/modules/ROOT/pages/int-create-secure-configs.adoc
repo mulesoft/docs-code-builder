@@ -1,5 +1,4 @@
 = Defining and Securing Properties for a Mule Application
-:page-deployment-options: cloud-ide, desktop-ide
 
 // no corresponding Tutorial topic
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -20,7 +19,7 @@ For a guided, conversational approach to setting up secure properties, use MuleS
 
 == Before You Begin
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access the IDE].
 * xref:int-create-integrations.adoc[Create an integration].
 
 [[get-familiar]]
@@ -506,7 +505,7 @@ Changes you make in the editor automatically update the XML in `global-configs.x
 The editor manages the configuration element. To change the actual encrypted values in `.secure.properties` files, use the secure-properties-tool JAR, edit the file directly, or ask MuleSoft Vibes to re-encrypt values. See xref:vibes-secure-properties.adoc[].
 
 [[test-deploy]]
-== Test Encrypted Properties in Your IDE
+== Test Encrypted Properties in Anypoint Code Builder
 
 If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. Adding these arguments to the setting enables the runtime to decrypt properties used in your application so that it deploys successfully to the local runtime in your IDE.
 
@@ -568,7 +567,6 @@ IMPORTANT: This procedure configures the _name_ of your encryption key but not i
 Before you begin: 
 
 * Run and test encrypted properties used by your Mule application in your IDE. See <<properties>> for guidance.
-* If you are using the cloud IDE, ensure that you have the required permission: *Anypoint Code Builder Developer*. See xref:configure-permissions.adoc[].
 
 To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub or CloudHub 2.0: 
 

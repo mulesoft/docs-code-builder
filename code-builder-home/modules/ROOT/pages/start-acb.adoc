@@ -1,6 +1,5 @@
 = Getting Started with Anypoint Code Builder
-:page-deployment-options: cloud-ide, desktop-ide
-:page-aliases: setup.adoc, connect-eu-cloud.adoc, load-acb-web-ide.adoc, log-in-anypoint-platform.adoc, get-started.adoc
+:page-aliases: setup.adoc, connect-eu-cloud.adoc, load-acb-web-ide.adoc, log-in-anypoint-platform.adoc, get-started.adoc, start-acb-cloud.adoc
 :restart-ide: Restart the IDE to load all your changes. 
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -8,40 +7,16 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studio Code. Both the desktop and cloud IDEs for Anypoint Code Builder share these extensions. The cloud IDE provides built-in extensions to the code-server implementation of Visual Studio Code for the web.
-
-* <<set-up-desktop>>: For the desktop IDE, you must load the extension pack to your local Visual Studio Code IDE. 
-* <<set-up-web>>: For the cloud IDE, you must sign in to Anypoint Platform and acquire the permission to use Anypoint Code Builder. 
+Anypoint Code Builder is built from the Anypoint Extension Pack for Visual Studio Code. You must load the extension pack to your local Visual Studio Code IDE.
 
 [[set-up-desktop]]
-== Set up the Desktop IDE
+== Set up Anypoint Code Builder
 
 //start desktop IDE
 include::anypoint-code-builder::partial$acb-start-desktop.adoc[]
 
-[[set-up-web]]
-== Launch the Cloud IDE 
-
-//intro: launch cloud IDE
-include::partial$acb-start-cloud.adoc[tag="start-cloud-intro"]
-
-
-//heading: before you begin
-[[prereqs-cloud]]
-include::partial$acb-start-cloud.adoc[tag="heading-before-you-begin",leveloffset=+2]
-
-//content: before you begin
-include::partial$acb-start-cloud.adoc[tag="before-you-begin"]
-
-//heading: launch cloud IDE
-[[login-cloud]]
-include::partial$acb-start-cloud.adoc[tag="heading-launch-cloud",leveloffset=+2]
-
-//content: launch cloud IDE
-include::partial$acb-start-cloud.adoc[tag=launch-cloud]
-
 [[login-ide]]
-== Sign in to Anypoint Platform from the IDE
+== Sign in to Anypoint Platform from Anypoint Code Builder
 
 Some Anypoint Code Builder features require you to sign in directly from the IDE to Anypoint Platform. The IDE prompts you when login is necessary and guides you through the login process. However, it is a good practice to sign in from the IDE after opening MuleSoft features in the IDE. 
 
@@ -58,7 +33,7 @@ From the IDE, you can sign in from the status bar or through a command, and you 
 [[login-status-bar]]
 === Sign in to Anypoint Platform from the Status Bar
 
-The status bar in the desktop and cloud IDEs shows your login status:
+The status bar in the IDE shows your login status:
 
 * *Not logged in to Anypoint Platform* indicates that you must sign in to perform tasks that require a connection to Anypoint Platform. 
 +
@@ -100,7 +75,7 @@ After logging you in, Anypoint Platform displays a *You can close this page now*
 . To verify your login, ensure that *<your-username>* replaces *Not logged in to Anypoint Platform*. 
 
 [[logout-status-bar]]
-=== Log Out from Anypoint Platform from the IDE
+=== Log Out from Anypoint Platform from Anypoint Code Builder
 
 Log out from the IDE by:
 
@@ -109,7 +84,7 @@ Log out from the IDE by:
 
 
 [[change-user-account]]
-=== Sign In to a Different Anypoint Platform Account from the IDE
+=== Sign In to a Different Anypoint Platform Account from Anypoint Code Builder
 
 To use a different Anypoint Platform user account:
 
@@ -121,7 +96,7 @@ For guidance, see <<logout-status-bar>>.
 For more guidance, see <<login-status-bar>>.
 
 [[change-clouds]]
-== Set the Desktop IDE to a Different Control Plane
+== Set Anypoint Code Builder to a Different Control Plane
 
 In the desktop IDE, you can change your Anypoint Platform control plane to one of these clouds:
 
@@ -140,4 +115,4 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="mule-setti
 . Scroll to *Mule: Control Plane*.
 . Select the desired cloud.
 . {restart-ide}
-. Follow the steps in xref:anypoint-code-builder::start-acb.adoc#login-ide[Sign in to Anypoint Platform from the IDE].
+. Follow the steps in xref:anypoint-code-builder::start-acb.adoc#login-ide[Sign in to Anypoint Platform from Anypoint Code Builder].

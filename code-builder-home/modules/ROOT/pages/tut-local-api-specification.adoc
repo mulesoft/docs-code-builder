@@ -1,5 +1,4 @@
 = Iteratively Design and Implement an API Specification
-:page-deployment-options: desktop-ide
 :imagesdir: ../assets/images
 :page-aliases: local-api-specification-tutorial.adoc
 
@@ -11,8 +10,6 @@ Scaffold a REST API specification into an implementation project within your IDE
 The interface XML is automatically created in a Mule project during the scaffolding process. You define an API in a specification file within an API Design project.
 
 Iterative API design and implementation within the IDE takes place in a _multi-root workspace_ in VS Code. To map project folders for your API specification and implementation projects into a multi-root workspace, VS Code uses a file with the extension `.code-workspace`. For your projects to work properly, this file _must not reside within_ either project folder. In addition, Anypoint Code Builder permits only one pair of iterative design and implementation project folders per multi-root workspace. The procedures for creating the specification and implementation projects are designed to meet these requirements. For information in the VS Code documentation, see https://code.visualstudio.com/docs/editing/workspaces/multi-root-workspaces[Multi-root Workspaces^].
-
-NOTE: The procedures are currently written for the desktop IDE only.
 
 [[prereqs]]
 == Before You Begin
@@ -113,7 +110,7 @@ version: 1.0.development
 
 Scaffold your local REST API specification into a local implementation project. The scaffolding process creates a configuration XML for your implementation.
 
-Local projects reside in the Anypoint Code Builder IDE, whether the projects are in your desktop IDE or in the cloud IDE associated with your user account in Anypoint Platform. 
+Local projects reside in the Anypoint Code Builder IDE.
 
 To scaffold your local API specification:
 
@@ -387,8 +384,7 @@ Team members in your business group can import your API specification from Excha
 * Use the keyboard shortcuts:
 ** Mac: Cmd+Shift+p
 ** Windows: Ctrl+Shift+p
-* In the desktop IDE, select *View* > *Command Palette*. 
-* In the cloud IDE, click the image:anypoint-code-builder::icon-menu.png["",18,18] (menu) icon, and select *View* > *Command Palette*.
+* Select *View* > *Command Palette*.
 ====
 
 .. Provide this command:
@@ -430,8 +426,7 @@ To remove your project from a multi-root workspace:
 * Use the keyboard shortcuts:
 ** Mac: Cmd+Shift+p
 ** Windows: Ctrl+Shift+p
-* In the desktop IDE, select *View* > *Command Palette*. 
-* In the cloud IDE, click the image:anypoint-code-builder::icon-menu.png["",18,18] (menu) icon, and select *View* > *Command Palette*.
+* Select *View* > *Command Palette*.
 ====
 
 .. Provide this command:

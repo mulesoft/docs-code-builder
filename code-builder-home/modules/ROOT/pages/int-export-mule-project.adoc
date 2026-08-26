@@ -1,5 +1,4 @@
 = Exporting Mule Projects
-:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: package-mule-application.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -20,11 +19,9 @@ The shareable JAR includes:
 * `mule-artifact.json`
 * `pom.xml`
 
-The IDEs generate the dependencies automatically based on the settings in the POM file (`pom.xml`). You or your teammates can import the JAR file and continue developing in Anypoint Code Builder or Anypoint Studio (Studio). 
+The IDE generates the dependencies automatically based on the settings in the POM file (`pom.xml`). You or your teammates can import the JAR file and continue developing in Anypoint Code Builder or Anypoint Studio (Studio). 
 
-To import a shareable JAR, see xref:int-import-mule-project.adoc#desktop-project-package[Import a Shareable Project JAR File into the Desktop IDE] and xref:int-import-mule-project.adoc#web-project-package[Import a Shareable Project JAR File into the Cloud IDE].
-
-If you are migrating from Cloud IDE to Desktop IDE, see xref:int-import-mule-project.adoc#migrate-cloud-to-desktop[Migrate a Project from Cloud IDE to Desktop IDE] for migration options and steps.
+To import a shareable JAR, see xref:int-import-mule-project.adoc#desktop-project-package[Import a Shareable Project JAR File into Anypoint Code Builder].
 
 [[deployable]]
 == Deployable JAR
@@ -39,7 +36,7 @@ For more information on deployment options, see xref:hosting-home::index.adoc#ru
 
 == Before You Begin
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access the IDE].
 * xref:int-create-integrations.adoc[Create an integration].
 
 [[export-mule-project]]
@@ -71,21 +68,11 @@ MuleSoft: Export Mule Project
 [[find-download-jar]]
 === Find or download the JAR
 
-When packaging completes, find or download the JAR file by following the prompts that appear in the IDE:
+When packaging completes, find the JAR file by following the prompts that appear in the IDE:
 
-* In the desktop IDE, click *Open Folder* to open the directory that contains the JAR file in the Explorer view.
-* In the cloud IDE, click *Download File* to download the JAR file to a directory on your local machine:
-+
---
-** For a JAR file that is 32 MB or smaller, the IDE automatically downloads the file to your Downloads folder.
-** For a JAR file that is larger than 32 MB, the IDE disallows downloads to built-in folders that contain system files, such as the Downloads, Desktop, or Documents folder.
-+
-... Select a folder for the download.
-... At the prompt, click *View files* to allow the site to view the files in the folder you select.
-... Click *Save Changes*.
---
+* Click *Open Folder* to open the directory that contains the JAR file in the Explorer view.
 
-The terminal window in the IDE also provides the path to the JAR, in the `/target` directory under your project folder. In the desktop IDE, you can find the JAR file in the Explorer, under Java Projects:
+The terminal window in the IDE also provides the path to the JAR, in the `/target` directory under your project folder. You can find the JAR file in the Explorer, under Java Projects:
 
 image::int-export-deployable.png["Deployable JAR file in the Java Projects folder"]
 

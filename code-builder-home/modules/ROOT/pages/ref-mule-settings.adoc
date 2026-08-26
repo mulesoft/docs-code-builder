@@ -1,12 +1,11 @@
 = MuleSoft Settings
-:page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 //LOGO (web, desktop, or both)
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
-Anypoint Code Builder provides configurable settings that apply at the IDE level, across all your Anypoint Code Builder projects. Many of the default settings are suitable for most users. However, if you use the EU cloud, it is important to change the default US cloud setting. Some settings are configurable in the desktop IDE only.
+Anypoint Code Builder provides configurable settings that apply across all your Anypoint Code Builder projects. Many of the default settings are suitable for most users. However, if you use the EU cloud, it is important to change the default US cloud setting.
 
 To open the settings: 
 
@@ -96,12 +95,8 @@ For information about secure configuration properties, see xref:int-create-secur
 
 Metaspace is an area for non-heap memory used to store class metadata, constant pool information, and method bytecode.
 
-Typically, the default of *1g* (1 GB) is sufficient. However, you can change the metaspace size when installing Mule Runtime engine (Mule). 
+Typically, the default of *1g* (1 GB) is sufficient. However, you can change the metaspace size when installing Mule Runtime engine (Mule).
 //TODO: WHEN INSTALLING MULE FOR THE FIRST TIME ONLY, OR WHAT ABOUT WHEN UPDATING?
-
-If you are using the cloud IDE, be aware of the memory available to the container before changing this value.
-//TODO: HOW WOULD THEY KNOW 
-
 
 [[setting-region]]
 == Mule: Control Plane
@@ -110,8 +105,6 @@ Select a control plane for your desktop IDE:
 
 * *US Cloud* (default)
 * *EU Cloud*
-
-In the cloud IDE, this setting is not configurable because it is set automatically based on the region where your Anypoint Platform account resides. 
 
 For more information, see xref:index.adoc#us-eu-clouds[US and EU Cloud Hosts].
 

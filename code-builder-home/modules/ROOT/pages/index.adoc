@@ -1,5 +1,4 @@
 = Anypoint Code Builder Overview
-:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: ui-help.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
@@ -8,13 +7,13 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 // include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 //intro
-Use the Anypoint Code Builder integrated development environment (IDE) for your API designs, implementations, and integration development. Work locally with Anypoint Code Builder for Desktop on Microsoft Visual Studio Code (VS Code) or from your browser with Anypoint Code Builder through Anypoint Platform. The IDEs support the development lifecycle:
+Use the Anypoint Code Builder integrated development environment (IDE) for your API designs, implementations, and integration development. Work locally with Anypoint Code Builder for Desktop on Microsoft Visual Studio Code (VS Code). The IDE supports the development lifecycle:
 
 * API specification design, a mocking service for testing, source control, and publication to Anypoint Exchange
 * API implementation features for importing supported API specifications (such as OAS, RAML, AsyncAPI, or GraphQL) and autogenerating interfaces (scaffolding) for flows and error handlers within a Mule application
 * Integration development to connect systems, transform data to required formats, and provide business logic to manage messages and events programmatically within a Mule application
 
-The desktop and cloud IDEs offer the same Anypoint Code Builder functionality. Use the IDE that works better for your needs. You can share project snapshots between IDEs or with members of your team by using import and export features or by using a <<scm, source control management (SCM) system>> of your choice.
+You can share project snapshots with members of your team by using import and export features or by using a <<scm, source control management (SCM) system>> of your choice.
 
 For an introduction to Anypoint Code Builder, see our Trailhead badge, https://trailhead.salesforce.com/content/learn/modules/mulesoft-anypoint-code-builder-quick-look[Anypoint Code Builder: Quick Look^] (login required). Sign up if you don't have a Trailhead account.
 
@@ -22,12 +21,12 @@ For an introduction to Anypoint Code Builder, see our Trailhead badge, https://t
 [[extension-pack]]
 == Anypoint Extension Pack
 
-Get the Anypoint Code Builder experience through the Anypoint Extension Pack for Visual Studio Code. The cloud-based extensions are preinstalled into a code-server implementation that makes VS Code accessible from a browser. The desktop extensions require installation to your VS Code IDE. See xref:start-acb.adoc[].
+Get the Anypoint Code Builder experience through the Anypoint Extension Pack for Visual Studio Code. The extensions require installation to your VS Code IDE. See xref:start-acb.adoc[].
 
 [[us-eu-clouds]]
 == Cloud Hosts
 
-Anypoint Code Builder is available through Anypoint Platform from US, EU, Canada (desktop IDE only), Japan (desktop IDE only), India (desktop IDE only), and Australia (desktop IDE only) cloud hosts. To help your organization meet emerging regulatory requirements that differ by region, Anypoint Platform does not share organization information, permissions, account data, or projects between hosts.
+Anypoint Code Builder is available through Anypoint Platform from US, EU, Canada, Japan, India, and Australia cloud hosts. To help your organization meet emerging regulatory requirements that differ by region, Anypoint Platform does not share organization information, permissions, account data, or projects between hosts.
 
 [%header,cols="1,1,2"]
 |===
@@ -41,30 +40,30 @@ Anypoint Code Builder is available through Anypoint Platform from US, EU, Canada
 |https://eu1.anypoint.mulesoft.com/login[eu1.anypoint.mulesoft.com^]
 |EU-compliant host. MuleSoft hosts this control plane within EU (Frankfurt) data centers.
 
-|Canada Cloud (desktop IDE only)
+|Canada Cloud
 |https://ca1.platform.mulesoft.com/login/[ca1.platform.mulesoft.com^]
 |MuleSoft hosts this control plane within Canada (North America) data centers.
 
-|Japan Cloud (desktop IDE only)
+|Japan Cloud
 |https://jp1.platform.mulesoft.com/login/[jp1.platform.mulesoft.com^]
 |MuleSoft hosts this control plane within Japan (APAC) data centers.
 
-|India Cloud (desktop IDE only)
+|India Cloud
 |https://in1.platform.mulesoft.com/login/[in1.platform.mulesoft.com^]
 |MuleSoft hosts this control plane within India (APAC) data centers.
 
-|Australia Cloud (desktop IDE only)
+|Australia Cloud
 |https://au1.platform.mulesoft.com/login/[au1.platform.mulesoft.com^]
 |MuleSoft hosts this control plane within Australia (APAC) data centers.
 |===
 
 Anypoint Platform hosts deployment targets for managed Mule runtime versions and related data, including data and metadata about your Mule implementations.
 
-To change the host from the default (US), see xref:start-acb.adoc#change-clouds[Set the Desktop IDE to a Different Control Plane].
+To change the host from the default (US), see xref:start-acb.adoc#change-clouds[Set Anypoint Code Builder to a Different Control Plane].
 
-Use of Anypoint Code Builder in the desktop and cloud IDEs requires an Anypoint Platform user account. Access to the cloud IDE and use of some features in both IDEs require permissions set by an organization administrator (see xref:start-configure-permissions.adoc[]).
+Use of Anypoint Code Builder requires an Anypoint Platform user account. Use of some features requires permissions set by an organization administrator (see xref:start-configure-permissions.adoc[]).
 
-To open Anypoint Code Builder from Anypoint Platform, see xref:start-acb.adoc#set-up-web[Launch the Cloud IDE]. If you do not have an Anypoint Platform account through your organization, you can sign up in the US or EU cloud host for Anypoint Platform.
+If you do not have an Anypoint Platform account through your organization, you can sign up in the US or EU cloud host for Anypoint Platform.
 
 See xref:hosting-home::index.adoc[] for more information.
 
@@ -99,13 +98,13 @@ A flow reference enables you to trigger execution of a flow or subflow from anot
 == Anypoint Platform Product Integrations
 
 //relationships to our other products
-Both the web and desktop Anypoint Code Builder IDEs integrate with key Anypoint Platform products and features:
+Anypoint Code Builder integrates with key Anypoint Platform products and features:
 
 * Anypoint Exchange for publishing the API specifications that you create and importing API specifications and development resources (such as connectors, integration project templates and examples) into your projects
 * CloudHub and CloudHub 2.0 for deploying the implementations and integrations that you build
 * MuleSoft VCS for importing API specification projects into Anypoint Code Builder and optionally, synchronizing imported projects by using the Anypoint source control management (SCM) system
 
-The use of features provided by Anypoint Platform products through the cloud and desktop IDEs requires a connection from the IDE to Anypoint Platform. You establish this connection by logging in to your Anypoint Platform account from the IDE. For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform from the IDE].
+The use of features provided by Anypoint Platform products through the IDE requires a connection from the IDE to Anypoint Platform. You establish this connection by logging in to your Anypoint Platform account from the IDE. For more information, see xref:start-acb.adoc#login-ide[Sign in to Anypoint Platform from Anypoint Code Builder].
 
 [[scm]]
 == Source and Version Control

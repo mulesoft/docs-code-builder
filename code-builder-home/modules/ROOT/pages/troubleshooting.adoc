@@ -1,6 +1,5 @@
 = Troubleshooting
-:page-deployment-options: cloud-ide, desktop-ide
-:page-aliases: manage-web-ide-instance.adoc
+:page-aliases: manage-web-ide-instance.adoc, troubleshoot-cloud-ide-disk.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
@@ -15,7 +14,6 @@ Troubleshoot errors and warnings you encounter when using Anypoint Code Builder.
 * xref:troubleshoot-implementation-errors.adoc[]
 * xref:troubleshoot-mule-runtime-errors.adoc[]
 * xref:troubleshoot-loading-errors.adoc[]
-* xref:troubleshoot-cloud-ide-disk.adoc[]
 * xref:troubleshoot-mcp-server.adoc[]
 +
 For other issues and workarounds, see xref:acb-release-notes.adoc#known-issues[Known Issues] in the Anypoint Code Builder Release Notes.
@@ -25,14 +23,6 @@ For tasks that support the troubleshooting process, see:
 * <<check-logs>>
 * <<check-console-logs>>
 * <<export-troubleshooting-info>>
-* <<manage-cloud>>
-
-[[cloud-ide-environment]]
-== About the Cloud IDE Environment
-
-The Anypoint Code Builder cloud IDE is a managed, hosted environment. Your workspace is a dedicated directory assigned to you at `/home/_your-user-name_/`, and you have full control to create, edit, and manage files within it.
-
-Unlike a local development environment, you don't have access to underlying server system folders, and you don't need to. All troubleshooting steps provide solutions you can perform directly from the IDE without requiring server access or file system permission changes.
 
 [[check-logs]]
 == Check for Problems and Issues
@@ -91,30 +81,6 @@ Collecting information...: Generating compressed file
 The command places the file in your home directory. The filename has the prefix `acb-troubleshooting`, for example, `/Users/me/acb-troubleshooting-w9ffppmq.tar.gz`.
 . Provide a copy of the file to the support team. 
 
-[[manage-cloud]]
-== Manage Your Cloud IDE Instance
-
-Manage your cloud IDE instance directly from the Anypoint Code Builder in Anypoint Platform.
-
-image::web-ide-management-central-page.png["Cloud IDE management page"]
-
-[calloutlist]
-. *Version and IDE Details*: 
-+
-Shows the version of your Anypoint Code Builder cloud IDE instance. You can hover over *View IDE Details* to view some internal details about your cloud IDE instance:
-
-* *Image*: The ID of the image of your cloud IDE instance.
-* *URL*: The URL to directly access your cloud IDE instance. +
-This URL is necessary to ping your locally deployed Mule application when debugging.
-* *Created at*: Date and time of the creation of the cloud IDE instance.
-. *Reboot*: Button for rebooting your cloud IDE instance.
-. *Delete*: Button for deleting your cloud IDE instance.
-+
-[WARNING]
---
-Deletion is permanent and cannot be undone. The process removes all the projects hosted on the IDE instance.
---
-
 [[check-extension-pack]]
 == Check for Anypoint Extension Pack Installation
 
@@ -125,7 +91,7 @@ To determine whether Anypoint Code Builder extensions are installed in the deskt
 To find this icon, see xref:start-discover-ui.adoc[].
 . In the panel's search field, type _Anypoint_ to locate *Anypoint Extension Pack* in the list of installed extensions.
 
-* If the extension pack is _not_ installed, follow the installation steps at xref:start-acb.adoc#set-up-desktop[Set up the Desktop IDE].
+* If the extension pack is _not_ installed, follow the installation steps at xref:start-acb.adoc#set-up-desktop[Set up Anypoint Code Builder].
 * If the extension pack is installed but the MuleSoft icon is not present in the Activity Bar, see xref:troubleshoot-missing-features.adoc#missing-mulesoft-icon[MuleSoft Icon Missing from Activity Bar] to display the icon.
 
 [[maven-401-error]]
@@ -134,18 +100,6 @@ To find this icon, see xref:start-discover-ui.adoc[].
 If Maven fails to download dependencies with a 401 Unauthorized error when opening or building a MuleSoft project, configure authentication for the MuleSoft Enterprise Repository.
 
 See xref:ref-acb-maven.adoc#authenticating-to-mulesoft-repositories[Authenticating to MuleSoft Repositories] for instructions on configuring your credentials.
-
-[[folder-permission]]
-== Folder Permission Error
-
-Error:
-----
-EACCES: permission denied, mkdir '/home/XXXX/.vscode'
-----
-
-Cause: In the Anypoint Code Builder cloud IDE, you must save your work in your designated workspace folder to keep your projects secure and accessible. This error occurs when you attempt to create or save a project outside of that workspace, in a system-level folder such as `/home`, `/`, or `.config`.
-
-Solution: Create and import your projects within your `/home/_your-user-name_/` folder or a subdirectory under it. The cloud IDE automatically provides this folder with your username. Also avoid `/home/AnypointCodeBuilder`, which is reserved for Mule and Java downloads.
 
 [[settings-sync-home-directory]]
 == Settings Sync Overwrites Home Directory on a New Computer

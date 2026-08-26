@@ -1,5 +1,4 @@
 = Controlling Source Files
-:page-deployment-options: cloud-ide, desktop-ide
 :no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can use the IDE to generate a repo in GitHub and publish your project files to that remote repo. The process also implicitly initializes a local repo in the IDE.
 :init-local: Initializing and committing your project files into a local repo in the IDE is a prerequisite to publishing and syncing files into a remote repo in GitHub.
 :repo-in-github: If you have an empty repo in GitHub, you can publish your project files to the repo from the IDE.
@@ -12,7 +11,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="scm-intro-best-practice"]
 A useful SCM provides change history of each file and a branching methodology to maintain project quality, full traceability, the ability to restore earlier versions of your files, and a way to recover source code if your Anypoint Code Builder environment is lost or removed. 
 
-GitHub and the Git command line interface (CLI) are widely used in the industry and supported by VS Code out-of-the-box, with minimal configuration, in the desktop and cloud IDE. The procedures on this page show how to set up and use GitHub for source control. VS Code extensions for other SCM systems are also available for you to set up and use. For information, see https://code.visualstudio.com/docs/sourcecontrol/overview#_scm-providers[SCM Providers^]. 
+GitHub and the Git command line interface (CLI) are widely used in the industry and supported by VS Code out-of-the-box, with minimal configuration. The procedures on this page show how to set up and use GitHub for source control. VS Code extensions for other SCM systems are also available for you to set up and use. For information, see https://code.visualstudio.com/docs/sourcecontrol/overview#_scm-providers[SCM Providers^]. 
 
 For more information, see https://code.visualstudio.com/docs/sourcecontrol/overview[Using Git source control in VS Code^] in the VS Code documentation. For detailed information about Git, see the https://git-scm.com/book[Git documentation^].
 
@@ -29,7 +28,7 @@ If you do not have an account, create one from the https://github.com/signup[Joi
 +
 If Git is not installed on your computer, follow the https://github.com/git-guides/install-git[Git installation instructions^] for your machine.
 
-* Access to Anypoint Code Builder from the desktop or cloud IDE
+* Access to Anypoint Code Builder
 +
 For setup and installation information, see xref:start-acb.adoc[], and be sure to meet all prerequisites. 
 
@@ -73,7 +72,7 @@ If two-factor authentication is enabled on your GitHub account and you are promp
 ** <<sync-changes>>
 
 [[set-up-repo]]
-== Set Up a Repository from the IDE
+== Set Up a Repository from Anypoint Code Builder
 
 Set up a repo for your design, integration, or implementation project from the IDE. If your project is already set up to sync from the IDE with a repo in an SCM that you want to use, no additional setup is required. You can sync your changes without further setup. For an example, see <<sync-changes>>.
 
@@ -99,7 +98,7 @@ To set up a remote GitHub repo from the IDE for your projects, the following sce
 {extra-repo-continued}
 * <<clone-repo>>
 +
-If a design, implementation, or integration project is already stored in a repo on GitHub, you can clone it into the cloud or desktop IDE. 
+If a design, implementation, or integration project is already stored in a repo on GitHub, you can clone it into the IDE.
 
 [[create-repo]]
 === Generate and Publish to a Repository in GitHub
@@ -348,9 +347,9 @@ To https://github.com/me/my-repo.git
 For common Git commands, see https://docs.github.com/en/get-started/using-git/about-git[About Git^] in the GitHub documentation, or find all commands in the https://git-scm.com/docs[Git command reference^].
 
 [[clone-repo]]
-== Clone a Project Repository into the IDE
+== Clone a Project Repository into Anypoint Code Builder
 
-If your design, implementation, or integration project is already stored in a repo on GitHub, you and your team members can clone it into Anypoint Code Builder desktop or cloud IDEs. Cloning is helpful for sharing your project with another IDE, for enabling you to edit source and sync changes from the IDE, and for retrieving a backup of a deleted project. For example, you can work on the same project in the desktop and cloud IDE if your project is stored in a  repo to which you and your team have access.
+If your design, implementation, or integration project is already stored in a repo on GitHub, you and your team members can clone it into Anypoint Code Builder. Cloning is helpful for sharing your project, for enabling you to edit source and sync changes from the IDE, and for retrieving a backup of a deleted project. For example, you can work on the same project on different computers if your project is stored in a repo to which you and your team have access.
 
 //open ACB terminal:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
