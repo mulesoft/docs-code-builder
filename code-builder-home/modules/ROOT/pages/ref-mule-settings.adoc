@@ -102,6 +102,34 @@ Typically, the default of *1g* (1 GB) is sufficient. However, you can change the
 If you are using the cloud IDE, be aware of the memory available to the container before changing this value.
 //TODO: HOW WOULD THEY KNOW 
 
+[[setting-fips]]
+== Mule › Runtime: FIPS Compliance
+
+Use Mule runtime FIPS settings to configure local runtime behavior for regulated environments.
+
+[%header,cols="35,65"]
+|===
+|Setting |Description
+
+|`mule.runtime.fipsEnabled`
+|Enables FIPS runtime behavior when set to `true`. The default is `false`.
+
+|`mule.runtime.fipsMode`
+|Selects the compliance mode, such as FIPS 140-2 or FIPS 140-3.
+
+|`mule.runtime.fipsCustomCacertsPath`
+|Optional path to a custom `cacerts` file for FIPS workflows.
+|===
+
+When FIPS is enabled, Mule runtime initialization can include FIPS-specific startup behavior and keystore handling required for compliant execution.
+
+This setting doesn't, by itself, certify an application as compliant. Configure Mule runtime and dependencies to meet your organization and regulatory requirements.
+
+For Mule runtime requirements and setup instructions, see:
+
+* xref:mule-runtime::fips-140-2-compliance-support[]
+* xref:mule-runtime::fips-140-3-compliance-support[]
+
 
 [[setting-region]]
 == Mule: Control Plane
