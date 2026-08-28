@@ -4,7 +4,7 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-Import a project JAR file or folder into a workspace in your IDE.
+Import a project JAR file or folder into a workspace.
 A project directory contains a Mule application for an integration or implementation.
 
 You can also import a Maven multi-module project and apply the properties, dependencies, and versions from a Maven parent POM file to the `pom.xml` file of each child module. For more information about the Maven parent POM file, see https://maven.apache.org/pom/maven/index.html[Maven Project Parent POM].
@@ -16,7 +16,7 @@ To _export_ a JAR file that packages a project with resources from your applicat
 == Before You Begin
 
 * xref:start-acb.adoc[Set up and access Anypoint Code Builder].
-* Close any open project in your IDE.
+* Close any open project.
 +
 --
 // Pointer to Close Project
@@ -43,11 +43,11 @@ Import a shareable JAR file for a snapshot of a Mule project into Anypoint Code 
 
 To create a shareable JAR, see xref:int-export-mule-project.adoc#export-mule-project[Export Mule Project].
 The contents are lightweight because they don't include dependencies.
-The IDE generates the dependencies configured in the `pom.xml` for the project. 
+Anypoint Code Builder generates the dependencies configured in the `pom.xml` for the project.
 
 To import a shareable JAR file in Anypoint Code Builder:
 
-. Ensure that no project is open in the IDE.
+. Ensure that no project is open.
 // include for this procedure
 include::partial$acb-open-packaged-sources.adoc[tags="open-command-palette-desktop"]
 include::partial$acb-open-packaged-sources.adoc[tags="load-shareable-jar"]
@@ -63,11 +63,11 @@ include::partial$acb-open-packaged-sources.adoc[tags="test-project"]
 
 Although it is more common to import a shareable JAR file or to open a project workspace from file directory, you can also drag a Mule project folder into the Explorer view and open the project in a VS Code workspace.
 
-Open any valid project folder, including a project from Anypoint Studio (Studio) that's stored on your desktop. Alternatively, use the procedure in <<both-open-project-folder>> to open the project from your file directory instead of dragging and dropping the folder into the IDE.
+Open any valid project folder, including a project from Anypoint Studio (Studio) that's stored on your desktop. Alternatively, use the procedure in <<both-open-project-folder>> to open the project from your file directory instead of dragging and dropping the folder into Anypoint Code Builder.
 
 To import a project folder into Anypoint Code Builder:
 
-. Ensure that no project is open in the IDE.
+. Ensure that no project is open.
 include::partial$acb-open-packaged-sources.adoc[tags="import-project-folder-desktop"]
 . If your Mule project folder is closed, <<both-open-project-folder, open a workspace>> for the project at the project's _root_ directory.
 +

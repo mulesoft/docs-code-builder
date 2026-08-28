@@ -3,7 +3,7 @@
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-When your integration or implementation builds successfully within the Anypoint Code Builder IDE, the application deploys to your local development environment.
+When your integration or implementation builds successfully within Anypoint Code Builder, the application deploys to your local development environment.
 
 Configure the *HTTP Listener* from xref:http-connector::index.adoc[Anypoint Connector for HTTP] (HTTP Connector) to trigger the execution of a flow in a deployed application. Or trigger the flow locally from the built-in terminal in Anypoint Code Builder, or from a VS Code extension like Thunder Client.
 
@@ -20,12 +20,12 @@ To create a project, see xref:int-create-integrations.adoc[] or xref:imp-impleme
 [[trigger-urls]]
 == URLs for Triggering a Flow from an HTTP Listener
 
-For integrations and implementations that you build and deploy within your IDE during the development process, the URL to use for triggering an HTTP Listener differs depending on whether the listener is within the configuration XML for a scaffolded interface that is generated from an API specification or within a configuration XML file that does not implement a scaffolded interface.
+For integrations and implementations that you build and deploy during the development process, the URL to use for triggering an HTTP Listener differs depending on whether the listener is within the configuration XML for a scaffolded interface that is generated from an API specification or within a configuration XML file that does not implement a scaffolded interface.
 
 Typically, for apps that use an HTTP Listener, you configure the host to `0.0.0.0` and the port to `8081`. If port `8081` is in use by another application, you can use a similar port, such as `8082`.
 
 [[trigger-url-no-interface]]
-* Trigger a flow within a configuration XML that _does not_ contain a scaffolded interface by using a URL similar to this one from your IDE's terminal: 
+* Trigger a flow within a configuration XML that _does not_ contain a scaffolded interface by using a URL similar to this one from the terminal:
 +
 ----
 http://localhost:8081/mypath
@@ -46,7 +46,7 @@ The port and host are defined in the `<http:listener-connection/>` element, and 
 ----
 
 [[trigger-url-interface]]
-* Trigger a flow from the listener within a scaffolded interface by using a URL similar to this one from your IDE's terminal: 
+* Trigger a flow from the listener within a scaffolded interface by using a URL similar to this one from the terminal:
 +
 ----
 http://localhost:8081/api/my-endpoint
@@ -110,9 +110,9 @@ The URL adds `/api` before the `/flights` endpoint to make the request through t
 [[trigger-flow]]
 == Trigger a Flow
 
-Use the terminal in Anypoint Code Builder to trigger a flow through an HTTP Listener in an integration or implementation project that is deployed locally, within the IDE.
+Use the terminal in Anypoint Code Builder to trigger a flow through an HTTP Listener in an integration or implementation project that is deployed locally.
 
-TIP: The examples in this procedure show how to trigger the flow with a `curl` command from the IDE's terminal. You can also use Thunder Client, a third-party extension for VS Code, to trigger a flow with the same URLs.
+TIP: The examples in this procedure show how to trigger the flow with a `curl` command from the terminal. You can also use Thunder Client, a third-party extension for VS Code, to trigger a flow with the same URLs.
 
 Before attempting to trigger a flow, review <<trigger-urls>>, and verify that you meet the prerequisites in <<before-you-begin>>.
 
@@ -122,7 +122,7 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-run-d
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="deploy-locally"]
 //open terminal
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
-. In the IDE's terminal, click the name of the shell to use, such as PowerShell (for Windows), Bash (`bash`), or Z shell (`zsh` for Mac).
+. In the terminal, click the name of the shell to use, such as PowerShell (for Windows), Bash (`bash`), or Z shell (`zsh` for Mac).
 +
 Alternatively, click the *+* icon in the terminal to open a new command prompt.
 . At the command prompt, provide a `curl` command to trigger the flow.

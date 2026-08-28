@@ -18,7 +18,7 @@ MUnit is a MuleSoft unit testing framework for creating and running unit tests o
 
 With MUnit, create MUnit tests and MUnit test suites. An MUnit test is an individual test case, defined by the `<munit:test>` element, which includes specific validations and assertions to test the functionality of a Mule application. An MUnit test suite is a container for multiple MUnit tests. It organizes tests in an XML file typically found in the `/src/test/munit` directory.
 
-Anypoint Code Builder provides a *Testing* panel from which you can run tests. In the *Explorer*, test suites are also located within the project directory `{munit-src}`. The IDE also shows a canvas for creating and maintaining MUnit test suits, a Testing Results panel with the status of tests, and logs that identify the status of tests. 
+Anypoint Code Builder provides a *Testing* panel from which you can run tests. In the *Explorer*, test suites are also located within the project directory `{munit-src}`. Anypoint Code Builder also shows a canvas for creating and maintaining MUnit test suits, a Testing Results panel with the status of tests, and logs that identify the status of tests.
 
 Anypoint Code Builder - MUnit Extension, part of the Anypoint Extension Pack, supports MUnit functionality in Anypoint Code Builder. For information about extensions, see xref:index.adoc#extension-pack[Anypoint Extension Pack].
 
@@ -119,7 +119,7 @@ Generate the basic structure for an MUnit test designed to test a specific flow 
 . Open an MUnit test suite file in the `src/test/munit/` folder.
 . Click *Add*, and then select *Test scope*.
 . In the panel that appears, select *Test*.
-. The IDE creates an empty test in the currently open test suite.
+. Anypoint Code Builder creates an empty test in the currently open test suite.
 
 [[create-test-from-xml]]
 ==== Create a Test from the Code Editor
@@ -162,12 +162,12 @@ For guidance, see <<run>>.
 == Open MUnit Tests
 
 Open the test suite XML from the *Testing* panel or the *Explorer*. + 
-After the February 2025 release, the IDE shows a canvas with the test components, or provides a link to build a new test.   
+After the February 2025 release, Anypoint Code Builder shows a canvas with the test components, or provides a link to build a new test.
 
 [NOTE]
 Anypoint Code Builder requires MUnit 3.4.0 or later to create MUnit test suites from the canvas.
 
-* *Testing panel* - Open the *Testing* panel from the activity bar in the IDE:
+* *Testing panel* - Open the *Testing* panel from the activity bar:
 //open project (with tests) step as local variable
 . {open-project} 
 . Click image:anypoint-code-builder::icon-munit-testing.png["",18,18] (*Testing*) to open the *Testing* panel.
@@ -201,7 +201,7 @@ Run MUnit tests using any of these options:
 
 If you run a test, a test build executes, and the Terminal displays the progress of the test. If all tests execute successfully, the build succeeds. Otherwise, the build fails. 
 
-The IDE displays the results of the tests in the *Testing* panel, the *Terminal*, and the *Test Results* panels. Time-stamped logs are also available from the *Test Results* panel. You can clear the results at any time.
+Anypoint Code Builder displays the results of the tests in the *Testing* panel, the *Terminal*, and the *Test Results* panels. Time-stamped logs are also available from the *Test Results* panel. You can clear the results at any time.
 
 //
 //RUN: FROM TEST PANEL
@@ -502,7 +502,7 @@ For more guidance, see <<run-test-xml>>.
 +
 image:anypoint-code-builder::munit-test-coverage-panel.png["Test coverage percentages after running tests with coverage"]
 
-* In the activity bar, click (image:anypoint-code-builder::icon-explorer.png["",18,18]) (*Explorer*). The IDE shows Coverage for directories and files.
+* In the activity bar, click (image:anypoint-code-builder::icon-explorer.png["",18,18]) (*Explorer*), which shows coverage for directories and files.
 
 Numeric and graphic percentages both show the percentage of event processors executed by the MUnit test.
 
@@ -650,4 +650,3 @@ The following MUnit test example validates if the `payload` is the string `"Exam
 ---- 
 
 For information about `munit:execution`, `munit:validation`, and other MUnit testing elements, see xref:munit::munit-test-concept.adoc[] and xref:munit::event-processors.adoc[].
-

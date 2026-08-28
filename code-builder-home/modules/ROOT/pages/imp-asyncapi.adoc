@@ -97,7 +97,7 @@ When you create the project, Anypoint Code Builder:
 +
 ** Scaffolds your API specification into the new Mule project that opens to a configuration XML file with scaffolded flows (`flows.xml`), for example:
 +
-image::imp-asyncapi-project-ex.png["AsyncAPI implementation project in the IDE"]
+image::imp-asyncapi-project-ex.png["AsyncAPI implementation project"]
 +
 The configuration XML file includes the interface for your implementation project,
 with flows that contain Message Listener (`<apikit-asyncapi:message-listener/>`) configurations for each `publish` operation in the specification. 
@@ -134,7 +134,7 @@ Scaffold or re-scaffold an AsyncAPI specification from Exchange into an existing
 
 . Meet the prerequisites in <<prereqs>>.
 +
-Use of AsyncAPI features in the IDE requires enablement by an Anypoint Platform organization administrator.
+Use of AsyncAPI features requires enablement by an Anypoint Platform organization administrator.
 . In Anypoint Code Builder, open your project.
 +
 // Pointer to Command Palette
@@ -152,13 +152,13 @@ MuleSoft: Import Asset from Exchange
 ----
 My AsyncAPI Spec
 ----
-. Wait for the IDE to load a list of matches to the name, and then select your AsyncAPI specification.
+. Wait for Anypoint Code Builder to load a list of matches to the name, and then select your AsyncAPI specification.
 +
 {supported-spec-version}
 . When prompted for a version, select the version of the API to import, such as `_1.0.0_` or `_2.0.0_`.
 . Select *Yes* when prompted to scaffold the API dependency.
 +
-When the scaffolding process is complete, the IDE opens to a configuration XML file that contains the scaffolded flows (`flows.xml`). If you re-scaffolded the specification, see the <<important-rescaffold, important note>> about which new configurations are scaffolded into your project.
+When the scaffolding process is complete, Anypoint Code Builder opens to a configuration XML file that contains the scaffolded flows (`flows.xml`). If you re-scaffolded the specification, see the <<important-rescaffold, important note>> about which new configurations are scaffolded into your project.
 // Shared step on adding business logic
 include::partial$acb-reusable-steps.adoc[tags="implement-business-logic"]
 

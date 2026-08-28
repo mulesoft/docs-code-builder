@@ -505,9 +505,9 @@ The editor manages the configuration element. To change the actual encrypted val
 [[test-deploy]]
 == Test Encrypted Properties in Anypoint Code Builder
 
-If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command in your IDE. Adding these arguments to the setting enables the runtime to decrypt properties used in your application so that it deploys successfully to the local runtime in your IDE.
+If your application uses encrypted properties, add arguments for the encryption key and value to the runtime command. Adding these arguments to the setting enables the runtime to decrypt properties used in your application so that it deploys successfully to the local runtime.
 
-The setting avoids an error that causes the deployment to fail when you use  *Run and Debug* in your IDE:
+The setting avoids an error that causes the deployment to fail when you use *Run and Debug*:
 
 ----
 Couldn't find configuration property value for key ${encryption.key}
@@ -527,13 +527,13 @@ from properties provider environment properties provider
 In the example, `-M-D` is the required prefix, `encryption.key` is the default name of the encryption key, and `my-key-value` is the value used to encrypt the properties through the Secure Properties Tool.
 .. If you are using a variable such as `$\{env}` in `$\{env}.secure.yaml` to identify the properties file in `<secure-properties:config/>`, append a value for `$\{env}` to the *Runtime: Default Arguments* field. 
 +
-For example, for a file `dev.secure.yaml` that contains properties for the development environment within the IDE:
+For example, for a file `dev.secure.yaml` that contains properties for the development environment:
 +
 [source,env-configuration]
 ----
 -M-Denv=dev
 ----
-. Deploy the application locally within the IDE by pressing Cmd+shift+p (Mac) or Ctrl+shift+p (Windows), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
+. Deploy the application locally by pressing Cmd+shift+p (Mac) or Ctrl+shift+p (Windows), and entering *View: Show Run and Debug*, then clicking *Run and Debug*.
 +
 A successful deployment produces the following message in the *OUTPUT* tab of the output panel: 
 +
@@ -564,7 +564,7 @@ IMPORTANT: This procedure configures the _name_ of your encryption key but not i
 
 Before you begin: 
 
-* Run and test encrypted properties used by your Mule application in your IDE. See <<properties>> for guidance.
+* Run and test encrypted properties used by your Mule application. See <<properties>> for guidance.
 
 To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub or CloudHub 2.0: 
 
@@ -580,7 +580,7 @@ To hide sensitive values from the Runtime Manager UI when you deploy to CloudHub
 }
 ----
 +
-The _name_ (not the _value_) of your encryption key goes into a comma-separated `secureProperties` array. Later in this procedure, when you deploy your application to CloudHub, the IDE prompts you to provide the _value_ of the encryption key that you provided through the Secure Configuration Tool when encrypting your sensitive properties.
+The _name_ (not the _value_) of your encryption key goes into a comma-separated `secureProperties` array. Later in this procedure, when you deploy your application to CloudHub, Anypoint Code Builder prompts you to provide the _value_ of the encryption key that you provided through the Secure Configuration Tool when encrypting your sensitive properties.
 . Deploy your application to CloudHub or CloudHub 2.0 by pressing Cmd+shift+p (Mac) or Ctrl+shift+p (Windows) and providing this command:
 +
 [source, command]
@@ -596,7 +596,7 @@ image::deploy-to-cloudhub-icon-with-detail.png["Deploy to CloudHub rocket icon"]
 If you do not enter the same value, the application is able to upload to CloudHub or CloudHub 2.0, but the deployment fails because the encryption key value does not work.
 . Select the *Sandbox* environment for your deployment.
 +
-Other environments are not supported, and attempts to deploy to the *Design* environment fail with a `500` error code. While the deployment is in progress, the IDE provides the status of the process and prompts you to open the application in Runtime Manager when the deployment completes.  
+Other environments are not supported, and attempts to deploy to the *Design* environment fail with a `500` error code. While the deployment is in progress, Anypoint Code Builder provides the status of the process and prompts you to open the application in Runtime Manager when the deployment completes.
 +
 If you receive an error message that says the application `was not successfully deployed to "Sandbox" in CloudHub`, you can open Runtime Manager to check the logs and correct some issues.
 . Click *Open in Runtime Manager* to open the management options for the application in Runtime Manager.
@@ -622,12 +622,12 @@ For more information, see xref:runtime-manager::index.adoc[]. For information ab
 
 Hosts, ports, directories, and other settings in the configuration XML often differ depending on the target environment for your deployment, such as the development, sandbox, or production environment. For example, on your desktop, the host name is typically `localhost`, the port something like `8081`, and the directory is a path on your local machine rather than a path to an external host.
 
-When developing your application in the IDE, create separate properties files for each of the target environments that require different settings, and provide the appropriate settings in each file. 
+When developing your application, create separate properties files for each of the target environments that require different settings, and provide the appropriate settings in each file.
 
 [[filename-patterns]]
 Typical filenames follow patterns like these:
 
-* `dev.properties.yaml` or `dev.secure.yaml` for your development environment in the IDE
+* `dev.properties.yaml` or `dev.secure.yaml` for your development environment
 * `sandbox.properties.yaml` or `sandbox.secure.yaml` for a pre-production environment
 * `prod.properties.yaml` or `prod.secure.yaml` for the production environment
 
@@ -657,14 +657,14 @@ Notice the value of the `file` attribute in this example:
 //----
 //+
 //After deploying to CloudHub or CloudHub 2.0, you can add a new value through the Runtime Manager UI that takes precedence over this setting.
-. _Before deploying to CloudHub or CloudHub 2.0_, ensure that the application deploys locally your IDE:
-.. In the IDE, press Cmd+shift+p (Mac) or Ctrl+shift+p (Windows), and provide this command:
+. _Before deploying to CloudHub or CloudHub 2.0_, ensure that the application deploys locally:
+.. Press Cmd+shift+p (Mac) or Ctrl+shift+p (Windows), and provide this command:
 +
 [source,command]
 ----
 Open 'launch.json'
 ----
-.. In `launch.json`, append the value of the `env` variable to use when running the application from the IDE.
+.. In `launch.json`, append the value of the `env` variable to use when running the application.
 +
 Notice the setting `-M-Denv=dev` in this `launch.json` example. For more information about launch configurations and alternative methods for passing properties, see xref:int-run-mule-apps-with-properties.adoc[].
 +
@@ -686,7 +686,7 @@ Notice the setting `-M-Denv=dev` in this `launch.json` example. For more informa
 ----
 +
 `-M-Denv=dev` sets the `env` variable to `dev` as a Mule runtime argument (`"mule.runtime.args"`). 
-.. If your application defines encrypted properties in your properties file, configure the *Runtime: Default Arguments* command in the IDE with the encryption key and value so that the local deployment to your IDE can decrypt the properties when the application runs.
+.. If your application defines encrypted properties in your properties file, configure the *Runtime: Default Arguments* command with the encryption key and value so that the local deployment can decrypt the properties when the application runs.
 +
 _Do not_ configure `launch.json` with sensitive property values. See <<test-deploy>> for guidance with the recommended configuration.
 . Launch the `deploy.json` file for your application by pressing Cmd+shift+p (Mac) or Ctrl+shift+p (Windows) and providing this command:

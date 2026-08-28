@@ -5,11 +5,11 @@
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 
-Scaffold a REST API specification into an implementation project within your IDE, and sync changes to the specification with the interface without first publishing to Anypoint Exchange. For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the interface to add a flow for that endpoint to the interface's configuration XML file.
+Scaffold a REST API specification into an implementation project, and sync changes to the specification with the interface without first publishing to Anypoint Exchange. For example, after adding a new endpoint to your API specification, you can re-scaffold the change into the interface to add a flow for that endpoint to the interface's configuration XML file.
 
 The interface XML is automatically created in a Mule project during the scaffolding process. You define an API in a specification file within an API Design project.
 
-Iterative API design and implementation within the IDE takes place in a _multi-root workspace_ in VS Code. To map project folders for your API specification and implementation projects into a multi-root workspace, VS Code uses a file with the extension `.code-workspace`. For your projects to work properly, this file _must not reside within_ either project folder. In addition, Anypoint Code Builder permits only one pair of iterative design and implementation project folders per multi-root workspace. The procedures for creating the specification and implementation projects are designed to meet these requirements. For information in the VS Code documentation, see https://code.visualstudio.com/docs/editing/workspaces/multi-root-workspaces[Multi-root Workspaces^].
+Iterative API design and implementation takes place in a _multi-root workspace_ in VS Code. To map project folders for your API specification and implementation projects into a multi-root workspace, VS Code uses a file with the extension `.code-workspace`. For your projects to work properly, this file _must not reside within_ either project folder. In addition, Anypoint Code Builder permits only one pair of iterative design and implementation project folders per multi-root workspace. The procedures for creating the specification and implementation projects are designed to meet these requirements. For information in the VS Code documentation, see https://code.visualstudio.com/docs/editing/workspaces/multi-root-workspaces[Multi-root Workspaces^].
 
 [[prereqs]]
 == Before You Begin
@@ -33,7 +33,7 @@ Alternatively, open the Command Palette by pressing Ctrl+Shift+p (Mac) or Cmd+Sh
 ----
 MuleSoft: Design an API
 ----
-. If prompted, sign in to Anypoint Platform, and follow all the prompts to reopen the IDE.
+. If prompted, sign in to Anypoint Platform, and follow all the prompts to reopen Anypoint Code Builder.
 . Complete the *API Specification* form:
 +
 [%header,cols="20a,60a"]
@@ -110,11 +110,11 @@ version: 1.0.development
 
 Scaffold your local REST API specification into a local implementation project. The scaffolding process creates a configuration XML for your implementation.
 
-Local projects reside in the Anypoint Code Builder IDE.
+Local projects reside in Anypoint Code Builder.
 
 To scaffold your local API specification:
 
-. With `retrieve-users-api.raml` open in your IDE, prepare to scaffold the specification into a Mule project:
+. With `retrieve-users-api.raml` open, prepare to scaffold the specification into a Mule project:
 +
 .. Click the image:icon-implement-api.png["",15,15] (*Implement this local API*) icon in the activity bar:
 +
@@ -152,7 +152,7 @@ The UI provides updates while the scaffolding process takes place:
 
 * *Executing scaffolding operation, please wait*
 * *Scaffolding process ended. You can now start iterating over your local API and implementation project*
-. From your multi-root workspace in the Explorer, the IDE opens the scaffolded specification in your new Mule project. 
+. From your multi-root workspace in the Explorer, Anypoint Code Builder opens the scaffolded specification in your new Mule project.
 +
 The configuration XML file for the implementation (`retrieve-users-implementation.xml`) is located in an implementation project directory similar to this one:
 +
@@ -361,7 +361,7 @@ image::tut-api-publish.png["Publish Retrieve Users API"]
 . Confirm the asset version: *1.0.0*.
 . Confirm the API version: *v1*.
 +
-The status bar provides progress-related messages before the IDE updates your Mule project POM file to point to `v1.0.0` of your API specification: 
+The status bar provides progress-related messages before Anypoint Code Builder updates your Mule project POM file to point to `v1.0.0` of your API specification:
 
 ** *Publishing API Specification to Exchange* 
 ** _Project_ *has been successfully published to Exchange*
@@ -398,7 +398,7 @@ MuleSoft: Implement an API Specification
 *** Select or create a new project location.
 *** Find your API specification on Anypoint Exchange, and click *Add* to insert the API name into the field. 
 .. Click *Create Project* to start scaffolding the specification into a new implementation.  
-. Implement the scaffolded specification in your IDE.
+. Implement the scaffolded specification.
 
 ////
 //TODO: ON HOLD. RETEST THIS PROCEDURE. CREATE STORY. FIX ANY ISSUES.
