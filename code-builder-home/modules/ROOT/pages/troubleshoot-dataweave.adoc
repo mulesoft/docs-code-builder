@@ -1,9 +1,8 @@
 = DataWeave Issues and Errors
-:page-deployment-options: cloud-ide, desktop-ide
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-When Anypoint Code Builder can't process a value, the IDE provides a visual indicator to identify an issue with the value. Issues include:
+When Anypoint Code Builder can't process a value, it provides a visual indicator to identify an issue with the value. Issues include:
 
 * <<sample-input, Unable to find sample input>>
 * <<resolve-reference, Unable to resolve reference>>
@@ -13,11 +12,11 @@ When Anypoint Code Builder can't process a value, the IDE provides a visual indi
 [[sample-input]]
 == Unable to Find Sample Input
 
-The DataWeave error `Unable to find sample input` applies to a Mule event variable, such as `payload`. In this case, the IDE places a wavy blue line under the value in the configuration XML file. 
+The DataWeave error `Unable to find sample input` applies to a Mule event variable, such as `payload`. In this case, Anypoint Code Builder places a wavy blue line under the value in the configuration XML file.
 
 image::dw-issue-sample-data.png["'Unable to find sample input' error"]
 
-If your application isn't running, the IDE can't provide any information about Mule variables unless you provide sample data. 
+If your application isn't running, Anypoint Code Builder can't provide any information about Mule variables unless you provide sample data.
 Use xref:int-configure-dw-expressions.adoc#sample-data[Quick Fix] to provide sample data in the format and data structure that you expect to be present when the application runs.
 
 For more information about Mule event variables, see xref:dataweave::dataweave-variables-context.adoc[].

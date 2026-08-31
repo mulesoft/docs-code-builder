@@ -1,10 +1,9 @@
 = Controlling Source Files
-:page-deployment-options: cloud-ide, desktop-ide
-:no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can use the IDE to generate a repo in GitHub and publish your project files to that remote repo. The process also implicitly initializes a local repo in the IDE.
-:init-local: Initializing and committing your project files into a local repo in the IDE is a prerequisite to publishing and syncing files into a remote repo in GitHub.
-:repo-in-github: If you have an empty repo in GitHub, you can publish your project files to the repo from the IDE.
-:extra-repo: If your project is already configured to sync with a remote repo, you can configure the IDE to publish your project files to a different repo. 
-:extra-repo-continued: This feature is helpful, for example, if you want to use your own repo for an API spec project that you imported from MuleSoft VCS or if you created your design project from the IDE before the February 2024 release. Both types of projects automatically add a connection to a remote Git repo in MuleSoft VCS.
+:no-repo-yet: If you have a project in Anypoint Code Builder but do not have a repo for that project, you can generate a repo in GitHub and publish your project files to that remote repo. The process also implicitly initializes a local repo.
+:init-local: Initializing and committing your project files into a local repo is a prerequisite to publishing and syncing files into a remote repo in GitHub.
+:repo-in-github: If you have an empty repo in GitHub, you can publish your project files to the repo.
+:extra-repo: If your project is already configured to sync with a remote repo, you can configure Anypoint Code Builder to publish your project files to a different repo.
+:extra-repo-continued: This feature is helpful, for example, if you want to use your own repo for an API spec project that you imported from MuleSoft VCS or if you created your design project before the February 2024 release. Both types of projects automatically add a connection to a remote Git repo in MuleSoft VCS.
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
@@ -12,7 +11,7 @@ include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="scm-intro-best-practice"]
 A useful SCM provides change history of each file and a branching methodology to maintain project quality, full traceability, the ability to restore earlier versions of your files, and a way to recover source code if your Anypoint Code Builder environment is lost or removed. 
 
-GitHub and the Git command line interface (CLI) are widely used in the industry and supported by VS Code out-of-the-box, with minimal configuration, in the desktop and cloud IDE. The procedures on this page show how to set up and use GitHub for source control. VS Code extensions for other SCM systems are also available for you to set up and use. For information, see https://code.visualstudio.com/docs/sourcecontrol/overview#_scm-providers[SCM Providers^]. 
+GitHub and the Git command line interface (CLI) are widely used in the industry and supported by VS Code out-of-the-box, with minimal configuration. The procedures on this page show how to set up and use GitHub for source control. VS Code extensions for other SCM systems are also available for you to set up and use. For information, see https://code.visualstudio.com/docs/sourcecontrol/overview#_scm-providers[SCM Providers^]. 
 
 For more information, see https://code.visualstudio.com/docs/sourcecontrol/overview[Using Git source control in VS Code^] in the VS Code documentation. For detailed information about Git, see the https://git-scm.com/book[Git documentation^].
 
@@ -29,7 +28,7 @@ If you do not have an account, create one from the https://github.com/signup[Joi
 +
 If Git is not installed on your computer, follow the https://github.com/git-guides/install-git[Git installation instructions^] for your machine.
 
-* Access to Anypoint Code Builder from the desktop or cloud IDE
+* Access to Anypoint Code Builder
 +
 For setup and installation information, see xref:start-acb.adoc[], and be sure to meet all prerequisites. 
 
@@ -67,17 +66,17 @@ git config –-global user.email "your@email.com"
 +
 If two-factor authentication is enabled on your GitHub account and you are prompted for a password, enter your personal access token instead of your GitHub login password. For more information, see GitHub documentation https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/accessing-github-using-two-factor-authentication[Access GitHub with 2FA^].
 
-* If your GitHub `user.name` and `user.email` are listed, you are ready to use Git to control your project files from the IDE. For guidance with common source control tasks in VS Code, see: 
+* If your GitHub `user.name` and `user.email` are listed, you are ready to use Git to control your project files. For guidance with common source control tasks in VS Code, see:
 
 ** <<set-up-repo>>
 ** <<sync-changes>>
 
 [[set-up-repo]]
-== Set Up a Repository from the IDE
+== Set Up a Repository from Anypoint Code Builder
 
-Set up a repo for your design, integration, or implementation project from the IDE. If your project is already set up to sync from the IDE with a repo in an SCM that you want to use, no additional setup is required. You can sync your changes without further setup. For an example, see <<sync-changes>>.
+Set up a repo for your design, integration, or implementation project. If your project is already set up to sync with a repo in an SCM that you want to use, no additional setup is required. You can sync your changes without further setup. For an example, see <<sync-changes>>.
 
-To set up a remote GitHub repo from the IDE for your projects, the following scenarios are common:
+To set up a remote GitHub repo for your projects, the following scenarios are common:
 
 * <<create-repo>>
 +
@@ -99,14 +98,14 @@ To set up a remote GitHub repo from the IDE for your projects, the following sce
 {extra-repo-continued}
 * <<clone-repo>>
 +
-If a design, implementation, or integration project is already stored in a repo on GitHub, you can clone it into the cloud or desktop IDE. 
+If a design, implementation, or integration project is already stored in a repo on GitHub, you can clone it into Anypoint Code Builder.
 
 [[create-repo]]
 === Generate and Publish to a Repository in GitHub
 
 //shared info about this procedure:
 {no-repo-yet} 
-If you already have an empty repo in GitHub that you intend to use for a project in Anypoint Code Builder, see <<publish-to-empty>> to add and publish to the repo from the IDE. 
+If you already have an empty repo in GitHub that you intend to use for a project in Anypoint Code Builder, see <<publish-to-empty>> to add and publish to the repo.
 
 . Meet the prerequisites in <<prereqs>>.
 //step: open the project folder
@@ -115,9 +114,9 @@ include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open
 include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
 . In the Source Control panel, click *Publish to GitHub*.
 +
-image::start-scm-repo.png["Publish repo to GitHub from the IDE"]
+image::start-scm-repo.png["Publish repo to GitHub"]
 +
-When no repo is associated with your project, the IDE provides options for initializing a _local_ repo (*Initialize Repository*) on your IDE or directly publishing your project to a new remote repo in GitHub (*Publish to GitHub*). Publishing to GitHub also implicitly initializes your local repo for the project. 
+When no repo is associated with your project, Anypoint Code Builder provides options for initializing a _local_ repo (*Initialize Repository*) or directly publishing your project to a new remote repo in GitHub (*Publish to GitHub*). Publishing to GitHub also implicitly initializes your local repo for the project.
 . Provide a name for your repo in the field that opens, or use the default name that appears.
 +
 image::start-scm-repo-name.png["Name of new repo"]
@@ -151,12 +150,12 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-c
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
 // Pointer to Source Control Panel
 include::partial$acb-reusable-steps.adoc[tags="open-source-control-no-edits"]
-. From the Source Control panel for your project, initialize and commit your project files to a local repo in the IDE for your project:
+. From the Source Control panel for your project, initialize and commit your project files to a local repo for your project:
 .. In the Source Control panel, click *Initialize Repository* to generate a local repo for your project.
 +
 image::start-scm-repo-initialize.png["Initializing a local repo for a project"]
 +
-When no repo is associated with your project, the IDE provides options for initializing a _local_ repo (*Initialize Repository*) for your project or directly publishing your project to a new remote repo in GitHub (*Publish to GitHub*).
+When no repo is associated with your project, Anypoint Code Builder provides options for initializing a _local_ repo (*Initialize Repository*) for your project or directly publishing your project to a new remote repo in GitHub (*Publish to GitHub*).
 // Shared substep to stage files
 include::partial$acb-reusable-steps.adoc[tags="scm-stage-files-substep"]
 // Shared substeps to commit files
@@ -180,10 +179,10 @@ include::partial$acb-reusable-steps.adoc[tags="scm-commit-message-substep"]
 This procedure assumes that the project files are ready to stage and publish to the repo. 
 
 . Meet the prerequisites in <<prereqs>>.
-. If you have not yet initialized a local repo for your project in the IDE, see <<initialize-repo>>.
+. If you have not yet initialized a local repo for your project, see <<initialize-repo>>.
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Configure a connection from the project in the IDE to your empty remote repo in GitHub:
+. Configure a connection from the project to your empty remote repo in GitHub:
 .. Provide the following command to add the remote repo on GitHub:
 +
 [source, command]
@@ -196,13 +195,13 @@ image::start-scm-oas-add-remote.png["Adding an remote repo from GitHub"]
 .. Provide the URL to your git repo, for example:
 +
 image::start-scm-repo-add-remote-uri.png["Adding a remote repo URL from GitHub"]
-.. Provide a name for the remote in the IDE, for example:
+.. Provide a name for the remote, for example:
 +
 ----
 my-acb-project-repo
 ----
 +
-The name for the repo in the IDE can match or differ from the repo name in GitHub.
+The name for the repo can match or differ from the repo name in GitHub.
 . Click *Publish Branch*.
 +
 image::start-scm-repo-publish-branch.png["Publish branch files in a repo on GitHub"]
@@ -236,7 +235,7 @@ include::partial$acb-reusable-steps.adoc[tags="open-source-control"]
 image::start-scm-oas-anypoint.png["Project source control using MuleSoft VCS"]
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Configure a connection from the project in the IDE to your repo in GitHub:
+. Configure a connection from the project to your repo in GitHub:
 .. Provide the following command to add the remote repo on GitHub:
 +
 [source, command]
@@ -251,13 +250,13 @@ image::start-scm-oas-add-remote.png["Adding an extra remote repo from GitHub"]
 ----
 https://github.com/me/my-extra-repo.git
 ----
-.. Provide a name for the remote in the IDE, for example:
+.. Provide a name for the remote, for example:
 +
 ----
 my-extra-repo
 ----
 +
-This name for the repo in the IDE can match or differ from the repo name in GitHub.
+This name for the repo can match or differ from the repo name in GitHub.
 . Publish your project to your extra remote repo:
 .. In the command palette, provide the following command:
 +
@@ -267,7 +266,7 @@ Git: Push to...
 ----
 .. Select *Git: Push to...* from the popup menu.
 +
-image::start-scm-oas-push-to.png["Selecting 'Push to... from the IDE'"]
+image::start-scm-oas-push-to.png["Selecting 'Push to...'"]
 .. Select the extra remote repo that you added, for example:
 +
 image::start-scm-oas-publish-to-private-repo.png["Selecting the extra remote repo"]
@@ -275,14 +274,14 @@ image::start-scm-oas-publish-to-private-repo.png["Selecting the extra remote rep
 +
 image::start-scm-oas-in-github.png["Viewing project files in the extra remote repo"]
 
-You can now clone this project repo in your IDE to easily modify and sync your changes from the IDE's UI. See <<clone-repo>>. 
+You can now clone this project repo to easily modify and sync your changes from the UI. See <<clone-repo>>.
 
 [[sync-changes]]
 == Sync Project Changes with Your Repository 
 
-After your project is connected and published to a remote repo in GitHub, you can use the IDE to sync your changes with that repo. If your repo is not set up yet, see <<set-up-repo>>.
+After your project is connected and published to a remote repo in GitHub, you can sync your changes with that repo. If your repo is not set up yet, see <<set-up-repo>>.
 
-Use the IDE's UI or its built-in terminal to sync your changes:
+Use the UI or the built-in terminal to sync your changes:
 
 * <<sync-from-ui>>
 * <<sync-from-terminal>>
@@ -290,7 +289,7 @@ Use the IDE's UI or its built-in terminal to sync your changes:
 [[sync-from-ui]]
 === Sync Changes from the Source Control Panel 
 
-To sync changes to your files from your project's Source Control panel in the IDE:
+To sync changes to your files from your project's Source Control panel:
 
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
@@ -307,7 +306,7 @@ include::partial$acb-reusable-steps.adoc[tags="scm-commit-message-substep"]
 [[sync-from-terminal]]
 === Sync Changes from the Command Terminal
 
-To sync changes to your files from your project's command terminal in the IDE:
+To sync changes to your files from your project's command terminal:
 
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
@@ -348,9 +347,9 @@ To https://github.com/me/my-repo.git
 For common Git commands, see https://docs.github.com/en/get-started/using-git/about-git[About Git^] in the GitHub documentation, or find all commands in the https://git-scm.com/docs[Git command reference^].
 
 [[clone-repo]]
-== Clone a Project Repository into the IDE
+== Clone a Project Repository into Anypoint Code Builder
 
-If your design, implementation, or integration project is already stored in a repo on GitHub, you and your team members can clone it into Anypoint Code Builder desktop or cloud IDEs. Cloning is helpful for sharing your project with another IDE, for enabling you to edit source and sync changes from the IDE, and for retrieving a backup of a deleted project. For example, you can work on the same project in the desktop and cloud IDE if your project is stored in a  repo to which you and your team have access.
+If your design, implementation, or integration project is already stored in a repo on GitHub, you and your team members can clone it into Anypoint Code Builder. Cloning is helpful for sharing your project, for enabling you to edit source and sync changes, and for retrieving a backup of a deleted project. For example, you can work on the same project on different computers if your project is stored in a repo to which you and your team have access.
 
 //open ACB terminal:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tag="open-terminal"]
@@ -382,7 +381,7 @@ include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="scm-sync-c
 [[check-remote]]
 == Check for a Remote Repository URL
 
-To determine whether a remote GitHub repo for your project is configured in the IDE, check for a URL to the repo: 
+To determine whether a remote GitHub repo for your project is configured, check for a URL to the repo:
 
 //step: open the project folder
 include::anypoint-code-builder::partial$acb-open-packaged-sources.adoc[tag="open-workspace-root"]
@@ -425,7 +424,7 @@ Git: Remove Remote...
 ----
 .. In the popup, select the remote repo that you want to remove.
 +
-In the IDE, your local Git repo remains because it was initialized before syncing with the remote.  
+Your local Git repo remains because it was initialized before syncing with the remote.
 
 == See Also
 

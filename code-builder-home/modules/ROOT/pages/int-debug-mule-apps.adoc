@@ -1,12 +1,9 @@
 = Debugging Mule Applications
-:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: debug-add-breakpoint.adoc, debug-add-components.adoc, debug-add-logger-set-variables.adoc, debug-run-debug-sessions.adoc, debug-a-mule-application.adoc, debugging-mule-apps.adoc, tut-af-debug-am-flights.adoc
 
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 In Anypoint Code Builder, the embedded debugger pauses Mule flows so you can inspect payloads and variables, evaluate DataWeave expressions, and step through processors in the XML editor or on the canvas.
 Set breakpoints in configuration files or on components, run in debug mode, step through execution with the debug toolbar, and hot deploy updates while the runtime stays up.
@@ -29,7 +26,7 @@ For example, trigger an HTTP Listener, or trigger a Scheduler on demand instead 
 
 == Before You Begin
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access Anypoint Code Builder].
 * xref:int-create-integrations.adoc[Create an integration].
 
 [[debugger-view-overview]]
@@ -209,7 +206,7 @@ At a *Flow Ref* component (`<flow-ref/>`), *Step Over* doesn't enter the referen
 ====
 . *Step Into* (F11) — Enters the next processor, including following a `<flow-ref/>` into the referenced flow.
 +
-When you step into a flow reference, the IDE opens the Mule configuration file that declares that referenced flow, moves the canvas to that flow, and pauses on the first processor inside it. If the referenced flow is in an imported Mule project dependency, the dependency flow opens in a read-only canvas and XML view. You can step through its processors, and stepping continues in the caller flow where appropriate after you step through the referenced flow.
+When you step into a flow reference, Anypoint Code Builder opens the Mule configuration file that declares that referenced flow, moves the canvas to that flow, and pauses on the first processor inside it. If the referenced flow is in an imported Mule project dependency, the dependency flow opens in a read-only canvas and XML view. You can step through its processors, and stepping continues in the caller flow where appropriate after you step through the referenced flow.
 +
 .Step Into Details
 [%collapsible]
@@ -273,7 +270,7 @@ A hot deployment updates a running instance of your application but does not pac
 
 To perform a hot deploy:
 
-. Ensure your Mule application is running in the IDE.
+. Ensure your Mule application is running.
 . Make an update to your application.
 . In the editor toolbar for the running Mule application, click *Save and Hot-deploy to Mule Runtime* (lightning bolt icon) to push the change to the running runtime without a full stop and dependency resolution cycle.
 

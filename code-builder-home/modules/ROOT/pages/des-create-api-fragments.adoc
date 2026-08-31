@@ -1,11 +1,8 @@
 = Creating and Using API Spec Fragments
-:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: des-add-examples-to-specs.adoc, add-request-response-details.adoc, tut-af-design-api-add-request-response-details.adoc
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Using Anypoint Code Builder, you can create your own API fragments and publish them to Anypoint Exchange to share with other people,
 add fragments from Exchange to your API specification,
@@ -36,13 +33,13 @@ Use these examples to explore the functionality of Anypoint Code Builder:
 Before adding fragments:
 
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access Anypoint Code Builder].
 * Understand the basics of designing API specifications. 
 +
 To see where adding fragments fits in the journey from API design through deployment, see xref:tutorials.adoc#modular-learning-paths[Take Your API Specification from Design Through Deployment in Mule].
 * Have some familiarity with xref:access-management::business-groups.adoc[business groups].
 +
-When you publish your API fragment to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. See xref:access-management::business-groups.adoc[].
+When you publish your API fragment to Exchange from Anypoint Code Builder, it requests the name of the business group. See xref:access-management::business-groups.adoc[].
 
 == Create an API Fragment and Publish it to Exchange
 
@@ -120,7 +117,7 @@ Your API specification appears as an API spec fragment type asset in your organi
 image::des-api-frag-exchange.png["API Spec Fragment in Exchange"]
 +
 --
-If your API spec appears on Exchange as a REST API rather than an API spec fragment, check that the `classifier` attribute in the `exchange.json` file in the project folder in your IDE is set to one of the following, depending on the language:
+If your API spec appears on Exchange as a REST API rather than an API spec fragment, check that the `classifier` attribute in the `exchange.json` file in the project folder is set to one of the following, depending on the language:
 
 ** OAS: `oas-components`
 ** RAML: `raml-fragment`

@@ -1,12 +1,9 @@
 = Creating Integrations
-:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: int-create-basic-integrations.adoc, ui-tut-integrate.adoc, create-basic-integration.adoc, develop-integration.adoc, tut-af-integrate-am-flights.adoc
 
 
 include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 
 To process your data with business logic, create an integration with connectors and other components in a Mule application.
@@ -26,7 +23,7 @@ You can create multiple configuration XML files in your project. See <<create-ne
 [[prereqs]]
 == Before You Begin
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access Anypoint Code Builder].
 
 [[create-integration-project]]
 == Create an Integration Project
@@ -75,10 +72,10 @@ To import an existing integration template or example from Anypoint Exchange:
 .. Click *Template or Example Project* to import an existing integration template or example from Anypoint Exchange. 
 +
 image::int-create-integration.png["Create integration project from an Exchange asset."]
-.. If you intend to import a private asset associated with your business organization, xref:start-acb.adoc#login-ide[log in to Anypoint Platform from the IDE] to list the template or example in the search results.
+.. If you intend to import a private asset associated with your business organization, xref:start-acb.adoc#login-ide[log in to Anypoint Platform] to list the template or example in the search results.
 +
 Searches for public assets do not require login.
-.. From the IDE, search for a template or for an example. 
+.. Search for a template or for an example.
 +
 Partial searches are accepted.
 .. Mouse over the asset that you want to add.
@@ -113,7 +110,7 @@ image::int-add-config-xml.png["Provide name of Mule configuration XML file"]
 +
 The name must be unique within the project. Permitted special characters are `_` (underscore), `-` (hyphen), `.`, `@`, `(`, and `)`.
 +
-The process automatically appends an `xml` extension to the file name and opens the new configuration XML file and its canvas within the IDE. The new configuration XML file contains the `<mule/>` element with default namespaces:
+The process automatically appends an `xml` extension to the file name and opens the new configuration XML file and its canvas. The new configuration XML file contains the `<mule/>` element with default namespaces:
 +
 [source,xml]
 --
