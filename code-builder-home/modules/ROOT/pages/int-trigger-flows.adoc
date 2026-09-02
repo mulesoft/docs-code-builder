@@ -1,8 +1,6 @@
 = Triggering Flows in Your Development Environment
 :page-aliases: ping-locally-deployed-app.adoc
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
-
 When your integration or implementation builds successfully within Anypoint Code Builder, the application deploys to your local development environment.
 
 Configure the *HTTP Listener* from xref:http-connector::index.adoc[Anypoint Connector for HTTP] (HTTP Connector) to trigger the execution of a flow in a deployed application. Or trigger the flow locally from the built-in terminal in Anypoint Code Builder, or from a VS Code extension like Thunder Client.
@@ -105,7 +103,6 @@ The URL adds `/api` before the `/flights` endpoint to make the request through t
 [calloutlist]
 .. Within the listener (`<http:listener/>`), the attribute `path="/api/*"` is set automatically during the scaffolding process. 
 .. The router (`<apikit:router/>`) is located after the listener in the scaffolded interface within the configuration XML. 
-
 
 [[trigger-flow]]
 == Trigger a Flow
