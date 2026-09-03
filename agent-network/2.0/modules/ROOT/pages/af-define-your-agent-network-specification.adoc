@@ -145,6 +145,47 @@ You can also start the *Add Exchange Assets* flow without opening the canvas:
 
 After you add dependencies, their asset names are available as values in auto-completion menus in the code editor. For example, after you add `test-agent` to `exchange.json`, the value `test-agent` is available in auto-completion menus in `agent-network.yaml` when you reference an agent.
 
+[[use-llm-proxy]]
+== Use an LLM Proxy in Your Agent Network
+
+You can use an xref:gateway::flex-gateway-llm-proxy.adoc[Omni Gateway LLM Proxy] as the LLM connection for your agent broker. The LLM Proxy must use the OpenAI or Gemini format. For supported models, see xref:af-agent-networks.adoc#llm-support[Large Language Models].
+
+=== Create and Activate the LLM Model Proxy
+
+Create an LLM Model Proxy in Omni Gateway and verify that it is active in Anypoint Exchange before adding it to your agent network.
+
+. xref:general::model-proxy-create-model-proxy.adoc[Create an LLM Model Proxy in Omni Gateway]. The proxy format must be OpenAI or Gemini.
+. xref:exchange::to-request-access.adoc[Request access to the LLM Model Proxy asset] in Anypoint Exchange and verify that the proxy status is *Active*.
+. Note the client ID and client secret, as you need these to authenticate with the proxy when you deploy your agent network. 
+
+=== Add the LLM Proxy to Your Agent Network
+
+Add the LLM Proxy Exchange asset to your project and configure the connection in agent-network.yaml and your broker's .agent file.
+
+. Add the LLM Proxy Exchange asset to your agent network project by using one of the following methods:
++
+** <<add-exchange-assets,Add Exchange Assets from the Project Assets or the Command Palette>>
+** <<define-dev-agent,Use MuleSoft Vibes>>
+. In the Explorer, open `exchange.json` and copy the `assetId` for the LLM Proxy dependency.
+. Open `agent-network.yaml` and add a connection entry in the `context.connections` section:
++
+.. Set `kind` to `llm`.
+.. Set `ref.name` to the `assetId` you copied from `exchange.json`.
+.. Set `url` to the consumer endpoint URL for the LLM Proxy. You can find this URL on the LLM Proxy page in the Anypoint Platform UI.
++
+You do not need to add the LLM Proxy to the `registry` section of `agent-network.yaml`.
+. In the `/brokers` directory, open the `.agent` file for the broker that uses this LLM and set the `target` of the LLM node to the connection name you defined in `agent-network.yaml`.
+
+=== Provide Authentication Credentials at Deployment
+
+When you deploy your agent network, you need to provide an `apiKey` to authenticate with the LLM Proxy. LLM Proxy authenticates with a `client_id` and `client_secret`. Provide the value in the following format:
+
+`<client_id>:<client_secret>`
+
+=== Troubleshoot Version Mismatches
+
+If you reuse an existing LLM Proxy Exchange asset in your agent network, ensure that the `apiVersion` in the `exchange.json` dependency matches the version group name in your LLM Proxy asset. To verify, open the Exchange asset page for your LLM Proxy and confirm that the version group name matches the `apiVersion` value in `exchange.json`.
+
 [[see-also]]
 == See Also
 
