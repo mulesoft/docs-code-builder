@@ -1,0 +1,120 @@
+= Design and Publish the American Flights API Specification
+:imagesdir: ../assets/images
+:page-pagination:
+
+Design the American Flights API specification in Anypoint Code Builder, test it with the built-in mocking service, and publish it to Anypoint Exchange so other team members can find and implement it.
+
+Before you begin, complete the setup in xref:tut-flights-api-tutorial.adoc[].
+
+== Create the API Specification
+
+Start creating the American Flights API spec:
+
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
+. From *Create*, click *Design an API*.
+. Configure your API spec project using these values:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Enable this API for Topics and Actions* | Select this checkbox to add the applicable agent topic metadata and apply centralized governance rulesets to the project. See xref:ai-enabling-api-project-topic-center.adoc[] for more information.
+| *Project Name* | `American Flights API`
+| *Project Location* | Your home directory is selected by default. This is the root folder of your project, which acts as your workspace. Don't select a different project directory for this API spec. See xref:start-add-folders.adoc[] for more information.
+| *API Type* | *REST API*
+| *API Specification Language* | *OAS 3.0 (YAML)*
+|===
+
+. Click *Create Project* to generate the American Flights API project file: `american-flights-api.yaml`.
++
+The file name is based on the project name you provide.
+. Configure the agent topic metadata and instructions using these values:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Topic Label* | American Flights API
+| *Classification Description* | Use the API description.
+| *Scope* | Your job is only to book, update, or retrieve flight information.
+| *Instruction* | If a user asks to retrieve flight details, use the get flight operation to retrieve information using the booking ID.
+|===
+
+. Click *Apply* to save your changes.
+. Open MuleSoft Vibes from the toolbar or from the *Build Your Ecosystem with AI* card in the canvas.
+. Enable auto-approve by clicking the *Auto-approve* section at the bottom of the MuleSoft Vibes window, and then select *Read project files*, *Edit project files*, *Execute safe commands*, and *Use MCP Servers*.
++
+With auto-approve enabled, MuleSoft Vibes automatically applies changes to your project without prompting you for confirmation. See xref:vibes-get-started.adoc[] for more information.
+. Enter this prompt, and then send your message:
++
+[source,command]
+----
+Create an API specification example for the American Flights API that returns flight information from a MySQL database.
+----
++
+MuleSoft Vibes generates the spec and saves it to your file.
++
+NOTE: If you get an `API streaming failed` error, click *Resume Task* to retry creating the spec.
+
+== Mock and Test the API
+
+Next, use MuleSoft Vibes and the built-in mocking service in the API Console to test the API before you publish it.
+
+. Enter this prompt, and then send your message:
++
+[source,command]
+----
+Test the API using the built-in mocking service in API console.
+----
+. Select the *Auto-approve* checkbox and click *Accept* to proceed with testing.
+
+MuleSoft Vibes creates a testing file named `API_TESTING_GUIDE.md` and tests these endpoints:
+
+* `GET` flight data
+* `GET` flight status
+* `GET` airport information
+
+MuleSoft Vibes then creates a testing file named `API_TESTING_RESULTS.md`. Your API spec is now ready to publish to Anypoint Exchange.
+
+== Publish the API Spec to Exchange
+
+Publish the American Flights API spec to Exchange so that other team members can find and implement it.
+
+. In Anypoint Code Builder, open the spec for your American Flights API project, such as `american-flights-api.yaml`.
+. Open the Command Palette.
++
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide this command:
++
+[source,command]
+----
+MuleSoft: Publish API Project to Exchange
+----
+. If prompted, click *Allow*, and follow the prompts to sign in to Anypoint Platform.
+. If you haven't selected a business group, select one now in *Select a Business Group*.
+. Enter the asset version: `1.0.0`.
+. Confirm the API version: `v1`.
+. Confirm the asset ID in the project metadata: `american-flights-api`.
+. Click *Publish*.
++
+The status bar shows the progress after the API is published successfully to Exchange.
+. When prompted to implement the API now, select *No* to avoid scaffolding the American Flights API spec into your integration.
++
+Selecting *Yes* scaffolds the API spec into your project. Instead of scaffolding now, you scaffold the API in xref:tut-flights-implement-api.adoc[].
+
+=== Locate Your API in Exchange
+
+After publishing your API spec, you can find it in Anypoint Exchange:
+
+. Navigate to Anypoint Exchange.
++
+--
+// Pointer to Exchange URLs
+include::partial$acb-reusable-steps.adoc[tags="exchange-urls"]
+--
+. Type `american` in the search bar and press Enter. 
+. Notice that your API spec is listed as an asset.
++
+You can select the API, navigate through its summary, and see all the endpoints you defined in the previous tasks.

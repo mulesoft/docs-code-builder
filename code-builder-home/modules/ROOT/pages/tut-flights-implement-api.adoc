@@ -1,0 +1,76 @@
+= Implement the American Flights API
+:imagesdir: ../assets/images
+:page-pagination:
+
+After designing and publishing your API specification, you're ready to implement it in Anypoint Code Builder. At this stage of the tutorial, you already have an API specification for the American Flights API published to Anypoint Exchange, and you're working in the same workspace where you build the integration.
+
+To implement the API, you scaffold the API specification into an integration project. Scaffolding generates the API interface based on the specification, creating the flows and configuration that you then extend with application logic.
+
+== Scaffold the American Flights API into an Integration Project
+
+Now that the American Flights API specification is available in Anypoint Exchange, scaffold it into a new integration project to generate the API interface.
+
+You can ask MuleSoft Vibes to scaffold the locally generated API spec with this message:
+
+[source,command]
+----
+Scaffold the american-flights-api.yaml API spec.
+----
+
+Or, you can manually scaffold the API spec from Anypoint Exchange:
+
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide this command:
++
+[source,command]
+----
+MuleSoft: Implement an API Specification
+----
+. In the *Implement an API Specification* tab that opens:
+.. Provide a new name for the implementation project.
+.. Select or create a new project location.
+.. In the search box, type `American Flights API`, or the name you used when creating the specification, and press Enter.
+.. Find your API specification on Anypoint Exchange, and click *Add Asset* to insert the API name into the field.
+.. Select an existing workspace, or create a new one by providing a name and a location.
+.. Click *Create Project* to start scaffolding the specification into a new implementation project.
+
+After scaffolding completes, confirm that the generated project contains listener configuration, APIKit router flows, and operation-specific flow stubs.
+
+== Connect to a Database Using the Database Connector
+
+Add and configure a Database Select operation to retrieve flight data from a database.
+
+. Open the `get:\flights:american-flights-api-config` flow
+. Click *Add Component* (+) before *Transform Message*, and then select *Connectors > Database > Select*.
+. Click the *Select* component to open its properties panel.
+. Change the name to `All Flights`.
+. In the *Select* component properties, click *Add New Connection* next to *Connection Config*.
+. Set the connection to *MySQL Connection*.
+. Click *Configure library* next to *MySQL JDBC Driver*.
+. Review the default settings for the recommended library, and in the *Select Library Source* drop-down menu, select *Maven Dependency*.
+. Enter `mysql:` in the *Search Maven Central Repository* text field, and select *mysql:mysql-connector-java* in the results.
+. Enter `8.0.30` in the *Version* text field, and click *Apply*.
+. Confirm that the MySQL JDBC Driver is set.
+. Set the following configuration values:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Host* | `iltdb.mule-training.com`
+| *Port* | `3306`
+| *User* | `mule`
+| *Password* | `mule`
+| *Database* | `training`
+|===
+
+. Click *Test Connection* and confirm that you see a *Connection is valid* message.
+. Click *Add* and close the *Database - Select Config* tab.
+. In the *Database - Select* properties panel, add a query to select all records from the `american` table:
++
+[source,sql]
+----
+SELECT * FROM american
+----
+. In your REST client, test `http://localhost:8081/api/flights`. Confirm that you see a response with all flight data.

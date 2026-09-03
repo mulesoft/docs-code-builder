@@ -1,0 +1,37 @@
+= Build an API from Start to Finish with Anypoint Code Builder
+:imagesdir: ../assets/images
+:page-pagination: next
+
+Take an end-to-end, API-led journey in MuleSoft: design a REST API specification, implement it as an integration, debug and test your application, deploy it, and then manage and monitor it in production. This tutorial walks you through that full lifecycle using a single-resource API, the American Flights API, that returns flight information from a MySQL database.
+
+After you complete the tutorial with this single-resource API, use the same model to plan your own connectivity projects.
+
+This tutorial series contains the following parts:
+
+. xref:tut-flights-design-api.adoc[] +
+Design the American Flights API specification, test it with the built-in mocking service, and publish it to Anypoint Exchange.
+. xref:tut-flights-implement-api.adoc[] +
+Scaffold the specification into an integration project and connect to a MySQL database.
+. xref:tut-flights-validate-transform-data.adoc[] +
+Add business logic validation and transform database records to meet the API contract.
+. xref:tut-flights-debug-test-api.adoc[] +
+Run the application locally, use the debugger, and create MUnit tests.
+. xref:tut-flights-deploy-api.adoc[] +
+Deploy the application to CloudHub 2.0.
+. xref:tut-flights-manage-secure-monitor-api.adoc[] +
+Register the API with API Manager, secure it with a policy, and monitor it with Runtime Manager.
+
+== Before You Begin
+
+Before you begin your API journey, verify that you have the required tools and access:
+
+* Set up your MuleSoft environment.
++
+See xref:start-acb.adoc[] for more information.
+* Create an account on Anypoint Platform.
++
+Use your username and password for your Anypoint Platform organization. If you don't have an Anypoint Platform account yet, create a trial organization.
+* Download a REST client, such as Advanced REST Client or another similar client, to test REST requests. This tutorial uses Advanced REST Client.
+* Have some familiarity with xref:access-management::business-groups.adoc[business groups]. API specs must belong to a business group to be published to Exchange.
+
+TIP: Configure a long timeout in your REST client settings to avoid timeout issues during debugging.

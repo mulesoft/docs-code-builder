@@ -1,0 +1,91 @@
+= Deploy the American Flights API to CloudHub 2.0
+:imagesdir: ../assets/images
+:page-pagination:
+
+After implementing, debugging, and testing your API locally, you're ready to deploy it to CloudHub 2.0. CloudHub 2.0 is MuleSoft's cloud-based integration platform that lets you deploy, manage, and scale your Mule applications without managing infrastructure.
+
+In this section, you deploy your American Flights API to CloudHub 2.0. You configure it in API Manager, apply a security policy, and monitor its performance using Runtime Manager in the pages that follow.
+
+See xref:int-deploy-mule-apps.adoc[] for more information about CloudHub and CloudHub 2.0 deployment concepts.
+
+== Deploy Your Application to CloudHub 2.0 from Anypoint Code Builder
+
+CloudHub 2.0 provides a fully managed, containerized deployment environment for your Mule applications. Deploying from Anypoint Code Builder is a streamlined process that packages your application and deploys it directly to the cloud.
+
+=== Prerequisites for Deployment
+
+Before deploying to CloudHub 2.0, verify that you have:
+
+* A CloudHub 2.0 account with available vCores (virtual cores) for deployment.
+* Runtime Manager permissions to read, create, and delete applications.
+* An application that passes all MUnit tests.
+* An application that runs successfully in debug mode locally.
+
+=== Step 1: Configure Deployment Settings and Deploy Your Project
+
+The first time you deploy an application to CloudHub 2.0, Anypoint Code Builder creates a deployment settings file. After modifying the deployment settings, deploy your project with those settings.
+
+. In the project explorer, right-click the American Flights project XML file and select *Mule > Deploy Mule Project to CloudHub*.
+. If prompted, sign in to Anypoint Platform.
+. Select *CloudHub 2.0*.
+. Select a deployment target.
+. Select an environment, for example: *Sandbox*.
++
+If there's no deployment settings file for the project, Code Builder creates one.
+. In the deployment configuration file, provide the following information:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *applicationName* | Enter a unique name for your deployment (for example, `american-flights-api-yourname`). This name must be unique across all CloudHub deployments.
+| *runtime* | Confirm the Mule runtime version (the latest compatible version is selected by default).
+| *replicas* | `1`. The number of replica instances to deploy.
+| *replicaSize* | `0.1`. The compute capacity (vCores) allocated to each replica.
+| *deploymentModel* | Leave the default value: `rolling`.
+|===
+
+. Click *Deploy* in the notification pop-up.
++
+If the notification is no longer visible, restart the deployment from the first step.
+. Select the Mule version to use for the deployment.
+. If prompted to select an asset version, leave the default value and press Enter.
+
+NOTE: Worker size and count affect your CloudHub 2.0 costs. For this tutorial, use 0.1 vCores with 1 worker, which are the minimum allowed values.
+
+The deployment process starts and usually takes from two to five minutes. After this period, look for an ACB notification with a message similar to this: `The 'american-flights-api-implementation' project was published to the 'Sandbox' environment in CloudHub 2.0 'Cloudhub-US-East-2 - Shared Space'. The deployment is now processing. Monitor its progress in Runtime Manager.`
+
+=== Step 2: Monitor the Deployment Process
+
+After initiating the deployment, open Runtime Manager to monitor the status.
+
+. In the notification that shows after deployment starts, click *Open Runtime Manager* and then click *Open*.
+. Alternatively, if you missed the notification, open xref:runtime-manager::index.adoc[Runtime Manager] and search for your application name. Then, click the application name to open its status page.
+. Confirm the *Application status* is *Running*.
++
+If the application is still deploying and shows status *Not Running*, wait a few minutes for the process to finish.
+
+=== Step 3: Verify Your Deployed Application
+
+Once deployed, verify that your API is accessible and functioning correctly.
+
+. In Runtime Manager, copy the application URL from the *Public endpoint* value.
++
+The URL is similar to this: `https://american-flights-api-implementation-ij0c18.5sc6y6-3.usa-e2.cloudhub.io`
+. In your REST client, test the deployed API by making a GET request to your endpoint and adding `/api/flights` to the URL. For example:
++
+[source,command]
+----
+GET https://american-flights-api-implementation-ij0c18.5sc6y6-3.usa-e2.cloudhub.io/api/flights
+----
++
+Replace the URL from the example with your actual endpoint URL.
+. Verify that you receive a `200 OK` response with the flight data.
+. Test additional endpoints:
++
+[source,command]
+----
+GET https://american-flights-api-implementation-ij0c18.5sc6y6-3.usa-e2.cloudhub.io/api/flights/AA123
+----
+
+TIP: Save your application URL for use in the next sections where you configure API Manager and apply policies.

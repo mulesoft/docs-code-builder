@@ -1,0 +1,438 @@
+= Validate Input Parameters and Transform Flight Data
+:imagesdir: ../assets/images
+:page-pagination:
+
+When you scaffold an API specification into an implementation project, APIKit automatically validates incoming requests against your API specification. This includes:
+
+* *Path parameter formats*: If your API spec defines a pattern (such as `pattern: "^[A-Z]{2}\d+$"`), APIKit validates the format automatically.
+* *Required vs. optional parameters*: APIKit ensures required parameters are present.
+* *Data types*: APIKit validates that parameters match their specified types (string, integer, boolean, and so on).
+* *Enum values*: If your spec defines allowed values, APIKit validates against that list.
+
+If a request doesn't match these rules, APIKit returns a `400 Bad Request` with an appropriate error message before your flow logic even executes.
+
+While APIKit handles format and structural validation, you need custom validation for:
+
+* *Business logic rules*: Validating that a resource exists in your system (for example, "Does this flight code exist in our database?").
+* *Cross-field validation*: Rules that depend on multiple parameters.
+* *External system checks*: Validating against external APIs or services.
+* *Database lookups*: Confirming that identifiers correspond to actual records.
+
+In this section, you add business logic validation to check whether a flight code exists in your database before attempting to query for it. This prevents unnecessary database calls and provides more meaningful error messages to API consumers.
+
+In the American Flights API, the example database stores flights with numeric IDs (1, 2, 3), but the API exposes flight codes like `AA123`, `AA456`, and `AA789`. You need to map these codes to database IDs and validate that the flight exists before querying.
+
+== Create the Flight Code to Database ID Mapping
+
+First, create a transform that stores the mapping of flight codes to database IDs.
+
+. In Anypoint Code Builder, open the `get:\flights\(flightId):american-flights-api-config` flow.
+. If there's already a Transform Message component at the beginning of the flow, click it to open its properties. Otherwise, click *Add Component* (+) at the start of the flow and add *Core > Transform Message*.
+. Click *Edit name* and change it to *Create Flight Code Map*.
+. In the *General* tab, under *Target*, click *Add* (+) and select *Variable*.
+. Click the edit icon next to `vars.NewVariable1` and set the name to `flightCodeMap`, then click *Apply*.
+. In the *Inline Script* field, replace the content with this DataWeave script:
++
+[source,dataweave]
+----
+%dw 2.0
+output application/java
+---
+{
+	"AA123": 1,
+	"AA234": 2,
+	"AA345": 3,
+	"AA456": 4,
+	"AA567": 5
+}
+----
+
+This creates a variable `vars.flightCodeMap` that maps flight codes to their corresponding database IDs.
+
+NOTE: In a production application, you would typically query the database directly rather than maintaining a hardcoded map. This tutorial uses a map to clearly demonstrate the validation logic without requiring additional database queries.
+
+== Look Up the Database Flight ID
+
+Now create a second transform to look up the flight code in the mapping you just created.
+
+. After the *Create Flight Code Map* transform, click *Add Component* (+).
+. Select *Core > Transform Message*.
+. Click *Edit name* and change it to *Lookup DB Flight ID*.
+. In the *General* tab, under *Target*, click *Add* (+) and select *Variable*.
+. Click the edit icon next to `vars.NewVariable1` and set the name to `dbFlightId`, then click *Apply*.
+. In the *Inline Script* field for this variable, add:
++
+[source,dataweave]
+----
+%dw 2.0
+output application/java
+---
+vars.flightCodeMap[attributes.uriParams.flightId]
+----
+
+This script looks up the flight code from the request URL in the mapping created in the previous transform and returns the corresponding database ID. If the flight code isn't in the map, it returns `null`.
+
+NOTE: You cannot reference a variable in the same Transform Message where you're creating it. The variable only becomes available *after* the transform completes. By splitting the logic into two transforms, `vars.flightCodeMap` is available for use in the second transform.
+
+== Add a Choice Router to Validate Flight Existence
+
+Now add logic to check whether the flight code was found in the mapping.
+
+. After the *Lookup DB Flight ID* transform, click *Add Component* (+).
+. Select *Core > Routers > Choice*.
+. Click the *When* path inside the Choice router.
+. In the *When* properties panel, under *Expression*, add this condition to check if the flight code wasn't found:
++
+[source,dataweave]
+----
+#[vars.dbFlightId == null]
+----
+
+This expression evaluates to `true` when the flight code doesn't exist in the mapping.
+
+== Raise an Error for Unknown Flight Codes
+
+When a flight code isn't found, raise a custom error instead of proceeding with the query.
+
+. Inside the *When* path (where the condition is true), click *Add Component* (+).
+. Select *Core > Error Handling > Raise Error*.
+. In the *Raise Error* properties panel, configure:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Type* | `VALIDATION:FLIGHT_NOT_FOUND`
+| *Description* | `#['Flight code ' ++ attributes.uriParams.flightId ++ ' not found in our system']`
+|===
+
+This creates a custom error type that you handle in the error handler, providing a meaningful message that includes the flight code the user attempted to look up.
+
+== Move the Database Query to the Otherwise Path
+
+The database query should only execute when the flight exists (when `vars.dbFlightId` is not null).
+
+. If you already have a *Database Select* operation after the Choice router, right-click it and select *Copy Component*.
+. Click inside the *Otherwise* path of the Choice router (the path taken when the flight exists).
+. Click *Add Component* (+) and select *Paste Component*.
+. If you don't have an existing Database Select, add one inside the *Otherwise* path instead:
+.. Click *Add Component* (+) and select *Connectors > Database > Select*.
+.. Configure it with:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Name* | `Flight by ID`
+| *Connection Config* | `Config` (your MySQL connection)
+| *SQL Query Text* | `SELECT * FROM american WHERE ID = :flightId`
+| *Input Parameters* | `#[{ 'flightId': vars.dbFlightId }]`
+|===
+
+. Delete the original Database Select component that was outside the Choice router, if it exists.
+
+Your flow should now look like this:
+
+. *Transform Message*: Create Flight Code Map (creates `vars.flightCodeMap`).
+. *Transform Message*: Lookup DB Flight ID (creates `vars.dbFlightId` using `vars.flightCodeMap`).
+. *Choice*: Check if Flight Exists.
+.. *When* `vars.dbFlightId == null`: *Raise Error* (`VALIDATION:FLIGHT_NOT_FOUND`).
+.. *Otherwise*: *Database Select* (Flight by ID).
+. *Transform Message*: Transform Flight (converts the database result to JSON).
+
+== Add an Error Handler for Flight Not Found
+
+Now configure the error handler to return a proper 404 response when a flight isn't found.
+
+. In the canvas, open the `american-flights-api-main` flow (the main flow with the HTTP listener and error handler).
+. In the *Error Handler* section at the bottom, click *Add Component* (+).
+. Select *On Error Propagate*.
+. In the *On Error Propagate* properties panel, set *Type* to `VALIDATION:FLIGHT_NOT_FOUND`.
+. Inside this error handler, click *Add Component* (+) and add *Core > Logger*.
+. In the *Logger* properties, set:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Level* | `WARN`
+| *Message* | `#['Flight not found: ' ++ error.description]`
+|===
+
+This logs details about which flight was requested but not found, helping with debugging and monitoring.
+
+. After the Logger, click *Add Component* (+) and add *Core > Transform Message*.
+. Configure the Transform Message:
+.. In the *General* tab, under *Target > Payload*, set *Source* to *Inline Script*.
+.. In the *Inline Script* field:
++
+[source,dataweave]
+----
+%dw 2.0
+output application/json
+---
+{
+	message: error.description default "Flight not found",
+	flightId: attributes.uriParams.flightId
+}
+----
+
+. Click *Add* (+) under *Target* and select *Variable*.
+. Name the variable `httpStatus` and set its value to `404`.
+
+This returns a JSON response with a meaningful error message and the flight ID that was requested, along with a 404 HTTP status code.
+
+== Transform Data to Meet the API Contract
+
+When building an API implementation, it's essential that your responses match the structure defined in your API specification. While the database might store data in one format, your API contract defines how that data should be presented to consumers. DataWeave transformations bridge this gap by mapping database fields to the expected API response format.
+
+In this section, you create a DataWeave transformation that converts database query results into the JSON format specified in your American Flights API contract.
+
+=== Understand the Data Mapping Challenge
+
+Your MySQL database stores flight information with these fields:
+
+.Example database record
+[source,json]
+----
+{
+	"ID": 1,
+	"code1": "rree",
+	"code2": "0001",
+	"airlineName": "American Airlines",
+	"toAirport": "LAX",
+	"fromAirport": "MUA",
+	"takeOffDate": "2016-01-20",
+	"price": 541,
+	"planeType": "Boeing 787",
+	"seatsAvailable": 0,
+	"totalSeats": 200
+}
+----
+
+Your API specification defines a different structure for the response:
+
+[source,json]
+----
+{
+	"ID": 1,
+	"code": "AA123",
+	"price": 499.99,
+	"departureDate": "2024-12-25T10:00:00",
+	"origin": "SFO",
+	"destination": "LAX",
+	"emptySeats": 45,
+	"plane": {
+		"type": "Boeing 737",
+		"totalSeats": 150
+	}
+}
+----
+
+Notice the transformation challenges:
+
+. *Field name changes*: Database fields have different names than API fields:
+.. `fromAirport` → `origin`
+.. `toAirport` → `destination`
+.. `takeOffDate` → `departureDate`
+.. `seatsAvailable` → `emptySeats`
+. *Field combination*: `code1` and `code2` need to be combined into a single `code` field.
+. *Nested object creation*: `planeType` and `totalSeats` (flat fields in the database) must become a nested `plane` object in the API response.
+. *Fields to exclude*: `airlineName` is in the database but not needed in the API response.
+
+=== Open the Transform Message Component
+
+In your implementation flow `get:\flights\{flightId}:american-flights-api-config`, you already have a Transform Message component after the Database Select operation.
+
+. In Anypoint Code Builder, locate the `get:\flights\{flightId}:american-flights-api-config` flow in your canvas.
+. Click the *Transform Message* component named *Transform Flight* (after the *Flight by ID* database query).
+
+Currently, this transform just outputs `payload`, which passes through the raw database structure without transformation.
+
+=== Define Input Metadata
+
+To help DataWeave understand the structure of your database results, define input metadata.
+
+. In the *Transform Message* properties panel, look at the left side showing *Input* (this represents `payload`, your database query results).
+. Click the *Define metadata* link next to `payload: Unknown`.
+. In the *Select metadata type* dialog, set:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Type ID* | `DatabaseFlightRecord`
+| *Type* | *JSON*
+|===
+
+. Click *Create type* and provide this sample JSON structure (representing one database record):
++
+[source,json]
+----
+{
+	"ID": 1,
+	"code1": "rree",
+	"code2": "0001",
+	"airlineName": "American Airlines",
+	"toAirport": "LAX",
+	"fromAirport": "MUA",
+	"takeOffDate": "2016-01-20",
+	"price": 541,
+	"planeType": "Boeing 787",
+	"seatsAvailable": 0,
+	"totalSeats": 200
+}
+----
+. Click *Save*.
+
+You should now see the input payload structure in the left panel, showing all available database fields.
+
+=== Define Output Metadata
+
+Now define the expected API response format based on your specification.
+
+. In the *Transform Message* properties panel, look at the right side showing *Output* (this represents the API response).
+. Click the *Define metadata* link next to the output.
+. In the *Select metadata type* dialog, set:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Type ID* | `FlightResponse`
+| *Type* | *JSON*
+|===
+
+. Click *Create type* and provide this sample JSON structure (from your API spec):
++
+[source,json]
+----
+{
+	"ID": 1,
+	"code": "AA123",
+	"price": 499.99,
+	"departureDate": "2024-12-25T10:00:00",
+	"origin": "SFO",
+	"destination": "LAX",
+	"emptySeats": 45,
+	"plane": {
+		"type": "Boeing 737",
+		"totalSeats": 150
+	}
+}
+----
+. Click *Save*.
+
+The output panel now shows the expected response structure with the nested `plane` object.
+
+=== Create the Field Mappings
+
+With both input and output metadata defined, you can now create the transformation using DataWeave's mapping features.
+
+==== Option A: Use MuleSoft Vibes
+
+. Open MuleSoft Vibes.
+. Send this message:
++
+[source,command]
+----
+In the get:\flights\(flightId):american-flights-api-config flow, open the Transform Flight component and add a transformation that maps the input metadata with the output metadata. For code, use code1 ++ code2.
+----
++
+NOTE: If you used a different flow or component name, ensure you specify it in the message so MuleSoft Vibes knows exactly which flow and components to modify.
+
+After MuleSoft Vibes finishes adding the transformation, confirm that the DataWeave script is similar to this:
+
+[source,dataweave]
+----
+%dw 2.0
+output application/json
+---
+{
+	ID: payload[0].ID,
+	code: payload[0].code1 ++ payload[0].code2,
+	price: payload[0].price,
+	departureDate: payload[0].takeOffDate,
+	origin: payload[0].fromAirport,
+	destination: payload[0].toAirport,
+	emptySeats: payload[0].seatsAvailable,
+	plane: {
+		"type": payload[0].planeType,
+		totalSeats: payload[0].totalSeats
+	}
+}
+----
+
+==== Option B: Write the DataWeave Script Directly
+
+Alternatively, you can write the complete DataWeave script in the *Script* view:
+
+. Click the *Script* tab in the Transform Message component.
+. Replace the current content with:
++
+[source,dataweave]
+----
+%dw 2.0
+output application/json
+---
+{
+	ID: payload[0].ID,
+	code: payload[0].code1 ++ payload[0].code2,
+	price: payload[0].price,
+	departureDate: payload[0].takeOffDate,
+	origin: payload[0].fromAirport,
+	destination: payload[0].toAirport,
+	emptySeats: payload[0].seatsAvailable,
+	plane: {
+		"type": payload[0].planeType,
+		totalSeats: payload[0].totalSeats
+	}
+}
+----
+
+*Explanation:*
+
+* `code: payload[0].code1 ++ payload[0].code2` — concatenates `code1` and `code2` into a single `code` field.
+* `departureDate: payload[0].takeOffDate` — renames the field from database to API format.
+* `origin: payload[0].fromAirport` — maps `fromAirport` to `origin`.
+* `destination: payload[0].toAirport` — maps `toAirport` to `destination`.
+* `emptySeats: payload[0].seatsAvailable` — renames `seatsAvailable` to `emptySeats`.
+* `plane: { ... }` — creates a nested object from flat database fields.
+* `output application/json` — specifies the output format.
+
+=== Test with Real Data
+
+Now test your transformation with actual database data.
+
+. Save your changes to the flow.
+. Run the application locally using the *Run and Debug* panel.
+. Once the application starts, use a REST client (such as Advanced REST Client) to call:
++
+[source,command]
+----
+GET http://localhost:8081/api/flights/AA123
+----
+. Verify the response:
+* Status code: `200 OK`
+* Content-Type: `application/json`
+* Body structure matches your API specification.
+* The `plane` field is a nested object with `type` and `totalSeats`.
+* Field names are correctly transformed from database format to API format.
+
+.Example expected response
+[source,json]
+----
+{
+	"ID": 1,
+	"code": "rree0001",
+	"price": 541,
+	"departureDate": "2016-01-20",
+	"origin": "MUA",
+	"destination": "LAX",
+	"emptySeats": 0,
+	"plane": {
+		"type": "Boeing 787",
+		"totalSeats": 200
+	}
+}
+----
