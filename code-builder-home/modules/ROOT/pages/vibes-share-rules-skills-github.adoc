@@ -1,0 +1,147 @@
+= Sharing Rules and Skills from GitHub with MuleSoft Vibes
+
+Use a GitHub repository to centralize the workspace rules and skills that your team applies in MuleSoft Vibes. When you clone the repository into Anypoint Code Builder and open it as your workspace, MuleSoft Vibes loads those files as workspace rules and workspace skills. Rules and skills such as error handling are ready to use, so each developer doesn't define them again in every project.
+
+To create rules and workflows in the MuleSoft Vibes panel, see xref:vibes-workflows-commands.adoc[]. For information about how skills work, see xref:vibes-skills.adoc[].
+
+[[before-you-begin]]
+== Before You Begin
+
+* xref:start-acb.adoc[].
+* xref:mulesoft-vibes.adoc#before-you-begin-vibes[Set up MuleSoft Vibes] and confirm that you have the required permissions.
+* Install Git on your computer and configure your GitHub username and email. See xref:start-scm.adoc#prereqs[Controlling Source Files].
+* Get access to the GitHub repository that stores your team's rules and skills, or create a repository for them.
+
+[[rule-and-skill-locations]]
+== Rule and Skill Locations in Your Repository
+
+MuleSoft Vibes reads workspace rules and skills from the `.a4drules` directory at the root of the folder that you open in Anypoint Code Builder.
+
+[%header,cols="30a,70a"]
+|===
+| Asset | Repository Location
+
+| Workspace rules
+| Markdown (`.md`) files directly in `.a4drules/`. Each file is a natural-language rule that MuleSoft Vibes follows in that workspace. Prefix the file names with numbers, such as `01-error-handling.md`, to control the order in which MuleSoft Vibes applies the rules.
+
+| Workspace skills
+| One directory per skill in `.a4drules/skills/`. The directory name matches the skill name and contains a `SKILL.md` file with the instructions. Supporting material goes in subfolders such as `references/`, `assets/`, or `scripts/`. See xref:vibes-skills.adoc#set-up-skills-in-your-project[Set Up Skills in Your Project].
+|===
+
+Global rules and global skills stay on the local machine and aren't part of the repository. Share only workspace rules and skills in GitHub.
+
+[[store-in-github]]
+== Store Rules and Skills in a GitHub Repository
+
+Keep `.a4drules` at the repository root. Use a dedicated repository for your team's rules and skills, or add the directory to an existing API or integration project repository.
+
+. Open the GitHub repository for your team's MuleSoft Vibes configuration, or create one.
+. At the root of the repository, create a `.a4drules` directory.
+. Add each workspace rule as a Markdown file in `.a4drules/`.
++
+This rule centralizes error-handling guidance for the whole team:
++
+.`01-error-handling.md`
+[source,markdown]
+----
+# Error handling
+
+When you generate or update Mule flows and API specifications:
+
+- Add explicit error handling for connector and HTTP failures.
+- Use On Error Propagate for errors that callers must see.
+- Use On Error Continue only when the flow can recover and continue.
+- Log the error type and a correlation ID.
+----
+. Add each workspace skill in `.a4drules/skills/<skill-name>/SKILL.md`.
++
+The repository structure looks like this example:
++
+[source,text]
+----
+.a4drules/
+├── 01-error-handling.md
+├── 02-naming-conventions.md
+└── skills/
+    └── error-handling/
+        └── SKILL.md
+----
+. Commit `.a4drules` and push the changes to GitHub.
++
+For information about publishing and syncing project files, see xref:start-scm.adoc[].
+
+[NOTE] 
+To create rules and skills in the MuleSoft Vibes panel instead of writing the files yourself, see xref:vibes-workflows-commands.adoc#add-workflows-or-rules[Add Workflows or Rules] and xref:vibes-skills.adoc#set-up-skills-in-your-project[Set Up Skills in Your Project]. Anypoint Code Builder saves the files in `.a4drules`, and you commit them to the repository.
+
+[[clone-into-acb]]
+== Clone the Repository into Anypoint Code Builder
+
+MuleSoft Vibes loads `.a4drules` only from the root of the folder that you open, so open the cloned repository as your workspace.
+
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Write this command:
++
+[source,command]
+----
+Git: Clone
+----
+. Write the URL to your repository in GitHub, for example:
++
+[source,command]
+----
+https://github.com/_owner_/_yourrepo_.git
+----
++
+Replace the URL in the example with the URL to your repository.
+. Navigate to a directory for your new repo, and click *Select as repo Destination*.
+. If prompted with the request *Would you like to open the cloned repository?*, click *Open*.
+. In the *Explorer*, check that `.a4drules` is at the root of the open folder.
+
+[IMPORTANT]
+If your team's rules and skills are in a dedicated repository and your application code is in a different repository, then copy `.a4drules` into the root of the application repository. Open the application repository as your workspace so that MuleSoft Vibes finds the directory.
+
+[[verify-shared-rules-skills]]
+== Verify the Shared Rules and Skills
+
+To confirm that MuleSoft Vibes loaded the files from the repository:
+
+. Open MuleSoft Vibes.
+. In the MuleSoft Vibes panel, click the *Rules/Workflows* icon.
+. Select *Workspace Rules*.
++
+The Markdown rules from `.a4drules/` are listed and active. There's no need to add them again in *Settings*.
+. Check that each skill in `.a4drules/skills/` is available as a workspace skill.
+
+MuleSoft Vibes applies the workspace rules to every message that you send in that workspace, and loads a skill when your message matches the skill description.
+
+[[error-handling-example]]
+== Example: Centralized Error Handling
+
+Teams often keep error-handling rules and skills in GitHub so that every developer gets the same results:
+
+* A workspace rule states when to use On Error Propagate, when to use On Error Continue, and what to log.
+* A workspace skill provides the workflow that MuleSoft Vibes follows when you ask it to add or review error handling.
+
+After a teammate clones the repository and opens it in Anypoint Code Builder, both the rule and the skill are active. When that teammate asks MuleSoft Vibes to generate or update a flow, MuleSoft Vibes applies the shared rule and loads the error-handling skill when the message matches it.
+
+[[troubleshoot-shared-rules-skills]]
+== Troubleshoot Rules and Skills That Don't Load
+
+If the shared rules don't appear in *Workspace Rules*, verify the following:
+
+* You opened the cloned repository as your workspace, not a parent or child folder.
+* `.a4drules` is at the root of the open folder.
+* The rules are Markdown files in `.a4drules/`.
+
+If a shared skill isn't available in the workspace, you must verify:
+
+* The skill is a directory in `.a4drules/skills/`, and the directory contains a `SKILL.md` file.
+* Your local clone includes the latest commits. Pull the changes if a teammate added the skill after you cloned the repository.
+
+== See Also
+
+* xref:vibes-workflows-commands.adoc[]
+* xref:vibes-skills.adoc[]
+* xref:start-scm.adoc[]
+* xref:mulesoft-vibes.adoc[]
+* xref:vibes-get-started.adoc[]
