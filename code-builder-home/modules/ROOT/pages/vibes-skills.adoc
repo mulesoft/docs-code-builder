@@ -15,7 +15,7 @@ MuleSoft publishes Mule development skills from the `mulesoft-dx` repository as 
 
 Default skills are available automatically when you use MuleSoft Vibes where the feature is supported.
 
-NOTE: When you use MuleSoft Vibes in Anypoint Code Builder for VS Code, ACB automatically installs or updates Anypoint CLI after you restart VS Code. Some skills, such as `build-mule-integration`, require Anypoint CLI. When you use skills with Claude Code or another agent instead, you must install Anypoint CLI manually before using skills. See <<install-mulesoft-skills-in-claude-code>>.
+NOTE: When you use MuleSoft Vibes, Anypoint Code Builder automatically installs or updates Anypoint CLI after you restart VS Code. Some skills, such as `build-mule-integration` and `upgrade-mule-app`, require Anypoint CLI. When you use skills with Claude Code or another agent instead, you must install Anypoint CLI manually before using skills. See <<install-mulesoft-skills-in-claude-code>>.
 
 Use MuleSoft Vibes settings to turn on and off each default skill based on your workflow.
 
@@ -41,7 +41,7 @@ For more information, see xref:anypoint-cli::auth.adoc[].
 To install MuleSoft skills:
 
 . Make sure Node.js is installed.
-. Install the `anypoint-cli-dx-mule-plugin`.
+. Install the `anypoint-cli-dx-mule-plugin` version 1.3.0 or later.
 . Run:
 +
 `npx skills add mulesoft/mulesoft-dx/skills/mule-development`
@@ -96,7 +96,17 @@ The default MuleSoft skills set includes:
 
 | `manage-global-configurations`
 | Create, edit, delete, list, validate, and consolidate global configuration elements in a Mule project. Covers connector configs, TLS Context, Object Store, Caching Strategy, Global Error Handler, API AutoDiscovery, Import Project Reference, properties files, global-property elements, and multi-environment setup.
+
+| `upgrade-mule-app`
+| Upgrade a Mule application to a later Mule runtime version and Java version.
 |===
+
+[NOTE]
+====
+The `upgrade-mule-app` skill requires a Mule application on Mule 4.3 or later. It also requires `@salesforce/anypoint-cli-dx-mule-plugin` version 1.3.0 or later, which auto-provisions the source and target JDKs during the upgrade. To update the plugin, run:
+
+`npm install -g @salesforce/anypoint-cli-dx-mule-plugin@latest`
+====
 
 // [[manual-skill-install-paths]]
 // == Manual Skill Install Paths
