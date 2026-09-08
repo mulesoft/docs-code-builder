@@ -37,21 +37,37 @@ MuleSoft: Implement an API Specification
 
 After scaffolding completes, confirm that the generated project contains listener configuration, APIKit router flows, and operation-specific flow stubs.
 
+image::tut-flights-scaffold-project.png["Flow list showing the scaffolded american-flights-api-main flow with a Listener and Router, alongside error handler flows"]
+
 == Connect to a Database Using the Database Connector
 
 Add and configure a Database Select operation to retrieve flight data from a database.
 
 . Open the `get:\flights:american-flights-api-config` flow
++
+image::tut-flights-db-flow-overview.png["The get:\flights:american-flights-api-config flow with an All Flights Database Select component followed by a Transform Message component"]
 . Click *Add Component* (+) before *Transform Message*, and then select *Connectors > Database > Select*.
 . Click the *Select* component to open its properties panel.
 . Change the name to `All Flights`.
 . In the *Select* component properties, click *Add New Connection* next to *Connection Config*.
++
+image::tut-flights-db-select-add-connection.png["Database - Select properties panel with the Add New Connection link next to Connection Config"]
 . Set the connection to *MySQL Connection*.
++
+image::tut-flights-db-mysql-connection.png["Connection Config dialog with Name set to Config and Connection set to MySQL Connection"]
 . Click *Configure library* next to *MySQL JDBC Driver*.
++
+image::tut-flights-db-configure-library.png["Required Libraries section with the Configure library option next to MySQL JDBC Driver"]
 . Review the default settings for the recommended library, and in the *Select Library Source* drop-down menu, select *Maven Dependency*.
++
+image::tut-flights-db-library-source-maven.png["Select Library Source drop-down menu set to Maven Dependency"]
 . Enter `mysql:` in the *Search Maven Central Repository* text field, and select *mysql:mysql-connector-java* in the results.
++
+image::tut-flights-db-maven-search-results.png["Search Maven Central Repository results showing mysql:mysql-connector-java and other matches"]
 . Enter `8.0.30` in the *Version* text field, and click *Apply*.
 . Confirm that the MySQL JDBC Driver is set.
++
+image::tut-flights-db-driver-configured.png["Required Libraries section confirming MySQL JDBC Driver is set to mysql:mysql-connector-java:8.0.30"]
 . Set the following configuration values:
 +
 [%header,cols="20a,60a"]
@@ -64,8 +80,12 @@ Add and configure a Database Select operation to retrieve flight data from a dat
 | *Password* | `mule`
 | *Database* | `training`
 |===
++
+image::tut-flights-db-connection-config.png["Connection Config dialog with Host, Port, User, Password, and Database fields set"]
 
 . Click *Test Connection* and confirm that you see a *Connection is valid* message.
++
+image::tut-flights-db-connection-valid.png["Connection is valid confirmation message"]
 . Click *Add* and close the *Database - Select Config* tab.
 . In the *Database - Select* properties panel, add a query to select all records from the `american` table:
 +
@@ -73,4 +93,6 @@ Add and configure a Database Select operation to retrieve flight data from a dat
 ----
 SELECT * FROM american
 ----
++
+image::tut-flights-db-select-query.png["Database - Select properties panel with the General tab showing the SQL Query Text field set to SELECT * FROM american"]
 . In your REST client, test `http://localhost:8081/api/flights`. Confirm that you see a response with all flight data.
