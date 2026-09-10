@@ -10,17 +10,28 @@ To implement the API, you scaffold the API specification into an integration pro
 
 Now that the American Flights API specification is available in Anypoint Exchange, scaffold it into a new integration project to generate the API interface.
 
-You can ask MuleSoft Vibes to scaffold the locally generated API spec with this message:
+[tabs]
+====
+Use MuleSoft Vibes::
++
+--
+Ask MuleSoft Vibes to scaffold the locally generated API spec with this message:
 
 [source,command]
 ----
 Scaffold the american-flights-api.yaml API spec.
 ----
+--
 
-Or, you can manually scaffold the API spec from Anypoint Exchange:
-
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+Manually Scaffold from Anypoint Exchange::
++
+--
+// Can't reuse because collapsible block conflicts with tab syntax
+. Open the Command Palette.
+.. Use the keyboard shortcuts:
+*** Mac: Cmd+Shift+p
+*** Windows: Ctrl+Shift+p
+.. Select View > Command Palette.
 . Provide this command:
 +
 [source,command]
@@ -34,6 +45,8 @@ MuleSoft: Implement an API Specification
 .. Find your API specification on Anypoint Exchange, and click *Add Asset* to insert the API name into the field.
 .. Select an existing workspace, or create a new one by providing a name and a location.
 .. Click *Create Project* to start scaffolding the specification into a new implementation project.
+--
+====
 
 After scaffolding completes, confirm that the generated project contains listener configuration, APIKit router flows, and operation-specific flow stubs.
 

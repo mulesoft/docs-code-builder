@@ -1,148 +1,14 @@
-= Debug and Test the American Flights API
+= Test the American Flights API with MUnit
 :imagesdir: ../assets/images
 :page-pagination:
 
-After implementing your API flows, validate that the application behaves as expected before deployment. In this section, you run the project locally, use the debugger to trace request execution and error routing, and add baseline MUnit tests to confirm both successful and failure scenarios.
+After debugging your API flows locally, add automated MUnit tests to verify behavior and guard against regressions before deployment.
 
-== Run the Application Locally
-
-Before testing your API, start the Mule application locally to verify the implementation works as designed.
-
-. In Anypoint Code Builder, open your implementation project and verify that the listener in `american-flights-api-main` is configured for host `0.0.0.0` and port `8081`.
-. Click the *Listener* element in your flow.
-. On the *Connection Config* field, click *Edit Connection*.
-. Verify the values and update them if necessary:
-+
-[%header,cols="20a,60a"]
-|===
-| Field Name | Field Value
-
-| *Host* | `0.0.0.0`
-| *Port* | `8081`
-|===
-
-// Pointer to Run and Debug
-include::partial$acb-reusable-steps.adoc[tags="open-run-debug"]
-. In the top menu, ensure *Run Mule Application* is selected and click *Start Debugging*.
-. Wait for the application to deploy. You see deployment messages in the *Output* panel.
-+
-When deployment is complete, you see a message similar to:
-+
-[source,command]
-----
-**********************************************************************
-*            - - + APPLICATION + - -            * - - + STATUS + - -  *
-**********************************************************************
-* american-flights-api-implementation-1.0.0 * DEPLOYED     *
-**********************************************************************
-----
-. In your REST client (such as Advanced REST Client), test your API endpoints:
-* Send `GET http://localhost:8081/api/flights` and verify a `200` response with flight data.
-* Send `GET http://localhost:8081/api/flights/AA123` and verify the flight-by-ID response path works.
-* Send `GET http://localhost:8081/api/flights/123` and verify a `400` response from your API specification's path parameter validation.
-
-== Use the Debugger to Troubleshoot
-
-The built-in debugger in Anypoint Code Builder helps you understand how your Mule application processes requests, inspect variable values at runtime, and trace error-handling paths.
-
-Breakpoints pause execution at specific components in your flow, so you can inspect the current state of the message payload, attributes, and variables. There are two types of breakpoints:
-
-* *Component Breakpoint*: Pauses execution before a specific component executes (such as a Transform Message or Database Select operation).
-* *Error Breakpoint*: Pauses execution when an error occurs, allowing you to inspect the error object.
-
-When the application running in debug mode reaches a component with a breakpoint, execution pauses and the IDE highlights the current component with a yellow border.
-
-The *Debug* panel opens automatically, showing the current values of Mule variables, message attributes, payload, and the flow execution path leading to the current breakpoint.
-
-=== Set Component Breakpoints
-
-Set breakpoints in your application to pause execution and evaluate values at runtime.
-
-. With your application stopped, open the canvas view of your `american-flights-api-implementation.xml` file.
-. Locate the flow `get:\flights\(flightId):american-flights-api-config`.
-. Right-click the *Flight by ID* Database Select operation.
-. Select *Add Breakpoint* from the context menu.
-+
-A red dot appears on the component, indicating an active breakpoint.
-. Add a breakpoint on the *Transform Flight* component after the database query to inspect the payload.
-
-=== Start a Debug Session
-
-. Click the *Run and Debug* icon in the activity bar.
-. Ensure *Debug Mule Application* is selected in the dropdown.
-. Click the *Start Debugging* button (green play icon).
-. Wait for the application to deploy in debug mode. You see `Debugger listening on port XXXX` in the output panel.
-
-=== Step Through the Execution and Inspect Variables and Payload
-
-. After your application starts running in debug mode, send a request from your REST client:
-+
-[source,command]
-----
-GET http://localhost:8081/api/flights/AA123
-----
-+
-The execution pauses at the *Flight by ID* breakpoint.
-. In the *Variables* section of the Debug panel, expand *Mule Message > Payload*.
-+
-At this point, the message is empty because the query to the database hasn't executed.
-. Expand *Mule Message > Attributes* to see HTTP request information:
-* `attributes.uriParams.flightId`: The flight ID from the URL.
-* `attributes.headers`: HTTP headers.
-* `attributes.method`: HTTP method (GET, POST, and so on).
-. Expand *Variables* to see Mule variables created by Transform Message components:
-* `vars.flightCodeMap`: The flight code mapping.
-* `vars.dbFlightId`: The database ID for the flight.
-. To evaluate a DataWeave expression at the current breakpoint:
-.. In the Debug panel, locate the *Watch* section.
-.. Click the *+* icon to add a watch expression.
-.. Enter a DataWeave expression, such as:
-+
-[source,dataweave]
-----
-attributes.uriParams.flightId
-----
-.. Press Enter. The IDE evaluates the expression and displays the result.
-. Click *Step Over* (or press F10) to continue the execution.
-. Execution stops at the *Transform Flight* component.
-. Expand *Mule Message > Payload*.
-+
-Notice that now the message contains the results from the database query.
-. Click *Stop* (SHIFT+F5) to finish debugging.
-
-=== Debug Error Paths
-
-To understand how your API handles errors, debug the validation and error-handling logic.
-
-. Set breakpoints on:
-* The Choice router in `get:\flights\(flightId):american-flights-api-config`.
-* The Raise Error component inside the *When* path.
-. Start debugging and send an invalid request in your REST client:
-+
-[source,command]
-----
-GET http://localhost:8081/api/flights/AA999
-----
-+
-The execution pauses at the Choice router.
-. Inspect `vars.dbFlightId` (should be `null` because `AA999` isn't in the mapping).
-. Click *Step Over* (F10).
-+
-Execution moves to the *When* path and pauses at Raise Error.
-. Click *Step Over* (F10).
-+
-Execution pauses at the On Error Propagate handler for `VALIDATION:FLIGHT_NOT_FOUND`:
-. In the Debug panel, expand the `error` object and verify:
-* `error.errorType`: `VALIDATION:FLIGHT_NOT_FOUND`
-* `error.description`: `"Flight code AA999 not found in our system"`
-. Inspect the Logger component's message evaluation.
-. Click *Continue* (F5) to complete the error response.
-
-== Create and Run MUnit Tests
+Before you begin, complete the debugging steps in xref:tut-flights-debug-api.adoc[].
 
 MUnit is MuleSoft's unit testing framework for Mule applications. Use it to create automated tests that verify your API behaves correctly, without requiring external dependencies or manual testing. Anypoint Code Builder provides integrated support for creating, running, and debugging MUnit tests through a Testing panel, canvas UI, and code editor.
 
-=== Understand MUnit Test Structure
+== Understand MUnit Test Structure
 
 An MUnit test consists of:
 
@@ -154,11 +20,11 @@ An MUnit test consists of:
 
 NOTE: MUnit 3.4.0 or later is required for canvas-based test suite creation in Anypoint Code Builder.
 
-=== Create Your First MUnit Test Suite
+== Create Your First MUnit Test Suite
 
 Create a test suite to verify the `GET /flights` endpoint returns all flights.
 
-==== Step 1: Create a New MUnit Test Suite
+=== Step 1: Create a New MUnit Test Suite
 
 . In Anypoint Code Builder, navigate to `src/test/munit` in the Explorer panel.
 . Right-click the `munit` folder and select *New MUnit Test Suite File*.
@@ -181,7 +47,7 @@ Anypoint Code Builder generates a new file with a basic structure:
 </mule>
 ----
 
-==== Step 2: Add a Test for Database Operations
+=== Step 2: Add a Test for Database Operations
 
 Now create your first test case to verify a database query returns flight data successfully. This test uses the actual database configuration from your implementation project.
 
@@ -250,7 +116,7 @@ Alternatively, paste this code in your `munit:test` element in the XML config:
 +
 This validation checks that the database query returned at least one record.
 
-==== Step 3: Run the Test
+=== Step 3: Run the Test
 
 // Pointer to Testing panel
 include::partial$acb-reusable-steps.adoc[tags="munit-open-testing-panel"]
@@ -271,7 +137,7 @@ A successful test shows a green checkmark (✓) and output similar to:
 [INFO] ------------------------------------------------------------------------
 ----
 
-==== Complete Example
+=== Complete Example
 
 Here's the complete test structure:
 
@@ -298,11 +164,11 @@ Here's the complete test structure:
 </mule>
 ----
 
-=== Advanced Testing: Use Mocks for API Endpoints
+== Advanced Testing: Use Mocks for API Endpoints
 
 While the previous example tested a database operation directly, you can also test complete API endpoints by adding an HTTP Request configuration and mocking dependencies. This approach allows your tests to run without requiring external systems like databases.
 
-==== Step 1: Add the HTTP Namespace
+=== Step 1: Add the HTTP Namespace
 
 Before using HTTP components in your test, you need to add the HTTP namespace to your test suite.
 
@@ -329,7 +195,7 @@ Your `<mule>` tag should look like this:
       http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
 ----
 
-==== Step 2: Add the HTTP Request Configuration
+=== Step 2: Add the HTTP Request Configuration
 
 Add an HTTP Request configuration that points to your local Mule application. Copy and paste this configuration in the XML editor before your test cases:
 
@@ -340,7 +206,7 @@ Add an HTTP Request configuration that points to your local Mule application. Co
 </http:request-config>
 ----
 
-==== Step 3: Add a Test for GET /flights (Success Path)
+=== Step 3: Add a Test for GET /flights (Success Path)
 
 Create a test that calls your API endpoint and mocks the database response.
 
@@ -410,7 +276,7 @@ Create a test that calls your API endpoint and mocks the database response.
 
 NOTE: The `with-attributes` section identifies which specific Database Select operation to mock by matching the `doc:name` attribute value. Make sure the `whereValue` matches the name you gave to your Database Select component in the implementation flow.
 
-==== Step 4: Add a Test for Error Handling
+=== Step 4: Add a Test for Error Handling
 
 Add a new test to verify error handling when a flight code is not found.
 
@@ -456,7 +322,7 @@ Add a new test to verify error handling when a flight code is not found.
 </munit:test>
 ----
 
-==== Step 5: Run the Tests
+=== Step 5: Run the Tests
 
 . Open the test in canvas view.
 . In the Testing panel, click the *Run all tests in this file* (▶) button.
@@ -467,24 +333,20 @@ image::tut-flights-munit-run-test-menu.png["Testing panel run button menu with R
 +
 image::tut-flights-munit-test-results.png["Testing panel showing 3 of 3 tests passed for the american-flights-api-test.xml suite"]
 
-=== Measure Test Coverage
+== Measure Test Coverage
 
-MUnit provides built-in coverage reporting to measure what percentage of your application code is executed by your tests.
+MUnit provides built-in coverage reporting that measures the percentage of event processors executed by your tests. Aim for at least 80% coverage for production APIs.
 
-==== Run Tests with Coverage
+After you run tests with coverage, you can view the results in the *Test Coverage* panel or in the console output. The Explorer panel also displays coverage metrics alongside your files, making it easy to identify which parts of your application need additional test coverage.
+
+To run tests with coverage:
 
 . In the Testing panel, click the *Run all tests in this file* (▶) button.
 . Click *Run Test With Coverage*.
 +
 Alternatively, right-click the test suite file in the project explorer and select *Run MUnit Test with Coverage*.
 
-After the tests complete, you can view the coverage report in the *Test Coverage* panel, or in the console output.
-
-Coverage indicates the percentage of event processors executed by the MUnit test. Aim for at least 80% coverage for production APIs.
-
-After running tests with coverage, the Explorer panel displays coverage metrics alongside your files, making it easy to identify which parts of your application need additional test coverage.
-
-=== Best Practices for MUnit Testing
+== Best Practices for MUnit Testing
 
 Follow these best practices to create maintainable and effective MUnit tests:
 
@@ -496,11 +358,11 @@ Follow these best practices to create maintainable and effective MUnit tests:
 * *Aim for high coverage*: Target at least 80% code coverage, ensuring all critical paths are tested.
 * *Test error scenarios*: Don't just test the happy path — validate that your error handlers work correctly too.
 
-=== Troubleshoot Common MUnit Issues
+== Troubleshoot Common MUnit Issues
 
 When creating and running MUnit tests, you may encounter issues related to test execution, mocking, or runtime configuration. These are some common problems and their solutions to help you resolve test failures.
 
-==== Test Timeout Errors
+=== Test Timeout Errors
 
 If tests fail with timeout errors:
 
@@ -508,7 +370,7 @@ If tests fail with timeout errors:
 * Check for infinite loops or blocking operations in your flows.
 * Ensure mocked components return responses quickly.
 
-==== Mock Not Applied
+=== Mock Not Applied
 
 If mocks aren't being applied:
 
@@ -516,7 +378,7 @@ If mocks aren't being applied:
 * Check that the processor type (`db:select`, `ee:transform`, and so on) is correct.
 * Ensure the mock is defined in the `munit:behavior` section before execution.
 
-==== Assertion Failures
+=== Assertion Failures
 
 When assertions fail:
 

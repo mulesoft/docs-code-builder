@@ -2,7 +2,7 @@
 :imagesdir: ../assets/images
 :page-pagination:
 
-When you scaffold an API specification into an implementation project, APIKit automatically validates incoming requests against your API specification. This includes:
+When you scaffold an API specification into an implementation project, APIKit automatically validates incoming requests against your API specification. This validation includes:
 
 * *Path parameter formats*: If your API spec defines a pattern (such as `pattern: "^[A-Z]{2}\d+$"`), APIKit validates the format automatically.
 * *Required vs. optional parameters*: APIKit ensures required parameters are present.
@@ -240,7 +240,7 @@ Notice the transformation challenges:
 . *Nested object creation*: `planeType` and `totalSeats` (flat fields in the database) must become a nested `plane` object in the API response.
 . *Fields to exclude*: `airlineName` is in the database but not needed in the API response.
 
-=== Open the Transform Message Component
+=== Step 1: Open the Transform Message Component
 
 In your implementation flow `get:\flights\{flightId}:american-flights-api-config`, you already have a Transform Message component after the Database Select operation.
 
@@ -249,7 +249,7 @@ In your implementation flow `get:\flights\{flightId}:american-flights-api-config
 
 Currently, this transform just outputs `payload`, which passes through the raw database structure without transformation.
 
-=== Define Input Metadata
+=== Step 2: Define Input Metadata
 
 To help DataWeave understand the structure of your database results, define input metadata.
 
@@ -287,7 +287,7 @@ To help DataWeave understand the structure of your database results, define inpu
 
 You should now see the input payload structure in the left panel, showing all available database fields.
 
-=== Define Output Metadata
+=== Step 3: Define Output Metadata
 
 Now define the expected API response format based on your specification.
 
@@ -325,12 +325,15 @@ Now define the expected API response format based on your specification.
 
 The output panel now shows the expected response structure with the nested `plane` object.
 
-=== Create the Field Mappings
+=== Step 4: Create the Field Mappings
 
 With both input and output metadata defined, you can now create the transformation using DataWeave's mapping features.
 
-==== Option A: Use MuleSoft Vibes
-
+[tabs]
+====
+Use MuleSoft Vibes::
++
+--
 . Open MuleSoft Vibes.
 . Send this message:
 +
@@ -362,10 +365,12 @@ output application/json
 	}
 }
 ----
+--
 
-==== Option B: Write the DataWeave Script Directly
-
-Alternatively, you can write the complete DataWeave script in the *Script* view:
+Write the DataWeave Script Directly::
++
+--
+You can write the complete DataWeave script in the *Script* view:
 
 . Click the *Script* tab in the Transform Message component.
 . Replace the current content with:
@@ -399,8 +404,10 @@ output application/json
 * `emptySeats: payload[0].seatsAvailable` — renames `seatsAvailable` to `emptySeats`.
 * `plane: { ... }` — creates a nested object from flat database fields.
 * `output application/json` — specifies the output format.
+--
+====
 
-=== Test with Real Data
+=== Step 5: Test with Real Data
 
 Now test your transformation with actual database data.
 

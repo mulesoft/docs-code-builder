@@ -6,13 +6,11 @@ After implementing, debugging, and testing your API locally, you're ready to dep
 
 In this section, you deploy your American Flights API to CloudHub 2.0. You configure it in API Manager, apply a security policy, and monitor its performance using Runtime Manager in the pages that follow.
 
-See xref:int-deploy-mule-apps.adoc[] for more information about CloudHub and CloudHub 2.0 deployment concepts.
-
-== Deploy Your Application to CloudHub 2.0 from Anypoint Code Builder
-
 CloudHub 2.0 provides a fully managed, containerized deployment environment for your Mule applications. Deploying from Anypoint Code Builder is a streamlined process that packages your application and deploys it directly to the cloud.
 
-=== Prerequisites for Deployment
+See xref:int-deploy-mule-apps.adoc[] for more information about CloudHub and CloudHub 2.0 deployment concepts.
+
+== Prerequisites for Deployment
 
 Before deploying to CloudHub 2.0, verify that you have:
 
@@ -21,7 +19,7 @@ Before deploying to CloudHub 2.0, verify that you have:
 * An application that passes all MUnit tests.
 * An application that runs successfully in debug mode locally.
 
-=== Step 1: Configure Deployment Settings and Deploy Your Project
+== Configure Deployment Settings and Deploy Your Project
 
 The first time you deploy an application to CloudHub 2.0, Anypoint Code Builder creates a deployment settings file. After modifying the deployment settings, deploy your project with those settings.
 
@@ -55,7 +53,7 @@ NOTE: Worker size and count affect your CloudHub 2.0 costs. For this tutorial, u
 
 The deployment process starts and usually takes from two to five minutes. After this period, look for an ACB notification with a message similar to this: `The 'american-flights-api-implementation' project was published to the 'Sandbox' environment in CloudHub 2.0 'Cloudhub-US-East-2 - Shared Space'. The deployment is now processing. Monitor its progress in Runtime Manager.`
 
-=== Step 2: Monitor the Deployment Process
+== Monitor the Deployment Process
 
 After initiating the deployment, open Runtime Manager to monitor the status.
 
@@ -65,7 +63,7 @@ After initiating the deployment, open Runtime Manager to monitor the status.
 +
 If the application is still deploying and shows status *Not Running*, wait a few minutes for the process to finish.
 
-=== Step 3: Verify Your Deployed Application
+== Verify Your Deployed Application
 
 Once deployed, verify that your API is accessible and functioning correctly.
 
