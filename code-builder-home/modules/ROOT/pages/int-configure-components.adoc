@@ -155,6 +155,19 @@ Anypoint Code Builder opens the target flow in the application canvas or, from a
 
 If the target flow is in an imported Mule project dependency, you can open it in a read-only canvas and view its read-only XML. You can inspect the flow and go to other flows in the dependency, but you can't modify the dependency flow or its XML.
 
+[[find-referencing-flows]]
+== Find Flows That Reference a Subflow
+
+Find every flow that references a subflow without searching the project manually. Right-click the subflow in the canvas and select *Find References*. You can also press Shift+Alt+F12 (Windows and macOS).
+
+Anypoint Code Builder lists each flow reference that points to the selected subflow, including references in other configuration files and in MUnit tests. Select a reference to open that location.
+
+You can also use *Find References* on a flow to locate every flow reference that calls it.
+
+This helps you trace execution paths and assess the impact of changes across a project.
+
+*Find References* lists only flow reference components that use a static flow or subflow name. It doesn't resolve dynamic names that use DataWeave expressions.
+
 [[import-connectors-from-exchange]]
 == Import a Connector from Exchange
 
