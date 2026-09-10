@@ -1267,7 +1267,7 @@ node_c ──┘
 
 === Accessing Trigger Data
 
-The `@request` namespace provides access to the trigger's incoming request data. Because a workflow can support multiple interface types, `@request` decouples your nodes from the specific trigger that fired.
+The `@request` namespace provides access to the trigger's incoming request data. Use `@request` expressions to read the payload, headers, and other properties of the request that started the workflow.
 
 * `@request.payload`: Returns the request payload. For the `on_message` handler of the A2A trigger, this expression returns a `SendMessageRequest` object.
 * `@request.interface`: Returns the name of the interface that produced the message (for example, `a2a`).
