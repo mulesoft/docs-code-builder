@@ -2,9 +2,6 @@
 :imagesdir: ../assets/images
 :page-pagination: prev
 
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
-
-
 With your email and Salesforce integration complete, you can now configure your Slack integration to send a Slack message for a new case that is not escalated.
 
 == Before You Begin
@@ -47,8 +44,6 @@ image::select-post-message-operation.png["A list of search results containing Sl
 [calloutlist]
 .. Set the `channel` field to the channel name that you set earlier in the tutorial.
 
-
-
 == Configure the Slack Connection
 
 . In Anypoint Code Builder, open your `new-case-salesforce.xml` file, and add a new line under your `<email:smtp-config/>` element.
@@ -61,8 +56,6 @@ image::select-post-message-operation.png["A list of search results containing Sl
   <slack:token-connection token="${slack.token}" />
 </slack:config>
 --
-
-
 
 == Test Your Mule Application
 
