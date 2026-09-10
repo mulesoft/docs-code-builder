@@ -1246,7 +1246,7 @@ Every node has `.output` (the value it produced) and `.input` (the output of whi
 
 ==== When to Use `.output` vs `.input`
 
-Use `.output` when you know exactly which upstream node you need data from. In a straight-line graph, this is the simplest approach:
+Use `.output` when you know exactly which upstream node you need data from. In a straight-line graph, `.output` is the simplest approach:
 
 ----
 process ──► generate_email ──► send_email
@@ -1255,7 +1255,7 @@ process ──► generate_email ──► send_email
 * `generate_email` accesses the content to write about using `@subagent.process.output`.
 * `send_email` obtains its content using `@generator.generate_email.output`.
 
-You can target any preceding node in the graph, not only the one immediately before the current node.
+An expression can target any preceding node in the graph, not only the node immediately before the current node.
 
 Use `.input` when multiple nodes can transition into the current one and you want to decouple the node from the specific path taken. In this example, `@generator.generate_email.input` returns the output from whichever of `node_a`, `node_b`, or `node_c` actually transitioned into it:
 
