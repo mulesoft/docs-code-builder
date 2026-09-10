@@ -1252,12 +1252,12 @@ Use `.output` when you know exactly which upstream node you need data from. In a
 process ──► generate_email ──► send_email
 ----
 
-* `generate_email` accesses the content to write about using `@subagent.process.output`.
-* `send_email` obtains its content using `@generator.generate_email.output`.
+* `generate_email` reads `@subagent.process.output` as the source content.
+* `send_email` reads `@generator.generate_email.output` as its content.
 
 An expression can target any preceding node in the graph, not only the node immediately before the current node.
 
-Use `.input` when multiple nodes can transition into the current one and you want to decouple the node from the specific path taken. In this example, `@generator.generate_email.input` returns the output from whichever of `node_a`, `node_b`, or `node_c` actually transitioned into it:
+To decouple a node from the path that reached it, use `.input`. In this example, `@generator.generate_email.input` returns the output from whichever of `node_a`, `node_b`, or `node_c` transitioned into `generate_email`:
 
 ----
 node_a ──┐
