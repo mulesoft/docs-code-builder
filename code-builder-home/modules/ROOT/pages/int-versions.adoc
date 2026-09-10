@@ -11,6 +11,7 @@ Anypoint Code Builder includes bundled Mule runtime versions so you can open and
 * Project-level versions: Set versions to use in a specific project.
 ** For Mule and Java versions, see <<project-version-mule-java>>.
 ** For connector versions, see <<project-versions-connectors>>.
+** To upgrade all connectors at once, see <<upgrade-all-connectors>>.
 
 * <<install-additional-runtimes, Install additional runtimes>>: Download specific Mule runtime versions when needed for run or debug operations.  
 
@@ -97,7 +98,9 @@ include::anypoint-code-builder::partial$acb-runtime-java.adoc[tags="runtime-java
 [[project-versions-connectors]]
 == Select Connector Versions for a Project
 
-Set connector versions for a specific implementation or integration project from *Project Properties* or when you add a component to the canvas. You can change versions at any time, but it is important to test your projects with the versions you intend to deploy. 
+Set connector versions for a specific implementation or integration project from *Project Properties* or when you add a component to the canvas. You can change versions at any time, but it is important to test your projects with the versions you intend to deploy.
+
+To upgrade every connector in the project at once, see <<upgrade-all-connectors>>.
 
 [[connector-version-from-properties]]
 To select connector versions for a project:
@@ -112,10 +115,40 @@ include::partial$acb-runtime-java.adoc[tags="open-project-properties-menu"]
 +
 image::int-project-properties-connectors.png["Connector versions in Project Properties tab"]
 . Select connector versions. You can update Exchange connector versions for compatibility with your project's Mule runtime and Java versions.
+. Click *Apply*.
 
 [NOTE]
 ====
-Connector compatibility is checked against the selected Mule runtime and Java versions. Compatibility issues appear after you apply changes in *Project Properties*.
+Connector compatibility is checked against the selected Mule runtime and Java versions. Compatibility issues appear after you apply changes in *Project Properties*. Connector versions that are unavailable from Anypoint Exchange can't be changed in *Project Properties*.
+====
+
+[[upgrade-all-connectors]]
+== Upgrade All Connectors in a Project
+
+Upgrade every connector in an implementation or integration project to its latest compatible version from *Project Properties*. Anypoint Code Builder selects the latest version that is compatible with the project's Mule runtime and Java versions. The upgrade stays on each connector's current major version. For example, a connector on version 1.11.0 can move to 1.12.5, but not to 2.0.0. Review the selected versions, then apply them to update the project's `pom.xml` file.
+
+*Upgrade all to latest* is available when at least one connector has a newer compatible version within its current major version. Connector versions that are unavailable from Anypoint Exchange can't be changed in *Project Properties*.
+
+To upgrade all connectors:
+
+. Open your implementation or integration project.
+//step: open project properties tab from Project Properties menu item
+include::partial$acb-runtime-java.adoc[tags="open-project-properties-command"]
+//step: open project properties tab
+include::partial$acb-runtime-java.adoc[tags="open-project-properties-menu"]
+. Click *Connectors* from *Project Properties*.
+. Click *Upgrade all to latest*.
++
+Anypoint Code Builder sets each connector to the latest compatible version within that connector's current major version. The new version appears in the connector's version dropdown menu. Connectors that already use the latest compatible version, or that have no compatible upgrade within the same major version, remain unchanged.
+. Review the selected versions. To keep a different version for a connector, select it from that connector's dropdown menu.
+. Click *Apply*.
+. In the *Apply connector upgrades?* window, click *Apply*.
++
+Anypoint Code Builder writes the selected connector versions to the project's `pom.xml` file. If you close the window without applying, Anypoint Code Builder doesn't update `pom.xml`.
+
+[NOTE]
+====
+To move a connector to a different major version, select that version from the connector's dropdown menu, then click *Apply*. *Upgrade all to latest* stays within each connector's current major version.
 ====
 
 [[install-additional-runtimes]]
