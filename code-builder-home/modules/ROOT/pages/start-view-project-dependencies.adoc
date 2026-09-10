@@ -1,0 +1,35 @@
+= Viewing Project Dependencies
+
+View the Exchange assets a project depends on from Explorer in Anypoint Code Builder. The *Project Dependencies* list shows each asset and version on your project.
+
+== Before You Begin
+
+* xref:start-acb.adoc[Set up and access Anypoint Code Builder].
+* Open a project that includes dependencies from Anypoint Exchange.
+
+== View Project Dependencies
+
+To open the *Project Dependencies* list:
+
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Select this command:
++
+[source,command]
+----
+MuleSoft: Show Project dependencies
+----
+
+Anypoint Code Builder opens Explorer and expands *Project Dependencies*. Each entry identifies an Exchange asset and its version. Expand an entry to see the files in that dependency. 
+
+If a dependency includes other Exchange assets, those nested dependencies appear under the parent entry.
+
+Alternatively, expand *Project Dependencies* directly in Explorer.
+
+Anypoint Code Builder downloads dependency files to the `.exchange_modules` directory in your home directory. The *Project Dependencies* list shows those assets in the IDE.
+
+== See Also
+
+* xref:des-create-api-fragments.adoc[]
+* xref:start-use-command-palette.adoc[]
+* xref:ref-acb-commands.adoc[]
