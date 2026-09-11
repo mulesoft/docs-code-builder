@@ -8,11 +8,11 @@ Add, edit, and delete global configurations in Anypoint Code Builder from *Globa
 * xref:int-create-integrations.adoc[Create an integration project].
 
 [[open-global-elements-panel]]
-== Open the Global Elements Panel
+== Open Global Elements
 
 Open *Global Elements* from *Project Properties* to view and manage the global configurations defined in your project.
 
-. Use one of the these options:
+. Use one of these options:
 +
 * In the canvas toolbar, click *Manage Global Elements* to open *Project Properties* with the *Global Elements* tab already selected.
 * In the Explorer, right-click your project and select *Project Properties*, then select *Global Elements* from the menu.
@@ -20,7 +20,7 @@ Open *Global Elements* from *Project Properties* to view and manage the global c
 *Global Elements* shows a searchable table with the *Type*, *Name*, and *Notes* for each element. 
 
 . In *Selected File*, select a configuration file and view its elements. 
-. After you select a file, use *Add New* to create a configuration, or use MuleSoft Vibes. 
+. After you select a file, select *New Configuration* to create a configuration, or use MuleSoft Vibes. 
 +
 The table updates in real-time as you make changes.
 
@@ -31,16 +31,16 @@ Add connector configurations and other global configuration types from *Global E
 
 To add a global configuration:
 
-. Open the <<open-global-elements-panel, Global Elements panel>>.
+. Open <<open-global-elements-panel, *Global Elements*>>.
 . Select a configuration file from *Selected File*.
-. Click *Add New*.
-. In *Select Configuration Type*, search for or browse to the type you want.
+. Click *New Configuration*.
+. In *Select configuration type*, search for or browse to the type you want.
 +
 Types are grouped by category:
 +
-* *Global Configuration*
-* *Connector Configuration*
-* *Component Configuration*
+* *Component Configurations*
+* *Global Configurations*
+* *Connector Configurations*
 * *Caching Strategies*
 . Select a type. A form opens, scoped to the file you selected.
 . Complete the required fields and save.
@@ -58,7 +58,7 @@ For more details on using Vibes to manage global elements, see <<vibes-manage-gl
 [[edit-global-config]]
 == Edit a Global Configuration
 
-To edit an existing element, use one of the these methods:
+To edit an existing element, use one of these methods:
 
 * *Form editor* — Click the *More actions* (*...*) menu next to the element and select *Edit*. A form-driven editor opens with field validation so you can update the configuration. Form editing is available for connector configurations and for these global configuration types:
 +
@@ -80,7 +80,7 @@ Delete connector configurations and other global configuration elements from *Gl
 
 To delete a global configuration:
 
-. Open the <<open-global-elements-panel, Global Elements panel>>.
+. Open <<open-global-elements-panel, *Global Elements*>>.
 . In the *Configured Elements* table, click the *More actions* (*...*) menu next to the element.
 . Select *Delete*.
 . Confirm the deletion when the dialog names the element.
@@ -101,10 +101,10 @@ If global elements are scattered across multiple configuration files, consolidat
 
 To consolidate from *Global Elements*:
 
-. Open the <<open-global-elements-panel, Global Elements panel>>.
+. Open <<open-global-elements-panel, *Global Elements*>>.
 . Click *Consolidate*.
 
-Anypoint Code Builder moves global configuration elements from every file in the project into `global-configs.xml` and updates flow file references.
+Anypoint Code Builder combines global configurations from all project files into `global-configs.xml` and updates flow file references.
 
 To consolidate through MuleSoft Vibes, see <<centralize-studio-projects>>.
 
@@ -115,7 +115,7 @@ When you create a new project, Anypoint Code Builder automatically generates a `
 
 === Register a Properties File
 
-To register a `.yaml` or `.properties` file as a configuration source, click *Add New* in *Global Elements* and select the configuration properties type. You can also use MuleSoft Vibes. For example:
+To register a `.yaml` or `.properties` file as a configuration source, click *New Configuration* in *Global Elements* and select the configuration properties type. You can also use MuleSoft Vibes. For example:
 
 * _"Register a new properties file"_
 * _"Add config.yaml as a configuration properties file"_
@@ -124,7 +124,7 @@ Anypoint Code Builder adds a `<configuration-properties>` element to your global
 
 === Add Inline Global Properties
 
-To add `<global-property>` key-value pairs, click *Add New* in *Global Elements* and select the global property type. You can also use MuleSoft Vibes. For example:
+To add `<global-property>` key-value pairs, click *New Configuration* in *Global Elements* and select the global property type. You can also use MuleSoft Vibes. For example:
 
 * _"Add a global property named env with value dev"_
 
@@ -175,7 +175,7 @@ In addition to connector configurations, you can add, edit, and delete these glo
 | Set up Trust Store and Key Store configurations once, then reference them from any connector that supports TLS.
 
 | *Import Project Reference*
-| Import a JAR containing a shared Mule project. Use its flows, error handlers, and connection configurations. Anypoint Code Builder handles POM dependency management. When you import from a library that's added as a project dependency, specify the Mule configuration file to import.
+| Import a JAR containing a shared Mule project. Use its flows, error handlers, and connection configurations. Anypoint Code Builder handles POM dependency management. When you import from a project dependency, specify the Mule configuration file to import.
 
 | *Caching Strategy*
 | Define a centralized caching strategy that you can reference from Cache scopes across the project.
