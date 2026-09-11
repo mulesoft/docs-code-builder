@@ -1,0 +1,387 @@
+= Test the American Flights API with MUnit
+:imagesdir: ../assets/images
+:page-pagination:
+
+After debugging your API flows locally, add automated MUnit tests to verify behavior and guard against regressions before deployment.
+
+Before you begin, complete the debugging steps in xref:tut-flights-debug-api.adoc[].
+
+MUnit is MuleSoft's unit testing framework for Mule applications. Use it to create automated tests that verify your API behaves correctly, without requiring external dependencies or manual testing. Anypoint Code Builder provides integrated support for creating, running, and debugging MUnit tests through a Testing panel, canvas UI, and code editor.
+
+== Understand MUnit Test Structure
+
+An MUnit test consists of:
+
+* *Test Suite*: A file containing one or more tests (saved as `*-test.xml` in `src/test/munit`).
+* *Test Case*: An individual test that validates a specific behavior.
+* *Behavior*: Setup and teardown conditions, including mocks of external systems (like databases) to isolate the logic under test.
+* *Execution*: Invokes a flow or subflow.
+* *Validation*: Asserts that the result matches expectations.
+
+NOTE: MUnit 3.4.0 or later is required for canvas-based test suite creation in Anypoint Code Builder.
+
+== Create Your First MUnit Test Suite
+
+Create a test suite to verify the `GET /flights` endpoint returns all flights.
+
+=== Step 1: Create a New MUnit Test Suite
+
+. In Anypoint Code Builder, navigate to `src/test/munit` in the Explorer panel.
+. Right-click the `munit` folder and select *New MUnit Test Suite File*.
+. Provide a name for the test suite: `american-flights-api-test.xml`.
+. Click *Create*.
++
+Anypoint Code Builder generates a new file with a basic structure:
++
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+      xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+      http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+      http://www.mulesoft.org/schema/mule/munit-tools http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+    <munit:config name="american-flights-api-test"/>
+</mule>
+----
+
+=== Step 2: Add a Test for Database Operations
+
+Now create your first test case to verify a database query returns flight data successfully. This test uses the actual database configuration from your implementation project.
+
+NOTE: This example uses a real database connection. For tests that should run without external dependencies, you can mock the database using `munit-tools:mock-when` as shown later in this section.
+
+. Open the test file (`american-flights-api-test.xml`) in canvas view.
+. In the MUnit bar, click *+* and select *Test Scope*.
+. Click the *Test* component and change its name to `test-database-query`.
++
+Alternatively, in the code editor, add:
++
+[source,xml]
+----
+<munit:test name="test-database-query"
+    description="Test that database query returns flight data">
+    <!-- Test content will go here -->
+</munit:test>
+----
+. In the *Behavior* section, click *+*.
+. Select *Code Processors > Transformers > Set Variable*.
+. Click the *Set Variable* component and specify these values:
+* *Variable name*: `expectedRecordCount`
+* *Value*: `3`
++
+Alternatively, paste this code in your `munit:test` element in the XML config:
++
+[source,xml]
+----
+<munit:behavior>
+    <!-- Set expected conditions for the test -->
+    <set-variable variableName="expectedRecordCount" value="3" />
+</munit:behavior>
+----
+. In the *Execution* section, click *+*.
+. Select *Connectors > Database > Select*.
+. Click the *Database - Select* operation and specify these values:
+* *Connection Config*: `Config` (select the existing database configuration)
+* *SQL Query Text*: `SELECT * FROM american`
++
+Alternatively, paste this code in your `munit:test` element in the XML config:
++
+[source,xml]
+----
+<munit:execution>
+    <db:select doc:name="Select" config-ref="Config">
+        <db:sql><![CDATA[SELECT * FROM american]]></db:sql>
+    </db:select>
+</munit:execution>
+----
+. In the *Validation* section, click *+*.
+. Select *MUnit Test Modules > Assert that*.
+. Click the *Assert that* component and specify these values:
+* *Expression*: `sizeOf(payload)`
+* *Is*: `MunitTools::greaterThan(0)`
+* *Message*: `Should return at least one flight`
++
+[source,xml]
+----
+<munit:validation>
+    <munit-tools:assert-that
+        expression="#[sizeOf(payload)]"
+        is="#[MunitTools::greaterThan(0)]"
+        message="Should return at least one flight" />
+</munit:validation>
+----
++
+This validation checks that the database query returned at least one record.
+
+=== Step 3: Run the Test
+
+// Pointer to Testing panel
+include::partial$acb-reusable-steps.adoc[tags="munit-open-testing-panel"]
+. Locate your test suite `american-flights-api-test.xml` in the Testing panel.
+. Click the *Run* button (▶) next to the test case `test-database-query`.
++
+Alternatively, right-click the test in the canvas and select *Run Tests*.
+. View the test results in the *Testing* panel.
++
+A successful test shows a green checkmark (✓) and output similar to:
++
+[source,command]
+----
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+----
+
+=== Complete Example
+
+Here's the complete test structure:
+
+[source,xml]
+----
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd http://www.mulesoft.org/schema/mule/munit-tools http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+    <munit:config name="american-flights-api-test.xml"></munit:config>
+    <munit:test name="test-database-query">
+        <munit:behavior>
+            <!-- Mock or verify database has data -->
+            <set-variable value="3" variableName="expectedRecordCount"></set-variable>
+        </munit:behavior>
+        <munit:execution>
+            <!-- Execute your actual flow. Reference the existing config. -->
+            <db:select config-ref="Config" doc:name="Select">
+                <db:sql><![CDATA[SELECT * FROM american]]></db:sql>
+            </db:select>
+        </munit:execution>
+        <munit:validation>
+            <!-- Verify the results -->
+            <munit-tools:assert-that expression="#[sizeOf(payload)]" is="#[MunitTools::greaterThan(0)]" message="Should return at least one flight"></munit-tools:assert-that>
+        </munit:validation>
+    </munit:test>
+</mule>
+----
+
+== Advanced Testing: Use Mocks for API Endpoints
+
+While the previous example tested a database operation directly, you can also test complete API endpoints by adding an HTTP Request configuration and mocking dependencies. This approach allows your tests to run without requiring external systems like databases.
+
+=== Step 1: Add the HTTP Namespace
+
+Before using HTTP components in your test, you need to add the HTTP namespace to your test suite.
+
+. Open the test suite file in the XML code editor (click the *</>* icon to switch from canvas to code view).
+. Locate the opening `<mule>` tag at the top of your file.
+. Add the HTTP namespace declaration to the `<mule>` tag:
+* Add `xmlns:http="http://www.mulesoft.org/schema/mule/http"` to the namespace declarations.
+* Add `http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd` to the `xsi:schemaLocation` attribute.
++
+Your `<mule>` tag should look like this:
++
+[source,xml]
+----
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+      xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:db="http://www.mulesoft.org/schema/mule/db"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+      http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+      http://www.mulesoft.org/schema/mule/munit-tools http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+      http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+      http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+----
+
+=== Step 2: Add the HTTP Request Configuration
+
+Add an HTTP Request configuration that points to your local Mule application. Copy and paste this configuration in the XML editor before your test cases:
+
+[source,xml]
+----
+<http:request-config name="HTTP_Request_configuration">
+    <http:request-connection host="localhost" port="8081"/>
+</http:request-config>
+----
+
+=== Step 3: Add a Test for GET /flights (Success Path)
+
+Create a test that calls your API endpoint and mocks the database response.
+
+. Open the `american-flights-api-test.xml` file in the Code Editor.
+. After the closing `</munit:test>` tag and before the `</mule>` tag, paste this code:
++
+[source,xml]
+----
+<munit:test name="get-all-flights-returns-200"
+    description="Test that GET /flights returns all flights">
+    <munit:behavior>
+        <munit-tools:mock-when doc:name="Mock Database Select"
+            processor="db:select">
+            <munit-tools:with-attributes>
+                <munit-tools:with-attribute
+                    attributeName="doc:name"
+                    whereValue="All Flights"/>
+            </munit-tools:with-attributes>
+            <munit-tools:then-return>
+                <munit-tools:payload value='#[[
+                    {
+                        "ID": 1,
+                        "code1": "rree",
+                        "code2": "0001",
+                        "airlineName": "American Airlines",
+                        "toAirport": "LAX",
+                        "fromAirport": "MUA",
+                        "takeOffDate": "2016-01-20",
+                        "price": 541,
+                        "planeType": "Boeing 787",
+                        "seatsAvailable": 0,
+                        "totalSeats": 200
+                    },
+                    {
+                        "ID": 2,
+                        "code1": "rree",
+                        "code2": "0002",
+                        "airlineName": "American Airlines",
+                        "toAirport": "JFK",
+                        "fromAirport": "LAX",
+                        "takeOffDate": "2016-01-21",
+                        "price": 599,
+                        "planeType": "Airbus A320",
+                        "seatsAvailable": 23,
+                        "totalSeats": 180
+                    }
+                ]]' />
+            </munit-tools:then-return>
+        </munit-tools:mock-when>
+    </munit:behavior>
+    <munit:execution>
+        <flow-ref name="get:\flights:american-flights-api-config" doc:name="Flow-ref"/>
+    </munit:execution>
+    <munit:validation>
+        <munit-tools:assert-that
+            expression="#[sizeOf(payload)]"
+            is="#[MunitTools::equalTo(2)]"
+            doc:name="Assert 2 flights returned"/>
+        <munit-tools:assert-that
+            expression="#[payload[0].ID]"
+            is="#[MunitTools::equalTo(1)]"
+            doc:name="Assert first flight ID"/>
+    </munit:validation>
+</munit:test>
+----
+. Confirm the test was created in the canvas view.
+
+NOTE: The `with-attributes` section identifies which specific Database Select operation to mock by matching the `doc:name` attribute value. Make sure the `whereValue` matches the name you gave to your Database Select component in the implementation flow.
+
+=== Step 4: Add a Test for Error Handling
+
+Add a new test to verify error handling when a flight code is not found.
+
+. After the last closing `</munit:test>` tag and before the `</mule>` tag, paste this code:
++
+[source,xml]
+----
+<munit:test name="get-flight-by-invalid-code-returns-404"
+    description="Test that invalid flight code returns 404">
+    <munit:behavior>
+        <!-- Set up the event with attributes for URI parameters -->
+        <munit:set-event doc:name="Set Event">
+            <munit:attributes value="#[{
+                uriParams: {flightId: 'XX999'}
+            }]"/>
+        </munit:set-event>
+        <!-- Tell MUnit we expect this error -->
+        <munit-tools:assert-that
+            expression="#[true]"
+            is="#[MunitTools::equalTo(true)]"
+            doc:name="Setup complete"/>
+    </munit:behavior>
+    <munit:execution>
+        <try>
+            <flow-ref name="get:\flights\(flightId):american-flights-api-config"/>
+            <error-handler>
+                <on-error-continue type="VALIDATION:FLIGHT_NOT_FOUND">
+                    <set-variable variableName="caughtError" value="#[error]"/>
+                </on-error-continue>
+            </error-handler>
+        </try>
+    </munit:execution>
+    <munit:validation>
+        <munit-tools:assert-that
+            expression="#[vars.caughtError.errorType.identifier]"
+            is="#[MunitTools::equalTo('FLIGHT_NOT_FOUND')]"
+            doc:name="Assert FLIGHT_NOT_FOUND error"/>
+        <munit-tools:assert-that
+            expression="#[vars.caughtError.description]"
+            is="#[MunitTools::containsString('XX999')]"
+            doc:name="Assert error mentions flight code"/>
+    </munit:validation>
+</munit:test>
+----
+
+=== Step 5: Run the Tests
+
+. Open the test in canvas view.
+. In the Testing panel, click the *Run all tests in this file* (▶) button.
+. Click *Run Test*.
++
+image::tut-flights-munit-run-test-menu.png["Testing panel run button menu with Run Test and Run Test with Coverage options"]
+. Verify the tests pass with the expected responses.
++
+image::tut-flights-munit-test-results.png["Testing panel showing 3 of 3 tests passed for the american-flights-api-test.xml suite"]
+
+== Measure Test Coverage
+
+MUnit provides built-in coverage reporting that measures the percentage of event processors executed by your tests. Aim for at least 80% coverage for production APIs.
+
+After you run tests with coverage, you can view the results in the *Test Coverage* panel or in the console output. The Explorer panel also displays coverage metrics alongside your files, making it easy to identify which parts of your application need additional test coverage.
+
+To run tests with coverage:
+
+. In the Testing panel, click the *Run all tests in this file* (▶) button.
+. Click *Run Test With Coverage*.
++
+Alternatively, right-click the test suite file in the project explorer and select *Run MUnit Test with Coverage*.
+
+== Best Practices for MUnit Testing
+
+Follow these best practices to create maintainable and effective MUnit tests:
+
+* *Mock external dependencies*: Always mock database connections, HTTP requests to external APIs, and file system operations to keep tests fast and reliable.
+* *Test one behavior per test case*: Each test should validate a single scenario (success path, specific error condition, and so on).
+* *Use descriptive test names*: Names like `get-flight-by-valid-code-returns-200` clearly indicate what the test validates.
+* *Maintain test data separately*: Consider storing sample payloads in separate files in `src/test/resources` for complex data structures.
+* *Run tests frequently*: Execute tests after each significant change to catch issues early.
+* *Aim for high coverage*: Target at least 80% code coverage, ensuring all critical paths are tested.
+* *Test error scenarios*: Don't just test the happy path — validate that your error handlers work correctly too.
+
+== Troubleshoot Common MUnit Issues
+
+When creating and running MUnit tests, you may encounter issues related to test execution, mocking, or runtime configuration. These are some common problems and their solutions to help you resolve test failures.
+
+=== Test Timeout Errors
+
+If tests fail with timeout errors:
+
+* Increase the timeout value in your MUnit configuration.
+* Check for infinite loops or blocking operations in your flows.
+* Ensure mocked components return responses quickly.
+
+=== Mock Not Applied
+
+If mocks aren't being applied:
+
+* Verify the `doc:name` attribute in `with-attributes` exactly matches your component's name.
+* Check that the processor type (`db:select`, `ee:transform`, and so on) is correct.
+* Ensure the mock is defined in the `munit:behavior` section before execution.
+
+=== Assertion Failures
+
+When assertions fail:
+
+* Review the expected vs. actual values in the test output.
+* Add Logger components to see intermediate payload transformations.
+* Use debug mode to inspect the actual payload structure at the validation point.
