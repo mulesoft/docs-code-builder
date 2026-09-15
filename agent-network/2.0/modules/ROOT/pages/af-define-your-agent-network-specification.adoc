@@ -1,5 +1,5 @@
 [[define-spec]]
-= Define Your Agent Network
+= Define Agent Networks
 :page-aliases: anypoint-code-builder::af-define-your-agent-network-specification.adoc
 
 After you create your agent network project, configure your network by editing `agent-network.yaml`, the `.agent` files in the `/brokers` directory, and `exchange.json`. As you edit, use the read-only visual canvas alongside the code editor to verify the structure of your network and to navigate quickly between graph nodes and the code that defines them.
@@ -128,7 +128,7 @@ The *Add Exchange Assets to Project* UI opens with the Exchange search and listi
 . Click *Add to Project*.
 +
 The asset is added to the `dependencies` attribute in `exchange.json` and appears in the *Imported from Exchange* section of the Project Assets.
-. Edit `agent-network.yaml` to reference the new asset from the appropriate broker's *registry* entries, and edit the relevant `.agent` files in `/brokers` to use the asset in node configurations.
+. Edit `agent-network.yaml` to add a connection entry in the `context.connections` section that references the new asset, and edit the relevant `.agent` files in `/brokers` to use the connection in node configurations.
 +
 If you added a dependency that doesn't belong to the same business group as your agent network, specify the `namespace` property at the same level as `name` in `agent-network.yaml`. Provide the `groupId` (business group ID) for the business group that the dependency belongs to. The `groupId` value is the same as the `groupId` value of the corresponding dependency in `exchange.json`. If you don't provide a namespace value, the same `groupId` as the agent network project is used.
 
@@ -186,9 +186,8 @@ When you deploy your agent network, provide an `apiKey` to authenticate with the
 
 If you reuse an existing LLM Proxy Exchange asset in your agent network, ensure that the `apiVersion` in the `exchange.json` dependency matches the version group name in your LLM Proxy asset. To verify, open the Exchange asset page for your LLM Proxy and confirm that the version group name matches the `apiVersion` value in `exchange.json`.
 
-[[see-also]]
-== See Also
+[[whats-next]]
+== What's Next?
 
-* xref:af-create-agent-network.adoc[Create Agent Networks]
-* xref:af-project-files.adoc[Agent Network Project File Reference]
-* xref:af-agent-script-reference.adoc[Agent Script Reference]
+* xref:af-local-deploy-and-test.adoc[Deploy and Test Agent Networks Locally]
+* xref:af-publish-agent-network.adoc[Publish Your Agent Network to Anypoint Exchange]
