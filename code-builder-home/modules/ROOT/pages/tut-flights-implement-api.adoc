@@ -10,28 +10,8 @@ To implement the API, you scaffold the API specification into an integration pro
 
 Now that the American Flights API specification is available in Anypoint Exchange, scaffold it into a new integration project to generate the API interface.
 
-[tabs]
-====
-Use MuleSoft Vibes::
-+
---
-Ask MuleSoft Vibes to scaffold the locally generated API spec with this message:
-
-[source,command]
-----
-Scaffold the american-flights-api.yaml API spec.
-----
---
-
-Manually Scaffold from Anypoint Exchange::
-+
---
 // Can't reuse because collapsible block conflicts with tab syntax
-. Open the Command Palette.
-.. Use the keyboard shortcuts:
-*** Mac: Cmd+Shift+p
-*** Windows: Ctrl+Shift+p
-.. Select View > Command Palette.
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Provide this command:
 +
 [source,command]
@@ -45,8 +25,7 @@ MuleSoft: Implement an API Specification
 .. Find your API specification on Anypoint Exchange, and click *Add Asset* to insert the API name into the field.
 .. Select an existing workspace, or create a new one by providing a name and a location.
 .. Click *Create Project* to start scaffolding the specification into a new implementation project.
---
-====
+.. If you see a *Do you trust the authors of the files in this folder?* message, select *Yes*.
 
 After scaffolding completes, confirm that the generated project contains listener configuration, APIKit router flows, and operation-specific flow stubs.
 
@@ -57,11 +36,11 @@ image::tut-flights-scaffold-project.png["Flow list showing the scaffolded americ
 Add and configure a Database Select operation to retrieve flight data from a database.
 
 . Open the `get:\flights:american-flights-api-config` flow
-+
-image::tut-flights-db-flow-overview.png["The get:\flights:american-flights-api-config flow with an All Flights Database Select component followed by a Transform Message component"]
 . Click *Add Component* (+) before *Transform Message*, and then select *Connectors > Database > Select*.
 . Click the *Select* component to open its properties panel.
 . Change the name to `All Flights`.
++
+image::tut-flights-db-flow-overview.png["The get:\flights:american-flights-api-config flow with an All Flights Database Select component followed by a Transform Message component"]
 . In the *Select* component properties, click *Add New Connection* next to *Connection Config*.
 +
 image::tut-flights-db-select-add-connection.png["Database - Select properties panel with the Add New Connection link next to Connection Config"]
@@ -94,18 +73,22 @@ image::tut-flights-db-driver-configured.png["Required Libraries section confirmi
 | *Database* | `training`
 |===
 +
-image::tut-flights-db-connection-config.png["Connection Config dialog with Host, Port, User, Password, and Database fields set"]
+image::tut-flights-db-select-query.png["Connection Config dialog with Host, Port, User, Password, and Database fields set"]
 
 . Click *Test Connection* and confirm that you see a *Connection is valid* message.
 +
 image::tut-flights-db-connection-valid.png["Connection is valid confirmation message"]
-. Click *Add* and close the *Database - Select Config* tab.
-. In the *Database - Select* properties panel, add a query to select all records from the `american` table:
++
+[TIP]
+If the test fails, verify the connection details and retry. If you are using a VPN, confirm that it is not preventing the connection to the MySQL database.   
+. Click *Add* and close the *Database - Select* config tab.
+. In the *Database - Select* properties panel, add this query in the *SQL Query Text* field:
 +
 [source,sql]
 ----
 SELECT * FROM american
 ----
 +
-image::tut-flights-db-select-query.png["Database - Select properties panel with the General tab showing the SQL Query Text field set to SELECT * FROM american"]
-. In your REST client, test `http://localhost:8081/api/flights`. Confirm that you see a response with all flight data.
+image::tut-flights-db-connection-config.png["Database - Select properties panel with the General tab showing the SQL Query Text field set to SELECT * FROM american"]
++
+This query selects all records from the `american` table.

@@ -21,21 +21,20 @@ image::tut-flights-acb-activity-bar-icon.png["Anypoint Code Builder icon in the 
 |===
 | Field Name | Field Value
 
-| *Enable this API for Topics and Actions* | Select this checkbox to add the applicable agent topic metadata and apply centralized governance rulesets to the project. 
-+
+| *Enable this API for Topics and Actions* | Select this checkbox to add the applicable agent topic metadata and apply centralized governance rulesets to the project.
 See xref:ai-enabling-api-project-topic-center.adoc[] for more information.
 | *Project Name* | `American Flights API`
-| *Project Location* | Your home directory is selected by default. 
-+
+| *Project Location* | Your home directory is selected by default.
 This is the root folder of your project, which acts as your workspace. Don't select a different project directory for this API spec. See xref:start-add-folders.adoc[] for more information.
 | *API Type* | *REST API*
 | *API Specification Language* | *OAS 3.0 (YAML)*
+| *Business Group* | Select the business Group to use for this project. 
 |===
 
 . Click *Create Project* to generate the American Flights API project file: `american-flights-api.yaml`.
 +
 The file name is based on the project name you provide.
-. Configure the agent topic metadata and instructions using these values:
+. Configure the agent topic metadata and instructions by setting these values:
 +
 [%header,cols="20a,60a"]
 |===
@@ -46,10 +45,22 @@ The file name is based on the project name you provide.
 | *Scope* | Your job is only to book, update, or retrieve flight information.
 | *Instruction* | If a user asks to retrieve flight details, use the get flight operation to retrieve information using the booking ID.
 |===
-
++
+[TIP]
+If you don't see the *Agent Topics* after creating the project, you must trust the workspace folder. You can do so by clicking *Manage* then *Trust* from the notification that shows. If you closed the notification, or it doesn't show, see: https://code.visualstudio.com/docs/editing/workspaces/workspace-trust#_trusting-a-workspace[Trusting a workspace] for instructions.
 . Click *Apply* to save your changes.
-. Open MuleSoft Vibes from the toolbar or from the *Build Your Ecosystem with AI* card in the canvas.
-. Enable auto-approve by clicking the *Auto-approve* section at the bottom of the MuleSoft Vibes window, and then select *Read project files*, *Edit project files*, *Execute safe commands*, and *Use MCP Servers*.
+. Open MuleSoft Vibes from the toolbar.
++
+If you don't see the MuleSoft Vibes icon, click *Additional Views* to expand the toolbar.
++
+image::tut-flights-open-vibes.png["Additional Views menu with MuleSoft Vibes highlighted"]
+. Enable auto-approve by clicking the *Auto-approve* section at the end of the MuleSoft Vibes window, and then select:
+** *Read project files*
+** *Edit project files*
+** *Execute safe commands*
+** *Use MCP Servers*
++
+image::tut-flights-vibes-auto-approve.png["Auto-approve panel with Read project files, Edit project files, Execute safe commands, and Use MCP servers checkboxes selected"]
 +
 With auto-approve enabled, MuleSoft Vibes automatically applies changes to your project without prompting you for confirmation. See xref:vibes-get-started.adoc[] for more information.
 . Enter this prompt, and then send your message:
@@ -61,7 +72,11 @@ Create an API specification example for the American Flights API that returns fl
 +
 MuleSoft Vibes generates the spec and saves it to your file.
 +
-NOTE: If you get an `API streaming failed` error, click *Resume Task* to retry creating the spec.
+[TIP]
+====
+If you get an `API streaming failed` error, click *Resume Task* to retry creating the spec. +
+If you see this message: `The model has determined this command requires explicit approval.`, click *Run Command*.
+====
 
 == Mock and Test the API
 
@@ -73,7 +88,7 @@ Next, use MuleSoft Vibes and the built-in mocking service in the API Console to 
 ----
 Test the API using the built-in mocking service in API console.
 ----
-. Select the *Auto-approve* checkbox and click *Accept* to proceed with testing.
+. Click *Approve* every time MuleSoft Vibes asks for approval to continue with the task.
 
 MuleSoft Vibes creates a testing file named `API_TESTING_GUIDE.md` and tests these endpoints:
 
@@ -81,14 +96,12 @@ MuleSoft Vibes creates a testing file named `API_TESTING_GUIDE.md` and tests the
 * `GET` flight status
 * `GET` airport information
 
-MuleSoft Vibes then creates a testing file named `API_TESTING_RESULTS.md`. Your API spec is now ready to publish to Anypoint Exchange.
+Your API spec is now ready to publish to Anypoint Exchange.
 
 == Publish the API Spec to Exchange
 
 Publish the American Flights API spec to Exchange so that other team members can find and implement it.
 
-. In Anypoint Code Builder, open the spec for your American Flights API project, such as `american-flights-api.yaml`.
-+
 // Pointer to Command Palette
 include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
 . Provide this command:
@@ -102,7 +115,7 @@ image::tut-flights-publish-command-palette.png["Command Palette with MuleSoft: P
 . If prompted, click *Allow*, and follow the prompts to sign in to Anypoint Platform.
 . If you haven't selected a business group, select one now in *Select a Business Group*.
 . Enter the asset version: `1.0.0`.
-. Confirm the API version: `v1`.
+. Enter the API version: `v1`.
 . Confirm the asset ID in the project metadata: `american-flights-api`.
 . Click *Publish*.
 +

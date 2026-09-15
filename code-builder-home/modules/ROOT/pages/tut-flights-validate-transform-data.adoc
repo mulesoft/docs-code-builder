@@ -27,10 +27,14 @@ In the American Flights API, the example database stores flights with numeric ID
 First, create a transform that stores the mapping of flight codes to database IDs.
 
 . In Anypoint Code Builder, open the `get:\flights\(flightId):american-flights-api-config` flow.
++
+Because MuleSoft Vibes generated the API spec, your implementation flows might have different names. You must locate the flow that starts with `get:\flights\` and is followed by an ID parameter such as `(ID)`, `(flightID)`, or `{flightID}`, for example.
 . If there's already a Transform Message component at the beginning of the flow, click it to open its properties. Otherwise, click *Add Component* (+) at the start of the flow and add *Core > Transform Message*.
-. Click *Edit name* and change it to *Create Flight Code Map*.
+. Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]), change it to *Create Flight Code Map*, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
 . In the *General* tab, under *Target*, click *Add* (+) and select *Variable*.
-. Click the edit icon next to `vars.NewVariable1` and set the name to `flightCodeMap`, then click *Apply*.
+. Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]) next to `vars.NewVariable1`, set the name to `flightCodeMap`, then click *Apply* (image:icon-apply.svg["The Apply icon.", 1.5%, 1.5%]).
++
+If the transform component already has a variable defined, your new variable is the one with name `vars.NewVariable1`.
 . In the *Inline Script* field, replace the content with this DataWeave script:
 +
 [source,dataweave]
@@ -55,12 +59,13 @@ NOTE: In a production application, you would typically query the database direct
 
 Now create a second transform to look up the flight code in the mapping you just created.
 
-. After the *Create Flight Code Map* transform, click *Add Component* (+).
-. Select *Core > Transform Message*.
-. Click *Edit name* and change it to *Lookup DB Flight ID*.
+. After the *Create Flight Code Map* transform, click *Add Component* (+) and select *Core > Transform Message*.
++
+If a second *Transform* already exists, select it and skip this step. 
+. Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]), change it to *Lookup DB Flight ID*, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
 . In the *General* tab, under *Target*, click *Add* (+) and select *Variable*.
-. Click the edit icon next to `vars.NewVariable1` and set the name to `dbFlightId`, then click *Apply*.
-. In the *Inline Script* field for this variable, add:
+. Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]) next to `vars.NewVariable1`, set the name to `dbFlightId`, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
+. In the *Inline Script* field for this variable, paste this code:
 +
 [source,dataweave]
 ----
@@ -79,7 +84,7 @@ NOTE: You cannot reference a variable in the same Transform Message where you're
 Now add logic to check whether the flight code was found in the mapping.
 
 . After the *Lookup DB Flight ID* transform, click *Add Component* (+).
-. Select *Core > Routers > Choice*.
+. Select *Core Processors > Flow Control > Choice*.
 . Click the *When* path inside the Choice router.
 . In the *When* properties panel, under *Expression*, add this condition to check if the flight code wasn't found:
 +
@@ -95,7 +100,7 @@ This expression evaluates to `true` when the flight code doesn't exist in the ma
 When a flight code isn't found, raise a custom error instead of proceeding with the query.
 
 . Inside the *When* path (where the condition is true), click *Add Component* (+).
-. Select *Core > Error Handling > Raise Error*.
+. Select *Core Processors > Error Handling > Raise Error*.
 . In the *Raise Error* properties panel, configure:
 +
 [%header,cols="20a,60a"]
