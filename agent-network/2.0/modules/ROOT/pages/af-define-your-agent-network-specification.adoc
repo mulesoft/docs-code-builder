@@ -128,7 +128,7 @@ The *Add Exchange Assets to Project* UI opens with the Exchange search and listi
 . Click *Add to Project*.
 +
 The asset is added to the `dependencies` attribute in `exchange.json` and appears in the *Imported from Exchange* section of the Project Assets.
-. Edit `agent-network.yaml` to reference the new asset from the appropriate broker's *registry* entries, and edit the relevant `.agent` files in `/brokers` to use the asset in node configurations.
+. Edit `agent-network.yaml` to add a connection entry in the `context.connections` section that references the new asset, and edit the relevant `.agent` files in `/brokers` to use the connection in node configurations.
 +
 If you added a dependency that doesn't belong to the same business group as your agent network, specify the `namespace` property at the same level as `name` in `agent-network.yaml`. Provide the `groupId` (business group ID) for the business group that the dependency belongs to. The `groupId` value is the same as the `groupId` value of the corresponding dependency in `exchange.json`. If you don't provide a namespace value, the same `groupId` as the agent network project is used.
 
