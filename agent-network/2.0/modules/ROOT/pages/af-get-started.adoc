@@ -49,6 +49,13 @@ For more information about gateways, see xref:gateway::flex-architecture-basic-d
 
 For more information about Runtime Fabric deployments, see xref:gateway::flex-gateway-managed-set-up.adoc#rtf[Managed Omni Gateway on Runtime Fabric].
 
+[IMPORTANT]
+====
+For Runtime Fabric deployments, you must register an external ingress domain on your Managed Omni Gateway in Runtime Manager before you deploy an agent network. Running a gateway without inbound transport is a valid configuration, but agent network broker deployment requires an inbound ingress endpoint.
+
+To add an ingress endpoint, see the instructions for xref:gateway::flex-gateway-managed-set-up.adoc#deploy-a-managed-omni-gateway[deploying a Managed Omni Gateway].
+====
+
 . In Anypoint Code Builder, from the Command Palette, run the command *MuleSoft: Set Up Agent Network Gateways*.
 . If you're not logged in, log in to your Anypoint Platform account.
 . Select the business group and environment.
