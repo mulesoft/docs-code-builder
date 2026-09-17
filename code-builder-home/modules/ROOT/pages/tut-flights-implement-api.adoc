@@ -25,11 +25,13 @@ MuleSoft: Implement an API Specification
 .. Find your API specification on Anypoint Exchange, and click *Add Asset* to insert the API name into the field.
 .. Select an existing workspace, or create a new one by providing a name and a location.
 .. Click *Create Project* to start scaffolding the specification into a new implementation project.
-.. If you see a *Do you trust the authors of the files in this folder?* message, select *Yes*.
+.. If you see this notification, trust your workspace by clicking *Manage* then *Trust*. 
++
+image::tut-flights-restricted-banner.png["The workspace trust notification with Manage and Trust options"]
 
 After scaffolding completes, confirm that the generated project contains listener configuration, APIKit router flows, and operation-specific flow stubs.
 
-image::tut-flights-scaffold-project.png["Flow list showing the scaffolded american-flights-api-main flow with a Listener and Router, alongside error handler flows"]
+image::tut-flights-flow-list-view.png["Flow list showing the scaffolded american-flights-api-main flow with a Listener and Router, alongside error handler flows"]
 
 == Connect to a Database Using the Database Connector
 
@@ -40,11 +42,11 @@ Add and configure a Database Select operation to retrieve flight data from a dat
 If you don't see the flow list, click *Show flow list* to display it.
 +
 image::tut-flights-show-flow-list.png["The Show flow list button in Anypoint Code Builder used to display the list of flows in the canvas"]
-. Click *Add Component* (+) before *Transform Message*, and then select *Connectors > Database > Select*.
-. Click the *Select* component to open its properties panel.
-. Change the name to `All Flights`.
+. Click *Add Component* (+) before the existing *Transform Message* and select *Connectors > Database > Select*.
 +
-image::tut-flights-db-flow-overview.png["The get:\flights:american-flights-api-config flow with an All Flights Database Select component followed by a Transform Message component"]
+If there's no *Transform Message*, add the *Database - Select* component at the beginning of the flow. You add or configure the Transform Message component later in this section.
+. Click the *Select* component to open its properties panel.
+. Click Edit name (The Edit Name icon.), change it to `All Flights`, then click Apply (The Apply icon.).
 . In the *Select* component properties, click *Add New Connection* next to *Connection Config*.
 +
 image::tut-flights-db-select-add-connection.png["Database - Select properties panel with the Add New Connection link next to Connection Config"]
@@ -54,7 +56,7 @@ image::tut-flights-db-mysql-connection.png["Connection Config dialog with Name s
 . Click *Configure library* next to *MySQL JDBC Driver*.
 +
 image::tut-flights-db-configure-library.png["Required Libraries section with the Configure library option next to MySQL JDBC Driver"]
-. Review the default settings for the recommended library, and in the *Select Library Source* drop-down menu, select *Maven Dependency*.
+. In the *Select Library Source* drop-down menu, select *Maven Dependency*.
 +
 image::tut-flights-db-library-source-maven.png["Select Library Source drop-down menu set to Maven Dependency"]
 . Enter `mysql:` in the *Search Maven Central Repository* text field, and select *mysql:mysql-connector-java* in the results.
@@ -85,7 +87,7 @@ image::tut-flights-db-connection-valid.png["Connection is valid confirmation mes
 +
 [TIP]
 If the test fails, verify the connection details and retry. If you are using a VPN, confirm that it is not preventing the connection to the MySQL database.   
-. Click *Add* and close the *Database - Select* config tab.
+. Click *Apply* and close the *Database - Select* config tab.
 . In the *Database - Select* properties panel, add this query in the *SQL Query Text* field:
 +
 [source,sql]
@@ -96,3 +98,18 @@ SELECT * FROM american
 image::tut-flights-db-connection-config.png["Database - Select properties panel with the General tab showing the SQL Query Text field set to SELECT * FROM american"]
 +
 This query selects all records from the `american` table.
+. Locate the *Transform Message* component after the *All Flights* Database Select.
++
+If there's no *Transform Message* component there, click *Add Component* (+) after *All Flights* and select *Core Processors > Components > Transform Message*.
++
+image::tut-flights-db-flow-overview.png["The get:\flights:american-flights-api-config flow with an All Flights Database Select component followed by a Transform Message component"]
+. Click the *Transform Message* component to open its properties panel.
+. In the *Inline Script* field, set the script to:
++
+[source,dataweave]
+----
+%dw 2.0
+output application/json
+---
+payload
+----

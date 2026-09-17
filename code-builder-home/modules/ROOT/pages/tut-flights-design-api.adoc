@@ -46,8 +46,12 @@ The file name is based on the project name you provide.
 | *Instruction* | If a user asks to retrieve flight details, use the get flight operation to retrieve information using the booking ID.
 |===
 +
+If you don't see the *Agent Topics* after creating the project, you must trust the workspace folder. You can do so by clicking *Manage* then *Trust* from the notification that shows.
++
+image::tut-flights-restricted-banner.png["The workspace trust notification with Manage and Trust options"]
++
 [TIP]
-If you don't see the *Agent Topics* after creating the project, you must trust the workspace folder. You can do so by clicking *Manage* then *Trust* from the notification that shows. If you closed the notification, or it doesn't show, see: https://code.visualstudio.com/docs/editing/workspaces/workspace-trust#_trusting-a-workspace[Trusting a workspace] for instructions.
+If you closed the notification, or it doesn't show, see: https://code.visualstudio.com/docs/editing/workspaces/workspace-trust#_trusting-a-workspace[Trusting a workspace] for instructions.
 . Click *Apply* to save your changes.
 . Open MuleSoft Vibes from the toolbar.
 +
@@ -67,10 +71,15 @@ With auto-approve enabled, MuleSoft Vibes automatically applies changes to your 
 +
 [source,command]
 ----
-Create an API specification example for the American Flights API that returns flight information from a MySQL database.
+Create an API specification example for the American Flights API that returns flight information from a MySQL database. The API must define:
+1. A GET /flights endpoint that retrieves all flights.
+2. A GET /flights/{flightId} endpoint that retrieves a single flight by its flightId path parameter. The flightId must match the pattern ^[A-Z]{2}[0-9]{1,4}$.
+3. Both endpoints must return flight objects with this exact structure: ID (integer), code (string), price (number), departureDate (string), origin (string), destination (string), emptySeats (integer), and a nested plane object with type (string) and totalSeats (integer).
 ----
 +
 MuleSoft Vibes generates the spec and saves it to your file.
++
+Because MuleSoft Vibes is an AI-driven tool, the generated spec's flow and operation names may still vary between runs. Later steps account for this and tell you how to locate the correct flow.
 +
 [TIP]
 ====
@@ -89,12 +98,6 @@ Next, use MuleSoft Vibes and the built-in mocking service in the API Console to 
 Test the API using the built-in mocking service in API console.
 ----
 . Click *Approve* every time MuleSoft Vibes asks for approval to continue with the task.
-
-MuleSoft Vibes creates a testing file named `API_TESTING_GUIDE.md` and tests these endpoints:
-
-* `GET` flight data
-* `GET` flight status
-* `GET` airport information
 
 Your API spec is now ready to publish to Anypoint Exchange.
 

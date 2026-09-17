@@ -29,13 +29,19 @@ First, create a transform that stores the mapping of flight codes to database ID
 . Open the `get:\flights\(flightId):american-flights-api-config` flow.
 +
 Because MuleSoft Vibes generated the API spec, your implementation flows might have different names. You must locate the flow that starts with `get:\flights\` and is followed by an ID parameter such as `(ID)`, `(flightID)`, or `{flightID}`, for example.
-. If there's already a Transform Message component at the beginning of the flow, click it to open its properties. Otherwise, click *Add Component* (+) at the start of the flow and add *Core Processors > Components > Transform Message*.
+. If the flow already contains any *Transform Message* components, select the components and press *Delete*, or click *More actions...* (image:icon-kebab.svg["The More actions menu icon."]) and select *Delete Component*.
++
+Delete any existing *Transform Messages* to start with a clean flow.
+. Click *Add Component* (+) at the start of the flow and select *Core Processors > Components > Transform Message*.
 . Click the *Transform Message* component to open its properties panel.
+. Click *Delete Target* next to *Payload*.
++
+image::tut-flights-delete-target.png["The Transform Message General tab with Delete Target selected next to the Payload target"]
++
+This step ensures the Transform does not modify the payload.
 . Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]), change it to *Create Flight Code Map*, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
 . In the *General* tab, under *Target*, click *Add* (+) and select *Variable*.
 . Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]) next to `vars.NewVariable1`, set the name to `flightCodeMap`, then click *Apply* (image:icon-apply.svg["The Apply icon.", 1.5%, 1.5%]).
-+
-If the transform component already has a variable defined, your new variable is the one with name `vars.NewVariable1`.
 . In the *Inline Script* field, replace the content with this DataWeave script:
 +
 [source,dataweave]
@@ -61,10 +67,9 @@ NOTE: In a production application, you would typically query the database direct
 Now create a second transform to look up the flight code in the mapping you just created.
 
 . After the *Create Flight Code Map* transform, click *Add Component* (+) and select *Core Processors > Components > Transform Message*.
-+
-If a second *Transform* already exists, skip this step.
 . Click the *Transform Message* component to open its properties panel.
 . Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]), change it to *Lookup DB Flight ID*, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
+. Click *Delete Target* next to *Payload*.
 . In the *General* tab, under *Target*, click *Add* (+) and select *Variable*.
 . Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]) next to `vars.NewVariable1`, set the name to `dbFlightId`, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
 . In the *Inline Script* field for this variable, paste this code:
@@ -85,8 +90,7 @@ NOTE: You cannot reference a variable in the same Transform Message where you're
 
 Now add logic to check whether the flight code was found in the mapping.
 
-. After the *Lookup DB Flight ID* transform, click *Add Component* (+).
-. Select *Core Processors > Flow Control > Choice*.
+. After the *Lookup DB Flight ID* transform, click *Add Component* (+) and select *Core Processors > Flow Control > Choice*.
 . Click the *When* path inside the Choice router.
 . In the *When* properties panel, under *Expression*, add this condition to check if the flight code wasn't found:
 +
@@ -101,8 +105,7 @@ This expression evaluates to `true` when the flight code doesn't exist in the ma
 
 When a flight code isn't found, raise a custom error instead of proceeding with the query.
 
-. Inside the *When* path (where the condition is true), click *Add Component* (+).
-. Select *Core Processors > Error Handling > Raise Error*.
+. Inside the *When* path (where the condition is true), click *Add Component* (+) and select *Core Processors > Error Handling > Raise Error*.
 . In the *Raise Error* properties panel, configure:
 +
 [%header,cols="20a,60a"]
@@ -377,6 +380,7 @@ In the get:\flights\(flightId):american-flights-api-config flow, open the Transf
 ----
 +
 NOTE: If you used a different flow or component name, ensure you specify it in the message so MuleSoft Vibes knows exactly which flow and components to modify.
+. Wait until MuleSoft Vibes completes the task before making further changes. 
 
 After MuleSoft Vibes finishes adding the transformation, confirm that the DataWeave script is similar to this:
 

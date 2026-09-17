@@ -8,8 +8,8 @@ After implementing your API flows, validate that the application behaves as expe
 
 Before testing your API, start the Mule application locally to verify the implementation works as designed.
 
-. Open the `american-flights-api-main` flow and verify the listener is configured for host `0.0.0.0` and port `8081`.
-. Click the *Listener* element in your flow.
+. Open the `american-flights-api-main` flow.
+. Click the *Listener* element.
 . On the *Connection Config* field, click *Edit Connection* (image:icon-gear.png["The Edit Connection icon.",1.5%, 1.5%]).
 +
 image::tut-flights-listener-config.png["The Listener properties panel with Edit Connection selected next to the Connection Config field"]
@@ -40,30 +40,7 @@ When deployment is complete, you see a message similar to:
 ----
 . In your REST client (such as Advanced REST Client), test your API endpoints:
 * Send `GET http://localhost:8081/api/flights` and verify a `200` response with flight data.
-* Send `GET http://localhost:8081/api/flights/AA123` and verify the flight-by-ID response:
-** Status code: `200 OK`
-** Content-Type: `application/json`
-** Body structure matches your API specification.
-** The `plane` field is a nested object with `type` and `totalSeats`.
-** Field names are correctly transformed from database format to API format.
-+
-.Example expected response
-[source,json]
-----
-{
-	"ID": 1,
-	"code": "rree0001",
-	"price": 541,
-	"departureDate": "2016-01-20",
-	"origin": "MUA",
-	"destination": "LAX",
-	"emptySeats": 0,
-	"plane": {
-		"type": "Boeing 787",
-		"totalSeats": 200
-	}
-}
-----
+* Send `GET http://localhost:8081/api/flights/AA123` and verify a `200` response with data for flight with `"ID": 1`.
 * Send `GET http://localhost:8081/api/flights/123` and verify a `400` response from your API specification's path parameter validation.
 
 == Understand the Debugger
