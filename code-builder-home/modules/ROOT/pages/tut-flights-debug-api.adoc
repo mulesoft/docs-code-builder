@@ -60,28 +60,31 @@ The *Debug* panel opens automatically, showing the current values of Mule variab
 
 Set breakpoints in your application to pause execution and evaluate values at runtime.
 
-. With your application stopped, open the canvas view of your `american-flights-api-implementation.xml` file.
-. Locate the flow `get:\flights\(flightId):american-flights-api-config`.
+. With your application stopped, open the `get:\flights\(flightId):american-flights-api-config` flow.
 . Right-click the *Flight by ID* Database Select operation.
 . Select *Add Breakpoint* from the context menu.
 +
 A red dot appears on the component, indicating an active breakpoint.
++
+image::tut-flights-add-breakpoint.png["The get:\flights\(flightId):american-flights-api-config flow with breakpoints set on the Flight by ID Database Select and Transform Flight components"]
 . Add a breakpoint on the *Transform Flight* component after the database query to inspect the payload.
 
 == Start a Debug Session
 
 . Click the *Run and Debug* icon in the activity bar.
 . Ensure *Debug Mule Application* is selected in the dropdown.
++
+image::tut-flights-debug-app.png["The Run and Debug dropdown with Debug Mule Application selected"]
 . Click the *Start Debugging* button (green play icon).
-. Wait for the application to deploy in debug mode. You see `Debugger listening on port XXXX` in the output panel.
+. Wait for the application to deploy in debug mode.
 
 == Step Through the Execution and Inspect Variables and Payload
 
-. After your application starts running in debug mode, send a request from your REST client:
+. After your application starts running in debug mode, send a GET request from your REST client to your local application:
 +
 [source,command]
 ----
-GET http://localhost:8081/api/flights/AA123
+http://localhost:8081/api/flights/AA123
 ----
 +
 The execution pauses at the *Flight by ID* breakpoint.
@@ -89,28 +92,35 @@ The execution pauses at the *Flight by ID* breakpoint.
 +
 At this point, the message is empty because the query to the database hasn't executed.
 . Expand *Mule Message > Attributes* to see HTTP request information:
-* `attributes.uriParams.flightId`: The flight ID from the URL.
-* `attributes.headers`: HTTP headers.
-* `attributes.method`: HTTP method (GET, POST, and so on).
+* `uriParams.flightId`: The flight ID from the URL.
+* `headers`: HTTP headers.
+* `method`: HTTP method (GET, POST, and so on).
 . Expand *Variables* to see Mule variables created by Transform Message components:
-* `vars.flightCodeMap`: The flight code mapping.
-* `vars.dbFlightId`: The database ID for the flight.
-. To evaluate a DataWeave expression at the current breakpoint:
-.. In the Debug panel, locate the *Watch* section.
-.. Click the *+* icon to add a watch expression.
-.. Enter a DataWeave expression, such as:
+* `flightCodeMap`: The flight code mapping.
+* `dbFlightId`: The database ID for the flight.
+. To evaluate a DataWeave expression, in the Debug panel, locate the *Watch* section.
+. Click *Add Expression* to add a watch expression.
++
+image::tut-flights-add-expression.png["The Watch section with the Add Expression icon highlighted"]
++
+If the button doesn't show, collapse and expand the *Watch* section so it shows again.
+. Enter a DataWeave expression, such as:
 +
 [source,dataweave]
 ----
 attributes.uriParams.flightId
 ----
-.. Press Enter. The IDE evaluates the expression and displays the result.
+. Press Enter. 
++
+The IDE evaluates the expression and displays the result.
 . Click *Step Over* (or press F10) to continue the execution.
++
+image::tut-flights-step-over.png["The Step Over button in the debug toolbar"]
 . Execution stops at the *Transform Flight* component.
 . Expand *Mule Message > Payload*.
 +
 Notice that now the message contains the results from the database query.
-. Click *Stop* (SHIFT+F5) to finish debugging.
+. Click *Disconnect (SHIFT+F5)* (image:icon-stop.png["The Disconnect icon.",1.5%, 1.5%]) to finish debugging.
 
 == Debug Error Paths
 
@@ -127,17 +137,16 @@ GET http://localhost:8081/api/flights/AA999
 ----
 +
 The execution pauses at the Choice router.
-. Inspect `vars.dbFlightId` (should be `null` because `AA999` isn't in the mapping).
+. In *Variables*, inspect `dbFlightId` (should be `null` because `AA999` isn't in the mapping).
 . Click *Step Over* (F10).
 +
 Execution moves to the *When* path and pauses at Raise Error.
 . Click *Step Over* (F10).
 +
 Execution pauses at the On Error Propagate handler for `VALIDATION:FLIGHT_NOT_FOUND`:
-. In the Debug panel, expand the `error` object and verify:
-* `error.errorType`: `VALIDATION:FLIGHT_NOT_FOUND`
-* `error.description`: `"Flight code AA999 not found in our system"`
-. Inspect the Logger component's message evaluation.
+. In *Parameters*, verify:
+* `type`: `VALIDATION:FLIGHT_NOT_FOUND`
+* `description`: `"Flight code AA999 not found in our system"`
 . Click *Continue* (F5) to complete the error response.
 
 Once your application behaves as expected, add automated tests in xref:tut-flights-munit-test-api.adoc[].

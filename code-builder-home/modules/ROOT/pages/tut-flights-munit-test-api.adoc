@@ -8,8 +8,6 @@ Before you begin, complete the debugging steps in xref:tut-flights-debug-api.ado
 
 MUnit is MuleSoft's unit testing framework for Mule applications. Use it to create automated tests that verify your API behaves correctly, without requiring external dependencies or manual testing. Anypoint Code Builder provides integrated support for creating, running, and debugging MUnit tests through a Testing panel, canvas UI, and code editor.
 
-== Understand MUnit Test Structure
-
 An MUnit test consists of:
 
 * *Test Suite*: A file containing one or more tests (saved as `*-test.xml` in `src/test/munit`).
@@ -20,43 +18,28 @@ An MUnit test consists of:
 
 NOTE: MUnit 3.4.0 or later is required for canvas-based test suite creation in Anypoint Code Builder.
 
-== Create Your First MUnit Test Suite
+== Create a New MUnit Test Suite
 
 Create a test suite to verify the `GET /flights` endpoint returns all flights.
 
-=== Step 1: Create a New MUnit Test Suite
-
 . Navigate to `src/test/munit` in the Explorer panel.
 . Right-click the `munit` folder and select *New MUnit Test Suite File*.
++
+image::tut-flights-new-munit.png["The munit folder context menu with New MUnit Test Suite File selected"]
 . Provide a name for the test suite: `american-flights-api-test.xml`.
-. Click *Create*.
+. Press *Enter*.
 +
-Anypoint Code Builder generates a new file with a basic structure:
-+
-[source,xml]
-----
-<?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
-      xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
-      xmlns="http://www.mulesoft.org/schema/mule/core"
-      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-      http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
-      http://www.mulesoft.org/schema/mule/munit-tools http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
-    <munit:config name="american-flights-api-test"/>
-</mule>
-----
+Anypoint Code Builder generates a new file with a basic structure.
 
-=== Step 2: Add a Test for Database Operations
+== Create a Test for Database Operations
 
 Now create your first test case to verify a database query returns flight data successfully. This test uses the actual database configuration from your implementation project.
 
-NOTE: This example uses a real database connection. For tests that should run without external dependencies, you can mock the database using `munit-tools:mock-when` as shown later in this section.
-
 . Open the test file (`american-flights-api-test.xml`) in canvas view.
-. In the MUnit bar, click *+* and select *Test Scope*.
+. Click *Build a Test* to start.
 . Click the *Test* component and change its name to `test-database-query`.
 +
+////
 Alternatively, in the code editor, add:
 +
 [source,xml]
@@ -66,12 +49,14 @@ Alternatively, in the code editor, add:
     <!-- Test content will go here -->
 </munit:test>
 ----
-. In the *Behavior* section, click *+*.
-. Select *Code Processors > Transformers > Set Variable*.
++
+////
+. In the *Behavior* section, click *+* and select *Code Processors > Transformers > Set Variable*.
 . Click the *Set Variable* component and specify these values:
 * *Variable name*: `expectedRecordCount`
 * *Value*: `3`
 +
+////
 Alternatively, paste this code in your `munit:test` element in the XML config:
 +
 [source,xml]
@@ -81,12 +66,13 @@ Alternatively, paste this code in your `munit:test` element in the XML config:
     <set-variable variableName="expectedRecordCount" value="3" />
 </munit:behavior>
 ----
-. In the *Execution* section, click *+*.
-. Select *Connectors > Database > Select*.
+////
+. In the *Execution* section, click *+* and select *Connectors > Database > Select*.
 . Click the *Database - Select* operation and specify these values:
 * *Connection Config*: `Config` (select the existing database configuration)
 * *SQL Query Text*: `SELECT * FROM american`
 +
+////
 Alternatively, paste this code in your `munit:test` element in the XML config:
 +
 [source,xml]
@@ -97,33 +83,25 @@ Alternatively, paste this code in your `munit:test` element in the XML config:
     </db:select>
 </munit:execution>
 ----
-. In the *Validation* section, click *+*.
-. Select *MUnit Test Modules > Assert that*.
+////
+. In the *Validation* section, click *+* and select *MUnit Test Modules > Assert that*.
 . Click the *Assert that* component and specify these values:
 * *Expression*: `sizeOf(payload)`
 * *Is*: `MunitTools::greaterThan(0)`
 * *Message*: `Should return at least one flight`
 +
-[source,xml]
-----
-<munit:validation>
-    <munit-tools:assert-that
-        expression="#[sizeOf(payload)]"
-        is="#[MunitTools::greaterThan(0)]"
-        message="Should return at least one flight" />
-</munit:validation>
-----
+Ensure *Expression mode* (image:icon-function.svg["The Expression mode icon.",1.5%, 1.5%]) is enabled so expressions are recognized
++
+image::tut-flights-expression-mode-enabled.png["The Assert that component with Expression mode enabled"]
 +
 This validation checks that the database query returned at least one record.
 
-=== Step 3: Run the Test
+== Run the Test
 
 // Pointer to Testing panel
-include::partial$acb-reusable-steps.adoc[tags="munit-open-testing-panel"]
-. Locate your test suite `american-flights-api-test.xml` in the Testing panel.
-. Click the *Run* button (▶) next to the test case `test-database-query`.
-+
-Alternatively, right-click the test in the canvas and select *Run Tests*.
+//include::partial$acb-reusable-steps.adoc[tags="munit-open-testing-panel"]
+//. Locate your test suite `american-flights-api-test.xml` in the Testing panel.
+. In the Testing panel, click *Run all the tests in this file* (▶) and select *Run Test*.
 . View the test results in the *Testing* panel.
 +
 A successful test shows a green checkmark (✓) and output similar to:
@@ -136,7 +114,7 @@ A successful test shows a green checkmark (✓) and output similar to:
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
 ----
-
+////
 === Complete Example
 
 Here's the complete test structure:
@@ -163,7 +141,9 @@ Here's the complete test structure:
     </munit:test>
 </mule>
 ----
+////
 
+////
 == Advanced Testing: Use Mocks for API Endpoints
 
 While the previous example tested a database operation directly, you can also test complete API endpoints by adding an HTTP Request configuration and mocking dependencies. This approach allows your tests to run without requiring external systems like databases.
@@ -332,6 +312,7 @@ image::tut-flights-munit-run-test-menu.png["Testing panel run button menu with R
 . Verify the tests pass with the expected responses.
 +
 image::tut-flights-munit-test-results.png["Testing panel showing 3 of 3 tests passed for the american-flights-api-test.xml suite"]
+////
 
 == Measure Test Coverage
 

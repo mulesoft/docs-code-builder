@@ -4,18 +4,20 @@
 
 After deploying your American Flights API to CloudHub 2.0, register it with API Manager to apply governance policies, secure it with a policy, and monitor its performance and health with Runtime Manager.
 
-== Manage the API with API Manager
+== Create an API Instance and Link it with Your Application
 
-Use xref:api-manager::api-instance-landing-page.adoc[API Manager] to manage, monitor, and secure your APIs. After deploying your application to CloudHub 2.0, register it with API Manager to apply governance policies, track usage, and control access.
+Use xref:api-manager::api-instance-landing-page.adoc[API Manager] to manage, monitor, and secure your APIs. After deploying your application to CloudHub 2.0, configure autodiscover to register it with API Manager to apply governance policies, track usage, and control access.
 
 === Step 1: Navigate to API Manager
 
 . Sign in to Anypoint Platform.
 +
-// Pointer to Platform URLs
+--
 include::partial$acb-reusable-steps.adoc[tags="platform-urls"]
-. From the Anypoint Platform home page, click *API Manager* in the navigation menu.
-. Select your environment from the environment dropdown (the same environment where you deployed your application).
+--
++
+. From the Anypoint Platform home page, click *Agents & Tools* > *API Manager* in the navigation menu.
+. Ensure you are working on the same environment where you deployed your application (for example, Sandbox).
 
 === Step 2: Create an API Instance
 
@@ -28,10 +30,62 @@ Create an API instance that links your deployed application to the API specifica
 .. Search for "American Flights API" (the API specification you published earlier).
 .. Select your API and click *Next*.
 . In the *Downstream* section, click *Next*.
-. In the *Upstream* section, set the Upstream URL to your application's public endpoint, for example: `https://american-flights-api-implementation-ij0c18.5sc6y6-3.usa-e2.cloudhub.io/`. Click *Next*.
+. In the *Upstream* section, set the Upstream URL to your application's public endpoint (the one you see in *Runtime Manager*). 
++
+For example: `https://american-flights-api-implementation-ij0c18.5sc6y6-3.usa-e2.cloudhub.io/`. Click *Next*.
 . In the *Review* section, click *Save* to create the API instance.
 +
 Verify that your API status now shows *Active*.
+. Copy your API Instance ID for use in the next step while configuring API Autodiscovery.
+
+=== Step 3: Configure API Autodiscovery
+
+API Autodiscovery links your running application to the API instance you created in the previous step, so API Manager and Runtime Manager can report accurate status and enforce policies against the correct application.
+
+. Open your project in Anypoint Code Builder.
+. Open MuleSoft Vibes.
+. Send this message:
++
+[source,command]
+----
+Enable API autodiscovery for my current project with this info:
+- API Instance ID: {your_api_instance_id}
+- Environment: {environment}
+----
++
+NOTE: Replace `{your_api_instance_id}` with the ID you copied in the previous step, and `{environment}` with the environment you used to deploy your application (for example, Sandbox).
+. Save your project and redeploy your application.
++
+When prompted for the asset version, specify `1.0.1` so you can identify the updated deployment when monitoring it in Runtime Manager.
+
+=== Step 4: Configure Business Group Credentials
+
+Your application needs valid Business Group credentials to connect to the API instance for autodiscovery and policy enforcement. Configure these credentials as properties in Runtime Manager.
+
+. Sign in to Anypoint Platform.
+. Click *Access Management* in the navigation menu.
+. Click *Business Groups* in the sidebar.
+. Click your business group (the same one you used throughout this tutorial).
+. Copy the *Client ID* and *Client Secret*.
+. Open *Runtime Manager* and select your deployed application.
+. On the side panel, click *Settings*.
+. Ensure your application is *Stopped*.
+. Add these properties:
++
+[%header,cols="30a,70a"]
+|===
+| Property Key | Property Value
+
+| `anypoint.platform.client_id` | `{your_client_id}`
+| `anypoint.platform.client_secret` | `{your_client_secret}`
+|===
++
+Replace `{your_client_id}` and `{your_client_secret}` with the values you copied.
+. Click *Apply Changes*.
+
+After setting the properties and redeploying your application with API Autodiscovery configured, confirm that the API status shows *Active* in API Manager.
+
+TIP: If the status doesn't show *Active* right away, wait a few minutes, verify the properties are configured correctly in Runtime Manager, and check the status again.
 
 Your API is now registered with API Manager and ready for policy configuration.
 
@@ -76,16 +130,11 @@ After applying the policy, verify that unauthenticated requests are rejected.
 +
 [source,command]
 ----
-GET http://american-flights-api-yourname.us-e2.cloudhub.io/api/flights
+GET http://american-flights-api-implementation{your_app_id}us-e2.cloudhub.io/api/flights
 ----
-. Verify that you receive a `401 Unauthorized` response:
-+
-[source,json]
-----
-{
-	"error": "Authentication denied."
-}
-----
++ 
+Replace this URL with your application's actual endpoint URL.
+. Verify that you receive a `401 Unauthorized` response.
 
 Then, create a test client application to obtain credentials:
 
@@ -101,11 +150,13 @@ Then, create a test client application to obtain credentials:
 +
 [source,command]
 ----
-GET http://american-flights-api-yourname.us-e2.cloudhub.io/api/flights
+GET http://american-flights-api-implementation{your_app_id}us-e2.cloudhub.io/api/flights
 Headers:
 client_id: <your-client-id>
 client_secret: <your-client-secret>
 ----
++ 
+Replace this URL with your application's actual endpoint URL.
 . Verify that you receive a `200 OK` response with flight data.
 
 Your API is now secured and requires authenticated clients to access it.

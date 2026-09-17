@@ -23,14 +23,14 @@ Before deploying to CloudHub 2.0, verify that you have:
 
 The first time you deploy an application to CloudHub 2.0, Anypoint Code Builder creates a deployment settings file. After modifying the deployment settings, deploy your project with those settings.
 
-. In the project explorer, right-click the American Flights project XML file and select *Mule > Deploy Mule Project to CloudHub*.
+. In the project explorer, Right-click the American Flights project XML file and select *Mule > Deploy Mule Project to CloudHub*.
 . If prompted, sign in to Anypoint Platform.
 . Select *CloudHub 2.0*.
-. Select a deployment target.
+. Select a deployment target, for example: Cloudhub-US-East-1 - Shared Space.
 . Select an environment, for example: *Sandbox*.
 +
 If there's no deployment settings file for the project, Code Builder creates one.
-. In the deployment configuration file, provide the following information:
+. Edit the deployment configuration file and provide the following information:
 +
 [%header,cols="20a,60a"]
 |===
@@ -58,7 +58,8 @@ The deployment process starts and usually takes from two to five minutes. After 
 After initiating the deployment, open Runtime Manager to monitor the status.
 
 . In the notification that shows after deployment starts, click *Open Runtime Manager* and then click *Open*.
-. Alternatively, if you missed the notification, open xref:runtime-manager::index.adoc[Runtime Manager] and search for your application name. Then, click the application name to open its status page.
++
+Alternatively, if you missed the notification, open xref:runtime-manager::index.adoc[Runtime Manager] and search for your application name. Then, click the application name to open its status page.
 . Confirm the *Application status* is *Running*.
 +
 If the application is still deploying and shows status *Not Running*, wait a few minutes for the process to finish.
