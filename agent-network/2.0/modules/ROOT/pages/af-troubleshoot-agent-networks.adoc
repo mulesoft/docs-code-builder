@@ -96,14 +96,15 @@ After any source file change, run the full pipeline:
 . Publish
 . Deploy
 
+[[asset-belongs-to-another-project-error-2006]]
 === Error: "Asset belongs to another project" (Error 2006)
 
-If the project build succeeds but it fails to publish with error `2006`, your registry keys conflict with another project in the org. Registry keys are unique across an org, so you can't copy a project and rename only the broker. Renaming only the broker leaves the original registry key prefixes, and the first project owns those Exchange asset IDs.
+If the publish command fails with this error (code `2006`), an asset in your project has the same name as an asset that belongs to a different project in the same organization. Asset names must be unique across all projects in an org, and you can't reuse an asset name that another project already owns.
 
 To resolve this conflict:
 
-* Prefix every registry key with a unique network short ID (for example, `myNetRegistry` instead of `registry`).
-* If you own the conflicting project, remove or delete it before you publish the new project.
+* In `agent-network.yaml`, rename the conflicting asset to a unique name.
+* Check the other project referenced in the error to verify which assets it owns. If you own the conflicting project, remove or rename the asset in that project before you republish.
 
 === Error: CrashLoopBackOff or Exit 139 with No Clear Error
 
