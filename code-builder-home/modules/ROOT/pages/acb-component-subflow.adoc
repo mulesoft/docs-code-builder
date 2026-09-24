@@ -41,6 +41,19 @@ include::partial$mule-components/4.4/component-{component-filename}.adoc[tag=com
 //include::partial$mule-components/4.4/component-{component-filename}.adoc[tag=component-snippet-json]
 //
 
+[[find-flows-that-reference-this-subflow]]
+== Find Flows That Reference This Subflow
+
+You can find every flow that references a subflow without searching the project manually.
+To list the references, right-click the subflow in the canvas and select *Find References*. You can also press Shift+Alt+F12 (Windows and macOS).
+
+Anypoint Code Builder lists each flow reference that points to the selected subflow, including references in other configuration files and in MUnit tests. Select a reference to open that location.
+
+This helps you trace execution paths and assess the impact of changes to a reusable subflow.
+
+For more information, see xref:int-configure-components.adoc#find-referencing-flows[Find Flows That Reference a Subflow].
+
+
 //Child Element (if needed, repeating as necessary): 
 //Component element and attribute descriptions
 //include::partial$mule-components/4.4/component-{component-filename}.adoc[tag=component-xml-attributes-child1]
