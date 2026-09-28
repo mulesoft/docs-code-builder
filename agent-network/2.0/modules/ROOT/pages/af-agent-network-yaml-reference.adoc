@@ -1149,7 +1149,10 @@ HTTP Basic authentication with username and password.
 
 [source,yaml]
 ----
-kind: basic username: my-username password: my-password headerName: Authorization
+kind: basic
+username: my-username
+password: my-password
+headerName: Authorization
 ----
 
 The basic object has these properties.
@@ -1196,7 +1199,9 @@ Authenticates outbound requests by including an API key in a configurable HTTP h
 
 [source,yaml]
 ----
-kind: apiKey apiKey: my-api-key-123 headerName: Authorization
+kind: apiKey
+apiKey: my-api-key-123
+headerName: Authorization
 ----
 
 An API key passed in a header has these properties.
@@ -1237,9 +1242,11 @@ API key client credentials with client ID and client secret objects.
 
 [source,yaml]
 ----
-kind: apikey-client-credentials client-id:
+kind: apikey-client-credentials
+clientId:
    value: my-client-id
-   name: client_id client-secret:
+   name: client_id
+clientSecret:
    value: my-client-secret
    name: client_secret
 ----
@@ -1306,10 +1313,14 @@ OAuth 2.0 authentication using the Client Credentials Grant Type. Allows agents 
 
 [source,yaml]
 ----
-kind: oauth2-client-credentials clientId: my-client-id clientSecret: my-client-secret token:
+kind: oauth2-client-credentials
+clientId: my-client-id
+clientSecret: my-client-secret
+token:
    url: https://my-oauth2-provider.com/token
    timeout: 15
-   bodyEncoding: form scopes:
+   bodyEncoding: form
+scopes:
    - my.custom.scope
    - another.scope
 ----
@@ -1394,7 +1405,7 @@ authentication:
    codeChallengeMethod: S256
    bodyEncoding: form
    challengeResponseStatusCode: 200
-    tokenTimeout: 300
+   tokenTimeout: 300
 ----
 
 The in-task-authorization-code authentication has these properties.
@@ -1515,7 +1526,7 @@ authentication:
    clientSecret: clientSecret
    targetType: audience
    targetValue: https://api.example.com/agents/my-agent
-   scope: Read #optional, OAuth 2.0 scope to request. Required for Microsoft Entra OBO (for example, api://downstream-client-id/.default). Optional for OAuth 2.0 Token Exchange (RFC 8693).
+    scope: Read
    timeout: 5000
 ----
 
@@ -1644,7 +1655,10 @@ brokers:
      implementation: ./brokers/customer-service.agent
      interfaces:
        a2a:
-         card:             ...
+         card:
+           name: customer-service-agent
+           description: Routes customer service requests.
+           version: "1.0.0"
          policies:
            inbound:
              - ref:
@@ -1654,7 +1668,10 @@ brokers:
      implementation: ./brokers/billing-handler.agent
      interfaces:
        a2a:
-        card:           ...
+         card:
+           name: billing-agent
+           description: Handles billing inquiries.
+           version: "1.0.0"
 ----
 
 The `brokers` section has these properties.
@@ -1790,12 +1807,12 @@ Enclose expressions using the {{}} evaluation wrapper. You can also use multilin
 [source,yaml]
 ----
 - reasoning:
-     id: welcome-message
-     description: "Send a welcome message to the candidate."
-     llm: my-primary-llm
-     prompt: "Extract the email from {{input}} and send a greeting email to the user saying their onboarding process has started"
-     tools:
-       - ref: my-email-tool
+    id: welcome-message
+    description: "Send a welcome message to the candidate."
+    llm: my-primary-llm
+    prompt: "Extract the email from {{input}} and send a greeting email to the user saying their onboarding process has started"
+    tools:
+      - ref: my-email-tool
 ----
 
 Expressions have these properties. 
