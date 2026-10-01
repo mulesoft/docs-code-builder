@@ -1,0 +1,1203 @@
+= Troubleshoot Agent Fabric CLI Errors
+
+This guide helps you diagnose and resolve errors from the Anypoint CLI Agent Fabric plugin.
+
+[[cli-error-code-reference]]
+== CLI Error Code Reference
+
+Error codes are grouped into ranges by area:
+
+* *Code:* 1000–1999
+** *Area:* Build errors
+** <<build-errors,Build Errors>>
+
+* *Code:* 2000–2999
+** *Area:* Publish and unpublish errors
+** <<publish-errors,Publish Errors>>
+
+* *Code:* 3000–3999
+** *Area:* Deploy and undeploy errors
+** <<deploy-errors,Deploy Errors>>
+
+* *Code:* 4000–4999
+** *Area:* Gateway setup errors
+** <<gateway-setup-errors,Gateway Setup Errors>>
+
+* *Code:* 5000–5999
+** *Area:* Entitlement and org access errors
+** <<entitlement-and-org-access-errors,Entitlement and Org Access Errors>>
+
+* *Code:* 6000–6999
+** *Area:* Dependency manager errors
+** <<dependency-manager-errors,Dependency Manager Errors>>
+
+* *Code:* 7000–7999
+** *Area:* `create` command errors
+** <<create-command-errors,Create Command Errors>>
+
+* *Code:* 8001–8004
+** *Area:* Policy validation errors
+** <<policy-validation-errors,Policy Validation Errors>>
+
+* *Code:* 8500–8534
+** *Area:* Local run (`run-local`) errors
+** <<local-run-errors,Local Run Errors>>
+
+* *Code:* 10001
+** *Area:* Access management errors
+** <<access-management-errors,Access Management Errors>>
+
+* *Code:* 11001–11006
+** *Area:* Gateway flags and CLI arguments errors
+** <<gateway-flag-and-cli-argument-errors,Gateway Flag and CLI-Argument Errors>>
+
+
+[[build-errors]]
+=== Build Errors
+
+* *Code:* 1001
+** *Name:* `projectDescriptorNotFound`
+** *What it means:* `exchange.json` is missing for the project.
+** *How to fix:* Run the command from the project root and confirm that `exchange.json` exists.
+
+* *Code:* 1002
+** *Name:* `invalidAgentNetworkProject`
+** *What it means:* The project failed validation.
+** *How to fix:* Check the validation output printed before the error. Fix the reported issue and rebuild.
+
+* *Code:* 1003
+** *Name:* `buildAssetsError`
+** *What it means:* An asset failed to build.
+** *How to fix:* Read the nested `cause`. The cause is usually a malformed asset file in the assets directory.
+
+* *Code:* 1004
+** *Name:* `variableNotFound`
+** *What it means:* A `${placeholder}` has no matching variable.
+** *How to fix:* Declare the variable under `metadata.variables` in `exchange.json`.
+
+* *Code:* 1005
+** *Name:* `validatingAgentNetworkError`
+** *What it means:* Project validation exited with a non-zero status.
+** *How to fix:* Review the validator output for the specific failure.
+
+* *Code:* 1006
+** *Name:* `buildingAgentNetworkError`
+** *What it means:* The build process exited with a non-zero status.
+** *How to fix:* Check the build logs printed before the error.
+
+* *Code:* 1007
+** *Name:* `wrapperNotFoundError`
+** *What it means:* The Maven wrapper (`mvnw`/`mvnw.cmd`) is missing.
+** *How to fix:* Confirm that the project is a Maven project and that the wrapper is present and executable.
+
+* *Code:* 1008
+** *Name:* `buildBrokersAppError`
+** *What it means:* The Brokers App failed to build.
+** *How to fix:* Check the logs. The cause is usually an AgentScript compile error.
+
+* *Code:* 1009
+** *Name:* `variablesNotFound`
+** *What it means:* Multiple `${placeholder}`s are unresolved.
+** *How to fix:* Declare each listed variable under `metadata.variables` in `exchange.json`.
+
+* *Code:* 1010
+** *Name:* `invalidVariablePath`
+** *What it means:* A variable resolves to an invalid nested path.
+** *How to fix:* Correct the variable path in `exchange.json`.
+
+* *Code:* 1011
+** *Name:* `invalidPath`
+** *What it means:* A file or YAML path is invalid.
+** *How to fix:* Verify the referenced path exists and is well-formed.
+
+* *Code:* 1012
+** *Name:* `invalidOrNotBuiltAgentNetworkProject`
+** *What it means:* A downstream command ran before the project was built.
+** *How to fix:* Run `agent-network project build` first.
+
+* *Code:* 1013
+** *Name:* `unsupportedSchemaVersion`
+** *What it means:* The `schemaVersion` isn't supported by this CLI.
+** *How to fix:* Use a supported version listed in the message or upgrade the CLI.
+
+* *Code:* 1014
+** *Name:* `validationConnectionsError`
+** *What it means:* A connection references an undefined target or has the wrong kind.
+** *How to fix:* Fix the connection references in `agent-network.yaml` to match defined entities and kinds.
+
+* *Code:* 1015
+** *Name:* `noBrokerForImplementation`
+** *What it means:* An AgentScript implementation has no matching broker entry.
+** *How to fix:* Add a broker for the implementation or remove the orphaned file.
+
+* *Code:* 1016
+** *Name:* `unsupportedToolType`
+** *What it means:* An entity declares an unknown tool type.
+** *How to fix:* Use a supported tool type (listed in the message).
+
+* *Code:* 1017
+** *Name:* `invalidAgentScriptPath`
+** *What it means:* An AgentScript path is invalid or its content is unsafe.
+** *How to fix:* Use a path inside the project and remove unsafe content.
+
+* *Code:* 1018
+** *Name:* `errorParsingAgentFile`
+** *What it means:* An AgentScript file failed to parse.
+** *How to fix:* Fix the syntax error reported in the nested `cause`.
+
+* *Code:* 1019
+** *Name:* `policyBindingNotFound`
+** *What it means:* A referenced policy binding doesn't exist.
+** *How to fix:* Define the binding or correct the reference name.
+
+* *Code:* 1020
+** *Name:* `brokerKindMismatch` *see note*
+** *What it means:* A broker's kind doesn't support the requested interface kind.
+** *How to fix:* Align the broker's kind with the interface or use a compatible broker.
+
+* *Code:* 1021
+** *Name:* `brokerIdMismatch` *see note*
+** *What it means:* The broker id in AgentScript doesn't match the YAML.
+** *How to fix:* Make the broker id consistent between AgentScript and `agent-network.yaml`.
+
+* *Code:* 1022
+** *Name:* `invalidAgentNetworkProjectDescriptor` *see note*
+** *What it means:* `exchange.json` descriptor is malformed.
+** *How to fix:* Fix the descriptor per the details in the message.
+
+* *Code:* 1023
+** *Name:* `brokerSupportedInterfacesUrlMismatch` *see note*
+** *What it means:* A broker's A2A supported interfaces use different base URLs.
+** *How to fix:* Use the same scheme, host, and port for all supported interfaces. Use different paths only.
+
+* *Code:* 1024
+** *Name:* `brokerUnsupportedProtocolBinding` *see note*
+** *What it means:* A broker's `protocolBinding` isn't supported.
+** *How to fix:* Use a supported `protocolBinding` value (listed in the message).
+
+* *Code:* 1020
+** *Name:* `mcpMainYamlNotFound` *see note*
+** *What it means:* MCP introspection can't find the main YAML.
+** *How to fix:* Set the `main` field in `exchange.json` to the correct file.
+
+* *Code:* 1021
+** *Name:* `mcpYamlParseError` *see note*
+** *What it means:* The MCP YAML failed to parse.
+** *How to fix:* Fix the YAML syntax error in the reported file.
+
+* *Code:* 1022
+** *Name:* `mcpServerJsonNotFound` *see note*
+** *What it means:* `server.json` couldn't be read.
+** *How to fix:* Confirm `server.json` exists and is readable.
+
+* *Code:* 1023
+** *Name:* `mcpServerJsonInvalidJson` *see note*
+** *What it means:* `server.json` isn't valid JSON.
+** *How to fix:* Fix the JSON syntax.
+
+* *Code:* 1024
+** *Name:* `mcpServerJsonSchemaValidation` *see note*
+** *What it means:* `server.json` failed schema validation.
+** *How to fix:* Correct the fields listed in the message.
+
+* *Code:* 1025
+** *Name:* `mcpServerJsonNoRemotes`
+** *What it means:* `server.json` defines no remotes.
+** *How to fix:* Add a remote entry. Only remote MCP servers are supported.
+
+* *Code:* 1026
+** *Name:* `mcpServerJsonMultipleRemotes`
+** *What it means:* `server.json` defines multiple remotes.
+** *How to fix:* Pass `--transport` to select one.
+
+* *Code:* 1027
+** *Name:* `mcpServerJsonRemoteNotFound`
+** *What it means:* The requested transport isn't in `server.json`.
+** *How to fix:* Use one of the available transports listed in the message.
+
+* *Code:* 1028
+** *Name:* `mcpInvalidRemoteProtocol`
+** *What it means:* The remote URL uses an unsupported scheme.
+** *How to fix:* Use `http:` or `https:`.
+
+* *Code:* 1029
+** *Name:* `mcpInvalidRemoteUrl`
+** *What it means:* The remote URL failed to parse.
+** *How to fix:* Correct the URL in `server.json`.
+
+* *Code:* 1030
+** *Name:* `mcpInvalidRegistryKey`
+** *What it means:* A registry key contains invalid characters.
+** *How to fix:* Use only lowercase letters, digits, and hyphens.
+
+* *Code:* 1031
+** *Name:* `mcpCannotDeriveRegistryKey`
+** *What it means:* A registry key couldn't be derived.
+** *How to fix:* Declare an explicit registry key.
+
+* *Code:* 1032
+** *Name:* `assetIdTooLongForDeployment`
+** *What it means:* The project asset id exceeds the deployment-name length limit.
+** *How to fix:* Shorten the asset id and rebuild.
+
+* *Code:* 1033
+** *Name:* `invalidExchangeJson`
+** *What it means:* `exchange.json` isn't valid JSON.
+** *How to fix:* Fix the JSON syntax.
+
+* *Code:* 1034
+** *Name:* `invalidExchangeJsonField`
+** *What it means:* An `exchange.json` field has the wrong type.
+** *How to fix:* Set the reported field to the expected type (a string).
+
+[NOTE]
+====
+*Code collision (1020–1024) — known defect.* Codes 1020 through 1024 are each assigned to *two* different errors: a broker-interface error and an MCP-introspection error. The `errorMessage` text identifies the error as either a broker-interface error or a `server.json` or MCP YAML error. Match the message instead of the number alone.
+====
+
+[[publish-errors]]
+=== Publish Errors
+
+* *Code:* 2001
+** *Name:* `organizationAccessError`
+** *What it means:* You lack access to the project's `groupId`.
+** *How to fix:* Switch to an org that owns the `groupId` or request access.
+
+* *Code:* 2002
+** *Name:* `projectNotBuiltError`
+** *What it means:* Publish ran before build.
+** *How to fix:* Run `agent-network project build` first.
+
+* *Code:* 2003
+** *Name:* `publishError`
+** *What it means:* An asset failed to publish.
+** *How to fix:* Read the nested `cause`. See <<exchange,Exchange>>.
+
+* *Code:* 2004
+** *Name:* `assetNotFoundError`
+** *What it means:* An Exchange asset lookup failed.
+** *How to fix:* Verify the GAV, confirm that the asset exists, and check org access.
+
+* *Code:* 2005
+** *Name:* `assetTypeMismatchError`
+** *What it means:* An asset already exists in Exchange with a different type.
+** *How to fix:* Use a new asset id or version, or reconcile the existing asset's type.
+
+* *Code:* 2006
+** *Name:* `ownershipConflictsError`
+** *What it means:* The asset id is already owned by another project.
+** *How to fix:* Choose a different asset id or publish from the owning project.
+
+* *Code:* 2007
+** *Name:* `deployedResourcesExistOnUnpublish`
+** *What it means:* Unpublish is blocked because deployed resources still reference the assets.
+** *How to fix:* Run `agent-network project undeploy` first, then retry unpublish.
+
+* *Code:* 2010
+** *Name:* `unpublishError`
+** *What it means:* Reports a failure that occurred during the unpublish stage.
+** *How to fix:* Read the nested `cause` for the specific reason. See <<exchange,Exchange>> for the known 403 issue.
+
+* *Code:* 2011
+** *Name:* `incompatibleTargetVersionPublish`
+** *What it means:* The `target/` artifact was built with an incompatible CLI version.
+** *How to fix:* Rebuild with the current CLI version, then publish.
+
+* *Code:* 2012
+** *Name:* `projectNotBuiltPublish`
+** *What it means:* No build artifact was found at publish time.
+** *How to fix:* Run `agent-network project build` first.
+
+* *Code:* 2013
+** *Name:* `publicationAggregateFailure`
+** *What it means:* One or more publish tasks failed. This error consolidates the failures.
+** *How to fix:* Read the logs for each sub-failure. Each sub-failure maps to an error-code or dependent-service entry on this page.
+
+* *Code:* 2014
+** *Name:* `unrecognizedComponentKindForPublicationOrder`
+** *What it means:* *Internal:* a component kind wasn't recognized when ordering publication.
+** *How to fix:* Rebuild the project. If the error persists, then report it with the `requestId`.
+
+* *Code:* 2015
+** *Name:* `metadataPatchParseFailed`
+** *What it means:* *Internal:* a serialized metadata file couldn't be parsed for version patching.
+** *How to fix:* Rebuild the project. If the error persists, then report it with the `requestId`.
+
+[[deploy-errors]]
+=== Deploy Errors
+
+* *Code:* 3001
+** *Name:* `createApiError`
+** *What it means:* Creating an API instance in API Manager failed.
+** *How to fix:* A 409 often means that an instance with this name already exists. See <<api-manager,API Manager>>.
+
+* *Code:* 3004
+** *Name:* `deployError`
+** *What it means:* Deploying an API into a gateway failed.
+** *How to fix:* Read the nested `cause`. See <<runtime-fabric--application-manager-amc,Runtime Fabric / AMC>>.
+
+* *Code:* 3005
+** *Name:* `connectionNotFoundError`
+** *What it means:* A connection couldn't be resolved.
+** *How to fix:* Verify the connection is published and its name matches the reference.
+
+* *Code:* 3006
+** *Name:* `gettingEgressConnectionError`
+** *What it means:* Fetching the egress connection failed.
+** *How to fix:* Check the egress gateway and target. See <<gateway-manager,Gateway Manager>>.
+
+* *Code:* 3007
+** *Name:* `deployAPIError`
+** *What it means:* A generic API deploy failure.
+** *How to fix:* Read the nested `cause`.
+
+* *Code:* 3008
+** *Name:* `brokerGroupDeploymentError`
+** *What it means:* Broker group (Agent Graph) deployment failed.
+** *How to fix:* Check the logs. See <<runtime-fabric--application-manager-amc,Runtime Fabric / AMC>>.
+
+* *Code:* 3009
+** *Name:* `unableToResolve`
+** *What it means:* A GAV couldn't be resolved at deploy time.
+** *How to fix:* Build and publish the project before deploying.
+
+* *Code:* 3010
+** *Name:* `createPatchApiError`
+** *What it means:* Updating an existing API instance failed.
+** *How to fix:* Read the nested `cause`. See <<api-manager,API Manager>>.
+
+* *Code:* 3012
+** *Name:* `noTranscodingFoundFor`
+** *What it means:* An expected transcoding policy is missing.
+** *How to fix:* Verify that the transcoding policy is published and referenced correctly.
+
+* *Code:* 3015
+** *Name:* `gatewayTargetSpaceError`
+** *What it means:* The ingress and egress gateways don't match the runtime target space.
+** *How to fix:* Choose gateways whose target space matches your runtime target.
+
+* *Code:* 3016
+** *Name:* `createApiSpecNotFound`
+** *What it means:* The API spec asset isn't in Exchange.
+** *How to fix:* Publish the Agent Network before deploying.
+
+* *Code:* 3017
+** *Name:* `requestTimeout`
+** *What it means:* A single HTTP request timed out.
+** *How to fix:* Retry the request. If the error persists, then increase `--request-timeout`. See <<the-retry-and-timeout-engine,retry engine>>.
+
+* *Code:* 3018
+** *Name:* `commandTimeout`
+** *What it means:* The overall command exceeded its timeout budget.
+** *How to fix:* Review org resource limits and increase `--process-timeout`. Check `steps` for the command's progress.
+
+* *Code:* 3019
+** *Name:* `findingAssetsError`
+** *What it means:* Discovering assets to deploy failed.
+** *How to fix:* Retry the request. If the error persists, then read the nested `cause`.
+
+* *Code:* 3020
+** *Name:* `nonPublishedAssetsFoundError`
+** *What it means:* One or more assets aren't published in Exchange.
+** *How to fix:* Publish the listed assets, then deploy.
+
+* *Code:* 3021
+** *Name:* `noGatewayFoundForInstance`
+** *What it means:* No gateway resolvable for an API instance.
+** *How to fix:* Verify that a gateway is configured for the instance's protection direction.
+
+* *Code:* 3022
+** *Name:* `assetNotFoundForInstance`
+** *What it means:* An API instance's backing asset is missing from Exchange.
+** *How to fix:* Publish the asset before deploying.
+
+* *Code:* 3023
+** *Name:* `assetNotFoundForConnection`
+** *What it means:* A connection's backing asset is missing from Exchange.
+** *How to fix:* Publish the asset before deploying.
+
+* *Code:* 3024
+** *Name:* `missingRequiredUpstreamUrl`
+** *What it means:* A required upstream URL wasn't resolved.
+** *How to fix:* Provide the upstream URL variable at deploy time (`--property`).
+
+* *Code:* 3025
+** *Name:* `dependencyFailure`
+** *What it means:* A stage was skipped because a dependency's stage failed.
+** *How to fix:* Fix the upstream failure reported elsewhere in the output.
+
+* *Code:* 3026
+** *Name:* `apiBelongsToAnotherProject`
+** *What it means:* An instance name collides with another project's instance.
+** *How to fix:* Choose a different name or reuse the existing instance.
+
+* *Code:* 3027
+** *Name:* `invalidSourceValue`
+** *What it means:* An invalid `source` value was supplied.
+** *How to fix:* Set `source` to a supported value (listed in the message).
+
+* *Code:* 3028
+** *Name:* `agentGraphDeploymentError`
+** *What it means:* Agent Graph provisioning failed.
+** *How to fix:* Check the logs. See <<runtime-fabric--application-manager-amc,Runtime Fabric / AMC>>.
+
+* *Code:* 3029
+** *Name:* `connectionRefNotFoundError`
+** *What it means:* A `connection.ref.name` didn't resolve.
+** *How to fix:* Verify the connection is published and the ref name matches.
+
+* *Code:* 3030
+** *Name:* `undeployError`
+** *What it means:* Reports a failure that occurred during the undeploy stage (fail-closed).
+** *How to fix:* Read the nested `cause` for the specific reason. See <<dependent-services-status-codes-and-common-issues,Dependent Services: Status Codes and Common Issues>>.
+
+* *Code:* 3031
+** *Name:* `invalidPolicy`
+** *What it means:* A policy metadata response was empty or invalid.
+** *How to fix:* Verify the policy GAV (`groupId:assetId:version` coordinate) and retry the request. The error can be transient. See <<api-manager,API Manager>>.
+
+* *Code:* 3032
+** *Name:* `missingGatewayForSharedSpace`
+** *What it means:* A shared-space deploy needs a gateway but none was given.
+** *How to fix:* Provide a gateway with `--gateway`.
+
+* *Code:* 3033
+** *Name:* `invalidGAVFormat`
+** *What it means:* A GAV argument couldn't be parsed.
+** *How to fix:* Use `groupId:assetId:version`.
+
+* *Code:* 3034
+** *Name:* `parentAssetNotFound`
+** *What it means:* A parent asset lookup failed.
+** *How to fix:* Verify the parent asset exists in Exchange.
+
+* *Code:* 3036
+** *Name:* `invalidAgentProtocol`
+** *What it means:* Agent metadata declares no protocol for a connection.
+** *How to fix:* Declare a protocol for the connection in agent metadata.
+
+* *Code:* 3037
+** *Name:* `unsupportedAgentProtocol`
+** *What it means:* An agent exposes a non-A2A protocol only.
+** *How to fix:* Connect only A2A (Agent2Agent) agents that use `a2a` or `a2a_v1`.
+
+* *Code:* 3045
+** *Name:* `incompatibleTargetVersionDeploy`
+** *What it means:* The `target/` artifact was built with an incompatible CLI version.
+** *How to fix:* Rebuild with the current CLI, republish, then deploy.
+
+* *Code:* 3046
+** *Name:* `projectNotBuiltDeploy`
+** *What it means:* Deploy ran before build.
+** *How to fix:* Run `agent-network project build` first.
+
+* *Code:* 3047
+** *Name:* `bulkApplyPolicyError`
+** *What it means:* Applying policies in API Manager failed.
+** *How to fix:* Check policy GAV resolution and org entitlements. See <<api-manager,API Manager>>.
+
+* *Code:* 3048
+** *Name:* `brokerAuthorizationPolicyConflict`
+** *What it means:* An explicit `user-context-propagation` policy conflicts with the broker's `authorization` section.
+** *How to fix:* Align or remove the conflicting policy field, per the message.
+
+* *Code:* 3049
+** *Name:* `deploymentSettingsFlagsMutuallyExclusive`
+** *What it means:* `--deployment-properties-file` and `--deployment-property` were both passed.
+** *How to fix:* Use one or the other, not both.
+
+* *Code:* 3050
+** *Name:* `deploymentFileReadError`
+** *What it means:* The deployment settings file couldn't be read.
+** *How to fix:* Verify the file path and permissions.
+
+* *Code:* 3051
+** *Name:* `deploymentSettingsMalformedEntry`
+** *What it means:* A `--deployment-property` entry is malformed.
+** *How to fix:* Use `<scope>:<name>:<value>` (for example `brokers:vCores:0.1`).
+
+* *Code:* 3052
+** *Name:* `deploymentSettingsInvalid`
+** *What it means:* Deployment settings failed semantic validation.
+** *How to fix:* Fix the reported setting.
+
+* *Code:* 3053
+** *Name:* `runtimeVersionNotFound`
+** *What it means:* The requested runtime version isn't available.
+** *How to fix:* Use one of the available versions listed in the message.
+
+* *Code:* 3054
+** *Name:* `mixedRuntimeTypesInDeploy`
+** *What it means:* The deploy set mixes Mule apps and Agent Graphs.
+** *How to fix:* Split into separate deploys.
+
+* *Code:* 3055
+** *Name:* `deploymentAggregateFailure`
+** *What it means:* One or more deploy tasks failed. This error consolidates the failures.
+** *How to fix:* Read the logs for each sub-failure. Each sub-failure maps to an error-code or dependent-service entry on this page.
+
+* *Code:* 3056
+** *Name:* `runtimeVersionNotResolved`
+** *What it means:* *Internal:* runtime version wasn't resolved before deployment.
+** *How to fix:* Rebuild and redeploy. If the error persists, then report it with the `requestId`.
+
+* *Code:* 3057
+** *Name:* `undeployEnvironmentIdRequired`
+** *What it means:* `--gav` undeploy is missing the environment id.
+** *How to fix:* Pass `--environment`.
+
+* *Code:* 3058
+** *Name:* `undeployEnvironmentRequired`
+** *What it means:* No environment was selected for undeploy.
+** *How to fix:* Pass `--environment`.
+
+* *Code:* 3059
+** *Name:* `publicationBeforeDeploymentFailed`
+** *What it means:* The auto-publish step before deploy failed, so deploy aborted.
+** *How to fix:* Fix the publish failure. See the embedded cause and <<publish-errors,Publish Errors>>.
+
+[[gateway-setup-errors]]
+=== Gateway Setup Errors
+
+* *Code:* 4001
+** *Name:* `noDomainsFound`
+** *What it means:* No private-network domains for the target space.
+** *How to fix:* Create a private network in the target space first.
+
+* *Code:* 4002
+** *Name:* `setupIngressGatewayError`
+** *What it means:* Ingress gateway setup threw.
+** *How to fix:* Read the nested `cause`. See <<gateway-manager,Gateway Manager>>.
+
+* *Code:* 4003
+** *Name:* `setupIngressGatewayFail`
+** *What it means:* Ingress gateway setup returned a non-success status.
+** *How to fix:* Check the `status` and response in the message. See <<gateway-manager,Gateway Manager>>.
+
+* *Code:* 4004
+** *Name:* `setupEgressGatewayError`
+** *What it means:* Egress gateway setup threw.
+** *How to fix:* Read the nested `cause`. See <<gateway-manager,Gateway Manager>>.
+
+* *Code:* 4005
+** *Name:* `setupEgressGatewayFail`
+** *What it means:* Egress gateway setup returned a non-success status.
+** *How to fix:* Check the `status` and response. See <<gateway-manager,Gateway Manager>>.
+
+* *Code:* 4006
+** *Name:* `gatewayNotFoundError`
+** *What it means:* A named gateway isn't in the environment.
+** *How to fix:* Use one of the available gateways listed in the message.
+
+* *Code:* 4007
+** *Name:* `runtimeTargetNotFoundError`
+** *What it means:* A named runtime target space isn't in the environment.
+** *How to fix:* Use an available space or create one (https://docs.mulesoft.com/cloudhub-2/ps-create-configure[CloudHub 2 docs]).
+
+* *Code:* 4008
+** *Name:* `unableToRetrieveTargetSpaceMetadata`
+** *What it means:* Fetching target space metadata failed.
+** *How to fix:* Retry the request. See <<gateway-manager,Gateway Manager>>.
+
+* *Code:* 4009
+** *Name:* `unableToRetrieveGateways`
+** *What it means:* Fetching the gateway list failed.
+** *How to fix:* Retry the request and check org and environment access.
+
+* *Code:* 4010
+** *Name:* `unableToRetrieveGatewayVersions`
+** *What it means:* Fetching gateway versions failed.
+** *How to fix:* Retry the request. See <<gateway-manager,Gateway Manager>>.
+
+* *Code:* 4011
+** *Name:* `gatewayChannelNotFoundError`
+** *What it means:* The requested update channel doesn't exist.
+** *How to fix:* Use one of the available channels listed in the message.
+
+* *Code:* 4012
+** *Name:* `noGatewayVersionsFoundError`
+** *What it means:* The channel has no versions.
+** *How to fix:* Choose a different channel.
+
+* *Code:* 4013
+** *Name:* `gatewayAlreadyExists`
+** *What it means:* A gateway with this name already exists in the environment.
+** *How to fix:* Choose a different name because gateway names are unique per environment.
+
+* *Code:* 4014
+** *Name:* `setupGatewayInsufficientResourcesError`
+** *What it means:* The org's gateway quota is exhausted.
+** *How to fix:* Delete an unused gateway or increase your org limits.
+
+* *Code:* 4015
+** *Name:* `missingDomainsResponse`
+** *What it means:* Domains are required for a non-shared target but none were returned.
+** *How to fix:* Confirm a private network exists for the target.
+
+* *Code:* 4016
+** *Name:* `gatewayUpdateFailedError`
+** *What it means:* Updating the gateway runtime version failed.
+** *How to fix:* Check the `status` in the message and retry the request.
+
+* *Code:* 4017
+** *Name:* `gatewayUpdateTimedOutError`
+** *What it means:* The gateway update didn't finish within the timeout.
+** *How to fix:* Check the gateway status in Runtime Manager. Retry when the gateway is stable.
+
+[[entitlement-and-org-access-errors]]
+=== Entitlement and Org Access Errors
+
+* *Code:* 5001
+** *Name:* `noEntitlementForOrganization`
+** *What it means:* Retrieving org entitlements failed.
+** *How to fix:* Check the `status` in the message and verify org access. See <<access-management,Access Management>>.
+
+* *Code:* 5002
+** *Name:* `organizationAccessDenied`
+** *What it means:* You lack access to the org.
+** *How to fix:* Switch orgs or request access.
+
+* *Code:* 5003
+** *Name:* `selectedOrganizationMismatch`
+** *What it means:* The `groupId` doesn't match the selected org.
+** *How to fix:* Switch to the org that owns the assets.
+
+[[dependency-manager-errors]]
+=== Dependency Manager Errors
+
+* *Code:* 6001
+** *Name:* `downloadFileError`
+** *What it means:* A dependency download failed.
+** *How to fix:* Check network access and retry the request.
+
+* *Code:* 6002
+** *Name:* `couldNotFindVersion`
+** *What it means:* No resolvable version in `maven-metadata.xml`.
+** *How to fix:* Confirm the dependency exists in the repository and that you have network access to it.
+
+* *Code:* 6003
+** *Name:* `invalidStrategyVersion`
+** *What it means:* A dependency strategy or version config is invalid.
+** *How to fix:* Correct the strategy or version in the descriptor.
+
+* *Code:* 6004
+** *Name:* `invalidMetadataFile`
+** *What it means:* A dependency metadata file is invalid.
+** *How to fix:* Rerun setup to refresh the cached dependency.
+
+* *Code:* 6005
+** *Name:* `runtimeDependenciesFileNotFound`
+** *What it means:* The runtime dependency manifest is missing.
+** *How to fix:* Run `agent-network setup dependencies`.
+
+* *Code:* 6006
+** *Name:* `invalidDependencyVersion`
+** *What it means:* A dependency version isn't valid SemVer.
+** *How to fix:* Use SemVer (for example `2.1.3`).
+
+[[create-command-errors]]
+=== Create Command Errors
+
+* *Code:* 7001
+** *Name:* `projectAlreadyExists`
+** *What it means:* The target project or directory already exists.
+** *How to fix:* Use a new name or directory.
+
+* *Code:* 7002
+** *Name:* `invalidAssetVersion`
+** *What it means:* The asset version isn't valid SemVer.
+** *How to fix:* Use SemVer (for example `0.0.0`).
+
+* *Code:* 7003
+** *Name:* `invalidGroupId`
+** *What it means:* The `group-id` wasn't found.
+** *How to fix:* Use a `group-id` for an org that you belong to, as listed in the message.
+
+* *Code:* 7004
+** *Name:* `invalidProjectName`
+** *What it means:* The project name has no alphanumeric character.
+** *How to fix:* Include at least one alphanumeric character.
+
+* *Code:* 7005
+** *Name:* `invalidAssetId`
+** *What it means:* The asset id has invalid characters.
+** *How to fix:* Use only `A-Z`, `a-z`, `0-9`, `_`, `-`.
+
+* *Code:* 7006
+** *Name:* `missingAssetIdWithInvalidProjectName`
+** *What it means:* The project name has no alphanumerics and no asset id was given.
+** *How to fix:* Provide an explicit asset id.
+
+* *Code:* 7007
+** *Name:* `brokerAlreadyExists`
+** *What it means:* A broker with this name already exists.
+** *How to fix:* Choose a different broker name.
+
+* *Code:* 7008
+** *Name:* `invalidBrokerTemplate`
+** *What it means:* The broker scaffold template is missing.
+** *How to fix:* Reinstall the plugin. The installation can be corrupted.
+
+* *Code:* 7009
+** *Name:* `unsupportedAgentNetworkVersion`
+** *What it means:* The command requires a V2 project.
+** *How to fix:* Use a V2 Agent Network project.
+
+* *Code:* 7010
+** *Name:* `invalidAgentNetworkYaml`
+** *What it means:* `agent-network.yaml` failed to parse.
+** *How to fix:* Fix the YAML syntax error reported in the message.
+
+* *Code:* 7011
+** *Name:* `invalidEmptyBrokerName`
+** *What it means:* The broker name has no alphanumeric character.
+** *How to fix:* Include at least one alphanumeric character.
+
+* *Code:* 7012
+** *Name:* `invalidBrokerName`
+** *What it means:* The broker id violates the naming pattern.
+** *How to fix:* Start and end with a letter or digit. In the middle, use only letters, digits, `_`, `.`, or `-`.
+
+* *Code:* 7013
+** *Name:* `invalidBrokersSection`
+** *What it means:* The `brokers` YAML section isn't a mapping.
+** *How to fix:* Make `brokers:` a mapping of names to definitions.
+
+* *Code:* 7014
+** *Name:* `brokerNameTooLong`
+** *What it means:* The broker id exceeds the deployment-name length limit.
+** *How to fix:* Shorten the name of the broker.
+
+[[policy-validation-errors]]
+=== Policy Validation Errors
+
+* *Code:* 8001
+** *Name:* `policyVersionError`
+** *What it means:* Looking up a policy version failed.
+** *How to fix:* Verify the policy GAV. See <<exchange,Exchange>>.
+
+* *Code:* 8002
+** *Name:* `policyValidationFailed`
+** *What it means:* One or more policy bindings failed validation.
+** *How to fix:* Fix the validation errors listed in the nested `cause`.
+
+* *Code:* 8003
+** *Name:* `schemaNotFoundForAsset`
+** *What it means:* A policy config schema file is missing.
+** *How to fix:* Verify the policy asset includes its schema.
+
+* *Code:* 8004
+** *Name:* `dependencyVersionNotFound`
+** *What it means:* A dependency version is absent from the descriptor.
+** *How to fix:* Add the dependency version to `exchange.json`.
+
+[[local-run-errors]]
+=== Local Run Errors
+
+These errors come from `agent-network project run-local` in a local Docker Compose environment.
+
+* *Code:* 8500
+** *Name:* `v1NotSupportedForLocalRun`
+** *What it means:* `run-local` was invoked on a V1 project.
+** *How to fix:* Only V2 projects can run locally.
+
+* *Code:* 8501
+** *Name:* `dockerNotInstalled`
+** *What it means:* Docker isn't installed.
+** *How to fix:* Install https://www.docker.com/products/docker-desktop/[Docker Desktop].
+
+* *Code:* 8502
+** *Name:* `dockerDaemonNotRunning`
+** *What it means:* The Docker daemon isn't running.
+** *How to fix:* Start Docker Desktop and retry.
+
+* *Code:* 8503
+** *Name:* `dockerSignInRequired`
+** *What it means:* Docker requires sign-in.
+** *How to fix:* Run `docker login` or sign in via Docker Desktop.
+
+* *Code:* 8504
+** *Name:* `dockerImagePullFailed`
+** *What it means:* A required image failed to pull.
+** *How to fix:* Confirm that you're signed in and have network access.
+
+* *Code:* 8505
+** *Name:* `exchangeJsonMissingMain`
+** *What it means:* `exchange.json` has no `main` field.
+** *How to fix:* Set the `main` field to the network YAML file.
+
+* *Code:* 8506
+** *Name:* `flexRegistrationFailed`
+** *What it means:* Flex Gateway registration generation failed.
+** *How to fix:* Read the detail in the message and retry the request.
+
+* *Code:* 8507
+** *Name:* `policyImplementationNotFound`
+** *What it means:* No Flex implementation exists for a policy.
+** *How to fix:* Use a policy with a Flex Gateway implementation.
+
+* *Code:* 8508
+** *Name:* `policyImplementationResolveFailed`
+** *What it means:* Resolving a policy's Flex implementation failed.
+** *How to fix:* Read the detail and verify the policy GAV.
+
+* *Code:* 8509
+** *Name:* `policyFetchFailed`
+** *What it means:* Fetching a policy asset failed.
+** *How to fix:* Check network and Exchange access, and then retry the request.
+
+* *Code:* 8510
+** *Name:* `policyAssetCorrupt`
+** *What it means:* A cached policy asset is missing `exchange.json`.
+** *How to fix:* Clear the cache and fetch the asset again.
+
+* *Code:* 8511
+** *Name:* `policyMainFileMissing`
+** *What it means:* A policy asset's declared main file is absent.
+** *How to fix:* Verify the policy asset is complete.
+
+* *Code:* 8512
+** *Name:* `policyDependencyMissing`
+** *What it means:* A policy dependency isn't cached.
+** *How to fix:* Rerun the command to fetch dependencies.
+
+* *Code:* 8513
+** *Name:* `noAvailablePort`
+** *What it means:* No free port in the scan range.
+** *How to fix:* Free a port or pass `--port` explicitly.
+
+* *Code:* 8514
+** *Name:* `invalidPort`
+** *What it means:* The `--port` value is invalid.
+** *How to fix:* Use an integer between 1 and 65535.
+
+* *Code:* 8515
+** *Name:* `agentGraphServiceNameCollision`
+** *What it means:* Two asset ids trim to the same Docker service name.
+** *How to fix:* Rename one asset to avoid the DNS-label collision.
+
+* *Code:* 8516
+** *Name:* `localSecretRetrievalFailed`
+** *What it means:* A stored secret couldn't be retrieved.
+** *How to fix:* Rerun the command without a cached value and reenter the secret.
+
+* *Code:* 8517
+** *Name:* `unknownLlmPlatformForApiKey`
+** *What it means:* An LLM platform isn't recognized for API-key selection.
+** *How to fix:* Use a supported platform (listed in the message).
+
+* *Code:* 8518
+** *Name:* `undeclaredVariables`
+** *What it means:* A `${...}` placeholder is used but not declared.
+** *How to fix:* Declare each variable under `metadata.variables` in `exchange.json`.
+
+* *Code:* 8519
+** *Name:* `dockerAgentGraphImageMissing`
+** *What it means:* The Agent Graph image isn't published yet.
+** *How to fix:* Use `--build-only`, which doesn't require the image. Local deploy is unavailable without the image.
+
+* *Code:* 8520
+** *Name:* `localEnvironmentNotRendered`
+** *What it means:* A local-deploy command ran before `run-local`.
+** *How to fix:* Run `agent-network project run-local` first.
+
+* *Code:* 8521
+** *Name:* `secretEnvVarNameCollision`
+** *What it means:* Two secret variables normalize to the same env var name.
+** *How to fix:* Rename one to avoid the collision.
+
+* *Code:* 8522
+** *Name:* `secretRouteSegment`
+** *What it means:* A secret variable is used in a route path segment.
+** *How to fix:* Use a non-secret variable for the path.
+
+* *Code:* 8523
+** *Name:* `secretUpstreamAddress`
+** *What it means:* A secret variable is used in an upstream URL.
+** *How to fix:* Use a non-secret variable, or supply the credential via a policy.
+
+* *Code:* 8524
+** *Name:* `flexCrdNameCollision`
+** *What it means:* Two Flex Gateway CRD (Custom Resource Definition) ids collapse to the same filename.
+** *How to fix:* Rename one of the colliding ids.
+
+* *Code:* 8525
+** *Name:* `connectionPolicyResolverRequired`
+** *What it means:* *Internal:* local render lacks a connection policy resolver.
+** *How to fix:* Rebuild and rerun. If the error persists, then report it with the `requestId`.
+
+* *Code:* 8526
+** *Name:* `apiInstancePolicyResolverRequired`
+** *What it means:* *Internal:* local render lacks an API-instance policy resolver.
+** *How to fix:* Rebuild and rerun. If the error persists, then report it with the `requestId`.
+
+* *Code:* 8527
+** *Name:* `localExchangeDestinationUnsafe`
+** *What it means:* A local Exchange asset has an empty or unsafe destination.
+** *How to fix:* Rename the asset or dependency to a safe id.
+
+* *Code:* 8528
+** *Name:* `localExchangeDestinationCollision`
+** *What it means:* Two local Exchange assets map to the same destination.
+** *How to fix:* Rename an asset or use a distinct dependency.
+
+* *Code:* 8529
+** *Name:* `malformedBuildOutputAssetKeyMismatch`
+** *What it means:* *Internal:* build-output asset map key mismatch.
+** *How to fix:* Rebuild the project. If the error persists, then report it with the `requestId`.
+
+* *Code:* 8530
+** *Name:* `malformedBuildOutputMissingComponentVersion`
+** *What it means:* *Internal:* an owned asset has no component version.
+** *How to fix:* Rebuild the project. If the error persists, then report it with the `requestId`.
+
+* *Code:* 8531
+** *Name:* `malformedBuildOutputDuplicateAssetIdentity`
+** *What it means:* *Internal:* duplicate owned-asset identity.
+** *How to fix:* Rebuild the project. If the error persists, then report it with the `requestId`.
+
+* *Code:* 8532
+** *Name:* `malformedBuildOutputEmptyDestination`
+** *What it means:* *Internal:* an owned asset has an empty destination.
+** *How to fix:* Rename the asset and rebuild.
+
+* *Code:* 8533
+** *Name:* `malformedBuildOutputDestinationCollision`
+** *What it means:* *Internal:* two owned assets map to the same destination.
+** *How to fix:* Rename an asset and rebuild.
+
+* *Code:* 8534
+** *Name:* `localRenderAggregateFailure`
+** *What it means:* One or more local-render tasks failed. This error consolidates the failures.
+** *How to fix:* Read the logs for each sub-failure.
+
+[[access-management-errors]]
+=== Access Management Errors
+
+* *Code:* 10001
+** *Name:* `credentialsValidationsError`
+** *What it means:* Credential validation failed.
+** *How to fix:* Reauthenticate and verify your credentials. See <<access-management,Access Management>>.
+
+[[gateway-flag-and-cli-argument-errors]]
+=== Gateway Flag and CLI-Argument Errors
+
+* *Code:* 11001
+** *Name:* `gatewayFlagsMutuallyExclusive`
+** *What it means:* `--gateway` was combined with `--ingress-gw`/`--egress-gw`.
+** *How to fix:* Use `--gateway` alone, or `--ingress-gw [--egress-gw]`.
+
+* *Code:* 11002
+** *Name:* `egressGwRequiresIngress`
+** *What it means:* `--egress-gw` was passed without `--ingress-gw`.
+** *How to fix:* Pass both, or use `--gateway`.
+
+* *Code:* 11003
+** *Name:* `gatewayFlagRequired`
+** *What it means:* No gateway flag was supplied.
+** *How to fix:* Pass `--gateway` or `--ingress-gw [--egress-gw]`.
+
+* *Code:* 11004
+** *Name:* `separateGatewayModeNotSupportedInSharedSpace`
+** *What it means:* Separate-gateway mode was used with a Shared Space.
+** *How to fix:* Use `--gateway`, or pass a Private Space to `--target-space`.
+
+* *Code:* 11005
+** *Name:* `singleGatewayTargetSpaceMismatch`
+** *What it means:* `--target-space` conflicts with the gateway's target space.
+** *How to fix:* Omit `--target-space`, or make it match the gateway.
+
+* *Code:* 11006
+** *Name:* `forceFlagRequiredWithJson`
+** *What it means:* `--json` was used without `--force`.
+** *How to fix:* Add `--force` to skip interactive prompts.
+
+[[dependent-services-status-codes-and-common-issues]]
+== Dependent Services: Status Codes and Common Issues
+
+The CLI orchestrates several Anypoint Platform services. When one of them returns an HTTP error, it surfaces in the `cause.response.status` field in the CLI error output. This part explains the common failures per service.
+
+[[the-retry-and-timeout-engine]]
+=== The Retry and Timeout Engine
+
+Before diagnosing a transient-looking failure, know that the CLI already retries automatically:
+
+* *Retries:* Every HTTP `429` and `5xx` response, plus network errors (`ECONNRESET`, `ETIMEDOUT`, `ENETUNREACH`, `EAI_AGAIN`).
+* *Attempts:* Up to two, with a 30-second backoff. The CLI honors the server's `Retry-After` header and limits the backoff to 30 seconds.
+* *Deletes:* a `404` on a retry is treated as success (the resource was already deleted).
+* *Non-idempotent writes:* The CLI also retries `POST`, `PUT`, and `PATCH` requests after `5xx` or `429` responses. A retry can create a duplicate resource on a non-idempotent endpoint.
+* *Timeouts:* Each request defaults to 60 seconds (`--request-timeout`). The whole command defaults to 15 minutes (`--process-timeout`).
+
+If a command still fails after these retries, treat the failure as deterministic rather than transient unless a service entry says otherwise.
+
+[[exchange]]
+=== Exchange
+
+Backs `publish`, `unpublish`, and asset lookups during build and deploy operations.
+
+* *Operation:* Publish asset
+** *Status / symptom:* `409`, asset already exists
+** *Likely cause:* An asset with this id exists with a different type or owner.
+** *Fix:* See codes 2005 and 2006. Use a new id or version, or reconcile ownership.
+
+* *Operation:* Delete an asset during unpublish or undeploy
+** *Status / symptom:* *`403 Forbidden` (surfaces as code 2010)*
+** *Likely cause:* A known Exchange platform issue.
+** *Fix:* Retry later. If the error persists, then open a support case with your `requestId`. This known platform issue can't be resolved locally.
+
+* *Operation:* Delete asset version
+** *Status / symptom:* `404`
+** *Likely cause:* The asset is already gone.
+** *Fix:* No action. The CLI treats the response as a success.
+
+* *Operation:* Fetch policy or asset
+** *Status / symptom:* `5xx` or `429`
+** *Likely cause:* Transient platform load.
+** *Fix:* The CLI retries automatically. If the error persists, then retry later.
+
+* *Operation:* Fetch policy Flex bundle
+** *Status / symptom:* Missing zip classifier (`run-local` only)
+** *Likely cause:* Some policy versions (for example `user-context-propagation-policy-flex@1.0.0`) were published without a zip classifier.
+** *Fix:* This policy version is missing a required file in Exchange. Open a support case to request that MuleSoft republish it with a zip classifier. Production `deploy` is unaffected.
+
+[[api-manager]]
+=== API Manager
+
+Backs API-instance and connection creation or patching, policy application, and instance deletion during deploy and undeploy operations.
+
+* *Operation:* Create API instance or connection
+** *Status or symptom:* *`409 Conflict` (code 3001)*
+** *Likely cause:* A stale or orphaned instance from a prior partial deploy, or a name collision.
+** *Fix:* Check API Manager for an existing instance with that name. Delete or reuse the instance, and then redeploy.
+
+* *Operation:* Patch API instance
+** *Status or symptom:* non-2xx (code 3010)
+** *Likely cause:* The target instance changed or was removed.
+** *Fix:* Read the `cause` and verify that the instance still exists.
+
+* *Operation:* Apply policies
+** *Status or symptom:* failure (code 3047)
+** *Likely cause:* A policy GAV resolution or org entitlement problem.
+** *Fix:* Verify the policy GAV and confirm that your org is entitled to the policy.
+
+* *Operation:* Fetch policy metadata
+** *Status or symptom:* empty or invalid (code 3031)
+** *Likely cause:* A transient error or a bad policy GAV.
+** *Fix:* Retry the request. If the error persists, then verify the policy GAV.
+
+* *Operation:* Delete instance (undeploy)
+** *Status or symptom:* `404`
+** *Likely cause:* The instance was already removed.
+** *Fix:* No action. The CLI treats the response as a success.
+
+[[runtime-fabric--application-manager-amc]]
+=== Runtime Fabric and Application Manager
+
+Backs Mule application and agent network deployments and undeployments.
+
+* *Operation:* Poll deployment status
+** *Status or symptom:* "Deployment status request returned status N"
+** *Likely cause:* A non-retryable HTTP error, or retries exhausted.
+** *Fix:* Read the status and check the deployment in Runtime Manager.
+
+* *Operation:* Deploy request
+** *Status or symptom:* request timeout (code 3017)
+** *Likely cause:* The request exceeded `--request-timeout`.
+** *Fix:* Retry the request and increase `--request-timeout`.
+
+* *Operation:* Whole command
+** *Status or symptom:* command timeout (code 3018)
+** *Likely cause:* The org can lack sufficient resources, or the deploy can be slow.
+** *Fix:* Review org resource allocation and increase `--process-timeout`. Check `steps` for progress.
+
+* *Operation:* Deploy broker group or Agent Graph
+** *Status or symptom:* failure (codes 3008 and 3028)
+** *Likely cause:* Underlying AMC error.
+** *Fix:* Read the logs and nested `cause`.
+
+* *Operation:* Undeploy by name
+** *Status or symptom:* `404`
+** *Likely cause:* Already removed.
+** *Fix:* No action. The CLI treats the response as a success.
+
+[[gateway-manager]]
+=== Gateway Manager
+
+Backs `agent-network setup gateways` for ingress and egress Flex Gateway provisioning.
+
+* *Operation:* Create gateway
+** *Status or symptom:* name collision (code 4013)
+** *Likely cause:* The environment already contains a gateway with this name.
+** *Fix:* Choose a different name.
+
+* *Operation:* Create gateway
+** *Status or symptom:* insufficient resources (code 4014)
+** *Likely cause:* The org's gateway quota is exhausted.
+** *Fix:* Delete an unused gateway or increase org limits.
+
+* *Operation:* Resolve domains
+** *Status or symptom:* no domains (codes 4001 and 4015)
+** *Likely cause:* No private network in the target space.
+** *Fix:* Create a private network for the target space first.
+
+* *Operation:* Set up ingress or egress
+** *Status or symptom:* non-success status (codes 4003 and 4005)
+** *Likely cause:* Downstream gateway or API Manager error.
+** *Fix:* Read the `status` and response in the message, and then retry the request.
+
+* *Operation:* List gateways, versions, or metadata
+** *Status or symptom:* non-2xx (codes 4008–4010)
+** *Likely cause:* A transient or access issue.
+** *Fix:* Retry the request and verify org and environment access.
+
+[[access-management]]
+=== Access Management
+
+Backs org, entitlement, and credential validation during build, publish, and deploy operations.
+
+* *Operation:* Retrieve entitlements
+** *Status or symptom:* non-2xx (code 5001)
+** *Likely cause:* A transient error or a missing org entitlement.
+** *Fix:* Retry the request and verify that the org is entitled to Agent Fabric.
+
+* *Operation:* Org access check
+** *Status or symptom:* denied (code 5002)
+** *Likely cause:* You lack access to the org that owns the `groupId`.
+** *Fix:* Switch orgs or request access.
+
+* *Operation:* Selected org check
+** *Status or symptom:* mismatch (code 5003)
+** *Likely cause:* The `groupId` doesn't match your selected org or business group.
+** *Fix:* Switch to the org that owns the assets.
+
+* *Operation:* Credential validation
+** *Status or symptom:* failure (code 10001)
+** *Likely cause:* Expired or invalid credentials.
+** *Fix:* Reauthenticate.
+
+[[known-platform-issues-vs-plugin-issues]]
+=== Known Platform Issues Versus Plugin Issues
+
+* *Item:* Exchange unpublish or undeploy `403`
+** *Status or code:* 403 → code 2010
+** *Classification:* *Known Exchange platform issue.* Retry later. If the error persists, then open a support case with your `requestId`.
+
+* *Item:* `user-context-propagation-policy-flex@1.0.0` missing zip classifier
+** *Status or code:* `run-local` fetch failure
+** *Classification:* *Missing file in Exchange.* Open a support case to request a republish. Production `deploy` is unaffected.
+
+* *Item:* Agent Graph Docker image not published
+** *Status or code:* code 8519
+** *Classification:* *External blocker.* Use `--build-only` because the image isn't published.
+
+* *Item:* `409` when creating an API instance or connection
+** *Status or code:* 409 → code 3001
+** *Classification:* *Environment state.* The cause is usually an orphaned instance. Check API Manager and delete or reuse the instance.
+
+* *Item:* API Manager or AMC `5xx`, `429`, or timeouts
+** *Status or code:* 429, 5xx
+** *Classification:* *Transient platform load.* The CLI already retries the request.
+
+* *Item:* Gateway setup non-2xx relays
+** *Status or code:* codes 4003–4010
+** *Classification:* *Downstream relay.* The CLI passes through the status that the gateway or API Manager service returns.
