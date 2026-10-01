@@ -11,6 +11,12 @@ To deploy an agent network, you need a space on CloudHub 2.0 or a deployment tar
 
 Use a shared space if you don't require dedicated infrastructure. Use a private space if you need workload isolation or have other requirements that a shared space doesn't satisfy.
 
+[[plan-spaces-for-promotion]]
+[IMPORTANT]
+====
+If you plan to promote the same agent network across environments by using the same asset ID, use the shared space or a separate private space for each environment. You can't promote the agent network when the source and target environments share a private space.
+====
+
 Depending on your deployment target:
 
 * CloudHub 2.0 shared space:
