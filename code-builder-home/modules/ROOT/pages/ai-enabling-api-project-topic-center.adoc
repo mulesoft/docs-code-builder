@@ -29,7 +29,7 @@ NOTE: The MuleSoft for Agentforce Extension Pack (beta) must not be installed at
 *** *Delete applications*
 ** xref:access-management::permissions-by-product.adoc#design-center[Design Center Developer] permission so that users can view and create APIs. 
 * In *Anypoint Platform -> API Governance*, make sure you xref:api-governance::get-started.adoc[opt in to govern APIs by version].
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access Anypoint Code Builder].
 * Understand the basics of designing API specs. 
 +
 See the xref:tutorials.adoc[] for details.
@@ -69,7 +69,7 @@ include::partial$acb-reusable-steps.adoc[tags="proj-directory-warn"]
 [NOTE]
 Only OAS 3.0 is supported for topics and actions. 
 
-| *Business Group* | Select the business group the API will belong to. The business group is required for API governance and syncing centralized rulesets. When you publish your API spec to Exchange from Anypoint Code Builder, the IDE requests the name of the business group. 
+| *Business Group* | Select the business group the API will belong to. The business group is required for API governance and syncing centralized rulesets. When you publish your API spec to Exchange from Anypoint Code Builder, it requests the name of the business group.
 |===
 . Click *Create Project*.
 +
@@ -84,7 +84,7 @@ As you enter elements, use xref:start-discover-ui.adoc#auto-complete[auto-comple
 [[add-metadata]]
 == Add Metadata to the API Project
 
-. In *Explorer*, right-click the API specification and select *Open API Project Properties*.
+. In *Explorer*, right-click the API specification and select *API* > *Open API Project Properties*.
 +
 The *API Project Properties* tab opens and is auto-populated with:
 
@@ -226,7 +226,7 @@ After you publish your API to Exchange and create an active API instance in API 
 [[disable-api-spec-for-topics]]
 == Disable the API Specification for Topics
 
-. In *Explorer*, right-click the API specification and select *Open API Project Properties*.
+. In *Explorer*, right-click the API specification and select *API* > *Open API Project Properties*.
 . Deselect *Enable this API for Agent Topic and Actions*, and click *Apply*.
 
 The `sf-api-catalog` and `sf-api-topic` tags and the *SF API Topic and Action Enablement* ruleset are removed from the API project. 

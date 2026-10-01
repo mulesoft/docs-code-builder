@@ -1,7 +1,4 @@
 = Iteratively Design and Implement APIs
-:page-deployment-options: cloud-ide, desktop-ide
-
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
 
 Using Anypoint Code Builder, you can scaffold an API specification into a new integration project without first publishing the API to Anypoint Exchange.
 As you make changes, you sync changes in the project by re-scaffolding the spec.
@@ -22,7 +19,6 @@ When you're ready, publish your API specification to Exchange and deploy your Mu
 When you scaffold your API specification into a new integration project,
 Anypoint Code Builder creates a configuration XML for your implementation.
 
-
 == Multi-Root Workspace Considerations
 
 When you scaffold an API, Anypoint Code Builder creates a _multi-root workspace_ in VS Code 
@@ -40,10 +36,9 @@ For general information about using workspaces in Anypoint Code Builder, see xre
 
 For more information, see https://code.visualstudio.com/docs/editing/workspaces/multi-root-workspaces[Multi-root Workspaces^] in the VS Code documentation.
 
-
 == Before You Begin 
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access Anypoint Code Builder].
 * xref:des-create-api-specs.adoc[Create and test your API specification].
 
 [[scaffold-spec-into-project]]
@@ -65,8 +60,7 @@ Alternatively, use the Command Palette.
 ** Use the keyboard shortcuts:
 *** Mac: Cmd+Shift+p
 *** Windows: Ctrl+Shift+p
-** In the desktop IDE, select *View* > *Command Palette*. 
-** In the cloud IDE, click the image:icon-menu.png["",18,18] (menu) icon, and select *View* > *Command Palette*.
+** Select *View* > *Command Palette*.
 
 . Select the following command:
 +
@@ -104,7 +98,7 @@ Anypoint Code Builder scaffolds your local API specification into a new Mule pro
 +
 image::imp-local-api-scaffolded.png["Scaffolding process ended message"]
 +
-Both the API spec and the Mule project open in your IDE, for example:
+Both the API spec and the Mule project open, for example:
 +
 image::imp-local-api-workspace.png["API spec and implementation project in Explorer view"]
 +
@@ -121,9 +115,7 @@ which you then implement within a Mule application.
 +
 You can switch between the spec and the implementation project in the Explorer view.
 
-
 To close or reopen your workspace later, see xref:start-workspaces.adoc[Working with Workspaces]. 
-
 
 [[rescaffold-api-spec]]
 == Re-Scaffold the API Spec

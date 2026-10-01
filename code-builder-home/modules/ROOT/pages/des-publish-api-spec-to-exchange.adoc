@@ -1,11 +1,5 @@
 = Publishing API Projects to Exchange
-:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: publish-api-spec-to-exchange.adoc, tut-af-design-api-publish-api-spec-to-exchange.adoc
-
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
-
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 Publish your API project to Anypoint Exchange so that other team members can find and use it.
 
@@ -14,7 +8,7 @@ Publish your API project to Anypoint Exchange so that other team members can fin
 
 Before publishing an API project:
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access Anypoint Code Builder].
 * xref:des-create-api-specs.adoc[Create your API specification] or xref:des-create-api-fragments.adoc[fragment].
 // Prereq bullet on familiarity with biz groups
 include::partial$acb-reusable-steps.adoc[tags="prereq-business-groups"]
@@ -41,8 +35,7 @@ Alternatively:
 * Use the keyboard shortcuts:
 ** Mac: Cmd+Shift+p
 ** Windows: Ctrl+Shift+p
-* In the desktop IDE, select *View* > *Command Palette*. 
-* In the cloud IDE, click the image:anypoint-code-builder::icon-menu.png["",18,18] (menu) icon, and select *View* > *Command Palette*.
+* Select *View* > *Command Palette*.
 ====
 .. Enter `publish` and select the following command:
 +
@@ -82,7 +75,6 @@ If the API project has errors, you must fix the errors before you can publish to
 // Start an implementation project:
 include::partial$acb-reusable-steps.adoc[tags="scaffold-spec-substeps"]
 
-
 [[locate-api]]
 == Locate Your API in Exchange
 
@@ -105,9 +97,7 @@ Your API specification appears as an asset in your organization, for example:
 +
 image::des-api-exchange.png["API specification in Exchange"]
 
-
 You can select the API, navigate through its summary, and see all the endpoints you defined in the previous tasks. You can also generate documentation for REST APIs without documentation on the asset details page in Exchange. For more information, see https://docs.mulesoft.com/exchange/generating-documentation-with-ai[Generating API Documentation with Einstein Generative AI^].
-
 
 [[publish-graphql-to-exchange]]
 == Publish a GraphQL API Spec to Exchange

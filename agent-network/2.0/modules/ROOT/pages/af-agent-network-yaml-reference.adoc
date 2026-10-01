@@ -32,7 +32,7 @@ This section has these properties.
 |No
 
 |agentNetwork
-|This string must be the <<versions,version number>> of the agent network specification used by the agent network document. This is not related to the document's `info.version` property.
+|This string must be the version number of the agent network specification used by the agent network document. This is not related to the document's `info.version` property.
 |String
 |Yes
 
@@ -678,7 +678,9 @@ Each interface object declares a transport and URL combination for interacting w
 |`protocolVersion`
 |The A2A protocol version for this interface.
 |String
-|For example, 1.0
+|For example, 1.0 +
+ +
+IMPORTANT: The A2A protocol version you declare for a connection must match the deployed agent's actual runtime protocol version. A mismatch causes the platform to apply the wrong Agent Card policy, which prevents the agent card URL from being rewritten to the egress proxy and results in a `401 Unauthorized` error at runtime rather than a version error.
 |No
 
 |`tenant`
@@ -1032,17 +1034,6 @@ The `context` section has these properties.
 
 Connection definitions live in the `context` object. Each `connections` object has a kind field that determines its connection type: either `a2a`, `llm`, or `mcp`.
 
-[[connection-id-format]]
-==== Connection ID Format
-
-Each connection key (ID) must use only:
-
-* Lowercase letters (`a`–`z`)
-* Numeric characters (`0`–`9`)
-* Underscores (`_`), non-trailing
-
-For example, `hr_system_agent` and `slack_mcp` are valid, but `HR-System-Agent` and `my_connection_` are not.
-
 Connection objects have these properties.
 
 [%header,cols="1,1,1,1"]
@@ -1158,7 +1149,10 @@ HTTP Basic authentication with username and password.
 
 [source,yaml]
 ----
-kind: basic username: my-username password: my-password headerName: Authorization
+kind: basic
+username: my-username
+password: my-password
+headerName: Authorization
 ----
 
 The basic object has these properties.
@@ -1205,7 +1199,9 @@ Authenticates outbound requests by including an API key in a configurable HTTP h
 
 [source,yaml]
 ----
-kind: apiKey apiKey: my-api-key-123 headerName: Authorization
+kind: apiKey
+apiKey: my-api-key-123
+headerName: Authorization
 ----
 
 An API key passed in a header has these properties.
@@ -1246,9 +1242,11 @@ API key client credentials with client ID and client secret objects.
 
 [source,yaml]
 ----
-type: apikey-client-credentials client-id:
+kind: apikey-client-credentials
+clientId:
    value: my-client-id
-   name: client_id client-secret:
+   name: client_id
+clientSecret:
    value: my-client-secret
    name: client_secret
 ----
@@ -1315,10 +1313,14 @@ OAuth 2.0 authentication using the Client Credentials Grant Type. Allows agents 
 
 [source,yaml]
 ----
-kind: oauth2-client-credentials clientId: my-client-id clientSecret: my-client-secret token:
+kind: oauth2-client-credentials
+clientId: my-client-id
+clientSecret: my-client-secret
+token:
    url: https://my-oauth2-provider.com/token
    timeout: 15
-   bodyEncoding: form scopes:
+   bodyEncoding: form
+scopes:
    - my.custom.scope
    - another.scope
 ----
@@ -1403,7 +1405,7 @@ authentication:
    codeChallengeMethod: S256
    bodyEncoding: form
    challengeResponseStatusCode: 200
-    tokenTimeout: 300
+   tokenTimeout: 300
 ----
 
 The in-task-authorization-code authentication has these properties.
@@ -1523,9 +1525,9 @@ authentication:
    clientId: clientId
    clientSecret: clientSecret
    targetType: audience
-   targetValue: https://api.example.com/agents/my-agent
-   scope: Read #optional, OAuth 2.0 scope to request. Required for Microsoft Entra OBO (for example, api://downstream-client-id/.default). Optional for OAuth 2.0 Token Exchange (RFC 8693).
-   timeout: 5000
+    targetValue: https://api.example.com/agents/my-agent
+    scope: Read
+    timeout: 5000
 ----
 
 *Using Microsoft Entra ID On-Behalf-Of*
@@ -1643,17 +1645,6 @@ The `oauth2-obo` authentication has these properties.
 
 Use this section to define brokers that orchestrate and control the flow of agent and tool invocations. Each broker object maps to an `.agent` file. You can have multiple Agent Script files in your `/brokers` directory.
 
-[[broker-id-format]]
-=== Broker ID Format
-
-Each broker key (ID) must use only:
-
-* Lowercase letters (`a`–`z`)
-* Numeric characters (`0`–`9`)
-* Underscores (`_`), non-trailing
-
-For example, `customer_service_agent` and `billing_agent` are valid, but `customerServiceAgent` and `my_broker_` are not.
-
 *Example*
 
 [source,yaml]
@@ -1664,7 +1655,10 @@ brokers:
      implementation: ./brokers/customer-service.agent
      interfaces:
        a2a:
-         card:             ...
+         card:
+           name: customer-service-agent
+           description: Routes customer service requests.
+           version: "1.0.0"
          policies:
            inbound:
              - ref:
@@ -1674,7 +1668,10 @@ brokers:
      implementation: ./brokers/billing-handler.agent
      interfaces:
        a2a:
-        card:           ...
+         card:
+           name: billing-agent
+           description: Handles billing inquiries.
+           version: "1.0.0"
 ----
 
 The `brokers` section has these properties.
@@ -1688,7 +1685,7 @@ The `brokers` section has these properties.
 |Values
 
 |`_(broker id)_`
-|Named broker definition. See <<broker-id-format>>.
+|Named broker definition.
 |Object
 |No
 |Keys: identifiers using only lowercase `a`–`z`, `0`–`9`, and non-trailing underscores (`_`). Values: broker entity (BrokerEntity in agent_network_v2.json)
@@ -1810,12 +1807,12 @@ Enclose expressions using the {{}} evaluation wrapper. You can also use multilin
 [source,yaml]
 ----
 - reasoning:
-     id: welcome-message
-     description: "Send a welcome message to the candidate."
-     llm: my-primary-llm
-     prompt: "Extract the email from {{input}} and send a greeting email to the user saying their onboarding process has started"
-     tools:
-       - ref: my-email-tool
+    id: welcome-message
+    description: "Send a welcome message to the candidate."
+    llm: my-primary-llm
+    prompt: "Extract the email from {{input}} and send a greeting email to the user saying their onboarding process has started"
+    tools:
+      - ref: my-email-tool
 ----
 
 Expressions have these properties. 
@@ -1922,6 +1919,8 @@ These key-value pairs are important for your agent network configuration:
 * assetId: Unique identifier for the agent network project.
 * dependencies: Existing assets that this network needs to reference.
 * variables: Nested in the metadata section, defines all the variables whose values shouldn't be hardcoded in the `agent-network.yaml` file. Enter these values when publishing the agent network. Each variable has a description value, a default value, and a secret value that indicates whether it's treated as sensitive or not.
+
+For more information about versioning assets in agent network projects, see xref:af-publish-agent-network-assets.adoc#version-assets[Version Assets].
 
 [[runtime-system-limits]]
 === Runtime System Limits Configuration

@@ -1,8 +1,4 @@
 = Tracking Requests with Autodiscovery
-:page-deployment-options: cloud-ide, desktop-ide
-
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
-
 
 Set up API autodiscovery in a Mule app to display key metrics in API Manager, including requests to endpoints in the app. API Manager is part of Anypoint Platform.
 
@@ -68,6 +64,8 @@ You'll need the instance ID when configuring your Mule app for autodiscovery.
 ====
 --
 . In your Mule app in Anypoint Code Builder, use your API instance ID to pair your app to the API instance:
++
+You can add API Autodiscovery from *Global Elements* instead of editing XML. See xref:int-global-config-elements.adoc#add-global-config[Add a Global Configuration].
 .. In the code editor for your Mule app, add the `<api-gateway:autodiscovery/>` element above `<flow/>` elements in the app, for example:
 +
 [source,xml]
@@ -155,7 +153,6 @@ paths:
 . `/current-time` endpoint definition
 . Formatted example of a date-time value
 --
-
 
 [[mule-app]]
 ==== Example: Mule Application

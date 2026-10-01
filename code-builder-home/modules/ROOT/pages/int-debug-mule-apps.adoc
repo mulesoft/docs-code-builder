@@ -1,12 +1,5 @@
 = Debugging Mule Applications
-:page-deployment-options: cloud-ide, desktop-ide
 :page-aliases: debug-add-breakpoint.adoc, debug-add-components.adoc, debug-add-logger-set-variables.adoc, debug-run-debug-sessions.adoc, debug-a-mule-application.adoc, debugging-mule-apps.adoc, tut-af-debug-am-flights.adoc
-
-
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"] 
-
-//LOGO (web, desktop, or both)
-// include::partial$acb-ide-logos.adoc[tags="both-ides"]
 
 In Anypoint Code Builder, the embedded debugger pauses Mule flows so you can inspect payloads and variables, evaluate DataWeave expressions, and step through processors in the XML editor or on the canvas.
 Set breakpoints in configuration files or on components, run in debug mode, step through execution with the debug toolbar, and hot deploy updates while the runtime stays up.
@@ -20,16 +13,15 @@ Breakpoints are markers that you add on line numbers in a configuration XML file
 . <<run-debug-mode, Run the application in debug mode>>.
 . Start execution of a flow in your Mule application.
 +
-For example, trigger an HTTP Listener or configure a Scheduler component.
+For example, trigger an HTTP Listener, or trigger a Scheduler on demand instead of waiting for its next tick. See xref:int-trigger-flows.adoc#trigger-scheduler-on-demand[].
 . When the execution stops at a breakpoint, use the <<debug-toolbar, debug toolbar>> to navigate, inspect, and fix issues.
 . After addressing an issue at a breakpoint, redeploy (<<hot-deploy, hot deploy>>) the running instance of your application.
 . Execute your flow again, and continue debugging until you address all issues.
 . <<stop-debug, Stop the debug session>>.
 
-
 == Before You Begin
 
-* xref:start-acb.adoc[Set up and access the web or desktop IDE].
+* xref:start-acb.adoc[Set up and access Anypoint Code Builder].
 * xref:int-create-integrations.adoc[Create an integration].
 
 [[debugger-view-overview]]
@@ -59,7 +51,7 @@ When execution pauses at a breakpoint or after a step, the flow canvas shows whi
 [[source-editor-focus]]
 === Source Editor and Multiple Configuration Files
 
-Projects can split flows across several Mule configuration XML files. When a breakpoint is hit or you step, the editor opens or switches focus to the XML file that contains the flow and processor that is actually executing, and the canvas shows that configuration. Stepping through a `<flow-ref>` into a referenced flow opens the file that declares that referenced flow and updates the canvas accordingly.
+Projects can split flows across several Mule configuration XML files. When a breakpoint is hit or you step, the editor opens or switches focus to the XML file that contains the flow and processor that is actually executing, and the canvas shows that configuration. Stepping through a `<flow-ref>` into a referenced flow opens the file that declares that referenced flow and updates the canvas accordingly. If the referenced flow is in an imported Mule project dependency, it opens in a read-only canvas and XML view.
 
 [[inspect-mule-event-variables]]
 == Inspect Variables and the Mule Event
@@ -209,7 +201,7 @@ At a *Flow Ref* component (`<flow-ref/>`), *Step Over* doesn't enter the referen
 ====
 . *Step Into* (F11) — Enters the next processor, including following a `<flow-ref/>` into the referenced flow.
 +
-When you step into a flow reference, the IDE opens the Mule configuration file that declares that referenced flow, moves the canvas to that flow, and pauses on the first processor inside it. After you step through the referenced flow, stepping continues in the caller flow where appropriate.
+When you step into a flow reference, Anypoint Code Builder opens the Mule configuration file that declares that referenced flow, moves the canvas to that flow, and pauses on the first processor inside it. If the referenced flow is in an imported Mule project dependency, the dependency flow opens in a read-only canvas and XML view. You can step through its processors, and stepping continues in the caller flow where appropriate after you step through the referenced flow.
 +
 .Step Into Details
 [%collapsible]
@@ -273,7 +265,7 @@ A hot deployment updates a running instance of your application but does not pac
 
 To perform a hot deploy:
 
-. Ensure your Mule application is running in the IDE.
+. Ensure your Mule application is running.
 . Make an update to your application.
 . In the editor toolbar for the running Mule application, click *Save and Hot-deploy to Mule Runtime* (lightning bolt icon) to push the change to the running runtime without a full stop and dependency resolution cycle.
 

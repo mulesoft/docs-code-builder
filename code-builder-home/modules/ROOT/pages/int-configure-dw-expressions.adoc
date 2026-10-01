@@ -44,7 +44,7 @@ Anypoint Code Builder supports these transform mapping use cases:
 +
 For more information, see xref:dataweave::dw-functions.adoc[]. 
 
-* Review the built-in documentation for functions the IDE provides. For example, see <<tab-functions>>.
+* Review the built-in documentation for functions that Anypoint Code Builder provides. For example, see <<tab-functions>>.
 
 ** xref:dataweave::dataweave-variables-context.adoc[Predefined Mule event variables] such as `payload`, `attributes`, `vars`.
 
@@ -111,7 +111,7 @@ image:int-dw-fx-data-tab.png["Data tab for expression field"]
 image:int-dw-fx-data-tab-attributes.png["Data tab for expression field with mock attributes"]
 |===
 
-The IDE shows the automatically generated strings as mock values and uses them to generate output for previews, such as in the <<tab-preview, Preview>> tab. The attribute metadata keys in the example come from the configuration of an `HTTP Listener` component in the flow.
+Anypoint Code Builder shows the automatically generated strings as mock values and uses them to generate output for previews, such as in the <<tab-preview, Preview>> tab. The attribute metadata keys in the example come from the configuration of an `HTTP Listener` component in the flow.
 
 [[set-component-custom-metadata-on-metadata-or-data-tab]]
 === Set Component Custom Metadata on the Metadata or Data Tab
@@ -229,7 +229,7 @@ On *Transformation Builder*, select the option that best suits your needs:
 [[namespaces-in-generated-dataweave]]
 === Namespaces in Generated DataWeave Scripts
 
-If your input or output metadata includes namespace URIs, Anypoint Code Builder updates the generated DataWeave script for visual mapping to XML and similar targets. The IDE adds `ns` directives to the script header for each URI that needs a declaration and maps fields using qualified names with a generated prefix. Prefixes are unique in the script (such as `ns0`, `ns1`), and Anypoint Code Builder reuses any existing `ns` line if it binds the same URI.
+If your input or output metadata includes namespace URIs, Anypoint Code Builder updates the generated DataWeave script for visual mapping to XML and similar targets, adds `ns` directives to the script header for each URI that needs a declaration, and maps fields using qualified names with a generated prefix. Prefixes are unique in the script (such as `ns0`, `ns1`), and Anypoint Code Builder reuses any existing `ns` line if it binds the same URI.
 
 Namespace handling applies to AI-assisted mapping and manual drag mapping in *Transformation Builder*. It also applies to other flows that generate scripts from metadata, for MIME types where the type system exposes namespaces. Provide accurate xref:int-manage-custom-metadata.adoc[custom metadata] or sample data so element namespaces are present in the structure the builder uses.
 
@@ -322,7 +322,7 @@ If you receive an authorization error:
 
 . Verify that you are logged in to Anypoint Platform from Anypoint Code Builder.
 +
-For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform from the IDE].
+For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform].
 . Contact your Anypoint Platform organization administrator to verify:
 +
 * You have the *Mule Developer Generative AI User* permission assigned in Anypoint Platform access management.
@@ -466,7 +466,7 @@ image::int-dw-sample-quick-fix-create.png["Quick Fix menu displaying 'Create sam
 +
 image::dw-issue-sample-data-formats.png["Sample data format selection menu showing options including JSON, XML, CSV, Java, Text, YAML, Avro, Excel, and other supported formats"]
 +
-The IDE opens a tab for your sample data. 
+Anypoint Code Builder opens a tab for your sample data.
 . Add content in the selected format to the sample data file. For example, for JSON:
 +
 image::int-dw-sample-quick-fix-example-dir.png["Project Explorer showing sample data files like payload.json stored in src/test/resources directory structure"]

@@ -1,7 +1,4 @@
 = Designing a gRPC API Specification with Anypoint Code Builder
-:page-deployment-options: cloud-ide, desktop-ide
-
-include::reuse::partial$beta-banner.adoc[tag="anypoint-code-builder"]
 
 Anypoint Code Builder supports designing gRPC API specifications using Protocol Buffers 3 (Protobuf 3). Create and edit `.proto` files, import reusable Protobuf libraries from Anypoint Exchange, and use syntax highlighting and validation. gRPC uses HTTP/2 and supports four RPC patterns:
 
@@ -77,7 +74,7 @@ To publish a gRPC fragment to Exchange:
 
 . Ensure that you're logged in to Anypoint Platform.
 . Open the project that contains your reusable `.proto` files.
-. From the IDE, select the publish action.
+. Select the publish action.
 . When prompted:
 +
 * Select the business group.
@@ -104,7 +101,7 @@ To use a Protobuf fragment published to Exchange:
 . Open the Command Palette (Cmd+Shift+P on macOS or Ctrl+Shift+P on Windows).
 . Select *MuleSoft: Add Fragment dependency from Exchange*.
 . Search for the Protobuf fragment you need and select the version to add.
-. After the dependency is added, the library is available under the project.
+. After the dependency is added, the library appears under *Project Dependencies* in Explorer.
 . In your main `.proto` file, use `import` to reference the library's package and message or service definitions. For example:
 +
 [source,protobuf]
