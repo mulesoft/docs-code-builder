@@ -45,6 +45,12 @@ To deploy an agent network, you need a space on CloudHub 2.0 or a deployment tar
 
 After you create a target space, set up the ingress and egress gateways for deployment if you haven't already done so. See xref:af-get-started.adoc#setup-gateways[Set Up Agent Network Gateways for the Space or Deployment Target].
 
+=== Plan Target Spaces for Environment Promotion
+
+To promote the same agent network asset from development to staging and production, use the shared space or a separate private space for each environment. You can't promote the same asset ID when the source and target environments share a private space, even if the private space is associated with each environment.
+
+For more information, see xref:af-get-started.adoc#plan-spaces-for-promotion[Set Up the Space or Deployment Target for Your Environment].
+
 == CLI for Agent Fabric Plugin Reference
 
 Use these commands to set up gateways and author, publish, and deploy agent network projects.
