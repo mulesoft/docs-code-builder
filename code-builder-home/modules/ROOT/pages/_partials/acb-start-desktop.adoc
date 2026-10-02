@@ -85,6 +85,10 @@ image::anypoint-code-builder-view.png["MuleSoft icon for Anypoint Code Builder i
 
 . Confirm that the <<acb-menu, Anypoint Code Builder menu>> loads.
 
+. Disable other VS Code extensions that you don't need for Mule development
++
+Java-based extensions such as a Java Language Server, Java debugger, or Spring Boot tools, run background processes that compete with Anypoint Code Builder for the same JVM resources, which can slow down canvas loading, DataSense resolution, and debugging.
+
 . If you have an Anypoint Platform account running in the EU cloud, change the *Mule: Control Plane* setting to *EU cloud*. 
 +
 For guidance, see xref:anypoint-code-builder::start-acb.adoc#change-clouds[Set Anypoint Code Builder to the EU or US Cloud].
@@ -97,6 +101,8 @@ If an Anypoint Platform session is active in any of your browsers when you insta
 === Install Anypoint Extension Pack in Cursor, Trae, or Devin
 
 Cursor, Trae, and Devin use the OpenVSX marketplace by default. Before you can search for and install Anypoint Extension Pack in these IDEs, configure Visual Studio Marketplace as the gallery service URL.
+
+Anypoint Extension Pack is also compatible with Windsurf. See xref:anypoint-code-builder::vibes-mcp-server.adoc[] for more about using the Anypoint Extension Pack, including MuleSoft MCP Servers, across compatible IDEs.
 
 [tabs]
 ====
