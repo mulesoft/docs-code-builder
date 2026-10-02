@@ -1,0 +1,114 @@
+= Implement the American Flights API
+:imagesdir: ../assets/images
+:page-pagination:
+
+After designing and publishing your API specification, you're ready to implement it in Anypoint Code Builder. At this stage of the tutorial, you already have an API specification for the American Flights API published to Anypoint Exchange, and you're working in the same workspace where you build the integration.
+
+To implement the API, you scaffold the API specification into an integration project. Scaffolding generates the API interface based on the specification, creating the flows and configuration that you then extend with application logic.
+
+== Scaffold the American Flights API into an Integration Project
+
+Now that the American Flights API specification is available in Anypoint Exchange, scaffold it into a new integration project to generate the API interface.
+
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide this command:
++
+[source,command]
+----
+MuleSoft: Implement an API Specification
+----
+. In the *Implement an API Specification* tab that opens:
+.. Provide a new name for the implementation project.
+.. Select or create a new project location.
+.. In the search box, type `American Flights API`, or the name you used when creating the specification, and press Enter.
+.. Find your API specification on Anypoint Exchange, and click *Add Asset* to insert the API name into the field.
+.. Select an existing workspace, or create a new one by providing a name and a location.
+.. Click *Create Project* to start scaffolding the specification into a new implementation project.
+.. If you see this notification, trust your workspace by clicking *Manage* then *Trust*. 
++
+image::tut-flights-restricted-banner.png["The workspace trust notification with Manage and Trust options"]
+
+After scaffolding completes, confirm that the generated project contains listener configuration, APIKit router flows, and operation-specific flow stubs.
+
+image::tut-flights-flow-list-view.png["Flow list showing the scaffolded american-flights-api-main flow with a Listener and Router, alongside error handler flows"]
+
+== Connect to a Database Using the Database Connector
+
+Add and configure a Database Select operation to retrieve flight data from a database.
+
+. Open the `get:\flights:american-flights-api-config` flow.
++
+If you don't see the flow list, click *Show flow list* to display it.
++
+image::tut-flights-show-flow-list.png["The Show flow list button in Anypoint Code Builder used to display the list of flows in the canvas"]
+. Click *Add Component* (+) before the existing *Transform Message* and select *Connectors > Database > Select*.
++
+If there's no *Transform Message*, add the *Database - Select* component at the beginning of the flow. You add or configure the Transform Message component later in this section.
+. Click the *Select* component to open its properties panel.
+. Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]), change it to `All Flights`, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
+. In the *Select* component properties, click *Add New Connection* next to *Connection Config*.
++
+image::tut-flights-db-select-add-connection.png["Database - Select properties panel with the Add New Connection link next to Connection Config"]
+. Set the connection to *MySQL Connection*.
++
+image::tut-flights-db-mysql-connection.png["Connection Config dialog with Name set to Config and Connection set to MySQL Connection"]
+. Click *Configure library* next to *MySQL JDBC Driver*.
++
+image::tut-flights-db-configure-library.png["Required Libraries section with the Configure library option next to MySQL JDBC Driver"]
+. In the *Select Library Source* drop-down menu, select *Maven Dependency*.
++
+image::tut-flights-db-library-source-maven.png["Select Library Source drop-down menu set to Maven Dependency"]
+. Enter `mysql:` in the *Search Maven Central Repository* text field, and select *mysql:mysql-connector-java* in the results.
++
+image::tut-flights-db-maven-search-results.png["Search Maven Central Repository results showing mysql:mysql-connector-java and other matches"]
+. Enter `8.0.30` in the *Version* text field, and click *Apply*.
+. Confirm that the MySQL JDBC Driver is set.
++
+image::tut-flights-db-driver-configured.png["Required Libraries section confirming MySQL JDBC Driver is set to mysql:mysql-connector-java:8.0.30"]
+. Set the following configuration values:
++
+[%header,cols="20a,60a"]
+|===
+| Field Name | Field Value
+
+| *Host* | `iltdb.mule-training.com`
+| *Port* | `3306`
+| *User* | `mule`
+| *Password* | `mule`
+| *Database* | `training`
+|===
++
+image::tut-flights-db-select-query.png["Connection Config dialog with Host, Port, User, Password, and Database fields set"]
+
+. Click *Test Connection* and confirm that you see a *Connection is valid* message.
++
+image::tut-flights-db-connection-valid.png["Connection is valid confirmation message"]
++
+[TIP]
+If the test fails, verify the connection details and retry. If you are using a VPN, confirm that it is not preventing the connection to the MySQL database.   
+. Click *Apply* and close the *Database - Select* config tab.
+. In the *Database - Select* properties panel, add this query in the *SQL Query Text* field:
++
+[source,sql]
+----
+SELECT * FROM american
+----
++
+image::tut-flights-db-connection-config.png["Database - Select properties panel with the General tab showing the SQL Query Text field set to SELECT * FROM american"]
++
+This query selects all records from the `american` table.
+. Locate the *Transform Message* component after the *All Flights* Database Select.
++
+If there's no *Transform Message* component there, click *Add Component* (+) after *All Flights* and select *Core Processors > Components > Transform Message*.
++
+image::tut-flights-db-flow-overview.png["The get:\flights:american-flights-api-config flow with an All Flights Database Select component followed by a Transform Message component"]
+. Click the *Transform Message* component to open its properties panel.
+. In the *Inline Script* field, set the script to:
++
+[source,dataweave]
+----
+%dw 2.0
+output application/json
+---
+payload
+----
