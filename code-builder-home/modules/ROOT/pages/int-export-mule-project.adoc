@@ -14,7 +14,7 @@ The shareable JAR includes:
 * `mule-artifact.json`
 * `pom.xml`
 
-Anypoint Code Builder generates the dependencies automatically based on the settings in the POM file (`pom.xml`). You or your teammates can import the JAR file and continue developing in Anypoint Code Builder or Anypoint Studio (Studio). 
+Anypoint Code Builder generates the dependencies automatically based on the settings in the POM file (`pom.xml`). You or your teammates can import the JAR file and continue developing in Anypoint Code Builder or Anypoint Studio (Studio).
 
 To import a shareable JAR, see xref:int-import-mule-project.adoc#desktop-project-package[Import a Shareable Project JAR File into Anypoint Code Builder].
 
@@ -23,11 +23,13 @@ To import a shareable JAR, see xref:int-import-mule-project.adoc#desktop-project
 
 A deployable JAR file contains the compiled code and all dependencies. For a deployable JAR, you can select *Include project sources* while exporting the project so the JAR can be opened in Anypoint Code Builder or Studio and also used for deployment. When this option is selected, the JAR also includes the configuration XML and other files in the `src` folder (including resource files), `mule-artifact.json`, and `pom.xml`, the same project sources as in a shareable JAR. 
 
-You can deploy the JAR file to any supported environment, such as CloudHub or on-premises. You don't need to create a deployable JAR file to deploy to CloudHub. 
+You can deploy the JAR file to any supported environment, such as CloudHub or on-premises. You don't need to create a deployable JAR file to deploy to CloudHub.
 * To deploy an app directly from Anypoint Code Builder, see xref:int-deploy-mule-apps.adoc[].
 * To deploy a JAR file to CloudHub, see xref:cloudhub::deploying-to-cloudhub.adoc[].
 
 For more information on deployment options, see xref:hosting-home::index.adoc#runtime-plane-hosting-options.adoc[Runtime Plane Hosting Options] and xref:mule-runtime::deploying.adoc[Deploy Mule Applications].
+
+Because Anypoint Code Builder projects are standard Maven projects, you don't have to export a JAR manually every time. A CI/CD pipeline can build and package the same project by running `mvn clean package` against the `pom.xml` file, then deploy the resulting JAR with the Mule Maven Plugin or Anypoint CLI, independent of the IDE.
 
 == Before You Begin
 
@@ -99,7 +101,7 @@ image::publish-project-to-exchange-dialog.png["Form for publishing a project to 
 | *Asset Name* | Name that Exchange uses to identify the published project.
 | *Version* | Version number to display in the *Version* section of the page that Exchange creates for the asset.
 
-If you are publishing the asset for the first time, you can use any valid number. A typical starting version is `1.0.0`.
+Use semantic versioning (`major.minor.patch`), for example `1.0.0` for a first-time publish. Increase the major version for breaking changes, the minor version for backward-compatible new features, and the patch version for fixes, so consumers of your asset can decide when to adopt a new version based on the type of change.
 
 If you are republishing the asset, Anypoint Code Builder automatically populates the *Version* field. You can change this number, but the republish fails if you use a version number that has already been used to publish a stable version of this asset.
 
@@ -125,6 +127,11 @@ image::publish-project-to-exchange-advanced-dialog.png["Form for publishing a pr
 . Click *Publish*.
 
 The publication of your project as a new asset begins. After publication succeeds, select *View Asset* to view the asset in Exchange.
+
+[[publish-reusable-logic]]
+== Publish Reusable Logic as a Dependency
+
+To prevent building the same logic across multiple projects, such as a common error handler, a logging framework, or a set of utility flows, package that logic as a Mule project and publish it to Exchange. Other projects can then add it as a xref:acb-external-libraries.adoc[Maven dependency] instead of duplicating the flows.
 
 == See Also
 

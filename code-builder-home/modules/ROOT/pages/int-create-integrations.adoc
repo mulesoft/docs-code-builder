@@ -120,6 +120,15 @@ The process automatically appends an `xml` extension to the file name and opens 
 +
 The file's canvas provides the same options for building your project file that appear when you create an integration project. For an example and to get started with your configuration, see xref:int-configure-components.adoc#add-a-component-to-your-project[Add a Component to Your Project].
 
+For each configuration file, use a descriptive name that reflects the purpose of the flows it contains, such as `order-sync-flow.xml`, `customer-lookup-sapi.xml`, or `shared-error-handler.xml`, instead of a generic name such as `new-flow.xml`. Descriptive names make it easier for you and your team to locate the logic you need as the project grows.
+
+[[organize-flows]]
+== Organize Large Flows into Sub-Flows
+
+As a flow grows to include many processors, it becomes harder to read, test, and reuse. When a flow grows beyond approximately 15-20 processors, or when it contains logic you use in more than one place, such as validation, enrichment, or error formatting, move that logic into a sub-flow and reference it with a Flow Reference component (`<flow-ref>`). This keeps each flow focused on a single purpose and you can reuse the extracted logic elsewhere in the project.
+
+To move existing components into a new sub-flow without manually rewriting the XML, select the components in the canvas and use *Extract to Flow*. See xref:int-configure-components.adoc#canvas-actions[Refactor Flows Using Canvas Actions].
+
 == See Also
 
 * xref:start-workspaces.adoc[]

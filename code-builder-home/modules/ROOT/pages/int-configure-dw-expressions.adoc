@@ -212,6 +212,8 @@ image::dataweave-function-preview-output.png["Preview Output tab showing the exe
 
 Create DataWeave transformations in your Mule applications with *Transformation Builder*, assisted by Einstein generative AI. Provide input and output sample metadata or data to generate DataWeave scripts.
 
+Use the drag-and-drop mapping in *Transformation Builder* for straightforward mappings, as it supports nested arrays, multi-level mappings, field concatenation, and automatic type casting. For complex logic, such as conditional branching or custom functions, switch to the script editor.
+
 image::int-dw-transform-builder-ui.png["The *Transformation Builder* window and its sections highlighted"]
 
 [[customize-transformation-builder-layout]]
@@ -614,6 +616,18 @@ image::int-dw-libraries.png["Search for DataWeave libraries"]
 The status bar shows the progress.
 
 When complete, Anypoint Code Builder shows a message that the dependency was successfully added to the project.
+
+[[externalize-dw-scripts]]
+== Reference a DataWeave Script Stored in an External File
+
+If you use the same transformation logic in multiple places, store the DataWeave script in a `.dwl` file in `src/main/resources` instead of duplicating the transformation inline in each component. By externalizing a script, you can update the transformation in one place and reference it wherever it's needed.
+
+To reference an externalized script, use the `${file::filename}` syntax in any XML tag that expects an expression, where `filename` is the name of your `.dwl` file in `src/main/resources`. For example:
+
+[source,xml]
+----
+<http:body><![CDATA[#[${file::transform.dwl}]]]></http:body>
+----
 
 == See Also
 
