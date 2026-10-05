@@ -344,6 +344,15 @@ To https://github.com/me/my-repo.git
 
 For common Git commands, see https://docs.github.com/en/get-started/using-git/about-git[About Git^] in the GitHub documentation, or find all commands in the https://git-scm.com/docs[Git command reference^].
 
+[[branching-and-reviews]]
+== Branch and Review Changes to a Mule Project
+
+When multiple developers work on the same Mule project, merging changes to flow configuration XML files is more error-prone than merging typical source code. Work on a separate branch for each feature or fix so that concurrent changes stay isolated and conflicts are easier to resolve when you merge.
+
+Global elements in `global-config.xml`, such as connector configurations and connection details, affect every flow that references them. Commit changes to this file separately from flow changes, with a commit message that explains what changed and why, so you can roll back a global configuration change without also reverting unrelated flow work.
+
+When you review changes in a Mule configuration XML file, attribute reordering, namespace declarations, and auto-generated component IDs can clutter the review process. Focus your review on the parts that affect runtime behavior, such as connector configurations, DataWeave scripts, and flow logic.
+
 [[clone-repo]]
 == Clone a Project Repository into Anypoint Code Builder
 
