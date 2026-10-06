@@ -1,0 +1,29 @@
+== Configure Broker CPU and Memory Resources
+
+Configure CPU and memory resources for brokers when you deploy an agent network with the Anypoint CLI. By default, brokers reserve `20m` of CPU and `700Mi` of memory, with limits of `2000m` CPU and `700Mi` memory.
+
+Specify the resource settings in a deployment configuration file or directly in the deploy command. Don't use both methods in the same command.
+
+To specify the settings in a deployment configuration file:
+
+. Create a `deployment-config.yaml` file with the resource settings:
++
+[source,yaml]
+----
+brokers:
+  resources.cpu.reserved: 20m
+  resources.cpu.limit: 2000m
+  resources.memory.reserved: 700Mi
+  resources.memory.limit: 700Mi
+----
+. Pass the file to the deploy command with `--deployment-properties-file`:
++
+----
+--deployment-properties-file=/path/to/deployment-config.yaml
+----
+
+To specify a resource setting directly in the deploy command, use `--deployment-property` with the broker scope, resource property, and value. For example, to reserve `50m` of CPU:
+
+----
+--deployment-property brokers:resources:cpu:reserved:50m
+----
