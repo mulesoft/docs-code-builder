@@ -96,7 +96,7 @@ The section has these properties.
 |Yes
 
 |description
-|A human readable summary of what the agent network does.  Accepts CommonMark syntax.
+|A human readable summary of what the agent network does. Accepts CommonMark syntax.
 |String
 |No
 
@@ -276,25 +276,26 @@ The `registry` section has these properties.
 |The list of agents defined as part of this network.
 |Object
 |No
-|Keys: identifiers matching ^[a-zA-Z_][a-zA-Z0-9_.-]*$. Values: AgentEntity
+|Keys: identifiers matching `^[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]$`. Values: AgentEntity
 
 |`mcps`
 |The list of MCP servers defined as part of this network.
 |Object
 |No
-|Keys: identifiers. Values: MCPServerEntity
+|Keys: identifiers matching `^[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]$`. Values: MCPServerEntity
 
 |`llms`
 |The list of LLM providers defined as part of this network.
 |Object
 |No
-|Keys: identifiers. Values: LLMEntityEach `LLMEntity` requires `metadata.platform`: `Gemini`, `OpenAI`, or `AzureOpenai`.
+|Keys: identifiers matching `^[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]$`. Values: LLMEntity. Each `LLMEntity` requires `metadata.platform`: `Gemini`, `OpenAI`, `AzureOpenai`, or a custom platform name.
 
 |===
 
+[[info]]
 === Info
 
-All nodes in this section share these properties. 
+All nodes in this section share these properties.
 
 [%header,cols="1,1,1,1"]
 |===
@@ -389,12 +390,12 @@ The agents section has these properties.
 |No
 
 |`agents.urls`
-|Named URLs for the agent.
-|Array
+|Named URLs for the agent. Each entry requires a `name` (for example, `production` or `staging`) and a `url`.
+|Array[Object]
 |No
 
 |`agents.metadata.tools`
-|The list of tool providers (MCP or A2A)
+|The list of tool providers. Each entry is an object with exactly one of `mcp` or `a2a`. See <<agent-tools,Agent Tools>>.
 |Array[Object]
 |No
 
@@ -408,6 +409,59 @@ The agents section has these properties.
 Authentication for outbound calls is configured on <<connections,`connections`>> (and related policies), not on registry `AgentEntity` definitions.
 
 NOTE: If you are connecting to an agent that uses A2A protocol version 0.3.x, use the `a2a_v03` interface key instead of `a2a`. The `a2a` key targets A2A protocol version 1.x.
+
+[[agent-tools]]
+==== Agent Tools
+
+Each entry in `agents.metadata.tools` is an object with exactly one of these keys.
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`mcp`
+|Reference to an MCP server that provides tools.
+|Object
+|No (exactly one of `mcp` or `a2a`)
+
+|`mcp.ref`
+|Reference to an MCP server declared in the registry. See <<reference-types,Reference Types>>.
+|`MCPRef`
+|Yes
+
+|`mcp.allowed`
+|An optional list of tool names from the MCP server that the agent is allowed to use. Each name must match `^[a-zA-Z0-9_][a-zA-Z0-9_-]*$`.
+|Array of Strings
+|No
+
+|`a2a`
+|Reference to an A2A agent that the agent can use as a tool.
+|Object
+|No (exactly one of `mcp` or `a2a`)
+
+|`a2a.ref`
+|Reference to an agent. See <<reference-types,Reference Types>>.
+|`AgentRef`
+|Yes
+
+|===
+
+*Example*
+
+[source,yaml]
+----
+tools:
+  - mcp:
+      ref:
+        name: slack-mcp
+      allowed: [sendMessage, listChannels]
+  - a2a:
+      ref:
+        name: salesforce-agent
+----
 
 [[a2a-card]]
 ==== A2A Card
@@ -710,8 +764,8 @@ The MCP Server section has these properties.
 |--
 
 |`urls`
-|Named URLs for the MCP server.
-|Array
+|Named URLs for the MCP server. Each entry requires a `name` (for example, `production` or `staging`) and a `url`.
+|Array[Object]
 |No
 |--
 
@@ -838,7 +892,7 @@ Sse Transport has these properties.
 |Path to the messages endpoint.
 |String
 |No
-|Agent Graph Expression Optional
+|--
 
 |===
 
@@ -894,6 +948,7 @@ StdioTransport has these properties.
 
 |===
 
+[[reference-types]]
 === Reference Types
 
 Reference types are reusable objects that point to other entities defined in the registry, such as agents, MCP servers, LLMs, connections, and policies.
@@ -904,22 +959,20 @@ Reference types are reusable objects that point to other entities defined in the
 ----
 registry:
    agents:
-     myEvaluationAgent:
-       type: a2a_agent
-       protocol: a2a
-       platform: agentforce
-       kind: evaluation
-       connections:
-         - kind: mcp
+     my-evaluation-agent:
+       metadata:
+         platform: AgentForce
+         interfaces:
+           a2a: {}
+         tools:
+           - mcp:
+               ref:
+                 name: my-mcp-server
+               allowed:
+                 - tool-name-1
+         llm:
            ref:
-             assetId: my-mcp-server
-             version: 1.0.0
-           allowed:
-             - tool-name-1
-       provenance:
-         kind: exchange
-         metadata:
-           organizationId: my-org
+             name: my-llm
 ----
 
 Reference types used in the Registry section have these properties. 
@@ -961,6 +1014,12 @@ Reference types used in the Registry section have these properties.
 |Object
 |No
 |`{ name: string, namespace?: string }`
+
+|`SecretRef`
+|Reference to a secret held in the Anypoint secret manager. Used by `tlsContext`.
+|Object
+|No
+|`{ name: string, group: string }`
 
 |===
 
@@ -1083,14 +1142,141 @@ a|The base URL of the target system. For `llm` use these defaults:
 |Array
 |No
 
+|`tlsContext`
+|TLS context for the upstream connection (proxy to upstream), used for mutual TLS (mTLS). References the secret in the Anypoint secret manager that carries the TLS context configuration.
+|`SecretRef`. See <<reference-types,Reference Types>>.
+|No
+
+|`access`
+|The access modifier for the connection.
+|String: `internal` or `shared`. Default: `internal`.
+|No
+
+|`interfaces`
+|The protocol bindings the agent serves, each under a sub-path of `url`. Valid only when `kind` is `a2a`. See <<a2a-connection-interfaces,A2A Connection Interfaces>>.
+|Object
+|No
+
+|`card`
+|Configuration for fetching the target agent's agent card. Valid only when `kind` is `a2a`. See <<a2a-connection-card,A2A Connection Card>>.
+|Object
+|No
+
 |===
 
 You can attach policies to connection objects by referencing their policy identifier or by defining an inline policy binding. See the <<policies,policies object>> for field definitions.
 
+[[a2a-connection-interfaces]]
+==== A2A Connection Interfaces
+
+For `a2a` connections, `interfaces` declares which protocol bindings the target agent serves. Each binding is served under a sub-path of the connection's `url`.
+
+*Example*
+
+[source,yaml]
+----
+context:
+   connections:
+     hr_system_agent:
+       kind: a2a
+       ref:
+         name: hr-system-agent
+       url: https://hr-agent.example.com
+       interfaces:
+         jsonrpc:
+           basePath: /a2a
+         http:
+           basePath: /rest
+----
+
+The `interfaces` object has these properties.
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`jsonrpc`
+|The JSON-RPC binding.
+|Object
+|No
+
+|`jsonrpc.basePath`
+|Sub-path of `url` that serves the JSON-RPC binding.
+|String
+|Yes (if `jsonrpc` present)
+
+|`http`
+|The HTTP+JSON (REST) binding.
+|Object
+|No
+
+|`http.basePath`
+|Sub-path of `url` that serves the HTTP+JSON binding.
+|String
+|Yes (if `http` present)
+
+|`grpc`
+|The gRPC binding.
+|Object
+|No
+
+|`grpc.basePath`
+|Sub-path of `url` that serves the gRPC binding.
+|String
+|Yes (if `grpc` present)
+
+|===
+
+[[a2a-connection-card]]
+==== A2A Connection Card
+
+Use `card` on an `a2a` connection when the target agent requires different credentials to fetch its agent card than the connection's runtime `authentication`.
+
+*Example*
+
+[source,yaml]
+----
+context:
+   connections:
+     hr_system_agent:
+       kind: a2a
+       ref:
+         name: hr-system-agent
+       authentication:
+         kind: oauth2-client-credentials
+         clientId: runtime-client-id
+         clientSecret: runtime-client-secret
+         token:
+            url: https://my-oauth2-provider.com/token
+       card:
+         authentication:
+            kind: apiKey
+            apiKey: card-api-key
+----
+
+The `card` object has these properties.
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`authentication`
+|The authentication to use when fetching the agent's card. See <<authentication,Authentication>>.
+|Authentication Object
+|No
+
+|===
+
 [[policies]]
 === Policies
 
-This section describes reusable, composable policy bindings and definitions that govern specific behaviors or constraints related to connections. You must reference the policy identifier to attach a policy. 
+This section describes reusable, composable policy bindings and definitions that govern specific behaviors or constraints related to connections. To attach a policy, either reference a declared policy by name (`ref`) or define an inline policy binding (`policy`).
 
 For more information about applying policies via Omni Gateway in Local Mode, see:
 
@@ -1107,8 +1293,8 @@ context:
        ref:
          name: myReferenceObject
        configuration:
-         - rate: 100
-           unit: minute
+         rate: 100
+         unit: minute
 ----
 
 This section has these properties.
@@ -1130,13 +1316,24 @@ This section has these properties.
 |String
 |Yes
 
+|ref.namespace
+|Optional namespace to scope the policy reference.
+|String
+|No
+
 |configuration
 |Policy-specific configuration (structure defined by the referenced policy definition).
 |Object
 |Yes
 
+|access
+|The access modifier for the policy binding. Valid only on named policies declared in `context.policies`. When `shared`, the binding can also be referenced from other agent networks.
+|String: `internal` or `shared`. Default: `internal`.
+|No
+
 |===
 
+[[authentication]]
 === Authentication
 
 This section defines the authentication schemes used by the agent network for authenticating when making outbound requests.
@@ -1227,10 +1424,10 @@ An API key passed in a header has these properties.
 |No
 
 |apiKey
-|The header or parameter name for the API key.
+|The value of the API key.
 |String
 |String
-|No
+|Yes
 
 |===
 
@@ -1289,7 +1486,7 @@ The API key client credentials object has these properties.
 |Description of the client secret to be used.
 |Object
 |Object with value and optional name (default header name is client_secret).
-|No
+|Yes
 
 |clientSecret.value
 |The value for the client secret.
@@ -1372,7 +1569,7 @@ The oauth2-client-credentials object has these properties.
 |No
 
 |token.bodyEncoding
-|Content encoding for the request body. (`form = application/x-www-form-urlencoded`, `json = application/json`)
+|Content encoding for the request body. (`form = application/x-www-form-urlencoded`, `json = application/json`)
 |String
 |`form` or `json`
 |No
@@ -1380,7 +1577,7 @@ The oauth2-client-credentials object has these properties.
 |scopes
 |Array of scopes to request during token retrieval.
 |Array
-|Array of scope strings. Defaults to []
+|Array of scope strings
 |No
 
 |===
@@ -1525,9 +1722,9 @@ authentication:
    clientId: clientId
    clientSecret: clientSecret
    targetType: audience
-    targetValue: https://api.example.com/agents/my-agent
-    scope: Read
-    timeout: 5000
+   targetValue: https://api.example.com/agents/my-agent
+   scope: Read
+   timeout: 5000
 ----
 
 *Using Microsoft Entra ID On-Behalf-Of*
@@ -1567,16 +1764,16 @@ The `oauth2-obo` authentication has these properties.
 |Yes
 
 |clientId
-|OAuth2 client ID for token exchange.
+|OAuth2 client ID (or service-principal application ID) for token exchange. Required for `microsoft-entra-obo`. Optional for `oauth2-token-exchange`, because some IdPs require only a client ID, or neither a client ID nor a client secret.
 |String
 |String
-|Yes
+|Required for microsoft-entra-obo
 
 |clientSecret
-|OAuth2 client secret for token exchange.
+|OAuth2 client secret for token exchange. Required for `microsoft-entra-obo`. Optional for `oauth2-token-exchange`; leave it unset for IdPs whose token-exchange grant doesn't accept a client secret.
 |String
 |String
-|Yes
+|Required for microsoft-entra-obo
 
 |tokenEndpoint
 |OAuth2 token endpoint URL for token exchange.
@@ -1591,10 +1788,10 @@ The `oauth2-obo` authentication has these properties.
 |No
 
 |targetValue
-|Target audience URI or resource URI for the exchanged token. Required for OAuth 2.0 Token Exchange.
+|Target audience URI or resource URI for the exchanged token, sent as `audience` or `resource` according to `targetType`. Leave it unset for IdPs that scope the exchanged token with `scope` alone.
 |String
 |Valid URI
-|Required when using oauth2-token-exchange with a target
+|No
 
 |scope
 |OAuth scope to request. Required for Microsoft Entra OBO (for example, api://downstream-client-id/.default). Optional for OAuth 2.0 Token Exchange.
@@ -1688,7 +1885,13 @@ The `brokers` section has these properties.
 |Named broker definition.
 |Object
 |No
-|Keys: identifiers using only lowercase `a`–`z`, `0`–`9`, and non-trailing underscores (`_`). Values: broker entity (BrokerEntity in agent_network_v2.json)
+|Keys: identifiers matching `^[a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9]$`. Values: broker entity (BrokerEntity in agent_network_v2.json)
+
+|`info`
+|Metadata for the broker. See <<info,Info>>.
+|`InfoObject`
+|No
+|--
 
 |`kind`
 |The type of agent implementation.
@@ -1726,6 +1929,11 @@ The `a2a` interface defines how external clients interact with a broker through 
 |AgentCard
 |No
 
+|`authorization`
+|Authorization configuration for the broker's inbound A2A interface. Controls how the request principal is derived and whether requests without a determinable principal are allowed. See <<broker-authorization,Authorization>>.
+|Object
+|No
+
 |`policies`
 |Inbound and outbound policy binding lists for this interface.
 |Object
@@ -1743,11 +1951,54 @@ The `a2a` interface defines how external clients interact with a broker through 
 
 |===
 
+[[broker-authorization]]
+==== Authorization
+
+Use `authorization` to control how the broker resolves the request principal and whether anonymous requests are allowed.
+
+*Example*
+
+[source,yaml]
+----
+brokers:
+   customer_service_agent:
+     kind: AgentScript
+     implementation: ./brokers/customer-service.agent
+     interfaces:
+       a2a:
+         authorization:
+           principal: "#[authentication.clientId]"
+           allowAnonymousAccess: false
+----
+
+The `authorization` object has these properties.
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`principal`
+|A DataWeave expression that resolves the request principal from the Authentication object. Maps onto the `user-context-propagation` policy's `userIdExpression`. Default: `#[authentication.clientId]`.
+|String
+|No
+
+|`allowAnonymousAccess`
+|When `true`, requests whose principal cannot be determined are forwarded without a user identity (fail-open). When `false`, such requests are rejected with HTTP 401. Defaults to `false` when `principal` is set, because specifying a principal is a statement of intent to identify callers. Otherwise defaults to `true`.
+|Boolean
+|No
+
+|===
+
 ==== User Identity and Task Security
 
 The broker derives a `userId` from the authentication context of the security policy applied at the broker's ingress. This `userId` secures xref:af-agent-script-reference.adoc#a2a-trigger[A2A task management operations], ensuring that only the authenticated user who owns a task can query or modify it. This includes `SendMessage` and `SendStreamingMessage` operations that target an existing task.
 
 If no authentication policy is configured at the broker's ingress, or if a `userId` cannot be determined from the authentication context, the broker continues to orchestrate normally. However, A2A task management operations (such as querying task status, canceling a task, or sending messages to an existing task) are not available for tasks created without an associated `userId`.
+
+NOTE: This behavior applies when `interfaces.a2a.authorization.allowAnonymousAccess` is `true`, which is the default when `authorization.principal` isn't set. When `authorization.principal` is set, `allowAnonymousAccess` defaults to `false`, and requests whose principal can't be determined are rejected with HTTP 401. See <<broker-authorization,Authorization>>.
 
 ==== Policy Binding Reference
 
@@ -1764,6 +2015,11 @@ Use a policy binding reference to attach a previously declared policy to a broke
 |Name of the declared policy binding. See <<policies,Policies>>.
 |String
 |Yes
+
+|`ref.namespace`
+|Optional namespace to scope the policy binding reference.
+|String
+|No
 
 |===
 
@@ -1785,7 +2041,7 @@ Use an inline policy binding to define a policy directly on the broker interface
 
 |`policy.ref`
 |Reference to the policy definition.
-|PolicyRef See <<policies,Policies>>.
+|`PolicyRef`. See <<policies,Policies>>.
 |Yes
 
 |`policy.configuration`
@@ -2022,8 +2278,8 @@ The following table describes the runtime system limit variables you can configu
 |10485760
 
 |`OBJECT_STORE_DEFAULT_TTL_MS`
-|Maximum amount of time, in milliseconds, for data persistence. The default is 24 hours (86,400,000 ms).
-|30 days (2,592,000,000 ms)
+|Maximum amount of time, in milliseconds, for data persistence. The maximum allowed value is 30 days (2,592,000,000 ms).
+|24 hours (86,400,000 ms)
 
 |===
 
