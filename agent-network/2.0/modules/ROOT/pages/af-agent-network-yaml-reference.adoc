@@ -1083,9 +1083,57 @@ a|The base URL of the target system. For `llm` use these defaults:
 |Array
 |No
 
+|`card`
+|Configuration for fetching the target agent's agent card. Valid only when `kind` is `a2a`. See <<a2a-connection-card,A2A Connection Card>>.
+|Object
+|No
+
 |===
 
 You can attach policies to connection objects by referencing their policy identifier or by defining an inline policy binding. See the <<policies,policies object>> for field definitions.
+
+[[a2a-connection-card]]
+==== A2A Connection Card
+
+Use `card` on an `a2a` connection when the target agent requires different credentials to fetch its agent card than the connection's runtime `authentication`.
+
+*Example*
+
+[source,yaml]
+----
+context:
+   connections:
+     hr_system_agent:
+       kind: a2a
+       ref:
+         name: hr-system-agent
+       authentication:
+         kind: oauth2-client-credentials
+         clientId: runtime-client-id
+         clientSecret: runtime-client-secret
+         token:
+            url: https://my-oauth2-provider.com/token
+       card:
+         authentication:
+            kind: apiKey
+            apiKey: card-api-key
+----
+
+The `card` object has these properties.
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`authentication`
+|The authentication to use when fetching the agent's card. See <<authentication,Authentication>>.
+|Authentication Object
+|No
+
+|===
 
 [[policies]]
 === Policies
@@ -1137,6 +1185,7 @@ This section has these properties.
 
 |===
 
+[[authentication]]
 === Authentication
 
 This section defines the authentication schemes used by the agent network for authenticating when making outbound requests.
