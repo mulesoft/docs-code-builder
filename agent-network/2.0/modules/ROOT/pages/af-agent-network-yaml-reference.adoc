@@ -1015,12 +1015,6 @@ Reference types used in the Registry section have these properties.
 |No
 |`{ name: string, namespace?: string }`
 
-|`SecretRef`
-|Reference to a secret held in the Anypoint secret manager. Used by `tlsContext`.
-|Object
-|No
-|`{ name: string, group: string }`
-
 |===
 
 [[context-section]]
@@ -1140,11 +1134,6 @@ a|The base URL of the target system. For `llm` use these defaults:
 |`policies.outbound`
 |Policy bindings applied to outbound traffic.
 |Array
-|No
-
-|`tlsContext`
-|TLS context for the upstream connection (proxy to upstream), used for mutual TLS (mTLS). References the secret in the Anypoint secret manager that carries the TLS context configuration.
-|`SecretRef`. See <<reference-types,Reference Types>>.
 |No
 
 |`access`
