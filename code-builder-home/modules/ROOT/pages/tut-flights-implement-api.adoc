@@ -10,13 +10,20 @@ To implement the API, you scaffold the API specification into an integration pro
 
 Now that the American Flights API specification is available in Anypoint Exchange, scaffold it into a new integration project to generate the API interface.
 
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Provide this command:
-+
+Use MuleSoft Vibes to scaffold the locally generated API Spec by sending the following message: 
+
 [source,command]
 ----
-MuleSoft: Implement an API Specification
+Scaffold the american-flights-api.yaml API spec.
 ----
+
+Alternatively, you can manually implement your published API spec from Exchange: 
+
+// Open the ACB IDE
+include::partial$acb-reusable-steps.adoc[tags="open-ide"]
+. From *Create*, click *Implement an API*.
++
+image::tut-flights-create-import-menu.png["The Anypoint Code Builder panel with the Create and Import options, including Implement an API"]
 . In the *Implement an API Specification* tab that opens:
 .. Provide a new name for the implementation project.
 .. Select or create a new project location.
@@ -28,7 +35,7 @@ MuleSoft: Implement an API Specification
 +
 image::tut-flights-restricted-banner.png["The workspace trust notification with Manage and Trust options"]
 
-After scaffolding completes, confirm that the generated project contains listener configuration, APIKit router flows, and operation-specific flow stubs.
+After scaffolding completes, confirm that the generated project contains listener configuration, APIKit router flows, flows associated with API methods, and error handlers.
 
 image::tut-flights-flow-list-view.png["Flow list showing the scaffolded american-flights-api-main flow with a Listener and Router, alongside error handler flows"]
 
@@ -41,7 +48,7 @@ Add and configure a Database Select operation to retrieve flight data from a dat
 If you don't see the flow list, click *Show flow list* to display it.
 +
 image::tut-flights-show-flow-list.png["The Show flow list button in Anypoint Code Builder used to display the list of flows in the canvas"]
-. Click *Add Component* (+) before the existing *Transform Message* and select *Connectors > Database > Select*.
+. Click *Add Component* (*+*) before the existing *Transform Message* and select *Connectors > Database > Select*.
 +
 If there's no *Transform Message*, add the *Database - Select* component at the beginning of the flow. You add or configure the Transform Message component later in this section.
 . Click the *Select* component to open its properties panel.
@@ -99,7 +106,7 @@ image::tut-flights-db-connection-config.png["Database - Select properties panel 
 This query selects all records from the `american` table.
 . Locate the *Transform Message* component after the *All Flights* Database Select.
 +
-If there's no *Transform Message* component there, click *Add Component* (+) after *All Flights* and select *Core Processors > Components > Transform Message*.
+If there's no *Transform Message* component there, click *Add Component* (*+*) after *All Flights* and select *Core Processors > Components > Transform Message*.
 +
 image::tut-flights-db-flow-overview.png["The get:\flights:american-flights-api-config flow with an All Flights Database Select component followed by a Transform Message component"]
 . Click the *Transform Message* component to open its properties panel.

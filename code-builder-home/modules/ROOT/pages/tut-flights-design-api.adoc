@@ -28,7 +28,7 @@ See xref:ai-enabling-api-project-topic-center.adoc[] for more information.
 This is the root folder of your project, which acts as your workspace. Don't select a different project directory for this API spec. See xref:start-add-folders.adoc[] for more information.
 | *API Type* | *REST API*
 | *API Specification Language* | *OAS 3.0 (YAML)*
-| *Business Group* | Select the business group to use for this project. 
+| *Business Group* | Select the business group to use for this project.
 |===
 
 . Click *Create Project* to generate the American Flights API project file: `american-flights-api.yaml`.
@@ -73,13 +73,13 @@ With auto-approve enabled, MuleSoft Vibes automatically applies changes to your 
 ----
 Create an OAS 3.0 API specification example for the American Flights API that returns flight information from a MySQL database. The API must define:
 1. A GET /flights endpoint that retrieves all flights.
-2. A GET /flights/{flightId} endpoint that retrieves a single flight by its flightId path parameter. The flightId must match the pattern ^[A-Z]{2}[0-9]{1,4}$.
+2. A GET /flights/(flightId) endpoint that retrieves a single flight by its flightId path parameter. The flightId must match the pattern ^[A-Z]{2}[0-9]{1,4}$.
 3. Both endpoints must return flight objects with this exact structure: ID (integer), code (string), price (number), departureDate (string), origin (string), destination (string), emptySeats (integer), and a nested plane object with type (string) and totalSeats (integer).
 ----
 +
 MuleSoft Vibes generates the spec and saves it to your file.
 +
-Because MuleSoft Vibes is an AI-driven tool, the generated spec's flow and operation names may still vary between runs. Later steps account for this and tell you how to locate the correct flow.
+image::tut-flights-generated-spec.png["The american-flights-api.yaml file open in the editor showing the generated OAS 3.0 specification"]
 +
 [TIP]
 ====
@@ -91,13 +91,30 @@ If you see this message: `The model has determined this command requires explici
 
 Next, use MuleSoft Vibes and the built-in mocking service in the API Console to test the API before you publish it.
 
-. Enter this prompt, and then send your message:
-+
+Send this message to MuleSoft Vibes:
+
 [source,command]
 ----
 Test the API using the built-in mocking service in API console.
 ----
-. Click *Approve* every time MuleSoft Vibes asks for approval to continue with the task.
+
+Alternatively, you can open the API Console and manually test the endpoints:
+
+. In the project explorer, open your API spec YAML file.
+// Pointer to Command Palette
+include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
+. Provide this command:
++
+[source,command]
+----
+MuleSoft: Show API Console
+----
++
+image::tut-flights-api-console.png["The american-flights-api.yaml file next to the API Console showing the Get all flights and Get a flight by ID endpoints"]
+. Click *GET* in any of the endpoints.
+. Click *Try it* and then *Send*.
++
+The API Console shows an example response.
 
 Your API spec is now ready to publish to Anypoint Exchange.
 
@@ -105,9 +122,11 @@ Your API spec is now ready to publish to Anypoint Exchange.
 
 Publish the American Flights API spec to Exchange so that other team members can find and implement it.
 
-// Pointer to Command Palette
-include::partial$acb-reusable-steps.adoc[tags="open-command-palette"]
-. Provide this command:
+. In the project explorer, open your API spec YAML file.
+. Click *Publish API Project to Exchange*. 
++ 
+image::icon-publish-to-exchange.png["Publish API Project to Exchange icon"]
+. Alternatively, provide this command in the command palette: 
 +
 [source,command]
 ----

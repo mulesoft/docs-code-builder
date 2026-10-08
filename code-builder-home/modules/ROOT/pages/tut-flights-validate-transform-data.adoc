@@ -20,7 +20,7 @@ While APIKit handles format and structural validation, you need custom validatio
 
 In this section, you add business logic validation to check whether a flight code exists in your database before attempting to query for it. This prevents unnecessary database calls and provides more meaningful error messages to API consumers.
 
-In the American Flights API, the example database stores flights with numeric IDs (1, 2, 3), but the API exposes flight codes like `AA123`, `AA456`, and `AA789`. You need to map these codes to database IDs and validate that the flight exists before querying.
+In the American Flights API, the example database stores flights with numeric IDs (1, 2, 3), but the API exposes flight codes like `AA123`, `AA234`, and `AA345`. You need to map these codes to database IDs and validate that the flight exists before querying.
 
 == Create the Flight Code to Database ID Mapping
 
@@ -28,11 +28,13 @@ First, create a transform that stores the mapping of flight codes to database ID
 
 . Open the `get:\flights\(flightId):american-flights-api-config` flow.
 +
-Because MuleSoft Vibes generated the API spec, your implementation flows might have different names. You must locate the flow that starts with `get:\flights\` and is followed by an ID parameter such as `(ID)`, `(flightID)`, or `{flightID}`, for example.
+Because MuleSoft Vibes generated the API spec, your implementation flows might have different names. You must locate the flow that starts with `get:\flights\(flightId)`.
++
+image::tut-flights-flow-list-select-flow.png["The Flow List with the get:\flights\(flightId):american-flights-api-config flow selected"]
 . If the flow already contains any *Transform Message* components, select the components and press *Delete*, or click *More actions...* (image:icon-kebab.svg["The More actions menu icon."]) and select *Delete Component*.
 +
 Delete any existing *Transform Messages* to start with a clean flow.
-. Click *Add Component* (+) at the start of the flow and select *Core Processors > Components > Transform Message*.
+. Click *Add Component* (*+*) at the start of the flow and select *Core Processors > Components > Transform Message*.
 . Click the *Transform Message* component to open its properties panel.
 . Click *Delete Target* next to *Payload*.
 +
@@ -66,7 +68,9 @@ NOTE: In a production application, you would typically query the database direct
 
 Now create a second transform to look up the flight code in the mapping you just created.
 
-. After the *Create Flight Code Map* transform, click *Add Component* (+) and select *Core Processors > Components > Transform Message*.
+. After the *Create Flight Code Map* transform, click *Add Component* (*+*) and select *Core Processors > Components > Transform Message*.
++
+image::tut-flights-flow-add-component.png["The Add Component button after the Create Flight Code Map Transform element.", 75%, 75%]
 . Click the *Transform Message* component to open its properties panel.
 . Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]), change it to *Lookup DB Flight ID*, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
 . Click *Delete Target* next to *Payload*.
@@ -90,8 +94,10 @@ NOTE: You cannot reference a variable in the same Transform Message where you're
 
 Now add logic to check whether the flight code was found in the mapping.
 
-. After the *Lookup DB Flight ID* transform, click *Add Component* (+) and select *Core Processors > Flow Control > Choice*.
+. After the *Lookup DB Flight ID* transform, click *Add Component* (*+*) and select *Core Processors > Flow Control > Choice*.
 . Click the *When* path inside the Choice router.
++
+image::tut-flights-flow-when-config.png["The When path of the Choice router selected and the When element properties panel."]
 . In the *When* properties panel, under *Expression*, add this condition to check if the flight code wasn't found:
 +
 [source,dataweave]
@@ -105,7 +111,7 @@ This expression evaluates to `true` when the flight code doesn't exist in the ma
 
 When a flight code isn't found, raise a custom error instead of proceeding with the query.
 
-. Inside the *When* path (where the condition is true), click *Add Component* (+) and select *Core Processors > Error Handling > Raise Error*.
+. Inside the *When* path (where the condition is true), click *Add Component* (*+*) and select *Core Processors > Error Handling > Raise Error*.
 . In the *Raise Error* properties panel, configure:
 +
 [%header,cols="20a,60a"]
@@ -122,7 +128,7 @@ This creates a custom error type that you handle in the error handler, providing
 
 The database query executes when the flight exists (when `vars.dbFlightId` is not null).
 
-. Inside the *Otherwise* path of the Choice router, click *Add Component* (+) and select *Connectors > Database > Select*.
+. Inside the *Otherwise* path of the Choice router, click *Add Component* (*+*) and select *Connectors > Database > Select*.
 . Select the component and configure:
 +
 [%header,cols="20a,60a"]
@@ -146,7 +152,7 @@ image::tut-flights-choice-flow-overview.png["The get:\flights\(flightId):america
 Now configure the error handler to return a proper 404 response when a flight isn't found.
 
 . In the canvas, open the `american-flights-api-main` flow (the main flow with the HTTP listener and error handler).
-. After the last *Error Handler*, click *Add Component* (+).
+. After the last *Error Handler*, click *Add Component* (*+*).
 +
 image::tut-flights-error-handler-add-component.png["The american-flights-api-main flow's Error Handler section with Add Component clicked after the last error handler"]
 . Select *On Error Propagate*.
@@ -155,7 +161,7 @@ image::tut-flights-error-handler-add-component.png["The american-flights-api-mai
 +
 image::tut-flights-enable-text-mode.png["The On Error Propagate properties panel with the Text Mode button next to the Type field"]
 . In *Type*, paste `VALIDATION:FLIGHT_NOT_FOUND`.
-. Inside this error handler, click *Add Component* (+) and select *Core Processors > Components > Logger*.
+. Inside this error handler, click *Add Component* (*+*) and select *Core Processors > Components > Logger*.
 . Select the *Logger* and set these properties:
 +
 [%header,cols="20a,60a"]
@@ -168,7 +174,7 @@ image::tut-flights-enable-text-mode.png["The On Error Propagate properties panel
 +
 This logs details about which flight was requested but not found, helping with debugging and monitoring.
 +
-. After the Logger, click *Add Component* (+) and add *Core Processors > Components > Transform Message*.
+. After the Logger, click *Add Component* (*+*) and add *Core Processors > Components > Transform Message*.
 . Configure the Transform Message:
 .. In the *General* tab, under *Target > Payload*, set *Source* to *Inline Script*.
 .. In the *Inline Script* field, set:
@@ -254,7 +260,7 @@ Notice the transformation challenges:
 In your implementation flow `get:\flights\(flightId):american-flights-api-config`, add a Transform Message component after the Database Select operation.
 
 . Locate the `get:\flights\(flightId):american-flights-api-config` flow in your canvas.
-. After the *Flight by ID* database query, click *Add Component* (+) and select *Core Processors > Components > Transform Message*.
+. After the *Flight by ID* database query, click *Add Component* (*+*) and select *Core Processors > Components > Transform Message*.
 . Click the *Transform Message* component to open its properties panel.
 . Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]), change it to *Transform Flight*, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
 
@@ -340,7 +346,7 @@ Now define the expected API response format based on your specification.
 }
 ----
 . Open the `get:\flights\(flightId):american-flights-api-config` flow in the canvas.
-. Click the *Transform Flight* element we added previously. 
+. Click the *Transform Flight* element you added previously. 
 . Click the *Metadata* tab.
 . Inside *Output* and next to *Payload: Any*, click *(No metadata selected)* > *Set custom metadata*.
 . In the tab that opens, click *Create New*.

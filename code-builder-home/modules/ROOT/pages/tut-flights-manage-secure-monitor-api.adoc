@@ -54,7 +54,9 @@ Enable API autodiscovery for my current project with this info:
 ----
 +
 NOTE: Replace `{your_api_instance_id}` with the ID you copied in the previous step, and `{environment}` with the environment you used to deploy your application (for example, Sandbox).
-. Save your project and redeploy your application.
+. Save your project and deploy a new version from Anypoint Code Builder.
++
+You need to deploy a new version because you updated the project's code.
 +
 When prompted for the asset version, specify `1.0.1` so you can identify the updated deployment when monitoring it in Runtime Manager.
 
@@ -83,7 +85,7 @@ Your application needs valid Business Group credentials to connect to the API in
 Replace `{your_client_id}` and `{your_client_secret}` with the values you copied.
 . Click *Apply Changes*.
 
-After setting the properties and redeploying your application with API Autodiscovery configured, confirm that the API status shows *Active* in API Manager.
+After setting the properties and restarting your application with API Autodiscovery configured, confirm that the API status shows *Active* in API Manager.
 
 TIP: If the status doesn't show *Active* right away, wait a few minutes, verify the properties are configured correctly in Runtime Manager, and check the status again.
 
@@ -107,7 +109,7 @@ For this tutorial, you apply the Client ID Enforcement policy to require API con
 . Click the *Policies* tab.
 . Click *Add Policy*.
 . Search for *Client ID Enforcement*, select it, and click *Next*.
-. Leave the default settings:
+. Set the following values:
 +
 [%header,cols="20a,60a"]
 |===
@@ -117,7 +119,6 @@ For this tutorial, you apply the Client ID Enforcement policy to require API con
 | *Client ID Expression* | `#[attributes.headers['client_id']]`
 | *Client Secret Expression* | `#[attributes.headers['client_secret']]`
 |===
-
 +
 NOTE: This configuration requires clients to pass their credentials in HTTP headers. Alternative configurations can extract credentials from query parameters or custom locations.
 . Click *Apply* to activate the policy.
@@ -130,7 +131,7 @@ After applying the policy, verify that unauthenticated requests are rejected.
 +
 [source,command]
 ----
-GET http://american-flights-api-implementation{your_app_id}us-e2.cloudhub.io/api/flights
+GET http://american-flights-api-implementation{your_app_id}{region}.cloudhub.io/api/flights
 ----
 + 
 Replace this URL with your application's actual endpoint URL.
@@ -186,7 +187,7 @@ Runtime Manager provides:
 
 === Step 1: Review Application Status
 
-. From Anypoint Platform, click *Agent & Tools > Runtime Manager* in the navigation menu.
+. From Anypoint Platform, click *Agents & Tools > Runtime Manager* in the navigation menu.
 . In the *Applications* list, locate your application (for example, `american-flights-api-yourname`).
 . Click the application name.
 . On the side panel, click *Dashboard* to review key information:
