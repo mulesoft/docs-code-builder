@@ -30,7 +30,7 @@ First, create a transform that stores the mapping of flight codes to database ID
 +
 Because MuleSoft Vibes generated the API spec, your implementation flows might have different names. You must locate the flow that starts with `get:\flights\(flightId)`.
 +
-image::tut-flights-flow-list-select-flow.png["The Flow List with the get:\flights\(flightId):american-flights-api-config flow selected"]
+image::tut-flights-flow-list-select-flow.png["The Flow List with the get:\flights\(flightId):american-flights-api-config flow selected", 75%, 75%]
 . If the flow already contains any *Transform Message* components, select the components and press *Delete*, or click *More actions...* (image:icon-kebab.svg["The More actions menu icon."]) and select *Delete Component*.
 +
 Delete any existing *Transform Messages* to start with a clean flow.
@@ -38,7 +38,7 @@ Delete any existing *Transform Messages* to start with a clean flow.
 . Click the *Transform Message* component to open its properties panel.
 . Click *Delete Target* next to *Payload*.
 +
-image::tut-flights-delete-target.png["The Transform Message General tab with Delete Target selected next to the Payload target"]
+image::tut-flights-delete-target.png["The Transform Message General tab with Delete Target selected next to the Payload target", 75%, 75%]
 +
 This step ensures the Transform does not modify the payload.
 . Click *Edit name* (image:icon-edit.svg["The Edit Name icon.",1.5%, 1.5%]), change it to *Create Flight Code Map*, then click *Apply* (image:icon-apply.svg["The Apply icon.",1.5%, 1.5%]).
@@ -141,11 +141,11 @@ The database query executes when the flight exists (when `vars.dbFlightId` is no
 | *Input Parameters* | `{ 'flightId': vars.dbFlightId }`
 |===
 +
-image::tut-flights-db-flight-by-id-config.png["Database - Select properties panel with Name set to Flight by ID, Connection Config set to Config, and the SQL Query Text and Input Parameters fields configured"]
+image::tut-flights-db-flight-by-id-config.png["Database - Select properties panel with Name set to Flight by ID, Connection Config set to Config, and the SQL Query Text and Input Parameters fields configured", 50%, 50%]
 
 Your flow should now look like this:
 
-image::tut-flights-choice-flow-overview.png["The get:\flights\(flightId):american-flights-api-config flow with the Choice router's When and Otherwise paths configured with Raise Error and Database Select components"]
+image::tut-flights-choice-flow-overview.png["The get:\flights\(flightId):american-flights-api-config flow with the Choice router's When and Otherwise paths configured with Raise Error and Database Select components", 75%, 75%]
 
 == Add an Error Handler for Flight Not Found
 
@@ -159,7 +159,7 @@ image::tut-flights-error-handler-add-component.png["The american-flights-api-mai
 . Click the *On Error Propagate* component to open its properties panel
 . Next to *Type* click the *Text Mode* button (image:icon-text-mode.svg["The Text Mode icon.",1.5%, 1.5%]) to enable it.
 +
-image::tut-flights-enable-text-mode.png["The On Error Propagate properties panel with the Text Mode button next to the Type field"]
+image::tut-flights-enable-text-mode.png["The On Error Propagate properties panel with the Text Mode button next to the Type field", 50%, 50%]
 . In *Type*, paste `VALIDATION:FLIGHT_NOT_FOUND`.
 . Inside this error handler, click *Add Component* (*+*) and select *Core Processors > Components > Logger*.
 . Select the *Logger* and set these properties:
@@ -193,7 +193,7 @@ output application/json
 . Click *+Add* and select *Variable*.
 . Name the variable `httpStatus` and set its value to `404`.
 +
-image::tut-flights-dw-transform-config.png["The Transform Message properties panel with the error response script and the httpStatus variable set to 404"]
+image::tut-flights-dw-transform-config.png["The Transform Message properties panel with the error response script and the httpStatus variable set to 404", 50%, 50%]
 
 This returns a JSON response with a meaningful error message and the flight ID that was requested, along with a 404 HTTP status code.
 
@@ -274,7 +274,7 @@ To help DataWeave understand the structure of your database results, define inpu
 +
 If the `examples` folder doesn't exist, right-click the *resources* folder (`src/main/resources`), select *New Folder*, and name it `examples`.
 +
-image::tut-flights-new-file.png["The project explorer with the examples folder highlighted and New File selected from the context menu"]
+image::tut-flights-new-file.png["The project explorer with the examples folder highlighted and New File selected from the context menu", 50%, 50%]
 . Name the file `sample-database-input.json`.
 . Open the file, populate it with this sample database record, and save the file:
 +
@@ -301,7 +301,7 @@ image::tut-flights-new-file.png["The project explorer with the examples folder h
 . Click the *Metadata* tab.
 . Inside *Input* and next to *Payload: Any*, click *(No metadata selected)* > *Set custom metadata*.
 +
-image::tut-flights-set-custom-metadata.png["The Input Payload metadata selector with Set custom metadata highlighted"]
+image::tut-flights-set-custom-metadata.png["The Input Payload metadata selector with Set custom metadata highlighted", 50%, 50%]
 . In the tab that opens, click *Create New*.
 . In the *Add Custom Metadata* dialog, set:
 +
@@ -411,7 +411,7 @@ output application/json
 ----
 --
 
-Write the DataWeave Script Directly::
+Write the DataWeave Script Manually::
 +
 --
 You can write the complete DataWeave script in the *Script* view:
