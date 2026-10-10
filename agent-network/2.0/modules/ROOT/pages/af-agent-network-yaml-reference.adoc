@@ -1083,9 +1083,78 @@ a|The base URL of the target system. For `llm` use these defaults:
 |Array
 |No
 
+|`interfaces`
+|The protocol bindings the agent serves, each under a sub-path of `url`. Valid only when `kind` is `a2a`. See <<a2a-connection-interfaces,A2A Connection Interfaces>>.
+|Object
+|No
+
 |===
 
 You can attach policies to connection objects by referencing their policy identifier or by defining an inline policy binding. See the <<policies,policies object>> for field definitions.
+
+[[a2a-connection-interfaces]]
+==== A2A Connection Interfaces
+
+For `a2a` connections, `interfaces` declares which protocol bindings the target agent serves. Each binding is served under a sub-path of the connection's `url`.
+
+*Example*
+
+[source,yaml]
+----
+context:
+   connections:
+     hr_system_agent:
+       kind: a2a
+       ref:
+         name: hr-system-agent
+       url: https://hr-agent.example.com
+       interfaces:
+         jsonrpc:
+           basePath: /a2a
+         http:
+           basePath: /rest
+----
+
+The `interfaces` object has these properties.
+
+[%header,cols="1,1,1,1"]
+|===
+|Parameter
+|Description
+|Type
+|Required
+
+|`jsonrpc`
+|The JSON-RPC binding.
+|Object
+|No
+
+|`jsonrpc.basePath`
+|Sub-path of `url` that serves the JSON-RPC binding.
+|String
+|Yes (if `jsonrpc` present)
+
+|`http`
+|The HTTP+JSON (REST) binding.
+|Object
+|No
+
+|`http.basePath`
+|Sub-path of `url` that serves the HTTP+JSON binding.
+|String
+|Yes (if `http` present)
+
+|`grpc`
+|The gRPC binding.
+|Object
+|No
+
+|`grpc.basePath`
+|Sub-path of `url` that serves the gRPC binding.
+|String
+|Yes (if `grpc` present)
+
+|===
 
 [[policies]]
 === Policies
