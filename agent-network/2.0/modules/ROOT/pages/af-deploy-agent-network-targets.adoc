@@ -59,6 +59,8 @@ The broker's `egressgw.url` resolving to the cluster endpoint is expected behavi
 
 Make sure you review the xref:af-get-started.adoc#before-you-begin[prerequisites for setting up agent network gateways and deployment targets].
 
+If you plan to deploy the same agent network asset to multiple environments, use the shared space or a separate private space for each environment. You can't promote the same asset ID when the source and target environments share a private space. For more information, see xref:af-get-started.adoc#plan-spaces-for-promotion[Set Up the Space or Deployment Target for Your Environment].
+
 [IMPORTANT]
 ====
 Redeploying an agent network to a different target or gateway (for example, switching between a shared space and a private space, or changing to a different gateway) is not supported and fails with a Runtime Manager error. To deploy to a different target or gateway, first manually delete the existing Runtime Manager application, then redeploy.

@@ -88,6 +88,12 @@ To resolve this conflict, uninstall the Agentforce DX extension pack from VS Cod
 
 If you attempt to deploy an agent network, but you don’t see any deployment targets in Anypoint Code Builder or Anypoint CLI, then you need to set up your target deployment space and set up gateways. For instructions, see xref:af-get-started.adoc[Get Started with Agent Networks].
 
+=== Error: "Application Name Already Used in Target ID" When Promoting an Agent Network
+
+If you see an `application name already used in target id` error when you promote the same agent network asset to another environment, the source and target environments share a private space. Although the error refers to the application name, the shared private space causes the conflict.
+
+To resolve the error, use the shared space or configure a separate private space for each environment, and then deploy the agent network again. For more information, see xref:af-get-started.adoc#plan-spaces-for-promotion[Set Up the Space or Deployment Target for Your Environment].
+
 === Issue: Changes Don't Take Effect After Redeployment
 
 If you update `agent-network.yaml` or any `.agent` files but changes aren't reflected after you redeploy, the deployment used the last compiled `target/` directory. Every source change requires a full rebuild.
