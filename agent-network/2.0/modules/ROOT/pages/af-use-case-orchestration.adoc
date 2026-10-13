@@ -1,4 +1,5 @@
-= Orchestrating Multi-Agent Processes with Agent Broker
+= Orchestrating Multi-Agent Processes with Agent Networks
+:page-pagination: next
 
 Agent brokers and agent networks coordinate task delegation across specialized agents with guided determinism. This coordination produces reliable, predictable outcomes from complex business processes. You define broker routing logic in Agent Script and configure the network composition in `agent-network.yaml`. This file brings agents, LLMs, and MCP servers together in a single coordinated system. Use this approach when a single agent can't handle the process and your business process requires multiple specialized agents working in sequence or in parallel.
 
@@ -128,7 +129,7 @@ With a broker handling intelligent triage:
 . Configure `agent-network.yaml` to declare the registry (agents and MCP servers), context (connections), and brokers.
 . For each broker, create an Agent Script file (`.agent`) that defines the routing graph and node behavior.
 
-For more information, see xref:agent-network::af-define-your-agent-network-specification.adoc[Define Your Agent Network Specification].
+For more information, see xref:af-define-your-agent-network-specification.adoc[Define Your Agent Network Specification].
 
 === Step 4: Deploy and Test
 
@@ -144,7 +145,7 @@ For more information, see xref:agent-network::af-define-your-agent-network-speci
 . Use performance metrics to identify latency, error rates, and bottlenecks.
 . Review historical analysis to identify patterns and optimize routing logic.
 
-For more information, see xref:agent-visualizer::index.adoc[Agent Visualizer].
+For more information, see xref:agent-visualizer::troubleshoot-agent-network.adoc[monitoring agent networks with Agent Visualizer].
 
 === Step 6: Publish for Reuse
 
@@ -152,7 +153,6 @@ For more information, see xref:agent-visualizer::index.adoc[Agent Visualizer].
 . Other teams can discover the published broker and reuse it as a component in their own agent networks.
 . Apply Omni Gateway policies to the broker endpoint to enforce authentication, rate limiting, and audit logging.
 
-See xref:af-use-case-policy-enforcement.adoc[Policy Enforcement] for implementation steps.
 
 == Broker Design Patterns
 
@@ -183,7 +183,7 @@ These patterns represent common approaches to structuring broker routing logic i
 
 When deploying agent networks and brokers in production:
 
-* Apply Omni Gateway policies to broker endpoints to enforce authentication, rate limiting, and audit logging. See xref:af-use-case-policy-enforcement.adoc[Policy Enforcement].
+* Apply Omni Gateway policies to broker endpoints to enforce authentication, rate limiting, and audit logging.
 * Make sure that each specialist agent's MCP server connections use appropriate authentication.
 * Review which agents have access to which backend systems and apply the principle of least privilege to MCP tool selection.
 * Use Agent Visualizer to monitor for unexpected routing paths or anomalous agent behavior.
