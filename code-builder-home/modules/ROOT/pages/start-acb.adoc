@@ -92,14 +92,17 @@ For more guidance, see <<login-status-bar>>.
 [[change-clouds]]
 == Set Anypoint Code Builder to a Different Control Plane
 
-In Anypoint Code Builder, you can change your Anypoint Platform control plane to one of these clouds:
+In Anypoint Code Builder, you can change your Anypoint Platform control plane to one of these options:
 
 * US Cloud (default)
 * EU Cloud
 * Canada Cloud
 * Japan Cloud
+* Private Cloud Edition
 
 Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:index.adoc#us-eu-clouds[Cloud Hosts].
+
+Starting with Anypoint Code Builder 1.28.0, you can select *Private Cloud Edition* to connect to a Private Cloud Edition (PCE) 4.3.0 or later control plane that your organization hosts.
 
 To change the control plane:
 
@@ -107,6 +110,18 @@ To change the control plane:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-mule-settings"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="mule-settings-nav-options"]
 . Scroll to *Mule: Control Plane*.
-. Select the desired cloud.
+. Select the desired control plane.
+. If you select *Private Cloud Edition*, set *Mule: Control Plane PCE Url* to the URL of your PCE control plane, for example `https://pce.example.com`.
++
+Anypoint Code Builder uses this URL only when *Private Cloud Edition* is selected. Anypoint Code Builder imports custom SSL certificates for the PCE host automatically.
 . {restart-ide}
 . Follow the steps in xref:anypoint-code-builder::start-acb.adoc#login-ide[Sign in to Anypoint Platform from Anypoint Code Builder].
++
+If you selected *Private Cloud Edition*, sign in from the Command Palette with this command:
++
+[source,command]
+----
+MuleSoft: Login to Anypoint Platform
+----
++
+The command opens the PCE sign-in page.
