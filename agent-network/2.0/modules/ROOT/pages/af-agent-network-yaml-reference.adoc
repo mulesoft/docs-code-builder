@@ -962,6 +962,12 @@ Reference types used in the Registry section have these properties.
 |No
 |`{ name: string, namespace?: string }`
 
+|`SecretRef`
+|Reference to a secret held in the Anypoint secret manager. Used by `tlsContext`.
+|Object
+|No
+|`{ name: string, group: string }`
+
 |===
 
 [[context-section]]
@@ -994,14 +1000,17 @@ context:
        ref:
          name: slack-mcp
        url: https://mcp.example.com/slack
-     openai_llm:
-       kind: llm
-       ref:
-         name: Open-AI-LLM
-       url: https://api.openai.com/v1
-       authentication:
-         kind: apiKey
-         apiKey: "${env.OPENAI_API_KEY}"
+      openai_llm:
+        kind: llm
+        ref:
+          name: Open-AI-LLM
+        url: https://api.openai.com/v1
+        authentication:
+          kind: apiKey
+          apiKey: "${env.OPENAI_API_KEY}"
+        tlsContext:
+          name: my-tls-context
+          group: my-group
    policies:
      retry-policy:
        ref:
@@ -1081,6 +1090,11 @@ a|The base URL of the target system. For `llm` use these defaults:
 |`policies.outbound`
 |Policy bindings applied to outbound traffic.
 |Array
+|No
+
+|`tlsContext`
+|TLS context for the proxy-to-upstream connection, used for mutual TLS (mTLS). References an Anypoint Secret Manager secret that is resolved as a TLS context at deployment. For information about creating TLS contexts and secret groups, see xref:anypoint-security::index-secrets-manager.adoc[Anypoint Security Secrets Manager Overview].
+|`SecretRef`. See <<reference-types,Reference Types>>.
 |No
 
 |===
