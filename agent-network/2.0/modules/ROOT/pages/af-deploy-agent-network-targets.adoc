@@ -1,6 +1,7 @@
 [[deploy-instances]]
-= Deploy Agent Network Instances
+= Deploying Agent Network Instances
 :page-aliases: anypoint-code-builder::af-deploy-agent-network-targets.adoc
+:page-pagination: next
 
 Deploy your agent network instance to a CloudHub 2.0 shared space, a CloudHub 2.0 private space, or to a Runtime Fabric target. Agent network deployments are available on US Cloud and EU Cloud hosts only. For more information, see xref:hosting-home::index.adoc#control-plane-hosting-options[Control Plane Hosting Options].
 
@@ -67,6 +68,8 @@ When you deploy your agent network, the system deploys one instance for each con
 
 [[deploy-dev-agent]]
 == Deploy Your Network Using MuleSoft Vibes
+[%collapsible]
+====
 
 Use MuleSoft Vibes to deploy your agent network instances. For more information, see xref:anypoint-code-builder::vibes-api-ai-create-spec.adoc[].
 
@@ -79,9 +82,12 @@ To get started, try one of these suggested messages.
 * Deploy the hello-world-network project to staging.
 * Deploy agent network project at /path/to/project to dev environment with specific gateways.
 * Deploy my agent network to CloudHub 2.0.
+====
 
 [[deploy-acb]]
 == Deploy Your Network Using Anypoint Code Builder
+[%collapsible]
+====
 
 Deploy your agent network instance to a CloudHub 2.0 space or Runtime Fabric target directly from Anypoint Code Builder.
 
@@ -94,6 +100,7 @@ Deploy your agent network instance to a CloudHub 2.0 space or Runtime Fabric tar
 . Your instances are now deployed and ready to test. The system deploys one instance for each connection defined in your agent network. If your agent network contains brokers, the system deploys one instance per broker.
 
 Next, discover your agent network assets in *Agents & Tools* in Exchange, view your agent network in Agent Visualizer, apply a governance policy in API Manager, or monitor your agent network activity in Anypoint Monitoring.
+====
 
 [[undeploy-dev-agent]]
 == Undeploy Your Network Using MuleSoft Vibes
@@ -111,6 +118,8 @@ To get started, try one of these suggested messages.
 
 [[undeploy-acb]]
 == Undeploy Your Network Using Anypoint Code Builder
+[%collapsible]
+====
 
 Undeploy your agent network instances directly from Anypoint Code Builder. When you undeploy, all API instances and applications in the agent network are stopped and runtime resources are removed.
 
@@ -120,11 +129,15 @@ Undeploy your agent network instances directly from Anypoint Code Builder. When 
   . From the Command Palette, run this command: *MuleSoft: Undeploy Agent Network*.
 . In the confirmation dialog, select *Undeploy*.
 . Anypoint Code Builder removes all deployed runtime resources. For details, check the Agent Fabric CLI output logs.
+====
 
 [[deploy-cli]]
 == Deploy or Undeploy a Network Using the Anypoint CLI
+[%collapsible]
+====
 
 If you run operations within a CI/CD environment, use Anypoint CLI plugin to set up, create, build, publish, unpublish, deploy, and undeploy agent networks. For more information, see xref:af-build-agent-networks-in-a-ci-cd-environment.adoc[].
+====
 
 include::partial$af-configure-broker-resources.adoc[]
 
