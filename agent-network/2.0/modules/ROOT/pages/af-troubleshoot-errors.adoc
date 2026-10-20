@@ -393,15 +393,25 @@ Error codes are grouped into ranges by area:
 +
 On a Runtime Fabric target, this error might mean that the namespace resource quota is too low to schedule the pods. To check, run these commands in the namespace of your agent network:
 +
+[tabs]
+====
+Kubernetes::
++
 [source,ssh]
 ----
 kubectl get events -n <namespace> --sort-by='.lastTimestamp'
 kubectl describe resourcequota -n <namespace>
 ----
+OpenShift::
++
+[source,ssh]
+----
+oc get events -n <namespace> --sort-by='.lastTimestamp'
+oc describe resourcequota -n <namespace>
+----
+====
 +
 Look for `FailedScheduling` events or `exceeded quota` messages. If the quota is exhausted, increase it and redeploy.
-+
-On OpenShift, use `oc` instead of `kubectl`. 
 
 * *Code:* 3019
 ** *Name:* `findingAssetsError`

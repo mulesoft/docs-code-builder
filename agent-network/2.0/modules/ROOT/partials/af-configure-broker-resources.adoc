@@ -61,10 +61,20 @@ For an agent network with one broker and two MCP servers, set a namespace quota 
 
 To check the quota and confirm that the pods are running after you deploy, run:
 
+[tabs]
+====
+Kubernetes::
++
 [source,ssh]
 ----
 kubectl describe resourcequota -n <namespace>
 kubectl get pods -n <namespace>
 ----
-
-On OpenShift, use `oc` instead of `kubectl`.
+OpenShift::
++
+[source,ssh]
+----
+oc describe resourcequota -n <namespace>
+oc get pods -n <namespace>
+----
+====
