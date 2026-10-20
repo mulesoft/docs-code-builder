@@ -1395,6 +1395,68 @@ The oauth2-client-credentials object has these properties.
 
 |===
 
+[[llm-oauth2-client-credentials]]
+===== Authenticate to an LLM with OAuth 2.0 Client Credentials
+
+To authenticate a broker to an internal LLM that uses OAuth 2.0, set `authentication` on the `llm` connection to `oauth2-client-credentials`:
+
+[source,yaml]
+----
+context:
+  connections:
+    internal_llm:
+      kind: llm
+      ref:
+        name: internal-llm
+      url: ${internalLlm.url}
+      authentication:
+        kind: oauth2-client-credentials
+        clientId: ${internalLlm.clientId}
+        clientSecret: ${internalLlm.clientSecret}
+        token:
+          url: ${internalLlm.tokenUrl}
+        scopes:
+          - <llm-scope>
+----
+
+Don't hardcode the client ID and client secret in `agent-network.yaml`. Define them as variables in the `metadata.variables` section of the `exchange.json` file, and mark the client secret as secret. You enter the values when you publish the agent network.
+
+[source,json]
+----
+"metadata": {
+  "variables": {
+    "internalLlm": {
+      "url": {
+        "description": "Internal LLM URL",
+        "default": "",
+        "secret": false
+      },
+      "tokenUrl": {
+        "description": "Internal LLM token endpoint URL",
+        "default": "",
+        "secret": false
+      },
+      "clientId": {
+        "description": "Internal LLM client ID",
+        "default": ""
+      },
+      "clientSecret": {
+        "description": "Internal LLM client secret",
+        "default": "",
+        "secret": true
+      }
+    }
+  }
+}
+----
+
+For more information, see <<exchange-json-file,Exchange.JSON File>>.
+
+The broker requests the access token through the egress Omni Gateway. Before you deploy, make sure that:
+
+* The egress Omni Gateway can reach the token endpoint. If the egress gateway uses a forward proxy, allow the token endpoint host. See xref:gateway::managed-forward-proxy.adoc[].
+* The egress Omni Gateway trusts the token endpoint certificate. If a private CA signs the certificate, add the CA to a `tls-outbound` policy binding. See xref:gateway::managed-outbound-tls-config.adoc#private-ca-rtf[Trust Upstreams Signed by a Private CA on Runtime Fabric].
+
 ==== In-Task Authorization Code
 
 Use in-task authorization code when the connection needs secondary credentials obtained during a task using the OAuth 2.0 Authorization Code flow. OAuth2 tokens are extracted from message data and injected into the Authorization header for upstream calls. This supports step-up or in-task authentication (for example, when a user must re-authenticate for a sensitive action). For more information about the associated policy, see xref:gateway::policies-outbound-a2a-intask-authorization-code.adoc[].

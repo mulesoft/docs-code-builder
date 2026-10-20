@@ -390,6 +390,16 @@ Error codes are grouped into ranges by area:
 ** *Name:* `commandTimeout`
 ** *What it means:* The overall command exceeded its timeout budget.
 ** *How to fix:* Review org resource limits and increase `--process-timeout`. Check `steps` for the command's progress.
++
+On a Runtime Fabric target, if the deployment fails with this error after the earlier steps succeed, the namespace resource quota might be too low to schedule the pods. To check, run these commands in the namespace where you deploy the agent network:
++
+[source,ssh]
+----
+kubectl get events -n <namespace> --sort-by='.lastTimestamp'
+kubectl describe resourcequota -n <namespace>
+----
++
+Look for `FailedScheduling` events or `exceeded quota` messages. On OpenShift, use `oc` instead of `kubectl`. If the quota is exhausted, increase it and redeploy.
 
 * *Code:* 3019
 ** *Name:* `findingAssetsError`
