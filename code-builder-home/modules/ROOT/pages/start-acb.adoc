@@ -129,18 +129,17 @@ MuleSoft: Login to Anypoint Platform
 +
 The command opens the PCE sign-in page.
 
-If you selected *Private Cloud Edition*, add the Mule runtime versions to use with your projects. See <<add-mule-runtimes-pce>>.
+If you selected *Private Cloud Edition*, bundled Mule runtime versions are available, and you can add another Mule runtime version locally. See <<add-local-mule-runtime>>.
 
-[[add-mule-runtimes-pce]]
-== Add Mule Runtime Versions for Private Cloud Edition
+[[add-local-mule-runtime]]
+== Add a Mule Runtime Version Locally
 
-Starting with Anypoint Code Builder 1.28.0, Mule runtime versions bundled with Anypoint Code Builder are available when the control plane is Private Cloud Edition. To learn what each bundled version supports, see xref:int-versions.adoc#bundled-runtimes[Bundled Mule Runtime Versions].
+Starting with Anypoint Code Builder 1.28.0, you can add a Mule runtime version that Anypoint Code Builder does not include. Copy the Mule runtime directory into the `user-installed` folder. Anypoint Code Builder lists that version when you create a project and in *Project Properties*.
 
-You can also add a Mule runtime version on your local disk. Anypoint Code Builder detects the Mule runtime directory in the `user-installed` folder and lists that version with the other locally available Mule runtime versions.
+Use this option when your environment requires a Mule runtime version that is not bundled with Anypoint Code Builder, such as a version for Private Cloud Edition (PCE) or GIA2H. Bundled Mule runtime versions are also available when the control plane is Private Cloud Edition. See xref:int-versions.adoc#bundled-runtimes[Bundled Mule Runtime Versions].
 
 To add a Mule runtime version:
 
-. Set the control plane to *Private Cloud Edition*. See <<change-clouds>>.
 . Copy the Mule runtime directory into this folder:
 +
 [source,text]
@@ -149,11 +148,11 @@ ${user.home}/AnypointCodeBuilder/runtimes/user-installed
 ----
 +
 Create the `user-installed` folder if it does not exist.
-. Select the Mule runtime version when you create a project, or select it from *Project Properties*.
+. Create a project, or open *Project Properties*.
 +
-See xref:int-versions.adoc#project-version-mule-java[Select Mule and Java Versions for a Project].
+The Mule runtime version appears in the Mule runtime version menu. See xref:int-versions.adoc#project-version-mule-java[Select Mule and Java Versions for a Project].
 
 [IMPORTANT]
 ====
-Anypoint Code Builder does not validate that a Mule runtime version is compatible with your PCE instance. Confirm compatibility before you run or deploy your application.
+Anypoint Code Builder does not validate that a Mule runtime version is compatible with your PCE or GIA2H environment. Confirm compatibility before you run or deploy your application.
 ====
