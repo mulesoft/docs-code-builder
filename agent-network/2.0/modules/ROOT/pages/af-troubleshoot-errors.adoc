@@ -391,7 +391,7 @@ Error codes are grouped into ranges by area:
 ** *What it means:* The overall command exceeded its timeout budget.
 ** *How to fix:* Review org resource limits and increase `--process-timeout`. Check `steps` for the command's progress.
 +
-On a Runtime Fabric target, if the deployment fails with this error after the earlier steps succeed, the namespace resource quota might be too low to schedule the pods. To check, run these commands in the namespace where you deploy the agent network:
+On a Runtime Fabric target, this error can mean that the namespace resource quota is too low to schedule the pods. To check, run these commands in the namespace where you deploy the agent network:
 +
 [source,ssh]
 ----
