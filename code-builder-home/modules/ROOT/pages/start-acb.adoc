@@ -128,3 +128,31 @@ MuleSoft: Login to Anypoint Platform
 ----
 +
 The command opens the PCE sign-in page.
+
+If you selected *Private Cloud Edition*, bundled Mule runtime versions are available, and you can add another Mule runtime version locally. See <<add-local-mule-runtime>>.
+
+[[add-local-mule-runtime]]
+== Add a Mule Runtime Version Locally
+
+Starting with Anypoint Code Builder 1.28.0, you can add a Mule runtime version that Anypoint Code Builder does not include. Copy the Mule runtime directory into the `user-installed` folder. Anypoint Code Builder lists that version when you create a project and in *Project Properties*.
+
+Use this option when your environment requires a Mule runtime version that is not bundled with Anypoint Code Builder, such as a version for Private Cloud Edition (PCE). Bundled Mule runtime versions are also available when the control plane is Private Cloud Edition. See xref:int-versions.adoc#bundled-runtimes[Bundled Mule Runtime Versions].
+
+To add a Mule runtime version:
+
+. Copy the Mule runtime directory into this folder:
++
+[source,text]
+----
+${user.home}/AnypointCodeBuilder/runtimes/user-installed
+----
++
+Create the `user-installed` folder if it does not exist.
+. Create a project, or open *Project Properties*.
++
+The Mule runtime version appears in the Mule runtime version menu. See xref:int-versions.adoc#project-version-mule-java[Select Mule and Java Versions for a Project].
+
+[IMPORTANT]
+====
+Anypoint Code Builder does not validate that a Mule runtime version is compatible with your PCE environment. Confirm compatibility before you run or deploy your application.
+====
