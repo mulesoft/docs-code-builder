@@ -1,6 +1,8 @@
 == Configure CPU and Memory Resources for an Agent Broker
 
-Configure CPU and memory resources for brokers when you deploy an agent network with Anypoint CLI. By default, brokers reserve `20m` of CPU and `700Mi` of memory, with limits of `2000m` CPU and `700Mi` memory.
+To configure CPU and memory resources for brokers, deploy the agent network with the Anypoint CLI Agent Fabric plugin. You can't configure broker resources when you deploy from Anypoint Code Builder.
+
+By default, brokers reserve `20m` of CPU and `700Mi` of memory, with limits of `2000m` CPU and `700Mi` memory.
 
 Specify the resource settings in a deployment configuration file or directly in the deploy command. Don't use both methods in the same command.
 
@@ -27,3 +29,52 @@ To specify a resource setting directly in the deploy command, use `--deployment-
 ----
 --deployment-property brokers:resources:cpu:reserved:50m
 ----
+
+[[rtf-resource-requirements]]
+=== Resource Requirements for Runtime Fabric Targets
+
+Before you deploy an agent network to a Runtime Fabric target, set a resource quota on the namespace that covers every broker gateway and MCP server in the network.
+
+If the namespace quota is too low, Kubernetes can't create the pods, and the deployment fails with error `3018` (`commandTimeout`) instead of an insufficient-resources error.
+
+[%header%autowidth.spread,cols="a,a,a,a"]
+|===
+| Component | Minimum CPU | Minimum Memory | Recommended Limit
+
+| Agent broker ingress gateway, per instance
+| `500m`
+| `512Mi`
+| `2` CPU, `2Gi` memory
+
+| Agent broker egress gateway, per instance
+| `500m`
+| `512Mi`
+| `2` CPU, `2Gi` memory
+
+| MCP server, per server
+| `250m`
+| `256Mi`
+| `1` CPU, `1Gi` memory
+|===
+
+For example, if an agent network has one broker and two MCP servers, set a namespace quota of at least `4` CPU and `4Gi` memory.
+
+To check the quota and confirm that the pods are running after you deploy, run:
+
+[tabs]
+====
+Kubernetes::
++
+[source,ssh]
+----
+kubectl describe resourcequota -n <namespace>
+kubectl get pods -n <namespace>
+----
+OpenShift::
++
+[source,ssh]
+----
+oc describe resourcequota -n <namespace>
+oc get pods -n <namespace>
+----
+====
