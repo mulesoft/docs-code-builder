@@ -391,7 +391,7 @@ Error codes are grouped into ranges by area:
 ** *What it means:* The overall command exceeded its timeout budget.
 ** *How to fix:* Review org resource limits and increase `--process-timeout`. Check `steps` for the command's progress.
 +
-On a Runtime Fabric target, this error might mean that the namespace resource quota is too low to schedule the pods. To check, run these commands in the namespace of your agent network:
+On a Runtime Fabric target, this error might mean that the namespace resource quota is too low, so Kubernetes can't create the pods. To check, run these commands in the namespace of your agent network:
 +
 [tabs]
 ====
@@ -411,7 +411,11 @@ oc describe resourcequota -n <namespace>
 ----
 ====
 +
-Look for `FailedScheduling` events or `exceeded quota` messages. If the quota is exhausted, increase it and redeploy.
+Look for `FailedCreate` events with `exceeded quota` messages. If the quota is exhausted, increase it and redeploy.
++
+`FailedScheduling` events mean that the cluster nodes don't have enough free CPU or memory for the pods. Add node capacity, and then redeploy.
++
+If the quota and node capacity are sufficient, check that the Runtime Fabric agent can reach Anypoint Platform. See xref:runtime-fabric::install-self-managed-network-configuration.adoc[]. If the error persists, contact MuleSoft Support and include the Runtime Fabric agent logs.
 
 * *Code:* 3019
 ** *Name:* `findingAssetsError`

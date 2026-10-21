@@ -35,7 +35,7 @@ To specify a resource setting directly in the deploy command, use `--deployment-
 
 Before you deploy an agent network to a Runtime Fabric target, set a resource quota on the namespace that covers every broker gateway and MCP server in the network.
 
-If the namespace quota is too low, the pods can't be scheduled and the deployment fails with error `3018` (`commandTimeout`) instead of an insufficient-resources error.
+If the namespace quota is too low, Kubernetes can't create the pods, and the deployment fails with error `3018` (`commandTimeout`) instead of an insufficient-resources error.
 
 [%header%autowidth.spread,cols="a,a,a,a"]
 |===
