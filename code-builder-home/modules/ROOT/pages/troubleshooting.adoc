@@ -18,6 +18,7 @@ For tasks that support the troubleshooting process, see:
 * <<check-logs,Check for Problems and Issues>>
 * <<check-console-logs,Check Console Logs for Extension Issues>>
 * <<export-troubleshooting-info,Export Troubleshooting Information>>
+* <<performance-troubleshooting,Performance Troubleshooting>>
 
 [[check-logs]]
 == Check for Problems and Issues
@@ -77,6 +78,37 @@ Collecting information...: Generating compressed file
 +
 The command places the file in your home directory. The filename has the prefix `acb-troubleshooting`, for example, `/Users/me/acb-troubleshooting-w9ffppmq.tar.gz`.
 . Provide a copy of the file to the support team. 
+
+[[performance-troubleshooting]]
+== Performance Troubleshooting
+
+If Anypoint Code Builder is slow to start, load the canvas, or respond, rule out environment and configuration causes before you contact the MuleSoft support team. Work through the following checks in order, and restart VS Code after you make changes.
+
+. Check your hardware and storage against the requirements.
++
+Confirm that your machine meets the minimum CPU, RAM, storage type, free disk space, and network requirements, and that the disk that hosts your user profile, Maven repository, and projects meets the storage performance minimums. See xref:ref-hardware-storage-requirements.adoc[].
++
+On Windows, don't run projects from network-mapped drives. See xref:ref-hardware-storage-requirements.adoc#windows-performance[Windows Performance].
+. Apply antivirus and endpoint protection exclusions.
++
+Real-time scanning can reduce disk performance below the storage requirements. Exclude the processes and directories that Anypoint Code Builder uses, and confirm with your security team that exclusions are allowed. See xref:urls-to-allow.adoc#antivirus-exclusions[Antivirus Exclusion Paths].
+. Check your power settings.
++
+Power saving modes can throttle CPU and disk performance. See xref:ref-hardware-storage-requirements.adoc#power-settings[Power Settings] for Windows and macOS.
+. Close other resource-intensive applications.
++
+Applications such as Anypoint Studio compete with Anypoint Code Builder for CPU, memory, and disk resources. Close applications that you aren't using.
+. Use one VS Code window.
++
+Each VS Code window uses its own resources. Instead of opening a separate window for each project, open related projects in a single multi-root workspace. See xref:start-workspaces.adoc[].
+. Update to the latest version of Anypoint Extension Pack.
++
+Updates include performance improvements, such as file read and write optimizations on Windows. See xref:start-acb.adoc#update-pack[Update Anypoint Extension Pack]. To receive updates automatically, set each Anypoint extension to *Auto Update All (From Publisher)*.
+. Disable extensions that you don't need.
++
+Other extensions, especially Java-based extensions, can compete with Anypoint Code Builder for JVM resources. In the *Extensions* panel, review your installed extensions, and disable or uninstall the ones you don't use. Don't disable the extensions in Anypoint Extension Pack: API, APIkit, DataWeave, Dependencies, Integration, MUnit, and Platform.
+
+If the issue persists after you complete these checks, export your troubleshooting information and provide it to the support team. See <<export-troubleshooting-info,Export Troubleshooting Information>>.
 
 [[check-extension-pack]]
 == Check for Anypoint Extension Pack Installation
