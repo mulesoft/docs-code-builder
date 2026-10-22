@@ -1,15 +1,19 @@
-= Allow URLs for Anypoint Code Builder
+= Allow URLs and Antivirus Exclusions for Anypoint Code Builder
 
-Configure your firewall, antivirus, and proxy settings to allow Anypoint Code Builder URLs. Allowing these URLs ensures Anypoint Code Builder can connect to Anypoint Platform services, download dependencies, and access Maven repositories. This configuration prevents connection issues and improves performance if working with external hosts and Anypoint Platform services.
+Configure your firewall, antivirus, and proxy settings to allow Anypoint Code Builder URLs, and exclude the files, folders, and executables that Anypoint Code Builder uses from antivirus scanning. Allowing these URLs ensures Anypoint Code Builder can connect to Anypoint Platform services, download dependencies, and access Maven repositories. Antivirus exclusions prevent real-time scanning from slowing down disk operations. Together, this configuration prevents connection issues and improves performance.
 
-== Allow Anypoint Code Builder URLs
+== Allow Anypoint Code Builder URLs and Paths
 
-Allow URLs to ensure the best performance in Anypoint Code Builder.
+Allow URLs and exclude paths to ensure the best performance in Anypoint Code Builder.
 
+[[security-antivirus]]
 === Security and Antivirus Software
 
-If you have security and antivirus software, add Anypoint Code Builder to the allowlist. Running real-time antivirus protection software on your operating system can have a negative impact on Anypoint Code Builder performance, particularly during canvas loading and extension initialization. Continuous disk I/O from real-time scanning causes delays when Mule applications perform intense disk operations. Steps to solving these performance issues vary depending on your antivirus software.
+If you have security and antivirus software, add Anypoint Code Builder to the allowlist. Running real-time antivirus protection software on your operating system can have a negative impact on Anypoint Code Builder performance, particularly during canvas loading and extension initialization. Continuous disk I/O from real-time scanning causes delays when Mule applications perform intense disk operations. Exclusions reduce file locking, false positives, and I/O latency during builds. Steps to solving these performance issues vary depending on your antivirus software.
 
+Your organization's security policy decides whether exclusions are allowed and how they're deployed. Use these lists with your security team.
+
+[[antivirus-exclusions]]
 ==== Antivirus Exclusion Paths
 
 Exclude the following directories and executables from real-time antivirus scanning. The paths vary by operating system.
@@ -21,34 +25,41 @@ Windows::
 --
 As a first step, add the following high-I/O directories to your antivirus exclusion list:
 
-* `%userprofile%\.m2`
-* `%userprofile%\AnypointCodeBuilder`
-* `%userprofile%\.vscode\extensions\salesforce.*`
+* Anypoint Code Builder data: `%USERPROFILE%\AnypointCodeBuilder`
+* Local Maven repository: `%USERPROFILE%\.m2`
+* Anypoint extensions: `%USERPROFILE%\.vscode\extensions\salesforce.*`
 
 If performance issues persist, also exclude the following directories:
 
-* `%appdata%\Code`
-* `%userprofile%\.vscode`
-* `%appdata%\Local\Temp`
-* The directory where you store your Mule projects
+* VS Code user data: `%APPDATA%\Code`
+* VS Code extensions and settings: `%USERPROFILE%\.vscode`
+* Temporary files used by Anypoint Code Builder and build tools: `%USERPROFILE%\AppData\Local\Temp`
+* `%APPDATA%\Local\Temp`
+* The directory where you store your Mule projects (your projects directory). Exclude the entire tree, not single files.
 
 And the following executables:
 
-* `java.exe`
-* `javaw.exe`
-* `node.exe`
-* `Code.exe`
+* `java.exe` or `javaw.exe`: Java runtime used by Mule and tooling
+* `node.exe`: Node.js used by VS Code extensions and scripts
+* `Code.exe`: Visual Studio Code
 --
 macOS::
 +
 --
 Add the following directories to your antivirus exclusion list:
 
-* `~/Library/Application Support/Code`
-* `~/.vscode`
-* `~/AnypointCodeBuilder`
-* `~/.m2/repository`
-* The directory where you store your Mule projects
+* Anypoint Code Builder data: `~/AnypointCodeBuilder`
+* Local Maven repository: `~/.m2` or `~/.m2/repository`
+* VS Code user data: `~/Library/Application Support/Code`
+* VS Code extensions and settings: `~/.vscode`
+* Temporary files used by Anypoint Code Builder and build tools: `$TMPDIR` (or `/tmp` when that is your temp location)
+* The directory where you store your Mule projects (your projects directory). Exclude the entire tree, not single files.
+
+And these executables:
+
+* `java`: Java runtime used by Mule and tooling. Use the resolved path from your JDK installation.
+* `node`: Node.js used by VS Code extensions and scripts
+* The Visual Studio Code application bundle, for example, `Visual Studio Code.app`
 --
 ====
 
