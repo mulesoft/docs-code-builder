@@ -53,11 +53,9 @@ image::tut-flights-restricted-banner.png["The workspace trust notification with 
 [TIP]
 If you closed the notification, or it doesn't show, see: https://code.visualstudio.com/docs/editing/workspaces/workspace-trust#_trusting-a-workspace[Trusting a workspace] for instructions.
 . Click *Apply* to save your changes.
-. Open MuleSoft Vibes from the toolbar.
+. In the activity bar, click the MuleSoft Vibes icon.
 +
-If you don't see the MuleSoft Vibes icon, click *Additional Views* to expand the toolbar.
-+
-image::tut-flights-open-vibes.png["Additional Views menu with MuleSoft Vibes highlighted", 30%, 30%]
+image::tut-flights-open-vibes.png["MuleSoft Vibes icon in the activity bar", 30%, 30%]
 . Enable auto-approve by clicking the *Auto-approve* section at the end of the MuleSoft Vibes window, and then select:
 ** *Read project files*
 ** *Edit project files*
@@ -122,11 +120,24 @@ Your API spec is now ready to publish to Anypoint Exchange.
 
 Publish the American Flights API spec to Exchange so that other team members can find and implement it.
 
+Send this message to MuleSoft Vibes:
+
+[source,command]
+----
+Publish the American Flights API specification to Exchange with asset version 1.0.0, API version v1, and asset ID american-flights-api.
+----
+
+If prompted, sign in to Anypoint Platform and select a business group. When asked to implement the API now, select *No* to avoid scaffolding the American Flights API spec into your integration. You scaffold the API in xref:tut-flights-implement-api.adoc[].
+
+=== Manually Publish the API Spec to Exchange
+
+If you prefer not to use MuleSoft Vibes, publish the spec manually:
+
 . In the project explorer, open your API spec YAML file.
 . Click *Publish API Project to Exchange*. 
 + 
 image::icon-publish-to-exchange.png["Publish API Project to Exchange icon"]
-** Alternatively, provide this command in the command palette: 
+** You can also provide this command in the command palette:
 +
 [source,command]
 ----
@@ -144,7 +155,7 @@ The status bar shows the progress after the API is published successfully to Exc
 +
 Selecting *Yes* scaffolds the API spec into your project. Instead of scaffolding now, you scaffold the API in xref:tut-flights-implement-api.adoc[].
 
-=== Locate Your API in Exchange
+== Locate Your API in Exchange
 
 After publishing your API spec, you can find it in Anypoint Exchange:
 
