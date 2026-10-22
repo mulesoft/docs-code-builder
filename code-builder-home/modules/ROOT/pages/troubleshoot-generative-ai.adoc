@@ -42,7 +42,7 @@ Here are the permissions required across capabilities in the MuleSoft MCP Server
 * Usage Viewer  
 ====
 
-If you want to configure MuleSoft Vibes with a different set of permissions, you must:
+To configure MuleSoft Vibes with a different set of permissions, you must:
 
 . Remove or disable the out-of-the-box MuleSoft MCP Server.
 . Follow the steps in the xref:mulesoft-mcp-server::getting-started.adoc#set-up-authentication[MuleSoft MCP Server documentation] to set up a connected app with the desired permissions.
@@ -51,7 +51,7 @@ If you want to configure MuleSoft Vibes with a different set of permissions, you
 
 If you see the message `AI features are not enabled for your organization`, your Anypoint Platform organization is not linked to a Salesforce organization with an active generative AI license, or Einstein is not enabled.
 
-To resolve this error, verify the following:
+To resolve this error, verify:
 
 * Your Anypoint Platform organization is connected to a Salesforce organization with generative AI enabled. For setup instructions, see xref:access-management::connecting-salesforce-orgs.adoc[] and xref:access-management::trusted-salesforce-org.adoc[].
 * Einstein is enabled in Access Management. See xref:access-management::enabling-einstein.adoc[].
@@ -68,7 +68,7 @@ If results are still inconsistent, verify that your project context and Mulesoft
 
 If you receive an HTTP 409 Conflict error when initializing or prompting MuleSoft Vibes, the error indicates a configuration mismatch between Anypoint Platform and Salesforce.
 
-To resolve this error, verify the following:
+To resolve this error, verify:
 
 * Your Anypoint Platform organization is linked to a Salesforce organization. See xref:access-management::connecting-salesforce-orgs.adoc[] and xref:access-management::trusted-salesforce-org.adoc[].
 * Einstein is enabled in Access Management. See xref:access-management::enabling-einstein.adoc[].
@@ -128,7 +128,7 @@ java -version
 
 If you see the error `Prompt size exceeds the token limit when PII is enabled`, the Einstein Trust Layer's PII detection and masking is active and is expanding the size of your prompt beyond the model's token limit.
 
-To resolve this error:
+To resolve this error, you must:
 
 * Start a new chat session to clear the conversation history.
 * Remove large project folders or files from the attached context.
@@ -138,15 +138,15 @@ To resolve this error:
 
 If MuleSoft Vibes returns a `[SALESFORCE] Connection error`, the Salesforce AI model has reached its daily request or token limit for your session.
 
-To resolve this error:
+To resolve this error, you must:
 
 * Start a new chat session to reset your token usage.
 * Wait for the daily limit to reset, then retry.
-* If the error persists, contact your Anypoint Platform organization administrator.
+* Contact your Anypoint Platform organization administrator if the error persists.
 
 == Java 17 Connector Compatibility Errors
 
-If MuleSoft Vibes generates a flow and you then see an `Unsupported class file version` build error, the generated `pom.xml` may reference connector versions that are not compatible with Mule 4.6+ and Java 17.
+If MuleSoft Vibes generates a flow and you then see an `Unsupported class file version` build error, the generated `pom.xml` may reference connector versions that are not compatible with Mule runtime 4.6 and later, and Java 17.
 
 To resolve this error, update the connector version in your `pom.xml` to a version that supports Java 17, and rebuild the project.
 
