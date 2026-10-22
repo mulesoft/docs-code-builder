@@ -438,6 +438,54 @@ image:munit-launch-config-munit.png["Selecting *MUnit Debug Tests* from the laun
 .. Execute *MUnit Debug Tests* by clicking image:icon-start-debug.png["",18,18] (launch) in the *Run an Debug* panel.
 . Verify that the MUnit tests run. See the <<results-example, example>>.
 
+[[secure-properties]]
+== Run MUnit Tests That Use Secure Properties
+
+MUnit runs tests through Maven, separately from the Mule application run and debug configuration. If a test loads secure properties, configure the encryption key for the MUnit launch profile and the MUnit Maven Plugin.
+
+. In the project's `.vscode/settings.json` file, set `munit.runtime.defaultArguments` with the encryption-key system property. Use an environment variable to avoid adding the key value to a version-controlled file:
++
+[source,json]
+----
+{
+  "munit.runtime.defaultArguments": "-Dencryption.key=${env:MUNIT_ENCRYPTION_KEY}"
+}
+----
+
+. Reference the setting from the MUnit launch configuration in `.vscode/launch.json`:
++
+[source,json]
+----
+{
+  "type": "munit-xml-debugger",
+  "request": "launch",
+  "name": "MUnit Run Tests with Secure Properties",
+  "mule.project": "${workspaceFolder}",
+  "munit.runtime.args": "${config:munit.runtime.defaultArguments}",
+  "munit.runtime.debugger.version": "${config:munit.runtime.debugger.version}",
+  "munit.debug": "false"
+}
+----
+
+. In `pom.xml`, configure the MUnit Maven Plugin to pass the property to the test runtime:
++
+[source,xml]
+----
+<plugin>
+  <groupId>com.mulesoft.munit.tools</groupId>
+  <artifactId>munit-maven-plugin</artifactId>
+  <configuration>
+    <systemPropertyVariables>
+      <encryption.key>${encryption.key}</encryption.key>
+    </systemPropertyVariables>
+  </configuration>
+</plugin>
+----
+
+. Set `MUNIT_ENCRYPTION_KEY` in your shell environment, and then run the *MUnit Run Tests with Secure Properties* configuration.
+
+If the secure properties configuration uses a different property name, replace `encryption.key` consistently in the settings file, launch configuration, and Maven Plugin configuration.
+
 //
 //RUN: DEBUG
 [[run-debug]]
