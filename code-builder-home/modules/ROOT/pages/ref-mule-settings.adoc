@@ -108,16 +108,16 @@ Select a control plane for Anypoint Code Builder:
 
 For more information, see xref:index.adoc#us-eu-clouds[Cloud Hosts].
 
-Starting with Anypoint Code Builder 1.28.0, you can select *Private Cloud Edition* to connect to a Private Cloud Edition (PCE) 4.3.0 or later control plane. Set <<setting-pce-url>> to your PCE control plane URL. To add a Mule runtime version that Anypoint Code Builder does not include, see xref:start-acb.adoc#add-local-mule-runtime[Add a Mule Runtime Version Locally].
+Starting with Anypoint Code Builder 1.28.0, you can select *Private Cloud Edition* to connect to an Anypoint Platform Private Cloud Edition 4.3.0 or later control plane. Set <<setting-pce-url>> to your Anypoint Platform Private Cloud Edition control plane URL. To add a Mule runtime version that Anypoint Code Builder does not include, see xref:start-acb.adoc#add-local-mule-runtime[Add a Mule Runtime Version Locally]. For Anypoint CLI, telemetry, and deployment on Anypoint Platform Private Cloud Edition, see xref:start-acb-pce.adoc[].
 
 For more information, see xref:start-acb.adoc#change-clouds[Set Anypoint Code Builder to a Different Control Plane].
 
 [[setting-pce-url]]
-== Mule: Control Plane PCE URL
+== Mule: Control Plane __Anypoint Platform Private Cloud Edition_URL__
 
-Set the URL of your Private Cloud Edition (PCE) control plane, for example `https://pce.example.com`. Anypoint Code Builder uses this URL when *Mule: Control Plane* is *Private Cloud Edition*, and imports custom SSL certificates for the PCE host automatically.
+Set the URL of your Anypoint Platform Private Cloud Edition control plane, for example `https://pce.example.com`. Anypoint Code Builder uses this URL when *Mule: Control Plane* is *Private Cloud Edition*, and imports custom SSL certificates for the Anypoint Platform Private Cloud Edition host automatically.
 
-After you set the URL, restart Anypoint Code Builder and sign in from the Command Palette with *MuleSoft: Login to Anypoint Platform*. The command opens the PCE sign-in page.
+After you set the URL, restart Anypoint Code Builder and sign in from the Command Palette with *MuleSoft: Login to Anypoint Platform*. The command opens the Anypoint Platform Private Cloud Edition sign-in page.
 
 For more information, see xref:start-acb.adoc#change-clouds[Set Anypoint Code Builder to a Different Control Plane].
 
@@ -125,6 +125,8 @@ For more information, see xref:start-acb.adoc#change-clouds[Set Anypoint Code Bu
 ==  Mule > Telemetry
 
 You can enable or disable telemetry services in the US cloud. By default, this setting is disabled and not used for the EU cloud. When telemetry services are enabled, Anypoint Code Builder sends anonymous usage data to the MuleSoft team. The data helps identify important usage trends.
+
+When *Mule: Control Plane* is *Private Cloud Edition*, Anypoint Code Builder keeps application metadata in your network and blocks standard cloud telemetry. See xref:start-acb-pce.adoc#connect-pce-control-plane[].
 
 [[setting-home-dir]]
 ==  Mule: Home Directory
@@ -148,7 +150,7 @@ If you move your cursor to a new location or use the up or down arrow keys in th
 [[setting-fips-enabled]]
 == Mule > Runtime: Fips Enabled
 
-Enable FIPS compliance mode for your Mule applications. When enabled, the embedded JVM uses Bouncy Castle FIPS (BCFIPS) modules for all cryptographic operations. Required for regulated PCE and GIA2H environments.
+Enable FIPS compliance mode for your Mule applications. When enabled, the embedded JVM uses Bouncy Castle FIPS (BCFIPS) modules for all cryptographic operations. Required for regulated Anypoint Platform Private Cloud Edition and GIA2H environments.
 
 Enabling this setting automatically configures BCFIPS libraries, generates a custom `java.security` file, creates a BCFKS-format keystore, and updates each Mule application run configuration with the required FIPS parameters.
 
