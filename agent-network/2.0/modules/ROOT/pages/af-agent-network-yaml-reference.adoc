@@ -1454,8 +1454,8 @@ For more information, see <<exchange-json-file,Exchange.JSON File>>.
 
 The broker requests the access token through the egress Omni Gateway. Before you deploy, make sure that:
 
-* The egress Omni Gateway can reach the token endpoint.
-* The egress Omni Gateway trusts the token endpoint certificate.
+* The egress Omni Gateway can reach the token endpoint. If your cluster uses a forward proxy, see xref:gateway::managed-forward-proxy.adoc[].
+* The egress Omni Gateway trusts the token endpoint certificate. If the token endpoint uses a certificate signed by a private CA, see xref:gateway::managed-outbound-tls-config.adoc#private-ca-rtf[Trust Upstreams Signed by a Private CA on Runtime Fabric].
 
 ==== In-Task Authorization Code
 
