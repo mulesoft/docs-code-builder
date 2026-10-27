@@ -92,14 +92,20 @@ For more guidance, see <<login-status-bar>>.
 [[change-clouds]]
 == Set Anypoint Code Builder to a Different Control Plane
 
-In Anypoint Code Builder, you can change your Anypoint Platform control plane to one of these clouds:
+In Anypoint Code Builder, you can change your Anypoint Platform control plane to one of these options:
 
 * US Cloud (default)
 * EU Cloud
 * Canada Cloud
 * Japan Cloud
+* India Cloud
+* Australia Cloud
+* United Kingdom Cloud
+* Private Cloud Edition
 
 Anypoint Platform instances do not share user accounts, projects, or other data. For more information, see xref:index.adoc#us-eu-clouds[Cloud Hosts].
+
+Starting with Anypoint Code Builder 1.28.0, you can select *Private Cloud Edition* to connect to an Anypoint Platform Private Cloud Edition 4.3.0 or later control plane that your organization hosts.
 
 To change the control plane:
 
@@ -107,6 +113,48 @@ To change the control plane:
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="open-mule-settings"]
 include::anypoint-code-builder::partial$acb-reusable-steps.adoc[tags="mule-settings-nav-options"]
 . Scroll to *Mule: Control Plane*.
-. Select the desired cloud.
+. Select the desired control plane.
+. If you select *Private Cloud Edition*, set *Mule: Control Plane __Anypoint Platform Private Cloud Edition_URL_MIXED__* to the URL of your Anypoint Platform Private Cloud Edition control plane, for example `https://pce.example.com`.
++
+Anypoint Code Builder uses this URL only when *Private Cloud Edition* is selected. Anypoint Code Builder imports custom SSL certificates for the Anypoint Platform Private Cloud Edition host automatically.
 . {restart-ide}
 . Follow the steps in xref:anypoint-code-builder::start-acb.adoc#login-ide[Sign in to Anypoint Platform from Anypoint Code Builder].
++
+If you selected *Private Cloud Edition*, sign in from the Command Palette with this command:
++
+[source,command]
+----
+MuleSoft: Login to Anypoint Platform
+----
++
+The command opens the Anypoint Platform Private Cloud Edition sign-in page. Sign-in uses OAuth or OIDC with the identity provider hosted by Anypoint Platform Private Cloud Edition. Private cloud mode keeps application metadata in your network and blocks standard cloud telemetry.
+
+To install Anypoint Code Builder from the private distribution bundle, configure Anypoint CLI for your Anypoint Platform Private Cloud Edition instance, add optional MuleSoft Vibes skills, and deploy to a hybrid server in Runtime Manager, see xref:start-acb-pce.adoc[].
+
+If you selected *Private Cloud Edition*, bundled Mule runtime versions are available, and you can add another Mule runtime version locally. See <<add-local-mule-runtime>>. Anypoint Platform Private Cloud Edition 4.3.0 supports Mule runtime 4.6 with Java 8 and Java 17, and Mule runtime 4.9, 4.11, and 4.12 with Java 17. See xref:start-acb-pce.adoc#pce-runtime-versions[].
+
+[[add-local-mule-runtime]]
+== Add a Mule Runtime Version Locally
+
+Starting with Anypoint Code Builder 1.28.0, you can add a Mule runtime version that Anypoint Code Builder does not include. Copy the Mule runtime directory into the `user-installed` folder. Anypoint Code Builder lists that version when you create a project and in *Project Properties*.
+
+Use this option when your environment requires a Mule runtime version that is not bundled with Anypoint Code Builder, such as a version for Anypoint Platform Private Cloud Edition. Bundled Mule runtime versions are also available when the control plane is Private Cloud Edition. See xref:int-versions.adoc#bundled-runtimes[Bundled Mule Runtime Versions].
+
+To add a Mule runtime version:
+
+. Copy the Mule runtime directory into this folder:
++
+[source,text]
+----
+${user.home}/AnypointCodeBuilder/runtimes/user-installed
+----
++
+Create the `user-installed` folder if it does not exist.
+. Create a project, or open *Project Properties*.
++
+The Mule runtime version appears in the Mule runtime version menu. See xref:int-versions.adoc#project-version-mule-java[Select Mule and Java Versions for a Project].
+
+[IMPORTANT]
+====
+Anypoint Code Builder does not validate that a Mule runtime version is compatible with your Anypoint Platform Private Cloud Edition environment. Confirm compatibility before you run or deploy your application.
+====

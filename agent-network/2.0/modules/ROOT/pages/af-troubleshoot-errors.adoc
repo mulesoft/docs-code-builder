@@ -39,9 +39,13 @@ Error codes are grouped into ranges by area:
 ** *Area:* Policy validation errors
 ** <<policy-validation-errors,Policy Validation Errors>>
 
-* *Code:* 8500–8534
+* *Code:* 8500–8535
 ** *Area:* Local run (`run-local`) errors
 ** <<local-run-errors,Local Run Errors>>
+
+* *Code:* 9001
+** *Area:* Generic errors
+** <<generic-errors,Generic Errors>>
 
 * *Code:* 10001
 ** *Area:* Access management errors
@@ -250,6 +254,56 @@ Error codes are grouped into ranges by area:
 ** *What it means:* An `exchange.json` field has the wrong type.
 ** *How to fix:* Set the reported field to the expected type (a string).
 
+* *Code:* 1035
+** *Name:* `pushNotificationNotSupported`
+** *What it means:* A broker sets `capabilities.pushNotifications: true` in its A2A card, but push notifications aren't supported.
+** *How to fix:* Set `pushNotifications` to `false` in `interfaces.a2a.card` and rebuild.
+
+* *Code:* 1036
+** *Name:* `variableKeyCollision`
+** *What it means:* Two `metadata.variables` entries in `exchange.json` flatten to the same dotted key.
+** *How to fix:* Rename one entry, or use nested objects consistently.
+
+* *Code:* 1037
+** *Name:* `variableNameContainsColon`
+** *What it means:* A `metadata.variables` key or category in `exchange.json` contains the restricted `:` character.
+** *How to fix:* Remove the `:` from the reported key or category.
+
+* *Code:* 1038
+** *Name:* `unsupportedAuthenticationKind`
+** *What it means:* A connection or `card.authentication` declares an authentication `kind` that the CLI doesn't recognize.
+** *How to fix:* Use a supported authentication kind and rebuild.
+
+* *Code:* 1042
+** *Name:* `a2aInterfacesNotSupportedForV03`
+** *What it means:* `interfaces` was declared on a connection to an A2A v0.3 agent.
+** *How to fix:* Remove `interfaces` from the A2A v0.3 connection, or point the connection to an A2A v1 agent.
+
+* *Code:* 1043
+** *Name:* `invalidA2aInterfaceBasePath`
+** *What it means:* An `interfaces.*.basePath` value failed validation.
+** *How to fix:* Use an absolute path starting with `/`, without `..` segments, mid-path empty segments (`//`), or URL schemes.
+
+* *Code:* 1044
+** *Name:* `invalidA2aInterfaceProtocol`
+** *What it means:* An `interfaces` binding key isn't a supported protocol.
+** *How to fix:* Use only `jsonrpc`, `http`, or `grpc` as binding keys under `interfaces`.
+
+* *Code:* 1045
+** *Name:* `invalidA2aInterfacesShape`
+** *What it means:* `interfaces`, an `interfaces` binding, or a card policy's `interfacePaths` isn't a plain object.
+** *How to fix:* Use plain objects for `interfaces`, its bindings, and `interfacePaths`.
+
+* *Code:* 1046
+** *Name:* `javaHomeNotSet`
+** *What it means:* `JAVA_HOME` isn't set. Schema 1.0.0 builds require a JDK to generate the Brokers application.
+** *How to fix:* Set `JAVA_HOME` to the installation directory of a supported JDK.
+
+* *Code:* 1047
+** *Name:* `javaExecutableError`
+** *What it means:* The Java executable under `JAVA_HOME` couldn't be launched.
+** *How to fix:* Point `JAVA_HOME` to a valid JDK installation that contains `bin/java`.
+
 [NOTE]
 ====
 *Code collision (1020–1024) — known defect.* Codes 1020 through 1024 are each assigned to *two* different errors: a broker-interface error and an MCP-introspection error. The `errorMessage` text identifies the error as either a broker-interface error or a `server.json` or MCP YAML error. Match the message instead of the number alone.
@@ -334,7 +388,7 @@ Error codes are grouped into ranges by area:
 * *Code:* 3004
 ** *Name:* `deployError`
 ** *What it means:* Deploying an API into a gateway failed.
-** *How to fix:* Read the nested `cause`. See <<runtime-fabric--application-manager-amc,Runtime Fabric / AMC>>.
+** *How to fix:* Read the nested `cause`. See <<runtime-fabric-application-manager-amc,Runtime Fabric / AMC>>.
 
 * *Code:* 3005
 ** *Name:* `connectionNotFoundError`
@@ -354,7 +408,7 @@ Error codes are grouped into ranges by area:
 * *Code:* 3008
 ** *Name:* `brokerGroupDeploymentError`
 ** *What it means:* Broker group (Agent Graph) deployment failed.
-** *How to fix:* Check the logs. See <<runtime-fabric--application-manager-amc,Runtime Fabric / AMC>>.
+** *How to fix:* Check the logs. See <<runtime-fabric-application-manager-amc,Runtime Fabric / AMC>>.
 
 * *Code:* 3009
 ** *Name:* `unableToResolve`
@@ -439,7 +493,7 @@ Error codes are grouped into ranges by area:
 * *Code:* 3028
 ** *Name:* `agentGraphDeploymentError`
 ** *What it means:* Agent Graph provisioning failed.
-** *How to fix:* Check the logs. See <<runtime-fabric--application-manager-amc,Runtime Fabric / AMC>>.
+** *How to fix:* Check the logs. See <<runtime-fabric-application-manager-amc,Runtime Fabric / AMC>>.
 
 * *Code:* 3029
 ** *Name:* `connectionRefNotFoundError`
@@ -480,6 +534,21 @@ Error codes are grouped into ranges by area:
 ** *Name:* `unsupportedAgentProtocol`
 ** *What it means:* An agent exposes a non-A2A protocol only.
 ** *How to fix:* Connect only A2A (Agent2Agent) agents that use `a2a` or `a2a_v1`.
+
+* *Code:* 3041
+** *Name:* `networkLockMissing`
+** *What it means:* The Agent Network lock file generated at publish time is missing during deployment.
+** *How to fix:* Build and publish the Agent Network to regenerate the lock file, then deploy.
+
+* *Code:* 3042
+** *Name:* `networkLockMalformed`
+** *What it means:* The Agent Network lock file is malformed or has an invalid key.
+** *How to fix:* Rebuild and republish the Agent Network to regenerate the lock file, then deploy.
+
+* *Code:* 3044
+** *Name:* `assetMissingFromNetworkLock`
+** *What it means:* An asset referenced by the project isn't in the lock file.
+** *How to fix:* Rebuild and republish the Agent Network so the lock file includes every asset, then deploy.
 
 * *Code:* 3045
 ** *Name:* `incompatibleTargetVersionDeploy`
@@ -555,6 +624,51 @@ Error codes are grouped into ranges by area:
 ** *Name:* `publicationBeforeDeploymentFailed`
 ** *What it means:* The auto-publish step before deploy failed, so deploy aborted.
 ** *How to fix:* Fix the publish failure. See the embedded cause and <<publish-errors,Publish Errors>>.
+
+* *Code:* 3060
+** *Name:* `llmAuthenticationKindNotSupported`
+** *What it means:* An LLM connection's authentication kind isn't declared by the referenced LLM metadata.
+** *How to fix:* Use a supported kind listed in the message, or publish an LLM asset that declares the kind.
+
+* *Code:* 3061
+** *Name:* `llmAssetRequiresV2`
+** *What it means:* A V1 Agent Network references an LLM asset that declares `inputFormat`, which requires V2.
+** *How to fix:* Migrate the project to schema 2.0.0, or reference an LLM asset without `inputFormat`.
+
+* *Code:* 3062
+** *Name:* `llmInputFormatRequiresAuthentication`
+** *What it means:* An LLM asset declares `inputFormat` but has no nonempty `authentication`.
+** *How to fix:* Add `authentication` to the LLM metadata and republish the asset.
+
+* *Code:* 3063
+** *Name:* `llmModelNotDeclared`
+** *What it means:* An agent requests a model that the referenced LLM asset doesn't declare.
+** *How to fix:* Use a declared model ID, or add the model to the LLM asset and republish it.
+
+* *Code:* 3064
+** *Name:* `llmAuthenticationKindUnmapped`
+** *What it means:* The referenced LLM metadata declares the connection's authentication kind, but the CLI has no policy mapping for it.
+** *How to fix:* Use one of the kinds listed in the message, or upgrade the CLI.
+
+* *Code:* 3065
+** *Name:* `llmAdapterPolicyNotFound`
+** *What it means:* The adapter policy named by the LLM asset's `policyRef` wasn't found in Exchange.
+** *How to fix:* Republish the LLM asset with a valid `policyRef`, or publish the adapter policy.
+
+* *Code:* 3066
+** *Name:* `llmAdapterPolicyLookupFailed`
+** *What it means:* Resolving the LLM asset's adapter policy failed.
+** *How to fix:* Retry. If the error persists, then check Exchange availability and your access to the policy.
+
+* *Code:* 3067
+** *Name:* `cardAuthenticationUpstreamsError`
+** *What it means:* Configuring dual egress upstreams for agent-card authentication failed in API Manager.
+** *How to fix:* Confirm that Flex Gateway is version 1.5.0 or later, the connection uses `a2a` or `a2a_v1`, and outbound policies are enabled for the environment. Read the nested `cause`.
+
+* *Code:* 3068
+** *Name:* `outboundPolicyUpstreamLabelNotFound`
+** *What it means:* An outbound policy was bound to a labeled upstream (`agent` or `card`) that API Manager didn't return.
+** *How to fix:* Redeploy so upstreams and routing match the desired set. If the error persists, then open a support case with the `requestId`.
 
 [[gateway-setup-errors]]
 === Gateway Setup Errors
@@ -971,6 +1085,19 @@ These errors come from `agent-network project run-local` in a local Docker Compo
 ** *What it means:* One or more local-render tasks failed. This error consolidates the failures.
 ** *How to fix:* Read the logs for each sub-failure.
 
+* *Code:* 8535
+** *Name:* `localRunUnsupportedProjectType`
+** *What it means:* `run-local` was invoked on a project that isn't an Agent Network.
+** *How to fix:* Run local deployment from an Agent Network V2 project. A V1 project reports code 8500 instead.
+
+[[generic-errors]]
+=== Generic Errors
+
+* *Code:* 9001
+** *Name:* `genericError`
+** *What it means:* An uncategorized failure. The message carries the specific reason.
+** *How to fix:* Read the `errorMessage` and nested `cause`. See <<dependent-services-status-codes-and-common-issues,Dependent Services: Status Codes and Common Issues>> for an underlying service error.
+
 [[access-management-errors]]
 === Access Management Errors
 
@@ -1090,7 +1217,7 @@ Backs API-instance and connection creation or patching, policy application, and 
 ** *Likely cause:* The instance was already removed.
 ** *Fix:* No action. The CLI treats the response as a success.
 
-[[runtime-fabric--application-manager-amc]]
+[[runtime-fabric-application-manager-amc]]
 === Runtime Fabric and Application Manager
 
 Backs Mule application and agent network deployments and undeployments.
