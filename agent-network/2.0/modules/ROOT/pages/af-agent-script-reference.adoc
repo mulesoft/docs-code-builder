@@ -61,7 +61,7 @@ The system section has these parameters.
 
 === Agent Config Section
 
-The config section is the standard Agent Script config section, with the addition of the optional `default_llm` field. This section defines metadata and default settings for the agent.
+The config section is the standard Agent Script config section, with the optional `default_llm` and `parallel_tool_execution` fields. This section defines metadata and default settings for the agent.
 
 *Example*
 
@@ -71,6 +71,7 @@ config:
    agent_name: "employee-onboarding"
    label: "Employee Onboarding Agent"
    description: "An Agent that performs employee onboarding"
+   parallel_tool_execution: true
 ----
 
 The config section has these parameters.
@@ -102,7 +103,120 @@ The config section has these parameters.
 |@llm reference See <<llm-section,LLM>>
 |No
 
+|`parallel_tool_execution`
+|Specifies whether agentic nodes run independent tool calls concurrently by default. A setting in a node's `reasoning` block overrides this value. Default: `false`.
+|Boolean
+|No
+
 |===
+
+[[parallel-tool-execution]]
+=== Parallel Tool Execution
+
+Use `parallel_tool_execution` to allow a subagent or orchestrator to run independent tool calls concurrently. This can reduce response time when the LLM plans multiple tool calls in the same reasoning step.
+
+The LLM decides which tools to call. This setting affects only how the planned calls run.
+
+[%header,cols="1,2"]
+|===
+|Setting
+|Behavior
+
+|`true`
+|All planned tool calls for the node run concurrently.
+
+|`false`
+|Planned tool calls run one at a time in their planned order. This is the default.
+|===
+
+Tool results are processed only after every planned tool call completes. Enabling parallel execution doesn't change how results are merged or how downstream nodes behave.
+
+Enable parallel execution only when tool calls are independent. Use sequential execution when a tool requires the result of an earlier call or when calls must occur in a specific order.
+
+==== Set a Global Default
+
+Set `config.parallel_tool_execution` to a Boolean value to define the default for all subagent and orchestrator nodes in the file. Expressions aren't supported at this level.
+
+[source,yaml]
+----
+config:
+  agent_name: "customer-support-agent"
+  default_llm: @llm.gpt4
+  parallel_tool_execution: true
+----
+
+Every agentic node uses parallel tool execution unless its `reasoning` block overrides the setting.
+
+==== Override a Node
+
+Set `reasoning.parallel_tool_execution` to override the global default for one subagent or orchestrator. Put the field inside `reasoning`, not directly under the node declaration.
+
+[source,yaml]
+----
+subagent accountUpdater:
+  reasoning:
+    instructions: |
+      Update the account only after validating all required information.
+    actions:
+      validate_account: @actions.validateAccount
+      update_account: @actions.updateAccount
+    parallel_tool_execution: false
+  on_exit: -> transition to done
+----
+
+This node runs its planned tools sequentially even when the global default is `true`.
+
+==== Enable It Conditionally
+
+Within `reasoning`, you can use a variable reference or Boolean expression that the runtime evaluates from the current state.
+
+[source,yaml]
+----
+subagent premiumSupport:
+  reasoning:
+    instructions: |
+      Resolve premium support requests using the available account tools.
+    actions:
+      get_account: @actions.getAccount
+      get_open_cases: @actions.getOpenCases
+      get_recent_orders: @actions.getRecentOrders
+    parallel_tool_execution: @variables.user_tier == "gold"
+  on_exit: -> transition to done
+----
+
+If neither the global setting nor a node setting is present, planned tool calls run sequentially.
+
+==== Complete Example
+
+This example enables parallel execution by default for independent account research. The account-update node overrides that setting because it validates a change before applying it.
+
+[source,yaml]
+----
+config:
+  agent_name: "account-assistant"
+  default_llm: @llm.gpt4
+  parallel_tool_execution: true
+
+subagent accountResearch:
+  reasoning:
+    instructions: |
+      Collect independent account context before preparing a response.
+    actions:
+      get_account: @actions.getAccount
+      get_open_cases: @actions.getOpenCases
+      get_recent_orders: @actions.getRecentOrders
+  on_exit: -> transition to @subagent.accountUpdate
+
+subagent accountUpdate:
+  reasoning:
+    instructions: |
+      Validate the requested change, then update the account.
+    actions:
+      validate_change: @actions.validateAccountChange
+      update_account: @actions.updateAccount
+    parallel_tool_execution: false
+  on_exit: -> transition to done
+----
 
 [[llm-section]]
 === LLM Section
@@ -548,6 +662,11 @@ The subagent node has these properties.
 |Array[actions]
 |No
 
+|`reasoning.parallel_tool_execution`
+|Overrides `config.parallel_tool_execution` for this node. Accepts a Boolean literal or a runtime expression. See <<parallel-tool-execution>>.
+|Boolean or expression
+|No
+
 |`reasoning.outputs`
 |Schema definition describing the expected structure of the agent's output
 |Outputs See <<node-outputs,Node Outputs>>
@@ -654,6 +773,11 @@ The orchestrator node has these properties.
 |`reasoning.actions`
 |The available actions
 |Array[actions]
+|No
+
+|`reasoning.parallel_tool_execution`
+|Overrides `config.parallel_tool_execution` for this node. Accepts a Boolean literal or a runtime expression. See <<parallel-tool-execution>>.
+|Boolean or expression
 |No
 
 |`reasoning.outputs`
