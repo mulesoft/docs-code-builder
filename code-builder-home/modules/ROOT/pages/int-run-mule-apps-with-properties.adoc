@@ -297,6 +297,11 @@ Reference these properties in your database configuration:
 
 When you have multiple Mule projects in the same workspace that use the same encryption key, configure it once at the workspace level instead of duplicating it in each project's launch.json.
 
+[IMPORTANT]
+====
+These approaches apply only when all applications use the same encryption key. A multi-project launch runs all applications in one Mule runtime and JVM, so a system property such as `encryption.key` has one value for every application in that launch.
+====
+
 Use the approach that better applies to your workflow and security requirements.
 
 * <<workspace-settings-approach,Workspace Settings>>: Configure the encryption key in 
@@ -443,6 +448,69 @@ done
 ----
 
 Then update the single workspace-level key reference and all projects work immediately.
+
+[[separate-encryption-keys-workspace]]
+== Configure Separate Encryption Keys for Applications in a Multi-Project Run
+
+When applications in the same multi-root workspace require separate encryption keys, configure each application to use a unique key-property name. A shared JVM can provide multiple system properties, but it can't provide different values for the same property name.
+
+Use this approach only for applications that run together locally. Continue to configure the encryption key required by each application in the target deployment environment.
+
+. In each application, change the `key` attribute in the secure properties configuration to an application-specific property name.
++
+For example, in the Orders application, use `orders.encryption.key`:
++
+[source,xml]
+----
+<secure-properties:config
+  name="Secure_Properties_Config"
+  file="${env}.secure.yaml"
+  key="${orders.encryption.key}">
+  <secure-properties:encrypt algorithm="Blowfish" />
+</secure-properties:config>
+----
+
+. Add a global property in that application to preserve the existing `encryption.key` property as a fallback for individual runs and deployments:
++
+[source,xml]
+----
+<global-property name="orders.encryption.key" value="${encryption.key}" />
+----
++
+When a launch configuration supplies `orders.encryption.key`, the system property overrides this global property. Otherwise, the application resolves the value from `encryption.key`.
+
+. Repeat these changes for each application, using a different property name, such as `payments.encryption.key`.
+
+. Set the application-specific properties in the multi-project launch configuration. Use environment variables so that the workspace file doesn't contain key values:
++
+[source,json]
+----
+{
+  "folders": [
+    { "path": "orders" },
+    { "path": "payments" }
+  ],
+  "launch": {
+    "configurations": [
+      {
+        "type": "mule-xml-debugger",
+        "request": "launch",
+        "name": "Run Orders and Payments",
+        "noDebug": true,
+        "mule.projects": [
+          "${workspaceFolder:orders}",
+          "${workspaceFolder:payments}"
+        ],
+        "mule.runtime.args": "-M-Dorders.encryption.key=${env:ORDERS_ENCRYPTION_KEY} -M-Dpayments.encryption.key=${env:PAYMENTS_ENCRYPTION_KEY} -M-Denv=dev"
+      }
+    ]
+  }
+}
+----
+
+. Start the multi-project configuration from the *Run and Debug* view.
+
+The applications still share a local JVM. This pattern provides a separate property name and key value for each application, but it doesn't provide process isolation.
 
 == See Also
 
