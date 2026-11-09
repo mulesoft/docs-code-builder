@@ -167,8 +167,8 @@ These patterns represent common approaches to structuring broker routing logic i
 | Steps must run in order and each step depends on the previous result.
 
 | Parallel Dispatch
-| Dispatch a request to multiple specialist agents simultaneously and aggregate the results.
-| Sub-tasks are independent and can run concurrently for faster completion.
+| Dispatch a request to multiple specialist agents simultaneously and aggregate the results. See xref:af-agent-script-reference.adoc#parallel-tool-execution[Parallel Tool Execution].
+| Sub-tasks are independent and can run concurrently for faster completion. Use sequential execution when a call depends on another call's result.
 
 | Conditional Routing
 | Route a request to different agents based on the content or classification of the request.

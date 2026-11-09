@@ -23,7 +23,7 @@ To import a shareable JAR, see xref:int-import-mule-project.adoc#desktop-project
 
 A deployable JAR file contains the compiled code and all dependencies. For a deployable JAR, you can select *Include project sources* while exporting the project so the JAR can be opened in Anypoint Code Builder or Studio and also used for deployment. When this option is selected, the JAR also includes the configuration XML and other files in the `src` folder (including resource files), `mule-artifact.json`, and `pom.xml`, the same project sources as in a shareable JAR. 
 
-You can deploy the JAR file to any supported environment, such as CloudHub or on-premises. You don't need to create a deployable JAR file to deploy to CloudHub.
+You can deploy the JAR file to any supported environment, such as CloudHub or on-premises. To deploy to Anypoint Platform Private Cloud Edition, export a deployable JAR with *Include Project Sources* selected, and upload that JAR in Runtime Manager. See xref:start-acb-pce.adoc#deploy-to-pce[].
 * To deploy an app directly from Anypoint Code Builder, see xref:int-deploy-mule-apps.adoc[].
 * To deploy a JAR file to CloudHub, see xref:cloudhub::deploying-to-cloudhub.adoc[].
 
@@ -139,3 +139,4 @@ To prevent building the same logic across multiple projects, such as a common er
 * xref:mule-runtime::package-a-mule-application.adoc[Package a Mule Application]
 * xref:cloudhub::deploying-to-cloudhub.adoc[]
 * xref:int-deploy-mule-apps.adoc[]
+* xref:start-acb-pce.adoc#deploy-to-pce[]

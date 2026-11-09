@@ -1,0 +1,354 @@
+= Using Anypoint Code Builder on Private Cloud Edition
+
+Connect the Anypoint Code Builder to an Anypoint Platform Private Cloud Edition 4.3.0 control plane and design, implement, and package Mule applications against that instance. Package a deployable JAR and deploy it to a hybrid server in Runtime Manager on your private network. MuleSoft Vibes skills are optional. When you use them, a coding agent on your machine calls Anypoint CLI against the same Anypoint Platform Private Cloud Edition instance.
+
+[[before-you-begin-pce]]
+== Before You Begin
+
+Before you connect Anypoint Code Builder to Anypoint Platform Private Cloud Edition, make sure you have:
+
+* An Anypoint Platform Private Cloud Edition 4.3.0 environment.
+* Microsoft Visual Studio Code (VS Code) on your computer. Change the control plane. Browser-based Anypoint Code Builder doesn't provide this setting.
+* Network access from your computer to your Anypoint Platform Private Cloud Edition control plane URL.
+* An Anypoint Platform account on anypoint.mulesoft.com. This account is separate from your Anypoint Platform Private Cloud Edition license. Anypoint Code Builder uses it to retrieve assets and export the application artifact.
+* Network access to the Visual Studio Marketplace and npm, or the private distribution bundle and offline packages for Anypoint CLI and MuleSoft Vibes skills. Request the offline packages from your customer success manager.
+* Node.js 22.0.0 or later and npm 7 or later, when you install Anypoint CLI or MuleSoft Vibes skills.
+* Maven and a JDK on your terminal `PATH`, when a coding agent runs `mvn clean package`. Run `mvn -v` to confirm both are available.
+* A connected app in Anypoint Platform Private Cloud Edition, when you use Anypoint CLI or MuleSoft Vibes skills. Grant the connected app only the scopes the skills need.
+
+[[install-acb-pce]]
+== Install Anypoint Code Builder for a Private Network
+
+Install Anypoint Extension Pack from the Visual Studio Marketplace when your computer can reach the Marketplace. When it can't, install the private distribution bundle.
+
+[[install-from-marketplace]]
+=== Install from the Visual Studio Marketplace
+
+In VS Code, to install *Anypoint Extension Pack*, see xref:start-acb-desktop.adoc[].
+
+[[install-private-bundle]]
+=== Install the Private Distribution Bundle
+
+The private distribution bundle is on the Customer Portal page in the Salesforce Help customer portal. The installer script installs every Anypoint Code Builder extension.
+
+To install the bundle:
+
+. Unpack the bundle and run the installer.
++
+[tabs]
+====
+macOS::
++
+--
+Decompress the private-dist archive. Open a terminal in the resulting folder and run:
++
+[source,bash]
+----
+./install-bundle.sh
+----
+--
+Windows::
++
+--
+Unzip the private-dist archive at the root of `C:\`, for example `C:\win32-x64-dist`. If you unzip it into a deeply nested folder, the install fails because the file paths exceed the Windows path-length limit.
++
+In the extracted folder, right-click `install-bundle-windows.ps1` and select *Run with PowerShell*.
++
+If PowerShell reports that `install-bundle-windows.ps1` can't be loaded because the file isn't digitally signed, open PowerShell in the extracted folder, run this command, and then run the script again from that same window:
++
+[source,powershell]
+----
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\install-bundle-windows.ps1
+----
+--
+====
+. When the installer asks `Would you like to clean up your currently installed ACB extensions? (Y/n)`, enter `Y`.
++
+This removes the Anypoint Code Builder extensions already installed so the bundle starts from a clean set.
+. When the install finishes, open the Command Palette and run *Developer: Reload Window*.
++
+The MuleSoft icon appears in the activity bar.
+
+[[connect-pce-control-plane]]
+== Connect Anypoint Code Builder to Your Anypoint Platform Private Cloud Edition Control Plane
+
+Anypoint Code Builder talks to the MuleSoft-hosted control plane until you select Private Cloud Edition.
+
+To connect to your Anypoint Platform Private Cloud Edition control plane:
+
+. In VS Code, open *Settings* > *Extensions* > *Anypoint Code Builder (Platform)*.
++
+You can also open MuleSoft settings from the Command Palette. See xref:start-acb.adoc#change-clouds[Set Anypoint Code Builder to a Different Control Plane].
+. Set *Mule: Control Plane* to *Private Cloud Edition*.
+. Set *Mule: Control Plane __Anypoint Platform Private Cloud Edition_URL__* to your Anypoint Platform Private Cloud Edition control plane URL, for example `https://pce.example.com`.
++
+Anypoint Code Builder uses this URL only when *Private Cloud Edition* is selected and imports custom SSL certificates for that host automatically.
+. Restart Anypoint Code Builder.
+. Open the Command Palette and run:
++
+[source,command]
+----
+MuleSoft: Login to Anypoint Platform
+----
++
+Anypoint Code Builder opens your Anypoint Platform Private Cloud Edition sign-in page. Sign-in uses OAuth or OIDC with the identity provider hosted by Anypoint Platform Private Cloud Edition.
+. Confirm that the status bar shows your username.
+
+Private cloud mode keeps application metadata in your network and blocks standard cloud telemetry.
+
+If you use SSO or multi-factor authentication, set the `ANYPOINT_BEARER_TOKEN` environment variable in your terminal to an access token from your authenticated Anypoint Platform session.
+
+For the setting descriptions, see xref:ref-mule-settings.adoc#setting-region[Mule: Control Plane] and xref:ref-mule-settings.adoc#setting-pce-url[Mule: Control Plane __Anypoint Platform Private Cloud Edition_URL__].
+
+[[configure-cli-pce]]
+== Configure Anypoint CLI for Anypoint Platform Private Cloud Edition
+
+Anypoint CLI plugins for Anypoint Platform Private Cloud Edition manage business groups, roles, and federated identity settings, Design Center projects, Exchange assets and Maven dependencies, and API Manager registration, contracts, and policies. The CLI runs in the VS Code terminal and in other shells, including CI/CD jobs, against your Anypoint Platform Private Cloud Edition instance.
+
+Install the CLI and confirm that it runs:
+
+[source,bash]
+----
+npm install -g anypoint-cli-v4-public
+anypoint-cli-v4 --version
+----
+
+If the shell returns `command not found`, add npm's global bin directory to your `PATH`.
+
+Install the plugins that Anypoint Platform Private Cloud Edition supports:
+
+[source,bash]
+----
+anypoint-cli-v4 plugins:install anypoint-cli-account-plugin
+anypoint-cli-v4 plugins:install anypoint-cli-api-manager-plugin
+anypoint-cli-v4 plugins:install anypoint-cli-exchange-plugin
+anypoint-cli-v4 plugins:install mulesoft-anypoint-cli-designcenter-plugin
+----
+
+To install the CLI from the offline package, unzip the Anypoint CLI installer and run the install script from that folder. The script installs the CLI and the plugins:
+
+[source,bash]
+----
+./install.sh
+----
+
+Run `anypoint-cli-v4 plugins` and confirm that all four plugins are listed.
+
+Anypoint CLI runs on Node.js, which rejects an Anypoint Platform Private Cloud Edition TLS certificate it doesn't recognize. Point Node.js at the certificate before you call the CLI.
+
+On macOS or Linux, save the certificate and point Node.js at it:
+
+[source,bash]
+----
+echo | openssl s_client -connect pce.example.com:443 -showcerts 2>/dev/null | openssl x509 -outform PEM > anypoint.pem
+export NODE_EXTRA_CA_CERTS=$(pwd)/anypoint.pem
+----
+
+Replace `pce.example.com` with your Anypoint Platform Private Cloud Edition host. Add the `export` line to your shell profile, such as `~/.zshrc`, so new terminals and your coding agent pick it up.
+
+On Windows, open your Anypoint Platform Private Cloud Edition URL in Chrome or Edge, view the site certificate, and export it as a Base64-encoded PEM file. Then point Node.js at it and restart VS Code:
+
+[source,powershell]
+----
+setx NODE_EXTRA_CA_CERTS "C:\certs\anypoint.pem"
+----
+
+If your Anypoint Platform Private Cloud Edition certificate comes from an internal CA, set `NODE_EXTRA_CA_CERTS` to your organization's root CA file instead.
+
+Point the CLI at your Anypoint Platform Private Cloud Edition host, organization, environment, and connected app. Use the hostname only, without `https://`.
+
+[source,bash]
+----
+anypoint-cli-v4 conf host pce.example.com
+anypoint-cli-v4 conf organization <root-org-id>
+anypoint-cli-v4 conf client_id <your-client-id>
+anypoint-cli-v4 conf client_secret <your-client-secret>
+anypoint-cli-v4 conf session.selectedOrganization.id <your-org-id>
+anypoint-cli-v4 conf session.selectedEnvironment.id <your-environment-id>
+----
+
+The CLI stores these values in its local config. The agent acts with the permissions of the connected app.
+
+Confirm the connection:
+
+[source,bash]
+----
+anypoint-cli-v4 account:business-group:list
+----
+
+When the command returns your Anypoint Platform Private Cloud Edition business groups, the CLI is talking to your instance. For other `conf` keys, see xref:anypoint-cli::auth.adoc[].
+
+[[vibes-skills-pce]]
+== Add MuleSoft Vibes Skills
+
+MuleSoft Vibes is optional on Anypoint Platform Private Cloud Edition. The skills are files on your machine. They run in a coding agent such as Claude Code, Cursor, or others. The skills call the Anypoint CLI you configured for Anypoint Platform Private Cloud Edition.
+
+Point the coding agent at your organization's internal model endpoint so prompts and code stay inside your network.
+
+The MuleSoft Vibes assistant inside Anypoint Code Builder, including Einstein generative AI, is available on the US, EU, Canada, Japan, India, Australia, and United Kingdom cloud hosts. See xref:mulesoft-vibes.adoc[].
+
+To install the skills when your computer can reach npm:
+
+. Install `@salesforce/anypoint-cli-dx-mule-plugin` version 1.3.0 or later:
++
+[source,bash]
+----
+npm install -g @salesforce/anypoint-cli-dx-mule-plugin@latest
+----
+. Add the MuleSoft skills:
++
+[source,bash]
+----
+npx skills add mulesoft/mulesoft-dx/skills/mule-development
+----
+
+To install from the offline package, install the DX Mule plugin from the local file, then add the skills from the unzipped skills folder:
+
+[source,bash]
+----
+npm install -g ./<dx-mule-plugin-file>.tgz
+npx skills add ./<path-to-unzipped>/skills/mule-development
+----
+
+The installer asks you to:
+
+. Keep *Universal (`.agents/skills`)* selected, and select any other approved agents, such as *Claude Code (`.claude/skills`)*.
+. Choose *Project* or *Global* for the scope.
+. Choose *Symlink (Recommended)*.
+. Confirm the installation.
+
+For the full installer steps and the skills catalog, see xref:vibes-skills.adoc[].
+
+To add organization-specific rules, such as naming conventions, standard headers, or required logging, see xref:vibes-workflows-commands.adoc[]. To store private skills in a repository, see xref:vibes-share-rules-skills-github.adoc[] and xref:vibes-skills.adoc#set-up-skills-in-your-project[Set Up Skills in Your Project].
+
+=== Check the CLI and the Skills
+
+Before you build an application, confirm:
+
+. The Anypoint Code Builder status bar shows that you are signed in to your Anypoint Platform Private Cloud Edition instance.
+. `anypoint-cli-v4 account:business-group:list` returns your Anypoint Platform Private Cloud Edition business groups.
+. The skills you installed appear under `.agents/skills` or `.claude/skills` in your project.
+
+[[build-in-phases]]
+=== Build an Application in Phases
+
+Ask the agent to build one phase at a time so you can review each change in the Anypoint Code Builder canvas. Give the agent the source and target systems, schemas, and business rules.
+
+. Generate a phased plan from your API specification, data documentation, and product requirements document (PRD).
+. Implement one phase at a time. Each phase must finish `mvn clean package` with `BUILD SUCCESS` before the next phase starts.
+. Write MUnit tests for the finished flows.
+. Document the application.
+
+Name the `build-mule-integration` skill in the prompt, limit the prompt to one phase, and make the Maven build the gate:
+
+[source,text]
+----
+Use /build-mule-integration.
+Read IMPLEMENTATION_PLAN.md and implement Phase 1 only: <first endpoints in your plan>.
+When you're done, run mvn clean package.
+If it isn't BUILD SUCCESS, stop and report the error. Don't start Phase 2.
+----
+
+Review the flow in the canvas before you start the next phase. If the build fails, send the error or your notes back to the agent, or revert the phase and narrow its scope.
+
+`build-mule-integration` builds flows and applications from a specification and can add MUnit tests to an existing application. `secure-mule-app` scans configuration for security risks, encrypts secure properties, and suggests logging improvements. `generate-doc-description` writes `doc:description` values for flows that don't have them. You can also prompt for DataWeave mappings. For the skill descriptions, see xref:vibes-skills.adoc#mulesoft-skill-catalog[MuleSoft Skills Catalog].
+
+[[pce-runtime-versions]]
+== Choose a Mule Runtime Version for Anypoint Platform Private Cloud Edition
+
+Anypoint Platform Private Cloud Edition 4.3.0 supports these Mule runtime versions:
+
+[%header,cols="1,1"]
+|===
+|Mule runtime engine |Java
+
+|4.6
+|8 and 17
+
+|4.9
+|17
+
+|4.11
+|17
+
+|4.12
+|17
+|===
+
+Bundled Mule runtime versions in Anypoint Code Builder are available when the control plane is Private Cloud Edition. To add a runtime that Anypoint Code Builder doesn't include, see xref:start-acb.adoc#add-local-mule-runtime[Add a Mule Runtime Version Locally].
+
+Anypoint Code Builder doesn't validate that a Mule runtime version is compatible with your Anypoint Platform Private Cloud Edition environment. Confirm compatibility before you run or deploy.
+
+Anypoint Platform Private Cloud Edition 4.3.0 supports FIPS 140-3. To enable FIPS mode in Anypoint Code Builder, see xref:start-fips-compliance.adoc[]. That topic requires a FIPS 140-3 compliant runtime: Mule runtime 4.9 (LTS) or 4.10 and later, and Java 17 for Mule runtime 4.9.
+
+For bundled and project versions, see xref:int-versions.adoc[].
+
+[[deploy-to-pce]]
+== Deploy a Mule Application to Anypoint Platform Private Cloud Edition
+
+Develop the specification, the flow, DataWeave transformations, and security configuration in Anypoint Code Builder.
+
+* To design a specification, run `MuleSoft: Design an API`. Anypoint Code Builder validates the specification locally. To mock the API on your machine, use the API Console. See xref:des-designing-api-specs.adoc[].
+* To stub an interface from a specification, run `MuleSoft: Implement an API Specification`. See xref:imp-implement-api-specs.adoc[].
+* To create a project from the canvas, select *Develop an Integration*. See xref:int-create-integrations.adoc[].
+* To import an asset from Exchange, run `MuleSoft: Import Asset from Exchange`.
+* Create and run MUnit tests before you package the application. See xref:int-test-munit.adoc[].
+* Run a local debug session from the Run and Debug view before you package. See xref:int-debug-mule-apps.adoc[].
+
+`MuleSoft: Deploy to CloudHub` deploys to CloudHub or CloudHub 2.0. To deploy to Anypoint Platform Private Cloud Edition, export a deployable JAR and upload it in Runtime Manager.
+
+The hybrid server must be registered and in the *Running* state. See xref:private-cloud::deploy-apps.adoc[].
+
+To package the application:
+
+. In the VS Code Explorer, right-click `mule-artifact.json` or any XML file in `src/main/mule`.
++
+You can also open the Command Palette and run `MuleSoft: Export Mule Project`.
+. Select *Export Mule Project*.
+. Choose *Deployable JAR*.
+. Select *Include Project Sources*.
++
+Project sources let you import the project again later.
+. Save the JAR on your computer.
+
+See xref:int-export-mule-project.adoc#deployable[Deployable JAR].
+
+To deploy the JAR:
+
+. Log in to Anypoint Platform Private Cloud Edition and open Runtime Manager.
+. Select the environment, and then click *Deploy Application*.
+. Set *Deployment Target* to your hybrid server or cluster.
+. Click *Choose File* > *Upload File* and select the JAR.
+. Click *Deploy Application*.
+
+After the application status is *Started*, apply API Manager policies to the endpoints. Use API Manager in Anypoint Platform Private Cloud Edition, or the Anypoint CLI API Manager plugin.
+
+To validate the deployment:
+
+. In Runtime Manager, wait until the application status is *Started*.
+. Send a request to the server IP and the port in your HTTP Listener, for example `http://10.0.0.1:8081/api/test`.
+. Open the *Logs* tab in Runtime Manager and confirm that the request was processed.
+
+[[publish-to-exchange-pce]]
+== Publish an Asset to Exchange on Anypoint Platform Private Cloud Edition
+
+Publishing an asset directly from Anypoint Code Builder to Exchange on Anypoint Platform Private Cloud Edition has partial support. Publish the deployable JAR from Exchange in Anypoint Platform Private Cloud Edition:
+
+. In Anypoint Platform Private Cloud Edition, open Exchange.
+. Click *Publish New Asset*.
+. Enter an asset name and select *Mule Application* as the asset type.
+. Upload the same JAR file.
+
+The asset is published to your organization's private library.
+
+To publish an API specification from Anypoint Code Builder on a MuleSoft-hosted control plane, see xref:des-publish-api-spec-to-exchange.adoc[].
+
+== See Also
+
+* xref:start-acb.adoc#change-clouds[Set Anypoint Code Builder to a Different Control Plane]
+* xref:private-cloud::config-code-builder.adoc[]
+* xref:private-cloud::deploy-apps-code-builder.adoc[]
+* xref:private-cloud::deploy-apps.adoc[]
+* xref:vibes-skills.adoc[]
+* xref:urls-to-allow.adoc[]

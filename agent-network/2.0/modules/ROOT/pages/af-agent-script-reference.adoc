@@ -9,6 +9,7 @@ After you configure the assets and other elements of your agent network project,
 * <<built-in-functions,Built-in Functions>>
 * <<node-outputs,Node Outputs>>
 * <<node-expressions-and-references,Node Expressions and References>>
+* <<handle-action-failures,Handle Action Failures>>
 
 [[agent-script-structure]]
 == Agent Script Structure
@@ -61,7 +62,7 @@ The system section has these parameters.
 
 === Agent Config Section
 
-The config section is the standard Agent Script config section, with the addition of the optional `default_llm` field. This section defines metadata and default settings for the agent.
+The config section is the standard Agent Script config section, with the optional `default_llm` and `parallel_tool_execution` fields. This section defines metadata and default settings for the agent.
 
 *Example*
 
@@ -71,6 +72,7 @@ config:
    agent_name: "employee-onboarding"
    label: "Employee Onboarding Agent"
    description: "An Agent that performs employee onboarding"
+   parallel_tool_execution: true
 ----
 
 The config section has these parameters.
@@ -102,7 +104,120 @@ The config section has these parameters.
 |@llm reference See <<llm-section,LLM>>
 |No
 
+|`parallel_tool_execution`
+|Specifies whether agentic nodes run independent tool calls concurrently by default. A setting in a node's `reasoning` block overrides this value. Default: `false`.
+|Boolean
+|No
+
 |===
+
+[[parallel-tool-execution]]
+=== Parallel Tool Execution
+
+Use `parallel_tool_execution` to allow a subagent or orchestrator to run independent tool calls concurrently. This can reduce response time when the LLM plans multiple tool calls in the same reasoning step.
+
+The LLM decides which tools to call. This setting affects only how the planned calls run.
+
+[%header,cols="1,2"]
+|===
+|Setting
+|Behavior
+
+|`true`
+|All planned tool calls for the node run concurrently.
+
+|`false`
+|Planned tool calls run one at a time in their planned order. This is the default.
+|===
+
+Tool results are processed only after every planned tool call completes. Enabling parallel execution doesn't change how results are merged or how downstream nodes behave.
+
+Enable parallel execution only when tool calls are independent. Use sequential execution when a tool requires the result of an earlier call or when calls must occur in a specific order.
+
+==== Set a Global Default
+
+Set `config.parallel_tool_execution` to a Boolean value to define the default for all subagent and orchestrator nodes in the file. Expressions aren't supported at this level.
+
+[source,yaml]
+----
+config:
+  agent_name: "customer-support-agent"
+  default_llm: @llm.gpt4
+  parallel_tool_execution: true
+----
+
+Every agentic node uses parallel tool execution unless its `reasoning` block overrides the setting.
+
+==== Override a Node
+
+Set `reasoning.parallel_tool_execution` to override the global default for one subagent or orchestrator. Put the field inside `reasoning`, not directly under the node declaration.
+
+[source,yaml]
+----
+subagent accountUpdater:
+  reasoning:
+    instructions: |
+      Update the account only after validating all required information.
+    actions:
+      validate_account: @actions.validateAccount
+      update_account: @actions.updateAccount
+    parallel_tool_execution: false
+  on_exit: -> transition to done
+----
+
+This node runs its planned tools sequentially even when the global default is `true`.
+
+==== Enable It Conditionally
+
+Within `reasoning`, you can use a variable reference or Boolean expression that the runtime evaluates from the current state.
+
+[source,yaml]
+----
+subagent premiumSupport:
+  reasoning:
+    instructions: |
+      Resolve premium support requests using the available account tools.
+    actions:
+      get_account: @actions.getAccount
+      get_open_cases: @actions.getOpenCases
+      get_recent_orders: @actions.getRecentOrders
+    parallel_tool_execution: @variables.user_tier == "gold"
+  on_exit: -> transition to done
+----
+
+If neither the global setting nor a node setting is present, planned tool calls run sequentially.
+
+==== Complete Example
+
+This example enables parallel execution by default for independent account research. The account-update node overrides that setting because it validates a change before applying it.
+
+[source,yaml]
+----
+config:
+  agent_name: "account-assistant"
+  default_llm: @llm.gpt4
+  parallel_tool_execution: true
+
+subagent accountResearch:
+  reasoning:
+    instructions: |
+      Collect independent account context before preparing a response.
+    actions:
+      get_account: @actions.getAccount
+      get_open_cases: @actions.getOpenCases
+      get_recent_orders: @actions.getRecentOrders
+  on_exit: -> transition to @subagent.accountUpdate
+
+subagent accountUpdate:
+  reasoning:
+    instructions: |
+      Validate the requested change, then update the account.
+    actions:
+      validate_change: @actions.validateAccountChange
+      update_account: @actions.updateAccount
+    parallel_tool_execution: false
+  on_exit: -> transition to done
+----
 
 [[llm-section]]
 === LLM Section
@@ -448,6 +563,8 @@ TIP: If the node coordinates multiple agents or tools toward a shared goal, use 
 
 This node defines a generic agent loop node, made of a prompt and a set of actions. Because it can use actions and supports human-in-the-loop flows, this node is ideal for implementing patterns like classification, semantic routing, or LLM reasoning.
 
+To report and route on action failures, see <<handle-action-failures,Handle Action Failures>>.
+
 *Example*
 
 [source,yaml]
@@ -546,6 +663,11 @@ The subagent node has these properties.
 |`reasoning.actions`
 |The available actions
 |Array[actions]
+|No
+
+|`reasoning.parallel_tool_execution`
+|Overrides `config.parallel_tool_execution` for this node. Accepts a Boolean literal or a runtime expression. See <<parallel-tool-execution>>.
+|Boolean or expression
 |No
 
 |`reasoning.outputs`
@@ -654,6 +776,11 @@ The orchestrator node has these properties.
 |`reasoning.actions`
 |The available actions
 |Array[actions]
+|No
+
+|`reasoning.parallel_tool_execution`
+|Overrides `config.parallel_tool_execution` for this node. Accepts a Boolean literal or a runtime expression. See <<parallel-tool-execution>>.
+|Boolean or expression
 |No
 
 |`reasoning.outputs`
@@ -831,9 +958,12 @@ The `do` block accepts a procedure (`->`) containing one or more of these statem
 |`set @variables.ticketStatus = "escalated"`
 |===
 
+[[router-node]]
 === Router Node
 
 The router node performs dynamic transitions based on deterministic conditions. This node doesn't support `transition to` in its `on_exit` attribute. Use this node for branching based on structured output from a previous node.
+
+To route to a failure handler when an action fails, see <<handle-action-failures,Handle Action Failures>>.
 
 *Example*
 
@@ -1340,3 +1470,82 @@ actions:
    # Fix everything -- fully deterministic
    fullyDeterministic: @actions.send_slack     with message = @variables.calculatedMessage     with channel = @variables.channelId
 ----
+
+[[handle-action-failures]]
+== Handle Action Failures
+
+To handle a failed action in Agent Script, include the error in the subagent's output. Define an output structure that covers both results and errors, and instruct the subagent to describe the error in that output if anything goes wrong. A <<router-node,router node>> then sends the flow down the success path or to a failure handler.
+
+To handle action failures:
+
+. Define an output that covers both results and errors. For example, add a `status` enum (`ok` or `failed`) and an `error` field.
+. Tell the subagent what to do on failure. For example: "Fetch inventory for the requested product using the available tools. If anything goes wrong, set status to failed and describe the error."
+. Route on the output. Send `ok` to the next step and all other values to a handler.
+. In the `reasoning` block of the subagent, set these parameters.
++
+[%header,cols="1,2,1"]
+|===
+|Parameter
+|Description
+|Default
+
+|`max_consecutive_errors`
+|The maximum number of consecutive errors allowed during execution.
+|3
+
+|`task_timeout_secs`
+|A timeout (in seconds) for the total node execution.
+|60
+
+|`max_number_of_loops`
+|The maximum number of loops an execution can take.
+|25
+|===
+
+*Example*
+
+[source,yaml]
+----
+subagent lookup:
+  description: "Fetches inventory and reports success or failure."
+  reasoning:
+    instructions: ->
+      | Fetch inventory for the product in this request using the available tools:
+      | {!@request.payload.message.parts[0].text}
+      | If anything goes wrong, set status to "failed" and describe the error in error.
+    actions:
+      get_inventory: @actions.get_inventory
+    outputs:
+      properties:
+        status:
+          type: "string"
+          enum: ["ok", "failed"]
+        answer:
+          type: "string"
+        error:
+          type: "string"
+  on_exit: ->
+    transition to @router.checkStatus
+
+router checkStatus:
+  routes:
+    - target: @echo.success
+      when: @subagent.lookup.output.status == "ok"
+  otherwise:
+    target: @echo.failureHandler
+
+echo success:
+  kind: "a2a:status_update_event"
+  state: "TASK_STATE_COMPLETED"
+  message: a2a.message({messageId: uuid(), parts: [a2a.textPart(@subagent.lookup.output.answer)]})
+
+echo failureHandler:
+  kind: "a2a:status_update_event"
+  state: "TASK_STATE_FAILED"
+  message: a2a.message({messageId: uuid(), parts: [a2a.textPart("Inventory is unavailable right now: " + @subagent.lookup.output.error)]})
+----
+
+Note the following about this example:
+
+* This pattern handles failures within a single request. To return a default response while a backend is unavailable, add a resilience policy on the gateway in front of the MCP server or agent.
+* When the broker starts, it connects to every action to pull metadata, such as MCP tool lists and A2A agent cards.
