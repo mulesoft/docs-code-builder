@@ -415,11 +415,11 @@ This action adds a new JSON object named `Munit Debug Tests` to the file. For ex
       {
         "type": "munit-xml-debugger", <2>
         "request": "launch",
-        "name": "Munit Run Tests",
+        "name": "Munit Debug Tests",
         "mule.project": "${workspaceFolder}",
         "munit.runtime.args": "${config:munit.runtime.defaultArguments}",
-        "munit.runtime.debugger.version": "${config:munit.runtime.debugger.version}",
-        "munit.debug": "false"
+        "munit.externalTarget": "${config:munit.runtime.debugger.externalTarget}",
+        "munit.debug": "true"
       }
     ]
   }
@@ -459,11 +459,11 @@ MUnit runs tests through Maven, separately from the Mule application run and deb
 {
   "type": "munit-xml-debugger",
   "request": "launch",
-  "name": "MUnit Run Tests with Secure Properties",
+  "name": "Munit Debug Tests",
   "mule.project": "${workspaceFolder}",
   "munit.runtime.args": "${config:munit.runtime.defaultArguments}",
-  "munit.runtime.debugger.version": "${config:munit.runtime.debugger.version}",
-  "munit.debug": "false"
+  "munit.externalTarget": "${config:munit.runtime.debugger.externalTarget}",
+  "munit.debug": "true"
 }
 ----
 
@@ -482,7 +482,7 @@ MUnit runs tests through Maven, separately from the Mule application run and deb
 </plugin>
 ----
 
-. Set `MUNIT_ENCRYPTION_KEY` in your shell environment, and then run the *MUnit Run Tests with Secure Properties* configuration.
+. Set `MUNIT_ENCRYPTION_KEY` in your shell environment, and then run the *Munit Debug Tests* configuration.
 
 If the secure properties configuration uses a different property name, replace `encryption.key` consistently in the settings file, launch configuration, and Maven Plugin configuration.
 

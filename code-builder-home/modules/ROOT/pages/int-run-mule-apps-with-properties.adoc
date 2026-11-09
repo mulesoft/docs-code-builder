@@ -481,7 +481,7 @@ When a launch configuration supplies `orders.encryption.key`, the system propert
 
 . Repeat these changes for each application, using a different property name, such as `payments.encryption.key`.
 
-. Set the application-specific properties in the multi-project launch configuration. Use environment variables so that the workspace file doesn't contain key values:
+. Set the application-specific properties and an empty `encryption.key` fallback in the multi-project launch configuration. Mule resolves the fallback global property when each application starts, even when an application-specific system property overrides it. Use environment variables so that the workspace file doesn't contain key values:
 +
 [source,json]
 ----
@@ -501,7 +501,7 @@ When a launch configuration supplies `orders.encryption.key`, the system propert
           "${workspaceFolder:orders}",
           "${workspaceFolder:payments}"
         ],
-        "mule.runtime.args": "-M-Dorders.encryption.key=${env:ORDERS_ENCRYPTION_KEY} -M-Dpayments.encryption.key=${env:PAYMENTS_ENCRYPTION_KEY} -M-Denv=dev"
+        "mule.runtime.args": "${config:mule.runtime.defaultArguments} -M-Dorders.encryption.key=${env:ORDERS_ENCRYPTION_KEY} -M-Dpayments.encryption.key=${env:PAYMENTS_ENCRYPTION_KEY} -M-Dencryption.key= -M-Denv=dev"
       }
     ]
   }
