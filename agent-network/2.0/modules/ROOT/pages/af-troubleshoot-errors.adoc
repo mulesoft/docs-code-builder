@@ -39,7 +39,7 @@ Error codes are grouped into ranges by area:
 ** *Area:* Policy validation errors
 ** <<policy-validation-errors,Policy Validation Errors>>
 
-* *Code:* 8500–8535
+* *Code:* 8500–8550
 ** *Area:* Local run (`run-local`) errors
 ** <<local-run-errors,Local Run Errors>>
 
@@ -551,6 +551,11 @@ If the quota and node capacity are sufficient, check that the Runtime Fabric age
 ** *What it means:* A parent asset lookup failed.
 ** *How to fix:* Verify the parent asset exists in Exchange.
 
+* *Code:* 3035
+** *Name:* `tlsContextValidationError`
+** *What it means:* The CLI couldn't validate a connection's TLS context against Secret Manager.
+** *How to fix:* Verify that your organization is entitled to Secret Manager and that you have access to it. If the error reports another HTTP status, resolve that Secret Manager error and retry.
+
 * *Code:* 3036
 ** *Name:* `invalidAgentProtocol`
 ** *What it means:* Agent metadata declares no protocol for a connection.
@@ -560,6 +565,21 @@ If the quota and node capacity are sufficient, check that the Runtime Fabric age
 ** *Name:* `unsupportedAgentProtocol`
 ** *What it means:* An agent exposes a non-A2A protocol only.
 ** *How to fix:* Connect only A2A (Agent2Agent) agents that use `a2a` or `a2a_v1`.
+
+* *Code:* 3038
+** *Name:* `tlsContextSecretGroupNotFound`
+** *What it means:* The TLS context references a secret group that doesn't exist in the target environment's Secret Manager.
+** *How to fix:* Create the secret group in the target environment, or correct the group name in the TLS context.
+
+* *Code:* 3039
+** *Name:* `tlsContextNotFound`
+** *What it means:* The TLS context named by a connection doesn't exist in the referenced Secret Manager secret group.
+** *How to fix:* Create the TLS context in the secret group, or correct the TLS context name in the connection.
+
+* *Code:* 3040
+** *Name:* `secretTlsValidationFailed`
+** *What it means:* One or more secret or TLS context validations failed before deployment.
+** *How to fix:* Resolve each validation error listed in the message, and then deploy again.
 
 * *Code:* 3041
 ** *Name:* `networkLockMissing`
@@ -1115,6 +1135,81 @@ These errors come from `agent-network project run-local` in a local Docker Compo
 ** *Name:* `localRunUnsupportedProjectType`
 ** *What it means:* `run-local` was invoked on a project that isn't an Agent Network.
 ** *How to fix:* Run local deployment from an Agent Network V2 project. A V1 project reports code 8500 instead.
+
+* *Code:* 8536
+** *Name:* `localTlsVariableCollision`
+** *What it means:* A declared variable uses the `tls.<connectionId>.*` namespace that `run-local` reserves for a connection's TLS context.
+** *How to fix:* Rename the declared variable.
+
+* *Code:* 8537
+** *Name:* `localTlsUpstreamNotHttps`
+** *What it means:* A connection declares a TLS context, but its upstream URL doesn't use HTTPS.
+** *How to fix:* Use an `https://` upstream URL, or remove the TLS context from the connection.
+
+* *Code:* 8538
+** *Name:* `localTlsFileUnreadable`
+** *What it means:* `run-local` couldn't read a TLS file for a connection.
+** *How to fix:* Verify that the reported `tls.<connectionId>.<field>` file exists and is readable.
+
+* *Code:* 8539
+** *Name:* `localTlsInvalidPem`
+** *What it means:* A TLS file isn't a valid PEM file of the expected type.
+** *How to fix:* Replace the reported `tls.<connectionId>.<field>` file with a valid PEM file.
+
+* *Code:* 8540
+** *Name:* `localTlsTraditionalEncryptedKey`
+** *What it means:* The TLS key file uses a traditional encrypted PEM format that `run-local` doesn't support.
+** *How to fix:* Convert the key to PKCS#8 format, and then update `tls.<connectionId>.keyFile` to reference the converted file.
+
+* *Code:* 8541
+** *Name:* `localTlsKeyUnloadable`
+** *What it means:* `run-local` couldn't load a connection's private key.
+** *How to fix:* Verify that `tls.<connectionId>.keyFile` contains a valid PEM private key and that `tls.<connectionId>.keyPassphrase` is correct.
+
+* *Code:* 8542
+** *Name:* `localTlsIncompleteCertificate`
+** *What it means:* A client certificate or private-key setting is present without its required counterpart.
+** *How to fix:* Set both the certificate and private-key fields, or clear the field that isn't needed.
+
+* *Code:* 8543
+** *Name:* `localTlsInvalidOption`
+** *What it means:* A TLS option has an unsupported value.
+** *How to fix:* Set the reported option to one of the allowed values in the message.
+
+* *Code:* 8544
+** *Name:* `localTlsVersionRange`
+** *What it means:* The configured minimum TLS version is greater than the maximum TLS version.
+** *How to fix:* Set `minVersion` to the same version as or an earlier version than `maxVersion`.
+
+* *Code:* 8545
+** *Name:* `localTlsSecureEnvMissing`
+** *What it means:* A TLS environment variable generated for local run is empty.
+** *How to fix:* Restart `run-local` so it rereads the TLS files.
+
+* *Code:* 8546
+** *Name:* `localTlsCertificateKeyMismatch`
+** *What it means:* The private key doesn't match any certificate in the configured certificate file.
+** *How to fix:* Use a matching certificate and private key for the connection.
+
+* *Code:* 8547
+** *Name:* `localTlsAddedWhileWatching`
+** *What it means:* A connection added a TLS context while `run-local` was watching for changes. TLS settings are collected only when local run starts.
+** *How to fix:* Restart `run-local` to configure the connection's TLS settings.
+
+* *Code:* 8548
+** *Name:* `localTlsBindingMissing`
+** *What it means:* *Internal:* no resolved TLS configuration exists for a connection.
+** *How to fix:* Rerun `run-local`. If the error persists, report it with the error details.
+
+* *Code:* 8549
+** *Name:* `localTlsNoCipherForMaxVersion`
+** *What it means:* `maxVersion: 1.2` is configured with ciphers that are all TLS 1.3 suites.
+** *How to fix:* Add a TLS 1.2 cipher to `tls.<connectionId>.ciphers`, or set `tls.<connectionId>.maxVersion` to `1.3`.
+
+* *Code:* 8550
+** *Name:* `localTlsLeafNotFirst`
+** *What it means:* The private key matches a later certificate in the certificate file, but the leaf certificate must be first.
+** *How to fix:* Order the certificate file with the client certificate first, followed by its certificate chain.
 
 [[generic-errors]]
 === Generic Errors
