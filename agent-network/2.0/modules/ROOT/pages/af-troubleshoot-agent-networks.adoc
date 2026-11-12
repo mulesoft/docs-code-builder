@@ -189,6 +189,21 @@ To resolve this error:
 
 NOTE: A protocol version mismatch surfaces as an authentication (401) error, not as a version error. Verify the protocol version whenever a downstream agent call fails with `401` even if you've correctly configured the the egress auth policy.
 
+[[request-timeout]]
+=== Issue: Requests to a Slow Agent Time Out
+
+If a broker's `a2a:send_message` call to a downstream agent consistently fails after 60 seconds, the agent's response time is longer than the timeout on the Omni Gateway. This commonly happens with agents that run long queries, such as Looker agents.
+
+When you create an Omni Gateway with `agent-network setup gateways`, the default for upstream response timeouts is 60 seconds. Agent Script `a2a:send_message` actions don't have a timeout property of their own, so you need to raise the timeout on the gateway. If the node that calls the agent also sets a timeout, raise that too.
+
+* *Omni Gateway*: Set the timeout above the agent's worst-case response time (for example, a Looker agent's worst-case query time) using one of these options:
++
+** To change the timeout for the entire gateway, in Runtime Manager, go to *Omni Gateways* > <Your_Gateway> > *Runtime Configurations* > *Timeouts*, and set *Upstream Response Timeout*.
+** To change the timeout for only one agent, apply the Response Timeout policy (`response-timeout-flex`) to that agent's API instance, and set the timeout in seconds. This value overrides the gateway-level value for that instance.
+* *Agent broker*: In the subagent or orchestrator node that calls the A2A agent, increase `reasoning.task_timeout_secs`. This setting limits the total execution time of the node, so it must be longer than the agent's worst-case response time.
+
+After you change the broker configuration, rebuild, republish, and redeploy the agent network.
+
 
 == See Also
 

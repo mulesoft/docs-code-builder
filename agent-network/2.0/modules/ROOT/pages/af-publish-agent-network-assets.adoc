@@ -1,6 +1,7 @@
 [[publish-assets]]
-= Publish Agent Network Assets
+= Publishing Agent Networks
 :page-aliases: anypoint-code-builder::af-publish-agent-network-assets.adoc
+:page-pagination:
 
 Build and publish your agent network project as Anypoint Exchange assets. When you publish, Exchange creates an asset for each broker, agent, and MCP server in your agent network. The asset ID is the value of the `name` key in `agent-network.yaml`.
 
@@ -32,6 +33,8 @@ The `apiVersion` field in `exchange.json` is the version group shown when you pu
 
 [[publish-dev-agent]]
 == Publish Your Network Using MuleSoft Vibes
+[%collapsible]
+====
 
 Use MuleSoft Vibes to publish your agent network specification to Anypoint Exchange. For more information, see xref:anypoint-code-builder::vibes-api-ai-create-spec.adoc[].
 
@@ -44,9 +47,12 @@ To get started, try one of these suggested messages.
 * Publish my agent network project version 1.0.0.
 * Publish the [project-name] project to Exchange.
 * Publish agent network project at /path/to/project with version 2.1.0.
+====
 
 [[publish-acb]]
 == Publish Your Network Using Anypoint Code Builder
+[%collapsible]
+====
 
 Use Anypoint Code Builder to publish your agent network assets directly from your project to Anypoint Exchange.
 
@@ -59,9 +65,12 @@ Use Anypoint Code Builder to publish your agent network assets directly from you
 . Anypoint Code Builder publishes your agents, MCP servers, and LLM provider definitions to Exchange and creates an asset for each element in your agent network.
 
 Next, discover your agent network assets in *Agents & Tools* in Exchange to get a comprehensive view of your integration, including agent and MCP server assets. Exchange automatically tags brokers for easy identification.
+====
 
 [[unpublish-dev-agent]]
 == Unpublish Your Network Using MuleSoft Vibes
+[%collapsible]
+====
 
 Use MuleSoft Vibes to unpublish your agent network assets from Anypoint Exchange. For more information, see xref:anypoint-code-builder::vibes-api-ai-create-spec.adoc[].
 
@@ -73,9 +82,12 @@ To get started, try one of these suggested messages.
 * Unpublish my Employee Onboarding project from Exchange.
 * Unpublish my agent network project.
 * Unpublish the [project-name] project from Exchange.
+====
 
 [[unpublish-acb]]
 == Unpublish Your Network Using Anypoint Code Builder
+[%collapsible]
+====
 
 Unpublish your agent network assets from Anypoint Exchange directly from Anypoint Code Builder. When you unpublish, the asset versions are removed from Exchange. To prevent orphaned runtime references, undeploy your agent network before unpublishing.
 
@@ -85,6 +97,7 @@ Unpublish your agent network assets from Anypoint Exchange directly from Anypoin
   . From the Command Palette, run this command: *MuleSoft: Unpublish Agent Network*.
 . In the confirmation dialog, select *Unpublish*.
 . Anypoint Code Builder removes the asset versions from Exchange. For details, check the Agent Fabric CLI output logs.
+====
 
 == Unpublish Behavior in Exchange
 
