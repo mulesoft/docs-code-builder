@@ -241,6 +241,61 @@ If you declared namespaces in the header, the tooling preserves those declaratio
 
 For the DataWeave language rules that govern `ns` directives and qualified keys, see xref:dataweave::dataweave-formats.adoc[DataWeave formats] and xref:dataweave::index.adoc[DataWeave documentation].
 
+[[dw-metadata-logic]]
+=== Understanding Metadata in the Transformation Builder
+
+The *Input* and *Output* columns in *Transformation Builder* show field-specific metadata for each binding, not the general metadata for the component as a whole. The source of this metadata follows different rules depending on the component type, which affects what data you see and how ACB resolves transformations.
+
+==== Actual and Expected Metadata
+
+ACB distinguishes between two types of metadata:
+
+* *Actual metadata*: The data type that DataSense resolves for a component's real input or output at that point in the flow.
+* *Expected metadata* (postCondition): The data type that the component is configured to output, representing the schema the output must conform to.
+
+A component's input is the *last modified output* in the flow, not necessarily the output of the immediately preceding component. ACB uses this logic when populating the *Input* column.
+
+[NOTE]
+====
+DataSense may not detect all bindings. Some DataWeave bindings that rely on dynamic resolution or indirect references may not appear in the metadata panel.
+====
+
+==== Metadata by Component Type
+
+The source of metadata for the *Input* and *Output* columns in *Transformation Builder* varies by component type:
+
+[cols="1,1,1",options="header"]
+|===
+| Component Type
+| DW Input Column
+| DW Output Column
+
+| Transform / Set-Payload
+| DataSense actual input
+| DataSense expected output (postCondition)
+
+| Set-Variable
+| DataSense actual input
+| Target variable type (must match later usage)
+
+| Non-Source field binding
+| DataSense actual input
+| `inputMetadata` for that field
+
+| Source – Success Callback
+| Output of parent flow
+| `inputMetadata` for that field
+
+| Source – Error Callback
+| Error object of parent flow
+| `inputMetadata` for that field
+|===
+
+[NOTE]
+====
+Error Callback metadata support isn't yet fully implemented.
+====
+
 [[considerations-for-transformation-builder-with-ai]]
 === Considerations for AI-Assisted Transformations
 
@@ -324,7 +379,7 @@ Authorization errors occur when your Anypoint Platform account lacks the require
 
 If you receive an authorization error:
 
-. Verify that you are logged in to Anypoint Platform from Anypoint Code Builder.
+. Verify that you're logged in to Anypoint Platform from Anypoint Code Builder.
 +
 For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform].
 . Contact your Anypoint Platform organization administrator to verify:
@@ -333,7 +388,7 @@ For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-t
 * Einstein generative AI is enabled for your organization. For more information, see xref:access-management::enabling-einstein.adoc[Enabling Einstein for Anypoint Platform].
 * You have accepted the terms and conditions for using Einstein generative AI.
 * Your Anypoint Platform organization is current and active.
-. If you are the organization administrator, verify that:
+. If you're the organization administrator, verify that:
 +
 * The Salesforce organization connected for requests has generative AI enabled.
 * The Salesforce organization has an xref:access-management::trusted-salesforce-org.adoc[established tenant relationship] with your Anypoint Platform organization, and the connection is enabled.
