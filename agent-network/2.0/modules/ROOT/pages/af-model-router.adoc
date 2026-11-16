@@ -1,0 +1,92 @@
+= Configure a Model Router for an Agent Broker
+:page-aliases: anypoint-code-builder::af-model-router.adoc
+
+Configure a Model Router as the LLM provider for an agent broker. A Model Router supports OpenAI, Gemini, and Anthropic models when its input format matches the underlying model.
+
+NOTE: Use a Model Router whose format matches its underlying model. Although a Model Router can transcode another model to the OpenAI format, agent networks don't support such configurations.
+
+. Create and configure a Model Router. Select a model-based routing strategy. For instructions, see xref:general::model-proxy-create-model-proxy.adoc[Create a Model Proxy].
+. In Anypoint Exchange, xref:exchange::to-request-access.adoc[request access to the Model Router asset], and save the client ID and client secret. 
+. In `agent-network.yaml`, declare the Model Router as an LLM in the `registry.llms` section. 
+.. Set `inputFormat` to `openai`, `gemini`, or `anthropic` to match the format you selected for the Model Router. 
+.. Set `authentication` to `apikey-client-credentials` and, optionally, list the models that the broker can call.
++
+[source,yaml]
+----
+registry:
+  llms:
+    modelRouterOpenAI:
+      info:
+        label: OpenAI Model Router
+      metadata:
+        platform: OpenAI Model Router
+        inputFormat: openai
+        authentication:
+          - kind: apikey-client-credentials
+        models:
+          - id: gpt-5-mini
+            label: GPT-5 Mini
+----
+. In the `context.connections` section of `agent-network.yaml`, add an LLM connection for the Model Router. 
+.. Set `url` to the Model Router URL and use the client ID and client secret from Anypoint Exchange.
++
+[source,yaml]
+----
+context:
+  connections:
+    model_router_openai_connection:
+      kind: llm
+      ref:
+        name: modelRouterOpenAI
+      url: https://<model-router-url>
+      authentication:
+        kind: apikey-client-credentials
+        clientId:
+          value: ${modelRouterOpenAI.clientId}
+        clientSecret:
+          value: ${modelRouterOpenAI.clientSecret}
+----
+. In `exchange.json`, declare the client ID and client secret as secret variables.
++
+[source,json]
+----
+{
+  "metadata": {
+    "variables": [
+      {
+        "name": "modelRouterOpenAI.clientId",
+        "description": "Client ID for the Model Router",
+        "default": "",
+        "secret": true
+      },
+      {
+        "name": "modelRouterOpenAI.clientSecret",
+        "description": "Client secret for the Model Router",
+        "default": "",
+        "secret": true
+      }
+    ]
+  }
+}
+----
+. In the broker's `.agent` file, configure the LLM to use the connection. 
+.. Set `kind` to `OpenAI`, `Gemini`, or `Anthropic` to match the Model Router's `inputFormat`.
+.. Set `model` to a model declared in `registry.llms`.
++
+[source,yaml]
+----
+config:
+  default_llm: @llm.modelRouterOpenAI
+
+llm:
+  modelRouterOpenAI:
+    target: "llm://model_router_openai_connection"
+    kind: "OpenAI"
+    model: "gpt-5-mini"
+----
+
+== See Also
+
+* xref:af-agent-networks.adoc#llm-support[Large Language Model Support]
+* xref:af-agent-network-yaml-reference.adoc#llms[LLMs]
+* xref:af-agent-script-reference.adoc#llm-section[LLM Section]
