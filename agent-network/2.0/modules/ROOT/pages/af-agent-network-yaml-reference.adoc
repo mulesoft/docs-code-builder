@@ -241,25 +241,41 @@ registry:
              description: List available Slack channels.
              inputSchema:
                type: object
-   llms:
-     Open-AI-LLM:
-       info:
-         label: OpenAI LLM
-         description: OpenAI provider for orchestration and generation nodes.
-       metadata:
-         platform: OpenAI
-         models:
-           - gpt-4o
-           - gpt-4o-mini
-           - gpt5-mini
-     Azure-OpenAI-LLM:
-       info:
-         label: Azure OpenAI LLM
-         description: Azure OpenAI for orchestration nodes.
-       metadata:
-         platform: AzureOpenai
-         models:
-           - gpt-4o
+    llms:
+      Open-AI-LLM:
+        info:
+          label: OpenAI LLM
+          description: OpenAI provider for orchestration and generation nodes.
+        metadata:
+          platform: OpenAI
+          models:
+            - gpt-4o
+            - gpt-4o-mini
+            - gpt5-mini
+      Azure-OpenAI-LLM:
+        info:
+          label: Azure OpenAI LLM
+          description: Azure OpenAI for orchestration nodes.
+        metadata:
+          platform: AzureOpenai
+          models:
+            - gpt-4o
+      Anthropic-LLM:
+        info:
+          label: Anthropic LLM
+          description: Anthropic Claude provider for orchestration nodes.
+        metadata:
+          platform: Anthropic
+          models:
+            - claude-opus-4-7
+      Bedrock-Anthropic-LLM:
+        info:
+          label: Bedrock Anthropic LLM
+          description: Amazon Bedrock-hosted Anthropic Claude provider for orchestration nodes.
+        metadata:
+          platform: BedrockAnthropic
+          models:
+            - global.anthropic.claude-opus-4-7
 ----
 
 The `registry` section has these properties.
@@ -288,7 +304,7 @@ The `registry` section has these properties.
 |The list of LLM providers defined as part of this network.
 |Object
 |No
-|Keys: identifiers. Values: LLMEntity. Each `LLMEntity` requires `metadata.platform`, which can be `Gemini`, `OpenAI`, `AzureOpenai`, or a custom platform name.
+|Keys: identifiers. Values: LLMEntity. Each `LLMEntity` requires `metadata.platform`, which can be `Anthropic`, `BedrockAnthropic`, `Gemini`, `OpenAI`, `AzureOpenai`, or a custom platform name.
 
 |===
 
@@ -1004,44 +1020,60 @@ This section is for reusable entities scoped to the graphs defined in the `agent
 [source,yaml]
 ----
 context:
-   connections:
-     hr_system_agent:
-       kind: a2a
-       ref:
-         name: hr-system-agent
-       url: https://hr-agent.example.com/a2a
-       policies:
-         outbound:
-           - ref:
-               name: retry-policy
-     salesforce_agent:
-       kind: a2a
-       ref:
-         name: salesforce-agent
-       url: https://sfdc-agent.example.com/a2a
-     slack_mcp:
-       kind: mcp
-       ref:
-         name: slack-mcp
-       url: https://mcp.example.com/slack
-      openai_llm:
-        kind: llm
-        ref:
-          name: Open-AI-LLM
-        url: https://api.openai.com/v1
-        authentication:
-          kind: apiKey
-          apiKey: "${env.OPENAI_API_KEY}"
-        tlsContext:
-          name: my-tls-context
-          group: my-group
-   policies:
-     retry-policy:
-       ref:
-         name: retry-policy
-       configuration:
-         maxAttempts: 3
-         backoffMs: 1000
+  connections:
+    hr_system_agent:
+      kind: a2a
+      ref:
+        name: hr-system-agent
+      url: https://hr-agent.example.com/a2a
+      policies:
+        outbound:
+          - ref:
+              name: retry-policy
+    salesforce_agent:
+      kind: a2a
+      ref:
+        name: salesforce-agent
+      url: https://sfdc-agent.example.com/a2a
+    slack_mcp:
+      kind: mcp
+      ref:
+        name: slack-mcp
+      url: https://mcp.example.com/slack
+    openai_llm:
+      kind: llm
+      ref:
+        name: Open-AI-LLM
+      url: https://api.openai.com/v1
+      authentication:
+        kind: apiKey
+        apiKey: "${env.OPENAI_API_KEY}"
+      tlsContext:
+        name: my-tls-context
+        group: my-group
+    anthropic_llm:
+      kind: llm
+      ref:
+        name: Anthropic-LLM
+      url: https://api.anthropic.com/v1/messages
+      authentication:
+        kind: apiKey
+        apiKey: "${env.ANTHROPIC_API_KEY}"
+    bedrock_anthropic_llm:
+      kind: llm
+      ref:
+        name: Bedrock-Anthropic-LLM
+      url: https://bedrock-runtime.us-east-1.amazonaws.com/anthropic/v1/messages
+      authentication:
+        kind: apiKey
+        apiKey: "${env.BEDROCK_ANTHROPIC_API_KEY}"
+  policies:
+    retry-policy:
+      ref:
+        name: retry-policy
+      configuration:
+        maxAttempts: 3
+        backoffMs: 1000
 ----
 
 The `context` section has these properties. 
@@ -1093,6 +1125,8 @@ a|The base URL of the target system. For `llm` use these defaults:
 * Gemini: `\https://generativelanguage.googleapis.com`
 * Bedrock OpenAI: `\https://bedrock-mantle.<YOUR_REGION>.api.aws/v1`
 * Azure OpenAI: `\https://<YOUR_RESOURCE_NAME>.openai.azure.com/openai/v1`
+* Anthropic: `\https://api.anthropic.com/v1/messages`
+* Bedrock Anthropic: `\https://bedrock-runtime.<YOUR_REGION>.amazonaws.com/anthropic/v1/messages`
 |String
 |No
 
