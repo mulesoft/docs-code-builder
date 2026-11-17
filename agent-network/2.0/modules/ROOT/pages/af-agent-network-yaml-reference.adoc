@@ -260,22 +260,6 @@ registry:
           platform: AzureOpenai
           models:
             - gpt-4o
-      Anthropic-LLM:
-        info:
-          label: Anthropic LLM
-          description: Anthropic Claude provider for orchestration nodes.
-        metadata:
-          platform: Anthropic
-          models:
-            - claude-opus-4-7
-      Bedrock-Anthropic-LLM:
-        info:
-          label: Bedrock Anthropic LLM
-          description: Amazon Bedrock-hosted Anthropic Claude provider for orchestration nodes.
-        metadata:
-          platform: BedrockAnthropic
-          models:
-            - global.anthropic.claude-opus-4-7
 ----
 
 The `registry` section has these properties.
@@ -304,7 +288,7 @@ The `registry` section has these properties.
 |The list of LLM providers defined as part of this network.
 |Object
 |No
-|Keys: identifiers. Values: LLMEntity. Each `LLMEntity` requires `metadata.platform`, which can be `Anthropic`, `BedrockAnthropic`, `Gemini`, `OpenAI`, `AzureOpenai`, or a custom platform name.
+|Keys: identifiers. Values: LLMEntity. Each `LLMEntity` requires `metadata.platform`, which can be `Gemini`, `OpenAI`, `AzureOpenai`, or a custom platform name.
 
 |===
 
@@ -1051,22 +1035,23 @@ context:
       tlsContext:
         name: my-tls-context
         group: my-group
-    anthropic_llm:
+    llm_anthropic_conn:
       kind: llm
       ref:
-        name: Anthropic-LLM
-      url: https://api.anthropic.com/v1/messages
+        name: anthropic
+        namespace: 7e5913f6-95c2-4af4-8070-96bed4804c51
+      url: ${anthropic.url}
       authentication:
         kind: apiKey
-        apiKey: "${env.ANTHROPIC_API_KEY}"
-    bedrock_anthropic_llm:
+        apiKey: ${anthropic.apiKey}
+    llm_bedrockanthropic_conn:
       kind: llm
       ref:
-        name: Bedrock-Anthropic-LLM
-      url: https://bedrock-runtime.us-east-1.amazonaws.com/anthropic/v1/messages
+        name: bedrockanthropic
+        namespace: 7e5913f6-95c2-4af4-8070-96bed4804c51
+      url: ${bedrock.url}
       authentication:
-        kind: apiKey
-        apiKey: "${env.BEDROCK_ANTHROPIC_API_KEY}"
+        kind: amazonSigv4
   policies:
     retry-policy:
       ref:
@@ -1167,6 +1152,8 @@ a|The base URL of the target system. For `llm` use these defaults:
 |===
 
 For `llm` connections, `authentication` is required. LLM connections support `none`, `basic`, `apiKey`, `apikey-client-credentials`, `oauth2-client-credentials`, and `amazonSigv4`. The authentication kind must be one that the referenced LLM asset declares in its metadata. LLM connections don't support `oauth2-obo`, `in-task-authorization-code`, or `custom` authentication.
+
+For externally managed LLM assets, reference the asset from `context.connections` rather than declaring it in `registry.llms`. Set `ref.namespace` to the namespace that contains the LLM asset. The namespace varies by environment.
 
 For example, to connect to an LLM that uses OAuth 2.0 client credentials authentication:
 
@@ -2265,6 +2252,16 @@ All agent network projects have an `exchange.json` file. This file contains asse
       "version": "1.0.21",
       "classifier": "agent-metadata",
       "packaging": "zip"
+    },
+    {
+      "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+      "assetId": "anthropic",
+      "version": "1.0.0"
+    },
+    {
+      "groupId": "85de5a54-1f33-4ea4-a1bf-8a65bc409179",
+      "assetId": "bedrockanthropic",
+      "version": "1.0.0"
     }
   ],
   "metadata": {
@@ -2284,6 +2281,25 @@ All agent network projects have an `exchange.json` file. This file contains asse
           "default": "",
           "secret": false
         }
+      },
+      "anthropic": {
+        "url": {
+          "description": "Anthropic base URL",
+          "default": "https://api.anthropic.com/",
+          "secret": false
+        },
+        "apiKey": {
+          "description": "Anthropic API key",
+          "default": "",
+          "secret": true
+        }
+      },
+      "bedrock": {
+        "url": {
+          "description": "Bedrock Anthropic base URL",
+          "default": "https://bedrock-runtime.us-east-1.amazonaws.com/",
+          "secret": false
+        }
       }
     }
   }
@@ -2296,6 +2312,8 @@ These key-value pairs are important for your agent network configuration:
 * assetId: Unique identifier for the agent network project.
 * dependencies: Existing assets that this network needs to reference.
 * variables: Nested in the metadata section, defines all the variables whose values shouldn't be hardcoded in the `agent-network.yaml` file. Enter these values when publishing the agent network. Each variable has a description value, a default value, and a secret value that indicates whether it's treated as sensitive or not.
++
+The `anthropic.url` and `bedrock.url` variables supply the URLs used by the corresponding LLM connections in `agent-network.yaml`. Add the Anthropic API key as a secret variable. Amazon Bedrock uses AWS Signature Version 4 authentication and doesn't require an API key variable.
 
 For more information about versioning assets in agent network projects, see xref:af-publish-agent-network-assets.adoc#version-assets[Version Assets].
 
