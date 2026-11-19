@@ -2,7 +2,9 @@
 
 Anypoint Code Builder uses Apache Maven to build and manage your Mule projects (implementation and integration projects) and API specifications in design projects. All Maven configurations, such as custom repositories, proxies, and server credentials, are managed through a central `settings.xml` file.
 
-For information about the Maven file `settings.xml`, see the https://maven.apache.org/settings.html[Maven documentation]. 
+For information about the Maven file `settings.xml`, see the https://maven.apache.org/settings.html[Maven documentation].
+
+Maintain the `pom.xml` file to ensure build reproducibility and pipeline stability: pin fixed dependency versions instead of using dynamic ranges, avoid `SNAPSHOT` dependencies within release branches, and execute `mvn clean package` to validate the build locally before pushing changes.
 
 == Maven Settings File in Anypoint Code Builder
 

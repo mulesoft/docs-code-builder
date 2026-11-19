@@ -63,6 +63,10 @@ After your project is in Anypoint Code Builder, set up your development environm
 * Manage the folders that store your projects. See xref:start-add-folders.adoc[].
 * Connect your project to a Git repository for source control. See xref:start-scm.adoc[].
 
+You don't need to restructure a migrated project all at the same time. Confirm that the project opens and runs first, then adopt Anypoint Code Builder conventions over time, for example, by centralizing global elements that are scattered across flow files into `global-config.xml`, moving from `.properties` files to environment-specific property files such as `config-dev.yaml` and `config-prod.yaml`, and introducing MuleSoft Vibes for new work while leaving existing flows as they are.
+
+If multiple developers work on the same set of projects, migrate one project at a time rather than switching everyone over at the same time. Anypoint Studio and Anypoint Code Builder both produce standard Mule artifacts, so you can run them side by side during the transition without affecting CI/CD pipelines, deployments, or runtime behavior.
+
 == See Also
 
 * xref:int-import-mule-project.adoc[]
