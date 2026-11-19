@@ -1,14 +1,14 @@
 = Configure a Model Router for an Agent Broker
 :page-aliases: anypoint-code-builder::af-model-router.adoc
 
-Configure a Model Router as the LLM provider for an agent broker. A Model Router supports OpenAI, Gemini, and Anthropic models when its input format matches the underlying model.
+Configure a Model Router as the LLM provider for an agent broker. A Model Router supports OpenAI and Gemini models when its input format matches the underlying model.
 
 NOTE: Use a Model Router whose format matches its underlying model. Although a Model Router can transcode another model to the OpenAI format, agent networks don't support such configurations.
 
 . Create and configure a Model Router. Select a model-based routing strategy. For instructions, see xref:general::model-proxy-create-model-proxy.adoc[Create a Model Proxy].
 . In Anypoint Exchange, xref:exchange::to-request-access.adoc[request access to the Model Router asset], and save the client ID and client secret. 
 . In `agent-network.yaml`, declare the Model Router as an LLM in the `registry.llms` section. 
-.. Set `inputFormat` to `openai`, `gemini`, or `anthropic` to match the format you selected for the Model Router. 
+.. Set `inputFormat` to `openai` or `gemini` to match the format you selected for the Model Router. 
 .. Set `authentication` to `apikey-client-credentials` and, optionally, list the models that the broker can call.
 +
 [source,yaml]
@@ -70,7 +70,7 @@ context:
 }
 ----
 . In the broker's `.agent` file, configure the LLM to use the connection. 
-.. Set `kind` to `OpenAI`, `Gemini`, or `Anthropic` to match the Model Router's `inputFormat`.
+.. Set `kind` to `OpenAI` or `Gemini` to match the Model Router's `inputFormat`.
 .. Set `model` to a model declared in `registry.llms`.
 +
 [source,yaml]
