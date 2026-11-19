@@ -12,6 +12,8 @@ Anypoint Code Builder requires one of the following project configurations to fu
 
 If your directory structure doesn't meet these requirements, Anypoint Code Builder displays a message with steps to resolve the issue, such as opening a Mule project or creating a workspace. See <<fix-nested-project>>.
 
+Use a multi-root workspace when you work on an API-led architecture that spans an experience API, one or more process APIs, and one or more system APIs. By grouping these related projects in a single workspace, you can configure a multi-project run configuration that deploys all projects to the same local runtime, so you can validate service-to-service calls across the stack. See xref:int-run-multiple-mule-apps.adoc[] for additional information.
+
 [[create-project-workspace]]
 == Create a Project in a Workspace
 
@@ -126,9 +128,12 @@ The `.code-workspace` file must not reside within any of your project folders. S
 [[fix-nested-project]]
 == Fix a Nested Project Error
 
-This error appears when you open a folder that contains your Mule project instead of opening the project directly, and that folder isn't configured as a multi-root workspace.
+This error appears in either of these cases:
 
-To fix this issue, open the project folder at the root level or add it to a multi-root workspace.
+* You open a folder that contains your Mule project instead of opening the project directly, and that folder isn't configured as a multi-root workspace.
+* You open a parent directory that contains multiple Mule projects without configuring it as a multi-root workspace.
+
+To fix this issue, open the project folder at the root level or add it (or each project in the parent directory) to a multi-root workspace.
 
 === Open the Project at the Root
 

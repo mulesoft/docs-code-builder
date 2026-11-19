@@ -1,26 +1,11 @@
 = Troubleshooting AI Features in Anypoint Code Builder
 
-The following errors sometimes occur when you use MuleSoft Vibes in Anypoint Code Builder.
-
-== Unexpected Results When Using Mulesoft Vibes
-
-If the generated flow doesn't return accurate or useful results for your message, try rewriting your message and follow the guidelines to xref:vibes-create-integrations.adoc#craft-ai-prompt[write an effective message].
-
-If results are still inconsistent, verify that your project context and Mulesoft Vibes settings are correctly configured.
-
-== Troubleshoot Mulesoft Vibes Access Errors
-
-If you can't open MuleSoft Vibes, verify the following:
-
-* You are logged in to Anypoint Platform. For more information, see xref:start-acb.adoc#log-in-to-anypoint-platform-from-the-ide[Log in to Anypoint Platform].
-* You have the xref:start-configure-permissions.adoc#permissions[required Anypoint Code Builder permissions], including:
-** *Mule Developer Generative AI User*
-* You have the required permissions for the tools in the MuleSoft MCP Server that MuleSoft Vibes uses to generate accurate responses.  
+The following errors can occur when you use MuleSoft Vibes in Anypoint Code Builder.
 
 [[required-permissions]]
-=== Required Permissions for MuleSoft Vibes
+== Required Permissions for MuleSoft Vibes
 
-MuleSoft Vibes always uses the permissions of the logged-in Anypoint Platform user.  
+MuleSoft Vibes always uses the permissions of the logged-in Anypoint Platform user.
 MuleSoft Vibes can't perform any action that the user doesn't already have permission to perform.
 
 Here are the permissions required across capabilities in the MuleSoft MCP Server:
@@ -57,18 +42,39 @@ Here are the permissions required across capabilities in the MuleSoft MCP Server
 * Usage Viewer  
 ====
 
-If you want to configure MuleSoft Vibes with a different set of permissions, you must:  
+To configure MuleSoft Vibes with a different set of permissions, you must:
 
-. Remove or disable the out-of-the-box MuleSoft MCP Server.  
-. Follow the steps in the xref:mulesoft-mcp-server::getting-started.adoc#set-up-authentication[MuleSoft MCP Server documentation] to set up a connected app with the desired permissions.  
+. Remove or disable the out-of-the-box MuleSoft MCP Server.
+. Follow the steps in the xref:mulesoft-mcp-server::getting-started.adoc#set-up-authentication[MuleSoft MCP Server documentation] to set up a connected app with the desired permissions.
 
+== AI Features Not Enabled for Your Organization
 
-== Troubleshoot Anypoint Platform Authorization Errors
+If you see the message `AI features are not enabled for your organization`, your Anypoint Platform organization is not linked to a Salesforce organization with an active generative AI license, or Einstein is not enabled.
 
-If you receive an authorization error, contact your Anypoint Platform organization administrator. If you are the organization administrator, check the following:
+To resolve this error, verify:
 
-* The user has the required Anypoint Code Builder permissions.
-* Your Anypoint Platform organization is current and active.
+* Your Anypoint Platform organization is connected to a Salesforce organization with generative AI enabled. For setup instructions, see xref:access-management::connecting-salesforce-orgs.adoc[] and xref:access-management::trusted-salesforce-org.adoc[].
+* Einstein is enabled in Access Management. See xref:access-management::enabling-einstein.adoc[].
++
+NOTE: If you are a MuleSoft customer without an existing Salesforce organization, contact your MuleSoft account team to provision an Einstein-enabled Salesforce organization.
+
+NOTE: If the *MuleSoft > Anypoint Platform Setup* option is not visible in Salesforce or you encounter a "Page not found" error, the *Enable Flow API Actions* permission may not be enabled for your Salesforce organization. Contact MuleSoft Support with your Salesforce Org ID to request this permission. For setup instructions, see xref:access-management::connecting-salesforce-orgs.adoc[].
+
+== Unexpected Results When Using Mulesoft Vibes
+
+If the generated flow doesn't return accurate or useful results for your message, try rewriting your message and follow the guidelines to xref:vibes-create-integrations.adoc#craft-ai-prompt[write an effective message].
+
+If results are still inconsistent, verify that your project context and Mulesoft Vibes settings are correctly configured.
+
+== HTTP 409 Conflict Error
+
+If you receive an HTTP 409 Conflict error when initializing or prompting MuleSoft Vibes, the error indicates a configuration mismatch between Anypoint Platform and Salesforce.
+
+To resolve this error, verify:
+
+* Your Anypoint Platform organization is linked to a Salesforce organization. See xref:access-management::connecting-salesforce-orgs.adoc[] and xref:access-management::trusted-salesforce-org.adoc[].
+* Einstein is enabled in Access Management. See xref:access-management::enabling-einstein.adoc[].
+* You have the *Mule Developer Generative AI User* permission. See xref:start-configure-permissions.adoc#permissions[Anypoint Code Builder Permissions].
 
 == Vibes Features are Unresponsive or Fail to Load
 
@@ -117,6 +123,34 @@ source ~/.zshrc
 echo %JAVA_HOME%
 java -version
 ----
+
+== Token and Quota Errors
+
+=== Prompt Size Exceeds the Token Limit
+
+If you see the error `Prompt size exceeds the token limit when PII is enabled`, the Einstein Trust Layer's PII detection and masking is active and is expanding the size of your prompt beyond the model's token limit.
+
+To resolve this error, you must:
+
+* Start a new chat session to clear the conversation history.
+* Remove large project folders or files from the attached context.
+* Break your request into smaller, more focused prompts.
+
+=== Salesforce Connection Error
+
+If MuleSoft Vibes returns a `[SALESFORCE] Connection error`, the Salesforce AI model has reached its daily request or token limit for your session.
+
+To resolve this error, you must:
+
+* Start a new chat session to reset your token usage.
+* Wait for the daily limit to reset, then retry.
+* Contact your Anypoint Platform organization administrator if the error persists.
+
+== Java 17 Connector Compatibility Errors
+
+If MuleSoft Vibes generates a flow and you then see an `Unsupported class file version` build error, the generated `pom.xml` may reference connector versions that are not compatible with Mule runtime 4.6 and later, and Java 17.
+
+To resolve this error, update the connector version in your `pom.xml` to a version that supports Java 17, and rebuild the project.
 
 == See Also
 
