@@ -250,14 +250,14 @@ The *Input* and *Output* columns in *Transformation Builder* show field-specific
 
 ACB distinguishes between two types of metadata:
 
-* *Actual metadata*: The data type that DataSense resolves for a component's real input or output at that point in the flow.
-* *Expected metadata* (postCondition): The data type that the component is configured to output, representing the schema the output must conform to.
+* Actual metadata: The data type that DataSense resolves for a component's real input or output at that point in the flow.
+* Expected metadata (postCondition): The data type that the component is configured to output, representing the schema the output must conform to.
 
-A component's input is the *last modified output* in the flow, not necessarily the output of the immediately preceding component. ACB uses this logic when populating the *Input* column.
+A component's input is the last modified output in the flow, not necessarily the output of the immediately preceding component. ACB uses this logic when populating the *Input* column.
 
 [NOTE]
 ====
-DataSense may not detect all bindings. Some DataWeave bindings that rely on dynamic resolution or indirect references may not appear in the metadata panel.
+DataSense can't detect all bindings. Some DataWeave bindings that rely on dynamic resolution or indirect references won't appear in the metadata panel.
 ====
 
 ==== Metadata by Component Type
